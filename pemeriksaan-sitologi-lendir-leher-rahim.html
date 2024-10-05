@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PEMERIKSAAN SITOLOGI LENDIR LEHER RAHIM</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    .petugas {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .petugas th,
+    .petugas td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">PEMERIKSAAN SITOLOGI LENDIR LEHER RAHIM</h1>
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td bgcolor="#DFE8F6">No. Urut Pasien</td>
+          <td bgcolor="#DFE8F6">
+            <input
+              name="no_urut_pasien2"
+              type="text"
+              id="no_urut_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+            />
+          </td>
+          <td bgcolor="#DFE8F6">
+            <label for="">No. Lab:</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <input type="text" />
+          </td>
+        </tr>
+
+        <tr>
+          <td bgcolor="">Tanggal Pemeriksaan</td>
+          <td bgcolor="">
+            <input
+              name="tgl_pemeriksaan2"
+              type="text"
+              id="tgl_pemeriksaan"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td bgcolor="">Diterima Tgl.</td>
+          <td bgcolor="">
+            <input
+              name="diterima_tgl2"
+              type="text"
+              id="diterima_tgl"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr bgcolor="#DFE8F6">
+          <td>Nama Pasien:</td>
+          <td>
+            <input
+              type="text"
+              size="30"
+              name="nama-pasien"
+              id=""
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <label for="nama">Umur Pasien:</label>
+          </td>
+          <td>
+            <div>
+              <input
+                type="text"
+                size="30"
+                name="umur"
+                id=""
+                placeholder="..."
+              />
+              <label for="status-psikologis">Tahun</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Pendidikan terakhir pasien:</td>
+          <td>
+            <input
+              type="text"
+              size="30"
+              name="pendidikan-terakhir-pasien"
+              id=""
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <label for="nama">Pekerjaan Pasien:</label>
+          </td>
+          <td>
+            <div>
+              <input
+                type="text"
+                size="30"
+                name="pekerjaan-pasien"
+                id=""
+                placeholder="..."
+              />
+            </div>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>Nama suami:</td>
+          <td>
+            <input
+              type="text"
+              size="30"
+              name="nama-suami"
+              id=""
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <label for="nama">Pekerjaan suami:</label>
+          </td>
+          <td>
+            <div>
+              <input
+                type="text"
+                size="30"
+                name="pekerjaan-suami"
+                id=""
+                placeholder="..."
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Alamat:</td>
+          <td colspan="3">
+            <textarea
+              name=""
+              id=""
+              style="width: 100%; padding: 5px"
+              cols="2"
+            ></textarea>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>Usia waktu nikah (pertama):</td>
+          <td>
+            <div>
+              <input
+                type="text"
+                size="30"
+                name="usia-waktu-nikah"
+                id=""
+                placeholder="..."
+              />
+              <label for="status-psikologis">Tahun</label>
+            </div>
+          </td>
+          <td>Jumlah anak:</td>
+          <td>
+            <div>
+              <input
+                type="text"
+                size="30"
+                name="jumlah-anak"
+                id=""
+                placeholder="..."
+              />
+              <label for="status-psikologis">orang</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Pernah keguguran:</td>
+          <td>
+            <section style="display: flex; gap: 20px">
+              <div>
+                <input
+                  type="radio"
+                  name="apakah-pernah-keguguran"
+                  id=""
+                  value="Ya"
+                />
+                <label for="apakah-pernah-keguguran">Ya</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="apakah-pernah-keguguran"
+                  id=""
+                  value="Tidak"
+                />
+                <label for="apakah-pernah-keguguran">Tidak</label>
+              </div>
+              <div>
+                <label for="pernah-keguguran">bila Ya, berapa kali?</label>
+                <input
+                  type="text"
+                  name="pernah-keguguran"
+                  id=""
+                  placeholder="..."
+                />
+                <label for="pernah-keguguran">kali</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>Sudah menopause:</td>
+          <td colspan="3">
+            <section style="display: flex; gap: 20px">
+              <div>
+                <input
+                  type="radio"
+                  name="apakah-sudah-menopause"
+                  id=""
+                  value="Ya"
+                />
+                <label for="apakah-sudah-menopause">Ya</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="apakah-sudah-menopause"
+                  id=""
+                  value="Tidak"
+                />
+                <label for="apakah-sudah-menopause">Tidak</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td style="padding-left: 10px">
+            <label>Bila tidak, jenis KB yang digunakan sekarang:</label>
+          </td>
+          <td colspan="3">
+            <input
+              type="text"
+              size="30"
+              name="nama-suami"
+              id=""
+              placeholder="..."
+            />
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td style="padding-left: 10px">
+            <label>Telah menggunakan KB sejak:</label>
+          </td>
+          <td colspan="3">
+            <input
+              type="text"
+              size="30"
+              name="nama-suami"
+              id=""
+              placeholder="..."
+            />
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td style="padding-left: 10px">
+            <label>Bila tidak, hari pertama haid terakhir tanggal:</label>
+          </td>
+          <td colspan="3">
+            <input
+              type="text"
+              size="30"
+              name="nama-suami"
+              id=""
+              placeholder="..."
+            />
+            <label for="">(haid teratur/haid tidak teratur)</label>
+          </td>
+        </tr>
+        <tr>
+          <td>Pernah PAP SMEAR:</td>
+          <td>
+            <section style="display: flex; gap: 20px">
+              <div>
+                <input
+                  type="radio"
+                  name="apakah-pernah-pap-smear"
+                  id=""
+                  value="Ya"
+                />
+                <label for="apakah-pernah-pap-smear">Ya</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="apakah-pernah-pap-smear"
+                  id=""
+                  value="Tidak"
+                />
+                <label for="apakah-pernah-pap-smear">Tidak</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 10px">
+            <label>Bila Ya, sudah berapa kali?</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              size="30"
+              name="jumlah-kali-pap-smear"
+              id=""
+              placeholder="..."
+            />
+          </td>
+          <td style="padding-left: 10px">
+            <label>Terakhir dilakukan di</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              name="jumlah-kali-pap-smear"
+              id=""
+              placeholder="..."
+            />
+            <label for="tahun">Tahun:</label>
+            <input type="text" name="tahun-pap-smear" placeholder="..." id="" />
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>Keluhan saat ini:</td>
+          <td colspan="3">
+            <section style="display: flex; gap: 20px">
+              <div>
+                <input type="radio" name="ada-keluhan" id="" value="Ada" />
+                <label for="ada-keluhan">Ada</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="ada-keluhan"
+                  id=""
+                  value="Tidak ada"
+                />
+                <label for="ada-keluhan">Tidak ada</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Pendarahan:</td>
+          <td colspan="3">
+            <section style="display: flex; gap: 20px">
+              <div>
+                <input type="radio" name="pendarahan" id="" value="Ada" />
+                <label for="pendarahan">Ya</label>
+              </div>
+              <div>
+                <input type="radio" name="pendarahan" id="" value="Tidak ada" />
+                <label for="pendarahan">Tidak</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>Keputihan:</td>
+          <td colspan="3">
+            <section style="display: flex; gap: 20px">
+              <div>
+                <input type="radio" name="keputihan" id="" value="Ada" />
+                <label for="keputihan">Ya</label>
+              </div>
+              <div>
+                <input type="radio" name="keputihan" id="" value="Tidak ada" />
+                <label for="keputihan">Tidak</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr>
+          <td>Lain - lain (jelaskan) :</td>
+          <td colspan="3">
+            <textarea
+              name="keluhan-lain-lain"
+              id=""
+              style="width: 100%; padding: 5px"
+              cols="2"
+            ></textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr />
+    <table width="100%" class="table table-bordered petugas">
+      <tbody>
+        <tr bgcolor="#DFE8F6">
+          <td>Inspekulo:</td>
+          <td colspan="2">
+            <input
+              type="text"
+              size="30"
+              name="inspekulo"
+              id=""
+              placeholder="..."
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>IVA:</td>
+          <td colspan="2">
+            <input type="text" size="30" name="IVA" id="" placeholder="..." />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <div align="center"><strong>Perawat</strong></div>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
+          <td colspan="2" bgcolor="#FFFFFF">
+            <input
+              name="17_pukul"
+              type="text"
+              id="17_pukul"
+              placeholder="00:00"
+              size="10"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#FFFFFF">Nama</td>
+
+          <td colspan="2" bgcolor="#FFFFFF">
+            <input
+              name="17_nama3"
+              type="text"
+              id="17_nama3"
+              size="25"
+              myid="check_cara"
+            />
+            <br />
+            <select
+              type="select"
+              name="perawatnya"
+              id="perawatnya"
+              myid="check_cara"
+              iscombo="t"
+              onchange="get_ttd2();"
+            >
+              <option></option>
+            </select>
+
+            <font id="ttdnya2"></font>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
