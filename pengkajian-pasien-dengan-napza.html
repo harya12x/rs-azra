@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pengkajian Pasien Dengan Napza</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+  </style>
+  <body>
+    <h1 class="title">PENGKAJIAN AWAL PASIEN DENGAN NAPZA RS AZRA BOGOR</h1>
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td bgcolor="#DFE8F6">Nama Pasien</td>
+          <td bgcolor="#DFE8F6">
+            <input
+              name="nama_pasien2"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+            />
+          </td>
+          <td bgcolor="#DFE8F6">Jenis Kelamin</td>
+          <td bgcolor="#DFE8F6">
+            <input type="checkbox" />
+            <label for="l">L</label>
+            <input type="checkbox" />
+            <label for="l">P</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <input type="number" />
+          </td>
+        </tr>
+
+        <tr>
+          <td bgcolor="">Tanggal Lahir</td>
+          <td bgcolor="">
+            <input
+              name="tgl_lahira2"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td>Umur</td>
+          <td>
+            <input type="number" size="5" placeholder="..." />
+          </td>
+          <td>
+            <label for="kelas"> Kelas </label>
+          </td>
+          <td>
+            <input
+              name="kelasa2"
+              type="text"
+              id="kelas"
+              placeholder="..."
+              myid="check_cara"
+              label="kelas"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#DFE8F6">Tanggal</td>
+          <td bgcolor="#DFE8F6">
+            <input type="date" />
+          </td>
+
+          <td bgcolor="#DFE8F6">Jam</td>
+          <td bgcolor="#DFE8F6">
+            <input type="time" />
+          </td>
+
+          <td bgcolor="#DFE8F6">Kamar</td>
+          <td bgcolor="#DFE8F6">
+            <input type="text" placeholder="..." />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <td>1.</td>
+          <td>
+            <section style="display: flex; gap: 10px; padding-left: 10px">
+              <div>
+                <label for=""> Informasi diperoleh dari: </label>
+                <input
+                  type="text"
+                  name="perolehan-informasi"
+                  id=""
+                  placeholder="..."
+                />
+              </div>
+              <div>
+                <label for=""> Hubungan dengan pasien: </label>
+                <input
+                  type="text"
+                  name="hubungan-pasien"
+                  id=""
+                  placeholder="..."
+                />
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>2.</td>
+          <td>
+            <div style="gap: 10px; padding-left: 10px">
+              <label for=""
+                >Riwayat kesehatan sekarang (alasan masuk rumah sakit)
+              </label>
+              <input
+                type="text"
+                size="60"
+                name="perolehan-informasi"
+                id=""
+                placeholder="..."
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>3.</td>
+          <td>
+            <section style="display: flex; gap: 10px; padding-left: 10px">
+              <label for=""> Hubungan dengan orang terdekat: </label>
+              <div>
+                <input
+                  type="radio"
+                  name="hubungan-orang-terdekat"
+                  id=""
+                  value="Tidak masalah"
+                />
+                <label for="">Tidak masalah</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="hubungan-orang-terdekat"
+                  id=""
+                  value="Bermasalah"
+                />
+                <label for="">Bermasalah</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>4.</td>
+          <td>
+            <section style="display: flex; gap: 10px; padding-left: 10px">
+              <label for="">Adakah pengalaman tidak menyenangkan: </label>
+              <div>
+                <input
+                  type="radio"
+                  name="pengalaman-tidak-menyenangkan"
+                  id=""
+                  value="Tidak"
+                />
+                <label for="">Tidak</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="pengalaman-tidak-menyenangkan"
+                  id=""
+                  value="Ya"
+                />
+                <label for="">Ya</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td style="padding-left: 10px">
+            <b>Jika ada masalah NAPZA lanjutkan ke pertanyaan berikutnya</b>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>5.</td>
+          <td>
+            <section style="display: flex; gap: 10px; padding-left: 10px">
+              <label for="">Jika ya, pengalaman yang dirasakan: </label>
+              <div>
+                <input
+                  type="radio"
+                  name="pengalaman-yang-dirasakan"
+                  id=""
+                  value="Sering disakiti"
+                />
+                <label for="">Sering disakiti</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="pengalaman-yang-dirasakan"
+                  id=""
+                  value="Sering mengalam kegagalan"
+                />
+                <label for="">Sering mengalami kegagalan</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="pengalaman-yang-dirasakan"
+                  id=""
+                  value="Tidak diterima lingkungannya"
+                />
+                <label for="">Tidak diterima lingkungannya</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr>
+          <td>6.</td>
+          <td>
+            <label style="padding-left: 10px" for=""
+              >Penyebab penyalahgunaan NAPZA</label
+            >
+            <table>
+              <tbody>
+                <tr>
+                  <td style="padding-left: 10px">
+                    <div>
+                      <input
+                        type="radio"
+                        name="penyebab-penyalahgunaan"
+                        id=""
+                        value="Keluarga punya riwayat ketergantungan narkotika"
+                      />
+                      <label for=""
+                        >Keluarga punya riwayat ketergantungan narkotika</label
+                      >
+                    </div>
+                  </td>
+                  <td>
+                    <div style="padding-left: 10px">
+                      <input
+                        type="radio"
+                        name="penyebab-penyalahgunaan"
+                        id=""
+                        value="Keluarga dengan manajemen yang kacau"
+                      />
+                      <label for="">Keluarga dengan manajemen yang kacau</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="padding-left: 10px">
+                      <input
+                        type="radio"
+                        name="penyebab-penyalahgunaan"
+                        id=""
+                        value="Keluarga dengan konflik yang tinggi"
+                      />
+                      <label for="">Keluarga dengan konflik yang tinggi</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding-left: 10px">
+                    <div>
+                      <input
+                        type="radio"
+                        name="penyebab-penyalahgunaan"
+                        id=""
+                        value="Keluarga dengan orangtua otoriter"
+                      />
+                      <label for="">Keluarga dengan orangtua otoriter</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="padding-left: 10px">
+                      <input
+                        type="radio"
+                        name="penyebab-penyalahgunaan"
+                        id=""
+                        value="Keluarga yang perfeksionis"
+                      />
+                      <label for="">Keluarga yang perfeksionis</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="padding-left: 10px">
+                      <input
+                        type="radio"
+                        name="penyebab-penyalahgunaan"
+                        id=""
+                        value="Keluarga yang neurosis"
+                      />
+                      <label for="">Keluarga yang neurosis</label>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>7.</td>
+          <td>
+            <section style="display: flex; gap: 10px; padding-left: 10px">
+              <label for=""
+                >Sejak kapan pengalaman yang tidak menyenangkan dirasakan</label
+              >
+
+              <div>
+                <input
+                  type="radio"
+                  name="pengalaman-tidak-menyenangkan-dirasakan"
+                  id=""
+                  value="SD"
+                />
+                <label for="">SD</label>
+                <input
+                  type="radio"
+                  name="pengalaman-tidak-menyenangkan-dirasakan"
+                  id=""
+                  value="SMP"
+                />
+                <label for="">SMP</label>
+                <input
+                  type="radio"
+                  name="pengalaman-tidak-menyenangkan-dirasakan"
+                  id=""
+                  value="SMA"
+                />
+                <label for="">SMA</label>
+                <input
+                  type="radio"
+                  name="pengalaman-tidak-menyenangkan-dirasakan"
+                  id=""
+                  value="S1"
+                />
+                <label for="">S1</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="pengalaman-tidak-menyenangkan-dirasakan"
+                  id=""
+                  value="Setelah bekerja"
+                />
+                <label for="">Setelah bekerja</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="pengalaman-tidak-menyenangkan-dirasakan"
+                  id=""
+                  value="Setelah berkeluarga"
+                />
+                <label for="">Setelah berkeluarga</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr>
+          <td>8.</td>
+          <td>
+            <div style="display: flex">
+              <label style="padding-left: 10px" for=""
+                >Perasaan apa yang timbul saat ini:
+              </label>
+              <div style="padding-left: 10px">
+                <input
+                  type="radio"
+                  name="perasaan-timbul-saat-ini"
+                  id=""
+                  value="Tidak masalah"
+                />
+                <label for="">Tidak masalah</label>
+              </div>
+              <div style="padding-left: 10px">
+                <input
+                  type="radio"
+                  name="perasaan-timbul-saat-ini"
+                  id=""
+                  value="Kecewa"
+                />
+                <label for="">Kecewa</label>
+              </div>
+              <div style="padding-left: 10px">
+                <input
+                  type="radio"
+                  name="perasaan-timbul-saat-ini"
+                  id=""
+                  value="Stress berat"
+                />
+                <label for="">Stress berat</label>
+              </div>
+              <div style="padding-left: 10px">
+                <input
+                  type="radio"
+                  name="perasaan-timbul-saat-ini"
+                  id=""
+                  value="Menarik diri"
+                />
+                <label for="">Menarik diri</label>
+              </div>
+              <div style="padding-left: 10px">
+                <input
+                  type="radio"
+                  name="perasaan-timbul-saat-ini"
+                  id=""
+                  value="Marah"
+                />
+                <label for="">Marah</label>
+              </div>
+              <div style="padding-left: 10px">
+                <input
+                  type="radio"
+                  name="perasaan-timbul-saat-ini"
+                  id=""
+                  value="Depresi"
+                />
+                <label for="">Depresi</label>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>9.</td>
+          <td>
+            <div style="display: flex">
+              <label style="padding-left: 10px" for=""
+                >Tindakan pencegahan yang dilakukan:
+              </label>
+              <div style="padding-left: 10px">
+                <input
+                  type="radio"
+                  name="pencegahan-yang-dilakukan"
+                  id=""
+                  value="Tidak dilakukan"
+                />
+                <label for="">Tidak dilakukan</label>
+              </div>
+              <div style="padding-left: 10px">
+                <input
+                  type="radio"
+                  name="pencegahan-yang-dilakukan"
+                  id=""
+                  value="Dunia malam"
+                />
+                <label for="">Dunia malam</label>
+              </div>
+              <div style="padding-left: 10px">
+                <input
+                  type="radio"
+                  name="pencegahan-yang-dilakukan"
+                  id=""
+                  value="Penggunaan NAPZA"
+                />
+                <label for="">Penggunaan NAPZA</label>
+              </div>
+              <div style="padding-left: 10px">
+                <input
+                  type="radio"
+                  name="pencegahan-yang-dilakukan"
+                  id=""
+                  value="Mendekatkan diri pada Tuhan"
+                />
+                <label for="">Mendekatkan diri pada Tuhan</label>
+              </div>
+              <div style="padding-left: 10px">
+                <input
+                  type="radio"
+                  name="pencegahan-yang-dilakukan"
+                  id=""
+                  value="Konsultasi dokter ahli"
+                />
+                <label for="">Konsultasi dokter ahli</label>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>10.</td>
+          <td>
+            <section style="display: flex; gap: 10px; padding-left: 10px">
+              <label for=""> Riwayat pemakaian NAPZA: </label>
+              <div>
+                <input
+                  type="radio"
+                  name="riwayat-pemakaian-napza"
+                  id=""
+                  value="Tidak"
+                />
+                <label for="">Tidak</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="riwayat-pemakaian-napza"
+                  id=""
+                  value="Iya"
+                />
+                <label for="">Iya</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>11.</td>
+          <td style="display: flex; align-items: center">
+            <label style="padding-left: 10px" for=""
+              >Jenis zat yang digunakan:</label
+            >
+            <table>
+              <tbody>
+                <tr>
+                  <td style="padding-left: 10px">
+                    <div>
+                      <input
+                        type="radio"
+                        name="jenis-zat-digunakan"
+                        id=""
+                        value="Narkotika, sebutkan"
+                      />
+                      <label for="">Narkotika, sebutkan</label>
+                      <input
+                        type="text"
+                        name="jenis-narkotika"
+                        placeholder="..."
+                        id=""
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="padding-left: 10px">
+                      <input
+                        type="radio"
+                        name="jenis-zat-digunakan"
+                        id=""
+                        value="Psikotropika"
+                      />
+                      <label for="">Psikotropika, sebutkan</label>
+                      <input
+                        type="text"
+                        name="jenis-narkotika"
+                        placeholder="..."
+                        id=""
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="padding-left: 10px">
+                      <input
+                        type="radio"
+                        name="jenis-zat-digunakan"
+                        id=""
+                        value="Zat adiktif lainnya, sebutkan"
+                      />
+                      <label for="">Zat adiktif lainnya, sebutkan</label>
+                      <input
+                        type="text"
+                        name="jenis-narkotika"
+                        placeholder="..."
+                        id=""
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+
+        <tr>
+          <td>12.</td>
+          <td>
+            <div style="display: flex">
+              <label style="padding-left: 10px" for=""
+                >Cara penggunaan obat:
+              </label>
+              <div style="padding-left: 10px">
+                <input
+                  type="radio"
+                  name="cara-penggunaan-obat"
+                  id=""
+                  value="Dihisap/dihirup"
+                />
+                <label for="">Dihisap/dihirup</label>
+              </div>
+              <div style="padding-left: 10px">
+                <input
+                  type="radio"
+                  name="cara-penggunaan-obat"
+                  id=""
+                  value="Disuntik"
+                />
+                <label for="">Disuntik</label>
+              </div>
+              <div style="padding-left: 10px">
+                <input
+                  type="radio"
+                  name="cara-penggunaan-obat"
+                  id=""
+                  value="Diminum"
+                />
+                <label for="">Diminum</label>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>13.</td>
+          <td>
+            <div style="display: flex">
+              <label style="padding-left: 10px" for=""
+                >Sejak kapan penggunaan NAPZA:
+              </label>
+              <div style="padding-left: 10px">
+                <input
+                  type="text"
+                  name="lama-penggunaan-napza"
+                  id=""
+                  placeholder="..."
+                />
+                <label for="">minggu/bulan </label>
+              </div>
+              <div style="padding-left: 10px">
+                <input
+                  type="radio"
+                  name="sejak-penggunaan-napza"
+                  id=""
+                  value="SD"
+                />
+                <label for="">SD</label>
+                <input
+                  type="radio"
+                  name="sejak-penggunaan-napza"
+                  id=""
+                  value="SMP"
+                />
+                <label for="">SMP</label>
+                <input
+                  type="radio"
+                  name="sejak-penggunaan-napza"
+                  id=""
+                  value="SMA"
+                />
+                <label for="">SMA</label>
+                <input
+                  type="radio"
+                  name="sejak-penggunaan-napza"
+                  id=""
+                  value="S1"
+                />
+                <label for="">S1</label>
+              </div>
+              <div style="padding-left: 10px">
+                <input
+                  type="radio"
+                  name="sejak-penggunaan-napza"
+                  id=""
+                  value="Bekerja"
+                />
+                <label for="">Bekerja</label>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>14.</td>
+          <td>
+            <label style="padding-left: 10px" for=""
+              >Reaksi yang timbul konsumsi NAPZA</label
+            >
+            <table>
+              <tbody>
+                <tr>
+                  <td style="padding-left: 10px">
+                    <label for="">a. Kecanduan</label>
+                  </td>
+                  <td>
+                    <div>
+                      <input
+                        type="radio"
+                        name="kecanduan"
+                        id=""
+                        value="Tidak"
+                      />
+                      <label for="">Tidak</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="padding-left: 10px">
+                      <input type="radio" name="kecanduan" id="" value="Ya" />
+                      <label for="">Ya, jelaskan reaksi yang timbul</label>
+                      <input
+                        type="text"
+                        name="reaksi-kecanduan"
+                        placeholder="..."
+                        size="50"
+                        id=""
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding-left: 10px">
+                    <label for="">b. Intoksikasi (keracunan)</label>
+                  </td>
+                  <td>
+                    <div>
+                      <input
+                        type="radio"
+                        name="keracunan"
+                        id=""
+                        value="Tidak"
+                      />
+                      <label for="">Tidak</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="padding-left: 10px">
+                      <input type="radio" name="keracunan" id="" value="Ya" />
+                      <label for="">Ya, jelaskan reaksi yang timbul</label>
+                      <input
+                        type="text"
+                        name="reaksi-keracunan"
+                        placeholder="..."
+                        size="50"
+                        id=""
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding-left: 10px">
+                    <label for="">c. Overdosis (OD)</label>
+                  </td>
+                  <td>
+                    <div>
+                      <input
+                        type="radio"
+                        name="overdosis"
+                        id=""
+                        value="Tidak"
+                      />
+                      <label for="">Tidak</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="padding-left: 10px">
+                      <input type="radio" name="overdosis" id="" value="Ya" />
+                      <label for="">Ya, jelaskan reaksi yang timbul</label>
+                      <input
+                        type="text"
+                        name="reaksi-overdosis"
+                        placeholder="..."
+                        size="50"
+                        id=""
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>15.</td>
+          <td>
+            <label style="padding-left: 10px" for=""
+              >Apakah pernah menjalani rehabilitasi</label
+            >
+            <table>
+              <tbody>
+                <tr>
+                  <td style="padding-left: 10px">
+                    <label for="">a. Rehabilitasi psikososial</label>
+                  </td>
+                  <td>
+                    <div>
+                      <input
+                        type="radio"
+                        name="psikososial"
+                        id=""
+                        value="Tidak"
+                      />
+                      <label for="">Tidak</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="padding-left: 10px">
+                      <input type="radio" name="psikososial" id="" value="Ya" />
+                      <label for="">Ya, di mana:</label>
+                      <input
+                        type="text"
+                        name="lokasi-psikososial"
+                        placeholder="..."
+                        size="50"
+                        id=""
+                      />
+                      <label for=""> Berapa lama:</label>
+                      <input
+                        type="text"
+                        name="durasi-psikososial"
+                        placeholder="..."
+                        size="50"
+                        id=""
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding-left: 10px">
+                    <label for="">b. Rehabilitasi kejiwaan</label>
+                  </td>
+                  <td>
+                    <div>
+                      <input type="radio" name="kejiwaan" id="" value="Tidak" />
+                      <label for="">Tidak</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="padding-left: 10px">
+                      <input type="radio" name="kejiwaan" id="" value="Ya" />
+                      <label for="">Ya, di mana:</label>
+                      <input
+                        type="text"
+                        name="lokasi-kejiwaan"
+                        placeholder="..."
+                        size="50"
+                        id=""
+                      />
+                      <label for=""> Berapa lama:</label>
+                      <input
+                        type="text"
+                        name="durasi-kejiwaan"
+                        placeholder="..."
+                        size="50"
+                        id=""
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table" cellpadding="0" border="0">
+      <tbody>
+        <tr>
+          <td>&nbsp;</td>
+
+          <td>
+            <div align="center"><strong>Nama yang mengkaji</strong></div>
+          </td>
+
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
+          <td bgcolor="#FFFFFF">
+            <input
+              name="17_pukul"
+              type="text"
+              id="17_pukul"
+              placeholder="00:00"
+              size="10"
+              myid="check_cara"
+            />
+          </td>
+
+          <td bgcolor="#FFFFFF">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td bgcolor="#FFFFFF">Nama</td>
+
+          <td bgcolor="#FFFFFF">
+            <input
+              name="17_nama3"
+              type="text"
+              id="17_nama3"
+              size="25"
+              myid="check_cara"
+            />
+            <br />
+            <select
+              type="select"
+              name="perawatnya"
+              id="perawatnya"
+              myid="check_cara"
+              iscombo="t"
+              onchange="get_ttd2();"
+            >
+              <option></option>
+            </select>
+            <br />
+            <font id="ttdnya2"></font>
+          </td>
+
+          <td bgcolor="#FFFFFF">&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
