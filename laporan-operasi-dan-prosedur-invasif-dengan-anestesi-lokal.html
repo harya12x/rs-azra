@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      LAPORAN OPERASI DAN PROSEDUR INVASIF DENGAN ANESTESI LOKAL RS. AZRA BOGOR
+    </title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+    .pre-anestesi {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .pre-anestesi th,
+    .pre-anestesi td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">
+      LAPORAN OPERASI DAN PROSEDUR INVASIF DENGAN ANESTESI LOKAL RS. AZRA BOGOR
+    </h1>
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td bgcolor="#DFE8F6">Nama Pasien</td>
+          <td bgcolor="#DFE8F6">
+            <input
+              name="nama_pasien2"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+            />
+          </td>
+          <td bgcolor="#DFE8F6">Jenis Kelamin</td>
+          <td bgcolor="#DFE8F6">
+            <input type="checkbox" />
+            <label for="l">L</label>
+            <input type="checkbox" />
+            <label for="l">P</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <input type="number" />
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan="2">Tanggal Lahir</td>
+          <td rowspan="2">
+            <input
+              name="tgl_lahira2"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td rowspan="2">Umur</td>
+          <td rowspan="2">
+            <input type="number" size="5" placeholder="..." />
+          </td>
+          <td>
+            <label for="poli"> Poli </label>
+          </td>
+          <td>
+            <input
+              name="poli2"
+              type="text"
+              id="poli"
+              placeholder="..."
+              myid="check_cara"
+              label="poli"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#DFE8F6">Kamar</td>
+          <td bgcolor="#DFE8F6">
+            <input type="text" placeholder="..." />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <td style="width: 15%">
+            <label for="">Nama Ahli Bedah :</label>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="nama-ahli-bedah"
+              id=""
+            />
+          </td>
+
+          <td rowspan="4" colspan="2" style="padding-left: 10px">
+            <label for="">Alergi :</label>
+
+            <div style="display: flex; padding-top: 5px; padding-bottom: 5px">
+              <label for="">1.</label
+              ><input type="text" style="flex: 1" name="alergi-1" id="" />
+            </div>
+            <div style="display: flex; padding-bottom: 5px">
+              <label for="">2.</label
+              ><input type="text" style="flex: 1" name="alergi-2" id="" />
+            </div>
+            <div style="display: flex">
+              <label for="">3.</label
+              ><input type="text" style="flex: 1" name="alergi-3" id="" />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">Nama asisten :</label>
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nama-asisten" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">Nama instrumentator :</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              name="nama-instrumentator"
+              id=""
+              style="width: 100%"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">Nama sirkuler :</label>
+          </td>
+          <td>
+            <input type="text" style="width: 100%" name="nama-sirkuler" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">Diagnosa pre operatif :</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              style="width: 100%"
+              name="diagnosa-pre-operatif"
+              id=""
+            />
+          </td>
+          <td style="padding-left: 10px" rowspan="2" colspan="2">
+            <label for="">Sifat tindakan</label>
+            <div>
+              <label for="">1. Cito</label>
+              <input type="radio" name="sifat-tindakan" value="Cito" id="" />
+              <label for="">2. Efektif</label>
+              <input type="radio" name="sifat-tindakan" value="Efektif" id="" />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">Diagnosa post operatif :</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              style="width: 100%"
+              name="diagnosa-post-operatif"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="2" colspan="2">
+            <label for="">Obat yang digunakan :</label>
+
+            <div style="display: flex; padding-top: 5px; padding-bottom: 5px">
+              <label style="margin-right: 5px" for="">1.</label>
+              <input
+                type="text"
+                style="flex: 1"
+                name="obat-yang-digunakan-1"
+                id=""
+              />
+            </div>
+            <div style="display: flex; padding-bottom: 5px">
+              <label style="margin-right: 5px" for="">2.</label>
+              <input
+                type="text"
+                style="flex: 1"
+                name="obat-yang-digunakan-2"
+                id=""
+              />
+            </div>
+            <div style="display: flex">
+              <label style="margin-right: 5px" for="">3.</label>
+              <input
+                type="text"
+                style="flex: 1"
+                name="obat-yang-digunakan-3"
+                id=""
+              />
+            </div>
+          </td>
+          <td style="padding-left: 10px" colspan="2">
+            <label for="">Pemeriksaan spesimen:</label>
+            <div>
+              <label for="">1. Ya</label>
+              <input
+                type="radio"
+                name="pemeriksaan-spesimen"
+                value="Ya"
+                id=""
+              />
+              <label for="">2. Tidak</label>
+              <input
+                type="radio"
+                name="pemeriksaan-spesimen"
+                value="Tidak"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 10px" colspan="2">
+            <div style="display: flex; gap: 10px">
+              <label for="">Jenis:</label>
+              <div>
+                <div>
+                  <input type="radio" name="jenis" value="Bersih" id="" />
+                  <label for="">Bersih</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    name="jenis"
+                    value="Bersih Terkontaminasi"
+                    id=""
+                  />
+                  <label for="">Bersih Terkontaminasi</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    name="jenis"
+                    value="Terkontaminasi"
+                    id=""
+                  />
+                  <label for="">Terkontaminasi</label>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <label for="">Tanda - tanda vital</label>
+            <div style="display: flex; gap: 10px">
+              <div>
+                <label for="">TD:</label>
+                <input type="text" name="TD" placeholder="..." id="" />
+                <label for="">mmHg</label>
+              </div>
+              <div>
+                <label for="">N:</label>
+                <input type="text" name="N" placeholder="..." id="" />
+                <label for="">x/mnt</label>
+              </div>
+              <div>
+                <label for="">RR:</label>
+                <input type="text" name="RR" placeholder="..." id="" />
+                <label for="">x/mnt</label>
+              </div>
+              <div>
+                <label for="">Suhu:</label>
+                <input type="text" name="Suhu" placeholder="..." id="" />
+                <label for="">&deg;C</label>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <div style="display: flex; gap: 10px">
+              <label for="">Nama tindakan/operasi:</label>
+              <input type="text" name="nama-operasi" style="flex: 1" id="" />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 20%; text-align: center">
+            <label for="">Tanggal operasi:</label>
+
+            <input
+              style="width: 100%"
+              type="date"
+              name="tanggal-operasi"
+              id=""
+            />
+          </td>
+          <td style="text-align: center">
+            <label style="text-align: center" for=""
+              >Jam operasi dimulai:</label
+            >
+            <input
+              style="width: 100%"
+              type="time"
+              name="jam-operasi-dimulai"
+              id=""
+            />
+          </td>
+          <td style="text-align: center">
+            <label for="">Jam operasi selesai:</label>
+            <input
+              style="width: 100%"
+              type="time"
+              name="jam-operasi-selesai"
+              id=""
+            />
+          </td>
+          <td style="text-align: center">
+            <label for="">Lama operasi berlangsung:</label>
+            <input
+              style="width: 100%"
+              type="text"
+              name="lama-operasi-berlangsung"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <div style="display: flex; gap: 10px">
+              <label for="">Posisi pasien:</label>
+              <div>
+                <input
+                  type="radio"
+                  name="posisi-pasien"
+                  value="Terlentang"
+                  id=""
+                />
+                <label for="">Terlentang</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="posisi-pasien"
+                  value="Tengkurap"
+                  id=""
+                />
+                <label for="">Tengkurap</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="posisi-pasien"
+                  value="Litotomi"
+                  id=""
+                />
+                <label for="">Litotomi</label>
+              </div>
+              <div>
+                <input type="radio" name="posisi-pasien" value="Miring" id="" />
+                <label for="">Miring</label>
+              </div>
+              <div>
+                <input type="radio" name="posisi-pasien" value="Duduk" id="" />
+                <label for="">Duduk</label>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table table-bordered pre-anestesi" width="100%">
+      <tbody>
+        <tr>
+          <td>Jam</td>
+          <td colspan="6">&nbsp;</td>
+          <td colspan="6">&nbsp;</td>
+          <td colspan="6">&nbsp;</td>
+          <td colspan="6">&nbsp;</td>
+          <td rowspan="13">
+            <label for="">Pemeriksaan Pre Anestesi:</label>
+            <div>
+              <div>
+                <label for="kesadaran">Kesadaran:</label>
+                <input type="text" name="kesadaran" placeholder="..." id="" />
+              </div>
+              <div>
+                <label for="TD">TD:</label>
+                <input type="text" name="TD" placeholder="..." id="" />
+                <label for="">mmHg</label>
+              </div>
+              <div>
+                <label for="HR">HR:</label>
+                <input type="text" name="HR" placeholder="..." id="" />
+                <label for="">x/mnt</label>
+              </div>
+              <div>
+                <label for="Suhu">Suhu:</label>
+                <input type="text" name="Suhu" placeholder="..." id="" />
+                <label for="">&deg;C</label>
+              </div>
+              <div>
+                <label for="RR">RR:</label>
+                <input type="text" name="RR" placeholder="..." id="" />
+                <label for="">x/mnt</label>
+              </div>
+              <div>
+                <label for="BB">BB:</label>
+                <input type="text" name="BB" placeholder="..." id="" />
+                <label for="">kg</label>
+              </div>
+              <div>
+                <label for="jam-anestesi">Anestesi dimulai jam:</label>
+                <input
+                  type="text"
+                  name="jam-anestesi"
+                  placeholder="..."
+                  id=""
+                />
+              </div>
+              <div>
+                <label for="">Permulaan atau akhir anestesi: X</label>
+              </div>
+              <div>
+                <label for="">Permulaan atau akhir operasi: <-0-></label>
+              </div>
+              <div>
+                <label for="">Tekanan darah: X</label>
+              </div>
+              <div>
+                <label for="">Denyut nadi: 0</label>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>220</td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+        </tr>
+        <tr>
+          <td>200</td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+        </tr>
+        <tr>
+          <td>180</td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+        </tr>
+        <tr>
+          <td>160</td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+        </tr>
+        <tr>
+          <td>140</td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+        </tr>
+        <tr>
+          <td>120</td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+        </tr>
+        <tr>
+          <td>100</td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+        </tr>
+        <tr>
+          <td>80</td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+        </tr>
+        <tr>
+          <td>60</td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+        </tr>
+        <tr>
+          <td>40</td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+        </tr>
+        <tr>
+          <td>20</td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+          <td><input size="1" type="text" name="" id="" /></td>
+        </tr>
+      </tbody>
+    </table>
+    <hr />
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <td>
+            <div style="display: flex; gap: 10px">
+              <label for="">Nama tindakan/operasi:</label>
+              <input type="text" name="nama-operasi" style="flex: 1" id="" />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <label for="">Pemeriksaan post operasi:</label>
+            <div style="display: flex; gap: 10px">
+              <div>
+                <label for="">TD:</label>
+                <input type="text" name="TD" placeholder="..." id="" />
+                <label for="">mmHg</label>
+              </div>
+              <div>
+                <label for="">HR:</label>
+                <input type="text" name="HR" placeholder="..." id="" />
+                <label for="">x/mnt</label>
+              </div>
+              <div>
+                <label for="">RR:</label>
+                <input type="text" name="RR" placeholder="..." id="" />
+                <label for="">x/mnt</label>
+              </div>
+              <div>
+                <label for="">Suhu:</label>
+                <input type="text" name="suhu" placeholder="..." id="" />
+                <label for="">&deg;C</label>
+              </div>
+              <div>
+                <label for="">Kesadaran:</label>
+                <input type="text" name="kesadaran" placeholder="..." id="" />
+              </div>
+              <div>
+                <label for="">Pendarahan:</label>
+                <input type="text" name="pendarahan" placeholder="..." id="" />
+                <label for="">ml</label>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="4">
+            <div style="display: flex; gap: 10px">
+              <div>
+                <label for="">Hb:</label>
+                <input type="text" name="Hb" placeholder="..." id="" />
+                <label for="">mg/dl</label>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <hr />
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td>
+            <label for="">Pemeriksaan PA:</label>
+            <input type="radio" name="pemeriksaan-PA" value="Ya" id="" />
+            <label for="">Ya,</label>
+            <input type="date" name="tanggal-pemeriksaan-PA" id="" />
+            <input type="radio" name="pemeriksaan-PA" value="Tidak" id="" />
+            <label for="">Tidak</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">Jenis jaringan yang dikirim:</label>
+            <input
+              type="text"
+              placeholder="..."
+              name="jenis-jaringan-yang-dikirim"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">Label pasien sudah ditempel:</label>
+            <input
+              type="text"
+              placeholder="..."
+              name="label-pasien-sudah-ditempel"
+              id=""
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr />
+    <table>
+      <tbody>
+        <tr>
+          <label for="">Laporan Operasi:</label>
+          <textarea
+            name="laporan-operasi"
+            style="width: 100%; padding: 5px"
+            rows="10"
+            id=""
+          ></textarea>
+        </tr>
+      </tbody>
+    </table>
+    <hr />
+    <table width="100%" class="table">
+      <tbody>
+        <tr>
+          <td>
+            <label for="">Komplikasi/Temuan:</label>
+            <br />
+            <textarea
+              style="width: 100%"
+              name="komplikasi-temuan"
+              id=""
+              rows="5"
+            ></textarea>
+          </td>
+          <td>
+            <label for="">PERAWAT:</label>
+            <br />
+            <textarea
+              style="width: 100%"
+              name="perawat"
+              id=""
+              rows="5"
+            ></textarea>
+          </td>
+          <td>
+            <label for="">OPERATOR:</label>
+            <br />
+            <textarea
+              style="width: 100%"
+              name="operator"
+              id=""
+              rows="5"
+            ></textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
