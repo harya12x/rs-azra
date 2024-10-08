@@ -1,0 +1,2304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PENGKAJIAN PASIEN POPULASI KHUSUS RS. AZRA BOGOR</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+  </style>
+  <body>
+    <h1 class="title">PENGKAJIAN PASIEN POPULASI KHUSUS RS. AZRA BOGOR</h1>
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td bgcolor="#DFE8F6">Nama Pasien</td>
+          <td bgcolor="#DFE8F6">
+            <input
+              name="nama_pasien2"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+            />
+          </td>
+          <td bgcolor="#DFE8F6">Jenis Kelamin</td>
+          <td bgcolor="#DFE8F6">
+            <input type="checkbox" />
+            <label for="l">L</label>
+            <input type="checkbox" />
+            <label for="l">P</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <input type="number" />
+          </td>
+        </tr>
+
+        <tr>
+          <td>Tanggal Lahir</td>
+          <td>
+            <input
+              name="tgl_lahira2"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td>Umur</td>
+          <td>
+            <input type="number" size="5" placeholder="..." />
+          </td>
+          <td>
+            <label for="kelas"> Kelas </label>
+          </td>
+          <td>
+            <input
+              name="kelas2"
+              type="text"
+              id="kelas"
+              placeholder="..."
+              myid="check_cara"
+              label="kelas"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>TANGGAL/JAM PENGKAJIAN:</td>
+          <td colspan="3">
+            <input type="datetime-local" name="tanggal-jam-pengkajian" id="" />
+          </td>
+          <td bgcolor="#DFE8F6">Kamar</td>
+          <td bgcolor="#DFE8F6">
+            <input type="text" placeholder="..." />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td style="width: 5%"><b>A.</b></td>
+          <td colspan="2"><b>GERIATRI</b></td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 15%">
+            <label for="">Gangguan penglihatan:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="gangguan-penglihatan"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+              <input
+                type="radio"
+                name="gangguan-penglihatan"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya,</label>
+              <input
+                type="text"
+                name="detail-gangguan-penglihatan"
+                placeholder="......"
+                style="flex: 1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for="">Gangguan pendengaran:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="gangguan-pendengaran"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+              <input
+                type="radio"
+                name="gangguan-pendengaran"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya,</label>
+              <input
+                type="text"
+                name="detail-gangguan-pendengaran"
+                placeholder="......"
+                style="flex: 1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for="">Gangguan daya ingat:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="gangguan-daya-ingat"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+              <input type="radio" name="gangguan-daya-ingat" value="Ya" id="" />
+              <label for="">Ya,</label>
+              <input
+                type="text"
+                name="detail-gangguan-daya-ingat"
+                placeholder="......"
+                style="flex: 1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for="">Gangguan berkemih:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="gangguan-berkemih"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+              <input type="radio" name="gangguan-berkemih" value="Ya" id="" />
+              <label for="">Ya :</label>
+              <input
+                type="radio"
+                name="penyakit-gangguan-berkemih"
+                value="Inkontinensia"
+                id=""
+              />
+              <label for="">Inkontinensia</label>
+              <input
+                type="radio"
+                name="penyakit-gangguan-berkemih"
+                value="Disuria"
+                id=""
+              />
+              <label for="">Disuria</label>
+              <input
+                type="radio"
+                name="penyakit-gangguan-berkemih"
+                value="Poliuria"
+                id=""
+              />
+              <label for="">Poliuria</label>
+              <input
+                type="radio"
+                name="penyakit-gangguan-berkemih"
+                value="Oliguria"
+                id=""
+              />
+              <label for="">Oliguria</label>
+              <input
+                type="radio"
+                name="penyakit-gangguan-berkemih"
+                value="Anuria"
+                id=""
+              />
+              <label for="">Anuria</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for="">Gangguan bicara:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input type="radio" name="gangguan-bicara" value="Tidak" id="" />
+              <label for="">Tidak</label>
+              <input type="radio" name="gangguan-bicara" value="Ya" id="" />
+              <label for="">Ya,</label>
+              <input
+                type="text"
+                name="detail-gangguan-bicara"
+                placeholder="......"
+                style="flex: 1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for="">Menyediakan alat bantu:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="menyediakan-alat-bantu"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+              <input
+                type="radio"
+                name="menyediakan-alat-bantu"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya,</label>
+              <input
+                type="text"
+                name="detail-menyediakan-alat-bantu"
+                placeholder="......"
+                style="flex: 1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for="">Tingkat pendidikan:</label>
+          </td>
+          <td>
+            <input type="radio" name="tingkat-pendidikan" value="SD" id="" />
+            <label for="">SD</label>
+            <input type="radio" name="tingkat-pendidikan" value="SMP" id="" />
+            <label for="">SMP</label>
+            <input type="radio" name="tingkat-pendidikan" value="SMA" id="" />
+            <label for="">SMA</label>
+            <input
+              type="radio"
+              name="tingkat-pendidikan"
+              value="Perguruan tinggi"
+              id=""
+            />
+            <label for="">Perguruan tinggi</label>
+            <input
+              type="radio"
+              name="tingkat-pendidikan"
+              value="Tidak tamat sekolah"
+              id=""
+            />
+            <label for="">Tidak tamat sekolah</label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td style="width: 5%"><b>B.</b></td>
+          <td colspan="2"><b>PENYAKIT MENULAR</b></td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 20%">
+            <label for="">Pasien mengetahui penyakit saat ini:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="pasien-mengetahui-penyakit-menular"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya</label>
+              <input
+                type="radio"
+                name="pasien-mengetahui-penyakit-menular"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for=""
+              >Sumber informasi tentang penyakit diperoleh dari:</label
+            >
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="sumber-perolehan-informasi-penyakit-menular"
+                value="Dokter"
+                id=""
+              />
+              <label for="">Dokter</label>
+              <input
+                type="radio"
+                name="sumber-perolehan-informasi-penyakit-menular"
+                value="Perawat"
+                id=""
+              />
+              <label for="">Perawat</label>
+              <input
+                type="radio"
+                name="sumber-perolehan-informasi-penyakit-menular"
+                value="Keluarga"
+                id=""
+              />
+              <label for="">Keluarga</label>
+              <input
+                type="radio"
+                name="sumber-perolehan-informasi-penyakit-menular"
+                value="Lainnya"
+                id=""
+              />
+              <label for="">Lainnya,</label>
+              <input
+                type="text"
+                name="detail-sumber-perolehan-informasi-penyakit-menular"
+                placeholder="......"
+                style="flex: 1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for="">Menerima informasi jangka waktu pengobatan:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="menerima-informasi-jangka-waktu-pengobatan-menular"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+              <input
+                type="radio"
+                name="menerima-informasi-jangka-waktu-pengobatan-menular"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya, di</label>
+              <input
+                type="text"
+                name="detail-menerima-informasi-jangka-waktu-pengobatan-menular"
+                placeholder="......"
+                style="flex: 1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for="">Cara penularan:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input type="radio" name="cara-penularan" value="Airbone" id="" />
+              <label for="">Airbone</label>
+              <input type="radio" name="cara-penularan" value="Droplet" id="" />
+              <label for="">Droplet</label>
+              <input
+                type="radio"
+                name="cara-penularan"
+                value="Kontak langsung"
+                id=""
+              />
+              <label for="">Kontak langsung</label>
+              <input
+                type="radio"
+                name="cara-penularan"
+                value="Cairan tubuh"
+                id=""
+              />
+              <label for="">Cairan tubuh</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for="">Penyakit penyerta:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="penyakit-penyerta-menular"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+              <input
+                type="radio"
+                name="penyakit-penyerta-menular"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya,</label>
+              <input
+                type="text"
+                name="detail-penyakit-penyerta-menular"
+                placeholder="......"
+                style="flex: 1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td style="width: 5%"><b>B.</b></td>
+          <td colspan="2"><b>PENYAKIT MENULAR</b></td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 20%">
+            <label for="">Pasien mengetahui penyakit saat ini:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="pasien-mengetahui-penyakit-menular"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya</label>
+              <input
+                type="radio"
+                name="pasien-mengetahui-penyakit-menular"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for=""
+              >Sumber informasi tentang penyakit diperoleh dari:</label
+            >
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="sumber-perolehan-informasi-penyakit"
+                value="Dokter"
+                id=""
+              />
+              <label for="">Dokter</label>
+              <input
+                type="radio"
+                name="sumber-perolehan-informasi-penyakit"
+                value="Perawat"
+                id=""
+              />
+              <label for="">Perawat</label>
+              <input
+                type="radio"
+                name="sumber-perolehan-informasi-penyakit"
+                value="Keluarga"
+                id=""
+              />
+              <label for="">Keluarga</label>
+              <input
+                type="radio"
+                name="sumber-perolehan-informasi-penyakit"
+                value="Lainnya"
+                id=""
+              />
+              <label for="">Lainnya,</label>
+              <input
+                type="text"
+                name="detail-sumber-perolehan-informasi-penyakit"
+                placeholder="......"
+                style="flex: 1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for="">Menerima informasi jangka waktu pengobatan:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="menerima-informasi-jangka-waktu-pengobatan"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+              <input
+                type="radio"
+                name="menerima-informasi-jangka-waktu-pengobatan"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya, di</label>
+              <input
+                type="text"
+                name="detail-menerima-informasi-jangka-waktu-pengobatan"
+                placeholder="......"
+                style="flex: 1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for="">Cara penularan:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input type="radio" name="cara-penularan" value="Airbone" id="" />
+              <label for="">Airbone</label>
+              <input type="radio" name="cara-penularan" value="Droplet" id="" />
+              <label for="">Droplet</label>
+              <input
+                type="radio"
+                name="cara-penularan"
+                value="Kontak langsung"
+                id=""
+              />
+              <label for="">Kontak langsung</label>
+              <input
+                type="radio"
+                name="cara-penularan"
+                value="Cairan tubuh"
+                id=""
+              />
+              <label for="">Cairan tubuh</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for="">Penyakit penyerta:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="penyakit-penyerta"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+              <input type="radio" name="penyakit-penyerta" value="Ya" id="" />
+              <label for="">Ya,</label>
+              <input
+                type="text"
+                name="detail-gangguan-bicara"
+                placeholder="......"
+                style="flex: 1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td style="width: 5%"><b>C.</b></td>
+          <td colspan="2"><b>PENYAKIT PENURUNAN DAYA TAHAN TUBUH</b></td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 20%">
+            <label for="">Pasien mengetahui penyakit saat ini:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="pasien-mengetahui-penyakit-penurunan-daya-tubuh"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya</label>
+              <input
+                type="radio"
+                name="pasien-mengetahui-penyakit-penurunan-daya-tubuh"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for=""
+              >Sumber informasi tentang penyakit diperoleh dari:</label
+            >
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="sumber-perolehan-informasi-penyakit-penurunan-daya-tahan-tubuh"
+                value="Dokter"
+                id=""
+              />
+              <label for="">Dokter</label>
+              <input
+                type="radio"
+                name="sumber-perolehan-informasi-penyakit-penurunan-daya-tahan-tubuh"
+                value="Perawat"
+                id=""
+              />
+              <label for="">Perawat</label>
+              <input
+                type="radio"
+                name="sumber-perolehan-informasi-penyakit-penurunan-daya-tahan-tubuh"
+                value="Keluarga"
+                id=""
+              />
+              <label for="">Keluarga</label>
+              <input
+                type="radio"
+                name="sumber-perolehan-informasi-penyakit-penurunan-daya-tahan-tubuh"
+                value="Lainnya"
+                id=""
+              />
+              <label for="">Lainnya,</label>
+              <input
+                type="text"
+                name="detail-sumber-perolehan-informasi-penyakit-penurunan-daya-tahan-tubuh"
+                placeholder="......"
+                style="flex: 1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for="">Menerima informasi jangka waktu pengobatan:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="menerima-informasi-jangka-waktu-pengobatan-penurunan-daya-tahan-tubuh"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+              <input
+                type="radio"
+                name="menerima-informasi-jangka-waktu-pengobatan-penurunan-daya-tahan-tubuh"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya, di</label>
+              <input
+                type="text"
+                name="detail-menerima-informasi-jangka-waktu-pengobatan-penurunan-daya-tahan-tubuh"
+                placeholder="......"
+                style="flex: 1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for="">Penyakit penyerta:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="penyakit-penyerta-penurunan-daya-tahan-tubuh"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+              <input
+                type="radio"
+                name="penyakit-penyerta-penurunan-daya-tahan-tubuh"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya,</label>
+              <input
+                type="text"
+                name="detail-penyakit-penyerta-penurunan-daya-tahan-tubuh"
+                placeholder="......"
+                style="flex: 1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td style="width: 5%"><b>D.</b></td>
+          <td colspan="2"><b>PENYAKIT TERMINAL</b></td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 20%">
+            <label for="">Keadaan umum pasien:</label>
+          </td>
+          <td>
+            <div style="gap: 5px">
+              <input
+                type="radio"
+                name="keadaan-umum-pasien"
+                value="Tenang"
+                id=""
+              />
+              <label for="">Tenang</label>
+              <input
+                type="radio"
+                name="keadaan-umum-pasien"
+                value="Gelisah"
+                id=""
+              />
+              <label for="">Gelisah</label>
+              <input
+                type="radio"
+                name="keadaan-umum-pasien"
+                value="Berontak"
+                id=""
+              />
+              <label for="">Berontak</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for="">Pasien menggunakan alat bantu:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="menggunakan-alat-bantu"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+              <input
+                type="radio"
+                name="menggunakan-alat-bantu"
+                value="Gigi palsu"
+                id=""
+              />
+              <label for="">Gigi palsu</label>
+              <input
+                type="radio"
+                name="menggunakan-alat-bantu"
+                value="Softlens"
+                id=""
+              />
+              <label for="">Softlens</label>
+              <input
+                type="radio"
+                name="menggunakan-alat-bantu"
+                value="Tongkat"
+                id=""
+              />
+              <label for="">Tongkat</label>
+              <input
+                type="radio"
+                name="menggunakan-alat-bantu"
+                value="Alat bantu dengar"
+                id=""
+              />
+              <label for="">Alat bantu dengar</label>
+              <input
+                type="radio"
+                name="menggunakan-alat-bantu"
+                value="Lainnya"
+                id=""
+              />
+              <label for="">Lainnya,</label>
+              <input
+                type="text"
+                name="detail-menggunakan-alat-bantu"
+                placeholder="......"
+                style="flex: 1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for="">Apakah ada:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input type="radio" name="apakah-ada" value="Mual" id="" />
+              <label for="">Mual</label>
+              <input type="radio" name="apakah-ada" value="Muntah" id="" />
+              <label for="">Muntah</label>
+              <input type="radio" name="apakah-ada" value="Kembung" id="" />
+              <label for="">Kembung</label>
+              <input
+                type="radio"
+                name="apakah-ada"
+                value="Kulit dingin"
+                id=""
+              />
+              <label for="">Kulit dingin</label>
+              <input
+                type="radio"
+                name="apakah-ada"
+                value="Tekanan darah rendah"
+                id=""
+              />
+              <label for="">Tekanan darah rendah</label>
+              <input
+                type="radio"
+                name="apakah-ada"
+                value="Kesulitan pernafasan"
+                id=""
+              />
+              <label for="">Kesulitan pernafasan</label>
+              <input type="radio" name="apakah-ada" value="Obstipasi" id="" />
+              <label for="">Obstipasi</label>
+              <input type="radio" name="apakah-ada" value="Nadi lemah" id="" />
+              <label for="">Nadi lemah</label>
+              <input type="radio" name="apakah-ada" value="Lainnya" id="" />
+              <label for="">Lainnya</label>
+              <input
+                type="text"
+                name="detail-apakah-ada"
+                placeholder="......"
+                style="flex: 1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td>
+            <label for="">Tindakan yang dilakukan:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="text"
+                name="tindakan-yang-dilakukan"
+                placeholder="......"
+                style="flex: 1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 20%">
+            <label for="">Apakah ada perasaan:</label>
+          </td>
+          <td>
+            <div style="gap: 5px">
+              <input type="radio" name="ada-perasaan" value="Putus asa" id="" />
+              <label for="">Putus asa</label>
+              <input
+                type="radio"
+                name="ada-perasaan"
+                value="Penderitaan"
+                id=""
+              />
+              <label for="">Penderitaan</label>
+              <input
+                type="radio"
+                name="ada-perasaan"
+                value="Bersalah/pengampunan"
+                id=""
+              />
+              <label for="">Bersalah/pengampunan</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 20%">
+            <label for=""
+              >Keluarga menghendaki pelayanan pendampingan petugas
+              kerohanian:</label
+            >
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="pendampingan-petugas-kerohanian"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya</label>
+              <input
+                type="radio"
+                name="pendampingan-petugas-kerohanian"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 20%">
+            <label for=""
+              >Anggota keluarga yang diperlukan bila perawatan di rumah:</label
+            >
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="keluarga-untuk-perawatan-di-rumah"
+                value="Ada"
+                id=""
+              />
+              <label for="">Ada</label>
+              <input
+                type="radio"
+                name="keluarga-untuk-perawatan-di-rumah"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 20%">
+            <label for="">Dukungan keluarga dan pemberi pelayanan lain:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input type="radio" name="dukungan-keluarga" value="Ya" id="" />
+              <label for="">Ya</label>
+              <input
+                type="radio"
+                name="dukungan-keluarga"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 20%">
+            <label for="">Bila ya:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="checkbox"
+                name="jenis-dukungan-keluarga"
+                value="Kebersihan diri"
+                id=""
+              />
+              <label for="">Kebersihan diri</label>
+              <input
+                type="checkbox"
+                name="jenis-dukungan-keluarga"
+                value="Mengontrol rasa sakit"
+                id=""
+              />
+              <label for="">Mengontrol rasa sakit</label>
+              <input
+                type="checkbox"
+                name="jenis-dukungan-keluarga"
+                value="Membebaskan jalan nafas"
+                id=""
+              />
+              <label for="">Membebaskan jalan nafas</label>
+              <input
+                type="checkbox"
+                name="jenis-dukungan-keluarga"
+                value="Mobilisasi"
+                id=""
+              />
+              <label for="">Mobilisasi</label>
+              <input
+                type="checkbox"
+                name="jenis-dukungan-keluarga"
+                value="Nutrisi"
+                id=""
+              />
+              <label for="">Nutrisi</label>
+              <input
+                type="checkbox"
+                name="jenis-dukungan-keluarga"
+                value="Lainnya"
+                id=""
+              />
+              <label for="">Lainnya,</label>
+              <input
+                type="text"
+                style="flex: 1"
+                name="jenis-dukungan-keluarga-lainnya"
+                placeholder="......"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 20%">
+            <label for="">Kebutuhan alternatif atau pelayanan lain:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="kebutuhan-alternatif"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+              <input
+                type="radio"
+                name="kebutuhan-alternatif"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya,</label>
+
+              <input
+                type="text"
+                style="flex: 1"
+                name="detail-kebutuhan-alternatif"
+                placeholder="......"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 20%">
+            <label for="">Faktor risiko bagi yang ditinggalkan:</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="text"
+                name="faktor-risiko-ditinggalkan"
+                style="flex: 1"
+                placeholder="......."
+                id=""
+              />
+              <label for="">Cara mengatasi</label>
+
+              <input
+                type="text"
+                style="flex: 1"
+                name="mengatasi-faktor-risiko-ditinggalkan"
+                placeholder="......"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 20%">
+            <label for=""
+              >Keluarga menghendaki penghentian tindakan medis:</label
+            >
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="penghentian-tindakan-medis"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+              <input
+                type="radio"
+                name="penghentian-tindakan-medis"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya, alasan</label>
+
+              <input
+                type="text"
+                style="flex: 1"
+                name="alasan-penghentian-tindakan-medis"
+                placeholder="......"
+              />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr />
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td style="width: 5%"><b>E.</b></td>
+          <td colspan="2"><b>KESEHATAN JIWA</b></td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 20%">
+            <label for="">Pernah mengalami gangguan jiwa sebelumnya:</label>
+          </td>
+          <td>
+            <div style="gap: 5px">
+              <input
+                type="radio"
+                name="mengalami-gangguan-jiwa-sebelumnya"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya</label>
+              <input
+                type="radio"
+                name="mengalami-gangguan-jiwa-sebelumnya"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 40%">
+            <label for="">Riwayat pengobatan sebelumnya:</label>
+          </td>
+          <td>
+            <div style="gap: 5px">
+              <input
+                type="radio"
+                name="riwayat-pengobatan-sebelumnya"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya</label>
+              <input
+                type="radio"
+                name="riwayat-pengobatan-sebelumnya"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 40%">
+            <label for=""
+              >Adakah anggota keluarga yang mengalami gangguan jiwa
+              serupa:</label
+            >
+          </td>
+          <td>
+            <div style="gap: 5px">
+              <input
+                type="radio"
+                name="anggota-keluarga-lain-mengalami-gangguan-jiwa"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya</label>
+              <input
+                type="radio"
+                name="anggota-keluarga-lain-mengalami-gangguan-jiwa"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 40%">
+            <label for="">Apakah pasien bisa merawat diri sendiri:</label>
+          </td>
+          <td>
+            <div style="gap: 5px">
+              <input
+                type="radio"
+                name="pasien-bisa-merawat-diri-sendiri"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya</label>
+              <input
+                type="radio"
+                name="pasien-bisa-merawat-diri-sendiri"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 40%">
+            <label for="">Apakah pasien dapat berkomunikasi dengan baik:</label>
+          </td>
+          <td>
+            <div style="gap: 5px">
+              <input
+                type="radio"
+                name="pasien-dapat-berkomunikasi-baik"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya</label>
+              <input
+                type="radio"
+                name="pasien-dapat-berkomunikasi-baik"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 40%">
+            <label for=""
+              >Apakah bicara pasien dapat dipahami oleh perawat/dokter:</label
+            >
+          </td>
+          <td>
+            <div style="gap: 5px">
+              <input
+                type="radio"
+                name="bicara-pasien-dipahami-dokter"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya</label>
+              <input
+                type="radio"
+                name="bicara-pasien-dipahami-dokter"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 40%">
+            <label for="">Apakah risiko mencederai diri sendiri:</label>
+          </td>
+          <td>
+            <div style="gap: 5px">
+              <input
+                type="radio"
+                name="risiko-mencederai-diri-sendiri"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya</label>
+              <input
+                type="radio"
+                name="risiko-mencederai-diri-sendiri"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 40%">
+            <label for="">Apakah risiko mencederai orang lain:</label>
+          </td>
+          <td>
+            <div style="gap: 5px">
+              <input
+                type="radio"
+                name="risiko-mencederai-orang-lain"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya</label>
+              <input
+                type="radio"
+                name="risiko-mencederai-orang-lain"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 40%">
+            <label for=""
+              >Apakah pasien dapat memehami instruksi dokter atau perawat dengan
+              baik:</label
+            >
+          </td>
+          <td>
+            <div style="gap: 5px">
+              <input
+                type="radio"
+                name="pasien-dapat-memahami-instruksi"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya</label>
+              <input
+                type="radio"
+                name="pasien-dapat-memahami-instruksi"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr />
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td style="width: 5%"><b>F.</b></td>
+          <td colspan="2">
+            <b>PASIEN YANG MENGALAMI KEKERASAN/PENGANIAYAAN</b>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 20%">
+            <label for="">Apakah anda mengalami kekerasan/penganiayaan:</label>
+          </td>
+          <td>
+            <div style="gap: 5px">
+              <input
+                type="radio"
+                name="mengalami-kekerasaan"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya</label>
+              <input
+                type="radio"
+                name="mengalami-kekerasaan"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 40%">
+            <label for="">Jenis kekerasan/penganiayaan apa yang dialami:</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              style="width: 100%"
+              name="jenis-kekerasan-yang-dialami"
+              placeholder="......"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 40%">
+            <label for=""
+              >Sudah berapa lama mengalami tindak kekerasan/penganiayaan:</label
+            >
+          </td>
+          <td>
+            <input
+              type="text"
+              style="width: 100%"
+              name="berapa-lama-mengalami-kekerasan"
+              placeholder="......"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 40%">
+            <label for="">Siapa yang melakukan kekerasan/penganiayaan:</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              style="width: 100%"
+              name="pelaku-kekerasan"
+              placeholder="......"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td style="width: 40%">
+            <label for="">Apakah korban memerlukan pendampingan:</label>
+          </td>
+          <td>
+            <div style="gap: 5px">
+              <input
+                type="radio"
+                name="korban-memerlukan-pendampingan"
+                value="Ya"
+                id=""
+              />
+              <label for="">Ya</label>
+              <input
+                type="radio"
+                name="korban-memerlukan-pendampingan"
+                value="Tidak"
+                id=""
+              />
+              <label for="">Tidak</label>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr />
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td style="width: 5%"><b>G.</b></td>
+          <td colspan="2">
+            <b>PASIEN RESTRAIN</b>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td colspan="2">
+            <b>Pengkajian Fisik Dan Mental</b>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td colspan="2">
+            <label for="">Kesadaran:</label>
+            <label for="">GCS:</label>
+            <label for="">E</label>
+            <input
+              type="text"
+              name="gcs-e"
+              size="15"
+              placeholder="......"
+              id=""
+            />
+            <label for="">V</label>
+            <input
+              type="text"
+              name="gcs-v"
+              size="15"
+              placeholder="......"
+              id=""
+            />
+            <label for="">M</label>
+            <input
+              type="text"
+              name="gcs-m"
+              size="15"
+              placeholder="......"
+              id=""
+            />
+            <label for="" style="padding-left: 10px">Refleks Cahaya:</label>
+            <label for="">Ka</label>
+            <input
+              type="text"
+              name="refleks-cahaya-ka"
+              placeholder="......"
+              size="15"
+              id=""
+            />
+            <label for="">Ki</label>
+            <input
+              type="text"
+              name="refleks-cahaya-ki"
+              placeholder="......"
+              size="15"
+              id=""
+            />
+            <label for="">Ukuran pupil: Ka</label>
+            <input
+              type="text"
+              name="ukuran-pupil-ka"
+              placeholder="......"
+              size="15"
+              id=""
+            />
+            <label for="">mm/Ki</label>
+            <input
+              type="text"
+              name="ukuran-pupil-ki"
+              placeholder="......"
+              size="15"
+              id=""
+            />
+            <label for="">mm</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td colspan="2">
+            <label for="">Tanda vital:</label>
+            <input
+              type="text"
+              name="tekanan-darah"
+              size="15"
+              placeholder="......"
+              id=""
+            />
+            <label for="">mmHg,</label>
+            <label for="">Suhu</label>
+            <input
+              type="text"
+              name="suhu"
+              size="15"
+              placeholder="......"
+              id=""
+            />
+            <label for="">&deg;C,</label>
+            <label for="">Pernafasan</label>
+            <input
+              type="text"
+              name="pernafasan"
+              size="15"
+              placeholder="......"
+              id=""
+            />
+            <label for="">x/mnt,</label>
+            <label for="">Nadi</label>
+            <input
+              type="text"
+              name="nadi"
+              placeholder="......"
+              size="15"
+              id=""
+            />
+            <label for="">x/mnt</label>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 5%"></td>
+          <td colspan="2">
+            <label for="">Hasil observasi:</label>
+            <input
+              type="radio"
+              name="hasil-observasi"
+              value="Pasien gelisah atau delirium dan berontak"
+              size="15"
+              id=""
+            />
+            <label for="">Pasien gelisah atau delirium dan berontak,</label>
+            <input
+              type="radio"
+              name="hasil-observasi"
+              size="15"
+              value="Pasien tidak kooperatif"
+              id=""
+            />
+            <label for="">Pasien tidak kooperatif</label>
+
+            <input
+              type="radio"
+              name="hasil-observasi"
+              size="15"
+              value="Ketidakmampuan dalam mengikuti perintah untuk tidak meninggalkan tempat tidur"
+              id=""
+            />
+            <label for=""
+              >Ketidakmampuan dalam mengikuti perintah untuk tidak meninggalkan
+              tempat tidur</label
+            >
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 5%"></td>
+          <td colspan="2">
+            <label for=""><b>Pertimbangan Klinis:</b></label>
+            <input
+              type="radio"
+              name="pertimbangan-klinis"
+              value="Membahayakan diri sendiri"
+              size="15"
+              id=""
+            />
+            <label for="">Membahayakan diri sendiri</label>
+            <input
+              type="radio"
+              name="pertimbangan-klinis"
+              size="15"
+              value="Membahayakan orang lain"
+              id=""
+            />
+            <label for="">Membahayakan orang lain</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td colspan="2">
+            <label for=""><b>Penilaian Instruksi Dokter:</b></label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td colspan="2">
+            <input
+              type="radio"
+              name="penilaian-instruksi-dokter"
+              value="Restrain non farmakologi"
+              size="15"
+              id=""
+            />
+            <label for="">Restrain non farmakologi</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td colspan="2">
+            <input
+              type="radio"
+              name="penilaian-instruksi-dokter"
+              size="15"
+              value="Restrain tempat tidur atau side rail"
+              id=""
+            />
+            <label for="">Restrain tempat tidur atau side rail</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td colspan="2">
+            <input
+              type="radio"
+              name="penilaian-instruksi-dokter"
+              size="15"
+              value="Restrain pergelangan tangan kanan/kiri"
+              id=""
+            />
+            <label for="">Restrain pergelangan tangan kanan/kiri</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td colspan="2">
+            <input
+              type="radio"
+              name="penilaian-instruksi-dokter"
+              size="15"
+              value="Restrain badan"
+              id=""
+            />
+            <label for="">Restrain badan</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td colspan="2">
+            <input
+              type="radio"
+              name="penilaian-instruksi-dokter"
+              size="15"
+              value="Lainnya"
+              id=""
+            />
+            <label for="">Lainnya,</label>
+            <input
+              style="width: 20%"
+              type="text"
+              name="restrain-lainnya"
+              placeholder="......"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="restrain-farmakologi"
+              size="15"
+              value="Restrain farmakologi"
+              id=""
+            />
+            <label for="">Restrain farmakologi</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td colspan="2">
+            <label for="">1. </label>
+            <input
+              style="width: 25%"
+              type="text"
+              name="detail-restrain-farmakologi-1"
+              placeholder="......"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td colspan="2">
+            <label for="">2. </label>
+            <input
+              style="width: 25%"
+              type="text"
+              name="detail-restrain-farmakologi-2"
+              placeholder="......"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td colspan="2">
+            <label for="">3. </label>
+            <input
+              style="width: 25%"
+              type="text"
+              name="detail-restrain-farmakologi-3"
+              placeholder="......"
+              id=""
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 5%"></td>
+          <td colspan="2"><b>Pendidikan Pada Keluarga</b></td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td colspan="2">
+            <input
+              type="radio"
+              name="pendidikan-pada-keluarga"
+              value="Menjelaskan alasan penggunaan restrain sebagai prosedur
+              emergensi"
+              id=""
+            />
+            <label for=""
+              >Menjelaskan alasan penggunaan <i>restrain</i> sebagai prosedur
+              <i>emergensi</i></label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td colspan="2">
+            <input
+              type="radio"
+              name="pendidikan-pada-keluarga"
+              value="Menjelaskan kriteria hasil observasi atau ketentuan penghentian restrain"
+              id=""
+            />
+            <label for=""
+              >Menjelaskan kriteria hasil observasi atau ketentuan penghentian
+              <i>restrain</i>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%"></td>
+          <td colspan="2">
+            <input
+              type="radio"
+              name="pendidikan-pada-keluarga"
+              value="Memberikan informasi atau edukasi kepada pasien/keluarga"
+              id=""
+            />
+            <label for=""
+              >Memberikan informasi atau edukasi kepada pasien/keluarga
+            </label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table-bordered">
+      <tbody>
+        <tr>
+          <td colspan="4" style="text-align: center">
+            <label><b>MASALAH KEPERAWATAN / KEBIDANAN</b></label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%">&nbsp;</td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-1"
+              value="Bersihan jalan nafas tidak efektif"
+              id=""
+            />
+            <label for="">Bersihan jalan nafas tidak efektif </label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-2"
+              value="Kerusakan pertukaran gas"
+              id=""
+            />
+            <label for="">Kerusakan pertukaran gas </label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-3"
+              value="Pola nafas tidak efektif"
+              id=""
+            />
+            <label for="">Pola nafas tidak efektif </label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%">&nbsp;</td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-4"
+              value="Penurunan curah jantung"
+              id=""
+            />
+            <label for="">Penurunan curah jantung </label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-5"
+              value="Intoleransi aktivitas"
+              id=""
+            />
+            <label for="">Intoleransi aktivitas </label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-6"
+              value="Risiko cedera"
+              id=""
+            />
+            <label for="">Risiko cedera </label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%">&nbsp;</td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-7"
+              value="Kelebihan/kekurangan vol. cairan"
+              id=""
+            />
+            <label for="">Kelebihan/kekurangan vol. cairan </label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-8"
+              value="Perubahan perfusi jantung paru/jaringan otak/ perifer"
+              id=""
+            />
+            <label for=""
+              >Perubahan perfusi jantung paru/jaringan otak/ perifer
+            </label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-9"
+              value="Perubahan nutrisi kurang/lebih dari kebutuhan"
+              id=""
+            />
+            <label for="">Perubahan nutrisi kurang/lebih dari kebutuhan </label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%">&nbsp;</td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-10"
+              value="Konstipasi"
+              id=""
+            />
+            <label for="">Konstipasi </label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-11"
+              value="Risiko infeksi/sepsis"
+              id=""
+            />
+            <label for="">Risiko infeksi/sepsis </label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-12"
+              value="Keseimbangan cairan & elektrolit"
+              id=""
+            />
+            <label for="">Keseimbangan cairan & elektrolit </label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%">&nbsp;</td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-13"
+              value="Gangguan integritas kulit/jaringan"
+              id=""
+            />
+            <label for="">Gangguan integritas kulit/jaringan </label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-14"
+              value="Hipertemia/hipotermia"
+              id=""
+            />
+            <label for="">Hipertemia/hipotermia </label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-15"
+              value="Inkontinensia/retensio urin"
+              id=""
+            />
+            <label for="">Inkontinensia/retensio urin </label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%">&nbsp;</td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-16"
+              value="Konflik peran"
+              id=""
+            />
+            <label for="">Konflik peran </label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-17"
+              value="Gangguan komunikasi verbal"
+              id=""
+            />
+            <label for="">Gangguan komunikasi verbal </label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-18"
+              value="Kurang perawatan diri"
+              id=""
+            />
+            <label for="">Kurang perawatan diri </label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%">&nbsp;</td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-19"
+              value="Cemas"
+              id=""
+            />
+            <label for="">Cemas </label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-20"
+              value="Gangguan pola tidur"
+              id=""
+            />
+            <label for="">Gangguan pola tidur </label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-21"
+              value="Harga diri rendah"
+              id=""
+            />
+            <label for="">Harga diri rendah </label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%">&nbsp;</td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-22"
+              value="Tumbuh kembang"
+              id=""
+            />
+            <label for="">Tumbuh kembang </label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-23"
+              value="Koping individu tidak efektif"
+              id=""
+            />
+            <label for="">Koping individu tidak efektif </label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-24"
+              value="Menyusui kurang efektif"
+              id=""
+            />
+            <label for="">Menyusui kurang efektif </label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%">&nbsp;</td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-25"
+              value="Pendarahan"
+              id=""
+            />
+            <label for="">Pendarahan </label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-26"
+              value="Potensial komplikasi syok anafilaktik"
+              id=""
+            />
+            <label for="">Potensial komplikasi syok anafilaktik </label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-24"
+              value="Risiko jatuh"
+              id=""
+            />
+            <label for="">Risiko jatuh </label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%">&nbsp;</td>
+          <td colspan="3">
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-28"
+              value="Diagnosa kebidanan"
+              id=""
+            />
+            <label for="">Diagnosa kebidanan :</label>
+            <input
+              type="text"
+              name="detail-diagnosa-kebidanan"
+              style="width: 50%"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 5%">&nbsp;</td>
+          <td colspan="3">
+            <input
+              type="checkbox"
+              name="masalah-keperawatan-kebidanan-28"
+              value="Lain-lain"
+              id=""
+            />
+            <label for="">Lain-lain :</label>
+            <input
+              type="text"
+              name="detail-lain-lain"
+              style="width: 55%"
+              id=""
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table" cellpadding="0" border="0">
+      <tbody>
+        <tr>
+          <td>&nbsp;</td>
+
+          <td>
+            <div align="center"><strong>Perawat</strong></div>
+          </td>
+
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
+          <td bgcolor="#FFFFFF">
+            <input
+              name="17_pukul"
+              type="text"
+              id="17_pukul"
+              placeholder="00:00"
+              size="10"
+              myid="check_cara"
+            />
+          </td>
+
+          <td bgcolor="#FFFFFF">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td bgcolor="#FFFFFF">Nama</td>
+
+          <td bgcolor="#FFFFFF">
+            <input
+              name="17_nama3"
+              type="text"
+              id="17_nama3"
+              size="25"
+              myid="check_cara"
+            />
+            <br />
+            <select
+              type="select"
+              name="perawatnya"
+              id="perawatnya"
+              myid="check_cara"
+              iscombo="t"
+              onchange="get_ttd2();"
+            >
+              <option></option>
+            </select>
+            <br />
+            <font id="ttdnya2"></font>
+          </td>
+
+          <td bgcolor="#FFFFFF">&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
