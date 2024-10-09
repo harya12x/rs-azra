@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PENGKAJIAN LANJUTAN RISIKO JATUH PASIEN GERIATRI</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">PENGKAJIAN LANJUTAN RISIKO JATUH PASIEN GERIATRI</h1>
+
+    <table class="table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td bgcolor="#DFE8F6">Nama:</td>
+          <td bgcolor="#DFE8F6">
+            <input
+              name="nama_pasien"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+            />
+          </td>
+          <td bgcolor="#DFE8F6">Jenis Kelamin</td>
+          <td bgcolor="#DFE8F6">
+            <input
+              type="radio"
+              name="jenis-kelamin"
+              id="laki-laki"
+              myid="check_cara"
+              value="L"
+              label="jenis kelamin"
+            />
+            <label for="l">L</label>
+            <input
+              type="radio"
+              name="jenis-kelamin"
+              id="perempuan"
+              myid="check_cara"
+              value="P"
+              label="jenis kelamin"
+            />
+            <label for="l">P</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <input
+              type="text"
+              myid="check_cara"
+              name="no_rm"
+              id="no_rm"
+              label="nomor rekam medis"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan="2" bgcolor="">Tanggal Lahir</td>
+          <td rowspan="2" bgcolor="">
+            <input
+              name="tgl_lahir"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td rowspan="2">Umur</td>
+          <td rowspan="2">
+            <input
+              type="number"
+              size="5"
+              name="umur"
+              id="umur"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <label for="kelas"> Kelas </label>
+          </td>
+          <td>
+            <input
+              name="kelas"
+              type="text"
+              id="kelas"
+              placeholder="..."
+              myid="check_cara"
+              label="kelas"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#DFE8F6">Kamar</td>
+          <td bgcolor="#DFE8F6">
+            <input
+              type="text"
+              name="kamar"
+              id="kamar"
+              myid="check_cara"
+              placeholder="..."
+              aria-label="kamar"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table table-bordered" width="100%">
+      <thead>
+        <tr>
+          <th><b>No</b></th>
+          <th><b>Parameter</b></th>
+          <th><b>Skrining</b></th>
+          <th><b>Jawaban</b></th>
+          <th><b>Keterangan Nilai</b></th>
+          <th colspan="6"><b>Skor</b></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="2">1</td>
+          <td rowspan="2">Riwayat jatuh</td>
+          <td>Apakah pasien datang ke rumah sakit karena jatuh?</td>
+          <td>Ya / Tidak</td>
+          <td rowspan="2" style="width: 10%">Salah satu jawaban ya = 6</td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="riwayat-jatuh-a-1"
+              value="6"
+              id="riwayat-jatuh-a-1"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="riwayat-jatuh-a-1"
+              value="0"
+              id="riwayat-jatuh-a-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="riwayat-jatuh-a-2"
+              value="6"
+              id="riwayat-jatuh-a-2"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="riwayat-jatuh-a-2"
+              value="0"
+              id="riwayat-jatuh-a-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="riwayat-jatuh-a-3"
+              value="6"
+              id="riwayat-jatuh-a-3"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="riwayat-jatuh-a-3"
+              value="0"
+              id="riwayat-jatuh-a-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="riwayat-jatuh-a-4"
+              value="6"
+              id="riwayat-jatuh-a-4"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="riwayat-jatuh-a-4"
+              value="0"
+              id="riwayat-jatuh-a-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="riwayat-jatuh-a-5"
+              value="6"
+              id="riwayat-jatuh-a-5"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="riwayat-jatuh-a-5"
+              value="0"
+              id="riwayat-jatuh-a-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="riwayat-jatuh-a-6"
+              value="6"
+              id="riwayat-jatuh-a-6"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="riwayat-jatuh-a-6"
+              value="0"
+              id="riwayat-jatuh-a-6"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Jika tidak, apakah pasien mengalami jatuh dalam 2 bulan terakhir ini
+          </td>
+          <td>Ya / Tidak</td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="riwayat-jatuh-b-1"
+              value="6"
+              id="riwayat-jatuh-b-1"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="riwayat-jatuh-b-1"
+              value="0"
+              id="riwayat-jatuh-b-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="riwayat-jatuh-b-2"
+              value="6"
+              id="riwayat-jatuh-b-2"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="riwayat-jatuh-b-2"
+              value="0"
+              id="riwayat-jatuh-b-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="riwayat-jatuh-b-3"
+              value="6"
+              id="riwayat-jatuh-b-3"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="riwayat-jatuh-b-3"
+              value="0"
+              id="riwayat-jatuh-b-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="riwayat-jatuh-b-4"
+              value="6"
+              id="riwayat-jatuh-b-4"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="riwayat-jatuh-b-4"
+              value="0"
+              id="riwayat-jatuh-b-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="riwayat-jatuh-b-5"
+              value="6"
+              id="riwayat-jatuh-b-5"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="riwayat-jatuh-b-5"
+              value="0"
+              id="riwayat-jatuh-b-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="riwayat-jatuh-b-6"
+              value="6"
+              id="riwayat-jatuh-b-6"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="riwayat-jatuh-b-6"
+              value="0"
+              id="riwayat-jatuh-b-6"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="3">2</td>
+          <td rowspan="3">Status mental</td>
+          <td>
+            Apakah pasien delirium? (tidak dapat membuat keputusan, pola
+            <br />
+            pikir tidak teroganisir, gangguan daya ingat)
+          </td>
+          <td>Ya / Tidak</td>
+          <td rowspan="3">Salah satu jawaban ya = 14</td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="status-mental-a-1"
+              value="14"
+              id="status-mental-a-1"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="status-mental-a-1"
+              value="0"
+              id="status-mental-a-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="status-mental-a-2"
+              value="14"
+              id="status-mental-a-2"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="status-mental-a-2"
+              value="0"
+              id="status-mental-a-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="status-mental-a-3"
+              value="14"
+              id="status-mental-a-3"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="status-mental-a-3"
+              value="0"
+              id="status-mental-a-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="status-mental-a-4"
+              value="14"
+              id="status-mental-a-4"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="status-mental-a-4"
+              value="0"
+              id="status-mental-a-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="status-mental-a-5"
+              value="14"
+              id="status-mental-a-5"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="status-mental-a-5"
+              value="0"
+              id="status-mental-a-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="status-mental-a-6"
+              value="14"
+              id="status-mental-a-6"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="status-mental-a-6"
+              value="0"
+              id="status-mental-a-6"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Apakah pasien disorientasi? (salah menyebutkan waktu, tempat atau
+            orang)
+          </td>
+          <td>Ya / Tidak</td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="status-mental-b-1"
+              value="14"
+              id="status-mental-b-1"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="status-mental-b-1"
+              value="0"
+              id="status-mental-b-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="status-mental-b-2"
+              value="14"
+              id="status-mental-b-2"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="status-mental-b-2"
+              value="0"
+              id="status-mental-b-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="status-mental-b-3"
+              value="14"
+              id="status-mental-b-3"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="status-mental-b-3"
+              value="0"
+              id="status-mental-b-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="status-mental-b-4"
+              value="14"
+              id="status-mental-b-4"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="status-mental-b-4"
+              value="0"
+              id="status-mental-b-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="status-mental-b-5"
+              value="14"
+              id="status-mental-b-5"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="status-mental-b-5"
+              value="0"
+              id="status-mental-b-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="status-mental-b-6"
+              value="14"
+              id="status-mental-b-6"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="status-mental-b-6"
+              value="0"
+              id="status-mental-b-6"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Apakah pasien mengalami agitasi? (ketakukan, gelisah, dan cemas)
+          </td>
+          <td>Ya / Tidak</td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="status-mental-c-1"
+              value="6"
+              id="status-mental-c-1"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="status-mental-c-1"
+              value="0"
+              id="status-mental-c-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="status-mental-c-2"
+              value="6"
+              id="status-mental-c-2"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="status-mental-c-2"
+              value="0"
+              id="status-mental-c-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="status-mental-c-3"
+              value="6"
+              id="status-mental-c-3"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="status-mental-c-3"
+              value="0"
+              id="status-mental-c-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="status-mental-c-4"
+              value="6"
+              id="status-mental-c-4"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="status-mental-c-4"
+              value="0"
+              id="status-mental-c-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="status-mental-c-5"
+              value="6"
+              id="status-mental-c-5"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="status-mental-c-5"
+              value="0"
+              id="status-mental-c-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="status-mental-c-6"
+              value="6"
+              id="status-mental-c-6"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="status-mental-c-6"
+              value="0"
+              id="status-mental-c-6"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="3">3</td>
+          <td rowspan="3">Penglihatan</td>
+          <td>Apakah pasien memakai kacamata?</td>
+          <td>Ya / Tidak</td>
+          <td rowspan="3">Salah satu jawaban ya = 1</td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="penglihatan-a-1"
+              value="1"
+              id="penglihatan-a-1"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="penglihatan-a-1"
+              value="0"
+              id="penglihatan-a-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="penglihatan-a-2"
+              value="1"
+              id="penglihatan-a-2"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="penglihatan-a-2"
+              value="0"
+              id="penglihatan-a-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="penglihatan-a-3"
+              value="1"
+              id="penglihatan-a-3"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="penglihatan-a-3"
+              value="0"
+              id="penglihatan-a-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="penglihatan-a-4"
+              value="1"
+              id="penglihatan-a-4"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="penglihatan-a-4"
+              value="0"
+              id="penglihatan-a-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="penglihatan-a-5"
+              value="1"
+              id="penglihatan-a-5"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="penglihatan-a-5"
+              value="0"
+              id="penglihatan-a-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="penglihatan-a-6"
+              value="1"
+              id="penglihatan-a-6"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="penglihatan-a-6"
+              value="0"
+              id="penglihatan-a-6"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Apakah pasien mengeluh adanya penglihatan buram</td>
+          <td>Ya / Tidak</td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="penglihatan-b-1"
+              value="1"
+              id="penglihatan-b-1"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="penglihatan-b-1"
+              value="0"
+              id="penglihatan-b-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="penglihatan-b-2"
+              value="1"
+              id="penglihatan-b-2"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="penglihatan-b-2"
+              value="0"
+              id="penglihatan-b-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="penglihatan-b-3"
+              value="1"
+              id="penglihatan-b-3"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="penglihatan-b-3"
+              value="0"
+              id="penglihatan-b-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="penglihatan-b-4"
+              value="1"
+              id="penglihatan-b-4"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="penglihatan-b-4"
+              value="0"
+              id="penglihatan-b-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="penglihatan-b-5"
+              value="1"
+              id="penglihatan-b-5"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="penglihatan-b-5"
+              value="0"
+              id="penglihatan-b-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="penglihatan-b-6"
+              value="1"
+              id="penglihatan-b-6"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="penglihatan-b-6"
+              value="0"
+              id="penglihatan-b-6"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Apakah pasien mengalami glaukoma/katarak/degenerasi makula</td>
+          <td>Ya / Tidak</td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="penglihatan-c-1"
+              value="1"
+              id="penglihatan-c-1"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="penglihatan-c-1"
+              value="0"
+              id="penglihatan-c-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="penglihatan-c-2"
+              value="1"
+              id="penglihatan-c-2"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="penglihatan-c-2"
+              value="0"
+              id="penglihatan-c-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="penglihatan-c-3"
+              value="1"
+              id="penglihatan-c-3"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="penglihatan-c-3"
+              value="0"
+              id="penglihatan-c-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="penglihatan-c-4"
+              value="1"
+              id="penglihatan-c-4"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="penglihatan-c-4"
+              value="0"
+              id="penglihatan-c-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="penglihatan-c-5"
+              value="1"
+              id="penglihatan-c-5"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="penglihatan-c-5"
+              value="0"
+              id="penglihatan-c-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="penglihatan-c-6"
+              value="1"
+              id="penglihatan-c-6"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="penglihatan-c-6"
+              value="0"
+              id="penglihatan-c-6"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Kebiasan berkemih</td>
+          <td>
+            Apakah terdapat perubahan perilaku berkemih? (frekuensi,
+            <br />
+            urgensi, inkontinensia, nokturia)
+          </td>
+          <td>Ya / Tidak</td>
+          <td>Ya = 2</td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="kebiasaan-berkemih-1"
+              value="2"
+              id="kebiasaan-berkemih-1"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="kebiasaan-berkemih-1"
+              value="0"
+              id="kebiasaan-berkemih-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="kebiasaan-berkemih-2"
+              value="2"
+              id="kebiasaan-berkemih-2"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="kebiasaan-berkemih-2"
+              value="0"
+              id="kebiasaan-berkemih-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="kebiasaan-berkemih-3"
+              value="2"
+              id="kebiasaan-berkemih-3"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="kebiasaan-berkemih-3"
+              value="0"
+              id="kebiasaan-berkemih-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="kebiasaan-berkemih-4"
+              value="2"
+              id="kebiasaan-berkemih-4"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="kebiasaan-berkemih-4"
+              value="0"
+              id="kebiasaan-berkemih-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="kebiasaan-berkemih-5"
+              value="2"
+              id="kebiasaan-berkemih-5"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="kebiasaan-berkemih-5"
+              value="0"
+              id="kebiasaan-berkemih-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            Ya
+            <input
+              type="radio"
+              name="kebiasaan-berkemih-6"
+              value="2"
+              id="kebiasaan-berkemih-6"
+              myid="check_cara"
+            />
+            <br />
+            Tidak
+            <input
+              type="radio"
+              name="kebiasaan-berkemih-6"
+              value="0"
+              id="kebiasaan-berkemih-6"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="4">5</td>
+          <td rowspan="4">
+            Transfer (dari tempat tidur ke <br />
+            kursi dan kembali lagi ke tempat tidur)
+          </td>
+          <td>Mandiri (boleh memakai alat bantu jalan)</td>
+          <td>0</td>
+          <td rowspan="8">
+            Jumlah nilai transfer dan mobilitas. <br />
+            jika nilai total 0 - 3 maka skor = 0. <br />
+            Jika nilai total 4 - 6, maka skor = 7
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-1"
+              id="transfer-1"
+              value="0"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-2"
+              id="transfer-2"
+              value="0"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-3"
+              id="transfer-3"
+              value="0"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-4"
+              id="transfer-4"
+              value="0"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-5"
+              id="transfer-5"
+              value="0"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-6"
+              id="transfer-6"
+              value="0"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Memerlukan sedikit bantuan (1 orang) / dalam pengawasan</td>
+          <td>1</td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-1"
+              id="transfer-1"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-2"
+              id="transfer-2"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-3"
+              id="transfer-3"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-4"
+              id="transfer-4"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-5"
+              id="transfer-5"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-6"
+              id="transfer-6"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Memerlukan bantuan yang nyata (2 orang)</td>
+          <td>2</td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-1"
+              id="transfer-1"
+              value="2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-2"
+              id="transfer-2"
+              value="2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-3"
+              id="transfer-3"
+              value="2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-4"
+              id="transfer-4"
+              value="2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-5"
+              id="transfer-5"
+              value="2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-6"
+              id="transfer-6"
+              value="2"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Tidak dapat duduk dengan seimbang, perlu bantuan total</td>
+          <td>3</td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-1"
+              id="transfer-1"
+              value="3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-2"
+              id="transfer-2"
+              value="3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-3"
+              id="transfer-3"
+              value="3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-4"
+              id="transfer-4"
+              value="3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-5"
+              id="transfer-5"
+              value="3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="transfer-6"
+              id="transfer-6"
+              value="3"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="4">6</td>
+          <td rowspan="4">Mobilitas</td>
+          <td>Mandiri (Boleh menggunakan alat bantu jalan)</td>
+          <td>0</td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-1"
+              id="mobilitas-1"
+              value="0"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-2"
+              id="mobilitas-2"
+              value="0"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-3"
+              id="mobilitas-3"
+              value="0"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-4"
+              id="mobilitas-4"
+              value="0"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-5"
+              id="mobilitas-5"
+              value="0"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-6"
+              id="mobilitas-6"
+              value="0"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Berjalan dengan bantuan 1 orang (verbal / fisik)</td>
+          <td>1</td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-1"
+              id="mobilitas-1"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-2"
+              id="mobilitas-2"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-3"
+              id="mobilitas-3"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-4"
+              id="mobilitas-4"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-5"
+              id="mobilitas-5"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-6"
+              id="mobilitas-6"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Menggunakan kursi roda</td>
+          <td>2</td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-1"
+              id="mobilitas-1"
+              value="2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-2"
+              id="mobilitas-2"
+              value="2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-3"
+              id="mobilitas-3"
+              value="2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-4"
+              id="mobilitas-4"
+              value="2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-5"
+              id="mobilitas-5"
+              value="2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-6"
+              id="mobilitas-6"
+              value="2"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Imobilisasi</td>
+          <td>3</td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-1"
+              id="mobilitas-1"
+              value="3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-2"
+              id="mobilitas-2"
+              value="3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-3"
+              id="mobilitas-3"
+              value="3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-4"
+              id="mobilitas-4"
+              value="3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-5"
+              id="mobilitas-5"
+              value="3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="mobilitas-6"
+              id="mobilitas-6"
+              value="3"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: end" colspan="5"><b>TOTAL SKOR</b></td>
+          <td>
+            <input
+              type="text"
+              name="jumlah-skor-1"
+              id="jumlah-skor-1"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="jumlah-skor-2"
+              id="jumlah-skor-2"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="jumlah-skor-3"
+              id="jumlah-skor-3"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="jumlah-skor-4"
+              id="jumlah-skor-4"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="jumlah-skor-5"
+              id="jumlah-skor-5"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="jumlah-skor-6"
+              id="jumlah-skor-6"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          var radioButtons = document.querySelectorAll('input[type="radio"]');
+          radioButtons.forEach(function (radio) {
+            radio.addEventListener("click", function () {
+              if (this.classList.contains("clicked")) {
+                this.checked = false;
+                this.classList.remove("clicked");
+              } else {
+                var name = this.getAttribute("name");
+                var radios = document.querySelectorAll(
+                  'input[type="radio"][name="' + name + '"]'
+                );
+                radios.forEach(function (r) {
+                  r.classList.remove("clicked");
+                });
+                this.classList.add("clicked");
+              }
+              console.log(this.name + " diubah menjadi: " + this.checked);
+            });
+          });
+  
+          var textInputs = document.querySelectorAll('input[type="text"]');
+          textInputs.forEach(function (input) {
+            input.addEventListener("change", function () {
+              console.log(this.name + " diubah menjadi: " + this.value);
+            });
+          });
+        });
+      </script>
+  </body>
+</html>
