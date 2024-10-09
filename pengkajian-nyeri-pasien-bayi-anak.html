@@ -52,7 +52,7 @@
           <td bgcolor="#DFE8F6">Nama Pasien</td>
           <td bgcolor="#DFE8F6">
             <input
-              name="nama_pasien2"
+              name="nama_pasien"
               type="text"
               id="nama_pasien"
               size="30"
@@ -63,16 +63,36 @@
           </td>
           <td bgcolor="#DFE8F6">Jenis Kelamin</td>
           <td bgcolor="#DFE8F6">
-            <input type="checkbox" />
+            <input
+              type="radio"
+              name="jenis-kelamin"
+              id="laki-laki"
+              myid="check_cara"
+              value="L"
+              label="jenis kelamin"
+            />
             <label for="l">L</label>
-            <input type="checkbox" />
+            <input
+              type="radio"
+              name="jenis-kelamin"
+              id="perempuan"
+              myid="check_cara"
+              value="P"
+              label="jenis kelamin"
+            />
             <label for="l">P</label>
           </td>
           <td bgcolor="#DFE8F6">
             <label for="">Nomor Rekam Medis</label>
           </td>
           <td bgcolor="#DFE8F6">
-            <input type="number" />
+            <input
+              type="text"
+              myid="check_cara"
+              name="no_rm"
+              id="no_rm"
+              label="nomor rekam medis"
+            />
           </td>
         </tr>
 
@@ -80,7 +100,7 @@
           <td bgcolor="">Tanggal Lahir</td>
           <td bgcolor="">
             <input
-              name="tgl_lahira2"
+              name="tgl_lahir"
               type="text"
               id="tgl_lahir"
               placeholder="dd/mm/yyyy"
@@ -91,14 +111,21 @@
 
           <td>Umur</td>
           <td>
-            <input type="number" size="5" placeholder="..." />
+            <input
+              type="number"
+              size="5"
+              name="umur"
+              id="umur"
+              myid="check_cara"
+              placeholder="..."
+            />
           </td>
           <td>
             <label for="kelas"> Kelas </label>
           </td>
           <td>
             <input
-              name="kelasa2"
+              name="kelas"
               type="text"
               id="kelas"
               placeholder="..."
@@ -110,17 +137,37 @@
         <tr>
           <td bgcolor="#DFE8F6">Tanggal</td>
           <td bgcolor="#DFE8F6">
-            <input type="date" />
+            <input
+              type="text"
+              name="tgl"
+              id="tgl"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+              label="tanggal"
+            />
           </td>
 
           <td bgcolor="#DFE8F6">Jam</td>
           <td bgcolor="#DFE8F6">
-            <input type="time" />
+            <input
+              type="text"
+              name="jam"
+              id="jam"
+              myid="check_cara"
+              label="tanggal"
+            />
           </td>
 
           <td bgcolor="#DFE8F6">Kamar</td>
           <td bgcolor="#DFE8F6">
-            <input type="text" placeholder="..." />
+            <input
+              type="text"
+              name="kamar"
+              id="kamar"
+              myid="check_cara"
+              placeholder="..."
+              aria-label="kamar"
+            />
           </td>
         </tr>
       </tbody>
@@ -131,23 +178,135 @@
         <tr>
           <th rowspan="2" colspan="2">KATEGORI</th>
           <th>TGL</th>
-          <th><input style="width: 100%" type="date" name="tgl-1" id="" /></th>
-          <th><input style="width: 100%" type="date" name="tgl-2" id="" /></th>
-          <th><input style="width: 100%" type="date" name="tgl-3" id="" /></th>
-          <th><input style="width: 100%" type="date" name="tgl-4" id="" /></th>
-          <th><input style="width: 100%" type="date" name="tgl-5" id="" /></th>
-          <th><input style="width: 100%" type="date" name="tgl-6" id="" /></th>
-          <th><input style="width: 100%" type="date" name="tgl-7" id="" /></th>
+          <th>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-pengkajian-1"
+              id="tgl-pengkajian-1"
+              myid="check_cara"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-pengkajian-2"
+              id="tgl-pengkajian-2"
+              myid="check_cara"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-pengkajian-3"
+              id="tgl-pengkajian-3"
+              myid="check_cara"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-pengkajian-4"
+              id="tgl-pengkajian-4"
+              myid="check_cara"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-pengkajian-5"
+              id="tgl-pengkajian-5"
+              myid="check_cara"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-pengkajian-6"
+              id="tgl-pengkajian-6"
+              myid="check_cara"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-pengkajian-7"
+              id="tgl-pengkajian-7"
+              myid="check_cara"
+            />
+          </th>
         </tr>
         <tr>
           <th>JAM</th>
-          <th><input style="width: 100%" type="time" name="jam-1" id="" /></th>
-          <th><input style="width: 100%" type="time" name="jam-2" id="" /></th>
-          <th><input style="width: 100%" type="time" name="jam-3" id="" /></th>
-          <th><input style="width: 100%" type="time" name="jam-4" id="" /></th>
-          <th><input style="width: 100%" type="time" name="jam-5" id="" /></th>
-          <th><input style="width: 100%" type="time" name="jam-6" id="" /></th>
-          <th><input style="width: 100%" type="time" name="jam-7" id="" /></th>
+          <th>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jam-pengkajian-1"
+              id="jam-pengkajian-1"
+              myid="check_cara"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jam-pengkajian-2"
+              id="jam-pengkajian-2"
+              myid="check_cara"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jam-pengkajian-3"
+              id="jam-pengkajian-3"
+              myid="check_cara"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jam-pengkajian-4"
+              id="jam-pengkajian-4"
+              myid="check_cara"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jam-pengkajian-5"
+              id="jam-pengkajian-5"
+              myid="check_cara"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jam-pengkajian-6"
+              id="jam-pengkajian-6"
+              myid="check_cara"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jam-pengkajian-7"
+              id="jam-pengkajian-7"
+              myid="check_cara"
+            />
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -160,8 +319,9 @@
               style="width: 100%"
               type="radio"
               name="wajah-1"
+              myid="check_cara"
               value="0"
-              id=""
+              id="wajah-1"
             />
           </td>
           <td>
@@ -169,8 +329,9 @@
               style="width: 100%"
               type="radio"
               name="wajah-2"
+              myid="check_cara"
               value="0"
-              id=""
+              id="wajah-2"
             />
           </td>
           <td>
@@ -178,7 +339,8 @@
               style="width: 100%"
               type="radio"
               name="wajah-3"
-              id=""
+              myid="check_cara"
+              id="wajah-3"
               value="0"
             />
           </td>
@@ -187,7 +349,8 @@
               style="width: 100%"
               type="radio"
               name="wajah-4"
-              id=""
+              myid="check_cara"
+              id="wajah-4"
               value="0"
             />
           </td>
@@ -196,8 +359,9 @@
               style="width: 100%"
               type="radio"
               name="wajah-5"
+              myid="check_cara"
               value="0"
-              id=""
+              id="wajah-5"
             />
           </td>
           <td>
@@ -205,8 +369,9 @@
               style="width: 100%"
               type="radio"
               name="wajah-6"
+              myid="check_cara"
               value="0"
-              id=""
+              id="wajah-6"
             />
           </td>
           <td>
@@ -214,8 +379,9 @@
               style="width: 100%"
               type="radio"
               name="wajah-7"
+              myid="check_cara"
               value="0"
-              id=""
+              id="wajah-7"
             />
           </td>
         </tr>
@@ -228,7 +394,8 @@
               type="radio"
               value="1"
               name="wajah-1"
-              id=""
+              id="wajah-1"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -237,7 +404,8 @@
               type="radio"
               value="1"
               name="wajah-2"
-              id=""
+              id="wajah-2"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -246,7 +414,8 @@
               type="radio"
               value="1"
               name="wajah-3"
-              id=""
+              myid="check_cara"
+              id="wajah-3"
             />
           </td>
           <td>
@@ -255,7 +424,8 @@
               type="radio"
               value="1"
               name="wajah-4"
-              id=""
+              myid="check_cara"
+              id="wajah-4"
             />
           </td>
           <td>
@@ -264,7 +434,8 @@
               type="radio"
               value="1"
               name="wajah-5"
-              id=""
+              myid="check_cara"
+              id="wajah-5"
             />
           </td>
           <td>
@@ -273,7 +444,8 @@
               type="radio"
               value="1"
               name="wajah-6"
-              id=""
+              myid="check_cara"
+              id="wajah-6"
             />
           </td>
           <td>
@@ -282,7 +454,8 @@
               type="radio"
               value="1"
               name="wajah-7"
-              id=""
+              myid="check_cara"
+              id="wajah-7"
             />
           </td>
         </tr>
@@ -297,8 +470,9 @@
               style="width: 100%"
               type="radio"
               name="wajah-1"
+              myid="check_cara"
               value="2"
-              id=""
+              id="wajah-1"
             />
           </td>
           <td>
@@ -306,8 +480,9 @@
               style="width: 100%"
               type="radio"
               name="wajah-2"
+              myid="check_cara"
               value="2"
-              id=""
+              id="wajah-2"
             />
           </td>
           <td>
@@ -315,8 +490,9 @@
               style="width: 100%"
               type="radio"
               name="wajah-3"
+              myid="check_cara"
               value="2"
-              id=""
+              id="wajah-3"
             />
           </td>
           <td>
@@ -324,8 +500,9 @@
               style="width: 100%"
               type="radio"
               name="wajah-4"
+              myid="check_cara"
               value="2"
-              id=""
+              id="wajah-4"
             />
           </td>
           <td>
@@ -333,8 +510,9 @@
               style="width: 100%"
               type="radio"
               name="wajah-5"
+              myid="check_cara"
               value="2"
-              id=""
+              id="wajah-5"
             />
           </td>
           <td>
@@ -342,8 +520,9 @@
               style="width: 100%"
               type="radio"
               name="wajah-6"
+              myid="check_cara"
               value="2"
-              id=""
+              id="wajah-6"
             />
           </td>
           <td>
@@ -351,8 +530,9 @@
               style="width: 100%"
               type="radio"
               name="wajah-7"
+              myid="check_cara"
               value="2"
-              id=""
+              id="wajah-7"
             />
           </td>
         </tr>
@@ -365,8 +545,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-1"
+              myid="check_cara"
               value="0"
-              id=""
+              id="ekstremitas-1"
             />
           </td>
           <td>
@@ -374,8 +555,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-2"
+              myid="check_cara"
               value="0"
-              id=""
+              id="ekstremitas-2"
             />
           </td>
           <td>
@@ -383,8 +565,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-3"
+              myid="check_cara"
               value="0"
-              id=""
+              id="ekstremitas-3"
             />
           </td>
           <td>
@@ -392,8 +575,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-4"
+              myid="check_cara"
               value="0"
-              id=""
+              id="ekstremitas-4"
             />
           </td>
           <td>
@@ -401,8 +585,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-5"
+              myid="check_cara"
               value="0"
-              id=""
+              id="ekstremitas-5"
             />
           </td>
           <td>
@@ -410,8 +595,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-6"
+              myid="check_cara"
               value="0"
-              id=""
+              id="ekstremitas-6"
             />
           </td>
           <td>
@@ -419,8 +605,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-7"
+              myid="check_cara"
               value="0"
-              id=""
+              id="ekstremitas-7"
             />
           </td>
         </tr>
@@ -432,8 +619,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-1"
+              myid="check_cara"
               value="1"
-              id=""
+              id="ekstremitas-1"
             />
           </td>
           <td>
@@ -441,8 +629,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-2"
+              myid="check_cara"
               value="1"
-              id=""
+              id="ekstremitas-2"
             />
           </td>
           <td>
@@ -450,8 +639,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-3"
+              myid="check_cara"
               value="1"
-              id=""
+              id="ekstremitas-3"
             />
           </td>
           <td>
@@ -459,8 +649,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-4"
+              myid="check_cara"
               value="1"
-              id=""
+              id="ekstremitas-4"
             />
           </td>
           <td>
@@ -468,8 +659,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-5"
+              myid="check_cara"
               value="1"
-              id=""
+              id="ekstremitas-5"
             />
           </td>
           <td>
@@ -477,8 +669,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-6"
+              myid="check_cara"
               value="1"
-              id=""
+              id="ekstremitas-6"
             />
           </td>
           <td>
@@ -486,8 +679,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-7"
+              myid="check_cara"
               value="1"
-              id=""
+              id="ekstremitas-7"
             />
           </td>
         </tr>
@@ -499,8 +693,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-1"
+              myid="check"
               value="2"
-              id=""
+              id="ekstremitas-1"
             />
           </td>
           <td>
@@ -508,8 +703,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-2"
+              myid="check"
               value="2"
-              id=""
+              id="ekstremitas-2"
             />
           </td>
           <td>
@@ -517,8 +713,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-3"
+              myid="check"
               value="2"
-              id=""
+              id="ekstremitas-3"
             />
           </td>
           <td>
@@ -526,8 +723,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-4"
+              myid="check"
               value="2"
-              id=""
+              id="ekstremitas-4"
             />
           </td>
           <td>
@@ -535,8 +733,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-5"
+              myid="check"
               value="2"
-              id=""
+              id="ekstremitas-5"
             />
           </td>
           <td>
@@ -544,8 +743,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-6"
+              myid="check"
               value="2"
-              id=""
+              id="ekstremitas-6"
             />
           </td>
           <td>
@@ -553,8 +753,9 @@
               style="width: 100%"
               type="radio"
               name="ekstremitas-7"
+              myid="check"
               value="2"
-              id=""
+              id="ekstremitas-7"
             />
           </td>
         </tr>
@@ -568,7 +769,8 @@
               type="radio"
               value="0"
               name="gerakan-1"
-              id=""
+              id="gerakan-1"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -577,7 +779,8 @@
               type="radio"
               value="0"
               name="gerakan-2"
-              id=""
+              id="gerakan-2"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -586,7 +789,8 @@
               type="radio"
               value="0"
               name="gerakan-3"
-              id=""
+              id="gerakan-3"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -595,7 +799,8 @@
               type="radio"
               value="0"
               name="gerakan-4"
-              id=""
+              id="gerakan-4"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -604,7 +809,8 @@
               type="radio"
               value="0"
               name="gerakan-5"
-              id=""
+              id="gerakan-5"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -613,7 +819,8 @@
               type="radio"
               value="0"
               name="gerakan-6"
-              id=""
+              id="gerakan-6"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -622,7 +829,8 @@
               type="radio"
               value="0"
               name="gerakan-7"
-              id=""
+              id="gerakan-7"
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -635,7 +843,8 @@
               type="radio"
               name="gerakan-1"
               value="1"
-              id=""
+              id="gerakan-1"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -644,7 +853,8 @@
               type="radio"
               name="gerakan-2"
               value="1"
-              id=""
+              id="gerakan-2"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -653,7 +863,8 @@
               type="radio"
               name="gerakan-3"
               value="1"
-              id=""
+              id="gerakan-3"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -662,7 +873,8 @@
               type="radio"
               name="gerakan-4"
               value="1"
-              id=""
+              id="gerakan-4"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -671,7 +883,8 @@
               type="radio"
               name="gerakan-5"
               value="1"
-              id=""
+              id="gerakan-5"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -680,7 +893,8 @@
               type="radio"
               name="gerakan-6"
               value="1"
-              id=""
+              id="gerakan-6"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -689,7 +903,8 @@
               type="radio"
               name="gerakan-7"
               value="1"
-              id=""
+              id="gerakan-7"
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -702,7 +917,8 @@
               type="radio"
               name="gerakan-1"
               value="2"
-              id=""
+              id="gerakan-1"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -711,7 +927,8 @@
               type="radio"
               name="gerakan-2"
               value="2"
-              id=""
+              id="gerakan-2"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -720,7 +937,8 @@
               type="radio"
               name="gerakan-3"
               value="2"
-              id=""
+              id="gerakan-3"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -729,7 +947,8 @@
               type="radio"
               name="gerakan-4"
               value="2"
-              id=""
+              id="gerakan-4"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -738,7 +957,8 @@
               type="radio"
               name="gerakan-5"
               value="2"
-              id=""
+              id="gerakan-5"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -747,7 +967,8 @@
               type="radio"
               name="gerakan-6"
               value="2"
-              id=""
+              id="gerakan-6"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -756,7 +977,8 @@
               type="radio"
               name="gerakan-7"
               value="2"
-              id=""
+              id="gerakan-7"
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -769,8 +991,9 @@
               style="width: 100%"
               type="radio"
               name="menangis-1"
-              id=""
+              id="menangis-1"
               value="0"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -778,8 +1001,9 @@
               style="width: 100%"
               type="radio"
               name="menangis-2"
-              id=""
+              id="menangis-2"
               value="0"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -787,8 +1011,9 @@
               style="width: 100%"
               type="radio"
               name="menangis-3"
-              id=""
+              id="menangis-3"
               value="0"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -796,8 +1021,9 @@
               style="width: 100%"
               type="radio"
               name="menangis-4"
-              id=""
+              id="menangis-4"
               value="0"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -805,8 +1031,9 @@
               style="width: 100%"
               type="radio"
               name="menangis-5"
-              id=""
+              id="menangis-5"
               value="0"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -814,8 +1041,9 @@
               style="width: 100%"
               type="radio"
               name="menangis-6"
-              id=""
+              id="menangis-6"
               value="0"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -823,8 +1051,9 @@
               style="width: 100%"
               type="radio"
               name="menangis-7"
-              id=""
+              id="menangis-7"
               value="0"
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -837,7 +1066,8 @@
               type="radio"
               name="menangis-1"
               value="1"
-              id=""
+              id="menangis-1"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -846,7 +1076,8 @@
               type="radio"
               name="menangis-2"
               value="1"
-              id=""
+              id="menangis-2"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -855,7 +1086,8 @@
               type="radio"
               name="menangis-3"
               value="1"
-              id=""
+              id="menangis-3"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -864,7 +1096,8 @@
               type="radio"
               name="menangis-4"
               value="1"
-              id=""
+              id="menangis-4"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -873,7 +1106,8 @@
               type="radio"
               name="menangis-5"
               value="1"
-              id=""
+              id="menangis-5"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -882,7 +1116,8 @@
               type="radio"
               name="menangis-6"
               value="1"
-              id=""
+              id="menangis-6"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -891,7 +1126,8 @@
               type="radio"
               name="menangis-7"
               value="1"
-              id=""
+              id="menangis-7"
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -904,7 +1140,8 @@
               type="radio"
               name="menangis-1"
               value="2"
-              id=""
+              id="menangis-1"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -913,7 +1150,8 @@
               type="radio"
               name="menangis-2"
               value="2"
-              id=""
+              id="menangis-2"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -922,7 +1160,8 @@
               type="radio"
               name="menangis-3"
               value="2"
-              id=""
+              id="menangis-3"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -931,7 +1170,8 @@
               type="radio"
               name="menangis-4"
               value="2"
-              id=""
+              id="menangis-4"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -940,7 +1180,8 @@
               type="radio"
               name="menangis-5"
               value="2"
-              id=""
+              id="menangis-5"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -949,7 +1190,8 @@
               type="radio"
               name="menangis-6"
               value="2"
-              id=""
+              id="menangis-6"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -958,7 +1200,8 @@
               type="radio"
               name="menangis-7"
               value="2"
-              id=""
+              id="menangis-7"
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -973,8 +1216,9 @@
               style="width: 100%"
               type="radio"
               name="kemampuan-ditenangkan-1"
-              id=""
+              id="kemampuan-ditenangkan-1"
               value="0"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -982,8 +1226,9 @@
               style="width: 100%"
               type="radio"
               name="kemampuan-ditenangkan-2"
-              id=""
+              id="kemampuan-ditenangkan-2"
               value="0"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -991,8 +1236,9 @@
               style="width: 100%"
               type="radio"
               name="kemampuan-ditenangkan-3"
-              id=""
+              id="kemampuan-ditenangkan-3"
               value="0"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -1000,8 +1246,9 @@
               style="width: 100%"
               type="radio"
               name="kemampuan-ditenangkan-4"
-              id=""
+              id="kemampuan-ditenangkan-4"
               value="0"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -1009,8 +1256,9 @@
               style="width: 100%"
               type="radio"
               name="kemampuan-ditenangkan-5"
-              id=""
+              id="kemampuan-ditenangkan-5"
               value="0"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -1018,8 +1266,9 @@
               style="width: 100%"
               type="radio"
               name="kemampuan-ditenangkan-6"
-              id=""
+              id="kemampuan-ditenangkan-6"
               value="0"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -1027,8 +1276,9 @@
               style="width: 100%"
               type="radio"
               name="kemampuan-ditenangkan-7"
-              id=""
+              id="kemampuan-ditenangkan-7"
               value="0"
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -1044,7 +1294,8 @@
               type="radio"
               name="kemampuan-ditenangkan-1"
               value="1"
-              id=""
+              id="kemampuan-ditenangkan-1"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -1053,7 +1304,8 @@
               type="radio"
               name="kemampuan-ditenangkan-2"
               value="1"
-              id=""
+              id="kemampuan-ditenangkan-2"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -1062,7 +1314,8 @@
               type="radio"
               name="kemampuan-ditenangkan-3"
               value="1"
-              id=""
+              id="kemampuan-ditenangkan-3"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -1071,7 +1324,8 @@
               type="radio"
               name="kemampuan-ditenangkan-4"
               value="1"
-              id=""
+              id="kemampuan-ditenangkan-4"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -1080,7 +1334,8 @@
               type="radio"
               name="kemampuan-ditenangkan-5"
               value="1"
-              id=""
+              id="kemampuan-ditenangkan-5"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -1089,7 +1344,8 @@
               type="radio"
               name="kemampuan-ditenangkan-6"
               value="1"
-              id=""
+              id="kemampuan-ditenangkan-6"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -1098,7 +1354,8 @@
               type="radio"
               name="kemampuan-ditenangkan-7"
               value="1"
-              id=""
+              id="kemampuan-ditenangkan-7"
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -1114,7 +1371,8 @@
               type="radio"
               name="kemampuan-ditenangkan-1"
               value="2"
-              id=""
+              id="kemampuan-ditenangkan-1"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -1123,7 +1381,8 @@
               type="radio"
               name="kemampuan-ditenangkan-2"
               value="2"
-              id=""
+              id="kemampuan-ditenangkan-2"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -1132,7 +1391,8 @@
               type="radio"
               name="kemampuan-ditenangkan-3"
               value="2"
-              id=""
+              id="kemampuan-ditenangkan-3"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -1141,7 +1401,8 @@
               type="radio"
               name="kemampuan-ditenangkan-4"
               value="2"
-              id=""
+              id="kemampuan-ditenangkan-4"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -1150,7 +1411,8 @@
               type="radio"
               name="kemampuan-ditenangkan-5"
               value="2"
-              id=""
+              id="kemampuan-ditenangkan-5"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -1159,7 +1421,8 @@
               type="radio"
               name="kemampuan-ditenangkan-6"
               value="2"
-              id=""
+              id="kemampuan-ditenangkan-6"
+              myid="check_cara"
             />
           </td>
           <td>
@@ -1168,7 +1431,8 @@
               type="radio"
               name="kemampuan-ditenangkan-7"
               value="2"
-              id=""
+              id="kemampuan-ditenangkan-7"
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -1192,43 +1456,78 @@
           <td>&nbsp;</td>
           <td>
             <div class="ttd-1">
-              <input type="text" name="nama-perawat-1" id="" />
+              <input
+                type="text"
+                name="nama-perawat-1"
+                myid="check_cara"
+                id="nama-perawat-1"
+              />
               <font id="ttdnya2"></font>
             </div>
           </td>
           <td>
             <div class="ttd-2">
-              <input type="text" name="nama-perawat-2" id="" />
+              <input
+                type="text"
+                name="nama-perawat-2"
+                myid="check_cara"
+                id="nama-perawat-2"
+              />
               <font id="ttdnya2"></font>
             </div>
           </td>
           <td>
             <div class="ttd-3">
-              <input type="text" name="nama-perawat-3" id="" />
+              <input
+                type="text"
+                name="nama-perawat-3"
+                myid="check_cara"
+                id="nama-perawat-3"
+              />
               <font id="ttdnya2"></font>
             </div>
           </td>
           <td>
             <div class="ttd-4">
-              <input type="text" name="nama-perawat-4" id="" />
+              <input
+                type="text"
+                name="nama-perawat-4"
+                myid="check_cara"
+                id="nama-perawat-4"
+              />
               <font id="ttdnya2"></font>
             </div>
           </td>
           <td>
             <div class="ttd-5">
-              <input type="text" name="nama-perawat-5" id="" />
+              <input
+                type="text"
+                name="nama-perawat-5"
+                myid="check_cara"
+                id="nama-perawat-5"
+              />
               <font id="ttdnya2"></font>
             </div>
           </td>
           <td>
             <div class="ttd-6">
-              <input type="text" name="nama-perawat-6" id="" />
+              <input
+                type="text"
+                name="nama-perawat-6"
+                myid="check_cara"
+                id="nama-perawat-6"
+              />
               <font id="ttdnya2"></font>
             </div>
           </td>
           <td>
             <div class="ttd-7">
-              <input type="text" name="nama-perawat-7" id="" />
+              <input
+                type="text"
+                name="nama-perawat-7"
+                myid="check_cara"
+                id="nama-perawat-7"
+              />
               <font id="ttdnya2"></font>
             </div>
           </td>
@@ -1245,5 +1544,35 @@
         </tr>
       </tbody>
     </table>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(function (radio) {
+          radio.addEventListener("click", function () {
+            if (this.classList.contains("clicked")) {
+              this.checked = false;
+              this.classList.remove("clicked");
+            } else {
+              var name = this.getAttribute("name");
+              var radios = document.querySelectorAll(
+                'input[type="radio"][name="' + name + '"]'
+              );
+              radios.forEach(function (r) {
+                r.classList.remove("clicked");
+              });
+              this.classList.add("clicked");
+            }
+            console.log(this.name + " diubah menjadi: " + this.checked);
+          });
+        });
+
+        var textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+      });
+    </script>
   </body>
 </html>
