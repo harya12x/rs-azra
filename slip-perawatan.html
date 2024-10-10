@@ -99,6 +99,7 @@
                 style="flex: 1"
                 type="text"
                 class="slip-perawatan"
+                myid="check_cara"
                 name="jasa-dokter"
                 id="jasa-dokter"
                 placeholder="....."
@@ -117,6 +118,7 @@
                 style="flex: 1"
                 type="text"
                 class="slip-perawatan"
+                myid="check_cara"
                 name="tindakan"
                 id="tindakan"
                 placeholder="....."
@@ -144,6 +146,7 @@
                 style="flex: 1"
                 type="text"
                 class="slip-perawatan"
+                myid="check_cara"
                 name="biaya-perawatan-1"
                 id="biaya-perawatan-1"
                 placeholder="....."
@@ -171,6 +174,7 @@
                 style="flex: 1"
                 type="text"
                 class="slip-perawatan"
+                myid="check_cara"
                 name="biaya-perawatan-2"
                 id="biaya-perawatan-2"
                 placeholder="....."
@@ -198,6 +202,7 @@
                 style="flex: 1"
                 type="text"
                 class="slip-perawatan"
+                myid="check_cara"
                 name="biaya-perawatan-3"
                 id="biaya-perawatan-3"
                 placeholder="....."
@@ -225,6 +230,7 @@
                 style="flex: 1"
                 type="text"
                 class="slip-perawatan"
+                myid="check_cara"
                 name="biaya-perawatan-4"
                 id="biaya-perawatan-4"
                 placeholder="....."
@@ -252,6 +258,7 @@
                 style="flex: 1"
                 type="text"
                 class="slip-perawatan"
+                myid="check_cara"
                 name="biaya-perawatan-5"
                 id="biaya-perawatan-5"
                 placeholder="....."
@@ -279,6 +286,7 @@
                 style="flex: 1"
                 type="text"
                 class="slip-perawatan"
+                myid="check_cara"
                 name="biaya-perawatan-6"
                 id="biaya-perawatan-6"
                 placeholder="....."
@@ -299,6 +307,7 @@
                 name="jumlah-seluruhnya"
                 id="jumlah-seluruhnya"
                 placeholder="....."
+                myid="check_cara"
                 label="jumlah seluruhnya"
               />
             </div>
@@ -361,49 +370,29 @@
     </table>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const slipPerawatan = document.querySelectorAll(".slip-perawatan");
-        let jumlahSeluruhnya = document.querySelector("#jumlah-seluruhnya");
-
-        function hitungTotal() {
-          let total = 0;
-
-          // Loop melalui setiap input biaya perawatan
-          slipPerawatan.forEach((input) => {
-            // Konversi nilai input ke angka dan tambahkan ke total
-            const nilai = parseFloat(input.value) || 0;
-            total += nilai;
-          });
-
-          // Tampilkan hasil penjumlahan
-          jumlahSeluruhnya.value = total;
-        }
-
-        // Tambahkan event listener untuk setiap input biaya perawatan
-        slipPerawatan.forEach((input) => {
-          input.addEventListener("input", hitungTotal);
-        });
-
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
         var textInputs = document.querySelectorAll('input[type="text"]');
         textInputs.forEach(function (input) {
+          const slipPerawatan = document.querySelectorAll(".slip-perawatan");
+          let jumlahSeluruhnya = document.querySelector("#jumlah-seluruhnya");
+
+          function hitungTotal() {
+            let total = 0;
+
+            // Loop melalui setiap input biaya perawatan
+            slipPerawatan.forEach((input) => {
+              // Konversi nilai input ke angka dan tambahkan ke total
+              const nilai = parseFloat(input.value) || 0;
+              total += nilai;
+            });
+
+            // Tampilkan hasil penjumlahan
+            jumlahSeluruhnya.value = total;
+          }
+
+          // Tambahkan event listener untuk setiap input biaya perawatan
+          slipPerawatan.forEach((input) => {
+            input.addEventListener("input", hitungTotal);
+          });
           input.addEventListener("change", function () {
             console.log(this.name + " diubah menjadi: " + this.value);
           });
