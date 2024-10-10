@@ -1,0 +1,1723 @@
+<<<<<<< HEAD
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PENGKAJIAN KHUSUS PERAWATAN AKHIR KEHIDUPAN</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    .table-kewarganegaraan,
+    .perawatan-terintegrasi {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table-kewarganegaraan td,
+    .table-kewarganegaraan th,
+    .perawatan-terintegrasi th,
+    .perawatan-terintegrasi td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">PENGKAJIAN AWAL PASIEN DENGAN NAPZA RS AZRA BOGOR</h1>
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td bgcolor="#DFE8F6">Nama Pasien</td>
+          <td bgcolor="#DFE8F6">
+            <input
+              name="nama_pasien2"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+            />
+          </td>
+          <td bgcolor="#DFE8F6">Jenis Kelamin</td>
+          <td bgcolor="#DFE8F6">
+            <input type="checkbox" />
+            <label for="l">L</label>
+            <input type="checkbox" />
+            <label for="l">P</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <input type="number" />
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan="2" bgcolor="">Tanggal Lahir</td>
+          <td rowspan="2" bgcolor="">
+            <input
+              name="tgl_lahira2"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td rowspan="2">Umur</td>
+          <td rowspan="2">
+            <input type="number" size="5" placeholder="..." />
+          </td>
+          <td>
+            <label for="kelas"> Kelas </label>
+          </td>
+          <td>
+            <input
+              name="kelasa2"
+              type="text"
+              id="kelas"
+              placeholder="..."
+              myid="check_cara"
+              label="kelas"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Kamar</td>
+          <td>
+            <input type="text" placeholder="..." />
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#DFE8F6">Tanggal Masuk Rumah Sakit:</td>
+          <td bgcolor="#DFE8F6">
+            <input type="date" />
+          </td>
+
+          <td bgcolor="#DFE8F6">Waktu Pemeriksaan</td>
+          <td bgcolor="#DFE8F6">
+            <input type="time" />
+          </td>
+          <td bgcolor="#DFE8F6">Ruangan</td>
+          <td bgcolor="#DFE8F6">
+            <input type="text" placeholder="..." />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <td>
+            <section style="display: flex; gap: 10px; padding-left: 5px">
+              <div>
+                <label for="">Berat:</label>
+                <input type="text" name="berat" id="" placeholder="..." />
+                <label for="">kg </label>
+              </div>
+              <div>
+                <label for="">Tinggi:</label>
+                <input type="text" name="tinggi" id="" placeholder="..." />
+                <label for="">cm </label>
+              </div>
+              <div>
+                <label for="">IMT:</label>
+                <input type="text" name="imt" id="" placeholder="..." />
+                <label for="">kg/m <sup>3</sup> </label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table
+              class="table table-bordered table-kewarganegaraan"
+              width="100%"
+            >
+              <tr bgcolor="#DFE8F6">
+                <td>
+                  <div style="display: flex; gap: 10px">
+                    <label for="">Kewarganegaraan:</label>
+                    <div>
+                      <input
+                        type="radio"
+                        name="Kewarganegaraan"
+                        id=""
+                        value="WNI"
+                      />
+                      <label for="Kewarganegaraan">WNI</label>
+                    </div>
+                    <div>
+                      <input
+                        type="radio"
+                        name="Kewarganegaraan"
+                        id=""
+                        value="WNA"
+                      />
+                      <label for="Kewarganegaraan">WNA</label>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div style="display: flex; gap: 15px">
+                    <div style="display: flex">
+                      <label for="">Suku bangsa: </label>
+                      <input
+                        type="text"
+                        name="suku-bangsa"
+                        id=""
+                        placeholder="..."
+                      />
+                    </div>
+                    <div style="display: flex">
+                      <label for="">Sebutkan: </label>
+
+                      <input
+                        type="text"
+                        name="sebutkan-suku-bangsa"
+                        id=""
+                        placeholder="..."
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display: flex; gap: 10px">
+                    <label for="">Bahasa yang biasa digunakan :</label>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="bahasa"
+                        id=""
+                        value="Indonesia"
+                      />
+                      <label for="bahasa">Indonesia</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="bahasa"
+                        id=""
+                        value="Inggris"
+                      />
+                      <label for="bahasa">Inggris</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="bahasa"
+                        id=""
+                        value="Bahasa asing lain"
+                      />
+                      <label for="bahasa">Bahasa asing lain</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="bahasa"
+                        id=""
+                        value="Bahasa daerah"
+                      />
+                      <label for="bahasa">Bahasa daerah</label>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div style="display: flex; justify-content: space-between">
+                    <label for="">Agama: </label>
+                    <div>
+                      <input type="radio" name="agama" id="" value="Islam" />
+                      <label for="agama">Islam</label>
+                    </div>
+                    <div>
+                      <input type="radio" name="agama" id="" value="Kristen" />
+                      <label for="agama">Kristen</label>
+                    </div>
+                    <div>
+                      <input type="radio" name="agama" id="" value="Hindu" />
+                      <label for="agama">Hindu</label>
+                    </div>
+                    <div>
+                      <input type="radio" name="agama" id="" value="Katolik" />
+                      <label for="agama">Katolik</label>
+                    </div>
+
+                    <div>
+                      <input type="radio" name="agama" id="" value="Buddha" />
+                      <label for="agama">Buddha</label>
+                    </div>
+                    <div>
+                      <input
+                        type="radio"
+                        name="agama"
+                        id=""
+                        value="kepercayaan"
+                      />
+                      <label for="agama">kepercayaan</label>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr bgcolor="#DFE8F6">
+                <td>
+                  <div style="display: flex; gap: 10px">
+                    <label for="">Status :</label>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="status"
+                        id=""
+                        value="Belum menikah"
+                      />
+                      <label for="status">Belum menikah</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="status"
+                        id=""
+                        value="Sudah Menikah"
+                      />
+                      <label for="status">Sudah Menikah</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="status"
+                        id=""
+                        value="Cerai"
+                      />
+                      <label for="status">Cerai</label>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div style="display: flex; justify-content: space-between">
+                    <label for="">Yang merawat: </label>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="yang-merawat"
+                        id=""
+                        value="Suami/Istri"
+                      />
+                      <label for="yang-merawat">Suami/Istri</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="yang-merawat"
+                        id=""
+                        value="Anak"
+                      />
+                      <label for="yang-merawat">Anak</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="orang-tua"
+                        id=""
+                        value="Hindu"
+                      />
+                      <label for="orang-tua">Orang Tua</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="yang-merawat"
+                        id=""
+                        value="Tidak ada"
+                      />
+                      <label for="yang-merawat">Tidak ada</label>
+                    </div>
+
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="yang-merawat"
+                        id=""
+                        value="Lain-lain"
+                      />
+                      <label for="yang-merawat">Lain-lain</label>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display: flex; gap: 10px">
+                    <label for="">Tanggal :</label>
+                    <div>
+                      <input
+                        type="text"
+                        name="status"
+                        id=""
+                        placeholder="dd/mm/yy"
+                      />
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div style="display: flex; gap: 15px">
+                    <div class="nama-lengkap-keluarga">
+                      <label for="">Nama Lengkap Keluarga :</label>
+                      <div style="display: flex; gap: 10px">
+                        <div>
+                          <textarea
+                            style="padding: 5px"
+                            name="nama-lengkap-keluarga"
+                            id=""
+                            placeholder="..."
+                            rows="2"
+                            cols="30"
+                          ></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ttd-keluarga">
+                      <label for="">Tanda tangan keluarga :</label>
+                      <div style="display: flex; gap: 10px">
+                        <div>
+                          <textarea
+                            style="padding: 5px"
+                            name="tanda-tangan-keluarga"
+                            id=""
+                            placeholder="..."
+                            rows="2"
+                            cols="30"
+                          ></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>
+            <b>Perawatan Terintegrasi</b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table
+              class="table table-bordered perawatan-terintegrasi"
+              width="100%"
+            >
+              <tbody>
+                <tr style="font-weight: bold">
+                  <td>Insight</td>
+                  <td>Pasien</td>
+                  <td>Keluarga</td>
+                </tr>
+                <tr>
+                  <td>Mengetahui diagnosis</td>
+                  <td>
+                    <div style="display: flex; gap: 10px">
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="pasien-mengetahui-diagnosis"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="pasien-mengetahui-diagnosis"
+                      />
+                      <label for="l">Tidak</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 10px">
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="keluarga-mengetahui-diagnosis"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="keluarga-mengetahui-diagnosis"
+                      />
+                      <label for="l">Tidak</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Mengetahui prognosis</td>
+                  <td>
+                    <div style="display: flex; gap: 10px">
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="pasien-mengetahui-prognosis"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="pasien-mengetahui-prognosis"
+                      />
+                      <label for="l">Tidak</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 10px">
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="keluarga-mengetahui-prognosis"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="keluarga-mengetahui-prognosis"
+                      />
+                      <label for="l">Tidak</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Mengetahui tujuan perawatan</td>
+                  <td>
+                    <div style="display: flex; gap: 10px">
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="pasien-mengetahui-tujuan-perawatan"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="pasien-mengetahui-tujuan-perawatan"
+                      />
+                      <label for="l">Tidak</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 10px">
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="keluarga-mengetahui-tujuan-perawatan"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="keluarga-mengetahui-tujuan-perawatan"
+                      />
+                      <label for="l">Tidak</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr style="font-weight: bold">
+                  <td>Keagamaan / dukungan spiritual</td>
+                  <td>Pasien</td>
+                  <td>Keluarga</td>
+                </tr>
+                <tr>
+                  <td>Kebutuhan dan dukungan spiritual pada pasien</td>
+                  <td>
+                    <div style="display: flex; gap: 10px">
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="dukungan-spiritual-pasien"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="dukungan-spiritual-pasien"
+                      />
+                      <label for="l">Tidak</label>
+                      <input
+                        type="radio"
+                        value="Keadaan koma"
+                        name="dukungan-spiritual-pasien"
+                      />
+                      <label for="l">Keadaan koma</label>
+                    </div>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>
+                    Kebutuhan / kebutuhan spiritual pada keluarga / lainnya
+                  </td>
+                  <td></td>
+                  <td>
+                    <div
+                      style="
+                        display: flex;
+
+                        gap: 10px;
+                      "
+                    >
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="dukungan-spiritual-keluarga"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="dukungan-spiritual-keluarga"
+                      />
+                      <label for="l">Tidak</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Kecemasan pasien / kerabat terhadap diri sendiri / orang
+                    lain
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 10px">
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="kecemasan-pasien-kerabat-oranglain-pasien"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="kecemasan-pasien-kerabat-oranglain-pasien"
+                      />
+                      <label for="l">Tidak</label>
+                      <input
+                        type="radio"
+                        value="Keadaan koma"
+                        name="kecemasan-pasien-kerabat-oranglain-pasien"
+                      />
+                      <label for="l">Keadaan koma</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div
+                      style="
+                        display: flex;
+
+                        gap: 10px;
+                      "
+                    >
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="kecemasan-pasien-kerabat-oranglain-keluarga"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="kecemasan-pasien-kerabat-oranglain-keluarga"
+                      />
+                      <label for="l">Tidak</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Dukungan dari tim secara keseluruhan</td>
+                  <td>
+                    <div style="display: flex; gap: 10px">
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="dukungan-tim-pasien"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="dukungan-tim-pasien"
+                      />
+                      <label for="l">Tidak</label>
+                      <input
+                        type="radio"
+                        value="Keadaan koma"
+                        name="dukungan-tim-pasien"
+                      />
+                      <label for="l">Keadaan koma</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div
+                      style="
+                        display: flex;
+
+                        gap: 10px;
+                      "
+                    >
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="dukungan-tim-keluarga"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="dukungan-tim-keluarga"
+                      />
+                      <label for="l">Tidak</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Identifikasi tradisi keagamaan</td>
+                  <td>
+                    <div
+                      style="
+                        display: flex;
+
+                        gap: 10px;
+                      "
+                    >
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="identifikasi-tradisi-keagamaan-pasien"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="identifikasi-tradisi-keagamaan-pasien"
+                      />
+                      <label for="l">Tidak</label>
+                      <input
+                        type="radio"
+                        value="N/A"
+                        name="identifikasi-tradisi-keagamaan-pasien"
+                      />
+                      <label for="l">N/A</label>
+                    </div>
+                    <div>
+                      <label for="">Sebutkan, jika ya :</label>
+                      <input
+                        type="text"
+                        name="detail-tradisi-keagamaan"
+                        id=""
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div
+                      style="
+                        display: flex;
+
+                        gap: 10px;
+                      "
+                    >
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="identifikasi-tradisi-keagamaan-keluarga"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="identifikasi-tradisi-keagamaan-keluarga"
+                      />
+                      <label for="l">Tidak</label>
+                      <input
+                        type="radio"
+                        value="N/A"
+                        name="identifikasi-tradisi-keagamaan-keluarga"
+                      />
+                      <label for="l">N/A</label>
+                    </div>
+                    <div>
+                      <label for="">Sebutkan, jika ya :</label>
+                      <input
+                        type="text"
+                        name="detail-tradisi-keagamaan"
+                        id=""
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <b
+                      >Isu Psikolog (contoh: Masalah agama, pendamping hidup,
+                      rencana, keuangan, hukum)</b
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <textarea
+                      style="width: 100%"
+                      name="isu-psikolog"
+                      id=""
+                      rows="5"
+                    ></textarea>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table" cellpadding="0" border="0">
+      <tbody>
+        <tr>
+          <td>&nbsp;</td>
+
+          <td>
+            <div align="center"><strong>Nama yang mengkaji</strong></div>
+          </td>
+
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
+          <td bgcolor="#FFFFFF">
+            <input
+              name="17_pukul"
+              type="text"
+              id="17_pukul"
+              placeholder="00:00"
+              size="10"
+              myid="check_cara"
+            />
+          </td>
+
+          <td bgcolor="#FFFFFF">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td bgcolor="#FFFFFF">Nama</td>
+
+          <td bgcolor="#FFFFFF">
+            <input
+              name="17_nama3"
+              type="text"
+              id="17_nama3"
+              size="25"
+              myid="check_cara"
+            />
+            <br />
+            <select
+              type="select"
+              name="perawatnya"
+              id="perawatnya"
+              myid="check_cara"
+              iscombo="t"
+              onchange="get_ttd2();"
+            >
+              <option></option>
+            </select>
+            <br />
+            <font id="ttdnya2"></font>
+          </td>
+
+          <td bgcolor="#FFFFFF">&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
+=======
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PENGKAJIAN KHUSUS PERAWATAN AKHIR KEHIDUPAN</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    .table-kewarganegaraan,
+    .perawatan-terintegrasi {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table-kewarganegaraan td,
+    .table-kewarganegaraan th,
+    .perawatan-terintegrasi th,
+    .perawatan-terintegrasi td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">PENGKAJIAN AWAL PASIEN DENGAN NAPZA RS AZRA BOGOR</h1>
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td bgcolor="#DFE8F6">Nama Pasien</td>
+          <td bgcolor="#DFE8F6">
+            <input
+              name="nama_pasien2"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+            />
+          </td>
+          <td bgcolor="#DFE8F6">Jenis Kelamin</td>
+          <td bgcolor="#DFE8F6">
+            <input type="checkbox" />
+            <label for="l">L</label>
+            <input type="checkbox" />
+            <label for="l">P</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <input type="number" />
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan="2" bgcolor="">Tanggal Lahir</td>
+          <td rowspan="2" bgcolor="">
+            <input
+              name="tgl_lahira2"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td rowspan="2">Umur</td>
+          <td rowspan="2">
+            <input type="number" size="5" placeholder="..." />
+          </td>
+          <td>
+            <label for="kelas"> Kelas </label>
+          </td>
+          <td>
+            <input
+              name="kelasa2"
+              type="text"
+              id="kelas"
+              placeholder="..."
+              myid="check_cara"
+              label="kelas"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Kamar</td>
+          <td>
+            <input type="text" placeholder="..." />
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#DFE8F6">Tanggal Masuk Rumah Sakit:</td>
+          <td bgcolor="#DFE8F6">
+            <input type="date" />
+          </td>
+
+          <td bgcolor="#DFE8F6">Waktu Pemeriksaan</td>
+          <td bgcolor="#DFE8F6">
+            <input type="time" />
+          </td>
+          <td bgcolor="#DFE8F6">Ruangan</td>
+          <td bgcolor="#DFE8F6">
+            <input type="text" placeholder="..." />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <td>
+            <section style="display: flex; gap: 10px; padding-left: 5px">
+              <div>
+                <label for="">Berat:</label>
+                <input type="text" name="berat" id="" placeholder="..." />
+                <label for="">kg </label>
+              </div>
+              <div>
+                <label for="">Tinggi:</label>
+                <input type="text" name="tinggi" id="" placeholder="..." />
+                <label for="">cm </label>
+              </div>
+              <div>
+                <label for="">IMT:</label>
+                <input type="text" name="imt" id="" placeholder="..." />
+                <label for="">kg/m <sup>3</sup> </label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table
+              class="table table-bordered table-kewarganegaraan"
+              width="100%"
+            >
+              <tr bgcolor="#DFE8F6">
+                <td>
+                  <div style="display: flex; gap: 10px">
+                    <label for="">Kewarganegaraan:</label>
+                    <div>
+                      <input
+                        type="radio"
+                        name="Kewarganegaraan"
+                        id=""
+                        value="WNI"
+                      />
+                      <label for="Kewarganegaraan">WNI</label>
+                    </div>
+                    <div>
+                      <input
+                        type="radio"
+                        name="Kewarganegaraan"
+                        id=""
+                        value="WNA"
+                      />
+                      <label for="Kewarganegaraan">WNA</label>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div style="display: flex; gap: 15px">
+                    <div style="display: flex">
+                      <label for="">Suku bangsa: </label>
+                      <input
+                        type="text"
+                        name="suku-bangsa"
+                        id=""
+                        placeholder="..."
+                      />
+                    </div>
+                    <div style="display: flex">
+                      <label for="">Sebutkan: </label>
+
+                      <input
+                        type="text"
+                        name="sebutkan-suku-bangsa"
+                        id=""
+                        placeholder="..."
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display: flex; gap: 10px">
+                    <label for="">Bahasa yang biasa digunakan :</label>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="bahasa"
+                        id=""
+                        value="Indonesia"
+                      />
+                      <label for="bahasa">Indonesia</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="bahasa"
+                        id=""
+                        value="Inggris"
+                      />
+                      <label for="bahasa">Inggris</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="bahasa"
+                        id=""
+                        value="Bahasa asing lain"
+                      />
+                      <label for="bahasa">Bahasa asing lain</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="bahasa"
+                        id=""
+                        value="Bahasa daerah"
+                      />
+                      <label for="bahasa">Bahasa daerah</label>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div style="display: flex; justify-content: space-between">
+                    <label for="">Agama: </label>
+                    <div>
+                      <input type="radio" name="agama" id="" value="Islam" />
+                      <label for="agama">Islam</label>
+                    </div>
+                    <div>
+                      <input type="radio" name="agama" id="" value="Kristen" />
+                      <label for="agama">Kristen</label>
+                    </div>
+                    <div>
+                      <input type="radio" name="agama" id="" value="Hindu" />
+                      <label for="agama">Hindu</label>
+                    </div>
+                    <div>
+                      <input type="radio" name="agama" id="" value="Katolik" />
+                      <label for="agama">Katolik</label>
+                    </div>
+
+                    <div>
+                      <input type="radio" name="agama" id="" value="Buddha" />
+                      <label for="agama">Buddha</label>
+                    </div>
+                    <div>
+                      <input
+                        type="radio"
+                        name="agama"
+                        id=""
+                        value="kepercayaan"
+                      />
+                      <label for="agama">kepercayaan</label>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr bgcolor="#DFE8F6">
+                <td>
+                  <div style="display: flex; gap: 10px">
+                    <label for="">Status :</label>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="status"
+                        id=""
+                        value="Belum menikah"
+                      />
+                      <label for="status">Belum menikah</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="status"
+                        id=""
+                        value="Sudah Menikah"
+                      />
+                      <label for="status">Sudah Menikah</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="status"
+                        id=""
+                        value="Cerai"
+                      />
+                      <label for="status">Cerai</label>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div style="display: flex; justify-content: space-between">
+                    <label for="">Yang merawat: </label>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="yang-merawat"
+                        id=""
+                        value="Suami/Istri"
+                      />
+                      <label for="yang-merawat">Suami/Istri</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="yang-merawat"
+                        id=""
+                        value="Anak"
+                      />
+                      <label for="yang-merawat">Anak</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="orang-tua"
+                        id=""
+                        value="Hindu"
+                      />
+                      <label for="orang-tua">Orang Tua</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="yang-merawat"
+                        id=""
+                        value="Tidak ada"
+                      />
+                      <label for="yang-merawat">Tidak ada</label>
+                    </div>
+
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="yang-merawat"
+                        id=""
+                        value="Lain-lain"
+                      />
+                      <label for="yang-merawat">Lain-lain</label>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display: flex; gap: 10px">
+                    <label for="">Tanggal :</label>
+                    <div>
+                      <input
+                        type="text"
+                        name="status"
+                        id=""
+                        placeholder="dd/mm/yy"
+                      />
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div style="display: flex; gap: 15px">
+                    <div class="nama-lengkap-keluarga">
+                      <label for="">Nama Lengkap Keluarga :</label>
+                      <div style="display: flex; gap: 10px">
+                        <div>
+                          <textarea
+                            style="padding: 5px"
+                            name="nama-lengkap-keluarga"
+                            id=""
+                            placeholder="..."
+                            rows="2"
+                            cols="30"
+                          ></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ttd-keluarga">
+                      <label for="">Tanda tangan keluarga :</label>
+                      <div style="display: flex; gap: 10px">
+                        <div>
+                          <textarea
+                            style="padding: 5px"
+                            name="tanda-tangan-keluarga"
+                            id=""
+                            placeholder="..."
+                            rows="2"
+                            cols="30"
+                          ></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>
+            <b>Perawatan Terintegrasi</b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table
+              class="table table-bordered perawatan-terintegrasi"
+              width="100%"
+            >
+              <tbody>
+                <tr style="font-weight: bold">
+                  <td>Insight</td>
+                  <td>Pasien</td>
+                  <td>Keluarga</td>
+                </tr>
+                <tr>
+                  <td>Mengetahui diagnosis</td>
+                  <td>
+                    <div style="display: flex; gap: 10px">
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="pasien-mengetahui-diagnosis"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="pasien-mengetahui-diagnosis"
+                      />
+                      <label for="l">Tidak</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 10px">
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="keluarga-mengetahui-diagnosis"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="keluarga-mengetahui-diagnosis"
+                      />
+                      <label for="l">Tidak</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Mengetahui prognosis</td>
+                  <td>
+                    <div style="display: flex; gap: 10px">
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="pasien-mengetahui-prognosis"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="pasien-mengetahui-prognosis"
+                      />
+                      <label for="l">Tidak</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 10px">
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="keluarga-mengetahui-prognosis"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="keluarga-mengetahui-prognosis"
+                      />
+                      <label for="l">Tidak</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Mengetahui tujuan perawatan</td>
+                  <td>
+                    <div style="display: flex; gap: 10px">
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="pasien-mengetahui-tujuan-perawatan"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="pasien-mengetahui-tujuan-perawatan"
+                      />
+                      <label for="l">Tidak</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 10px">
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="keluarga-mengetahui-tujuan-perawatan"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="keluarga-mengetahui-tujuan-perawatan"
+                      />
+                      <label for="l">Tidak</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr style="font-weight: bold">
+                  <td>Keagamaan / dukungan spiritual</td>
+                  <td>Pasien</td>
+                  <td>Keluarga</td>
+                </tr>
+                <tr>
+                  <td>Kebutuhan dan dukungan spiritual pada pasien</td>
+                  <td>
+                    <div style="display: flex; gap: 10px">
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="dukungan-spiritual-pasien"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="dukungan-spiritual-pasien"
+                      />
+                      <label for="l">Tidak</label>
+                      <input
+                        type="radio"
+                        value="Keadaan koma"
+                        name="dukungan-spiritual-pasien"
+                      />
+                      <label for="l">Keadaan koma</label>
+                    </div>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>
+                    Kebutuhan / kebutuhan spiritual pada keluarga / lainnya
+                  </td>
+                  <td></td>
+                  <td>
+                    <div
+                      style="
+                        display: flex;
+
+                        gap: 10px;
+                      "
+                    >
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="dukungan-spiritual-keluarga"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="dukungan-spiritual-keluarga"
+                      />
+                      <label for="l">Tidak</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Kecemasan pasien / kerabat terhadap diri sendiri / orang
+                    lain
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 10px">
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="kecemasan-pasien-kerabat-oranglain-pasien"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="kecemasan-pasien-kerabat-oranglain-pasien"
+                      />
+                      <label for="l">Tidak</label>
+                      <input
+                        type="radio"
+                        value="Keadaan koma"
+                        name="kecemasan-pasien-kerabat-oranglain-pasien"
+                      />
+                      <label for="l">Keadaan koma</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div
+                      style="
+                        display: flex;
+
+                        gap: 10px;
+                      "
+                    >
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="kecemasan-pasien-kerabat-oranglain-keluarga"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="kecemasan-pasien-kerabat-oranglain-keluarga"
+                      />
+                      <label for="l">Tidak</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Dukungan dari tim secara keseluruhan</td>
+                  <td>
+                    <div style="display: flex; gap: 10px">
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="dukungan-tim-pasien"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="dukungan-tim-pasien"
+                      />
+                      <label for="l">Tidak</label>
+                      <input
+                        type="radio"
+                        value="Keadaan koma"
+                        name="dukungan-tim-pasien"
+                      />
+                      <label for="l">Keadaan koma</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div
+                      style="
+                        display: flex;
+
+                        gap: 10px;
+                      "
+                    >
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="dukungan-tim-keluarga"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="dukungan-tim-keluarga"
+                      />
+                      <label for="l">Tidak</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Identifikasi tradisi keagamaan</td>
+                  <td>
+                    <div
+                      style="
+                        display: flex;
+
+                        gap: 10px;
+                      "
+                    >
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="identifikasi-tradisi-keagamaan-pasien"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="identifikasi-tradisi-keagamaan-pasien"
+                      />
+                      <label for="l">Tidak</label>
+                      <input
+                        type="radio"
+                        value="N/A"
+                        name="identifikasi-tradisi-keagamaan-pasien"
+                      />
+                      <label for="l">N/A</label>
+                    </div>
+                    <div>
+                      <label for="">Sebutkan, jika ya :</label>
+                      <input
+                        type="text"
+                        name="detail-tradisi-keagamaan"
+                        id=""
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div
+                      style="
+                        display: flex;
+
+                        gap: 10px;
+                      "
+                    >
+                      <input
+                        type="radio"
+                        value="Ya"
+                        name="identifikasi-tradisi-keagamaan-keluarga"
+                      />
+                      <label for="l">Ya</label>
+                      <input
+                        type="radio"
+                        value="Tidak"
+                        name="identifikasi-tradisi-keagamaan-keluarga"
+                      />
+                      <label for="l">Tidak</label>
+                      <input
+                        type="radio"
+                        value="N/A"
+                        name="identifikasi-tradisi-keagamaan-keluarga"
+                      />
+                      <label for="l">N/A</label>
+                    </div>
+                    <div>
+                      <label for="">Sebutkan, jika ya :</label>
+                      <input
+                        type="text"
+                        name="detail-tradisi-keagamaan"
+                        id=""
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <b
+                      >Isu Psikolog (contoh: Masalah agama, pendamping hidup,
+                      rencana, keuangan, hukum)</b
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <textarea
+                      style="width: 100%"
+                      name="isu-psikolog"
+                      id=""
+                      rows="5"
+                    ></textarea>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table" cellpadding="0" border="0">
+      <tbody>
+        <tr>
+          <td>&nbsp;</td>
+
+          <td>
+            <div align="center"><strong>Nama yang mengkaji</strong></div>
+          </td>
+
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
+          <td bgcolor="#FFFFFF">
+            <input
+              name="17_pukul"
+              type="text"
+              id="17_pukul"
+              placeholder="00:00"
+              size="10"
+              myid="check_cara"
+            />
+          </td>
+
+          <td bgcolor="#FFFFFF">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td bgcolor="#FFFFFF">Nama</td>
+
+          <td bgcolor="#FFFFFF">
+            <input
+              name="17_nama3"
+              type="text"
+              id="17_nama3"
+              size="25"
+              myid="check_cara"
+            />
+            <br />
+            <select
+              type="select"
+              name="perawatnya"
+              id="perawatnya"
+              myid="check_cara"
+              iscombo="t"
+              onchange="get_ttd2();"
+            >
+              <option></option>
+            </select>
+            <br />
+            <font id="ttdnya2"></font>
+          </td>
+
+          <td bgcolor="#FFFFFF">&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
+>>>>>>> 96d4784f2a87893d45022b94fe2e0a92ddb92e0a

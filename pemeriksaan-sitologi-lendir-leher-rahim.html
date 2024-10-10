@@ -1,0 +1,2361 @@
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PEMERIKSAAN SITOLOGI LENDIR LEHER RAHIM</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    .petugas,
+    .inisiasi {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .petugas th,
+    .petugas td,
+    .inisiasi th,
+    .inisiasi td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+  </style>
+  <body>
+    <h1 class="title">PEMERIKSAAN SITOLOGI LENDIR LEHER RAHIM</h1>
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td bgcolor="#DFE8F6">No. Urut Pasien</td>
+          <td bgcolor="#DFE8F6">
+            <input
+              name="no_urut_pasien2"
+              type="text"
+              id="no_urut_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+            />
+          </td>
+          <td bgcolor="#DFE8F6">
+            <label for="">No. Lab:</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <input type="text" />
+          </td>
+        </tr>
+
+        <tr>
+          <td bgcolor="">Tanggal Pemeriksaan</td>
+          <td bgcolor="">
+            <input
+              name="tgl_pemeriksaan2"
+              type="text"
+              id="tgl_pemeriksaan"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td bgcolor="">Diterima Tgl.</td>
+          <td bgcolor="">
+            <input
+              name="diterima_tgl2"
+              type="text"
+              id="diterima_tgl"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+    <hr />
+    <br />
+
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr bgcolor="#DFE8F6">
+          <td>Nama Pasien:</td>
+          <td>
+            <input
+              type="text"
+              size="30"
+              name="nama-pasien"
+              id=""
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <label for="nama">Umur Pasien:</label>
+          </td>
+          <td>
+            <div>
+              <input
+                type="text"
+                size="30"
+                name="umur"
+                id=""
+                placeholder="..."
+              />
+              <label for="status-psikologis">Tahun</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Pendidikan terakhir pasien:</td>
+          <td>
+            <input
+              type="text"
+              size="30"
+              name="pendidikan-terakhir-pasien"
+              id=""
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <label for="nama">Pekerjaan Pasien:</label>
+          </td>
+          <td>
+            <div>
+              <input
+                type="text"
+                size="30"
+                name="pekerjaan-pasien"
+                id=""
+                placeholder="..."
+              />
+            </div>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>Nama suami:</td>
+          <td>
+            <input
+              type="text"
+              size="30"
+              name="nama-suami"
+              id=""
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <label for="nama">Pekerjaan suami:</label>
+          </td>
+          <td>
+            <div>
+              <input
+                type="text"
+                size="30"
+                name="pekerjaan-suami"
+                id=""
+                placeholder="..."
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Alamat:</td>
+          <td colspan="3">
+            <textarea
+              name=""
+              id=""
+              style="width: 100%; padding: 5px"
+              cols="2"
+            ></textarea>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>Usia waktu nikah (pertama):</td>
+          <td>
+            <div>
+              <input
+                type="text"
+                size="30"
+                name="usia-waktu-nikah"
+                id=""
+                placeholder="..."
+              />
+              <label for="status-psikologis">Tahun</label>
+            </div>
+          </td>
+          <td>Jumlah anak:</td>
+          <td>
+            <div>
+              <input
+                type="text"
+                size="30"
+                name="jumlah-anak"
+                id=""
+                placeholder="..."
+              />
+              <label for="status-psikologis">orang</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Pernah keguguran:</td>
+          <td>
+            <section style="display: flex; gap: 20px">
+              <div>
+                <input
+                  type="radio"
+                  name="apakah-pernah-keguguran"
+                  id=""
+                  value="Ya"
+                />
+                <label for="apakah-pernah-keguguran">Ya</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="apakah-pernah-keguguran"
+                  id=""
+                  value="Tidak"
+                />
+                <label for="apakah-pernah-keguguran">Tidak</label>
+              </div>
+              <div>
+                <label for="pernah-keguguran">bila Ya, berapa kali?</label>
+                <input
+                  type="text"
+                  name="pernah-keguguran"
+                  id=""
+                  placeholder="..."
+                />
+                <label for="pernah-keguguran">kali</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>Sudah menopause:</td>
+          <td colspan="3">
+            <section style="display: flex; gap: 20px">
+              <div>
+                <input
+                  type="radio"
+                  name="apakah-sudah-menopause"
+                  id=""
+                  value="Ya"
+                />
+                <label for="apakah-sudah-menopause">Ya</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="apakah-sudah-menopause"
+                  id=""
+                  value="Tidak"
+                />
+                <label for="apakah-sudah-menopause">Tidak</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td style="padding-left: 10px">
+            <label>Bila tidak, jenis KB yang digunakan sekarang:</label>
+          </td>
+          <td colspan="3">
+            <input
+              type="text"
+              size="30"
+              name="nama-suami"
+              id=""
+              placeholder="..."
+            />
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td style="padding-left: 10px">
+            <label>Telah menggunakan KB sejak:</label>
+          </td>
+          <td colspan="3">
+            <input
+              type="text"
+              size="30"
+              name="nama-suami"
+              id=""
+              placeholder="..."
+            />
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td style="padding-left: 10px">
+            <label>Bila tidak, hari pertama haid terakhir tanggal:</label>
+          </td>
+          <td colspan="3">
+            <input
+              type="text"
+              size="30"
+              name="nama-suami"
+              id=""
+              placeholder="..."
+            />
+            <label for="">(haid teratur/haid tidak teratur)</label>
+          </td>
+        </tr>
+        <tr>
+          <td>Pernah PAP SMEAR:</td>
+          <td>
+            <section style="display: flex; gap: 20px">
+              <div>
+                <input
+                  type="radio"
+                  name="apakah-pernah-pap-smear"
+                  id=""
+                  value="Ya"
+                />
+                <label for="apakah-pernah-pap-smear">Ya</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="apakah-pernah-pap-smear"
+                  id=""
+                  value="Tidak"
+                />
+                <label for="apakah-pernah-pap-smear">Tidak</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 10px">
+            <label>Bila Ya, sudah berapa kali?</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              size="30"
+              name="jumlah-kali-pap-smear"
+              id=""
+              placeholder="..."
+            />
+          </td>
+          <td style="padding-left: 10px">
+            <label>Terakhir dilakukan di</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              name="jumlah-kali-pap-smear"
+              id=""
+              placeholder="..."
+            />
+            <label for="tahun">Tahun:</label>
+            <input type="text" name="tahun-pap-smear" placeholder="..." id="" />
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>Keluhan saat ini:</td>
+          <td colspan="3">
+            <section style="display: flex; gap: 20px">
+              <div>
+                <input type="radio" name="ada-keluhan" id="" value="Ada" />
+                <label for="ada-keluhan">Ada</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="ada-keluhan"
+                  id=""
+                  value="Tidak ada"
+                />
+                <label for="ada-keluhan">Tidak ada</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Pendarahan:</td>
+          <td colspan="3">
+            <section style="display: flex; gap: 20px">
+              <div>
+                <input type="radio" name="pendarahan" id="" value="Ada" />
+                <label for="pendarahan">Ya</label>
+              </div>
+              <div>
+                <input type="radio" name="pendarahan" id="" value="Tidak ada" />
+                <label for="pendarahan">Tidak</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>Keputihan:</td>
+          <td colspan="3">
+            <section style="display: flex; gap: 20px">
+              <div>
+                <input type="radio" name="keputihan" id="" value="Ada" />
+                <label for="keputihan">Ya</label>
+              </div>
+              <div>
+                <input type="radio" name="keputihan" id="" value="Tidak ada" />
+                <label for="keputihan">Tidak</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr>
+          <td>Lain - lain (jelaskan) :</td>
+          <td colspan="3">
+            <textarea
+              name="keluhan-lain-lain"
+              id=""
+              style="width: 100%; padding: 5px"
+              cols="2"
+            ></textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table table-bordered petugas">
+      <tbody>
+        <tr bgcolor="#DFE8F6">
+          <td>Inspekulo:</td>
+          <td colspan="2">
+            <input
+              type="text"
+              style="width: 100%"
+              name="inspekulo"
+              id=""
+              placeholder="..."
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>IVA:</td>
+          <td colspan="2">
+            <input
+              type="text"
+              style="width: 100%"
+              name="IVA"
+              id=""
+              placeholder="..."
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <hr />
+    <br />
+    <table width="100%" class="table table-bordered inisiasi">
+      <thead>
+        <tr>
+          <th colspan="2">Inisiasi</th>
+          <th>
+            QB <br />
+            ml/mnt
+          </th>
+          <th>
+            QD <br />
+            ml/mnt
+          </th>
+          <th>
+            Tek Arteri <br />
+            mmHg
+          </th>
+          <th>
+            Tek Vena <br />
+            mmHg
+          </th>
+          <th>
+            TMP <br />
+            mmHg
+          </th>
+          <th>
+            UFR <br />
+            ml/jam
+          </th>
+          <th>
+            TD <br />
+            mmHg
+          </th>
+          <th>Nadi/Suhu</th>
+          <th>
+            P <br />
+            x/mnt
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-1" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-2" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-3" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-4" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-5" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-6" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-7" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-8" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-9" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-10" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-11" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-12" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="11"><b>Terminasi</b></td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-inisiasi-a-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-inisiasi-b-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-qb-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-qd-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-tek-arteri-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-tek-vena-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-tmp-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-ufr-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-td-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-nadi-suhu-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="terminasi-p-1" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-inisiasi-a-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-inisiasi-b-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-qb-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-qd-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-tek-arteri-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-tek-vena-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-tmp-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-ufr-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-td-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-nadi-suhu-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="terminasi-p-2" id="" />
+          </td>
+        </tr>
+        <tr style="text-align: center">
+          <td rowspan="2"><b>PKL</b></td>
+          <td rowspan="2"><b>Nama</b></td>
+          <td colspan="5"><b>CAIRAN MASUK</b></td>
+          <td colspan="4"><b>CAIRAN KELUAR</b></td>
+        </tr>
+        <tr style="text-align: center">
+          <td>Minum</td>
+          <td>Infus</td>
+          <td>Transfusi</td>
+          <td>Sisa Priming</td>
+          <td>Wash Out</td>
+          <td>Urine</td>
+          <td>Pendarahan</td>
+          <td colspan="2">Muntah</td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="pkl-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nama-1" id="" />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-minum-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-infus-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-transfusi-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-sisa-priming-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-wash-out-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-urine-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-pendarahan-1"
+              id=""
+            />
+          </td>
+          <td colspan="2">
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-muntah-1"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="pkl-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nama-2" id="" />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-minum-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-infus-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-transfusi-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-sisa-priming-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-wash-out-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-urine-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-pendarahan-2"
+              id=""
+            />
+          </td>
+          <td colspan="2">
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-muntah-2"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="pkl-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nama-3" id="" />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-minum-3"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-infus-3"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-transfusi-3"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-sisa-priming-3"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-wash-out-3"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-urine-3"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-pendarahan-3"
+              id=""
+            />
+          </td>
+          <td colspan="2">
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-muntah-3"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="pkl-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nama-4" id="" />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-minum-4"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-infus-4"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-transfusi-4"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-sisa-priming-4"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-wash-out-4"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-urine-4"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-pendarahan-4"
+              id=""
+            />
+          </td>
+          <td colspan="2">
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-muntah-4"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr style="text-align: center">
+          <td colspan="2" rowspan="2"><b>Jumlah</b></td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-cairan-masuk-minum"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-cairan-masuk-infus"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-cairan-masuk-transfusi"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-cairan-masuk-sisa-priming"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-cairan-masuk-wash-out"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-cairan-keluar-urine"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-cairan-keluar-pendarahan"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+          <td colspan="2">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-cairan-keluar-muntah"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-semua-cairan-masuk"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+          <td colspan="4">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-semua-cairan-keluar"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+        </tr>
+        <tr style="text-align: center">
+          <td><b>PKL</b></td>
+          <td><b>Nama</b></td>
+          <td colspan="9"><b>EVALUASI</b></td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-pkl-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-nama-1"
+              id=""
+            />
+          </td>
+          <td colspan="5">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <label for="">Subjektif:</label>
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-subjektif-1"
+                id=""
+              />
+            </div>
+          </td>
+          <td colspan="4">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <label for="">Assessment:</label>
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-assessment-1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-pkl-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-nama-2"
+              id=""
+            />
+          </td>
+          <td colspan="5">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-subjektif-2"
+                id=""
+              />
+            </div>
+          </td>
+          <td colspan="4">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-assessment-2"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-pkl-3"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-nama-3"
+              id=""
+            />
+          </td>
+          <td colspan="5">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-subjektif-3"
+                id=""
+              />
+            </div>
+          </td>
+          <td colspan="4">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-assessment-3"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-pkl-4"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-nama-4"
+              id=""
+            />
+          </td>
+          <td colspan="5">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <label for="">Objektif:</label>
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-objektif-1"
+                id=""
+              />
+            </div>
+          </td>
+          <td colspan="4">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <label for="">Planning:</label>
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-planning-1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-pkl-5"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-nama-5"
+              id=""
+            />
+          </td>
+          <td colspan="5">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-objektif-2"
+                id=""
+              />
+            </div>
+          </td>
+          <td colspan="4">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-planning-2"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-pkl-6"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-nama-6"
+              id=""
+            />
+          </td>
+          <td colspan="5">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-objektif-3"
+                id=""
+              />
+            </div>
+          </td>
+          <td colspan="4">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-planning-3"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr style="text-align: center">
+          <td colspan="12"><b>CATATAN</b></td>
+        </tr>
+        <tr>
+          <td colspan="12">
+            <input style="width: 100%" type="text" name="catatan-1" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="12">
+            <input style="width: 100%" type="text" name="catatan-2" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="12">
+            <input style="width: 100%" type="text" name="catatan-3" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="12">
+            <input style="width: 100%" type="text" name="catatan-4" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="12">
+            <input style="width: 100%" type="text" name="catatan-5" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="12">
+            <input style="width: 100%" type="text" name="catatan-6" id="" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+    <hr />
+    <br />
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <td colspan="4">
+            <div align="center"><strong>Perawat</strong></div>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
+          <td colspan="2" bgcolor="#FFFFFF">
+            <input
+              name="17_pukul"
+              type="text"
+              id="17_pukul"
+              placeholder="00:00"
+              size="10"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#FFFFFF">Nama</td>
+
+          <td colspan="2" bgcolor="#FFFFFF">
+            <input
+              name="17_nama3"
+              type="text"
+              id="17_nama3"
+              size="25"
+              myid="check_cara"
+            />
+            <br />
+            <select
+              type="select"
+              name="perawatnya"
+              id="perawatnya"
+              myid="check_cara"
+              iscombo="t"
+              onchange="get_ttd2();"
+            >
+              <option></option>
+            </select>
+
+            <font id="ttdnya2"></font>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PEMERIKSAAN SITOLOGI LENDIR LEHER RAHIM</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    .petugas {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .petugas th,
+    .petugas td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">PEMERIKSAAN SITOLOGI LENDIR LEHER RAHIM</h1>
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td bgcolor="#DFE8F6">No. Urut Pasien</td>
+          <td bgcolor="#DFE8F6">
+            <input
+              name="no_urut_pasien2"
+              type="text"
+              id="no_urut_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+            />
+          </td>
+          <td bgcolor="#DFE8F6">
+            <label for="">No. Lab:</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <input type="text" />
+          </td>
+        </tr>
+
+        <tr>
+          <td bgcolor="">Tanggal Pemeriksaan</td>
+          <td bgcolor="">
+            <input
+              name="tgl_pemeriksaan2"
+              type="text"
+              id="tgl_pemeriksaan"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td bgcolor="">Diterima Tgl.</td>
+          <td bgcolor="">
+            <input
+              name="diterima_tgl2"
+              type="text"
+              id="diterima_tgl"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr bgcolor="#DFE8F6">
+          <td>Nama Pasien:</td>
+          <td>
+            <input
+              type="text"
+              size="30"
+              name="nama-pasien"
+              id=""
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <label for="nama">Umur Pasien:</label>
+          </td>
+          <td>
+            <div>
+              <input
+                type="text"
+                size="30"
+                name="umur"
+                id=""
+                placeholder="..."
+              />
+              <label for="status-psikologis">Tahun</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Pendidikan terakhir pasien:</td>
+          <td>
+            <input
+              type="text"
+              size="30"
+              name="pendidikan-terakhir-pasien"
+              id=""
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <label for="nama">Pekerjaan Pasien:</label>
+          </td>
+          <td>
+            <div>
+              <input
+                type="text"
+                size="30"
+                name="pekerjaan-pasien"
+                id=""
+                placeholder="..."
+              />
+            </div>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>Nama suami:</td>
+          <td>
+            <input
+              type="text"
+              size="30"
+              name="nama-suami"
+              id=""
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <label for="nama">Pekerjaan suami:</label>
+          </td>
+          <td>
+            <div>
+              <input
+                type="text"
+                size="30"
+                name="pekerjaan-suami"
+                id=""
+                placeholder="..."
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Alamat:</td>
+          <td colspan="3">
+            <textarea
+              name=""
+              id=""
+              style="width: 100%; padding: 5px"
+              cols="2"
+            ></textarea>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>Usia waktu nikah (pertama):</td>
+          <td>
+            <div>
+              <input
+                type="text"
+                size="30"
+                name="usia-waktu-nikah"
+                id=""
+                placeholder="..."
+              />
+              <label for="status-psikologis">Tahun</label>
+            </div>
+          </td>
+          <td>Jumlah anak:</td>
+          <td>
+            <div>
+              <input
+                type="text"
+                size="30"
+                name="jumlah-anak"
+                id=""
+                placeholder="..."
+              />
+              <label for="status-psikologis">orang</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Pernah keguguran:</td>
+          <td>
+            <section style="display: flex; gap: 20px">
+              <div>
+                <input
+                  type="radio"
+                  name="apakah-pernah-keguguran"
+                  id=""
+                  value="Ya"
+                />
+                <label for="apakah-pernah-keguguran">Ya</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="apakah-pernah-keguguran"
+                  id=""
+                  value="Tidak"
+                />
+                <label for="apakah-pernah-keguguran">Tidak</label>
+              </div>
+              <div>
+                <label for="pernah-keguguran">bila Ya, berapa kali?</label>
+                <input
+                  type="text"
+                  name="pernah-keguguran"
+                  id=""
+                  placeholder="..."
+                />
+                <label for="pernah-keguguran">kali</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>Sudah menopause:</td>
+          <td colspan="3">
+            <section style="display: flex; gap: 20px">
+              <div>
+                <input
+                  type="radio"
+                  name="apakah-sudah-menopause"
+                  id=""
+                  value="Ya"
+                />
+                <label for="apakah-sudah-menopause">Ya</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="apakah-sudah-menopause"
+                  id=""
+                  value="Tidak"
+                />
+                <label for="apakah-sudah-menopause">Tidak</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td style="padding-left: 10px">
+            <label>Bila tidak, jenis KB yang digunakan sekarang:</label>
+          </td>
+          <td colspan="3">
+            <input
+              type="text"
+              size="30"
+              name="nama-suami"
+              id=""
+              placeholder="..."
+            />
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td style="padding-left: 10px">
+            <label>Telah menggunakan KB sejak:</label>
+          </td>
+          <td colspan="3">
+            <input
+              type="text"
+              size="30"
+              name="nama-suami"
+              id=""
+              placeholder="..."
+            />
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td style="padding-left: 10px">
+            <label>Bila tidak, hari pertama haid terakhir tanggal:</label>
+          </td>
+          <td colspan="3">
+            <input
+              type="text"
+              size="30"
+              name="nama-suami"
+              id=""
+              placeholder="..."
+            />
+            <label for="">(haid teratur/haid tidak teratur)</label>
+          </td>
+        </tr>
+        <tr>
+          <td>Pernah PAP SMEAR:</td>
+          <td>
+            <section style="display: flex; gap: 20px">
+              <div>
+                <input
+                  type="radio"
+                  name="apakah-pernah-pap-smear"
+                  id=""
+                  value="Ya"
+                />
+                <label for="apakah-pernah-pap-smear">Ya</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="apakah-pernah-pap-smear"
+                  id=""
+                  value="Tidak"
+                />
+                <label for="apakah-pernah-pap-smear">Tidak</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 10px">
+            <label>Bila Ya, sudah berapa kali?</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              size="30"
+              name="jumlah-kali-pap-smear"
+              id=""
+              placeholder="..."
+            />
+          </td>
+          <td style="padding-left: 10px">
+            <label>Terakhir dilakukan di</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              name="jumlah-kali-pap-smear"
+              id=""
+              placeholder="..."
+            />
+            <label for="tahun">Tahun:</label>
+            <input type="text" name="tahun-pap-smear" placeholder="..." id="" />
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>Keluhan saat ini:</td>
+          <td colspan="3">
+            <section style="display: flex; gap: 20px">
+              <div>
+                <input type="radio" name="ada-keluhan" id="" value="Ada" />
+                <label for="ada-keluhan">Ada</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="ada-keluhan"
+                  id=""
+                  value="Tidak ada"
+                />
+                <label for="ada-keluhan">Tidak ada</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Pendarahan:</td>
+          <td colspan="3">
+            <section style="display: flex; gap: 20px">
+              <div>
+                <input type="radio" name="pendarahan" id="" value="Ada" />
+                <label for="pendarahan">Ya</label>
+              </div>
+              <div>
+                <input type="radio" name="pendarahan" id="" value="Tidak ada" />
+                <label for="pendarahan">Tidak</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr bgcolor="#DFE8F6">
+          <td>Keputihan:</td>
+          <td colspan="3">
+            <section style="display: flex; gap: 20px">
+              <div>
+                <input type="radio" name="keputihan" id="" value="Ada" />
+                <label for="keputihan">Ya</label>
+              </div>
+              <div>
+                <input type="radio" name="keputihan" id="" value="Tidak ada" />
+                <label for="keputihan">Tidak</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr>
+          <td>Lain - lain (jelaskan) :</td>
+          <td colspan="3">
+            <textarea
+              name="keluhan-lain-lain"
+              id=""
+              style="width: 100%; padding: 5px"
+              cols="2"
+            ></textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr />
+    <table width="100%" class="table table-bordered petugas">
+      <tbody>
+        <tr bgcolor="#DFE8F6">
+          <td>Inspekulo:</td>
+          <td colspan="2">
+            <input
+              type="text"
+              size="30"
+              name="inspekulo"
+              id=""
+              placeholder="..."
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>IVA:</td>
+          <td colspan="2">
+            <input type="text" size="30" name="IVA" id="" placeholder="..." />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <div align="center"><strong>Perawat</strong></div>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
+          <td colspan="2" bgcolor="#FFFFFF">
+            <input
+              name="17_pukul"
+              type="text"
+              id="17_pukul"
+              placeholder="00:00"
+              size="10"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#FFFFFF">Nama</td>
+
+          <td colspan="2" bgcolor="#FFFFFF">
+            <input
+              name="17_nama3"
+              type="text"
+              id="17_nama3"
+              size="25"
+              myid="check_cara"
+            />
+            <br />
+            <select
+              type="select"
+              name="perawatnya"
+              id="perawatnya"
+              myid="check_cara"
+              iscombo="t"
+              onchange="get_ttd2();"
+            >
+              <option></option>
+            </select>
+
+            <font id="ttdnya2"></font>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
+>>>>>>> 96d4784f2a87893d45022b94fe2e0a92ddb92e0a

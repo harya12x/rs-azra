@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      PENGKAJIAN VOLUNTARY COUNCELING & TESTING (VCT) RS. AZRA BOGOR
+    </title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th,
+    .perawatan-terintegrasi th,
+    .perawatan-terintegrasi td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">
+      PENGKAJIAN VOLUNTARY COUNCELING & TESTING (VCT) RS. AZRA BOGOR
+    </h1>
+    <table class="table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td bgcolor="#DFE8F6">Nama Pasien</td>
+          <td bgcolor="#DFE8F6">
+            <input
+              name="nama_pasien2"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+            />
+          </td>
+          <td bgcolor="#DFE8F6">Jenis Kelamin</td>
+          <td bgcolor="#DFE8F6">
+            <input type="checkbox" />
+            <label for="l">L</label>
+            <input type="checkbox" />
+            <label for="l">P</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <input type="number" />
+          </td>
+        </tr>
+
+        <tr>
+          <td bgcolor="">Tanggal Lahir</td>
+          <td bgcolor="">
+            <input
+              name="tgl_lahira2"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td>Umur</td>
+          <td>
+            <input type="number" size="5" placeholder="..." />
+          </td>
+          <td>
+            <label for="kelas"> Kelas </label>
+          </td>
+          <td>
+            <input
+              name="kelasa2"
+              type="text"
+              id="kelas"
+              placeholder="..."
+              myid="check_cara"
+              label="kelas"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#DFE8F6">Tanggal</td>
+          <td bgcolor="#DFE8F6">
+            <input type="date" />
+          </td>
+
+          <td bgcolor="#DFE8F6">Jam</td>
+          <td bgcolor="#DFE8F6">
+            <input type="time" />
+          </td>
+
+          <td bgcolor="#DFE8F6">Kamar</td>
+          <td bgcolor="#DFE8F6">
+            <input type="text" placeholder="..." />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table-bordered">
+      <thead>
+        <tr style="text-align: left">
+          <th colspan="2">1. Data Pasien</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="width: 20%">
+            <label for="">Nama pengawas minum obat (PMO):</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              name="nama-pmo"
+              style="width: 100%"
+              placeholder="......"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 20%">
+            <label for="">Hubungan dengan pasien:</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              name="hubungan-pmo-dengan-pasien"
+              style="width: 100%"
+              placeholder="......"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 20%">
+            <label for="">Alamat PMO:</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              name="alamat-pmo"
+              style="width: 100%"
+              placeholder="......"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 20%">
+            <label for="">Nomor telepon PMO:</label>
+          </td>
+          <td>
+            <input type="tel" name="no-telp-pmo" style="width: 100%" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 20%">
+            <label for="">Tanggal konfirmasi tes HIV+:</label>
+          </td>
+          <td>
+            <input
+              style="padding-right: 20px"
+              type="date"
+              name="tanggal-tes-hiv"
+            />
+            <label for="">Tempat:</label>
+            <input type="text" name="tempat-tes-hiv" style="width: 40%" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 20%">
+            <label for=""> Entry Point: </label>
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="entry-point"
+              value="Instalasi Gawat Darurat"
+              id=""
+            />
+            <label for="">Instalasi Gawat Darurat</label>
+            <input
+              type="radio"
+              name="entry-point"
+              value="Instalasi Rawat Jalan"
+              id=""
+            />
+            <label for="">Instalasi Rawat Jalan</label>
+            <input
+              type="radio"
+              name="entry-point"
+              value="Instalasi Kamar Operasi"
+              id=""
+            />
+            <label for="">Instalasi Kamar Operasi</label>
+            <input
+              type="radio"
+              name="entry-point"
+              value="Instalasi Kamar Operasi"
+              id=""
+            />
+            <label for="">Instalasi Kamar Operasi</label>
+            <input
+              type="radio"
+              name="entry-point"
+              value="Pasien dirujuk masuk dengan antiretroval (ART) dari klinik lain"
+              id=""
+            />
+            <label for=""
+              >Pasien dirujuk masuk dengan antiretroval (ART) dari klinik
+              lain</label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input type="radio" name="entry-point" value="Lainnya" id="" />
+              <label for="">Lainnya</label>
+              <input
+                type="text"
+                style="flex: 1"
+                name="entry-point-lainnya"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 20%">
+            <label for="">Nama klinik sebelumnya:</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              name="nama-klinik-sebelumnya"
+              style="width: 40%"
+              placeholder="......"
+              id=""
+            />
+            <label for="">Tgl rujuk masuk (RM):</label>
+            <input
+              style="padding-right: 20px"
+              type="date"
+              name="tgl-rujuk-masuk"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table-bordered table">
+      <thead>
+        <tr style="text-align: left">
+          <th colspan="2">2. Riwayat Pribadi (Pilih salah satu)</th>
+          <th colspan="5">3. Riwayat Keluarga (Pilih salah satu)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center"><label for="">Pendidikan</label></td>
+          <td>
+            <div>
+              <input type="radio" name="pendidikan" value="0" id="" />
+              <label for="">0 - Tidak sekolah</label>
+            </div>
+            <div>
+              <input type="radio" name="pendidikan" value="1" id="" />
+              <label for="">1 - SD</label>
+            </div>
+            <div>
+              <input type="radio" name="pendidikan" value="1" id="" />
+              <label for="">1 - SD</label>
+            </div>
+            <div>
+              <input type="radio" name="pendidikan" value="2" id="" />
+              <label for="">2 - SMP</label>
+            </div>
+            <div>
+              <input type="radio" name="pendidikan" value="3" id="" />
+              <label for="">3 - SMU</label>
+            </div>
+            <div>
+              <input type="radio" name="pendidikan" value="4" id="" />
+              <label for="">4 - Akademi</label>
+            </div>
+            <div>
+              <input type="radio" name="pendidikan" value="5" id="" />
+              <label for="">5 - Universitas</label>
+            </div>
+          </td>
+          <td colspan="5">
+            <label for="">Status Perkawinan:</label>
+            <br />
+            <br />
+            <div>
+              <input
+                type="radio"
+                name="status-perkawinan"
+                value="Menikah"
+                id=""
+              />
+              <label for="">Menikah</label>
+              <input
+                type="radio"
+                name="status-perkawinan"
+                value="Belum Menikah"
+                id=""
+              />
+              <label for=""> Belum Menikah</label>
+              <input
+                type="radio"
+                name="status-perkawinan"
+                value="Janda/Duda"
+                id=""
+              />
+              <label for="">Janda/Duda</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">
+            <label for="">Status Pekerjaan</label>
+          </td>
+          <td>
+            <div>
+              <input type="radio" name="status-pekerjaan" value="0" id="" />
+              <label for="">0 - Tidak bekerja</label>
+            </div>
+            <div>
+              <input type="radio" name="status-pekerjaan" value="1" id="" />
+              <label for="">1 - Bekerja</label>
+            </div>
+          </td>
+          <td>Nama mitra seksual (Suami, isteri), anak dll</td>
+          <td>Umur</td>
+          <td>HIV +/-</td>
+          <td>ART ya/tidak</td>
+          <td>No.reg Nas jika dalam perawatan</td>
+        </tr>
+        <tr>
+          <td style="text-align: center" rowspan="7">
+            <label for="">Faktor Risiko</label>
+          </td>
+          <td rowspan="7">
+            <div>
+              <input type="radio" name="faktor-risiko" value="1" id="" />
+              <label for="">1 - Heteroseksual</label>
+            </div>
+            <div>
+              <input type="radio" name="faktor-risiko" value="2" id="" />
+              <label for="">2 - Homoseksual</label>
+            </div>
+            <div>
+              <input type="radio" name="faktor-risiko" value="3" id="" />
+              <label for="">3 - Biseksual</label>
+            </div>
+            <div>
+              <input type="radio" name="faktor-risiko" value="4" id="" />
+              <label for="">4 - Perinatal</label>
+            </div>
+            <div>
+              <input type="radio" name="faktor-risiko" value="5" id="" />
+              <label for="">5 - Transfusi darah</label>
+            </div>
+            <div>
+              <input type="radio" name="faktor-risiko" value="6" id="" />
+              <label for="">6 - NAPZA</label>
+            </div>
+            <div>
+              <input type="radio" name="faktor-risiko" value="7" id="" />
+              <label for="">7 - Lainnya, uraian</label>
+            </div>
+            <input
+              type="text"
+              name="faktor-risiko-lainnya"
+              placeholder="......"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="nama-mitra-seksual-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="umur-mitra-seksual-1"
+              id=""
+            />
+          </td>
+          <td><input style="width: 100%" type="text" name="hiv-1" id="" /></td>
+          <td><input style="width: 100%" type="text" name="art-1" id="" /></td>
+          <td>
+            <input style="width: 100%" type="text" name="no-reg-nas-1" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="nama-mitra-seksual-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="umur-mitra-seksual-2"
+              id=""
+            />
+          </td>
+          <td><input style="width: 100%" type="text" name="hiv-2" id="" /></td>
+          <td><input style="width: 100%" type="text" name="art-2" id="" /></td>
+          <td>
+            <input style="width: 100%" type="text" name="no-reg-nas-2" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="nama-mitra-seksual-3"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="umur-mitra-seksual-3"
+              id=""
+            />
+          </td>
+          <td><input style="width: 100%" type="text" name="hiv-3" id="" /></td>
+          <td><input style="width: 100%" type="text" name="art-3" id="" /></td>
+          <td>
+            <input style="width: 100%" type="text" name="no-reg-nas-3" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="nama-mitra-seksual-4"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="umur-mitra-seksual-4"
+              id=""
+            />
+          </td>
+          <td><input style="width: 100%" type="text" name="hiv-4" id="" /></td>
+          <td><input style="width: 100%" type="text" name="art-4" id="" /></td>
+          <td>
+            <input style="width: 100%" type="text" name="no-reg-nas-4" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="nama-mitra-seksual-5"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="umur-mitra-seksual-5"
+              id=""
+            />
+          </td>
+          <td><input style="width: 100%" type="text" name="hiv-5" id="" /></td>
+          <td><input style="width: 100%" type="text" name="art-5" id="" /></td>
+          <td>
+            <input style="width: 100%" type="text" name="no-reg-nas-5" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="nama-mitra-seksual-6"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="umur-mitra-seksual-6"
+              id=""
+            />
+          </td>
+          <td><input style="width: 100%" type="text" name="hiv-6" id="" /></td>
+          <td><input style="width: 100%" type="text" name="art-6" id="" /></td>
+          <td>
+            <input style="width: 100%" type="text" name="no-reg-nas-6" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="nama-mitra-seksual-7"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="umur-mitra-seksual-7"
+              id=""
+            />
+          </td>
+          <td><input style="width: 100%" type="text" name="hiv-7" id="" /></td>
+          <td><input style="width: 100%" type="text" name="art-7" id="" /></td>
+          <td>
+            <input style="width: 100%" type="text" name="no-reg-nas-7" id="" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table-bordered table">
+      <thead>
+        <tr style="text-align: left">
+          <th colspan="6">4. Riwayat terapi antiretroval</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="2">Pernah menerima ART?</td>
+          <td rowspan="2">
+            <div style="display: flex; gap: 5px">
+              <label for="">Jika Ya</label>
+              <div>
+                <input type="radio" name="jenis-art" value="PMTCT" id="" />
+                <label for="">PMTCT</label>
+              </div>
+              <div>
+                <input type="radio" name="jenis-art" value="ART" id="" />
+                <label for="">ART</label>
+              </div>
+            </div>
+          </td>
+          <td style="text-align: center" colspan="3">Tempat ART dulu</td>
+        </tr>
+        <tr>
+          <td>
+            <input type="radio" name="menerima-art" value="Ya" id="" />
+            <label for="">Ya</label>
+          </td>
+          <td>
+            <input type="radio" name="menerima-art" value="Tidak" id="" />
+            <label for="">Tidak</label>
+          </td>
+          <td>
+            <input type="radio" name="tempat-art-dulu" value="Praktek" id="" />
+            <label for="">Praktek</label>
+          </td>
+          <td>
+            <input type="radio" name="tempat-art-dulu" value="RS Pem" id="" />
+            <label for="">RS Pem</label>
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="tempat-art-dulu"
+              value="RS Swasta"
+              id=""
+            />
+            <label for="">RS Swasta</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td colspan="4">
+            <div style="display: flex; gap: 5px">
+              <label for="">Nama, dosis ARV & lama penggunaannya :</label>
+              <input
+                type="text"
+                name="nama-dosis-lama-penggunaan"
+                style="flex: 1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table-bordered table">
+      <thead>
+        <tr style="text-align: left">
+          <th colspan="7">5. Pemeriksaan klinis dan laboratorium</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="text-align: center">
+          <td>&nbsp;</td>
+          <td>Tanggal</td>
+          <td>Stand WHO</td>
+          <td>BB</td>
+          <td>Status Fungsional 1 = Kerja, 2 = Ambulatori, 3 = Baring</td>
+          <td>Jumlah limfosit</td>
+          <td>Jumlah CD 4 (CD% pada anak - anak)</td>
+        </tr>
+        <tr>
+          <td>Kunjungan pertama</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="date"
+              name="tgl-kunjungan-pertama"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="stand-who-kunjungan-pertama"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="BB-kunjungan-pertama"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="status-fungsional-kunjungan-pertama"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jumlah-limfosit-kunjungan-pertama"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jumlah-cd4-kunjungan-pertama"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Memenuhi syarat medis untuk ART</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="date"
+              name="tgl-memenuhi-syarat-medis-art"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="stand-who-memenuhi-syarat-medis-art"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="BB-memenuhi-syarat-medis-art"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="status-fungsional-memenuhi-syarat-medis-art"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jumlah-limfosit-memenuhi-syarat-medis-art"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jumlah-cd4-memenuhi-syarat-medis-art"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Saat mulai ART</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="date"
+              name="tgl-saat-mulai-art"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="stand-who-saat-mulai-art"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="BB-saat-mulai-art"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="status-fungsional-saat-mulai-art"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jumlah-limfosit-saat-mulai-art"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jumlah-cd4-saat-mulai-art"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr></tr>
+        <tr>
+          <td>Saat 12 bulan ART</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="date"
+              name="tgl-saat-12-bulan-art"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="stand-who-saat-12-bulan-art"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="BB-saat-12-bulan-art"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="status-fungsional-saat-12-bulan-art"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jumlah-limfosit-saat-12-bulan-art"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jumlah-cd4-saat-12-bulan-art"
+              id=""
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table-bordered table">
+      <thead>
+        <tr style="text-align: left">
+          <th colspan="8">6. Terapi antiretroviral (ART)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="text-align: center">
+          <td rowspan="2">Nama Rejimen ART orisinal</td>
+          <td colspan="7">SUBTITUSI dalam lini 1, SWITCH ke lini 2 STOP</td>
+        </tr>
+        <tr style="text-align: center">
+          <td>Tanggal</td>
+          <td>Subtitusi</td>
+          <td>Switch</td>
+          <td>Stop</td>
+          <td>Restart</td>
+          <td>Alasan</td>
+          <td>Nama rejimen baru</td>
+        </tr>
+        <tr>
+          <td>1. ZDV+3TC+NVP</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tanggal-ZDV+3TC+NVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="subsitusi-ZDV+3TC+NVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="switch-ZDV+3TC+NVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="stop-ZDV+3TC+NVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="restart-ZDV+3TC+NVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="alasan-ZDV+3TC+NVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="nama-rejimen-baru-ZDV+3TC+NVP"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>2. ZDV+3TC+EFV</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tanggal-ZDV+3TC+EFV"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="subsitusi-ZDV+3TC+EFV"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="switch-ZDV+3TC+EFV"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="stop-ZDV+3TC+EFV"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="restart-ZDV+3TC+EFV"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="alasan-ZDV+3TC+EFV"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="nama-rejimen-baru-ZDV+3TC+EFV"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>3. d4T(30)+3TC+NVP</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tanggal-d4T(30)+3TC+NVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="subsitusi-d4T(30)+3TC+NVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="switch-d4T(30)+3TC+NVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="stop-d4T(30)+3TC+NVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="restart-d4T(30)+3TC+NVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="alasan-d4T(30)+3TC+NVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="nama-rejimen-baru-d4T(30)+3TC+NVP"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>4. d4T(30)+3TC+EVP</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tanggal-d4T(30)+3TC+EVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="subsitusi-d4T(30)+3TC+EVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="switch-d4T(30)+3TC+EVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="stop-d4T(30)+3TC+EVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="restart-d4T(30)+3TC+EVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="alasan-d4T(30)+3TC+EVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="nama-rejimen-baru-d4T(30)+3TC+EVP"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>5. d4T(40)+3TC+NVP</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tanggal-d4T(40)+3TC+NVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="subsitusi-d4T(40)+3TC+NVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="switch-d4T(40)+3TC+NVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="stop-d4T(40)+3TC+NVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="restart-d4T(40)+3TC+NVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="alasan-d4T(40)+3TC+NVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="nama-rejimen-baru-d4T(40)+3TC+NVP"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>6. d4T(40)+3TC+EVP</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tanggal-d4T(40)+3TC+EVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="subsitusi-d4T(40)+3TC+EVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="switch-d4T(40)+3TC+EVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="stop-d4T(40)+3TC+EVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="restart-d4T(40)+3TC+EVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="alasan-d4T(40)+3TC+EVP"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="nama-rejimen-baru-d4T(40)+3TC+EVP"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            7.
+            <input
+              type="text"
+              placeholder="..."
+              name="nama-rejimen-art-orisinal-lainnya"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tanggal-nama-rejimen-art-orisinal-lainnya"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="subsitusi-nama-rejimen-art-orisinal-lainnya"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="switch-nama-rejimen-art-orisinal-lainnya"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="stop-nama-rejimen-art-orisinal-lainnya"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="restart-nama-rejimen-art-orisinal-lainnya"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="alasan-nama-rejimen-art-orisinal-lainnya"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="nama-rejimen-baru-nama-rejimen-art-orisinal-lainnya"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Alasan SUBTITUSI/SWITCH</td>
+          <td>
+            <input
+              type="radio"
+              name="alasan-subtitusi-switch"
+              value="1"
+              id=""
+            />
+            <label for="">1. Toksisitas/efek samping</label>
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="alasan-subtitusi-switch"
+              value="2"
+              id=""
+            />
+            <label for="">2. Hamil</label>
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="alasan-subtitusi-switch"
+              value="3"
+              id=""
+            />
+            <label for="">3. Risiko hamil</label>
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="alasan-subtitusi-switch"
+              value="4"
+              id=""
+            />
+            <label for="">4. TB baru</label>
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="alasan-subtitusi-switch"
+              value="5"
+              id=""
+            />
+            <label for="">5. Ada obat baru</label>
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="alasan-subtitusi-switch"
+              value="6"
+              id=""
+            />
+            <label for="">6. Stok obat habis</label>
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="alasan-subtitusi-switch"
+              value="7"
+              id=""
+            />
+            <label for="">7. Alasan lain:</label>
+            <br />
+            <input
+              type="text"
+              name="alasan-lain-subsitusi-switch"
+              placeholder="......"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Alasan hanya untuk SWITCH</td>
+          <td>
+            <input type="radio" name="alasan-hanya-switch" value="8" id="" />
+            <label for="">8. Gagal pengobatan</label>
+          </td>
+          <td>
+            <input type="radio" name="alasan-hanya-switch" value="9" id="" />
+            <label for="">9. Gagal imunologi</label>
+          </td>
+          <td>
+            <input type="radio" name="alasan-hanya-switch" value="10" id="" />
+            <label for="">10. Gagal virologist</label>
+          </td>
+          <td colspan="4"></td>
+        </tr>
+        <tr>
+          <td>Alasan stop</td>
+          <td>
+            <input type="radio" name="alasan-stop" value="1" id="" />
+            <label for="">1. Toksisitas/efek samping</label>
+          </td>
+          <td>
+            <input type="radio" name="alasan-stop" value="2" id="" />
+            <label for="">2. Hamil</label>
+          </td>
+          <td>
+            <input type="radio" name="alasan-stop" value="3" id="" />
+            <label for="">3. Gagal pengobatan</label>
+          </td>
+          <td>
+            <input type="radio" name="alasan-stop" value="4" id="" />
+            <label for="">4. Adherence buruk</label>
+          </td>
+          <td>
+            <input type="radio" name="alasan-stop" value="5" id="" />
+            <label for="">5. Sakit/MRS</label>
+          </td>
+          <td>
+            <input type="radio" name="alasan-stop" value="6" id="" />
+            <label for="">6. Stok obat habis</label>
+          </td>
+          <td>
+            <input type="radio" name="alasan-stop" value="7" id="" />
+            <label for="">7. Kekurangan biaya</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>
+            <input type="radio" name="alasan-stop" value="8" id="" />
+            <label for="">8. Keputusan pasien</label>
+          </td>
+          <td colspan="6">
+            <div style="display: flex; gap: 5px">
+              <input type="radio" name="alasan-stop" value="8" id="" />
+              <label for="">9. Lainnya:</label>
+              <input
+                type="text"
+                name="alasan-stop-lainnya"
+                style="flex: 1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table-bordered table">
+      <thead>
+        <tr style="text-align: left">
+          <th colspan="3">7. Pengobatan TB selama perawatan HIV</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="1">
+            <label for="">Jenis TB (pilih)</label>
+          </td>
+          <td rowspan="5">
+            <label for="">Rejimen TB</label>
+            <div>
+              <input
+                type="radio"
+                name="rejimen-tb"
+                value="Kategori anak"
+                id=""
+              />
+              <label for="">Kategori anak</label>
+            </div>
+            <div>
+              <input type="radio" name="rejimen-tb" value="Kategori I" id="" />
+              <label for="">Kategori I</label>
+            </div>
+            <div>
+              <input type="radio" name="rejimen-tb" value="Kategori II" id="" />
+              <label for="">Kategori II</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="rejimen-tb"
+                value="Kategori III"
+                id=""
+              />
+              <label for="">Kategori III</label>
+            </div>
+          </td>
+          <td rowspan="5">
+            <label for="">Tempat Pengobatan TB</label>
+
+            <div style="display: flex; gap: 5px">
+              <label for="">Kabupaten:</label>
+              <input style="flex: 1" type="text" name="kabupaten" id="" />
+            </div>
+            <div style="display: flex; gap: 5px">
+              <label for="">Nama sarana kesehatan:</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="sarana-kesehatan"
+                id=""
+              />
+            </div>
+            <div style="display: flex; gap: 5px">
+              <label for="">NoReg TB Kab/Kota:</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="no-reg-tb-kab-kota"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="checkbox" name="jenis-tb-1" value="TB Paru" id="" />
+            <label for="">TB Paru</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="checkbox"
+              name="jenis-tb-2"
+              value="Kasus baru (BTA+)"
+              id=""
+            />
+            <label for="">Kasus baru (BTA+)</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="checkbox"
+              name="jenis-tb-3"
+              value="Kasus kambuh/gagal (BTA-)"
+              id=""
+            />
+            <label for="">Kasus kambuh/gagal (BTA-)</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="checkbox"
+              name="jenis-tb-4"
+              value="Kasus baru (BTA-)"
+              id=""
+            />
+            <label for="">Kasus baru (BTA-)</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="checkbox"
+              name="jenis-tb-5"
+              value="Ekstra paru"
+              id=""
+            />
+            <label for="">Ekstra paru</label>
+          </td>
+          <td rowspan="2">
+            <label for="">Tgl mulai terapi:</label>
+            <br />
+            <label for="">Tgl selesai terapi:</label>
+          </td>
+          <td rowspan="2">
+            <input type="date" style="width: 100%" name="tgl-mulai" id="" />
+            <br />
+            <input type="date" style="width: 100%" name="tgl-selesai" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input type="checkbox" name="lokasi" value="Lokasi" id="" />
+              <label for="">Lokasi</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="lokasi-tb"
+                id=""
+                placeholder="......"
+              />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table-bordered table">
+      <thead>
+        <tr style="text-align: left">
+          <th colspan="2">8. Akhir Follow-up</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input
+              type="radio"
+              name="akhir-follow-up"
+              value="Meninggal dunia"
+              id=""
+            />
+            <label for="">Meninggal dunia</label>
+          </td>
+          <td>
+            <label for="">Tgl meninggal dunia</label>
+            <input type="date" name="tgl-meninggal-dunia" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="radio"
+              name="akhir-follow-up"
+              value="Lolos Follow-up (>3 bulan)"
+              id=""
+            />
+            <label for="">Lolos Follow-up (>3 bulan)</label>
+          </td>
+          <td>
+            <label for="">Tgl kunjungan terakhir</label>
+            <input type="date" name="tgl-kunjungan-terakhir" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="radio"
+              name="akhir-follow-up"
+              value="Rujuk keluar"
+              id=""
+            />
+            <label for="">Rujuk keluar</label>
+          </td>
+          <td>
+            <label for="">Tgl</label>
+            <input type="date" name="tgl-rujuk" id="" />
+
+            <label for="">Ke</label>
+            <input type="text" name="rujuk-ke" placeholder="......" id="" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table" cellpadding="0" border="0">
+      <tbody>
+        <tr>
+          <td>&nbsp;</td>
+
+          <td>
+            <div align="center"><strong>Nama yang mengkaji</strong></div>
+          </td>
+
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
+          <td bgcolor="#FFFFFF">
+            <input
+              name="17_pukul"
+              type="text"
+              id="17_pukul"
+              placeholder="00:00"
+              size="10"
+              myid="check_cara"
+            />
+          </td>
+
+          <td bgcolor="#FFFFFF">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td bgcolor="#FFFFFF">Nama</td>
+
+          <td bgcolor="#FFFFFF">
+            <input
+              name="17_nama3"
+              type="text"
+              id="17_nama3"
+              size="25"
+              myid="check_cara"
+            />
+            <br />
+            <select
+              type="select"
+              name="perawatnya"
+              id="perawatnya"
+              myid="check_cara"
+              iscombo="t"
+              onchange="get_ttd2();"
+            >
+              <option></option>
+            </select>
+            <br />
+            <font id="ttdnya2"></font>
+          </td>
+
+          <td bgcolor="#FFFFFF">&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
