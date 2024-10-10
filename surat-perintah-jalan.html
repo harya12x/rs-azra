@@ -236,5 +236,15 @@
         </tr>
       </tbody>
     </table>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+      });
+    </script>
   </body>
 </html>
