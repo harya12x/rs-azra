@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FORM PENGAJUAN TRANSPORTASI</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">FORM PENGAJUAN TRANSPORTASI</h1>
+    <h2 class="title">ANTAR - JEMPUT PASIEN RUMAH SAKIT</h2>
+
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <td colspan="4">
+            <h5>Diisi oleh unit kerja</h5>
+          </td>
+        </tr>
+        <tr>
+          <td>Unit Kerja :</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="unit-kerja"
+              id="unit-kerja"
+              label="unit-kerja"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>Tanggal :</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tanggal"
+              id="tanggal"
+              label="tanggal"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>Jam berangkat :</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jam-berangkat"
+              id="jam-berangkat"
+              label="jam-berangkat"
+              placeholder="00.00"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Kebutuhan :</td>
+          <td>
+            <div style="display: flex; gap: 10px">
+              <div>
+                <input
+                  type="radio"
+                  name="kebutuhan"
+                  id="kebutuhan"
+                  label="kebutuhan"
+                  value="Cito / Segera"
+                  myid="check_cara"
+                />
+                <label for="">Cito / Segera</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="kebutuhan"
+                  id="kebutuhan"
+                  label="kebutuhan"
+                  value="Biasa"
+                  myid="check_cara"
+                />
+                <label for="">Biasa</label>
+              </div>
+            </div>
+          </td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>Keperluan :</td>
+          <td>
+            <div style="display: flex; gap: 10px">
+              <div>
+                <input
+                  type="radio"
+                  name="keperluan"
+                  id="keperluan"
+                  label="keperluan"
+                  value="Antar Pasien"
+                  myid="check_cara"
+                />
+                <label for="">Antar Pasien</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="keperluan"
+                  id="keperluan"
+                  label="keperluan"
+                  value="Jemput Pasien"
+                  myid="check_cara"
+                />
+                <label for="">Jemput Pasien</label>
+              </div>
+            </div>
+          </td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="4"><b>Identitas Pasien</b></td>
+        </tr>
+        <tr>
+          <td>No. RM :</td>
+          <td width="35%">
+            <input
+              style="width: 100%"
+              type="text"
+              name="no-rm"
+              id="no-rm"
+              label="no-rm"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td>Nama Pasien :</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="nama-pasien"
+              id="nama-pasien"
+              label="nama-pasien"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td width="20%">Alamat Pasien (lengkap)</td>
+          <td colspan="3">
+            <input
+              style="width: 100%"
+              type="text"
+              name="alamat-pasien"
+              id="alamat-pasien"
+              label="alamat-pasien"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4"><h5>Diisi oleh unit Transportasi</h5></td>
+        </tr>
+        <tr>
+          <td>Kendaraan :</td>
+          <td>
+            <div style="display: flex; gap: 10px">
+              <div>
+                <input
+                  type="radio"
+                  name="kendaraan"
+                  id="kendaraan"
+                  label="kendaraan"
+                  value="Ambulance"
+                  myid="check_cara"
+                />
+                <label for="">Ambulance</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="kendaraan"
+                  id="kendaraan"
+                  label="kendaraan"
+                  value="Biasa"
+                  myid="check_cara"
+                />
+                <label for="">Biasa</label>
+              </div>
+            </div>
+          </td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>No. Polisi :</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="no-polisi"
+              id="no-polisi"
+              label="no-polisi"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td>Jam kedatangan :</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jam-kedatangan"
+              id="jam-kedatangan"
+              label="jam-kedatangan"
+              placeholder="00.00"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>K M Berangkat :</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="k-m-berangkat"
+              id="k-m-berangkat"
+              label="k-m-berangkat"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td>K M Tiba :</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="k-m-tiba"
+              id="k-m-tiba"
+              label="k-m-tiba"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <table width="100%" class="table">
+      <tbody>
+        <td style="text-align: center">
+          <label for="">Yang mengajukan</label>
+          <input
+            type="text"
+            name="yang-mengajukan"
+            myid="check_cara"
+            style="width: 100%"
+            id="yang-mengajukan"
+          />
+          <font id="ttdnya2"></font>
+        </td>
+        <td style="text-align: center">
+          <label for="">Diketahui Kepala / DO</label>
+          <input
+            type="text"
+            name="kepala-do"
+            myid="check_cara"
+            style="width: 100%"
+            id="kepala-do"
+          />
+          <font id="ttdnya2"></font>
+        </td>
+        <td style="text-align: center">
+          <label for="">Pengemudi</label>
+          <input
+            type="text"
+            name="pengemudi"
+            myid="check_cara"
+            style="width: 100%"
+            id="pengemudi"
+          />
+          <font id="ttdnya2"></font>
+        </td>
+        <td style="text-align: center">
+          <label for="">Diketahui Keamanan RS Azra</label>
+          <input
+            type="text"
+            name="mengetahui"
+            myid="check_cara"
+            style="width: 100%"
+            id="mengetahui"
+          />
+          <font id="ttdnya2"></font>
+        </td>
+      </tbody>
+    </table>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(function (radio) {
+          radio.addEventListener("click", function () {
+            if (this.classList.contains("clicked")) {
+              this.checked = false;
+              this.classList.remove("clicked");
+            } else {
+              var name = this.getAttribute("name");
+              var radios = document.querySelectorAll(
+                'input[type="radio"][name="' + name + '"]'
+              );
+              radios.forEach(function (r) {
+                r.classList.remove("clicked");
+              });
+              this.classList.add("clicked");
+            }
+            console.log(this.name + " diubah menjadi: " + this.checked);
+          });
+        });
+
+        var textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
