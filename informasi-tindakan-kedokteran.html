@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>INFORMASI TINDAKAN KEDOKTERAN</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">INFORMASI TINDAKAN KEDOKTERAN RS. AZRA BOGOR</h1>
+
+    <table class="table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td bgcolor="#DFE8F6">Nama Pasien</td>
+          <td bgcolor="#DFE8F6">
+            <input
+              name="nama_pasien2"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+            />
+          </td>
+          <td bgcolor="#DFE8F6">Jenis Kelamin</td>
+          <td bgcolor="#DFE8F6">
+            <input
+              type="radio"
+              name="no-rek-medis"
+              id="jenis-kelamin"
+              label="jenis kelamin"
+              value="L"
+              myid="check_cara"
+            />
+            <label for="l">L</label>
+            <input
+              type="radio"
+              name="jenis-kelamin"
+              id="jenis-kelamin"
+              label="jenis kelamin"
+              value="P"
+              myid="check_cara"
+            />
+            <label for="l">P</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <input
+              type="text"
+              name="no-rek-medis"
+              id="no-rek-medis"
+              label="no rek medis"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td bgcolor="" rowspan="2">Tanggal Lahir</td>
+          <td bgcolor="" rowspan="2">
+            <input
+              name="tgl_lahira2"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td rowspan="2">Umur</td>
+          <td rowspan="2">
+            <input
+              type="text"
+              size="5"
+              placeholder="..."
+              name="umur"
+              myid="check_cara"
+              id="umur"
+              label="umur"
+            />
+          </td>
+          <td>
+            <label for="poli"> Poli </label>
+          </td>
+          <td>
+            <input
+              name="polia2"
+              type="text"
+              id="poli"
+              placeholder="..."
+              myid="check_cara"
+              label="poli"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="kamar"> Kamar </label>
+          </td>
+          <td>
+            <input
+              name="kamara2"
+              type="text"
+              id="kamar"
+              placeholder="..."
+              myid="check_cara"
+              label="kamar"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td><b>Jenis Tindakan:</b></td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jenis-tindakan"
+              id="jenis-tindakan"
+              label="jenis-tindakan"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Dokter pelaksana tindakan:</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="dokter-pelaksana-tindakan"
+              id="dokter-pelaksana-tindakan"
+              label="dokter-pelaksana-tindakan"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input
+              type="radio"
+              name="penerima-informasi-pemberi-persetujuan"
+              id="penerima-informasi-pemberi-persetujuan"
+              label="penerima-informasi-pemberi-persetujuan"
+              myid="check_cara"
+              value="Penerima informan"
+            />
+            <label for="">Penerima informasi</label>
+            <input
+              type="radio"
+              name="penerima-informasi-pemberi-persetujuan"
+              id="penerima-informasi-pemberi-persetujuan"
+              label="penerima-informasi-pemberi-persetujuan"
+              myid="check_cara"
+              value="Pemberi persetujuan"
+            />
+            <label for="">Pemberi persetujuan</label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table table-bordered">
+      <thead>
+        <tr>
+          <th>NO</th>
+          <th>JENIS INFORMASI</th>
+          <th>ISI INFORMASI</th>
+          <th>PARAF PENERIMA INFORMASI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">1</td>
+          <td>Diagnosis (WD dan DD)</td>
+          <td>
+            <input
+              style="width: 100%"
+              name="isi-informasi-diagnosis"
+              type="text"
+              id="isi-informasi-diagnosis"
+              placeholder="..."
+              myid="check_cara"
+              label="isi-informasi-diagnosis"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="paraf-penerima-informasi-diagnosis"
+              type="text"
+              id="paraf-penerima-informasi-diagnosis"
+              placeholder="..."
+              myid="check_cara"
+              label="paraf-penerima-informasi-diagnosis"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">2</td>
+          <td>Dasar diagnosis</td>
+          <td>
+            <input
+              style="width: 100%"
+              name="isi-informasi-dasar-diagnosis"
+              type="text"
+              id="isi-informasi-dasar-diagnosis"
+              placeholder="..."
+              myid="check_cara"
+              label="isi-informasi-dasar-diagnosis"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="paraf-penerima-informasi-dasar-diagnosis"
+              type="text"
+              id="paraf-penerima-informasi-dasar-diagnosis"
+              placeholder="..."
+              myid="check_cara"
+              label="paraf-penerima-informasi-dasar-diagnosis"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">3</td>
+          <td>Tindakan Kedokteran</td>
+          <td>Injeksi Toksin Botulinum (Lanzox)</td>
+          <td>
+            <input
+              style="width: 100%"
+              name="paraf-penerima-informasi-tindakan-kedokteran"
+              type="text"
+              id="paraf-penerima-informasi-tindakan-kedokteran"
+              placeholder="..."
+              myid="check_cara"
+              label="paraf-penerima-informasi-tindakan-kedokteran"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">4</td>
+          <td>Indikasi Tindakan</td>
+          <td>
+            - Untuk menghilangkan kerutan dinamis <br />
+            - Mengatasi hiperhidrosis <br />
+            - Mengecilkan otot masseter
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="paraf-penerima-informasi-indikasi-tindakan"
+              type="text"
+              id="paraf-penerima-informasi-indikasi-tindakan"
+              placeholder="..."
+              myid="check_cara"
+              label="paraf-penerima-informasi-indikasi-tindakan"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">5</td>
+          <td>Tata Cara</td>
+          <td>
+            Oleskan anestesi &rarr; Injeksi Neurotoxin &rarr; Oles krim
+            Antibiotik
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="paraf-penerima-informasi-tata-cara"
+              type="text"
+              id="paraf-penerima-informasi-tata-cara"
+              placeholder="..."
+              myid="check_cara"
+              label="paraf-penerima-informasi-tata-cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">6</td>
+          <td>Tujuan</td>
+          <td>Terapi</td>
+          <td>
+            <input
+              style="width: 100%"
+              name="paraf-penerima-informasi-terapi"
+              type="text"
+              id="paraf-penerima-informasi-terapi"
+              placeholder="..."
+              myid="check_cara"
+              label="paraf-penerima-informasi-terapi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">7</td>
+          <td>Risiko dan Komplikasi</td>
+          <td>
+            Memar, nyeri kepala, nyeri di area suntikan, ptosis alis, ptosis
+            kelopak mata
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="paraf-penerima-risiko-komplikasi"
+              type="text"
+              id="paraf-penerima-risiko-komplikasi"
+              placeholder="..."
+              myid="check_cara"
+              label="paraf-penerima-risiko-komplikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">8</td>
+          <td>Prognosis</td>
+          <td>Ad bonam</td>
+          <td>
+            <input
+              style="width: 100%"
+              name="paraf-penerima-prognosis"
+              type="text"
+              id="paraf-penerima-prognosis"
+              placeholder="..."
+              myid="check_cara"
+              label="paraf-penerima-prognosis"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">9</td>
+          <td>Alternatif</td>
+          <td>Tidak ada</td>
+          <td>
+            <input
+              style="width: 100%"
+              name="paraf-penerima-alternatif"
+              type="text"
+              id="paraf-penerima-alternatif"
+              placeholder="..."
+              myid="check_cara"
+              label="paraf-penerima-alternatif"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">10</td>
+          <td>Lain - lain</td>
+          <td>
+            <input
+              style="width: 100%"
+              name="paraf-penerima-lain-lain"
+              type="text"
+              id="paraf-penerima-lain-lain"
+              placeholder="..."
+              myid="check_cara"
+              label="paraf-penerima-lain-lain"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="paraf-penerima-lain-lain"
+              type="text"
+              id="paraf-penerima-lain-lain"
+              placeholder="..."
+              myid="check_cara"
+              label="paraf-penerima-lain-lain"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            Dengan ini menyatakan bahwa saya Dokter
+            <input
+              name="nama-dokter"
+              type="text"
+              id="nama-dokter"
+              placeholder="..."
+              myid="check_cara"
+              label="nama-dokter"
+            />
+            telah menerangkan hal - hal di atas secara benar dan jelas dan
+            memberikan kesempatan untuk bertanya dan/atau berdiskusi
+          </td>
+          <td>
+            <p>Tanda tangan</p>
+            <input
+              type="text"
+              name="dokter-yang-merekomendasi"
+              myid="check_cara"
+              id="dokter-yang-merekomendasi"
+            />
+            <font id="ttdnya2"></font>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            Dengan ini menyatakan bahwa saya / keluarga pasien
+            <input
+              name="nama-dokter"
+              type="text"
+              id="nama-dokter"
+              placeholder="..."
+              myid="check_cara"
+              label="nama-dokter"
+            />
+            telah menerima informasi sebagaimana di atas yang saya beri
+            tanda/paraf di kolom kanannya serta telah diberi kesempatan untuk
+            bertanya/berdiskusi, dan telah memahaminya
+          </td>
+          <td>
+            <p>Tanda tangan</p>
+            <input
+              type="text"
+              name="dokter-yang-merekomendasi"
+              myid="check_cara"
+              id="dokter-yang-merekomendasi"
+            />
+            <font id="ttdnya2"></font>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            &ast; Bila pasien tidak kompeten atau tidak mau menerima informasi,
+            maka penerima informasi adalah keluarga terdekat, wali, atau
+            pengampunya (sesuai peraturan perundungan yang berlaku)
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(function (radio) {
+          radio.addEventListener("click", function () {
+            if (this.classList.contains("clicked")) {
+              this.checked = false;
+              this.classList.remove("clicked");
+            } else {
+              var name = this.getAttribute("name");
+              var radios = document.querySelectorAll(
+                'input[type="radio"][name="' + name + '"]'
+              );
+              radios.forEach(function (r) {
+                r.classList.remove("clicked");
+              });
+              this.classList.add("clicked");
+            }
+            console.log(this.name + " diubah menjadi: " + this.checked);
+          });
+        });
+
+        var textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
