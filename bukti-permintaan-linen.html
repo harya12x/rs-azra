@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BUKTI PERMINTAAN LINEN</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">BUKTI PERMINTAAN LINEN</h1>
+
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <td width="20%">
+            <label><b>TANGGAL & JAM:</b></label>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tanggal-jam"
+              id="tanggal-jam"
+              label="tanggal-jam"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy, 00.00"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td><b>NURSE STATION:</b></td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="nurse-station"
+              id="nurse-station"
+              label="nurse-station"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td><b>JUMLAH PASIEN :</b></td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jumlah-pasien"
+              id="jumlah-pasien"
+              label="jumlah-pasien"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td><b>DIBUTUHKAN UNTUK TANGGAL:</b></td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="dibutuhkan-utk-tgl"
+              id="dibutuhkan-utk-tgl"
+              label="dibutuhkan-utk-tgl"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>JENIS LINEN</th>
+          <th>JUMLAH</th>
+          <th>KETERANGAN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>1</th>
+          <td>SARUNG BANTAL</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="sarung-bantal"
+              id="sarung-bantal"
+              label="sarung-bantal"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-sarung-bantal"
+              id="ket-sarung-bantal"
+              label="ket-sarung-bantal"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>&nbsp;</th>
+          <td>A. SARUNG BANTAL JUMBO</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="sarung-bantal-jumbo"
+              id="sarung-bantal-jumbo"
+              label="sarung-bantal-jumbo"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-sarung-bantal-jumbo"
+              id="ket-sarung-bantal-jumbo"
+              label="ket-sarung-bantal-jumbo"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>&nbsp;</th>
+          <td>A. SARUNG BANTAL BIASA</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="sarung-bantal-biasa"
+              id="sarung-bantal-biasa"
+              label="sarung-bantal-biasa"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-sarung-bantal-biasa"
+              id="ket-sarung-bantal-biasa"
+              label="ket-sarung-bantal-biasa"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>LAKEN BLANKAR</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="laken-blankar"
+              id="laken-blankar"
+              label="laken-blankar"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-laken-blankar"
+              id="ket-laken-blankar"
+              label="ket-laken-blankar"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>LAKEN DEWASA</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="laken-dewasa"
+              id="laken-dewasa"
+              label="laken-dewasa"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-laken-dewasa"
+              id="ket-laken-dewasa"
+              label="ket-laken-dewasa"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>OVERLAKEN TIPIS</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="overlaken-tipis"
+              id="overlaken-tipis"
+              label="overlaken-tipis"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-overlaken-tipis"
+              id="ket-overlaken-tipis"
+              label="ket-overlaken-tipis"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>&nbsp;</th>
+          <td>A. HIJAU KELAS 2, 3, R. ANAK</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="hijau-kelas"
+              id="hijau-kelas"
+              label="hijau-kelas"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-hijau-kelas"
+              id="ket-hijau-kelas"
+              label="ket-hijau-kelas"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>&nbsp;</th>
+          <td>B. KUNING ISOLASI</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kuning-isolasi"
+              id="kuning-isolasi"
+              label="kuning-isolasi"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-kuning-isolasi"
+              id="ket-kuning-isolasi"
+              label="ket-kuning-isolasi"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>&nbsp;</th>
+          <td>C. TOSCA FISIOTERAPI</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tosca-fisioterapi"
+              id="tosca-fisioterapi"
+              label="tosca-fisioterapi"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-tosca-fisioterapi"
+              id="ket-tosca-fisioterapi"
+              label="ket-tosca-fisioterapi"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>&nbsp;</th>
+          <td>D. HIJAU IGD</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="hijau-igd"
+              id="hijau-igd"
+              label="hijau-igd"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-hijau-igd"
+              id="ket-hijau-igd"
+              label="ket-hijau-igd"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>&nbsp;</th>
+          <td>E. HIJAU VK</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="hijau-vk"
+              id="hijau-vk"
+              label="hijau-vk"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-hijau-vk"
+              id="ket-hijau-vk"
+              label="ket-hijau-vk"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>SELIMUT TEBAL</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="selimut-tebal"
+              id="selimut-tebal"
+              label="selimut-tebal"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-selimut-tebal"
+              id="ket-selimut-tebal"
+              label="ket-selimut-tebal"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>&nbsp;</th>
+          <td>A. SUITE ROOM</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="suite-room"
+              id="suite-room"
+              label="suite-room"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-suite-room"
+              id="ket-suite-room"
+              label="ket-suite-room"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>&nbsp;</th>
+          <td>B. VVIP</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="vvip"
+              id="vvip"
+              label="vvip"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-vvip"
+              id="ket-vvip"
+              label="ket-vvip"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>&nbsp;</th>
+          <td>C. VIP/KELAS 1</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="vip-kelas-1"
+              id="vip-kelas-1"
+              label="vip-kelas-1"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-vip-kelas-1"
+              id="ket-vip-kelas-1"
+              label="ket-vip-kelas-1"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>STICK LAKEN</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="stick-laken"
+              id="stick-laken"
+              label="stick-laken"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-stick-laken"
+              id="ket-stick-laken"
+              label="ket-stick-laken"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>7</th>
+          <td>PERLAK</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="perlak"
+              id="perlak"
+              label="perlak"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-perlak"
+              id="ket-perlak"
+              label="ket-perlak"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>8</th>
+          <td>BAJU PASIEN DEWASA</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="baju-pasien-dewasa"
+              id="baju-pasien-dewasa"
+              label="baju-pasien-dewasa"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-baju-pasien-dewasa"
+              id="ket-baju-pasien-dewasa"
+              label="ket-baju-pasien-dewasa"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>9</th>
+          <td>BAJU PASIEN ANAK</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="baju-pasien-anak"
+              id="baju-pasien-anak"
+              label="baju-pasien-anak"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-baju-pasien-anak"
+              id="ket-baju-pasien-anak"
+              label="ket-baju-pasien-anak"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>10</th>
+          <td>HANDTOWEL</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="handtowel"
+              id="handtowel"
+              label="handtowel"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-handtowel"
+              id="ket-handtowel"
+              label="ket-handtowel"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>11</th>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="linen-tambahan-1"
+              id="linen-tambahan-1"
+              label="linen-tambahan-1"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jumlah-linen-tambahan-1"
+              id="jumlah-linen-tambahan-1"
+              label="jumlah-linen-tambahan-1"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-linen-tambahan-1"
+              id="ket-linen-tambahan-1"
+              label="ket-linen-tambahan-1"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th>12</th>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="linen-tambahan-2"
+              id="linen-tambahan-2"
+              label="linen-tambahan-2"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="jumlah-linen-tambahan-2"
+              id="jumlah-linen-tambahan-2"
+              label="jumlah-linen-tambahan-2"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ket-linen-tambahan-2"
+              id="ket-linen-tambahan-2"
+              label="ket-linen-tambahan-2"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+    <table width="100%" class="table">
+      <tbody>
+        <td>
+          <label for="">Yang Menerima,</label>
+          <input
+            type="text"
+            name="yang-menerima"
+            myid="check_cara"
+            style="width: 100%"
+            id="yang-menerima"
+          />
+          <font id="ttdnya2"></font>
+        </td>
+
+        <td>
+          <label for="">Yang Menyerahkan,</label>
+          <input
+            type="text"
+            name="yang-menyerahkan"
+            myid="check_cara"
+            style="width: 100%"
+            id="yang-menyerahkan"
+          />
+          <font id="ttdnya2"></font>
+        </td>
+      </tbody>
+    </table>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(function (radio) {
+          radio.addEventListener("click", function () {
+            if (this.classList.contains("clicked")) {
+              this.checked = false;
+              this.classList.remove("clicked");
+            } else {
+              var name = this.getAttribute("name");
+              var radios = document.querySelectorAll(
+                'input[type="radio"][name="' + name + '"]'
+              );
+              radios.forEach(function (r) {
+                r.classList.remove("clicked");
+              });
+              this.classList.add("clicked");
+            }
+            console.log(this.name + " diubah menjadi: " + this.checked);
+          });
+        });
+
+        var textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
