@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PENGKAJIAN SKALA IDENTIFIKASI GEJALA (AKHIR KEHIDUPAN)</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">
+      PENGKAJIAN SKALA IDENTIFIKASI GEJALA (AKHIR KEHIDUPAN) RS. AZRA BOGOR
+    </h1>
+
+    <table class="table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td>Nama Pasien</td>
+          <td>
+            <input
+              name="nama_pasien"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+            />
+          </td>
+          <td>Jenis Kelamin</td>
+          <td>
+            <input
+              type="radio"
+              name="jenis-kelamin"
+              id="laki-laki"
+              myid="check_cara"
+              value="L"
+              label="jenis kelamin"
+            />
+            <label for="l">L</label>
+            <input
+              type="radio"
+              name="jenis-kelamin"
+              id="perempuan"
+              myid="check_cara"
+              value="P"
+              label="jenis kelamin"
+            />
+            <label for="l">P</label>
+          </td>
+          <td>
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              myid="check_cara"
+              name="no_rm"
+              id="no_rm"
+              label="nomor rekam medis"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan="2">Tanggal Lahir</td>
+          <td rowspan="2">
+            <input
+              name="tgl_lahir"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td rowspan="2">Umur</td>
+          <td rowspan="2">
+            <input
+              type="text"
+              size="5"
+              name="umur-pengkajian"
+              id="umur-pengkajian"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <label for="kelas"> Kelas </label>
+          </td>
+          <td>
+            <input
+              name="kelas"
+              type="text"
+              id="kelas"
+              placeholder="..."
+              myid="check_cara"
+              label="kelas"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Kamar</td>
+          <td>
+            <input
+              type="text"
+              name="kamar"
+              id="kamar"
+              myid="check_cara"
+              placeholder="..."
+              aria-label="kamar"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td><b>Tanggal Masuk Rumah Sakit:</b></td>
+          <td><b>Waktu Pemeriksaan:</b></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              name="tgl-masuk-rs"
+              id="tgl-masuk-rs"
+              label="tgl-masuk-rs"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="waktu-pemeriksaan"
+              id="waktu-pemeriksaan"
+              label="waktu-pemeriksaan"
+              placeholder="00.00"
+              myid="check_cara"
+            />
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            Pilih salah satu nomor yang menjelaskan gejala yang dirasakan SAAT
+            ini
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 33%"><b>Keadaan terbaik</b></td>
+          <td style="width: 33%"><b>Tingkat pemeriksaan</b></td>
+          <td style="width: 33%"><b>Keadaan terburuk</b></td>
+        </tr>
+        <tr>
+          <td>Tidak nyeri</td>
+          <td>
+            <input
+              type="radio"
+              name="nyeri"
+              id="nyeri"
+              label="nyeri"
+              value="1"
+              myid="check_cara"
+            />
+            <label for="">1</label>
+            <input
+              type="radio"
+              name="nyeri"
+              id="nyeri"
+              label="nyeri"
+              value="2"
+              myid="check_cara"
+            />
+            <label for="">2</label>
+            <input
+              type="radio"
+              name="nyeri"
+              id="nyeri"
+              label="nyeri"
+              value="3"
+              myid="check_cara"
+            />
+            <label for="">3</label>
+            <input
+              type="radio"
+              name="nyeri"
+              id="nyeri"
+              label="nyeri"
+              value="4"
+              myid="check_cara"
+            />
+            <label for="">4</label>
+            <input
+              type="radio"
+              name="nyeri"
+              id="nyeri"
+              label="nyeri"
+              value="5"
+              myid="check_cara"
+            />
+            <label for="">5</label>
+            <input
+              type="radio"
+              name="nyeri"
+              id="nyeri"
+              label="nyeri"
+              value="6"
+              myid="check_cara"
+            />
+            <label for="">6</label>
+            <input
+              type="radio"
+              name="nyeri"
+              id="nyeri"
+              label="nyeri"
+              value="7"
+              myid="check_cara"
+            />
+            <label for="">7</label>
+            <input
+              type="radio"
+              name="nyeri"
+              id="nyeri"
+              label="nyeri"
+              value="8"
+              myid="check_cara"
+            />
+            <label for="">8</label>
+            <input
+              type="radio"
+              name="nyeri"
+              id="nyeri"
+              label="nyeri"
+              value="9"
+              myid="check_cara"
+            />
+            <label for="">9</label>
+            <input
+              type="radio"
+              name="nyeri"
+              id="nyeri"
+              label="nyeri"
+              value="10"
+              myid="check_cara"
+            />
+            <label for="">10</label>
+          </td>
+          <td>Nyeri tidak tertahankan</td>
+        </tr>
+        <tr>
+          <td>Tidak lelah</td>
+          <td>
+            <input
+              type="radio"
+              name="lelah"
+              id="lelah"
+              label="lelah"
+              value="1"
+              myid="check_cara"
+            />
+            <label for="">1</label>
+            <input
+              type="radio"
+              name="lelah"
+              id="lelah"
+              label="lelah"
+              value="2"
+              myid="check_cara"
+            />
+            <label for="">2</label>
+            <input
+              type="radio"
+              name="lelah"
+              id="lelah"
+              label="lelah"
+              value="3"
+              myid="check_cara"
+            />
+            <label for="">3</label>
+            <input
+              type="radio"
+              name="lelah"
+              id="lelah"
+              label="lelah"
+              value="4"
+              myid="check_cara"
+            />
+            <label for="">4</label>
+            <input
+              type="radio"
+              name="lelah"
+              id="lelah"
+              label="lelah"
+              value="5"
+              myid="check_cara"
+            />
+            <label for="">5</label>
+            <input
+              type="radio"
+              name="lelah"
+              id="lelah"
+              label="lelah"
+              value="6"
+              myid="check_cara"
+            />
+            <label for="">6</label>
+            <input
+              type="radio"
+              name="lelah"
+              id="lelah"
+              label="lelah"
+              value="7"
+              myid="check_cara"
+            />
+            <label for="">7</label>
+            <input
+              type="radio"
+              name="lelah"
+              id="lelah"
+              label="lelah"
+              value="8"
+              myid="check_cara"
+            />
+            <label for="">8</label>
+            <input
+              type="radio"
+              name="lelah"
+              id="lelah"
+              label="lelah"
+              value="9"
+              myid="check_cara"
+            />
+            <label for="">9</label>
+            <input
+              type="radio"
+              name="lelah"
+              id="lelah"
+              label="lelah"
+              value="10"
+              myid="check_cara"
+            />
+            <label for="">10</label>
+          </td>
+          <td>Sangat lelah</td>
+        </tr>
+        <tr>
+          <td>Tidak merasa kantuk</td>
+          <td>
+            <input
+              type="radio"
+              name="merasa-kantuk"
+              id="merasa-kantuk"
+              label="merasa-kantuk"
+              value="1"
+              myid="check_cara"
+            />
+            <label for="">1</label>
+            <input
+              type="radio"
+              name="merasa-kantuk"
+              id="merasa-kantuk"
+              label="merasa-kantuk"
+              value="2"
+              myid="check_cara"
+            />
+            <label for="">2</label>
+            <input
+              type="radio"
+              name="merasa-kantuk"
+              id="merasa-kantuk"
+              label="merasa-kantuk"
+              value="3"
+              myid="check_cara"
+            />
+            <label for="">3</label>
+            <input
+              type="radio"
+              name="merasa-kantuk"
+              id="merasa-kantuk"
+              label="merasa-kantuk"
+              value="4"
+              myid="check_cara"
+            />
+            <label for="">4</label>
+            <input
+              type="radio"
+              name="merasa-kantuk"
+              id="merasa-kantuk"
+              label="merasa-kantuk"
+              value="5"
+              myid="check_cara"
+            />
+            <label for="">5</label>
+            <input
+              type="radio"
+              name="merasa-kantuk"
+              id="merasa-kantuk"
+              label="merasa-kantuk"
+              value="6"
+              myid="check_cara"
+            />
+            <label for="">6</label>
+            <input
+              type="radio"
+              name="merasa-kantuk"
+              id="merasa-kantuk"
+              label="merasa-kantuk"
+              value="7"
+              myid="check_cara"
+            />
+            <label for="">7</label>
+            <input
+              type="radio"
+              name="merasa-kantuk"
+              id="merasa-kantuk"
+              label="merasa-kantuk"
+              value="8"
+              myid="check_cara"
+            />
+            <label for="">8</label>
+            <input
+              type="radio"
+              name="merasa-kantuk"
+              id="merasa-kantuk"
+              label="merasa-kantuk"
+              value="9"
+              myid="check_cara"
+            />
+            <label for="">9</label>
+            <input
+              type="radio"
+              name="merasa-kantuk"
+              id="merasa-kantuk"
+              label="merasa-kantuk"
+              value="10"
+              myid="check_cara"
+            />
+            <label for="">10</label>
+          </td>
+          <td>Sangat mengantuk</td>
+        </tr>
+        <tr>
+          <td>Tidak mual</td>
+          <td>
+            <input
+              type="radio"
+              name="mual"
+              id="mual"
+              label="mual"
+              value="1"
+              myid="check_cara"
+            />
+            <label for="">1</label>
+            <input
+              type="radio"
+              name="mual"
+              id="mual"
+              label="mual"
+              value="2"
+              myid="check_cara"
+            />
+            <label for="">2</label>
+            <input
+              type="radio"
+              name="mual"
+              id="mual"
+              label="mual"
+              value="3"
+              myid="check_cara"
+            />
+            <label for="">3</label>
+            <input
+              type="radio"
+              name="mual"
+              id="mual"
+              label="mual"
+              value="4"
+              myid="check_cara"
+            />
+            <label for="">4</label>
+            <input
+              type="radio"
+              name="mual"
+              id="mual"
+              label="mual"
+              value="5"
+              myid="check_cara"
+            />
+            <label for="">5</label>
+            <input
+              type="radio"
+              name="mual"
+              id="mual"
+              label="mual"
+              value="6"
+              myid="check_cara"
+            />
+            <label for="">6</label>
+            <input
+              type="radio"
+              name="mual"
+              id="mual"
+              label="mual"
+              value="7"
+              myid="check_cara"
+            />
+            <label for="">7</label>
+            <input
+              type="radio"
+              name="mual"
+              id="mual"
+              label="mual"
+              value="8"
+              myid="check_cara"
+            />
+            <label for="">8</label>
+            <input
+              type="radio"
+              name="mual"
+              id="mual"
+              label="mual"
+              value="9"
+              myid="check_cara"
+            />
+            <label for="">9</label>
+            <input
+              type="radio"
+              name="mual"
+              id="mual"
+              label="mual"
+              value="10"
+              myid="check_cara"
+            />
+            <label for="">10</label>
+          </td>
+          <td>Sangat mual</td>
+        </tr>
+        <tr>
+          <td>Nafsu makan baik</td>
+          <td>
+            <input
+              type="radio"
+              name="nafsu-makan-buruk"
+              id="nafsu-makan-buruk"
+              label="nafsu-makan-buruk"
+              value="1"
+              myid="check_cara"
+            />
+            <label for="">1</label>
+            <input
+              type="radio"
+              name="nafsu-makan-buruk"
+              id="nafsu-makan-buruk"
+              label="nafsu-makan-buruk"
+              value="2"
+              myid="check_cara"
+            />
+            <label for="">2</label>
+            <input
+              type="radio"
+              name="nafsu-makan-buruk"
+              id="nafsu-makan-buruk"
+              label="nafsu-makan-buruk"
+              value="3"
+              myid="check_cara"
+            />
+            <label for="">3</label>
+            <input
+              type="radio"
+              name="nafsu-makan-buruk"
+              id="nafsu-makan-buruk"
+              label="nafsu-makan-buruk"
+              value="4"
+              myid="check_cara"
+            />
+            <label for="">4</label>
+            <input
+              type="radio"
+              name="nafsu-makan-buruk"
+              id="nafsu-makan-buruk"
+              label="nafsu-makan-buruk"
+              value="5"
+              myid="check_cara"
+            />
+            <label for="">5</label>
+            <input
+              type="radio"
+              name="nafsu-makan-buruk"
+              id="nafsu-makan-buruk"
+              label="nafsu-makan-buruk"
+              value="6"
+              myid="check_cara"
+            />
+            <label for="">6</label>
+            <input
+              type="radio"
+              name="nafsu-makan-buruk"
+              id="nafsu-makan-buruk"
+              label="nafsu-makan-buruk"
+              value="7"
+              myid="check_cara"
+            />
+            <label for="">7</label>
+            <input
+              type="radio"
+              name="nafsu-makan-buruk"
+              id="nafsu-makan-buruk"
+              label="nafsu-makan-buruk"
+              value="8"
+              myid="check_cara"
+            />
+            <label for="">8</label>
+            <input
+              type="radio"
+              name="nafsu-makan-buruk"
+              id="nafsu-makan-buruk"
+              label="nafsu-makan-buruk"
+              value="9"
+              myid="check_cara"
+            />
+            <label for="">9</label>
+            <input
+              type="radio"
+              name="nafsu-makan-buruk"
+              id="nafsu-makan-buruk"
+              label="nafsu-makan-buruk"
+              value="10"
+              myid="check_cara"
+            />
+            <label for="">10</label>
+          </td>
+          <td>Nafsu makan tidak ada</td>
+        </tr>
+        <tr>
+          <td>Tidak sesak nafas</td>
+          <td>
+            <input
+              type="radio"
+              name="sesak-nafas"
+              id="sesak-nafas"
+              label="sesak-nafas"
+              value="1"
+              myid="check_cara"
+            />
+            <label for="">1</label>
+            <input
+              type="radio"
+              name="sesak-nafas"
+              id="sesak-nafas"
+              label="sesak-nafas"
+              value="2"
+              myid="check_cara"
+            />
+            <label for="">2</label>
+            <input
+              type="radio"
+              name="sesak-nafas"
+              id="sesak-nafas"
+              label="sesak-nafas"
+              value="3"
+              myid="check_cara"
+            />
+            <label for="">3</label>
+            <input
+              type="radio"
+              name="sesak-nafas"
+              id="sesak-nafas"
+              label="sesak-nafas"
+              value="4"
+              myid="check_cara"
+            />
+            <label for="">4</label>
+            <input
+              type="radio"
+              name="sesak-nafas"
+              id="sesak-nafas"
+              label="sesak-nafas"
+              value="5"
+              myid="check_cara"
+            />
+            <label for="">5</label>
+            <input
+              type="radio"
+              name="sesak-nafas"
+              id="sesak-nafas"
+              label="sesak-nafas"
+              value="6"
+              myid="check_cara"
+            />
+            <label for="">6</label>
+            <input
+              type="radio"
+              name="sesak-nafas"
+              id="sesak-nafas"
+              label="sesak-nafas"
+              value="7"
+              myid="check_cara"
+            />
+            <label for="">7</label>
+            <input
+              type="radio"
+              name="sesak-nafas"
+              id="sesak-nafas"
+              label="sesak-nafas"
+              value="8"
+              myid="check_cara"
+            />
+            <label for="">8</label>
+            <input
+              type="radio"
+              name="sesak-nafas"
+              id="sesak-nafas"
+              label="sesak-nafas"
+              value="9"
+              myid="check_cara"
+            />
+            <label for="">9</label>
+            <input
+              type="radio"
+              name="sesak-nafas"
+              id="sesak-nafas"
+              label="sesak-nafas"
+              value="10"
+              myid="check_cara"
+            />
+            <label for="">10</label>
+          </td>
+          <td>Sesak nafas sekali</td>
+        </tr>
+        <tr>
+          <td>Tidak sedih</td>
+          <td>
+            <input
+              type="radio"
+              name="sedih"
+              id="sedih"
+              label="sedih"
+              value="1"
+              myid="check_cara"
+            />
+            <label for="">1</label>
+            <input
+              type="radio"
+              name="sedih"
+              id="sedih"
+              label="sedih"
+              value="2"
+              myid="check_cara"
+            />
+            <label for="">2</label>
+            <input
+              type="radio"
+              name="sedih"
+              id="sedih"
+              label="sedih"
+              value="3"
+              myid="check_cara"
+            />
+            <label for="">3</label>
+            <input
+              type="radio"
+              name="sedih"
+              id="sedih"
+              label="sedih"
+              value="4"
+              myid="check_cara"
+            />
+            <label for="">4</label>
+            <input
+              type="radio"
+              name="sedih"
+              id="sedih"
+              label="sedih"
+              value="5"
+              myid="check_cara"
+            />
+            <label for="">5</label>
+            <input
+              type="radio"
+              name="sedih"
+              id="sedih"
+              label="sedih"
+              value="6"
+              myid="check_cara"
+            />
+            <label for="">6</label>
+            <input
+              type="radio"
+              name="sedih"
+              id="sedih"
+              label="sedih"
+              value="7"
+              myid="check_cara"
+            />
+            <label for="">7</label>
+            <input
+              type="radio"
+              name="sedih"
+              id="sedih"
+              label="sedih"
+              value="8"
+              myid="check_cara"
+            />
+            <label for="">8</label>
+            <input
+              type="radio"
+              name="sedih"
+              id="sedih"
+              label="sedih"
+              value="9"
+              myid="check_cara"
+            />
+            <label for="">9</label>
+            <input
+              type="radio"
+              name="sedih"
+              id="sedih"
+              label="sedih"
+              value="10"
+              myid="check_cara"
+            />
+            <label for="">10</label>
+          </td>
+          <td>Sangat sedih sekali</td>
+        </tr>
+        <tr>
+          <td>Tidak cemas</td>
+          <td>
+            <input
+              type="radio"
+              name="cemas"
+              id="cemas"
+              label="cemas"
+              value="1"
+              myid="check_cara"
+            />
+            <label for="">1</label>
+            <input
+              type="radio"
+              name="cemas"
+              id="cemas"
+              label="cemas"
+              value="2"
+              myid="check_cara"
+            />
+            <label for="">2</label>
+            <input
+              type="radio"
+              name="cemas"
+              id="cemas"
+              label="cemas"
+              value="3"
+              myid="check_cara"
+            />
+            <label for="">3</label>
+            <input
+              type="radio"
+              name="cemas"
+              id="cemas"
+              label="cemas"
+              value="4"
+              myid="check_cara"
+            />
+            <label for="">4</label>
+            <input
+              type="radio"
+              name="cemas"
+              id="cemas"
+              label="cemas"
+              value="5"
+              myid="check_cara"
+            />
+            <label for="">5</label>
+            <input
+              type="radio"
+              name="cemas"
+              id="cemas"
+              label="cemas"
+              value="6"
+              myid="check_cara"
+            />
+            <label for="">6</label>
+            <input
+              type="radio"
+              name="cemas"
+              id="cemas"
+              label="cemas"
+              value="7"
+              myid="check_cara"
+            />
+            <label for="">7</label>
+            <input
+              type="radio"
+              name="cemas"
+              id="cemas"
+              label="cemas"
+              value="8"
+              myid="check_cara"
+            />
+            <label for="">8</label>
+            <input
+              type="radio"
+              name="cemas"
+              id="cemas"
+              label="cemas"
+              value="9"
+              myid="check_cara"
+            />
+            <label for="">9</label>
+            <input
+              type="radio"
+              name="cemas"
+              id="cemas"
+              label="cemas"
+              value="10"
+              myid="check_cara"
+            />
+            <label for="">10</label>
+          </td>
+          <td>Sangat cemas</td>
+        </tr>
+        <tr>
+          <td>Merasa nyaman</td>
+          <td>
+            <input
+              type="radio"
+              name="tidak-nyaman"
+              id="tidak-nyaman"
+              label="tidak-nyaman"
+              value="1"
+              myid="check_cara"
+            />
+            <label for="">1</label>
+            <input
+              type="radio"
+              name="tidak-nyaman"
+              id="tidak-nyaman"
+              label="tidak-nyaman"
+              value="2"
+              myid="check_cara"
+            />
+            <label for="">2</label>
+            <input
+              type="radio"
+              name="tidak-nyaman"
+              id="tidak-nyaman"
+              label="tidak-nyaman"
+              value="3"
+              myid="check_cara"
+            />
+            <label for="">3</label>
+            <input
+              type="radio"
+              name="tidak-nyaman"
+              id="tidak-nyaman"
+              label="tidak-nyaman"
+              value="4"
+              myid="check_cara"
+            />
+            <label for="">4</label>
+            <input
+              type="radio"
+              name="tidak-nyaman"
+              id="tidak-nyaman"
+              label="tidak-nyaman"
+              value="5"
+              myid="check_cara"
+            />
+            <label for="">5</label>
+            <input
+              type="radio"
+              name="tidak-nyaman"
+              id="tidak-nyaman"
+              label="tidak-nyaman"
+              value="6"
+              myid="check_cara"
+            />
+            <label for="">6</label>
+            <input
+              type="radio"
+              name="tidak-nyaman"
+              id="tidak-nyaman"
+              label="tidak-nyaman"
+              value="7"
+              myid="check_cara"
+            />
+            <label for="">7</label>
+            <input
+              type="radio"
+              name="tidak-nyaman"
+              id="tidak-nyaman"
+              label="tidak-nyaman"
+              value="8"
+              myid="check_cara"
+            />
+            <label for="">8</label>
+            <input
+              type="radio"
+              name="tidak-nyaman"
+              id="tidak-nyaman"
+              label="tidak-nyaman"
+              value="9"
+              myid="check_cara"
+            />
+            <label for="">9</label>
+            <input
+              type="radio"
+              name="tidak-nyaman"
+              id="tidak-nyaman"
+              label="tidak-nyaman"
+              value="10"
+              myid="check_cara"
+            />
+            <label for="">10</label>
+          </td>
+          <td>Sangat tidak nyaman</td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">Tidak</label>
+            <input
+              type="text"
+              name="keadaan-terbaik-lainnya"
+              id="keadaan-terbaik-lainnya"
+              label="keadaan-terbaik-lainnya"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              name="gejala-lainnya"
+              id="gejala-lainnya"
+              label="gejala-lainnya"
+              value="1"
+              myid="check_cara"
+            />
+            <label for="">1</label>
+            <input
+              type="radio"
+              name="gejala-lainnya"
+              id="gejala-lainnya"
+              label="gejala-lainnya"
+              value="2"
+              myid="check_cara"
+            />
+            <label for="">2</label>
+            <input
+              type="radio"
+              name="gejala-lainnya"
+              id="gejala-lainnya"
+              label="gejala-lainnya"
+              value="3"
+              myid="check_cara"
+            />
+            <label for="">3</label>
+            <input
+              type="radio"
+              name="gejala-lainnya"
+              id="gejala-lainnya"
+              label="gejala-lainnya"
+              value="4"
+              myid="check_cara"
+            />
+            <label for="">4</label>
+            <input
+              type="radio"
+              name="gejala-lainnya"
+              id="gejala-lainnya"
+              label="gejala-lainnya"
+              value="5"
+              myid="check_cara"
+            />
+            <label for="">5</label>
+            <input
+              type="radio"
+              name="gejala-lainnya"
+              id="gejala-lainnya"
+              label="gejala-lainnya"
+              value="6"
+              myid="check_cara"
+            />
+            <label for="">6</label>
+            <input
+              type="radio"
+              name="gejala-lainnya"
+              id="gejala-lainnya"
+              label="gejala-lainnya"
+              value="7"
+              myid="check_cara"
+            />
+            <label for="">7</label>
+            <input
+              type="radio"
+              name="gejala-lainnya"
+              id="gejala-lainnya"
+              label="gejala-lainnya"
+              value="8"
+              myid="check_cara"
+            />
+            <label for="">8</label>
+            <input
+              type="radio"
+              name="gejala-lainnya"
+              id="gejala-lainnya"
+              label="gejala-lainnya"
+              value="9"
+              myid="check_cara"
+            />
+            <label for="">9</label>
+            <input
+              type="radio"
+              name="gejala-lainnya"
+              id="gejala-lainnya"
+              label="gejala-lainnya"
+              value="10"
+              myid="check_cara"
+            />
+            <label for="">10</label>
+          </td>
+          <td>
+            Sangat tidak
+            <input
+              type="text"
+              name="keadaan-terburuk-lainnya"
+              id="keadaan-terburuk-lainnya"
+              label="keadaan-terburuk-lainnya"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <p>Gejala lain</p>
+            <p>(Contoh: Konstipasi)</p>
+            <p>Tindakan</p>
+            <textarea
+              style="width: 100%; padding: 5px"
+              rows="10"
+              name="tindakan"
+              id="tindakan"
+              label="tindakan"
+              placeholder="......"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table">
+      <tbody>
+        <tr>
+          <td colspan="2">
+            <label for="">Tanggal :</label>
+            <input
+              type="text"
+              name="tgl-pengkajian"
+              id="tgl-pengkajian"
+              label="tgl-pengkajian"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p style="text-align: center">Nama Pemeriksaan:</p>
+            <input
+              style="width: 100%"
+              type="text"
+              name="nama-pemeriksaan"
+              id="nama-pemeriksaan"
+              label="nama-pemeriksaan"
+              placeholder="......"
+              myid="check_cara"
+            /><font id="ttd2"></font>
+          </td>
+          <td>
+            <p style="text-align: center">Pemeriksa:</p>
+            <input
+              style="width: 100%"
+              type="text"
+              name="pemeriksa"
+              id="pemeriksa"
+              label="pemeriksa"
+              placeholder="......"
+              myid="check_cara"
+            /><font id="ttd2"></font>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(function (radio) {
+          radio.addEventListener("click", function () {
+            if (this.classList.contains("clicked")) {
+              this.checked = false;
+              this.classList.remove("clicked");
+            } else {
+              var name = this.getAttribute("name");
+              var radios = document.querySelectorAll(
+                'input[type="radio"][name="' + name + '"]'
+              );
+              radios.forEach(function (r) {
+                r.classList.remove("clicked");
+              });
+              this.classList.add("clicked");
+            }
+            console.log(this.name + " diubah menjadi: " + this.checked);
+          });
+        });
+
+        var textAreas = document.querySelectorAll("textarea");
+        textAreas.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+        var textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
