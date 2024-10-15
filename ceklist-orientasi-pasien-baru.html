@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CEKLIST ORIENTASI PASIEN BARU RS. AZRA BOGOR</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">CEKLIST ORIENTASI PASIEN BARU RS. AZRA BOGOR</h1>
+    <table class="table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td>Nama Pasien</td>
+          <td>
+            <input
+              name="nama_pasien"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+            />
+          </td>
+          <td>Jenis Kelamin</td>
+          <td>
+            <input
+              type="radio"
+              name="jenis-kelamin"
+              id="laki-laki"
+              myid="check_cara"
+              value="L"
+              label="jenis kelamin"
+            />
+            <label for="l">L</label>
+            <input
+              type="radio"
+              name="jenis-kelamin"
+              id="perempuan"
+              myid="check_cara"
+              value="P"
+              label="jenis kelamin"
+            />
+            <label for="l">P</label>
+          </td>
+          <td>
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              myid="check_cara"
+              name="no_rm"
+              id="no_rm"
+              label="nomor rekam medis"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan="2">Tanggal Lahir</td>
+          <td rowspan="2">
+            <input
+              name="tgl_lahir"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td rowspan="2">Umur</td>
+          <td rowspan="2">
+            <input
+              type="text"
+              size="5"
+              name="umur-pengkajian"
+              id="umur-pengkajian"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <label for="kelas"> Kelas </label>
+          </td>
+          <td>
+            <input
+              name="kelas"
+              type="text"
+              id="kelas"
+              placeholder="..."
+              myid="check_cara"
+              label="kelas"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Kamar</td>
+          <td>
+            <input
+              type="text"
+              name="kamar"
+              id="kamar"
+              myid="check_cara"
+              placeholder="..."
+              aria-label="kamar"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table-bordered">
+      <tbody>
+        <tr>
+          <td colspan="3">
+            (Dilengkapi dalam waktu 24 jam pertama pasien masuk rawat )
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <label for="">Diberikan kepada:</label>
+            <input
+              type="radio"
+              name="diberikan-kepada"
+              id="diberikan-kepada"
+              value="Pasien"
+              label="diberikan-kepada"
+              myid="check_cara"
+            />
+            <label for="diberikan-kepada">Pasien</label>
+            <input
+              type="radio"
+              name="diberikan-kepada"
+              id="diberikan-kepada"
+              value="Keluarga"
+              label="diberikan-kepada"
+              myid="check_cara"
+            />
+            <label for="diberikan-kepada">Keluarga</label>
+            <input
+              type="radio"
+              name="diberikan-kepada"
+              id="diberikan-kepada"
+              value="Lain - lain"
+              label="diberikan-kepada"
+              myid="check_cara"
+            />
+            <label for="">Lain - lain</label>
+            <input
+              type="radio"
+              name="diberikan-kepada"
+              id="diberikan-kepada"
+              value="Tidak bisa dilakukan (jelaskan)"
+              label="diberikan-kepada"
+              myid="check_cara"
+            />
+            <label for="">Tidak bisa dilakukan (jelaskan)</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 2%">
+            <b>1.</b>
+          </td>
+          <td colspan="2"><b>PETUGAS RUANGAN</b></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="perkenalan-terhadap-perawat-pengelola"
+              id="perkenalan-terhadap-perawat-pengelola"
+              value="Tidak bisa dilakukan (jelaskan)"
+              label="perkenalan-terhadap-perawat-pengelola"
+              myid="check_cara"
+            />
+            <label for="">Perkenalan terhadap perawat pengelola</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 2%">
+            <b>2.</b>
+          </td>
+          <td colspan="2"><b>FASILITAS FISIK</b></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>
+            <input
+              type="checkbox"
+              name="nurse-station"
+              id="nurse-station"
+              value="Nurse Station"
+              label="nurse-station"
+              myid="check_cara"
+            />
+            <label for=""><i>Nurse Station</i></label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="lokasi-perawatan-dan-tempat-tidur"
+              id="lokasi-perawatan-dan-tempat-tidur"
+              value="Lokasi perawatan dan tempat tidur"
+              label="lokasi-perawatan-dan-tempat-tidur"
+              myid="check_cara"
+            />
+            <label for="">Lokasi perawatan dan tempat tidur</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>
+            <input
+              type="checkbox"
+              name="penggunaan-tv"
+              id="penggunaan-tv"
+              value="Penggunaan TV"
+              label="penggunaan-tv"
+              myid="check_cara"
+            />
+            <label for="">Penggunaan TV</label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="lokasi-kamar-mandi-toilet-cara-menggunakan-toilet"
+              id="lokasi-kamar-mandi-toilet-cara-menggunakan-toilet"
+              value="Lokasi kamar mandi, toilet, dan cara menggunakan toilet"
+              label="lokasi-kamar-mandi-toilet-cara-menggunakan-toilet"
+              myid="check_cara"
+            />
+            <label for=""
+              >Lokasi kamar mandi, toilet, dan cara menggunakan toilet</label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>
+            <input
+              type="checkbox"
+              name="penggunaan-telepon"
+              id="penggunaan-telepon"
+              value="Penggunaan Telepon"
+              label="penggunaan-telepon"
+              myid="check_cara"
+            />
+            <label for="">Penggunaan Telepon</label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="bedside-monitor-ventilator-infusion-pump"
+              id="bedside-monitor-ventilator-infusion-pump"
+              value="Bedside monitor, ventilator, infusion pump (jika terpasang)"
+              label="bedside-monitor-ventilator-infusion-pump"
+              myid="check_cara"
+            />
+            <label for=""
+              >Bedside monitor, ventilator, infusion pump (jika
+              terpasang)</label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="cara-memanggil-perawat"
+              id="cara-memanggil-perawat"
+              value="Cara memanggil perawat"
+              label="cara-memanggil-perawat"
+              myid="check_cara"
+            />
+            <label for="">Cara memanggil perawat</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 2%">
+            <b>3.</b>
+          </td>
+          <td colspan="2"><b>KEBIJAKAN</b></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="aktivitas-harian-bangsal"
+              id="aktivitas-harian-bangsal"
+              value="Aktivitas harian bangsal"
+              label="aktivitas-harian-bangsal"
+              myid="check_cara"
+            />
+            <label for="">Aktivitas harian bangsal</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="kebersihan-kamar-mandi"
+              id="kebersihan-kamar-mandi"
+              value="Kebersihan kamar mandi"
+              label="kebersihan-kamar-mandi"
+              myid="check_cara"
+            />
+            <label for="">Kebersihan kamar mandi</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="pengunjung-dan-jam-pengunjung"
+              id="pengunjung-dan-jam-pengunjung"
+              value="Pengunjung dan jam pengunjung"
+              label="pengunjung-dan-jam-pengunjung"
+              myid="check_cara"
+            />
+            <label for="">Pengunjung dan jam pengunjung</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="pemakaian-pakaian-dari-rumah"
+              id="pemakaian-pakaian-dari-rumah"
+              value="Pemakaian pakaian dari rumah"
+              label="pemakaian-pakaian-dari-rumah"
+              myid="check_cara"
+            />
+            <label for="">Pemakaian pakaian dari rumah</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="prosedur-mengajukan-keluhan"
+              id="prosedur-mengajukan-keluhan"
+              value="Prosedur mengajukan keluhan"
+              label="prosedur-mengajukan-keluhan"
+              myid="check_cara"
+            />
+            <label for="">Prosedur mengajukan keluhan</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="prosedur-pre-dan-post-operasi"
+              id="prosedur-pre-dan-post-operasi"
+              value="Prosedur pre dan post operasi (jika ada)"
+              label="prosedur-pre-dan-post-operasi"
+              myid="check_cara"
+            />
+            <label for="">Prosedur pre dan post operasi (jika ada)</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="pelayanan-makanan"
+              id="pelayanan-makanan"
+              value="Pelayanan makanan"
+              label="pelayanan-makanan"
+              myid="check_cara"
+            />
+            <label for="">Pelayanan makanan</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="nomor-telepon-bangsal"
+              id="nomor-telepon-bangsal"
+              value="Nomor telepon bangsal (berikan kartu nama bangsal jika diperlukan)"
+              label="nomor-telepon-bangsal"
+              myid="check_cara"
+            />
+            <label for=""
+              >Nomor telepon bangsal (berikan kartu nama bangsal jika
+              diperlukan)</label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="jgn-mengganggu-pelayanan-pemberian-obat-oleh-perawat"
+              id="jgn-mengganggu-pelayanan-pemberian-obat-oleh-perawat"
+              value="Jangan mengganggu pelayanan pemberian obat oleh perawat"
+              label="jgn-mengganggu-pelayanan-pemberian-obat-oleh-perawat"
+              myid="check_cara"
+            />
+            <label for=""
+              >Jangan mengganggu pelayanan pemberian obat oleh perawat</label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="prosedur-mengenai-cara-bertemu-dokter-utk-menanyakan-kondisi-medis-terbaru"
+              id="prosedur-mengenai-cara-bertemu-dokter-utk-menanyakan-kondisi-medis-terbaru"
+              value="Prosedur mengenai cara bertemu dokter untuk menanyakan kondisi medis terbaru"
+              label="prosedur-mengenai-cara-bertemu-dokter-utk-menanyakan-kondisi-medis-terbaru"
+              myid="check_cara"
+            />
+            <label for=""
+              >Prosedur mengenai cara bertemu dokter untuk menanyakan kondisi
+              medis terbaru</label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="diberikan-brosur-hak-dan-kewajiban-pasien"
+              id="diberikan-brosur-hak-dan-kewajiban-pasien"
+              value="Diberikan brosur hak dan kewajiban pasien"
+              label="diberikan-brosur-hak-dan-kewajiban-pasien"
+              myid="check_cara"
+            />
+            <label for="">Diberikan brosur hak dan kewajiban pasien</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 2%">
+            <b>4.</b>
+          </td>
+          <td colspan="2"><b>MANAJEMEN KESELAMATAN PASIEN</b></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="pencegahan-jatuh"
+              id="pencegahan-jatuh"
+              value="Pencegahan jatuh"
+              label="pencegahan-jatuh"
+              myid="check_cara"
+            />
+            <label for="">Pencegahan jatuh</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="orang-tdk-dikenal"
+              id="orang-tdk-dikenal"
+              value="Orang tidak dikenal"
+              label="orang-tdk-dikenal"
+              myid="check_cara"
+            />
+            <label for="">Orang tidak dikenal</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="penggunaan-gelang-identitas-pasien"
+              id="penggunaan-gelang-identitas-pasien"
+              value="Penggunaan gelang identitas pasien"
+              label="penggunaan-gelang-identitas-pasien"
+              myid="check_cara"
+            />
+            <label for="">Penggunaan gelang identitas pasien</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="lokasi-pintu-fire-exit"
+              id="lokasi-pintu-fire-exit"
+              value="Lokasi pintu keluar bila terjadi kebakaran atau fire exit"
+              label="lokasi-pintu-fire-exit"
+              myid="check_cara"
+            />
+            <label for=""
+              >Lokasi pintu keluar bila terjadi kebakaran atau fire exit</label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="bahaya-api-dilarang-merokok-di-lingkungan-rmh-sakit"
+              id="bahaya-api-dilarang-merokok-di-lingkungan-rmh-sakit"
+              value="Bahaya api- dilarang merokok di lingkungan rumah sakit"
+              label="bahaya-api-dilarang-merokok-di-lingkungan-rmh-sakit"
+              myid="check_cara"
+            />
+            <label for=""
+              >Bahaya api- dilarang merokok di lingkungan rumah sakit</label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="bila-akan-meninggalkan-bangsal-harus-sesuai-peraturan-rmh-sakit"
+              id="bila-akan-meninggalkan-bangsal-harus-sesuai-peraturan-rmh-sakit"
+              value="Bila akan meninggalkan bangsal harus sesuai peraturan rumah sakit"
+              label="bila-akan-meninggalkan-bangsal-harus-sesuai-peraturan-rmh-sakit"
+              myid="check_cara"
+            />
+            <label for=""
+              >Bila akan meninggalkan bangsal harus sesuai peraturan rumah
+              sakit</label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <input
+              type="checkbox"
+              name="hand-hygiene"
+              id="hand-hygiene"
+              value="Hand hygiene"
+              label="hand-hygiene"
+              myid="check_cara"
+            />
+            <label for="">Hand hygiene</label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+
+    <table class="table" width="100%">
+      <tbody>
+        <tr>
+          <td style="text-align: center">Yang memberikan orientasi</td>
+          <td style="text-align: center">Yang menerima orientasi</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">
+            <input
+              style="width: 100%"
+              type="text"
+              name="yg-memberikan-orientasi"
+              id="yg-memberikan-orientasi"
+              label="yg-memberikan-orientasi"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttdnya2"></font>
+          </td>
+          <td style="text-align: center">
+            <input
+              style="width: 100%"
+              type="text"
+              name="yg-menerima-orientasi"
+              id="yg-menerima-orientasi"
+              label="yg-menerima-orientasi"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttdnya2"></font>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var checkboxButtons = document.querySelectorAll(
+          'input[type="checkbox"]'
+        );
+        checkboxButtons.forEach(function (checkbox) {
+          checkbox.addEventListener("click", function () {
+            if (this.classList.contains("clicked")) {
+              this.checked = false;
+              this.classList.remove("clicked");
+            } else {
+              var name = this.getAttribute("name");
+              var checkboxes = document.querySelectorAll(
+                'input[type="radio"][name="' + name + '"]'
+              );
+              checkboxes.forEach(function (r) {
+                r.classList.remove("clicked");
+              });
+              this.classList.add("clicked");
+            }
+            console.log(this.name + " diubah menjadi: " + this.checked);
+          });
+        });
+
+        var textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
