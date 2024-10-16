@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FORMULIR PERSETUJUAN TES HIV</title>
+  </head>
+  <style>
+    * {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      margin-bottom: 10px;
+      margin: 0;
+      padding: 0;
+    }
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">FORMULIR PERSETUJUAN TES HIV</h1>
+
+    <p>
+      Sebelum menanda tangani formulir persetujuan ini, harap mengetahui bahwa:
+    </p>
+
+    <ul>
+      <li>
+        Anda mempunyai hak untuk berpartisipasi di dalam pemeriksaan dengan
+        dasar keharasiaan.
+      </li>
+      <li>
+        Anda mempunyai hak untuk menarik persetujuan dari tes HIV sebelum
+        pemeriksaan tersebut dilangsungkan.
+      </li>
+    </ul>
+
+    <fieldset>
+      Saya telah menerima informasi dan konseling menyangkut hal - hal berikut
+      ini:
+      <ol type="a">
+        <li>Keberadaan dan kegunaan dari tesing HIV</li>
+        <li>Tujuan dan kegunaan dari tes HIV</li>
+        <li>Apa yang dapat dan tidak dapat diberitahukan dari tes HIV</li>
+        <li>
+          Keuntungan serta risiko dari tes HIV dan dari mengetahui hasil tes HIV
+          saya
+        </li>
+        <li>
+          Pemahaman dari positif, negative, false negative, dan hasil tes
+          intermediate serta dampak dari masa jendela
+        </li>
+        <li>
+          Pengukuran untuk pencegahan dari pemaparan dan penularan akan HIV
+        </li>
+      </ol>
+    </fieldset>
+
+    <br />
+
+    <fieldset>
+      <b
+        >Saya dengan sukarela menyetujui untuk menjalani tes HIV pemeriksaan HIV
+        dengan ketentuan bahwa hasil tes tersebut akan tetap rahasia dan terbuka
+        hanya kepada saya seorang.</b
+      >
+
+      <p>
+        Saya menyetujui untuk menerima pelayanan konseling setelah menjalani tes
+        HIV pemeriksaan untuk mendiskusikan hasil - hasil tes HIV saya dan cara
+        - cara untuk mengurangi risiko untuk terkena HIV atau menyebarluaskan
+        HIV kepada orang lain untuk waktu kedepannya.
+      </p>
+
+      <p>
+        Saya mengerti bahwa pelayanan kesehatan saya klinik ini tidak akan
+        mempengaruhi keputusan saya secara negative terhadap tes HIV atau tidak
+        menjalani tes HIV atau tidak menjalani tes HIV atau hasil dari tes HIV
+        saya.
+      </p>
+
+      <p>
+        Saya telah diberikan kesempatan untuk bertanya dan pertanyaan saya ini
+        telah diberikan jawaban yang memuaskan saya.
+      </p>
+
+      <p>Saya dengan ini mengizinkan tes HIV/pemeriksaan HIV</p>
+      <label>Untuk dilaksanakan tanggal:</label>
+      <input
+        type="text"
+        name="tgl-pemeriksaan-hiv"
+        id="tgl-pemeriksaan-hiv"
+        label="tgl-pemeriksaan-hiv"
+        myid="check_cara"
+        placeholder="dd/mm/yyyy"
+      />
+      <br />
+      <br />
+      <table width="100%" class="table">
+        <tbody>
+          <tr>
+            <td style="text-align: center; width: 50%">
+              <input
+                style="width: 99%"
+                type="text"
+                name="ttd-pasien"
+                id="ttd-pasien"
+                label="ttd-pasien"
+                myid="check_cara"
+                placeholder="......"
+              />
+              <font id="ttd2"></font>
+              <p style="margin: 5px 0 0 0; padding: 0">
+                Tanda tangan atau Cap jempol klien/pasien
+              </p>
+            </td>
+            <td style="text-align: center">
+              <input
+                style="width: 99%"
+                type="text"
+                name="ttd-konselor"
+                id="ttd-konselor"
+                label="ttd-konselor"
+                myid="check_cara"
+                placeholder="......"
+              />
+              <font id="ttd2"></font>
+              <p style="margin: 5px 0 0 0; padding: 0">Tanda tangan Konselor</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </fieldset>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
