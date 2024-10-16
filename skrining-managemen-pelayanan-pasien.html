@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SKRINING MANAJEMEN PELAYANAN PASIEN RS. AZRA BOGOR</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">SKRINING MANAJEMEN PELAYANAN PASIEN RS AZRA BOGOR</h1>
+
+    <table width="100%" class="table-bordered">
+      <tbody>
+        <tr>
+          <td style="width: 20%">Nama Pasien :</td>
+          <td>
+            <input
+              type="text"
+              name="nama-pasien"
+              id="nama-pasien"
+              label="nama-pasien"
+              placeholder="......"
+              myid="check_cara"
+              style="width: 100%"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>No. Rekam Medis :</td>
+          <td>
+            <input
+              type="text"
+              name="no-rek-medis"
+              id="no-rek-medis"
+              label="no-rek-medis"
+              placeholder="......"
+              myid="check_cara"
+              style="width: 100%"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Tanggal Lahir :</td>
+          <td>
+            <input
+              type="text"
+              name="tgl-lahir"
+              id="tgl-lahir"
+              label="tgl-lahir"
+              placeholder="......"
+              myid="check_cara"
+              style="width: 100%"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Tanggal Masuk Ruangan :</td>
+          <td>
+            <input
+              type="text"
+              name="tgl-masuk-ruangan"
+              id="tgl-masuk-ruangan"
+              label="tgl-masuk-ruangan"
+              placeholder="......"
+              myid="check_cara"
+              style="width: 100%"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>DPJP Utama :</td>
+          <td>
+            <input
+              type="text"
+              name="dpjp-utama"
+              id="dpjp-utama"
+              label="dpjp-utama"
+              placeholder="......"
+              myid="check_cara"
+              style="width: 100%"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+
+    <p>
+      Petunjuk : Lingkarilah skor yang sesuai dengan kriteria skrining pasien
+    </p>
+
+    <table width="100%" class="table table-bordered">
+      <thead>
+        <tr>
+          <th rowspan="3">NO.</th>
+          <th rowspan="3">KRITERIA SKRINING</th>
+          <th colspan="2">SKRINING</th>
+        </tr>
+        <tr>
+          <th>AWAL</th>
+          <th>LANJUT</th>
+        </tr>
+        <tr>
+          <th>SKOR</th>
+          <th>SKOR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="4"><b>DOKTER PENANGGUNG JAWAB PELAYANAN PASIEN</b></td>
+        </tr>
+        <tr>
+          <td style="text-align: center">1</td>
+          <td>Pasien dirawat oleh 3 atau lebih DPJP</td>
+          <td style="text-align: center">
+            <input
+              class="awal-skor"
+              type="radio"
+              name="awal-skor-penaggung-jawab-pelayanan-pasien"
+              id="awal-skor-penaggung-jawab-pelayanan-pasien"
+              label="awal-skor-penaggung-jawab-pelayanan-pasien"
+              value="10"
+              myid="check_cara"
+            />
+            <label for="">10</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              class="lanjut-skor"
+              type="radio"
+              name="lanjut-skor-penaggung-jawab-pelayanan-pasien"
+              id="lanjut-skor-penaggung-jawab-pelayanan-pasien"
+              label="lanjut-skor-penaggung-jawab-pelayanan-pasien"
+              value="10"
+              myid="check_cara"
+            />
+            <label for="">10</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">2</td>
+          <td>Pasien dirawat oleh kurang dari 3 DPJP</td>
+          <td style="text-align: center">
+            <input
+              class="awal-skor"
+              type="radio"
+              name="awal-skor-penaggung-jawab-pelayanan-pasien"
+              id="awal-skor-penaggung-jawab-pelayanan-pasien"
+              label="awal-skor-penaggung-jawab-pelayanan-pasien"
+              value="1"
+              myid="check_cara"
+            />
+            <label for="">1</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              class="lanjut-skor"
+              type="radio"
+              name="lanjut-skor-penaggung-jawab-pelayanan-pasien"
+              id="lanjut-skor-penaggung-jawab-pelayanan-pasien"
+              label="lanjut-skor-penaggung-jawab-pelayanan-pasien"
+              value="1"
+              myid="check_cara"
+            />
+            <label for="">1</label>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4"><b>PREDIKSI LAMA HARI RAWAT</b></td>
+        </tr>
+        <tr>
+          <td style="text-align: center">1</td>
+          <td>Prediksi lama rawat &gt; 14 hari</td>
+          <td style="text-align: center">
+            <input
+              class="awal-skor"
+              type="radio"
+              name="awal-skor-prediksi-lama-hari-rawat"
+              id="awal-skor-prediksi-lama-hari-rawat"
+              label="awal-skor-prediksi-lama-hari-rawat"
+              value="5"
+              myid="check_cara"
+            />
+            <label for="">5</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              class="lanjut-skor"
+              type="radio"
+              name="lanjut-skor-prediksi-lama-hari-rawat"
+              id="lanjut-skor-prediksi-lama-hari-rawat"
+              label="lanjut-skor-prediksi-lama-hari-rawat"
+              value="5"
+              myid="check_cara"
+            />
+            <label for="">5</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">2</td>
+          <td>Prediksi lama rawat 7 - 14 hari</td>
+          <td style="text-align: center">
+            <input
+              class="awal-skor"
+              type="radio"
+              name="awal-skor-prediksi-lama-hari-rawat"
+              id="awal-skor-prediksi-lama-hari-rawat"
+              label="awal-skor-prediksi-lama-hari-rawat"
+              value="2"
+              myid="check_cara"
+            />
+            <label for="">2</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              class="lanjut-skor"
+              type="radio"
+              name="lanjut-skor-prediksi-lama-hari-rawat"
+              id="lanjut-skor-prediksi-lama-hari-rawat"
+              label="lanjut-skor-prediksi-lama-hari-rawat"
+              value="2"
+              myid="check_cara"
+            />
+            <label for="">2</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">3</td>
+          <td>Prediksi lama rawat &lt; 7 hari</td>
+          <td style="text-align: center">
+            <input
+              class="awal-skor"
+              type="radio"
+              name="awal-skor-prediksi-lama-hari-rawat"
+              id="awal-skor-prediksi-lama-hari-rawat"
+              label="awal-skor-prediksi-lama-hari-rawat"
+              value="1"
+              myid="check_cara"
+            />
+            <label for="">1</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              class="lanjut-skor"
+              type="radio"
+              name="lanjut-skor-prediksi-lama-hari-rawat"
+              id="lanjut-skor-prediksi-lama-hari-rawat"
+              label="lanjut-skor-prediksi-lama-hari-rawat"
+              value="1"
+              myid="check_cara"
+            />
+            <label for="">1</label>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <p><b>ADMINISTRASI DAN SOSIAL</b></p>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">1</td>
+          <td>Naik kelas / turun kelas</td>
+          <td style="text-align: center">
+            <input
+              class="awal-skor"
+              type="radio"
+              name="awal-skor-administrasi-dan-sosial"
+              id="awal-skor-administrasi-dan-sosial"
+              label="awal-skor-administrasi-dan-sosial"
+              value="6"
+              myid="check_cara"
+            />
+            <label for="">6</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              class="lanjut-skor"
+              type="radio"
+              name="lanjut-skor-administrasi-dan-sosial"
+              id="lanjut-skor-administrasi-dan-sosial"
+              label="lanjut-skor-administrasi-dan-sosial"
+              value="6"
+              myid="check_cara"
+            />
+            <label for="">6</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">2</td>
+          <td>Tanpa keluarga / penanggung jawab</td>
+          <td style="text-align: center">
+            <input
+              class="awal-skor"
+              type="radio"
+              name="awal-skor-administrasi-dan-sosial"
+              id="awal-skor-administrasi-dan-sosial"
+              label="awal-skor-administrasi-dan-sosial"
+              value="5"
+              myid="check_cara"
+            />
+            <label for="">5</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              class="lanjut-skor"
+              type="radio"
+              name="lanjut-skor-administrasi-dan-sosial"
+              id="lanjut-skor-administrasi-dan-sosial"
+              label="lanjut-skor-administrasi-dan-sosial"
+              value="5"
+              myid="check_cara"
+            />
+            <label for="">5</label>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <p><b>KONDISI KLINIS PASIEN</b></p>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">1</td>
+          <td>Kepulangannya kritis</td>
+          <td style="text-align: center">
+            <input
+              class="awal-skor"
+              type="radio"
+              name="awal-skor-kondisi-klinis-pasien"
+              id="awal-skor-kondisi-klinis-pasien"
+              label="awal-skor-kondisi-klinis-pasien"
+              value="6"
+              myid="check_cara"
+            />
+            <label for="">6</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              class="lanjut-skor"
+              type="radio"
+              name="lanjut-skor-kondisi-klinis-pasien"
+              id="lanjut-skor-kondisi-klinis-pasien"
+              label="lanjut-skor-kondisi-klinis-pasien"
+              value="6"
+              myid="check_cara"
+            />
+            <label for="">6</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">2</td>
+          <td>Sering readmisi</td>
+          <td style="text-align: center">
+            <input
+              class="awal-skor"
+              type="radio"
+              name="awal-skor-kondisi-klinis-pasien"
+              id="awal-skor-kondisi-klinis-pasien"
+              label="awal-skor-kondisi-klinis-pasien"
+              value="2"
+              myid="check_cara"
+            />
+            <label for="">2</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              class="lanjut-skor"
+              type="radio"
+              name="lanjut-skor-kondisi-klinis-pasien"
+              id="lanjut-skor-kondisi-klinis-pasien"
+              label="lanjut-skor-kondisi-klinis-pasien"
+              value="2"
+              myid="check_cara"
+            />
+            <label for="">2</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">3</td>
+          <td>Kasus dengan penyakit fatal</td>
+          <td style="text-align: center">
+            <input
+              class="awal-skor"
+              type="radio"
+              name="awal-skor-kondisi-klinis-pasien"
+              id="awal-skor-kondisi-klinis-pasien"
+              label="awal-skor-kondisi-klinis-pasien"
+              value="2"
+              myid="check_cara"
+            />
+            <label for="">2</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              class="lanjut-skor"
+              type="radio"
+              name="lanjut-skor-kondisi-klinis-pasien"
+              id="lanjut-skor-kondisi-klinis-pasien"
+              label="lanjut-skor-kondisi-klinis-pasien"
+              value="2"
+              myid="check_cara"
+            />
+            <label for="">2</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">4</td>
+          <td>Kasus dengan penyakit terminal</td>
+          <td style="text-align: center">
+            <input
+              class="awal-skor"
+              type="radio"
+              name="awal-skor-kondisi-klinis-pasien"
+              id="awal-skor-kondisi-klinis-pasien"
+              label="awal-skor-kondisi-klinis-pasien"
+              value="2"
+              myid="check_cara"
+            />
+            <label for="">2</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              class="lanjut-skor"
+              type="radio"
+              name="lanjut-skor-kondisi-klinis-pasien"
+              id="lanjut-skor-kondisi-klinis-pasien"
+              label="lanjut-skor-kondisi-klinis-pasien"
+              value="2"
+              myid="check_cara"
+            />
+            <label for="">2</label>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <p><b>MASALAH KHUSUS</b></p>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">1</td>
+          <td>Pasien dengan risiko komplain</td>
+          <td style="text-align: center">
+            <input
+              class="awal-skor"
+              type="radio"
+              name="awal-skor-masalah-khusus"
+              id="awal-skor-masalah-khusus"
+              label="awal-skor-masalah-khusus"
+              value="10"
+              myid="check_cara"
+            />
+            <label for="">10</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              class="lanjut-skor"
+              type="radio"
+              name="lanjut-skor-masalah-khusus"
+              id="lanjut-skor-masalah-khusus"
+              label="lanjut-skor-masalah-khusus"
+              value="10"
+              myid="check_cara"
+            />
+            <label for="">10</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">2</td>
+          <td>Pasien dengan masalah hukum</td>
+          <td style="text-align: center">
+            <input
+              class="awal-skor"
+              type="radio"
+              name="awal-skor-masalah-khusus"
+              id="awal-skor-masalah-khusus"
+              label="awal-skor-masalah-khusus"
+              value="10"
+              myid="check_cara"
+            />
+            <label for="">10</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              class="lanjut-skor"
+              type="radio"
+              name="lanjut-skor-masalah-khusus"
+              id="lanjut-skor-masalah-khusus"
+              label="lanjut-skor-masalah-khusus"
+              value="10"
+              myid="check_cara"
+            />
+            <label for="">10</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">3</td>
+          <td>Pasien titipan</td>
+          <td style="text-align: center">
+            <input
+              class="awal-skor"
+              type="radio"
+              name="awal-skor-masalah-khusus"
+              id="awal-skor-masalah-khusus"
+              label="awal-skor-masalah-khusus"
+              value="10"
+              myid="check_cara"
+            />
+            <label for="">10</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              class="lanjut-skor"
+              type="radio"
+              name="lanjut-skor-masalah-khusus"
+              id="lanjut-skor-masalah-khusus"
+              label="lanjut-skor-masalah-khusus"
+              value="10"
+              myid="check_cara"
+            />
+            <label for="">10</label>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" style="font-weight: bold; text-align: end">
+            TOTAL SKOR
+          </td>
+          <td style="width: 15%">
+            <input
+              style="width: 100%"
+              type="text"
+              name="total-awal-skor"
+              id="total-awal-skor"
+              label="total-awal-skor"
+              myid="check_cara"
+            />
+          </td>
+          <td style="width: 15%">
+            <input
+              style="width: 100%"
+              type="text"
+              name="total-lanjut-skor"
+              id="total-lanjut-skor"
+              label="total-lanjut-skor"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h5>Sumber:</h5>
+    <h5>- Panduan Manajer Pelayanan Pasien, 2017, KARS</h5>
+    <h5>
+      -
+      <i
+        >Case Management Society of America Standard of Practice for Case
+        Management revised,</i
+      >
+      Arkansas, 2016
+    </h5>
+    <h5>
+      - Ciesta, T and Cunningham, B:
+      <i>Core Skills for Hospital Case Managers</i>, HC Pro, 2019
+    </h5>
+    <h5>
+      - Mullahy, C.M. :
+      <i>The Case Manager's handbook, 5<sup>th</sup> ed.</i> Jones & Barlett
+      Learning, 2014
+    </h5>
+
+    <br />
+
+    <table width="100%" class="table">
+      <tbody>
+        <tr>
+          <td>
+            <p><b>Analisa:</b></p>
+            <p><b>Membutuhkan penanganan MPP, jika :</b></p>
+            <p><b>Total Skor = 15 atau lebih</b></p>
+          </td>
+          <td>
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <div>
+                <label style="text-align: center" for="">Bogor, tanggal</label>
+                <input
+                  style="flex: 1"
+                  type="text"
+                  name="tgl-permintaan"
+                  id="tgl-permintaan"
+                  label="tgl-permintaan"
+                  placeholder="dd/mm/yyyy"
+                  myid="check_cara"
+                />
+              </div>
+              <p style="margin-top: 5px">Perawat Penanggung jawab Pasien</p>
+              <label for="">
+                (
+                <input
+                  style="flex: 1"
+                  type="text"
+                  name="perawat-penanggung-jwb-pasien"
+                  id="perawat-penanggung-jwb-pasien"
+                  label="perawat-penanggung-jwb-pasien"
+                  placeholder="......"
+                  myid="check_cara"
+                />
+                )
+              </label>
+
+              <font id="ttd2"></font>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const skorAwal = document.querySelectorAll(".awal-skor");
+        const lanjutSkor = document.querySelectorAll(".lanjut-skor");
+        const totalAwalSkor = document.querySelector("#total-awal-skor");
+        const totalLanjutSkor = document.querySelector("#total-lanjut-skor");
+        console.log(totalLanjutSkor);
+        function hitungTotalAwalSkor() {
+          let total = 0;
+
+          // Loop melalui setiap input biaya perawatan
+          skorAwal.forEach((input) => {
+            if (input.checked) {
+              total += parseFloat(input.value);
+            }
+          });
+
+          // Tampilkan hasil penjumlahan
+          totalAwalSkor.value = total;
+        }
+
+        function hitungTotalLanjutSkor() {
+          let total = 0;
+
+          // Loop melalui setiap input biaya perawatan
+          lanjutSkor.forEach((input) => {
+            if (input.checked) {
+              total += parseFloat(input.value);
+            }
+          });
+
+          // Tampilkan hasil penjumlahan
+          totalLanjutSkor.value = total;
+        }
+
+        // Tambahkan event listener untuk setiap input biaya perawatan
+        skorAwal.forEach((input) => {
+          input.addEventListener("change", hitungTotalAwalSkor);
+        });
+
+        lanjutSkor.forEach((input) => {
+          input.addEventListener("change", hitungTotalLanjutSkor);
+        });
+
+        var radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(function (radio) {
+          radio.addEventListener("click", function () {
+            if (this.classList.contains("clicked")) {
+              this.checked = false;
+              this.classList.remove("clicked");
+            } else {
+              var name = this.getAttribute("name");
+              var radios = document.querySelectorAll(
+                'input[type="radio"][name="' + name + '"]'
+              );
+              radios.forEach(function (r) {
+                r.classList.remove("clicked");
+              });
+              this.classList.add("clicked");
+            }
+            console.log(this.name + " diubah menjadi: " + this.checked);
+          });
+        });
+
+        var textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
