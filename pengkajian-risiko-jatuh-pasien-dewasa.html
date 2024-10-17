@@ -1600,6 +1600,28 @@
           });
         });
 
+        var checkboxButtons = document.querySelectorAll(
+          'input[type="checkbox"]'
+        );
+        checkboxButtons.forEach(function (checkbox) {
+          checkbox.addEventListener("click", function () {
+            if (this.classList.contains("clicked")) {
+              this.checked = false;
+              this.classList.remove("clicked");
+            } else {
+              var name = this.getAttribute("name");
+              var checkboxes = document.querySelectorAll(
+                'input[type="radio"][name="' + name + '"]'
+              );
+              checkboxes.forEach(function (r) {
+                r.classList.remove("clicked");
+              });
+              this.classList.add("clicked");
+            }
+            console.log(this.name + " diubah menjadi: " + this.checked);
+          });
+        });
+
         var textInputs = document.querySelectorAll('input[type="text"]');
         textInputs.forEach(function (input) {
           input.addEventListener("change", function () {
