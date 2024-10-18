@@ -1,0 +1,3633 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>INFORMASI DAN EDUKASI PASIEN DAN KELUARGA TERINTEGRASI</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">
+      INFORMASI DAN EDUKASI PASIEN DAN KELUARGA TERINTEGRASI
+    </h1>
+
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td>Nama:</td>
+          <td>
+            <input
+              style="width: 99%"
+              type="text"
+              name="nama-pasien"
+              id="nama-pasien"
+              label="nama-pasien"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Jenis Kelamin:</td>
+          <td>
+            <input
+              style="width: 99%"
+              type="text"
+              name="jenis-kelamin-pasien"
+              id="jenis-kelamin-pasien"
+              label="jenis-kelamin-pasien"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>No RM:</td>
+          <td>
+            <input
+              style="width: 99%"
+              type="text"
+              name="no-rm-pasien"
+              id="no-rm-pasien"
+              label="no-rm-pasien"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Tanggal Lahir:</td>
+          <td>
+            <input
+              style="width: 99%"
+              type="text"
+              name="tgl-lahir-pasien"
+              id="tgl-lahir-pasien"
+              label="tgl-lahir-pasien"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td colspan="2">
+            <p><b>Asesmen kebutuhan edukasi</b></p>
+            <p><b>Data Pasien</b></p>
+          </td>
+          <td>
+            <p><b>Kebutuhan Edukasi :</b></p>
+          </td>
+        </tr>
+        <tr>
+          <td>Tinggal bersama :</td>
+          <td>
+            <input
+              type="radio"
+              name="tinggal-bersama"
+              id="tinggal-bersama"
+              label="tinggal-bersama"
+              value="Anak"
+              myid="check_cara"
+            />
+            <label for="tinggal-bersama">Anak</label>
+            <input
+              type="radio"
+              name="tinggal-bersama"
+              id="tinggal-bersama"
+              label="tinggal-bersama"
+              value="Orang Tua"
+              myid="check_cara"
+            />
+            <label for="tinggal-bersama">Orang Tua</label>
+            <input
+              type="radio"
+              name="tinggal-bersama"
+              id="tinggal-bersama"
+              label="tinggal-bersama"
+              value="Sendiri"
+              myid="check_cara"
+            />
+            <label for="tinggal-bersama">Sendiri</label>
+            <input
+              type="radio"
+              name="tinggal-bersama"
+              id="tinggal-bersama"
+              label="tinggal-bersama"
+              value="Suami/Istri"
+              myid="check_cara"
+            />
+            <label for="tinggal-bersama">Suami/Istri</label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="hak-berpartisipasi-proses-pelayanan"
+              id="hak-berpartisipasi-proses-pelayanan"
+              label="hak-berpartisipasi-proses-pelayanan"
+              value="Hak Untuk Berpartisipasi pada Proses pelayanan"
+              myid="check_cara"
+            />
+            <label for="hak-berpartisipasi-proses-pelayanan"
+              >Hak Untuk Berpartisipasi pada Proses pelayanan</label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>Bahasa yang digunakan :</td>
+          <td>
+            <input
+              type="radio"
+              name="bhs-yg-digunakan"
+              id="bhs-yg-digunakan"
+              label="bhs-yg-digunakan"
+              value="Indonesia"
+              myid="check_cara"
+            />
+            <label for="bhs-yg-digunakan">Indonesia</label>
+            <input
+              type="radio"
+              name="bhs-yg-digunakan"
+              id="bhs-yg-digunakan"
+              label="bhs-yg-digunakan"
+              value="Daerah"
+              myid="check_cara"
+            />
+            <label for="bhs-yg-digunakan">Daerah</label>
+
+            <input
+              type="text"
+              name="detail-bhs-daerah"
+              id="detail-bhs-daerah"
+              label="detail-bhs-daerah"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <input
+              type="radio"
+              name="bhs-yg-digunakan"
+              id="bhs-yg-digunakan"
+              label="bhs-yg-digunakan"
+              value="Asing"
+              myid="check_cara"
+            />
+            <label for="bhs-yg-digunakan">Asing</label>
+            <input
+              type="text"
+              name="detail-bhs-asing"
+              id="detail-bhs-asing"
+              label="detail-bhs-asing"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="prosedur-pemeriksaan-penunjang"
+              id="prosedur-pemeriksaan-penunjang"
+              label="prosedur-pemeriksaan-penunjang"
+              value="Prosedur Pemeriksaan Penunjang"
+              myid="check_cara"
+            />
+            <label for="prosedur-pemeriksaan-penunjang"
+              >Prosedur Pemeriksaan Penunjang</label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>Perlu penterjemah :</td>
+          <td>
+            <input
+              type="radio"
+              name="perlu-penterjemah"
+              id="perlu-penterjemah"
+              label="perlu-penterjemah"
+              value="Ya"
+              myid="check_cara"
+            />
+            <label for="perlu-penterjemah">Ya</label>
+            <input
+              type="radio"
+              name="perlu-penterjemah"
+              id="perlu-penterjemah"
+              label="perlu-penterjemah"
+              value="Tidak"
+              myid="check_cara"
+            />
+            <label for="perlu-penterjemah">Tidak</label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="proses-pemberian-informed-consent"
+              id="proses-pemberian-informed-consent"
+              label="proses-pemberian-informed-consent"
+              value="Proses Pemberian Informed Consent"
+              myid="check_cara"
+            />
+            <label for="proses-pemberian-informed-consent"
+              >Proses Pemberian Informed Consent</label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>Baca & Tulis :</td>
+          <td>
+            <input
+              type="radio"
+              name="baca-tulis"
+              id="baca-tulis"
+              label="baca-tulis"
+              value="Bisa"
+              myid="check_cara"
+            />
+            <label for="baca-tulis">Bisa</label>
+            <input
+              type="radio"
+              name="baca-tulis"
+              id="baca-tulis"
+              label="baca-tulis"
+              value="Tidak"
+              myid="check_cara"
+            />
+            <label for="baca-tulis">Tidak</label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="kondisi-kesehatan-diagnosis-pasti-penatalaksanaannya"
+              id="kondisi-kesehatan-diagnosis-pasti-penatalaksanaannya"
+              label="kondisi-kesehatan-diagnosis-pasti-penatalaksanaannya"
+              value="Kondisi Kesehatan, Diagnosis Pasti dan Penatalaksanaannya"
+              myid="check_cara"
+            />
+            <label for="kondisi-kesehatan-diagnosis-pasti-penatalaksanaannya"
+              >Kondisi Kesehatan, Diagnosis Pasti dan Penatalaksanaannya</label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>Kepercayaan lainnya :</td>
+          <td>
+            <input
+              type="radio"
+              name="kepercayaan-lainnya"
+              id="kepercayaan-lainnya"
+              label="kepercayaan-lainnya"
+              value="Ada"
+              myid="check_cara"
+            />
+            <label for="kepercayaan-lainnya">Ada</label>
+            <input
+              type="radio"
+              name="kepercayaan-lainnya"
+              id="kepercayaan-lainnya"
+              label="kepercayaan-lainnya"
+              value="Tidak Ada"
+              myid="check_cara"
+            />
+            <label for="kepercayaan-lainnya">Tidak Ada</label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="diet-dan-nutrisi"
+              id="diet-dan-nutrisi"
+              label="diet-dan-nutrisi"
+              value="Diet dan Nutrisi"
+              myid="check_cara"
+            />
+            <label for="diet-dan-nutrisi">Diet dan Nutrisi</label>
+          </td>
+        </tr>
+        <tr>
+          <td>Hambatan :</td>
+          <td>
+            <input
+              type="radio"
+              name="hambatan"
+              id="hambatan"
+              label="hambatan"
+              value="Ya"
+              myid="check_cara"
+            />
+            <label for="hambatan">Ya</label>
+            <input
+              type="radio"
+              name="hambatan"
+              id="hambatan"
+              label="hambatan"
+              value="Tidak"
+              myid="check_cara"
+            />
+            <label for="hambatan">Tidak</label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="penggunan-obat-efektif-efek-samping-interaksi"
+              id="penggunan-obat-efektif-efek-samping-interaksi"
+              label="penggunan-obat-efektif-efek-samping-interaksi"
+              value="Penggunaan Obat Secara Efektif dan Aman, Efek Samping Serta Interaksinya"
+              myid="check_cara"
+            />
+            <label for="penggunan-obat-efektif-efek-samping-interaksi"
+              >Penggunaan Obat Secara Efektif dan Aman, Efek Samping Serta
+              Interaksinya</label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>
+            <input
+              disabled
+              type="radio"
+              name="detail-hambatan"
+              id="detail-hambatan"
+              label="detail-hambatan"
+              value="Gangguan Pendengaran"
+              myid="check_cara"
+            />
+            <label for="detail-hambatan">Gangguan Pendengaran</label>
+            <input
+              disabled
+              type="radio"
+              name="detail-hambatan"
+              id="detail-hambatan"
+              label="detail-hambatan"
+              value="Gangguan Emosi"
+              myid="check_cara"
+            />
+            <label for="hambatan">Gangguan Emosi</label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="manajemen-nyeri"
+              id="manajemen-nyeri"
+              label="manajemen-nyeri"
+              value="Manajemen Nyeri"
+              myid="check_cara"
+            />
+            <label for="manajemen-nyeri">Manajemen Nyeri</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>
+            <input
+              disabled
+              type="radio"
+              name="detail-hambatan"
+              id="detail-hambatan"
+              label="detail-hambatan"
+              value="Gangguan Penglihatan"
+              myid="check_cara"
+            />
+            <label for="detail-hambatan">Gangguan Penglihatan</label>
+            <input
+              disabled
+              type="radio"
+              name="detail-hambatan"
+              id="detail-hambatan"
+              label="detail-hambatan"
+              value="Gangguan Bicara"
+              myid="check_cara"
+            />
+            <label for="hambatan">Gangguan Bicara</label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="penggunaan-alat-medis-yg-aman"
+              id="penggunaan-alat-medis-yg-aman"
+              label="penggunaan-alat-medis-yg-aman"
+              value="Penggunaan Alat Medis yang Aman"
+              myid="check_cara"
+            />
+            <label for="penggunaan-alat-medis-yg-aman"
+              >Penggunaan Alat Medis yang Aman</label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>
+            <input
+              disabled
+              type="radio"
+              name="detail-hambatan"
+              id="detail-hambatan"
+              label="detail-hambatan"
+              value="Motivasi kurang / Buruk"
+              myid="check_cara"
+            />
+            <label for="detail-hambatan">Motivasi kurang / Buruk</label>
+            <input
+              disabled
+              type="radio"
+              name="detail-hambatan"
+              id="detail-hambatan"
+              label="detail-hambatan"
+              value="Memori hilang"
+              myid="check_cara"
+            />
+            <label for="hambatan">Memori hilang</label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="teknik-rehabilitasi-medik"
+              id="teknik-rehabilitasi-medik"
+              label="teknik-rehabilitasi-medik"
+              value="Teknik Rehabilitasi Medik"
+              myid="check_cara"
+            />
+            <label for="teknik-rehabilitasi-medik"
+              >Teknik Rehabilitasi Medik</label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>
+            <input
+              disabled
+              type="radio"
+              name="detail-hambatan"
+              id="detail-hambatan"
+              label="detail-hambatan"
+              value="Fisik lemah"
+              myid="check_cara"
+            />
+            <label for="detail-hambatan">Fisik lemah</label>
+            <input
+              disabled
+              type="radio"
+              name="detail-hambatan"
+              id="detail-hambatan"
+              label="detail-hambatan"
+              value="Alkoholik"
+              myid="check_cara"
+            />
+            <label for="hambatan">Alkoholik</label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="cuci-tangan-yg-benar"
+              id="cuci-tangan-yg-benar"
+              label="cuci-tangan-yg-benar"
+              value="Cuci Tangan yang benar"
+              myid="check_cara"
+            />
+            <label for="cuci-tangan-yg-benar">Cuci Tangan yang benar</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>
+            <input
+              disabled
+              type="radio"
+              name="detail-hambatan"
+              id="detail-hambatan"
+              label="detail-hambatan"
+              value="Secara fisiologis tidak mampu belajar"
+              myid="check_cara"
+            />
+            <label for="detail-hambatan"
+              >Secara fisiologis tidak mampu belajar</label
+            >
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="rujukan-edukasi"
+              id="rujukan-edukasi"
+              label="rujukan-edukasi"
+              value="Rujukan Edukasi"
+              myid="check_cara"
+            />
+            <label for="rujukan-edukasi">Rujukan Edukasi</label>
+          </td>
+        </tr>
+        <tr>
+          <td>Kesediaan menerima informasi :</td>
+          <td>
+            <input
+              type="radio"
+              name="kesediaan-menerima-informasi"
+              id="kesediaan-menerima-informasi"
+              label="kesediaan-menerima-informasi"
+              value="Ya"
+              myid="check_cara"
+            />
+            <label for="kesediaan-menerima-informasi">Bersedia</label>
+            <input
+              type="radio"
+              name="kesediaan-menerima-informasi"
+              id="kesediaan-menerima-informasi"
+              label="kesediaan-menerima-informasi"
+              value="Tidak"
+              myid="check_cara"
+            />
+            <label for="hambatan">Tidak bersedia, Alasan?</label>
+            <input
+              disabled
+              type="text"
+              name="alasan-tidak-bersedia"
+              id="alasan-tidak-bersedia"
+              label="alasan-tidak-bersedia"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="bahaya-merokok"
+              id="bahaya-merokok"
+              label="bahaya-merokok"
+              value="Bahaya merokok"
+              myid="check_cara"
+            />
+            <label for="bahaya-merokok">Bahaya merokok</label>
+          </td>
+        </tr>
+        <tr>
+          <td>Edukasi diberikan kepada :</td>
+          <td>
+            <input
+              type="radio"
+              name="eduksasi-diberikan-kpd"
+              id="eduksasi-diberikan-kpd"
+              label="eduksasi-diberikan-kpd"
+              value="Pasien"
+              myid="check_cara"
+            />
+            <label for="eduksasi-diberikan-kpd">Pasien</label>
+            <input
+              type="radio"
+              name="eduksasi-diberikan-kpd"
+              id="eduksasi-diberikan-kpd"
+              label="eduksasi-diberikan-kpd"
+              value="Orang Tua (Ayah/Ibu)"
+              myid="check_cara"
+            />
+            <label for="eduksasi-diberikan-kpd">Orang Tua (Ayah/Ibu)</label>
+            <input
+              type="radio"
+              name="eduksasi-diberikan-kpd"
+              id="eduksasi-diberikan-kpd"
+              label="eduksasi-diberikan-kpd"
+              value="Keluarga (Suami/Istri/Kakak/Adik)"
+              myid="check_cara"
+            />
+            <label for="eduksasi-diberikan-kpd"
+              >Keluarga (Suami/Istri/Kakak/Adik)</label
+            >
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="lain-lain"
+              id="lain-lain"
+              label="lain-lain"
+              value="Lain-lain"
+              myid="check_cara"
+            />
+            <label for="lain-lain">Lain - lain</label>
+            <input
+              disabled
+              type="text"
+              name="kebutuhan-lainnya"
+              id="kebutuhan-lainnya"
+              label="kebutuhan-lainnya"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table table-bordered">
+      <thead>
+        <tr>
+          <th rowspan="2">Kebutuhan Edukasi dan Topik Pemberian Edukasi</th>
+          <th rowspan="2">Tanggal & Jam Edukasi</th>
+          <th rowspan="2">Tingkat Pemahaman Awal</th>
+          <th rowspan="2">Metode Edukasi</th>
+          <th rowspan="2">Media Edukasi</th>
+          <th rowspan="2">Evaluasi</th>
+          <th rowspan="2">Tanggal Re-Edukasi / Re-Demonstrasi</th>
+          <th colspan="2">TTD & NAMA JELAS</th>
+        </tr>
+        <tr>
+          <th>Pemberi Edukasi</th>
+          <th>Pasien/Keluarga (Hubungan)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td width="20%">
+            1. Hak dan kewajiban pasien dan keluarga untuk berpartisipasi dalam
+            proses asuhan
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-jam-edukasi-1"
+              id="tgl-jam-edukasi-1"
+              label="tgl-jam-edukasi-1"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-1"
+                id="tingkat-pemahaman-awal-1"
+                label="tingkat-pemahaman-awal-1"
+                value="Hal baru"
+                myid="check_cara"
+              />
+              <label for="">Hal baru</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-1"
+                id="tingkat-pemahaman-awal-1"
+                label="tingkat-pemahaman-awal-1"
+                value="Edukasi ulang"
+                myid="check_cara"
+              />
+              <label for="">Edukasi ulang</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-1"
+                id="metode-edukasi-1"
+                label="metode-edukasi-1"
+                value="Lisan"
+                myid="check_cara"
+              />
+              <label for="">Lisan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-1"
+                id="metode-edukasi-1"
+                label="metode-edukasi-1"
+                value="Demonstrasi"
+                myid="check_cara"
+              />
+              <label for="">Demonstrasi</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="media-edukasi-1"
+                id="media-edukasi-1"
+                label="media-edukasi-1"
+                value="Leaflet"
+                myid="check_cara"
+              />
+              <label for="">Leaflet</label>
+            </div>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="media-edukasi-1"
+                id="media-edukasi-1"
+                label="media-edukasi-1"
+                value="lain-lain"
+                myid="check_cara"
+              />
+              <input
+                type="text"
+                name="detail-media-edukasi-lain-1"
+                id="detail-media-edukasi-lain-1"
+                label="detail-media-edukasi-lain-1"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-1"
+                id="evaluasi-1"
+                label="evaluasi-1"
+                value="Sudah mengerti"
+                myid="check_cara"
+              />
+              <label for="">Sudah mengerti</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-1"
+                id="evaluasi-1"
+                label="evaluasi-1"
+                value="Re Edukasi"
+                myid="check_cara"
+              />
+              <label for="">Re Edukasi</label>
+            </div>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-re-edukasi-re-demonstrasi-1"
+              id="tgl-re-edukasi-re-demonstrasi-1"
+              label="tgl-re-edukasi-re-demonstrasi-1"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pemberi-edukasi-1"
+              id="ttd-pemberi-edukasi-1"
+              label="ttd-pemberi-edukasi-1"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pasien-edukasi-1"
+              id="ttd-pasien-edukasi-1"
+              label="ttd-pasien-edukasi-1"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">2. Pengertian penyakit</label>
+            <input
+              style="width: 100%"
+              type="text"
+              name="pengertian-penyakit"
+              id="pengertian-penyakit"
+              label="pengertian-penyakit"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-jam-edukasi-2"
+              id="tgl-jam-edukasi-2"
+              label="tgl-jam-edukasi-2"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-2"
+                id="tingkat-pemahaman-awal-2"
+                label="tingkat-pemahaman-awal-2"
+                value="Hal baru"
+                myid="check_cara"
+              />
+              <label for="">Hal baru</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-2"
+                id="tingkat-pemahaman-awal-2"
+                label="tingkat-pemahaman-awal-2"
+                value="Edukasi ulang"
+                myid="check_cara"
+              />
+              <label for="">Edukasi ulang</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-2"
+                id="metode-edukasi-2"
+                label="metode-edukasi-2"
+                value="Lisan"
+                myid="check_cara"
+              />
+              <label for="">Lisan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-2"
+                id="metode-edukasi-2"
+                label="metode-edukasi-2"
+                value="Demonstrasi"
+                myid="check_cara"
+              />
+              <label for="">Demonstrasi</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="media-edukasi-2"
+                id="media-edukasi-2"
+                label="media-edukasi-2"
+                value="Leaflet"
+                myid="check_cara"
+              />
+              <label for="">Leaflet</label>
+            </div>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="media-edukasi-2"
+                id="media-edukasi-2"
+                label="media-edukasi-2"
+                value="lain-lain"
+                myid="check_cara"
+              />
+              <input
+                type="text"
+                name="detail-media-edukasi-lain-2"
+                id="detail-media-edukasi-lain-2"
+                label="detail-media-edukasi-lain-2"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-2"
+                id="evaluasi-2"
+                label="evaluasi-2"
+                value="Sudah mengerti"
+                myid="check_cara"
+              />
+              <label for="">Sudah mengerti</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-2"
+                id="evaluasi-2"
+                label="evaluasi-2"
+                value="Re Edukasi"
+                myid="check_cara"
+              />
+              <label for="">Re Edukasi</label>
+            </div>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-re-edukasi-re-demonstrasi-2"
+              id="tgl-re-edukasi-re-demonstrasi-2"
+              label="tgl-re-edukasi-re-demonstrasi-2"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pemberi-edukasi-2"
+              id="ttd-pemberi-edukasi-2"
+              label="ttd-pemberi-edukasi-2"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pasien-edukasi-2"
+              id="ttd-pasien-edukasi-2"
+              label="ttd-pasien-edukasi-2"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">3. Tanda dan gejala penyakit</label>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tanda-gejala-penyakit"
+              id="tanda-gejala-penyakit"
+              label="tanda-gejala-penyakit"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-jam-edukasi-3"
+              id="tgl-jam-edukasi-3"
+              label="tgl-jam-edukasi-3"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-3"
+                id="tingkat-pemahaman-awal-3"
+                label="tingkat-pemahaman-awal-3"
+                value="Hal baru"
+                myid="check_cara"
+              />
+              <label for="">Hal baru</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-3"
+                id="tingkat-pemahaman-awal-3"
+                label="tingkat-pemahaman-awal-3"
+                value="Edukasi ulang"
+                myid="check_cara"
+              />
+              <label for="">Edukasi ulang</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-3"
+                id="metode-edukasi-3"
+                label="metode-edukasi-3"
+                value="Lisan"
+                myid="check_cara"
+              />
+              <label for="">Lisan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-3"
+                id="metode-edukasi-3"
+                label="metode-edukasi-3"
+                value="Demonstrasi"
+                myid="check_cara"
+              />
+              <label for="">Demonstrasi</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="media-edukasi-3"
+                id="media-edukasi-3"
+                label="media-edukasi-3"
+                value="Leaflet"
+                myid="check_cara"
+              />
+              <label for="">Leaflet</label>
+            </div>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="media-edukasi-3"
+                id="media-edukasi-3"
+                label="media-edukasi-3"
+                value="lain-lain"
+                myid="check_cara"
+              />
+              <input
+                type="text"
+                name="detail-media-edukasi-lain-3"
+                id="detail-media-edukasi-lain-3"
+                label="detail-media-edukasi-lain-3"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-3"
+                id="evaluasi-3"
+                label="evaluasi-3"
+                value="Sudah mengerti"
+                myid="check_cara"
+              />
+              <label for="">Sudah mengerti</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-3"
+                id="evaluasi-3"
+                label="evaluasi-3"
+                value="Re Edukasi"
+                myid="check_cara"
+              />
+              <label for="">Re Edukasi</label>
+            </div>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-re-edukasi-re-demonstrasi-3"
+              id="tgl-re-edukasi-re-demonstrasi-3"
+              label="tgl-re-edukasi-re-demonstrasi-3"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pemberi-edukasi-3"
+              id="ttd-pemberi-edukasi-3"
+              label="ttd-pemberi-edukasi-3"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pasien-edukasi-3"
+              id="ttd-pasien-edukasi-3"
+              label="ttd-pasien-edukasi-3"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">4. Hasil pemeriksaan fisik dan diagnosis</label>
+            <input
+              style="width: 100%"
+              type="text"
+              name="hasil-pemeriksaan-fisik-diagnosis"
+              id="hasil-pemeriksaan-fisik-diagnosis"
+              label="hasil-pemeriksaan-fisik-diagnosis"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-jam-edukasi-4"
+              id="tgl-jam-edukasi-4"
+              label="tgl-jam-edukasi-4"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-4"
+                id="tingkat-pemahaman-awal-4"
+                label="tingkat-pemahaman-awal-4"
+                value="Hal baru"
+                myid="check_cara"
+              />
+              <label for="">Hal baru</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-4"
+                id="tingkat-pemahaman-awal-4"
+                label="tingkat-pemahaman-awal-4"
+                value="Edukasi ulang"
+                myid="check_cara"
+              />
+              <label for="">Edukasi ulang</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-4"
+                id="metode-edukasi-4"
+                label="metode-edukasi-4"
+                value="Lisan"
+                myid="check_cara"
+              />
+              <label for="">Lisan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-4"
+                id="metode-edukasi-4"
+                label="metode-edukasi-4"
+                value="Demonstrasi"
+                myid="check_cara"
+              />
+              <label for="">Demonstrasi</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="media-edukasi-4"
+                id="media-edukasi-4"
+                label="media-edukasi-4"
+                value="Leaflet"
+                myid="check_cara"
+              />
+              <label for="">Leaflet</label>
+            </div>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="media-edukasi-4"
+                id="media-edukasi-4"
+                label="media-edukasi-4"
+                value="lain-lain"
+                myid="check_cara"
+              />
+              <input
+                type="text"
+                name="detail-media-edukasi-lain-4"
+                id="detail-media-edukasi-lain-4"
+                label="detail-media-edukasi-lain-4"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-4"
+                id="evaluasi-4"
+                label="evaluasi-4"
+                value="Sudah mengerti"
+                myid="check_cara"
+              />
+              <label for="">Sudah mengerti</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-4"
+                id="evaluasi-4"
+                label="evaluasi-4"
+                value="Re Edukasi"
+                myid="check_cara"
+              />
+              <label for="">Re Edukasi</label>
+            </div>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-re-edukasi-re-demonstrasi-4"
+              id="tgl-re-edukasi-re-demonstrasi-4"
+              label="tgl-re-edukasi-re-demonstrasi-4"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pemberi-edukasi-4"
+              id="ttd-pemberi-edukasi-4"
+              label="ttd-pemberi-edukasi-4"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pasien-edukasi-4"
+              id="ttd-pasien-edukasi-4"
+              label="ttd-pasien-edukasi-4"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">5. Rencana asuhan / rencana tindakan</label>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rencana-asuhan-tindakan"
+              id="rencana-asuhan-tindakan"
+              label="rencana-asuhan-tindakan"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-jam-edukasi-5"
+              id="tgl-jam-edukasi-5"
+              label="tgl-jam-edukasi-5"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-5"
+                id="tingkat-pemahaman-awal-5"
+                label="tingkat-pemahaman-awal-5"
+                value="Hal baru"
+                myid="check_cara"
+              />
+              <label for="">Hal baru</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-5"
+                id="tingkat-pemahaman-awal-5"
+                label="tingkat-pemahaman-awal-5"
+                value="Edukasi ulang"
+                myid="check_cara"
+              />
+              <label for="">Edukasi ulang</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-5"
+                id="metode-edukasi-5"
+                label="metode-edukasi-5"
+                value="Lisan"
+                myid="check_cara"
+              />
+              <label for="">Lisan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-5"
+                id="metode-edukasi-5"
+                label="metode-edukasi-5"
+                value="Demonstrasi"
+                myid="check_cara"
+              />
+              <label for="">Demonstrasi</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="media-edukasi-5"
+                id="media-edukasi-5"
+                label="media-edukasi-5"
+                value="Leaflet"
+                myid="check_cara"
+              />
+              <label for="">Leaflet</label>
+            </div>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="media-edukasi-5"
+                id="media-edukasi-5"
+                label="media-edukasi-5"
+                value="lain-lain"
+                myid="check_cara"
+              />
+              <input
+                type="text"
+                name="detail-media-edukasi-lain-5"
+                id="detail-media-edukasi-lain-5"
+                label="detail-media-edukasi-lain-5"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-5"
+                id="evaluasi-5"
+                label="evaluasi-5"
+                value="Sudah mengerti"
+                myid="check_cara"
+              />
+              <label for="">Sudah mengerti</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-5"
+                id="evaluasi-5"
+                label="evaluasi-5"
+                value="Re Edukasi"
+                myid="check_cara"
+              />
+              <label for="">Re Edukasi</label>
+            </div>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-re-edukasi-re-demonstrasi-5"
+              id="tgl-re-edukasi-re-demonstrasi-5"
+              label="tgl-re-edukasi-re-demonstrasi-5"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pemberi-edukasi-5"
+              id="ttd-pemberi-edukasi-5"
+              label="ttd-pemberi-edukasi-5"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pasien-edukasi-5"
+              id="ttd-pasien-edukasi-5"
+              label="ttd-pasien-edukasi-5"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            6. Kemungkinan komplikasi dan prediksi kesembuhan / kekambuhan
+            <i>prognosis</i>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-jam-edukasi-6"
+              id="tgl-jam-edukasi-6"
+              label="tgl-jam-edukasi-6"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-6"
+                id="tingkat-pemahaman-awal-6"
+                label="tingkat-pemahaman-awal-6"
+                value="Hal baru"
+                myid="check_cara"
+              />
+              <label for="">Hal baru</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-6"
+                id="tingkat-pemahaman-awal-6"
+                label="tingkat-pemahaman-awal-6"
+                value="Edukasi ulang"
+                myid="check_cara"
+              />
+              <label for="">Edukasi ulang</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-6"
+                id="metode-edukasi-6"
+                label="metode-edukasi-6"
+                value="Lisan"
+                myid="check_cara"
+              />
+              <label for="">Lisan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-6"
+                id="metode-edukasi-6"
+                label="metode-edukasi-6"
+                value="Demonstrasi"
+                myid="check_cara"
+              />
+              <label for="">Demonstrasi</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="media-edukasi-6"
+                id="media-edukasi-6"
+                label="media-edukasi-6"
+                value="Leaflet"
+                myid="check_cara"
+              />
+              <label for="">Leaflet</label>
+            </div>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="media-edukasi-6"
+                id="media-edukasi-6"
+                label="media-edukasi-6"
+                value="lain-lain"
+                myid="check_cara"
+              />
+              <input
+                type="text"
+                name="detail-media-edukasi-lain-6"
+                id="detail-media-edukasi-lain-6"
+                label="detail-media-edukasi-lain-6"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-6"
+                id="evaluasi-6"
+                label="evaluasi-6"
+                value="Sudah mengerti"
+                myid="check_cara"
+              />
+              <label for="">Sudah mengerti</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-6"
+                id="evaluasi-6"
+                label="evaluasi-6"
+                value="Re Edukasi"
+                myid="check_cara"
+              />
+              <label for="">Re Edukasi</label>
+            </div>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-re-edukasi-re-demonstrasi-6"
+              id="tgl-re-edukasi-re-demonstrasi-6"
+              label="tgl-re-edukasi-re-demonstrasi-6"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pemberi-edukasi-6"
+              id="ttd-pemberi-edukasi-6"
+              label="ttd-pemberi-edukasi-6"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pasien-edukasi-6"
+              id="ttd-pasien-edukasi-6"
+              label="ttd-pasien-edukasi-6"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">7. Efek samping obat-obatan yang diberikan</label>
+            <input
+              style="width: 100%"
+              type="text"
+              name="efek-samping-obat-obatan-yg-diberikan"
+              id="efek-samping-obat-obatan-yg-diberikan"
+              label="efek-samping-obat-obatan-yg-diberikan"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-jam-edukasi-7"
+              id="tgl-jam-edukasi-7"
+              label="tgl-jam-edukasi-7"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-7"
+                id="tingkat-pemahaman-awal-7"
+                label="tingkat-pemahaman-awal-7"
+                value="Hal baru"
+                myid="check_cara"
+              />
+              <label for="">Hal baru</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-7"
+                id="tingkat-pemahaman-awal-7"
+                label="tingkat-pemahaman-awal-7"
+                value="Edukasi ulang"
+                myid="check_cara"
+              />
+              <label for="">Edukasi ulang</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-7"
+                id="metode-edukasi-7"
+                label="metode-edukasi-7"
+                value="Lisan"
+                myid="check_cara"
+              />
+              <label for="">Lisan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-7"
+                id="metode-edukasi-7"
+                label="metode-edukasi-7"
+                value="Demonstrasi"
+                myid="check_cara"
+              />
+              <label for="">Demonstrasi</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="media-edukasi-7"
+                id="media-edukasi-7"
+                label="media-edukasi-7"
+                value="Leaflet"
+                myid="check_cara"
+              />
+              <label for="">Leaflet</label>
+            </div>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="media-edukasi-7"
+                id="media-edukasi-7"
+                label="media-edukasi-7"
+                value="lain-lain"
+                myid="check_cara"
+              />
+              <input
+                type="text"
+                name="detail-media-edukasi-lain-7"
+                id="detail-media-edukasi-lain-7"
+                label="detail-media-edukasi-lain-7"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-7"
+                id="evaluasi-7"
+                label="evaluasi-7"
+                value="Sudah mengerti"
+                myid="check_cara"
+              />
+              <label for="">Sudah mengerti</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-7"
+                id="evaluasi-7"
+                label="evaluasi-7"
+                value="Re Edukasi"
+                myid="check_cara"
+              />
+              <label for="">Re Edukasi</label>
+            </div>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-re-edukasi-re-demonstrasi-7"
+              id="tgl-re-edukasi-re-demonstrasi-7"
+              label="tgl-re-edukasi-re-demonstrasi-7"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pemberi-edukasi-7"
+              id="ttd-pemberi-edukasi-7"
+              label="ttd-pemberi-edukasi-7"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pasien-edukasi-7"
+              id="ttd-pasien-edukasi-7"
+              label="ttd-pasien-edukasi-7"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">8. Interaksi obat</label>
+            <input
+              style="width: 100%"
+              type="text"
+              name="interaksi-obat"
+              id="interaksi-obat"
+              label="interaksi-obat"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-jam-edukasi-8"
+              id="tgl-jam-edukasi-8"
+              label="tgl-jam-edukasi-8"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-8"
+                id="tingkat-pemahaman-awal-8"
+                label="tingkat-pemahaman-awal-8"
+                value="Hal baru"
+                myid="check_cara"
+              />
+              <label for="">Hal baru</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-8"
+                id="tingkat-pemahaman-awal-8"
+                label="tingkat-pemahaman-awal-8"
+                value="Edukasi ulang"
+                myid="check_cara"
+              />
+              <label for="">Edukasi ulang</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-8"
+                id="metode-edukasi-8"
+                label="metode-edukasi-8"
+                value="Lisan"
+                myid="check_cara"
+              />
+              <label for="">Lisan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-8"
+                id="metode-edukasi-8"
+                label="metode-edukasi-8"
+                value="Demonstrasi"
+                myid="check_cara"
+              />
+              <label for="">Demonstrasi</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="media-edukasi-8"
+                id="media-edukasi-8"
+                label="media-edukasi-8"
+                value="Leaflet"
+                myid="check_cara"
+              />
+              <label for="">Leaflet</label>
+            </div>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="media-edukasi-8"
+                id="media-edukasi-8"
+                label="media-edukasi-8"
+                value="lain-lain"
+                myid="check_cara"
+              />
+              <input
+                type="text"
+                name="detail-media-edukasi-lain-8"
+                id="detail-media-edukasi-lain-8"
+                label="detail-media-edukasi-lain-8"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-8"
+                id="evaluasi-8"
+                label="evaluasi-8"
+                value="Sudah mengerti"
+                myid="check_cara"
+              />
+              <label for="">Sudah mengerti</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-8"
+                id="evaluasi-8"
+                label="evaluasi-8"
+                value="Re Edukasi"
+                myid="check_cara"
+              />
+              <label for="">Re Edukasi</label>
+            </div>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-re-edukasi-re-demonstrasi-8"
+              id="tgl-re-edukasi-re-demonstrasi-8"
+              label="tgl-re-edukasi-re-demonstrasi-8"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pemberi-edukasi-8"
+              id="ttd-pemberi-edukasi-8"
+              label="ttd-pemberi-edukasi-8"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pasien-edukasi-8"
+              id="ttd-pasien-edukasi-8"
+              label="ttd-pasien-edukasi-8"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">9. Penggunaan obat secara efektif</label>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-jam-edukasi-9"
+              id="tgl-jam-edukasi-9"
+              label="tgl-jam-edukasi-9"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-9"
+                id="tingkat-pemahaman-awal-9"
+                label="tingkat-pemahaman-awal-9"
+                value="Hal baru"
+                myid="check_cara"
+              />
+              <label for="">Hal baru</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-9"
+                id="tingkat-pemahaman-awal-9"
+                label="tingkat-pemahaman-awal-9"
+                value="Edukasi ulang"
+                myid="check_cara"
+              />
+              <label for="">Edukasi ulang</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-9"
+                id="metode-edukasi-9"
+                label="metode-edukasi-9"
+                value="Lisan"
+                myid="check_cara"
+              />
+              <label for="">Lisan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-9"
+                id="metode-edukasi-9"
+                label="metode-edukasi-9"
+                value="Demonstrasi"
+                myid="check_cara"
+              />
+              <label for="">Demonstrasi</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="media-edukasi-9"
+                id="media-edukasi-9"
+                label="media-edukasi-9"
+                value="Leaflet"
+                myid="check_cara"
+              />
+              <label for="">Leaflet</label>
+            </div>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="media-edukasi-9"
+                id="media-edukasi-9"
+                label="media-edukasi-9"
+                value="lain-lain"
+                myid="check_cara"
+              />
+              <input
+                type="text"
+                name="detail-media-edukasi-lain-9"
+                id="detail-media-edukasi-lain-9"
+                label="detail-media-edukasi-lain-9"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-9"
+                id="evaluasi-9"
+                label="evaluasi-9"
+                value="Sudah mengerti"
+                myid="check_cara"
+              />
+              <label for="">Sudah mengerti</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-9"
+                id="evaluasi-9"
+                label="evaluasi-9"
+                value="Re Edukasi"
+                myid="check_cara"
+              />
+              <label for="">Re Edukasi</label>
+            </div>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-re-edukasi-re-demonstrasi-9"
+              id="tgl-re-edukasi-re-demonstrasi-9"
+              label="tgl-re-edukasi-re-demonstrasi-9"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pemberi-edukasi-9"
+              id="ttd-pemberi-edukasi-9"
+              label="ttd-pemberi-edukasi-9"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pasien-edukasi-9"
+              id="ttd-pasien-edukasi-9"
+              label="ttd-pasien-edukasi-9"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">10. Program diet dan nutrisi (sebutkan)</label>
+            <input
+              style="width: 100%"
+              type="text"
+              name="program-diet-nutrisi"
+              id="program-diet-nutrisi"
+              label="program-diet-nutrisi"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-jam-edukasi-10"
+              id="tgl-jam-edukasi-10"
+              label="tgl-jam-edukasi-10"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-10"
+                id="tingkat-pemahaman-awal-10"
+                label="tingkat-pemahaman-awal-10"
+                value="Hal baru"
+                myid="check_cara"
+              />
+              <label for="">Hal baru</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-10"
+                id="tingkat-pemahaman-awal-10"
+                label="tingkat-pemahaman-awal-10"
+                value="Edukasi ulang"
+                myid="check_cara"
+              />
+              <label for="">Edukasi ulang</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-10"
+                id="metode-edukasi-10"
+                label="metode-edukasi-10"
+                value="Lisan"
+                myid="check_cara"
+              />
+              <label for="">Lisan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-10"
+                id="metode-edukasi-10"
+                label="metode-edukasi-10"
+                value="Demonstrasi"
+                myid="check_cara"
+              />
+              <label for="">Demonstrasi</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="media-edukasi-10"
+                id="media-edukasi-10"
+                label="media-edukasi-10"
+                value="Leaflet"
+                myid="check_cara"
+              />
+              <label for="">Leaflet</label>
+            </div>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="media-edukasi-10"
+                id="media-edukasi-10"
+                label="media-edukasi-10"
+                value="lain-lain"
+                myid="check_cara"
+              />
+              <input
+                type="text"
+                name="detail-media-edukasi-lain-10"
+                id="detail-media-edukasi-lain-10"
+                label="detail-media-edukasi-lain-10"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-10"
+                id="evaluasi-10"
+                label="evaluasi-10"
+                value="Sudah mengerti"
+                myid="check_cara"
+              />
+              <label for="">Sudah mengerti</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-10"
+                id="evaluasi-10"
+                label="evaluasi-10"
+                value="Re Edukasi"
+                myid="check_cara"
+              />
+              <label for="">Re Edukasi</label>
+            </div>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-re-edukasi-re-demonstrasi-10"
+              id="tgl-re-edukasi-re-demonstrasi-10"
+              label="tgl-re-edukasi-re-demonstrasi-10"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pemberi-edukasi-10"
+              id="ttd-pemberi-edukasi-10"
+              label="ttd-pemberi-edukasi-10"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pasien-edukasi-10"
+              id="ttd-pasien-edukasi-10"
+              label="ttd-pasien-edukasi-10"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">11. Manajemen nyeri</label>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-jam-edukasi-11"
+              id="tgl-jam-edukasi-11"
+              label="tgl-jam-edukasi-11"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-11"
+                id="tingkat-pemahaman-awal-11"
+                label="tingkat-pemahaman-awal-11"
+                value="Hal baru"
+                myid="check_cara"
+              />
+              <label for="">Hal baru</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-11"
+                id="tingkat-pemahaman-awal-11"
+                label="tingkat-pemahaman-awal-11"
+                value="Edukasi ulang"
+                myid="check_cara"
+              />
+              <label for="">Edukasi ulang</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-11"
+                id="metode-edukasi-11"
+                label="metode-edukasi-11"
+                value="Lisan"
+                myid="check_cara"
+              />
+              <label for="">Lisan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-11"
+                id="metode-edukasi-11"
+                label="metode-edukasi-11"
+                value="Demonstrasi"
+                myid="check_cara"
+              />
+              <label for="">Demonstrasi</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="media-edukasi-11"
+                id="media-edukasi-11"
+                label="media-edukasi-11"
+                value="Leaflet"
+                myid="check_cara"
+              />
+              <label for="">Leaflet</label>
+            </div>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="media-edukasi-11"
+                id="media-edukasi-11"
+                label="media-edukasi-11"
+                value="lain-lain"
+                myid="check_cara"
+              />
+              <input
+                type="text"
+                name="detail-media-edukasi-lain-11"
+                id="detail-media-edukasi-lain-11"
+                label="detail-media-edukasi-lain-11"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-11"
+                id="evaluasi-11"
+                label="evaluasi-11"
+                value="Sudah mengerti"
+                myid="check_cara"
+              />
+              <label for="">Sudah mengerti</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-11"
+                id="evaluasi-11"
+                label="evaluasi-11"
+                value="Re Edukasi"
+                myid="check_cara"
+              />
+              <label for="">Re Edukasi</label>
+            </div>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-re-edukasi-re-demonstrasi-11"
+              id="tgl-re-edukasi-re-demonstrasi-11"
+              label="tgl-re-edukasi-re-demonstrasi-11"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pemberi-edukasi-11"
+              id="ttd-pemberi-edukasi-11"
+              label="ttd-pemberi-edukasi-11"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pasien-edukasi-11"
+              id="ttd-pasien-edukasi-11"
+              label="ttd-pasien-edukasi-11"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">12. Rehabilitasi</label>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-jam-edukasi-12"
+              id="tgl-jam-edukasi-12"
+              label="tgl-jam-edukasi-12"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-12"
+                id="tingkat-pemahaman-awal-12"
+                label="tingkat-pemahaman-awal-12"
+                value="Hal baru"
+                myid="check_cara"
+              />
+              <label for="">Hal baru</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-12"
+                id="tingkat-pemahaman-awal-12"
+                label="tingkat-pemahaman-awal-12"
+                value="Edukasi ulang"
+                myid="check_cara"
+              />
+              <label for="">Edukasi ulang</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-12"
+                id="metode-edukasi-12"
+                label="metode-edukasi-12"
+                value="Lisan"
+                myid="check_cara"
+              />
+              <label for="">Lisan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-12"
+                id="metode-edukasi-12"
+                label="metode-edukasi-12"
+                value="Demonstrasi"
+                myid="check_cara"
+              />
+              <label for="">Demonstrasi</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="media-edukasi-12"
+                id="media-edukasi-12"
+                label="media-edukasi-12"
+                value="Leaflet"
+                myid="check_cara"
+              />
+              <label for="">Leaflet</label>
+            </div>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="media-edukasi-12"
+                id="media-edukasi-12"
+                label="media-edukasi-12"
+                value="lain-lain"
+                myid="check_cara"
+              />
+              <input
+                type="text"
+                name="detail-media-edukasi-lain-12"
+                id="detail-media-edukasi-lain-12"
+                label="detail-media-edukasi-lain-12"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-12"
+                id="evaluasi-12"
+                label="evaluasi-12"
+                value="Sudah mengerti"
+                myid="check_cara"
+              />
+              <label for="">Sudah mengerti</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-12"
+                id="evaluasi-12"
+                label="evaluasi-12"
+                value="Re Edukasi"
+                myid="check_cara"
+              />
+              <label for="">Re Edukasi</label>
+            </div>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-re-edukasi-re-demonstrasi-12"
+              id="tgl-re-edukasi-re-demonstrasi-12"
+              label="tgl-re-edukasi-re-demonstrasi-12"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pemberi-edukasi-12"
+              id="ttd-pemberi-edukasi-12"
+              label="ttd-pemberi-edukasi-12"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pasien-edukasi-12"
+              id="ttd-pasien-edukasi-12"
+              label="ttd-pasien-edukasi-12"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">13. Keamanan penggunaan alat medis</label>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-jam-edukasi-13"
+              id="tgl-jam-edukasi-13"
+              label="tgl-jam-edukasi-13"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-13"
+                id="tingkat-pemahaman-awal-13"
+                label="tingkat-pemahaman-awal-13"
+                value="Hal baru"
+                myid="check_cara"
+              />
+              <label for="">Hal baru</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-13"
+                id="tingkat-pemahaman-awal-13"
+                label="tingkat-pemahaman-awal-13"
+                value="Edukasi ulang"
+                myid="check_cara"
+              />
+              <label for="">Edukasi ulang</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-13"
+                id="metode-edukasi-13"
+                label="metode-edukasi-13"
+                value="Lisan"
+                myid="check_cara"
+              />
+              <label for="">Lisan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-13"
+                id="metode-edukasi-13"
+                label="metode-edukasi-13"
+                value="Demonstrasi"
+                myid="check_cara"
+              />
+              <label for="">Demonstrasi</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="media-edukasi-13"
+                id="media-edukasi-13"
+                label="media-edukasi-13"
+                value="Leaflet"
+                myid="check_cara"
+              />
+              <label for="">Leaflet</label>
+            </div>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="media-edukasi-13"
+                id="media-edukasi-13"
+                label="media-edukasi-13"
+                value="lain-lain"
+                myid="check_cara"
+              />
+              <input
+                type="text"
+                name="detail-media-edukasi-lain-13"
+                id="detail-media-edukasi-lain-13"
+                label="detail-media-edukasi-lain-13"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-13"
+                id="evaluasi-13"
+                label="evaluasi-13"
+                value="Sudah mengerti"
+                myid="check_cara"
+              />
+              <label for="">Sudah mengerti</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-13"
+                id="evaluasi-13"
+                label="evaluasi-13"
+                value="Re Edukasi"
+                myid="check_cara"
+              />
+              <label for="">Re Edukasi</label>
+            </div>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-re-edukasi-re-demonstrasi-13"
+              id="tgl-re-edukasi-re-demonstrasi-13"
+              label="tgl-re-edukasi-re-demonstrasi-13"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pemberi-edukasi-13"
+              id="ttd-pemberi-edukasi-13"
+              label="ttd-pemberi-edukasi-13"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pasien-edukasi-13"
+              id="ttd-pasien-edukasi-13"
+              label="ttd-pasien-edukasi-13"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">14. Kebersihan tangan (hand hygiene)</label>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-jam-edukasi-14"
+              id="tgl-jam-edukasi-14"
+              label="tgl-jam-edukasi-14"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-14"
+                id="tingkat-pemahaman-awal-14"
+                label="tingkat-pemahaman-awal-14"
+                value="Hal baru"
+                myid="check_cara"
+              />
+              <label for="">Hal baru</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-14"
+                id="tingkat-pemahaman-awal-14"
+                label="tingkat-pemahaman-awal-14"
+                value="Edukasi ulang"
+                myid="check_cara"
+              />
+              <label for="">Edukasi ulang</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-14"
+                id="metode-edukasi-14"
+                label="metode-edukasi-14"
+                value="Lisan"
+                myid="check_cara"
+              />
+              <label for="">Lisan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-14"
+                id="metode-edukasi-14"
+                label="metode-edukasi-14"
+                value="Demonstrasi"
+                myid="check_cara"
+              />
+              <label for="">Demonstrasi</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="media-edukasi-14"
+                id="media-edukasi-14"
+                label="media-edukasi-14"
+                value="Leaflet"
+                myid="check_cara"
+              />
+              <label for="">Leaflet</label>
+            </div>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="media-edukasi-14"
+                id="media-edukasi-14"
+                label="media-edukasi-14"
+                value="lain-lain"
+                myid="check_cara"
+              />
+              <input
+                type="text"
+                name="detail-media-edukasi-lain-14"
+                id="detail-media-edukasi-lain-14"
+                label="detail-media-edukasi-lain-14"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-14"
+                id="evaluasi-14"
+                label="evaluasi-14"
+                value="Sudah mengerti"
+                myid="check_cara"
+              />
+              <label for="">Sudah mengerti</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-14"
+                id="evaluasi-14"
+                label="evaluasi-14"
+                value="Re Edukasi"
+                myid="check_cara"
+              />
+              <label for="">Re Edukasi</label>
+            </div>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-re-edukasi-re-demonstrasi-14"
+              id="tgl-re-edukasi-re-demonstrasi-14"
+              label="tgl-re-edukasi-re-demonstrasi-14"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pemberi-edukasi-14"
+              id="ttd-pemberi-edukasi-14"
+              label="ttd-pemberi-edukasi-14"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pasien-edukasi-14"
+              id="ttd-pasien-edukasi-14"
+              label="ttd-pasien-edukasi-14"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">15. Prosedur perawatan (spesifik)</label>
+            <input
+              style="width: 100%"
+              type="text"
+              name="prosedur-perawatan"
+              id="prosedur-perawatan"
+              label="prosedur-perawatan"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-jam-edukasi-15"
+              id="tgl-jam-edukasi-15"
+              label="tgl-jam-edukasi-15"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-15"
+                id="tingkat-pemahaman-awal-15"
+                label="tingkat-pemahaman-awal-15"
+                value="Hal baru"
+                myid="check_cara"
+              />
+              <label for="">Hal baru</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-15"
+                id="tingkat-pemahaman-awal-15"
+                label="tingkat-pemahaman-awal-15"
+                value="Edukasi ulang"
+                myid="check_cara"
+              />
+              <label for="">Edukasi ulang</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-15"
+                id="metode-edukasi-15"
+                label="metode-edukasi-15"
+                value="Lisan"
+                myid="check_cara"
+              />
+              <label for="">Lisan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-15"
+                id="metode-edukasi-15"
+                label="metode-edukasi-15"
+                value="Demonstrasi"
+                myid="check_cara"
+              />
+              <label for="">Demonstrasi</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="media-edukasi-15"
+                id="media-edukasi-15"
+                label="media-edukasi-15"
+                value="Leaflet"
+                myid="check_cara"
+              />
+              <label for="">Leaflet</label>
+            </div>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="media-edukasi-15"
+                id="media-edukasi-15"
+                label="media-edukasi-15"
+                value="lain-lain"
+                myid="check_cara"
+              />
+              <input
+                type="text"
+                name="detail-media-edukasi-lain-15"
+                id="detail-media-edukasi-lain-15"
+                label="detail-media-edukasi-lain-15"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-15"
+                id="evaluasi-15"
+                label="evaluasi-15"
+                value="Sudah mengerti"
+                myid="check_cara"
+              />
+              <label for="">Sudah mengerti</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-15"
+                id="evaluasi-15"
+                label="evaluasi-15"
+                value="Re Edukasi"
+                myid="check_cara"
+              />
+              <label for="">Re Edukasi</label>
+            </div>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-re-edukasi-re-demonstrasi-15"
+              id="tgl-re-edukasi-re-demonstrasi-15"
+              label="tgl-re-edukasi-re-demonstrasi-15"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pemberi-edukasi-15"
+              id="ttd-pemberi-edukasi-15"
+              label="ttd-pemberi-edukasi-15"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pasien-edukasi-15"
+              id="ttd-pasien-edukasi-15"
+              label="ttd-pasien-edukasi-15"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for=""
+              >16. Waktu kontrol dan penggunaan obat - obatan di rumah</label
+            >
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-jam-edukasi-16"
+              id="tgl-jam-edukasi-16"
+              label="tgl-jam-edukasi-16"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-16"
+                id="tingkat-pemahaman-awal-16"
+                label="tingkat-pemahaman-awal-16"
+                value="Hal baru"
+                myid="check_cara"
+              />
+              <label for="">Hal baru</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-16"
+                id="tingkat-pemahaman-awal-16"
+                label="tingkat-pemahaman-awal-16"
+                value="Edukasi ulang"
+                myid="check_cara"
+              />
+              <label for="">Edukasi ulang</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-16"
+                id="metode-edukasi-16"
+                label="metode-edukasi-16"
+                value="Lisan"
+                myid="check_cara"
+              />
+              <label for="">Lisan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-16"
+                id="metode-edukasi-16"
+                label="metode-edukasi-16"
+                value="Demonstrasi"
+                myid="check_cara"
+              />
+              <label for="">Demonstrasi</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="media-edukasi-16"
+                id="media-edukasi-16"
+                label="media-edukasi-16"
+                value="Leaflet"
+                myid="check_cara"
+              />
+              <label for="">Leaflet</label>
+            </div>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="media-edukasi-16"
+                id="media-edukasi-16"
+                label="media-edukasi-16"
+                value="lain-lain"
+                myid="check_cara"
+              />
+              <input
+                type="text"
+                name="detail-media-edukasi-lain-16"
+                id="detail-media-edukasi-lain-16"
+                label="detail-media-edukasi-lain-16"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-16"
+                id="evaluasi-16"
+                label="evaluasi-16"
+                value="Sudah mengerti"
+                myid="check_cara"
+              />
+              <label for="">Sudah mengerti</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-16"
+                id="evaluasi-16"
+                label="evaluasi-16"
+                value="Re Edukasi"
+                myid="check_cara"
+              />
+              <label for="">Re Edukasi</label>
+            </div>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-re-edukasi-re-demonstrasi-16"
+              id="tgl-re-edukasi-re-demonstrasi-16"
+              label="tgl-re-edukasi-re-demonstrasi-16"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pemberi-edukasi-16"
+              id="ttd-pemberi-edukasi-16"
+              label="ttd-pemberi-edukasi-16"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pasien-edukasi-16"
+              id="ttd-pasien-edukasi-16"
+              label="ttd-pasien-edukasi-16"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for=""
+              >17. Tindakan / prosedur kedokteran yang tidak memerlukan informed
+              consent tertulis (sebutkan) :</label
+            >
+            <input
+              style="width: 100%"
+              type="text"
+              name="tindakan-prosedur-kedokteran"
+              id="tindakan-prosedur-kedokteran"
+              label="tindakan-prosedur-kedokteran"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-jam-edukasi-17"
+              id="tgl-jam-edukasi-17"
+              label="tgl-jam-edukasi-17"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-17"
+                id="tingkat-pemahaman-awal-17"
+                label="tingkat-pemahaman-awal-17"
+                value="Hal baru"
+                myid="check_cara"
+              />
+              <label for="">Hal baru</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-17"
+                id="tingkat-pemahaman-awal-17"
+                label="tingkat-pemahaman-awal-17"
+                value="Edukasi ulang"
+                myid="check_cara"
+              />
+              <label for="">Edukasi ulang</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-17"
+                id="metode-edukasi-17"
+                label="metode-edukasi-17"
+                value="Lisan"
+                myid="check_cara"
+              />
+              <label for="">Lisan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-17"
+                id="metode-edukasi-17"
+                label="metode-edukasi-17"
+                value="Demonstrasi"
+                myid="check_cara"
+              />
+              <label for="">Demonstrasi</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="media-edukasi-17"
+                id="media-edukasi-17"
+                label="media-edukasi-17"
+                value="Leaflet"
+                myid="check_cara"
+              />
+              <label for="">Leaflet</label>
+            </div>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="media-edukasi-17"
+                id="media-edukasi-17"
+                label="media-edukasi-17"
+                value="lain-lain"
+                myid="check_cara"
+              />
+              <input
+                type="text"
+                name="detail-media-edukasi-lain-17"
+                id="detail-media-edukasi-lain-17"
+                label="detail-media-edukasi-lain-17"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-17"
+                id="evaluasi-17"
+                label="evaluasi-17"
+                value="Sudah mengerti"
+                myid="check_cara"
+              />
+              <label for="">Sudah mengerti</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-17"
+                id="evaluasi-17"
+                label="evaluasi-17"
+                value="Re Edukasi"
+                myid="check_cara"
+              />
+              <label for="">Re Edukasi</label>
+            </div>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-re-edukasi-re-demonstrasi-17"
+              id="tgl-re-edukasi-re-demonstrasi-17"
+              label="tgl-re-edukasi-re-demonstrasi-17"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pemberi-edukasi-17"
+              id="ttd-pemberi-edukasi-17"
+              label="ttd-pemberi-edukasi-17"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pasien-edukasi-17"
+              id="ttd-pasien-edukasi-17"
+              label="ttd-pasien-edukasi-17"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">18. Hasil rencana asuhan / tindakan</label>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-jam-edukasi-18"
+              id="tgl-jam-edukasi-18"
+              label="tgl-jam-edukasi-18"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-18"
+                id="tingkat-pemahaman-awal-18"
+                label="tingkat-pemahaman-awal-18"
+                value="Hal baru"
+                myid="check_cara"
+              />
+              <label for="">Hal baru</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tingkat-pemahaman-awal-18"
+                id="tingkat-pemahaman-awal-18"
+                label="tingkat-pemahaman-awal-18"
+                value="Edukasi ulang"
+                myid="check_cara"
+              />
+              <label for="">Edukasi ulang</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-18"
+                id="metode-edukasi-18"
+                label="metode-edukasi-18"
+                value="Lisan"
+                myid="check_cara"
+              />
+              <label for="">Lisan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="metode-edukasi-18"
+                id="metode-edukasi-18"
+                label="metode-edukasi-18"
+                value="Demonstrasi"
+                myid="check_cara"
+              />
+              <label for="">Demonstrasi</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="media-edukasi-18"
+                id="media-edukasi-18"
+                label="media-edukasi-18"
+                value="Leaflet"
+                myid="check_cara"
+              />
+              <label for="">Leaflet</label>
+            </div>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="media-edukasi-18"
+                id="media-edukasi-18"
+                label="media-edukasi-18"
+                value="lain-lain"
+                myid="check_cara"
+              />
+              <input
+                type="text"
+                name="detail-media-edukasi-lain-18"
+                id="detail-media-edukasi-lain-18"
+                label="detail-media-edukasi-lain-18"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-18"
+                id="evaluasi-18"
+                label="evaluasi-18"
+                value="Sudah mengerti"
+                myid="check_cara"
+              />
+              <label for="">Sudah mengerti</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="evaluasi-18"
+                id="evaluasi-18"
+                label="evaluasi-18"
+                value="Re Edukasi"
+                myid="check_cara"
+              />
+              <label for="">Re Edukasi</label>
+            </div>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-re-edukasi-re-demonstrasi-18"
+              id="tgl-re-edukasi-re-demonstrasi-18"
+              label="tgl-re-edukasi-re-demonstrasi-18"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pemberi-edukasi-18"
+              id="ttd-pemberi-edukasi-18"
+              label="ttd-pemberi-edukasi-18"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ttd-pasien-edukasi-18"
+              id="ttd-pasien-edukasi-18"
+              label="ttd-pasien-edukasi-18"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <font id="ttd2"></font>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+      const lainLain = document.querySelector('input[name="lain-lain"]');
+      const kebutuhanLainnya = document.querySelector(
+        'input[name="kebutuhan-lainnya"]'
+      );
+      const hambatanButtons = document.querySelectorAll(
+        'input[name="hambatan"]'
+      );
+      const kesediaanMenerimaInformasiButtons = document.querySelectorAll(
+        'input[name="kesediaan-menerima-informasi"]'
+      );
+      const alasanTidakBersediaInput = document.querySelector(
+        'input[name="alasan-tidak-bersedia"]'
+      );
+
+      const detailHambatanButtons = document.querySelectorAll(
+        'input[name="detail-hambatan"]'
+      );
+
+      hambatanButtons.forEach((hambatan) => {
+        hambatan.addEventListener("click", function () {
+          if (hambatan.value == "Ya") {
+            detailHambatanButtons.forEach((detailHambatan) => {
+              detailHambatan.removeAttribute("disabled");
+            });
+          } else {
+            detailHambatanButtons.forEach((detailHambatan) => {
+              detailHambatan.setAttribute("disabled", true);
+            });
+          }
+        });
+      });
+
+      kesediaanMenerimaInformasiButtons.forEach(
+        (kesediaanMenerimaInformasi) => {
+          kesediaanMenerimaInformasi.addEventListener("click", function () {
+            if (kesediaanMenerimaInformasi.value == "Tidak") {
+              alasanTidakBersediaInput.removeAttribute("disabled");
+            } else {
+              alasanTidakBersediaInput.setAttribute("disabled", true);
+              alasanTidakBersediaInput.value = "";
+            }
+          });
+        }
+      );
+
+      lainLain.addEventListener("click", function () {
+        if (lainLain.checked == true) {
+          console.log("test");
+          kebutuhanLainnya.removeAttribute("disabled");
+        } else {
+          kebutuhanLainnya.setAttribute("disabled", true);
+          kebutuhanLainnya.value = "";
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        var radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(function (radio) {
+          radio.addEventListener("click", function () {
+            if (this.classList.contains("clicked")) {
+              this.checked = false;
+              this.classList.remove("clicked");
+            } else {
+              var name = this.getAttribute("name");
+              var radios = document.querySelectorAll(
+                'input[type="radio"][name="' + name + '"]'
+              );
+              radios.forEach(function (r) {
+                r.classList.remove("clicked");
+              });
+              this.classList.add("clicked");
+            }
+            console.log(this.name + " diubah menjadi: " + this.checked);
+          });
+        });
+
+        var checkboxButtons = document.querySelectorAll(
+          'input[type="checkbox"]'
+        );
+        checkboxButtons.forEach(function (checkbox) {
+          checkbox.addEventListener("click", function () {
+            if (this.classList.contains("clicked")) {
+              this.checked = false;
+              this.classList.remove("clicked");
+            } else {
+              var name = this.getAttribute("name");
+              var checkboxes = document.querySelectorAll(
+                'input[type="radio"][name="' + name + '"]'
+              );
+              checkboxes.forEach(function (r) {
+                r.classList.remove("clicked");
+              });
+              this.classList.add("clicked");
+            }
+            console.log(this.name + " diubah menjadi: " + this.checked);
+          });
+        });
+
+        var textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
