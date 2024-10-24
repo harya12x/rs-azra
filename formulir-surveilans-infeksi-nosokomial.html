@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FORMULIR SURVEILANS INFEKSI NOSOKOMIAL RS. AZRA BOGOR</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">FORMULIR SURVEILANS INFEKSI NOSOKOMIAL RS. AZRA BOGOR</h1>
+
+    <table class="table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td>Nama Pasien</td>
+          <td>
+            <input
+              name="nama_pasien2"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+            />
+          </td>
+          <td>Jenis Kelamin</td>
+          <td>
+            <input
+              type="radio"
+              name="no-rek-medis"
+              id="jenis-kelamin"
+              label="jenis kelamin"
+              value="L"
+              myid="check_cara"
+            />
+            <label for="l">L</label>
+            <input
+              type="radio"
+              name="jenis-kelamin"
+              id="jenis-kelamin"
+              label="jenis kelamin"
+              value="P"
+              myid="check_cara"
+            />
+            <label for="l">P</label>
+          </td>
+          <th colspan="2">
+            <label for="">NOMOR REKAM MEDIS</label>
+          </th>
+          <!-- <td>
+            <input
+              type="text"
+              name="no-rek-medis"
+              id="no-rek-medis"
+              label="no rek medis"
+              myid="check_cara"
+            />
+          </td> -->
+        </tr>
+
+        <tr>
+          <td rowspan="3">Tanggal Lahir</td>
+          <td rowspan="3">
+            <input
+              name="tgl_lahira2"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td rowspan="3">UMUR</td>
+          <td rowspan="3">
+            <input
+              type="text"
+              size="5"
+              placeholder="..."
+              name="umur"
+              myid="check_cara"
+              id="umur"
+              label="umur"
+            />
+          </td>
+          <td>
+            <label for="diagnosa"><b>Diagnosa :</b></label>
+          </td>
+          <td>
+            <input
+              type="text"
+              name="diagnosa"
+              id="diagnosa"
+              label="diagnosa"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="dpjp"><b> DPJP :</b></label>
+          </td>
+          <td>
+            <input
+              type="text"
+              name="dpjp"
+              id="dpjp"
+              label="dpjp"
+              placeholder="..."
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="kamar"><b> Kamar :</b></label>
+          </td>
+          <td>
+            <input
+              name="kamara2"
+              type="text"
+              id="kamar"
+              placeholder="..."
+              myid="check_cara"
+              label="kamar"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td width="20%">
+            <label for="tgl-jam"><b>Tanggal masuk / Jam</b> :</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                style="flex: 1"
+                type="text"
+                name="tgl-masuk"
+                id="tgl-masuk"
+                label="tgl-masuk"
+                placeholder="dd/mm/yyyy"
+                myid="check_cara"
+              />
+              <label for="">/</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="jam-masuk"
+                id="jam-masuk"
+                label="jam-masuk"
+                placeholder="00.00"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td width="20%">
+            <label for="cara-di-rawat"><b>Cara di rawat</b> :</label>
+          </td>
+          <td>
+            <label for="">Emergency</label>
+            <input
+              type="radio"
+              name="cara-di-rawat"
+              id="cara-di-rawat"
+              label="cara-di-rawat"
+              value="Emergency"
+              myid="check_cara"
+            />
+            <label for="">/ Efektif</label>
+            <input
+              type="radio"
+              name="cara-di-rawat"
+              id="cara-di-rawat"
+              label="cara-di-rawat"
+              value="Efektif"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td width="20%">
+            <label for="cara-di-rawat"><b>I. Diagnosa Waktu Masuk</b> :</label>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="diagnosa-waktu-masuk"
+              id="diagnosa-waktu-masuk"
+              label="diagnosa-waktu-masuk"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td width="20%">
+            <label for="cara-di-rawat"><b>II. Pindah Ruangan</b> :</label>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <label for="">1.</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="pindah-ruangan-1"
+                id="pindah-ruangan-1"
+                label="pindah-ruangan-1"
+                placeholder="......"
+                myid="check_cara"
+              />
+              <label for="">tgl</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="tgl-pindah-ruangan-1"
+                id="tgl-pindah-ruangan-1"
+                label="tgl-pindah-ruangan-1"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td width="20%">&nbsp;</td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <label for="">2.</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="pindah-ruangan-2"
+                id="pindah-ruangan-2"
+                label="pindah-ruangan-2"
+                placeholder="......"
+                myid="check_cara"
+              />
+              <label for="">tgl</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="tgl-pindah-ruangan-2"
+                id="tgl-pindah-ruangan-2"
+                label="tgl-pindah-ruangan-2"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td width="20%">&nbsp;</td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <label for="">3.</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="pindah-ruangan-3"
+                id="pindah-ruangan-3"
+                label="pindah-ruangan-3"
+                placeholder="......"
+                myid="check_cara"
+              />
+              <label for="">tgl</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="tgl-pindah-ruangan-3"
+                id="tgl-pindah-ruangan-3"
+                label="tgl-pindah-ruangan-3"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>III. Faktor Risiko Selama di Rawat</b>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table table-bordered">
+      <thead>
+        <tr>
+          <th rowspan="2">No</th>
+          <th rowspan="2">Jenis Tindakan / Alkes</th>
+          <th rowspan="2">Lokasi</th>
+          <th colspan="2">Tanggal Pemasangan</th>
+          <th rowspan="2">Total Hari</th>
+          <th rowspan="2">Tanggal Infeksi</th>
+          <th rowspan="2">Catatan</th>
+        </tr>
+        <tr>
+          <th>Mulai</th>
+          <th>S/d</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">1.</td>
+          <td>
+            <p>Intra Vena Kateter</p>
+            <div style="display: flex; justify-content: space-between">
+              <label for="">Vena Sentral</label>
+              <input
+                type="checkbox"
+                name="vena-sentral"
+                id="vena-sentral"
+                label="vena-sentral"
+                value="Vena Sentral"
+                myid="check_cara"
+              />
+            </div>
+            <div style="display: flex; justify-content: space-between">
+              <label for="">Vena Perifer</label>
+              <input
+                type="checkbox"
+                name="vena-perifer"
+                id="vena-perifer"
+                label="vena-perifer"
+                value="Vena Perifer"
+                myid="check_cara"
+              />
+            </div>
+            <div style="display: flex; justify-content: space-between">
+              <label for="">Arteri</label>
+              <input
+                type="checkbox"
+                name="arteri"
+                id="arteri"
+                label="arteri"
+                value="Arteri"
+                myid="check_cara"
+              />
+            </div>
+            <div style="display: flex; justify-content: space-between">
+              <label for="">Umbilikal</label>
+              <input
+                type="checkbox"
+                name="umbilikal"
+                id="umbilikal"
+                label="umbilikal"
+                value="Umbilikal"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="6"
+              name="lokasi-1"
+              id="lokasi-1"
+              label="lokasi-1"
+              myid="check_cara"
+            ></textarea>
+          </td>
+          <td width="10%">
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-mulai-1"
+              id="tgl-mulai-1"
+              label="tgl-mulai-1"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td width="10%">
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-s-d-1"
+              id="tgl-s-d-1"
+              label="tgl-s-d-1"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td width="5%">
+            <input
+              style="width: 100%"
+              type="text"
+              name="total-hari-1"
+              id="total-hari-1"
+              label="total-hari-1"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td width="10%">
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-infeksi-1"
+              id="tgl-infeksi-1"
+              label="tgl-infeksi-1"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="6"
+              name="catatan-1"
+              id="catatan-1"
+              label="catatan-1"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">2.</td>
+          <td>
+            <div style="display: flex; justify-content: space-between">
+              <label for="">Kateter Urine</label>
+              <input
+                type="checkbox"
+                name="kateter-urine"
+                id="kateter-urine"
+                label="kateter-urine"
+                value="Kateter Urine"
+                myid="check_cara"
+              />
+            </div>
+            <div style="display: flex; justify-content: space-between">
+              <label for="">Suprapublik kateter</label>
+              <input
+                type="checkbox"
+                name="suprapublik-kateter"
+                id="suprapublik-kateter"
+                label="suprapublik-kateter"
+                value="Suprapublik kateter"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              name="lokasi-2"
+              id="lokasi-2"
+              label="lokasi-2"
+              myid="check_cara"
+            ></textarea>
+          </td>
+          <td width="10%">
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-mulai-2"
+              id="tgl-mulai-2"
+              label="tgl-mulai-2"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td width="10%">
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-s-d-2"
+              id="tgl-s-d-2"
+              label="tgl-s-d-2"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td width="5%">
+            <input
+              style="width: 100%"
+              type="text"
+              name="total-hari-2"
+              id="total-hari-2"
+              label="total-hari-2"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td width="10%">
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-infeksi-2"
+              id="tgl-infeksi-2"
+              label="tgl-infeksi-2"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              name="catatan-2"
+              id="catatan-2"
+              label="catatan-2"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">3.</td>
+          <td>
+            <p>Ventilasi Mekanik</p>
+            <div style="display: flex; justify-content: space-between">
+              <label for="">ETT</label>
+              <input
+                type="checkbox"
+                name="ett"
+                id="ett"
+                label="ett"
+                value="ETT"
+                myid="check_cara"
+              />
+            </div>
+            <div style="display: flex; justify-content: space-between">
+              <label for="">Trakeostomi</label>
+              <input
+                type="checkbox"
+                name="trakeostomi"
+                id="trakeostomi"
+                label="trakeostomi"
+                value="Trakeostomi"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="4"
+              name="lokasi-3"
+              id="lokasi-3"
+              label="lokasi-3"
+              myid="check_cara"
+            ></textarea>
+          </td>
+          <td width="10%">
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-mulai-3"
+              id="tgl-mulai-3"
+              label="tgl-mulai-3"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td width="10%">
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-s-d-3"
+              id="tgl-s-d-3"
+              label="tgl-s-d-3"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td width="5%">
+            <input
+              style="width: 100%"
+              type="text"
+              name="total-hari-3"
+              id="total-hari-3"
+              label="total-hari-3"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td width="10%">
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-infeksi-3"
+              id="tgl-infeksi-3"
+              label="tgl-infeksi-3"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="4"
+              name="catatan-3"
+              id="catatan-3"
+              label="catatan-3"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">4.</td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <label for="">Lain - lain</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="lain-lain"
+                id="lain-lain"
+                label="lain-lain"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>
+            <input
+              type="text"
+              style="width: 100%"
+              placeholder="....."
+              name="lokasi-4"
+              id="lokasi-4"
+              label="lokasi-4"
+              myid="check_cara"
+            />
+          </td>
+          <td width="10%">
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-mulai-4"
+              id="tgl-mulai-4"
+              label="tgl-mulai-4"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td width="10%">
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-s-d-4"
+              id="tgl-s-d-4"
+              label="tgl-s-d-4"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td width="5%">
+            <input
+              style="width: 100%"
+              type="text"
+              name="total-hari-4"
+              id="total-hari-4"
+              label="total-hari-4"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td width="10%">
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-infeksi-4"
+              id="tgl-infeksi-4"
+              label="tgl-infeksi-4"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              style="width: 100%"
+              placeholder="....."
+              name="catatan-4"
+              id="catatan-4"
+              label="catatan-4"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td>&nbsp;</td>
+          <td><b>Faktor Penyakit :</b></td>
+          <td>&nbsp;</td>
+          <td colspan="2"><b>Hasil Laboratorium (Pemeriksaan Awal) :</b></td>
+        </tr>
+        <tr>
+          <td>&bull;</td>
+          <td>Hbs Ag :</td>
+          <td>
+            <label for="">Positif</label>
+            <input
+              type="radio"
+              name="hbs-ag"
+              id="hbs-ag"
+              label="hbs-ag"
+              value="Positif"
+              myid="check_cara"
+            />
+            <label for="">/ Negatif</label>
+            <input
+              type="radio"
+              name="hbs-ag"
+              id="hbs-ag"
+              label="hbs-ag"
+              value="Negatif"
+              myid="check_cara"
+            />
+            <label for="">/ Tidak diperiksa</label>
+            <input
+              type="radio"
+              name="hbs-ag"
+              id="hbs-ag"
+              label="hbs-ag"
+              value="Tidak diperiksa"
+              myid="check_cara"
+            />
+          </td>
+          <td>Leukosit :</td>
+          <td>
+            <input
+              type="text"
+              style="width: 100%"
+              placeholder="....."
+              name="leukosit"
+              id="leukosit"
+              label="leukosit"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>&bull;</td>
+          <td>Anti HCV :</td>
+          <td>
+            <label for="">Positif</label>
+            <input
+              type="radio"
+              name="anti-hcv"
+              id="anti-hcv"
+              label="anti-hcv"
+              value="Positif"
+              myid="check_cara"
+            />
+            <label for="">/ Negatif</label>
+            <input
+              type="radio"
+              name="anti-hcv"
+              id="anti-hcv"
+              label="anti-hcv"
+              value="Negatif"
+              myid="check_cara"
+            />
+            <label for="">/ Tidak diperiksa</label>
+            <input
+              type="radio"
+              name="anti-hcv"
+              id="anti-hcv"
+              label="anti-hcv"
+              value="Tidak diperiksa"
+              myid="check_cara"
+            />
+          </td>
+          <td>LED :</td>
+          <td>
+            <input
+              type="text"
+              style="width: 100%"
+              placeholder="....."
+              name="led"
+              id="led"
+              label="led"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>&bull;</td>
+          <td>Anti HIV :</td>
+          <td>
+            <label for="">Positif</label>
+            <input
+              type="radio"
+              name="anti-hiv"
+              id="anti-hiv"
+              label="anti-hiv"
+              value="Positif"
+              myid="check_cara"
+            />
+            <label for="">/ Negatif</label>
+            <input
+              type="radio"
+              name="anti-hiv"
+              id="anti-hiv"
+              label="anti-hiv"
+              value="Negatif"
+              myid="check_cara"
+            />
+            <label for="">/ Tidak diperiksa</label>
+            <input
+              type="radio"
+              name="anti-hiv"
+              id="anti-hiv"
+              label="anti-hiv"
+              value="Tidak diperiksa"
+              myid="check_cara"
+            />
+          </td>
+          <td>GDS :</td>
+          <td>
+            <input
+              type="text"
+              style="width: 100%"
+              placeholder="....."
+              name="gds"
+              id="gds"
+              label="gds"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Hasil Radiologi :</td>
+          <td>
+            <input
+              type="text"
+              style="width: 99%"
+              placeholder="....."
+              name="hasil-radiologi"
+              id="hasil-radiologi"
+              label="hasil-radiologi"
+              myid="check_cara"
+            />
+          </td>
+          <td>Tanggal :</td>
+          <td>
+            <input
+              type="text"
+              style="width: 100%"
+              placeholder="....."
+              name="tgl-hasil-laboratorium"
+              id="tgl-hasil-laboratorium"
+              label="tgl-hasil-laboratorium"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td width="1%"><b>IV.</b></td>
+          <td colspan="3"><b>Tindakan Operasi :</b></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>1. Diagnosa :</td>
+          <td width="85%" colspan="3">
+            <input
+              type="text"
+              style="width: 100%"
+              name="diagnosa"
+              id="diagnosa"
+              label="diagnosa"
+              myid="check_cara"
+              placeholder="....."
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>2. Tanggal Operasi :</td>
+          <td colspan="3">
+            <div style="display: flex; gap: 5px">
+              <label for="">1.</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="tgl-operasi-1"
+                id="tgl-operasi-1"
+                label="tgl-operasi-1"
+                placeholder="......"
+                myid="check_cara"
+              />
+              <label for="">Lama Operasi</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="lama-operasi-1"
+                id="lama-operasi-1"
+                label="lama-operasi-1"
+                placeholder="......"
+                myid="check_cara"
+              />
+              <label for="">Jam</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="jam-operasi-1"
+                id="jam-operasi-1"
+                label="jam-operasi-1"
+                placeholder="......"
+                myid="check_cara"
+              />
+              <label for="">Menit</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="menit-operasi-1"
+                id="menit-operasi-1"
+                label="menit-operasi-1"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td colspan="3">
+            <div style="display: flex; gap: 5px">
+              <label for="">2.</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="tgl-operasi-2"
+                id="tgl-operasi-2"
+                label="tgl-operasi-2"
+                placeholder="......"
+                myid="check_cara"
+              />
+              <label for="">Lama Operasi</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="lama-operasi-2"
+                id="lama-operasi-2"
+                label="lama-operasi-2"
+                placeholder="......"
+                myid="check_cara"
+              />
+              <label for="">Jam</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="jam-operasi-2"
+                id="jam-operasi-2"
+                label="jam-operasi-2"
+                placeholder="......"
+                myid="check_cara"
+              />
+              <label for="">Menit</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="menit-operasi-2"
+                id="menit-operasi-2"
+                label="menit-operasi-2"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>3. Jenis Operasi</td>
+          <td>
+            <div style="display: flex; gap: 20px">
+              <div>
+                <input
+                  type="radio"
+                  name="jenis-operasi"
+                  id="jenis-operasi"
+                  label="jenis-operasi"
+                  value="Bersih"
+                  myid="check_cara"
+                />
+                <label for="">Bersih</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="jenis-operasi"
+                  id="jenis-operasi"
+                  label="jenis-operasi"
+                  value="Bersih Tercemar"
+                  myid="check_cara"
+                />
+                <label for="">Bersih Tercemar</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="jenis-operasi"
+                  id="jenis-operasi"
+                  label="jenis-operasi"
+                  value="Tercemar"
+                  myid="check_cara"
+                />
+                <label for="">Tercemar</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="jenis-operasi-kotor"
+                  id="jenis-operasi-kotor"
+                  label="jenis-operasi-kotor"
+                  value="Kotor"
+                  myid="check_cara"
+                />
+                <label for="">Kotor</label>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>4. Tindakan Operasi</td>
+          <td>
+            <input
+              type="radio"
+              name="tindakan-operasi"
+              id="tindakan-operasi"
+              label="tindakan-operasi"
+              value="Cito"
+              myid="check_cara"
+            />
+            <label for="">Cito</label>
+            <input
+              type="radio"
+              name="tindakan-operasi"
+              id="tindakan-operasi"
+              label="tindakan-operasi"
+              value="Elektif"
+              myid="check_cara"
+            />
+            <label for="">Elektif</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>5. ASA Score</td>
+          <td>
+            <div style="display: flex; gap: 20px">
+              <div>
+                <p>1</p>
+                <input
+                  type="radio"
+                  name="asa-score"
+                  id="asa-score"
+                  label="asa-score"
+                  value="1"
+                  myid="check_cara"
+                />
+              </div>
+              <div>
+                <p>2</p>
+                <input
+                  type="radio"
+                  name="asa-score"
+                  id="asa-score"
+                  label="asa-score"
+                  value="2"
+                  myid="check_cara"
+                />
+              </div>
+
+              <div>
+                <p>3</p>
+                <input
+                  type="radio"
+                  name="asa-score"
+                  id="asa-score"
+                  label="asa-score"
+                  value="3"
+                  myid="check_cara"
+                />
+              </div>
+              <div>
+                <p>4</p>
+                <input
+                  type="radio"
+                  name="asa-score"
+                  id="asa-score"
+                  label="asa-score"
+                  value="4"
+                  myid="check_cara"
+                />
+              </div>
+              <div>
+                <p>5</p>
+                <input
+                  type="radio"
+                  name="asa-score"
+                  id="asa-score"
+                  label="asa-score"
+                  value="5"
+                  myid="check_cara"
+                />
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><b>V.</b></td>
+          <td colspan="4"><b>Komplikasi/Infeksi Nosokomial</b></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>1. IDO</td>
+          <td style="text-align: center">
+            <label for="">Ada</label>
+            <input
+              type="radio"
+              name="ido"
+              id="ido"
+              label="ido"
+              value="Ada"
+              myid="check_cara"
+            />
+            <label for="">/ Tidak ada</label>
+            <input
+              type="radio"
+              name="ido"
+              id="ido"
+              label="ido"
+              value="Tidak ada"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label for="">Hari ke :</label>
+            <input
+              type="text"
+              name="hari-ini-ke-1"
+              id="hari-ini-ke-1"
+              label="hari-ini-ke-1"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td style="padding-left: 20px">Hasil Kultur</td>
+          <td colspan="2">
+            <input
+              style="width: 100%"
+              type="text"
+              name="hasil-kultur-1"
+              id="hasil-kultur-1"
+              label="hasil-kultur-1"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>2. ISK</td>
+          <td style="text-align: center">
+            <label for="">Ada</label>
+            <input
+              type="radio"
+              name="isk"
+              id="isk"
+              label="isk"
+              value="Ada"
+              myid="check_cara"
+            />
+            <label for="">/ Tidak ada</label>
+            <input
+              type="radio"
+              name="isk"
+              id="isk"
+              label="isk"
+              value="Tidak ada"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label for="">Hari ke :</label>
+            <input
+              type="text"
+              name="hari-ini-ke-2"
+              id="hari-ini-ke-2"
+              label="hari-ini-ke-2"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td style="padding-left: 20px">Hasil Kultur</td>
+          <td colspan="2">
+            <input
+              style="width: 100%"
+              type="text"
+              name="hasil-kultur-2"
+              id="hasil-kultur-2"
+              label="hasil-kultur-2"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>3. Pneumonia</td>
+          <td style="text-align: center">
+            <label for="">Ada</label>
+            <input
+              type="radio"
+              name="pneunomia"
+              id="pneunomia"
+              label="pneunomia"
+              value="Ada"
+              myid="check_cara"
+            />
+            <label for="">/ Tidak ada</label>
+            <input
+              type="radio"
+              name="pneunomia"
+              id="pneunomia"
+              label="pneunomia"
+              value="Tidak ada"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label for="">Hari ke :</label>
+            <input
+              type="text"
+              name="hari-ini-ke-3"
+              id="hari-ini-ke-3"
+              label="hari-ini-ke-3"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td style="padding-left: 20px">Hasil Kultur</td>
+          <td colspan="2">
+            <input
+              style="width: 100%"
+              type="text"
+              name="hasil-kultur-3"
+              id="hasil-kultur-3"
+              label="hasil-kultur-3"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>4. IADP</td>
+          <td style="text-align: center">
+            <label for="">Ada</label>
+            <input
+              type="radio"
+              name="iadp"
+              id="iadp"
+              label="iadp"
+              value="Ada"
+              myid="check_cara"
+            />
+            <label for="">/ Tidak ada</label>
+            <input
+              type="radio"
+              name="iadp"
+              id="iadp"
+              label="iadp"
+              value="Tidak ada"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label for="">Hari ke :</label>
+            <input
+              type="text"
+              name="hari-ini-ke-4"
+              id="hari-ini-ke-4"
+              label="hari-ini-ke-4"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td style="padding-left: 20px">Hasil Kultur</td>
+          <td colspan="2">
+            <input
+              style="width: 100%"
+              type="text"
+              name="hasil-kultur-4"
+              id="hasil-kultur-4"
+              label="hasil-kultur-4"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td width="20%">5. Lain - lain (Phlebitis / Decubitus)</td>
+          <td style="text-align: center">
+            <label for="">Ada</label>
+            <input
+              type="radio"
+              name="phlebitis-decubitus"
+              id="phlebitis-decubitus"
+              label="phlebitis-decubitus"
+              value="Ada"
+              myid="check_cara"
+            />
+            <label for="">/ Tidak ada</label>
+            <input
+              type="radio"
+              name="phlebitis-decubitus"
+              id="phlebitis-decubitus"
+              label="phlebitis-decubitus"
+              value="Tidak ada"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label for="">Hari ke :</label>
+            <input
+              type="text"
+              name="hari-ini-ke-4"
+              id="hari-ini-ke-4"
+              label="hari-ini-ke-4"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td style="padding-left: 20px">Hasil Kultur</td>
+          <td colspan="2">
+            <input
+              style="width: 100%"
+              type="text"
+              name="hasil-kultur-5"
+              id="hasil-kultur-5"
+              label="hasil-kultur-5"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td><b>Pemakaian Antimikroba</b></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="4">
+            <div style="display: flex; gap: 5px">
+              <label for="">1.</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="antimikroba-1"
+                id="antimikroba-1"
+                label="antimikroba-1"
+                myid="check_cara"
+                placeholder="......"
+              />
+              <label for="">Dosis</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="dosis-antimikroba-1"
+                id="dosis-antimikroba-1"
+                label="dosis-antimikroba-1"
+                myid="check_cara"
+                placeholder="......"
+              />
+              <label for="">mulai tgl.</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="mulai-tgl-pemakaian-1"
+                id="mulai-tgl-pemakaian-1"
+                label="mulai-tgl-pemakaian-1"
+                myid="check_cara"
+                placeholder="......"
+              />
+              <label for="">s/d</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="selesai-tgl-pemakaian-1"
+                id="selesai-tgl-pemakaian-1"
+                label="selesai-tgl-pemakaian-1"
+                myid="check_cara"
+                placeholder="......"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="4">
+            <div style="display: flex; gap: 5px">
+              <label for="">2.</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="antimikroba-2"
+                id="antimikroba-2"
+                label="antimikroba-2"
+                myid="check_cara"
+                placeholder="......"
+              />
+              <label for="">Dosis</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="dosis-antimikroba-2"
+                id="dosis-antimikroba-2"
+                label="dosis-antimikroba-2"
+                myid="check_cara"
+                placeholder="......"
+              />
+              <label for="">mulai tgl.</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="mulai-tgl-pemakaian-2"
+                id="mulai-tgl-pemakaian-2"
+                label="mulai-tgl-pemakaian-2"
+                myid="check_cara"
+                placeholder="......"
+              />
+              <label for="">s/d</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="selesai-tgl-pemakaian-2"
+                id="selesai-tgl-pemakaian-2"
+                label="selesai-tgl-pemakaian-2"
+                myid="check_cara"
+                placeholder="......"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="4">
+            <label for="">Waktu pemberian : Pre Operasi </label>
+            <input
+              type="radio"
+              name="waktu-pemberian"
+              id="waktu-pemberian"
+              label="waktu-pemberian"
+              value="Pre Operasi"
+              myid="check_cara"
+            />
+            <label for="">/ Selama </label>
+            <input
+              type="radio"
+              name="waktu-pemberian"
+              id="waktu-pemberian"
+              label="waktu-pemberian"
+              value="Selama"
+              myid="check_cara"
+            />
+            <label for="">/ Sesudah Operasi </label>
+            <input
+              type="radio"
+              name="waktu-pemberian"
+              id="waktu-pemberian"
+              label="waktu-pemberian"
+              value="Sesudah Operasi"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td><b>VII.</b></td>
+          <td colspan="4"><b>Tgl Pasien keluar RS / Pindah / Meninggal</b></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="3">
+            <div style="display: flex; gap: 5px">
+              <label for="">1. Pindah ke RS :</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="pindah-ke-rs"
+                id="pindah-ke-rs"
+                label="pindah-ke-rs"
+                myid="check_cara"
+                placeholder="......"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="3">
+            <div style="display: flex; gap: 5px">
+              <label for="">2. Diagnosa Akhir :</label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="diagnosa-akhir"
+                id="diagnosa-akhir"
+                label="diagnosa-akhir"
+                myid="check_cara"
+                placeholder="......"
+              />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td style="text-align: center" width="50%">
+            <p>Perawat Penanggung Jawab / Pengisi Formulir</p>
+            <br />
+            <br />
+            (<input
+              size="40"
+              type="text"
+              name="perawat-penanggung-jawab"
+              id="perawat-penanggung-jawab"
+              label="perawat-penanggung-jawab"
+              placeholder="......"
+              myid="check_cara"
+            />)
+          </td>
+          <td style="text-align: center" width="50%">
+            <p>Kepala Ruangan</p>
+            <br />
+            <br />
+            (<input
+              size="40"
+              type="text"
+              name="kepala-ruangan"
+              id="kepala-ruangan"
+              label="kepala-ruangan"
+              placeholder="......"
+              myid="check_cara"
+            />)
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(function (radio) {
+          radio.addEventListener("click", function () {
+            if (this.classList.contains("clicked")) {
+              this.checked = false;
+              this.classList.remove("clicked");
+            } else {
+              var name = this.getAttribute("name");
+              var radios = document.querySelectorAll(
+                'input[type="radio"][name="' + name + '"]'
+              );
+              radios.forEach(function (r) {
+                r.classList.remove("clicked");
+              });
+              this.classList.add("clicked");
+            }
+            console.log(this.name + " diubah menjadi: " + this.checked);
+          });
+        });
+
+        var checkboxButtons = document.querySelectorAll(
+          'input[type="checkbox"]'
+        );
+        checkboxButtons.forEach(function (checkbox) {
+          checkbox.addEventListener("click", function () {
+            if (this.classList.contains("clicked")) {
+              this.checked = false;
+              this.classList.remove("clicked");
+            } else {
+              var name = this.getAttribute("name");
+              var checkboxes = document.querySelectorAll(
+                'input[type="radio"][name="' + name + '"]'
+              );
+              checkboxes.forEach(function (r) {
+                r.classList.remove("clicked");
+              });
+              this.classList.add("clicked");
+            }
+            console.log(this.name + " diubah menjadi: " + this.checked);
+          });
+        });
+
+        var textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
