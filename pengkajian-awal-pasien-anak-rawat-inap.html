@@ -1404,9 +1404,9 @@
             <input
               type="radio"
               class="stamp"
-              name="asupan-makan-pasien"
-              id="asupan-makan-pasien"
-              label="asupan-makan-pasien"
+              name="status-gizi-pasien"
+              id="status-gizi-pasien"
+              label="status-gizi-pasien"
               value="3"
               myid="check_cara"
             />
@@ -1414,9 +1414,9 @@
             <input
               type="radio"
               class="stamp"
-              name="asupan-makan-pasien"
-              id="asupan-makan-pasien"
-              label="asupan-makan-pasien"
+              name="status-gizi-pasien"
+              id="status-gizi-pasien"
+              label="status-gizi-pasien"
               value="2"
               myid="check_cara"
             />
@@ -1424,9 +1424,9 @@
             <input
               type="radio"
               class="stamp"
-              name="asupan-makan-pasien"
-              id="asupan-makan-pasien"
-              label="asupan-makan-pasien"
+              name="status-gizi-pasien"
+              id="status-gizi-pasien"
+              label="status-gizi-pasien"
               value="0"
               myid="check_cara"
             />
@@ -1438,6 +1438,7 @@
           <td colspan="2">
             <b>TOTAL</b>
             <input
+              size="40"
               type="text"
               name="total-stamp"
               id="total-stamp"
@@ -4631,12 +4632,33 @@
     </table>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        const stamp = document.querySelectorAll(".stamp");
+        const totalStamp = document.querySelector("input[name='total-stamp']");
+
         const skriningRisikoCideraJatuh = document.querySelectorAll(
           ".skrining-risiko-cidera-jatuh"
         );
         const totalSkriningRisikoCideraJatuh = document.querySelector(
           "input[name='total-skrining-risiko-cidera-jatuh']"
         );
+
+        function hitungSkorStamp() {
+          let totalSkor = 0;
+
+          stamp.forEach((input) => {
+            if (input.checked) {
+              totalSkor += parseFloat(input.value);
+            }
+          });
+
+          totalStamp.value = `${totalSkor} ${
+            totalSkor > 2 ? "dikonsultasikan kepada ahli gizi" : ""
+          } `;
+        }
+
+        stamp.forEach((input) => {
+          input.addEventListener("change", hitungSkorStamp);
+        });
 
         function hitungSkorSkriningRisikoCideraJatuh() {
           let totalSkor = 0;
