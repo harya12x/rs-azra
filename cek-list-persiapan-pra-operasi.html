@@ -17,18 +17,19 @@
       margin-bottom: 10px;
     }
 
-    .cek-list-pra-operasi,
-    .cidera-jatuh-bayi-anak {
+    .table {
       border-collapse: collapse;
       width: 100%;
     }
 
-    .cek-list-pra-operasi th,
-    .cek-list-pra-operasi td,
-    .cidera-jatuh-bayi-anak th,
-    .cidera-jatuh-bayi-anak td {
+    .table th,
+    .table td {
       border: 1px solid black;
       padding: 5px;
+    }
+
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
     }
   </style>
   <body>
@@ -48,8 +49,8 @@
             name="src_ttd_2"
             myid="check_cara"
           />
-          <td bgcolor="#DFE8F6">Nama Pasien</td>
-          <td bgcolor="#DFE8F6">
+          <td>Nama Pasien</td>
+          <td>
             <input
               name="nama_pasien2"
               type="text"
@@ -60,24 +61,44 @@
               placeholder="..."
             />
           </td>
-          <td bgcolor="#DFE8F6">Jenis Kelamin</td>
-          <td bgcolor="#DFE8F6">
-            <input type="checkbox" />
+          <td>Jenis Kelamin</td>
+          <td>
+            <input
+              type="radio"
+              name="jenis-kelamin"
+              id="laki-laki"
+              myid="check_cara"
+              value="L"
+              label="jenis kelamin"
+            />
             <label for="l">L</label>
-            <input type="checkbox" />
+            <input
+              type="radio"
+              name="jenis-kelamin"
+              id="perempuan"
+              myid="check_cara"
+              value="P"
+              label="jenis kelamin"
+            />
             <label for="l">P</label>
           </td>
-          <td bgcolor="#DFE8F6">
+          <td>
             <label for="">Nomor Rekam Medis</label>
           </td>
-          <td bgcolor="#DFE8F6">
-            <input type="number" />
+          <td>
+            <input
+              type="text"
+              myid="check_cara"
+              name="no_rm"
+              id="no_rm"
+              label="nomor rekam medis"
+            />
           </td>
         </tr>
 
         <tr>
-          <td bgcolor="" rowspan="2">Tanggal Lahir</td>
-          <td bgcolor="" rowspan="2">
+          <td rowspan="2">Tanggal Lahir</td>
+          <td rowspan="2">
             <input
               name="tgl_lahira2"
               type="text"
@@ -90,7 +111,14 @@
 
           <td rowspan="2">Umur</td>
           <td rowspan="2">
-            <input type="number" size="5" placeholder="..." />
+            <input
+              type="text"
+              size="5"
+              name="umur-pengkajian"
+              id="umur-pengkajian"
+              myid="check_cara"
+              placeholder="..."
+            />
           </td>
           <td>
             <label for="kelas"> Poli </label>
@@ -121,7 +149,7 @@
             />
           </td>
         </tr>
-        <tr bgcolor="#DFE8F6">
+        <tr>
           <td style="font-weight: bold">RENCANA OPERASI TANGGAL:</td>
           <td>
             <input type="date" />
@@ -132,29 +160,79 @@
             <input type="time" />
           </td>
           <td style="padding-left: 5px; font-weight: bold">
-            <input type="radio" value="CITO" name="cito-elektif" />
+            <input
+              type="radio"
+              value="CITO"
+              name="cito-elektif"
+              class="cito-elektif"
+              id="cito-elektif"
+              myid="check_cara"
+            />
             <label for="l">1. CITO</label>
-            <input type="radio" value="ELEKTIF" name="cito-elektif" />
+            <input
+              type="radio"
+              value="ELEKTIF"
+              name="cito-elektif"
+              class="cito-elektif"
+              id="cito-elektif"
+              myid="check_cara"
+            />
             <label for="l">2. ELEKTIF </label>
           </td>
         </tr>
         <tr>
           <td style="font-weight: bold">NAMA OPERASI:</td>
           <td>
-            <input type="text" size="50" placeholder="..." />
+            <input
+              type="text"
+              name="nama-operasi"
+              id="nama-operasi"
+              label="nama-operasi"
+              size="50"
+              placeholder="..."
+            />
           </td>
 
           <td style="font-weight: bold">JENIS OPERASI</td>
           <td style="padding-left: 5px; font-weight: bold" colspan="2">
-            <input type="radio" value="Besar" name="jenis-operasi" />
+            <input
+              type="radio"
+              value="Besar"
+              name="jenis-operasi"
+              id="jenis-operasi"
+              label="jenis-operasi"
+              myid="check_cara"
+            />
             <label for="l">1. Besar</label>
-            <input type="radio" value="Sedang" name="jenis-operasi" />
+            <input
+              type="radio"
+              value="Sedang"
+              name="jenis-operasi"
+              id="jenis-operasi"
+              label="jenis-operasi"
+              myid="check_cara"
+            />
             <label for="l">2. Sedang </label>
-            <input type="radio" value="Kecil" name="jenis-operasi" />
+            <input
+              type="radio"
+              value="Kecil"
+              name="jenis-operasi"
+              id="jenis-operasi"
+              label="jenis-operasi"
+              myid="check_cara"
+            />
             <label for="l">3. Kecil</label>
-            <input type="radio" value="Khusus" name="jenis-operasi" />
+            <input
+              type="radio"
+              value="Khusus"
+              name="jenis-operasi"
+              id="jenis-operasi"
+              label="jenis-operasi"
+              myid="check_cara"
+            />
             <label for="l">4. Khusus </label>
           </td>
+          <td>&nbsp;</td>
         </tr>
       </tbody>
     </table>
@@ -176,25 +254,32 @@
           <td>
             <input
               type="radio"
+              id="informasi-tindakan-kedokteran"
               name="informasi-tindakan-kedokteran"
+              label="informasi-tindakan-kedokteran"
               value="Ya"
-              id=""
+              myid="check_cara"
             />
           </td>
           <td>
             <input
               type="radio"
+              id="informasi-tindakan-kedokteran"
               name="informasi-tindakan-kedokteran"
+              label="informasi-tindakan-kedokteran"
               value="Tidak"
-              id=""
+              myid="check_cara"
             />
           </td>
           <td>
             <input
               type="text"
               name="keterangan-informasi-tindakan-kedokteran"
+              id="keterangan-informasi-tindakan-kedokteran"
+              label="keterangan-informasi-tindakan-kedokteran"
               style="width: 100%"
-              id=""
+              placeholder="....."
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -205,24 +290,31 @@
             <input
               type="radio"
               name="persetujuan-tindakan-kedokteran"
+              id="persetujuan-tindakan-kedokteran"
+              label="persetujuan-tindakan-kedokteran"
               value="Ya"
-              id=""
+              myid="check_cara"
             />
           </td>
           <td>
             <input
               type="radio"
               name="persetujuan-tindakan-kedokteran"
+              id="persetujuan-tindakan-kedokteran"
+              label="persetujuan-tindakan-kedokteran"
               value="Tidak"
-              id=""
+              myid="check_cara"
             />
           </td>
           <td>
             <input
               type="text"
               name="keterangan-persetujuan-tindakan-kedokteran"
+              id="keterangan-persetujuan-tindakan-kedokteran"
+              label="keterangan-persetujuan-tindakan-kedokteran"
+              placeholder="......"
               style="width: 100%"
-              id=""
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -233,24 +325,31 @@
             <input
               type="radio"
               name="pengkajian-penandaan-lokasi-bedah"
+              id="pengkajian-penandaan-lokasi-bedah"
+              label="pengkajian-penandaan-lokasi-bedah"
               value="Ya"
-              id=""
+              myid="check_cara"
             />
           </td>
           <td>
             <input
               type="radio"
               name="pengkajian-penandaan-lokasi-bedah"
+              id="pengkajian-penandaan-lokasi-bedah"
+              label="pengkajian-penandaan-lokasi-bedah"
               value="Tidak"
-              id=""
+              myid="check_cara"
             />
           </td>
           <td>
             <input
               type="text"
               name="keterangan-pengkajian-penandaan-lokasi-bedah"
+              id="keterangan-pengkajian-penandaan-lokasi-bedah"
+              label="keterangan-pengkajian-penandaan-lokasi-bedah"
               style="width: 100%"
-              id=""
+              placeholder="......"
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -261,24 +360,31 @@
             <input
               type="radio"
               name="informasi-tindakan-anestesi-sedasi"
+              id="informasi-tindakan-anestesi-sedasi"
+              label="informasi-tindakan-anestesi-sedasi"
               value="Ya"
-              id=""
+              myid="check_cara"
             />
           </td>
           <td>
             <input
               type="radio"
               name="informasi-tindakan-anestesi-sedasi"
+              id="informasi-tindakan-anestesi-sedasi"
+              label="informasi-tindakan-anestesi-sedasi"
               value="Tidak"
-              id=""
+              myid="check_cara"
             />
           </td>
           <td>
             <input
               type="text"
               name="keterangan-informasi-tindakan-anestesi-sedasi"
+              id="keterangan-informasi-tindakan-anestesi-sedasi"
+              label="keterangan-informasi-tindakan-anestesi-sedasi"
+              placeholder="......"
               style="width: 100%"
-              id=""
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -289,24 +395,31 @@
             <input
               type="radio"
               name="persetujuan-tindakan-anestesi"
+              id="persetujuan-tindakan-anestesi"
+              label="persetujuan-tindakan-anestesi"
               value="Ya"
-              id=""
+              myid="check_cara"
             />
           </td>
           <td>
             <input
               type="radio"
               name="persetujuan-tindakan-anestesi"
+              id="persetujuan-tindakan-anestesi"
+              label="persetujuan-tindakan-anestesi"
               value="Tidak"
-              id=""
+              myid="check_cara"
             />
           </td>
           <td>
             <input
               type="text"
               name="keterangan-persetujuan-tindakan-anestesi"
+              id="keterangan-persetujuan-tindakan-anestesi"
+              label="keterangan-persetujuan-tindakan-anestesi"
               style="width: 100%"
-              id=""
+              placeholder="......"
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -317,24 +430,31 @@
             <input
               type="radio"
               name="pengkajian-pra-anestesi-sedasi"
+              id="pengkajian-pra-anestesi-sedasi"
+              label="pengkajian-pra-anestesi-sedasi"
               value="Ya"
-              id=""
+              myid="check_cara"
             />
           </td>
           <td>
             <input
               type="radio"
               name="pengkajian-pra-anestesi-sedasi"
+              id="pengkajian-pra-anestesi-sedasi"
+              label="pengkajian-pra-anestesi-sedasi"
               value="Tidak"
-              id=""
+              myid="check_cara"
             />
           </td>
           <td>
             <input
               type="text"
               name="keterangan-pengkajian-pra-anestesi-sedasi"
+              id="keterangan-pengkajian-pra-anestesi-sedasi"
+              label="keterangan-pengkajian-pra-anestesi-sedasi"
               style="width: 100%"
-              id=""
+              placeholder="......"
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -342,22 +462,34 @@
           <td>7.</td>
           <td>Form Memo tindakan operasi</td>
           <td>
-            <input type="radio" name="memo-tindakan-operasi" value="Ya" id="" />
+            <input
+              type="radio"
+              name="memo-tindakan-operasi"
+              id="memo-tindakan-operasi"
+              label="memo-tindakan-operasi"
+              value="Ya"
+              myid="check_cara"
+            />
           </td>
           <td>
             <input
               type="radio"
               name="memo-tindakan-operasi"
+              id="memo-tindakan-operasi"
+              label="memo-tindakan-operasi"
               value="Tidak"
-              id=""
+              myid="check_cara"
             />
           </td>
           <td>
             <input
               type="text"
               name="keterangan-memo-tindakan-operasi"
+              id="keterangan-memo-tindakan-operasi"
+              label="keterangan-memo-tindakan-operasi"
               style="width: 100%"
-              id=""
+              placeholder="......"
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -369,7 +501,9 @@
             <input
               type="text"
               name="konsul-jenis-dokter-spesialis"
-              id=""
+              id="konsul-jenis-dokter-spesialis"
+              label="konsul-jenis-dokter-spesialis"
+              myid="check_cara"
               placeholder="..."
             />
           </td>
@@ -377,16 +511,20 @@
             <input
               type="radio"
               name="konsul-dokter-spesialis"
+              id="konsul-dokter-spesialis"
+              label="konsul-dokter-spesialis"
               value="Ya"
-              id=""
+              myid="check_cara"
             />
           </td>
           <td>
             <input
               type="radio"
               name="konsul-dokter-spesialis"
+              id="konsul-dokter-spesialis"
+              label="konsul-dokter-spesialis"
               value="Tidak"
-              id=""
+              myid="check_cara"
             />
           </td>
           <td>
@@ -395,8 +533,11 @@
               <input
                 type="text"
                 name="keterangan-dokter-spesialis"
+                id="keterangan-dokter-spesialis"
+                label="keterangan-dokter-spesialis"
                 style="width: 100%"
-                id=""
+                placeholder="......"
+                myid="check_cara"
               />
             </div>
           </td>
@@ -405,22 +546,45 @@
           <td>9.</td>
           <td>Booking ruang operasi</td>
           <td>
-            <input type="radio" name="booking-ruang-operasi" value="Ya" id="" />
+            <input
+              type="radio"
+              name="booking-ruang-operasi"
+              id="booking-ruang-operasi"
+              label="booking-ruang-operasi"
+              value="Ya"
+              myid="check_cara"
+            />
           </td>
           <td>
             <input
               type="radio"
               name="booking-ruang-operasi"
+              id="booking-ruang-operasi"
+              label="booking-ruang-operasi"
               value="Tidak"
-              id=""
+              myid="check_cara"
             />
           </td>
           <td>
             <div style="display: flex; gap: 5px">
               <label for="tgl">Tgl:</label>
-              <input type="date" name="tgl-booking-ruang-operasi" id="" />
+              <input
+                type="text"
+                name="tgl-booking-ruang-operasi"
+                id="tgl-booking-ruang-operasi"
+                label="tgl-booking-ruang-operasi"
+                myid="check_cara"
+                placeholder="dd/mm/yyyy"
+              />
               <label for="jam">Jam:</label>
-              <input type="time" name="jam-booking-ruang-operasi" id="" />
+              <input
+                type="text"
+                name="jam-booking-ruang-operasi"
+                id="jam-booking-ruang-operasi"
+                label="jam-booking-ruang-operasi"
+                myid="check_cara"
+                placeholder="00.00"
+              />
             </div>
           </td>
         </tr>
@@ -429,15 +593,37 @@
           <td>10.</td>
           <td>Puasa</td>
           <td>
-            <input type="radio" name="puasa" value="Ya" id="" />
+            <input
+              type="radio"
+              name="puasa"
+              id="puasa"
+              label="puasa"
+              value="Ya"
+              myid="check_cara"
+            />
           </td>
           <td>
-            <input type="radio" name="puasa" value="Tidak" id="" />
+            <input
+              type="radio"
+              name="puasa"
+              id="puasa"
+              label="puasa"
+              value="Tidak"
+              myid="check_cara"
+            />
           </td>
           <td>
             <div style="display: flex; gap: 5px">
               <label for="Dokter">Mulai dari jam:</label>
-              <input type="time" name="mulai-puasa" style="width: 100%" id="" />
+              <input
+                type="text"
+                name="mulai-puasa"
+                id="mulai-puasa"
+                label="mulai-puasa"
+                placeholder="00.00"
+                style="width: 100%"
+                myid="check_cara"
+              />
             </div>
           </td>
         </tr>
@@ -446,17 +632,45 @@
           <td>11.</td>
           <td>Persediaan darah</td>
           <td>
-            <input type="radio" name="persediaan-darah" value="Ya" id="" />
+            <input
+              type="radio"
+              name="persediaan-darah"
+              id="persediaan-darah"
+              label="persediaan-darah"
+              value="Ya"
+              myid="check_cara"
+            />
           </td>
           <td>
-            <input type="radio" name="persediaan-darah" value="Tidak" id="" />
+            <input
+              type="radio"
+              name="persediaan-darah"
+              id="persediaan-darah"
+              label="persediaan-darah"
+              value="Tidak"
+              myid="check_cara"
+            />
           </td>
           <td>
             <div style="display: flex; gap: 5px">
               <label for="tgl">Jumlah:</label>
-              <input type="text" name="jumlah-persediaan-darah" id="" />
+              <input
+                type="text"
+                name="jumlah-persediaan-darah"
+                id="jumlah-persediaan-darah"
+                label="jumlah-persediaan-darah"
+                myid="check_cara"
+                placeholder="......"
+              />
               <label for="gol">Gol:</label>
-              <input type="text" name="gol-darah" id="" />
+              <input
+                type="text"
+                name="gol-darah"
+                id="gol-darah"
+                label="gol-darah"
+                myid="check_cara"
+                placeholder="......"
+              />
             </div>
           </td>
         </tr>
@@ -464,25 +678,55 @@
           <td>12.</td>
           <td>Hasil Laboratorium</td>
           <td>
-            <input type="radio" name="hasil-laboratorium" value="Ya" id="" />
+            <input
+              type="radio"
+              name="hasil-laboratorium"
+              id="hasil-laboratorium"
+              label="hasil-laboratorium"
+              value="Ya"
+              myid="check_cara"
+            />
           </td>
           <td>
-            <input type="radio" name="hasil-laboratorium" value="Tidak" id="" />
+            <input
+              type="radio"
+              name="hasil-laboratorium"
+              id="hasil-laboratorium"
+              label="hasil-laboratorium"
+              value="Tidak"
+              myid="check_cara"
+            />
           </td>
           <td rowspan="3">
-            <table width="100%">
+            <table class="table" width="100%">
               <tbody>
                 <tr>
                   <td>
                     <div style="display: flex; gap: 5px">
                       <label for="gol">Hb:</label>
-                      <input style="width: 100%" type="text" name="Hb" id="" />
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="Hb"
+                        id="Hb"
+                        label="Hb"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
                     </div>
                   </td>
                   <td>
                     <div style="display: flex; gap: 5px">
                       <label for="gol">L:</label>
-                      <input type="text" style="width: 100%" name="l" id="" />
+                      <input
+                        type="text"
+                        style="width: 100%"
+                        name="l"
+                        id="l"
+                        label="l"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
                     </div>
                   </td>
                 </tr>
@@ -490,7 +734,15 @@
                   <td>
                     <div style="display: flex; gap: 5px">
                       <label for="gol">Tr:</label>
-                      <input style="width: 100%" type="text" name="Tr" id="" />
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="Tr"
+                        id="Tr"
+                        label="Tr"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
                     </div>
                   </td>
                   <td></td>
@@ -499,13 +751,29 @@
                   <td>
                     <div style="display: flex; gap: 5px">
                       <label for="gol">BT:</label>
-                      <input style="width: 100%" type="text" name="BT" id="" />
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="BT"
+                        id="BT"
+                        label="BT"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
                     </div>
                   </td>
                   <td>
                     <div style="display: flex; gap: 5px">
                       <label for="gol">PT:</label>
-                      <input style="width: 100%" type="text" name="PT" id="" />
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="PT"
+                        id="PT"
+                        label="PT"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
                     </div>
                   </td>
                 </tr>
@@ -513,7 +781,15 @@
                   <td>
                     <div style="display: flex; gap: 5px">
                       <label for="gol">CT:</label>
-                      <input style="width: 100%" type="text" name="CT" id="" />
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="CT"
+                        id="CT"
+                        label="CT"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
                     </div>
                   </td>
                   <td>
@@ -523,7 +799,10 @@
                         style="width: 100%"
                         type="text"
                         name="APTT"
-                        id=""
+                        id="APTT"
+                        label="APTT"
+                        placeholder="......"
+                        myid="check_cara"
                       />
                     </div>
                   </td>
@@ -536,30 +815,72 @@
           <td>13.</td>
           <td>EKG</td>
           <td>
-            <input type="radio" name="ekg" value="Ya" id="" />
+            <input
+              type="radio"
+              name="ekg"
+              id="ekg"
+              label="ekg"
+              value="Ya"
+              myid="check_cara"
+            />
           </td>
           <td>
-            <input type="radio" name="ekg" value="Tidak" id="" />
+            <input
+              type="radio"
+              name="ekg"
+              id="ekg"
+              label="ekg"
+              value="Tidak"
+              myid="check_cara"
+            />
           </td>
         </tr>
         <tr>
           <td>14.</td>
           <td>Rontgen / CT Scan / MRI</td>
           <td>
-            <input type="radio" name="rontgen-ctscan-mri" value="Ya" id="" />
+            <input
+              type="radio"
+              name="rontgen-ctscan-mri"
+              id="rontgen-ctscan-mri"
+              label="rontgen-ctscan-mri"
+              value="Ya"
+              myid="check_cara"
+            />
           </td>
           <td>
-            <input type="radio" name="rontgen-ctscan-mri" value="Tidak" id="" />
+            <input
+              type="radio"
+              name="rontgen-ctscan-mri"
+              id="rontgen-ctscan-mri"
+              label="rontgen-ctscan-mri"
+              value="Tidak"
+              myid="check_cara"
+            />
           </td>
         </tr>
         <tr>
           <td>15.</td>
           <td>Tanda - tanda Vital</td>
           <td>
-            <input type="radio" name="tanda-tanda-vital" value="Ya" id="" />
+            <input
+              type="radio"
+              name="tanda-tanda-vital"
+              id="tanda-tanda-vital"
+              label="tanda-tanda-vital"
+              value="Ya"
+              myid="check_cara"
+            />
           </td>
           <td>
-            <input type="radio" name="tanda-tanda-vital" value="Tidak" id="" />
+            <input
+              type="radio"
+              name="tanda-tanda-vital"
+              id="tanda-tanda-vital"
+              label="tanda-tanda-vital"
+              value="Tidak"
+              myid="check_cara"
+            />
           </td>
           <td rowspan="4">
             <table class="table table-bordered" width="100%">
@@ -568,15 +889,30 @@
                   <td>
                     <div style="display: flex; gap: 5px">
                       <label for="TD">TD:</label>
-                      <input style="width: 100%" type="text" name="TD" id="" />
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="TD"
+                        id="TD"
+                        label="TD"
+                        myid="check_cara"
+                      />
                       <label for="TD">mmhg</label>
                     </div>
                   </td>
                   <td>
                     <div style="display: flex; gap: 5px">
                       <label for="N">N:</label>
-                      <input style="width: 100%" type="text" name="N" id="" />
-                      <label for="N">x/mnt</label>
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="keterangan-N"
+                        id="keterangan-N"
+                        label="keterangan-N"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
+                      <label for="keterangan-N">x/mnt</label>
                     </div>
                   </td>
                 </tr>
@@ -584,15 +920,31 @@
                   <td>
                     <div style="display: flex; gap: 5px">
                       <label for="S">S:</label>
-                      <input style="width: 100%" type="text" name="S" id="" />
-                      <label for="S">x/mnt</label>
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="keterangan-S"
+                        id="keterangan-S"
+                        label="keterangan-S"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
+                      <label for="keterangan-S">x/mnt</label>
                     </div>
                   </td>
                   <td>
                     <div style="display: flex; gap: 5px">
                       <label for="P">P:</label>
-                      <input style="width: 100%" type="text" name="P" id="" />
-                      <label for="P">x/mnt</label>
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="keterangan-P"
+                        id="keterangan-P"
+                        label="keterangan-P"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
+                      <label for="keterangan-P">x/mnt</label>
                     </div>
                   </td>
                 </tr>
@@ -600,7 +952,15 @@
                   <td>
                     <div style="display: flex; gap: 5px">
                       <label for="BB">BB:</label>
-                      <input style="width: 100%" type="text" name="BB" id="" />
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="BB"
+                        id="BB"
+                        label="BB"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
                       <label for="BB">Kg</label>
                     </div>
                   </td>
@@ -618,16 +978,20 @@
             <input
               type="radio"
               name="gigipalsu-rambutpalsu-perhiasan-dilepas"
+              id="gigipalsu-rambutpalsu-perhiasan-dilepas"
+              label="gigipalsu-rambutpalsu-perhiasan-dilepas"
               value="Ya"
-              id=""
+              myid="check_cara"
             />
           </td>
           <td>
             <input
               type="radio"
               name="gigipalsu-rambutpalsu-perhiasan-dilepas"
+              id="gigipalsu-rambutpalsu-perhiasan-dilepas"
+              label="gigipalsu-rambutpalsu-perhiasan-dilepas"
               value="Tidak"
-              id=""
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -635,14 +999,23 @@
           <td>17.</td>
           <td>Hearing aid dilepas</td>
           <td>
-            <input type="radio" name="hearing-aid-dilepas" value="Ya" id="" />
+            <input
+              type="radio"
+              name="hearing-aid-dilepas"
+              id="hearing-aid-dilepas"
+              label="hearing-aid-dilepas"
+              value="Ya"
+              myid="check_cara"
+            />
           </td>
           <td>
             <input
               type="radio"
               name="hearing-aid-dilepas"
+              id="hearing-aid-dilepas"
+              label="hearing-aid-dilepas"
               value="Tidak"
-              id=""
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -653,16 +1026,20 @@
             <input
               type="radio"
               name="make-up-kutek-dibersihkan-kuku-palsu-dilepas"
+              id="make-up-kutek-dibersihkan-kuku-palsu-dilepas"
+              label="make-up-kutek-dibersihkan-kuku-palsu-dilepas"
               value="Ya"
-              id=""
+              myid="check_cara"
             />
           </td>
           <td>
             <input
               type="radio"
               name="make-up-kutek-dibersihkan-kuku-palsu-dilepas"
+              id="make-up-kutek-dibersihkan-kuku-palsu-dilepas"
+              label="make-up-kutek-dibersihkan-kuku-palsu-dilepas"
               value="Tidak"
-              id=""
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -670,10 +1047,24 @@
           <td>19.</td>
           <td>Obat premedikasi</td>
           <td>
-            <input type="radio" name="obat-premedikasi" value="Ya" id="" />
+            <input
+              type="radio"
+              name="obat-premedikasi"
+              id="obat-premedikasi"
+              label="obat-premedikasi"
+              value="Ya"
+              myid="check_cara"
+            />
           </td>
           <td>
-            <input type="radio" name="obat-premedikasi" value="Tidak" id="" />
+            <input
+              type="radio"
+              name="obat-premedikasi"
+              id="obat-premedikasi"
+              label="obat-premedikasi"
+              value="Tidak"
+              myid="check_cara"
+            />
           </td>
           <td rowspan="2">
             <table class="table table-bordered" width="100%">
@@ -686,7 +1077,9 @@
                         style="width: 100%"
                         type="text"
                         name="nama-obat"
-                        id=""
+                        id="nama-obat"
+                        label="nama-obat"
+                        myid="check_cara"
                       />
                     </div>
                   </td>
@@ -699,7 +1092,9 @@
                         style="width: 100%"
                         type="text"
                         name="jenis-obat"
-                        id=""
+                        id="jenis-obat"
+                        label="jenis-obat"
+                        myid="check_cara"
                       />
                     </div>
                   </td>
@@ -712,7 +1107,9 @@
                         style="width: 100%"
                         type="text"
                         name="dosis-obat"
-                        id=""
+                        id="dosis-obat"
+                        label="dosis-obat"
+                        myid="check_cara"
                       />
                     </div>
                   </td>
@@ -723,7 +1120,9 @@
                         style="width: 100%"
                         type="time"
                         name="jam-obat"
-                        id=""
+                        id="jam-obat"
+                        label="jam-obat"
+                        myid="check_cara"
                       />
                     </div>
                   </td>
@@ -739,16 +1138,20 @@
             <input
               type="radio"
               name="kacamata-kontak-lens-dilepas"
+              id="kacamata-kontak-lens-dilepas"
+              label="kacamata-kontak-lens-dilepas"
               value="Ya"
-              id=""
+              myid="check_cara"
             />
           </td>
           <td>
             <input
               type="radio"
               name="kacamata-kontak-lens-dilepas"
+              id="kacamata-kontak-lens-dilepas"
+              label="kacamata-kontak-lens-dilepas"
               value="Tidak"
-              id=""
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -757,10 +1160,24 @@
           <td>21.</td>
           <td>Kateter terpasang</td>
           <td>
-            <input type="radio" name="kateter-terpasang" value="Ya" id="" />
+            <input
+              type="radio"
+              name="kateter-terpasang"
+              id="kateter-terpasang"
+              label="kateter-terpasang"
+              value="Ya"
+              myid="check_cara"
+            />
           </td>
           <td>
-            <input type="radio" name="kateter-terpasang" value="Tidak" id="" />
+            <input
+              type="radio"
+              name="kateter-terpasang"
+              id="kateter-terpasang"
+              label="kateter-terpasang"
+              value="Tidak"
+              myid="check_cara"
+            />
           </td>
           <td>
             <div style="display: flex; gap: 5px">
@@ -769,14 +1186,18 @@
                 style="width: 100%"
                 type="text"
                 name="ukuran-kateter"
-                id=""
+                id="ukuran-kateter"
+                label="ukuran-kateter"
+                myid="check_cara"
               />
               <label for="balon-kateter">Balon:</label>
               <input
                 style="width: 100%"
                 type="text"
                 name="balon-kateter"
-                id=""
+                id="balon-kateter"
+                label="balon-kateter"
+                myid="check_cara"
               />
               <label for="balon-kateter">cc</label>
             </div>
@@ -786,15 +1207,37 @@
           <td>22.</td>
           <td>NGT terpasang</td>
           <td>
-            <input type="radio" name="ngt-terpasang" value="Ya" id="" />
+            <input
+              type="radio"
+              name="ngt-terpasang"
+              id="ngt-terpasang"
+              label="ngt-terpasang"
+              value="Ya"
+              myid="check_cara"
+            />
           </td>
           <td>
-            <input type="radio" name="ngt-terpasang" value="Tidak" id="" />
+            <input
+              type="radio"
+              name="ngt-terpasang"
+              id="ngt-terpasang"
+              label="ngt-terpasang"
+              value="Tidak"
+              myid="check_cara"
+            />
           </td>
           <td>
             <div style="display: flex; gap: 5px">
               <label for="ukuran-ngt">Ukuran:</label>
-              <input style="width: 100%" type="text" name="ukuran-ngt" id="" />
+              <input
+                style="width: 100%"
+                type="text"
+                name="ukuran-ngt"
+                id="ukuran-ngt"
+                label="ukuran-ngt"
+                placeholder="......"
+                myid="check_cara"
+              />
             </div>
           </td>
         </tr>
@@ -802,28 +1245,56 @@
           <td>23.</td>
           <td>Klisma</td>
           <td>
-            <input type="radio" name="klisma" value="Ya" id="" />
+            <input
+              type="radio"
+              name="klisma"
+              id="klisma"
+              label="klisma"
+              value="Ya"
+              myid="check_cara"
+            />
           </td>
           <td>
-            <input type="radio" name="klisma" value="Tidak" id="" />
+            <input
+              type="radio"
+              name="klisma"
+              id="klisma"
+              label="klisma"
+              value="Tidak"
+              myid="check_cara"
+            />
           </td>
           <td>
             <div style="display: flex; gap: 5px">
-              <input style="width: 100%" type="text" name="x" id="" />
-              <label for="x">x,</label>
+              <input
+                style="width: 100%"
+                type="text"
+                name="klisma-x"
+                id="klisma-x"
+                label="klisma-x"
+                myid="check_cara"
+                placeholder="......"
+              />
+              <label for="klisma-x">x,</label>
               <label for="jam-awal-klisma">Jam:</label>
               <input
                 style="width: 100%"
                 type="text"
                 name="jam-awal-klisma"
-                id=""
+                id="jam-awal-klisma"
+                label="jam-awal-klisma"
+                myid="check_cara"
+                placeholder="......"
               />
               <label for="jam-akhir-klisma">Jam: </label>
               <input
                 style="width: 100%"
                 type="text"
                 name="jam-awal-klisma"
-                id=""
+                id="jam-awal-klisma"
+                label="jam-awal-klisma"
+                myid="check_cara"
+                placeholder="......"
               />
             </div>
           </td>
@@ -832,10 +1303,24 @@
           <td>24.</td>
           <td>Haid</td>
           <td>
-            <input type="radio" name="haid" value="Ya" id="" />
+            <input
+              type="radio"
+              name="haid"
+              id="haid"
+              label="haid"
+              value="Ya"
+              myid="check_cara"
+            />
           </td>
           <td>
-            <input type="radio" name="haid" value="Tidak" id="" />
+            <input
+              type="radio"
+              name="haid"
+              id="haid"
+              label="haid"
+              value="Tidak"
+              myid="check_cara"
+            />
           </td>
           <td>
             <div style="display: flex; gap: 5px">
@@ -844,7 +1329,10 @@
                 style="width: 100%"
                 type="text"
                 name="haid-hari-ke"
-                id=""
+                id="haid-hari-ke"
+                label="haid-hari-ke"
+                placeholder="......"
+                myid="check_cara"
               />
             </div>
           </td>
@@ -853,10 +1341,24 @@
           <td>25.</td>
           <td>Hamil</td>
           <td>
-            <input type="radio" name="hamil" value="Ya" id="" />
+            <input
+              type="radio"
+              name="hamil"
+              id="hamil"
+              label="hamil"
+              value="Ya"
+              myid="check_cara"
+            />
           </td>
           <td>
-            <input type="radio" name="hamil" value="Tidak" id="" />
+            <input
+              type="radio"
+              name="hamil"
+              id="hamil"
+              label="hamil"
+              value="Tidak"
+              myid="check_cara"
+            />
           </td>
           <td>
             <div style="display: flex; gap: 5px">
@@ -865,7 +1367,10 @@
                 style="width: 100%"
                 type="text"
                 name="hamil-minggu-ke"
-                id=""
+                id="hamil-minggu-ke"
+                label="hamil-minggu-ke"
+                placeholder="......"
+                myid="check_cara"
               />
             </div>
           </td>
@@ -883,8 +1388,8 @@
               name="17_pukul"
               type="text"
               id="17_pukul"
-              placeholder="00:00"
-              size="10"
+              placeholder="dd/mm/yyyy/00:00"
+              size="30"
               myid="check_cara"
             />
           </td>
@@ -957,5 +1462,34 @@
         </tr>
       </tbody>
     </table>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(function (radio) {
+          radio.addEventListener("click", function () {
+            if (this.classList.contains("clicked")) {
+              this.checked = false;
+              this.classList.remove("clicked");
+            } else {
+              var name = this.getAttribute("name");
+              var radios = document.querySelectorAll(
+                'input[type="radio"][name="' + name + '"]'
+              );
+              radios.forEach(function (r) {
+                r.classList.remove("clicked");
+              });
+              this.classList.add("clicked");
+            }
+            console.log(this.name + " diubah menjadi: " + this.checked);
+          });
+        });
+        var textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+      });
+    </script>
   </body>
 </html>
