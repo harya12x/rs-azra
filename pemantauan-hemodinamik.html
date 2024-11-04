@@ -1,0 +1,5483 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PEMANTAUAN HEMODINAMIK</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">
+      PEMANTAUAN HEMODINAMIK <br />
+      RS. AZRA BOGOR
+    </h1>
+
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td>Nama Pasien</td>
+          <td>
+            <input
+              name="nama_pasien"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+            />
+          </td>
+          <td>Jenis Kelamin</td>
+          <td>
+            <input
+              type="radio"
+              name="jenis-kelamin"
+              id="laki-laki"
+              myid="check_cara"
+              value="L"
+              label="jenis kelamin"
+            />
+            <label for="l">L</label>
+            <input
+              type="radio"
+              name="jenis-kelamin"
+              id="perempuan"
+              myid="check_cara"
+              value="P"
+              label="jenis kelamin"
+            />
+            <label for="l">P</label>
+          </td>
+          <td>
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              myid="check_cara"
+              name="no_rm"
+              id="no_rm"
+              label="nomor rekam medis"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan="2">Tanggal Lahir</td>
+          <td rowspan="2">
+            <input
+              name="tgl_lahir"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td rowspan="2">Umur</td>
+          <td rowspan="2">
+            <input
+              type="text"
+              size="5"
+              name="umur-pengkajian"
+              id="umur-pengkajian"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <label for="kelas">Kelas</label>
+          </td>
+          <td>
+            <input
+              name="kelas"
+              type="text"
+              id="kelas"
+              placeholder="..."
+              myid="check_cara"
+              label="kelas"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Kamar</td>
+          <td>
+            <input
+              type="text"
+              name="kamar"
+              id="kamar"
+              myid="check_cara"
+              placeholder="..."
+              aria-label="kamar"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table table-bordered">
+      <thead>
+        <tr>
+          <th rowspan="2">TGL</th>
+          <th rowspan="2">JAM</th>
+          <th rowspan="2">KES</th>
+          <th rowspan="2">TD</th>
+          <th rowspan="2">N</th>
+          <th rowspan="2">S</th>
+          <th rowspan="2">RR</th>
+          <th rowspan="2">CRT</th>
+          <th rowspan="2">SetO2</th>
+          <th rowspan="2">O2</th>
+          <th rowspan="2">EWS</th>
+          <th colspan="4">CAIRAN MASUK</th>
+          <th colspan="5">CAIRAN KELUAR</th>
+        </tr>
+        <tr>
+          <th>Oral</th>
+          <th>NGT</th>
+          <th>Infus</th>
+          <th>Tranf</th>
+          <th>Urine</th>
+          <th>NGT</th>
+          <th>Muntah</th>
+          <th>BAB</th>
+          <th>Drain</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-1"
+              id="tgl-1"
+              label="tgl-1"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">7</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-1"
+              id="kes-1"
+              label="kes-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-1"
+              id="td-1"
+              label="td-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-1"
+              id="n-1"
+              label="n-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-1"
+              id="s-1"
+              label="s-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-1"
+              id="rr-1"
+              label="rr-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-1"
+              id="crt-1"
+              label="crt-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-1"
+              id="set02-1"
+              label="set02-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-1"
+              id="02-1"
+              label="02-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-1"
+              id="ews-1"
+              label="ews-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a oral"
+              name="oral-1"
+              id="oral-1"
+              label="oral-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a"
+              name="ngt-cairan-masuk-a-1"
+              id="ngt-cairan-masuk-a-1"
+              label="ngt-cairan-masuk-a-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a infus"
+              name="infus-1"
+              id="infus-1"
+              label="infus-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a"
+              name="tranf-1"
+              id="tranf-1"
+              label="tranf-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a urine"
+              name="urine-1"
+              id="urine-1"
+              label="urine-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="ngt-cairan-keluar-a-1"
+              id="ngt-cairan-keluar-a-1"
+              label="ngt-cairan-keluar-a-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="muntah-1"
+              id="muntah-1"
+              label="muntah-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="bab-1"
+              id="bab-1"
+              label="bab-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="drain-1"
+              id="drain-1"
+              label="drain-1"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-2"
+              id="tgl-2"
+              label="tgl-2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">8</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-2"
+              id="kes-2"
+              label="kes-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-2"
+              id="td-2"
+              label="td-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-2"
+              id="n-2"
+              label="n-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-2"
+              id="s-2"
+              label="s-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-2"
+              id="rr-2"
+              label="rr-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-2"
+              id="crt-2"
+              label="crt-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-2"
+              id="set02-2"
+              label="set02-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-2"
+              id="02-2"
+              label="02-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-2"
+              id="ews-2"
+              label="ews-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a oral"
+              name="oral-2"
+              id="oral-2"
+              label="oral-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a"
+              name="ngt-cairan-masuk-a-2"
+              id="ngt-cairan-masuk-a-2"
+              label="ngt-cairan-masuk-a-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a infus"
+              name="infus-2"
+              id="infus-2"
+              label="infus-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a"
+              name="tranf-2"
+              id="tranf-2"
+              label="tranf-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a urine"
+              name="urine-2"
+              id="urine-2"
+              label="urine-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="ngt-cairan-keluar-a-2"
+              id="ngt-cairan-keluar-a-2"
+              label="ngt-cairan-keluar-a-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="muntah-2"
+              id="muntah-2"
+              label="muntah-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="bab-2"
+              id="bab-2"
+              label="bab-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="drain-2"
+              id="drain-2"
+              label="drain-2"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-3"
+              id="tgl-3"
+              label="tgl-3"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">9</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-3"
+              id="kes-3"
+              label="kes-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-3"
+              id="td-3"
+              label="td-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-3"
+              id="n-3"
+              label="n-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-3"
+              id="s-3"
+              label="s-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-3"
+              id="rr-3"
+              label="rr-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-3"
+              id="crt-3"
+              label="crt-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-3"
+              id="set02-3"
+              label="set02-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-3"
+              id="02-3"
+              label="02-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-3"
+              id="ews-3"
+              label="ews-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a oral"
+              name="oral-3"
+              id="oral-3"
+              label="oral-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a"
+              name="ngt-cairan-masuk-a-3"
+              id="ngt-cairan-masuk-a-3"
+              label="ngt-cairan-masuk-a-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a infus"
+              name="infus-3"
+              id="infus-3"
+              label="infus-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a"
+              name="tranf-3"
+              id="tranf-3"
+              label="tranf-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a urine"
+              name="urine-3"
+              id="urine-3"
+              label="urine-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="ngt-cairan-keluar-a-3"
+              id="ngt-cairan-keluar-a-3"
+              label="ngt-cairan-keluar-a-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="muntah-3"
+              id="muntah-3"
+              label="muntah-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="bab-3"
+              id="bab-3"
+              label="bab-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="drain-3"
+              id="drain-3"
+              label="drain-3"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-4"
+              id="tgl-4"
+              label="tgl-4"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">10</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-4"
+              id="kes-4"
+              label="kes-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-4"
+              id="td-4"
+              label="td-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-4"
+              id="n-4"
+              label="n-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-4"
+              id="s-4"
+              label="s-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-4"
+              id="rr-4"
+              label="rr-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-4"
+              id="crt-4"
+              label="crt-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-4"
+              id="set02-4"
+              label="set02-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-4"
+              id="02-4"
+              label="02-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-4"
+              id="ews-4"
+              label="ews-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a oral"
+              name="oral-4"
+              id="oral-4"
+              label="oral-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a"
+              name="ngt-cairan-masuk-a-4"
+              id="ngt-cairan-masuk-a-4"
+              label="ngt-cairan-masuk-a-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a infus"
+              name="infus-4"
+              id="infus-4"
+              label="infus-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a"
+              name="tranf-4"
+              id="tranf-4"
+              label="tranf-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a urine"
+              name="urine-4"
+              id="urine-4"
+              label="urine-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="ngt-cairan-keluar-a-4"
+              id="ngt-cairan-keluar-a-4"
+              label="ngt-cairan-keluar-a-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="muntah-4"
+              id="muntah-4"
+              label="muntah-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="bab-4"
+              id="bab-4"
+              label="bab-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="drain-4"
+              id="drain-4"
+              label="drain-4"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-5"
+              id="tgl-5"
+              label="tgl-5"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">11</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-5"
+              id="kes-5"
+              label="kes-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-5"
+              id="td-5"
+              label="td-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-5"
+              id="n-5"
+              label="n-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-5"
+              id="s-5"
+              label="s-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-5"
+              id="rr-5"
+              label="rr-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-5"
+              id="crt-5"
+              label="crt-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-5"
+              id="set02-5"
+              label="set02-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-5"
+              id="02-5"
+              label="02-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-5"
+              id="ews-5"
+              label="ews-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a oral"
+              name="oral-5"
+              id="oral-5"
+              label="oral-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a"
+              name="ngt-cairan-masuk-a-5"
+              id="ngt-cairan-masuk-a-5"
+              label="ngt-cairan-masuk-a-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a infus"
+              name="infus-5"
+              id="infus-5"
+              label="infus-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a"
+              name="tranf-5"
+              id="tranf-5"
+              label="tranf-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a urine"
+              name="urine-5"
+              id="urine-5"
+              label="urine-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="ngt-cairan-keluar-a-5"
+              id="ngt-cairan-keluar-a-5"
+              label="ngt-cairan-keluar-a-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="muntah-5"
+              id="muntah-5"
+              label="muntah-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="bab-5"
+              id="bab-5"
+              label="bab-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="drain-5"
+              id="drain-5"
+              label="drain-5"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-6"
+              id="tgl-6"
+              label="tgl-6"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">12</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-6"
+              id="kes-6"
+              label="kes-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-6"
+              id="td-6"
+              label="td-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-6"
+              id="n-6"
+              label="n-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-6"
+              id="s-6"
+              label="s-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-6"
+              id="rr-6"
+              label="rr-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-6"
+              id="crt-6"
+              label="crt-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-6"
+              id="set02-6"
+              label="set02-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-6"
+              id="02-6"
+              label="02-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-6"
+              id="ews-6"
+              label="ews-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a oral"
+              name="oral-6"
+              id="oral-6"
+              label="oral-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a"
+              name="ngt-cairan-masuk-a-6"
+              id="ngt-cairan-masuk-a-6"
+              label="ngt-cairan-masuk-a-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a infus"
+              name="infus-6"
+              id="infus-6"
+              label="infus-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a"
+              name="tranf-6"
+              id="tranf-6"
+              label="tranf-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a urine"
+              name="urine-6"
+              id="urine-6"
+              label="urine-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="ngt-cairan-keluar-a-6"
+              id="ngt-cairan-keluar-a-6"
+              label="ngt-cairan-keluar-a-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="muntah-6"
+              id="muntah-6"
+              label="muntah-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="bab-6"
+              id="bab-6"
+              label="bab-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="drain-6"
+              id="drain-6"
+              label="drain-6"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-7"
+              id="tgl-7"
+              label="tgl-7"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">13</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-7"
+              id="kes-7"
+              label="kes-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-7"
+              id="td-7"
+              label="td-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-7"
+              id="n-7"
+              label="n-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-7"
+              id="s-7"
+              label="s-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-7"
+              id="rr-7"
+              label="rr-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-7"
+              id="crt-7"
+              label="crt-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-7"
+              id="set02-7"
+              label="set02-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-7"
+              id="02-7"
+              label="02-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-7"
+              id="ews-7"
+              label="ews-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a oral"
+              name="oral-7"
+              id="oral-7"
+              label="oral-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a"
+              name="ngt-cairan-masuk-a-7"
+              id="ngt-cairan-masuk-a-7"
+              label="ngt-cairan-masuk-a-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a infus"
+              name="infus-7"
+              id="infus-7"
+              label="infus-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a"
+              name="tranf-7"
+              id="tranf-7"
+              label="tranf-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a urine"
+              name="urine-7"
+              id="urine-7"
+              label="urine-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="ngt-cairan-keluar-a-7"
+              id="ngt-cairan-keluar-a-7"
+              label="ngt-cairan-keluar-a-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="muntah-7"
+              id="muntah-7"
+              label="muntah-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="bab-7"
+              id="bab-7"
+              label="bab-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="drain-7"
+              id="drain-7"
+              label="drain-7"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-8"
+              id="tgl-8"
+              label="tgl-8"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">14</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-8"
+              id="kes-8"
+              label="kes-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-8"
+              id="td-8"
+              label="td-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-8"
+              id="n-8"
+              label="n-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-8"
+              id="s-8"
+              label="s-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-8"
+              id="rr-8"
+              label="rr-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-8"
+              id="crt-8"
+              label="crt-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-8"
+              id="set02-8"
+              label="set02-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-8"
+              id="02-8"
+              label="02-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-8"
+              id="ews-8"
+              label="ews-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a oral"
+              name="oral-8"
+              id="oral-8"
+              label="oral-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a"
+              name="ngt-cairan-masuk-a-8"
+              id="ngt-cairan-masuk-a-8"
+              label="ngt-cairan-masuk-a-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a infus"
+              name="infus-8"
+              id="infus-8"
+              label="infus-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-a"
+              name="tranf-8"
+              id="tranf-8"
+              label="tranf-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a urine"
+              name="urine-8"
+              id="urine-8"
+              label="urine-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="ngt-cairan-keluar-a-8"
+              id="ngt-cairan-keluar-a-8"
+              label="ngt-cairan-keluar-a-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="muntah-8"
+              id="muntah-8"
+              label="muntah-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="bab-8"
+              id="bab-8"
+              label="bab-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-a"
+              name="drain-8"
+              id="drain-8"
+              label="drain-8"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-9"
+              id="tgl-9"
+              label="tgl-9"
+              myid="check_cara"
+            />
+          </td>
+          <td colspan="10">&nbsp;</td>
+          <td colspan="4">
+            <label for=""><b>CAIRAN MASUK :</b></label>
+            <input
+              readonly
+              placeholder="input ini otomatis dari semua nilai cairan masuk"
+              style="width: 100%"
+              type="text"
+              name="total-cairan-masuk-a"
+              id="total-cairan-masuk-a"
+              label="total-cairan-masuk-a"
+              myid="check_cara"
+            />
+          </td>
+
+          <td colspan="5">
+            <label for=""><b>CAIRAN KELUAR :</b></label>
+            <input
+              readonly
+              placeholder="input ini otomatis dari semua nilai cairan keluar"
+              style="width: 100%"
+              type="text"
+              name="total-cairan-keluar-a"
+              id="total-cairan-keluar-a"
+              label="total-cairan-keluar-a"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-10"
+              id="tgl-10"
+              label="tgl-10"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">15</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-10"
+              id="kes-10"
+              label="kes-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-10"
+              id="td-10"
+              label="td-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-10"
+              id="n-10"
+              label="n-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-10"
+              id="s-10"
+              label="s-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-10"
+              id="rr-10"
+              label="rr-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-10"
+              id="crt-10"
+              label="crt-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-10"
+              id="set02-10"
+              label="set02-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-10"
+              id="02-10"
+              label="02-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-10"
+              id="ews-10"
+              label="ews-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b oral"
+              name="oral-10"
+              id="oral-10"
+              label="oral-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b"
+              name="ngt-cairan-masuk-b-10"
+              id="ngt-cairan-masuk-b-10"
+              label="ngt-cairan-masuk-b-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b infus"
+              name="infus-10"
+              id="infus-10"
+              label="infus-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b"
+              name="tranf-10"
+              id="tranf-10"
+              label="tranf-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b urine"
+              name="urine-10"
+              id="urine-10"
+              label="urine-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="ngt-cairan-keluar-b-10"
+              id="ngt-cairan-keluar-b-10"
+              label="ngt-cairan-keluar-b-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="muntah-10"
+              id="muntah-10"
+              label="muntah-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="bab-10"
+              id="bab-10"
+              label="bab-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="drain-10"
+              id="drain-10"
+              label="drain-10"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-11"
+              id="tgl-11"
+              label="tgl-11"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">16</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-11"
+              id="kes-11"
+              label="kes-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-11"
+              id="td-11"
+              label="td-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-11"
+              id="n-11"
+              label="n-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-11"
+              id="s-11"
+              label="s-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-11"
+              id="rr-11"
+              label="rr-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-11"
+              id="crt-11"
+              label="crt-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-11"
+              id="set02-11"
+              label="set02-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-11"
+              id="02-11"
+              label="02-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-11"
+              id="ews-11"
+              label="ews-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b oral"
+              name="oral-11"
+              id="oral-11"
+              label="oral-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b"
+              name="ngt-cairan-masuk-b-11"
+              id="ngt-cairan-masuk-b-11"
+              label="ngt-cairan-masuk-b-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b infus"
+              name="infus-11"
+              id="infus-11"
+              label="infus-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b"
+              name="tranf-11"
+              id="tranf-11"
+              label="tranf-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b urine"
+              name="urine-11"
+              id="urine-11"
+              label="urine-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="ngt-cairan-keluar-b-11"
+              id="ngt-cairan-keluar-b-11"
+              label="ngt-cairan-keluar-b-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="muntah-11"
+              id="muntah-11"
+              label="muntah-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="bab-11"
+              id="bab-11"
+              label="bab-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="drain-11"
+              id="drain-11"
+              label="drain-11"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-12"
+              id="tgl-12"
+              label="tgl-12"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">17</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-12"
+              id="kes-12"
+              label="kes-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-12"
+              id="td-12"
+              label="td-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-12"
+              id="n-12"
+              label="n-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-12"
+              id="s-12"
+              label="s-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-12"
+              id="rr-12"
+              label="rr-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-12"
+              id="crt-12"
+              label="crt-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-12"
+              id="set02-12"
+              label="set02-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-12"
+              id="02-12"
+              label="02-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-12"
+              id="ews-12"
+              label="ews-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b oral"
+              name="oral-12"
+              id="oral-12"
+              label="oral-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b"
+              name="ngt-cairan-masuk-b-12"
+              id="ngt-cairan-masuk-b-12"
+              label="ngt-cairan-masuk-b-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b infus"
+              name="infus-12"
+              id="infus-12"
+              label="infus-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b"
+              name="tranf-12"
+              id="tranf-12"
+              label="tranf-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b urine"
+              name="urine-12"
+              id="urine-12"
+              label="urine-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="ngt-cairan-keluar-b-12"
+              id="ngt-cairan-keluar-b-12"
+              label="ngt-cairan-keluar-b-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="muntah-12"
+              id="muntah-12"
+              label="muntah-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="bab-12"
+              id="bab-12"
+              label="bab-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="drain-12"
+              id="drain-12"
+              label="drain-12"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-13"
+              id="tgl-13"
+              label="tgl-13"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">18</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-13"
+              id="kes-13"
+              label="kes-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-13"
+              id="td-13"
+              label="td-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-13"
+              id="n-13"
+              label="n-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-13"
+              id="s-13"
+              label="s-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-13"
+              id="rr-13"
+              label="rr-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-13"
+              id="crt-13"
+              label="crt-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-13"
+              id="set02-13"
+              label="set02-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-13"
+              id="02-13"
+              label="02-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-13"
+              id="ews-13"
+              label="ews-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b oral"
+              name="oral-13"
+              id="oral-13"
+              label="oral-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b"
+              name="ngt-cairan-masuk-b-13"
+              id="ngt-cairan-masuk-b-13"
+              label="ngt-cairan-masuk-b-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b infus"
+              name="infus-13"
+              id="infus-13"
+              label="infus-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b"
+              name="tranf-13"
+              id="tranf-13"
+              label="tranf-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b urine"
+              name="urine-13"
+              id="urine-13"
+              label="urine-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="ngt-cairan-keluar-b-13"
+              id="ngt-cairan-keluar-b-13"
+              label="ngt-cairan-keluar-b-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="muntah-13"
+              id="muntah-13"
+              label="muntah-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="bab-13"
+              id="bab-13"
+              label="bab-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="drain-13"
+              id="drain-13"
+              label="drain-13"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-14"
+              id="tgl-14"
+              label="tgl-14"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">19</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-14"
+              id="kes-14"
+              label="kes-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-14"
+              id="td-14"
+              label="td-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-14"
+              id="n-14"
+              label="n-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-14"
+              id="s-14"
+              label="s-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-14"
+              id="rr-14"
+              label="rr-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-14"
+              id="crt-14"
+              label="crt-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-14"
+              id="set02-14"
+              label="set02-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-14"
+              id="02-14"
+              label="02-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-14"
+              id="ews-14"
+              label="ews-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b oral"
+              name="oral-14"
+              id="oral-14"
+              label="oral-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b"
+              name="ngt-cairan-masuk-b-14"
+              id="ngt-cairan-masuk-b-14"
+              label="ngt-cairan-masuk-b-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b infus"
+              name="infus-14"
+              id="infus-14"
+              label="infus-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b"
+              name="tranf-14"
+              id="tranf-14"
+              label="tranf-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b urine"
+              name="urine-14"
+              id="urine-14"
+              label="urine-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="ngt-cairan-keluar-b-14"
+              id="ngt-cairan-keluar-b-14"
+              label="ngt-cairan-keluar-b-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="muntah-14"
+              id="muntah-14"
+              label="muntah-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="bab-14"
+              id="bab-14"
+              label="bab-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="drain-14"
+              id="drain-14"
+              label="drain-14"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-15"
+              id="tgl-15"
+              label="tgl-15"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">20</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-15"
+              id="kes-15"
+              label="kes-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-15"
+              id="td-15"
+              label="td-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-15"
+              id="n-15"
+              label="n-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-15"
+              id="s-15"
+              label="s-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-15"
+              id="rr-15"
+              label="rr-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-15"
+              id="crt-15"
+              label="crt-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-15"
+              id="set02-15"
+              label="set02-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-15"
+              id="02-15"
+              label="02-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-15"
+              id="ews-15"
+              label="ews-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b oral"
+              name="oral-15"
+              id="oral-15"
+              label="oral-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b"
+              name="ngt-cairan-masuk-b-15"
+              id="ngt-cairan-masuk-b-15"
+              label="ngt-cairan-masuk-b-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b infus"
+              name="infus-15"
+              id="infus-15"
+              label="infus-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b"
+              name="tranf-15"
+              id="tranf-15"
+              label="tranf-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b urine"
+              name="urine-15"
+              id="urine-15"
+              label="urine-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="ngt-cairan-keluar-b-15"
+              id="ngt-cairan-keluar-b-15"
+              label="ngt-cairan-keluar-b-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="muntah-15"
+              id="muntah-15"
+              label="muntah-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="bab-15"
+              id="bab-15"
+              label="bab-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="drain-15"
+              id="drain-15"
+              label="drain-15"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-16"
+              id="tgl-16"
+              label="tgl-16"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">21</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-16"
+              id="kes-16"
+              label="kes-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-16"
+              id="td-16"
+              label="td-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-16"
+              id="n-16"
+              label="n-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-16"
+              id="s-16"
+              label="s-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-16"
+              id="rr-16"
+              label="rr-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-16"
+              id="crt-16"
+              label="crt-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-16"
+              id="set02-16"
+              label="set02-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-16"
+              id="02-16"
+              label="02-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-16"
+              id="ews-16"
+              label="ews-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b oral"
+              name="oral-16"
+              id="oral-16"
+              label="oral-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b"
+              name="ngt-cairan-masuk-b-16"
+              id="ngt-cairan-masuk-b-16"
+              label="ngt-cairan-masuk-b-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b infus"
+              name="infus-16"
+              id="infus-16"
+              label="infus-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-b"
+              name="tranf-16"
+              id="tranf-16"
+              label="tranf-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b urine"
+              name="urine-16"
+              id="urine-16"
+              label="urine-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="ngt-cairan-keluar-b-16"
+              id="ngt-cairan-keluar-b-16"
+              label="ngt-cairan-keluar-b-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="muntah-16"
+              id="muntah-16"
+              label="muntah-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="bab-16"
+              id="bab-16"
+              label="bab-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-b"
+              name="drain-16"
+              id="drain-16"
+              label="drain-16"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-17"
+              id="tgl-17"
+              label="tgl-17"
+              myid="check_cara"
+            />
+          </td>
+          <td colspan="10">&nbsp;</td>
+          <td colspan="4">
+            <label for=""><b>CAIRAN MASUK :</b></label>
+            <input
+              readonly
+              placeholder="input ini otomatis dari semua nilai cairan masuk"
+              style="width: 100%"
+              type="text"
+              name="total-cairan-masuk-b"
+              id="total-cairan-masuk-b"
+              label="total-cairan-masuk-b"
+              myid="check_cara"
+            />
+          </td>
+
+          <td colspan="5">
+            <label for=""><b>CAIRAN KELUAR :</b></label>
+            <input
+              readonly
+              placeholder="input ini otomatis dari semua nilai cairan keluar"
+              style="width: 100%"
+              type="text"
+              name="total-cairan-keluar-b"
+              id="total-cairan-keluar-b"
+              label="total-cairan-keluar-b"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-18"
+              id="tgl-18"
+              label="tgl-18"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">22</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-18"
+              id="kes-18"
+              label="kes-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-18"
+              id="td-18"
+              label="td-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-18"
+              id="n-18"
+              label="n-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-18"
+              id="s-18"
+              label="s-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-18"
+              id="rr-18"
+              label="rr-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-18"
+              id="crt-18"
+              label="crt-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-18"
+              id="set02-18"
+              label="set02-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-18"
+              id="02-18"
+              label="02-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-18"
+              id="ews-18"
+              label="ews-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c oral"
+              name="oral-18"
+              id="oral-18"
+              label="oral-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c"
+              name="ngt-cairan-masuk-c-18"
+              id="ngt-cairan-masuk-c-18"
+              label="ngt-cairan-masuk-c-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c infus"
+              name="infus-18"
+              id="infus-18"
+              label="infus-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c"
+              name="tranf-18"
+              id="tranf-18"
+              label="tranf-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c urine"
+              name="urine-18"
+              id="urine-18"
+              label="urine-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="ngt-cairan-keluar-c-18"
+              id="ngt-cairan-keluar-c-18"
+              label="ngt-cairan-keluar-c-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="muntah-18"
+              id="muntah-18"
+              label="muntah-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="bab-18"
+              id="bab-18"
+              label="bab-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="drain-18"
+              id="drain-18"
+              label="drain-18"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-19"
+              id="tgl-19"
+              label="tgl-19"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">23</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-19"
+              id="kes-19"
+              label="kes-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-19"
+              id="td-19"
+              label="td-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-19"
+              id="n-19"
+              label="n-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-19"
+              id="s-19"
+              label="s-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-19"
+              id="rr-19"
+              label="rr-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-19"
+              id="crt-19"
+              label="crt-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-19"
+              id="set02-19"
+              label="set02-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-19"
+              id="02-19"
+              label="02-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-19"
+              id="ews-19"
+              label="ews-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c oral"
+              name="oral-19"
+              id="oral-19"
+              label="oral-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c"
+              name="ngt-cairan-masuk-c-19"
+              id="ngt-cairan-masuk-c-19"
+              label="ngt-cairan-masuk-c-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c infus"
+              name="infus-19"
+              id="infus-19"
+              label="infus-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c"
+              name="tranf-19"
+              id="tranf-19"
+              label="tranf-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c urine"
+              name="urine-19"
+              id="urine-19"
+              label="urine-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="ngt-cairan-keluar-c-19"
+              id="ngt-cairan-keluar-c-19"
+              label="ngt-cairan-keluar-c-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="muntah-19"
+              id="muntah-19"
+              label="muntah-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="bab-19"
+              id="bab-19"
+              label="bab-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="drain-19"
+              id="drain-19"
+              label="drain-19"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-20"
+              id="tgl-20"
+              label="tgl-20"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">24</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-20"
+              id="kes-20"
+              label="kes-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-20"
+              id="td-20"
+              label="td-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-20"
+              id="n-20"
+              label="n-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-20"
+              id="s-20"
+              label="s-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-20"
+              id="rr-20"
+              label="rr-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-20"
+              id="crt-20"
+              label="crt-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-20"
+              id="set02-20"
+              label="set02-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-20"
+              id="02-20"
+              label="02-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-20"
+              id="ews-20"
+              label="ews-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c oral"
+              name="oral-20"
+              id="oral-20"
+              label="oral-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c"
+              name="ngt-cairan-masuk-c-20"
+              id="ngt-cairan-masuk-c-20"
+              label="ngt-cairan-masuk-c-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c infus"
+              name="infus-20"
+              id="infus-20"
+              label="infus-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c"
+              name="tranf-20"
+              id="tranf-20"
+              label="tranf-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c urine"
+              name="urine-20"
+              id="urine-20"
+              label="urine-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="ngt-cairan-keluar-c-20"
+              id="ngt-cairan-keluar-c-20"
+              label="ngt-cairan-keluar-c-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="muntah-20"
+              id="muntah-20"
+              label="muntah-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="bab-20"
+              id="bab-20"
+              label="bab-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="drain-20"
+              id="drain-20"
+              label="drain-20"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-21"
+              id="tgl-21"
+              label="tgl-21"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">1</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-21"
+              id="kes-21"
+              label="kes-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-21"
+              id="td-21"
+              label="td-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-21"
+              id="n-21"
+              label="n-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-21"
+              id="s-21"
+              label="s-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-21"
+              id="rr-21"
+              label="rr-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-21"
+              id="crt-21"
+              label="crt-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-21"
+              id="set02-21"
+              label="set02-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-21"
+              id="02-21"
+              label="02-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-21"
+              id="ews-21"
+              label="ews-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c oral"
+              name="oral-21"
+              id="oral-21"
+              label="oral-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c"
+              name="ngt-cairan-masuk-c-21"
+              id="ngt-cairan-masuk-c-21"
+              label="ngt-cairan-masuk-c-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c infus"
+              name="infus-21"
+              id="infus-21"
+              label="infus-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c"
+              name="tranf-21"
+              id="tranf-21"
+              label="tranf-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c urine"
+              name="urine-21"
+              id="urine-21"
+              label="urine-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="ngt-cairan-keluar-c-21"
+              id="ngt-cairan-keluar-c-21"
+              label="ngt-cairan-keluar-c-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="muntah-21"
+              id="muntah-21"
+              label="muntah-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="bab-21"
+              id="bab-21"
+              label="bab-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="drain-22"
+              id="drain-22"
+              label="drain-22"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-22"
+              id="tgl-22"
+              label="tgl-22"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">2</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-22"
+              id="kes-22"
+              label="kes-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-22"
+              id="td-22"
+              label="td-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-22"
+              id="n-22"
+              label="n-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-22"
+              id="s-22"
+              label="s-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-22"
+              id="rr-22"
+              label="rr-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-22"
+              id="crt-22"
+              label="crt-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-22"
+              id="set02-22"
+              label="set02-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-22"
+              id="02-22"
+              label="02-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-22"
+              id="ews-22"
+              label="ews-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c oral"
+              name="oral-22"
+              id="oral-22"
+              label="oral-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c"
+              name="ngt-cairan-masuk-c-22"
+              id="ngt-cairan-masuk-c-22"
+              label="ngt-cairan-masuk-c-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c infus"
+              name="infus-22"
+              id="infus-22"
+              label="infus-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c"
+              name="tranf-22"
+              id="tranf-22"
+              label="tranf-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c urine"
+              name="urine-22"
+              id="urine-22"
+              label="urine-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="ngt-cairan-keluar-c-22"
+              id="ngt-cairan-keluar-c-22"
+              label="ngt-cairan-keluar-c-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="muntah-22"
+              id="muntah-22"
+              label="muntah-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="bab-22"
+              id="bab-22"
+              label="bab-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="drain-22"
+              id="drain-22"
+              label="drain-22"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-23"
+              id="tgl-23"
+              label="tgl-23"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">3</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-23"
+              id="kes-23"
+              label="kes-23"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-23"
+              id="td-23"
+              label="td-23"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-23"
+              id="n-23"
+              label="n-23"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-23"
+              id="s-23"
+              label="s-23"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-23"
+              id="rr-23"
+              label="rr-23"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-23"
+              id="crt-23"
+              label="crt-23"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-23"
+              id="set02-23"
+              label="set02-23"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-23"
+              id="02-23"
+              label="02-23"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-23"
+              id="ews-23"
+              label="ews-23"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c oral"
+              name="oral-23"
+              id="oral-23"
+              label="oral-23"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c"
+              name="ngt-cairan-masuk-c-23"
+              id="ngt-cairan-masuk-c-23"
+              label="ngt-cairan-masuk-c-23"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c infus"
+              name="infus-23"
+              id="infus-23"
+              label="infus-23"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c"
+              name="tranf-23"
+              id="tranf-23"
+              label="tranf-23"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c urine"
+              name="urine-23"
+              id="urine-23"
+              label="urine-23"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="ngt-cairan-keluar-c-23"
+              id="ngt-cairan-keluar-c-23"
+              label="ngt-cairan-keluar-c-23"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="muntah-23"
+              id="muntah-23"
+              label="muntah-23"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="bab-23"
+              id="bab-23"
+              label="bab-23"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="drain-23"
+              id="drain-23"
+              label="drain-23"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-24"
+              id="tgl-24"
+              label="tgl-24"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">4</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-24"
+              id="kes-24"
+              label="kes-24"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-24"
+              id="td-24"
+              label="td-24"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-24"
+              id="n-24"
+              label="n-24"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-24"
+              id="s-24"
+              label="s-24"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-24"
+              id="rr-24"
+              label="rr-24"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-24"
+              id="crt-24"
+              label="crt-24"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-24"
+              id="set02-24"
+              label="set02-24"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-24"
+              id="02-24"
+              label="02-24"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-24"
+              id="ews-24"
+              label="ews-24"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c oral"
+              name="oral-24"
+              id="oral-24"
+              label="oral-24"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c"
+              name="ngt-cairan-masuk-c-24"
+              id="ngt-cairan-masuk-c-24"
+              label="ngt-cairan-masuk-c-24"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c infus"
+              name="infus-24"
+              id="infus-24"
+              label="infus-24"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c"
+              name="tranf-24"
+              id="tranf-24"
+              label="tranf-24"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c urine"
+              name="urine-24"
+              id="urine-24"
+              label="urine-24"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="ngt-cairan-keluar-c-24"
+              id="ngt-cairan-keluar-c-24"
+              label="ngt-cairan-keluar-c-24"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="muntah-24"
+              id="muntah-24"
+              label="muntah-24"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="bab-24"
+              id="bab-24"
+              label="bab-24"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="drain-24"
+              id="drain-24"
+              label="drain-24"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-25"
+              id="tgl-25"
+              label="tgl-25"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">5</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-25"
+              id="kes-25"
+              label="kes-25"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-25"
+              id="td-25"
+              label="td-25"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-25"
+              id="n-25"
+              label="n-25"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-25"
+              id="s-25"
+              label="s-25"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-25"
+              id="rr-25"
+              label="rr-25"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-25"
+              id="crt-25"
+              label="crt-25"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-25"
+              id="set02-25"
+              label="set02-25"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-25"
+              id="02-25"
+              label="02-25"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-25"
+              id="ews-25"
+              label="ews-25"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c oral"
+              name="oral-25"
+              id="oral-25"
+              label="oral-25"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c"
+              name="ngt-cairan-masuk-c-25"
+              id="ngt-cairan-masuk-c-25"
+              label="ngt-cairan-masuk-c-25"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c infus"
+              name="infus-25"
+              id="infus-25"
+              label="infus-25"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c"
+              name="tranf-25"
+              id="tranf-25"
+              label="tranf-25"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c urine"
+              name="urine-25"
+              id="urine-25"
+              label="urine-25"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="ngt-cairan-keluar-c-25"
+              id="ngt-cairan-keluar-c-25"
+              label="ngt-cairan-keluar-c-25"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="muntah-25"
+              id="muntah-25"
+              label="muntah-25"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="bab-25"
+              id="bab-25"
+              label="bab-25"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="drain-25"
+              id="drain-25"
+              label="drain-25"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-26"
+              id="tgl-26"
+              label="tgl-26"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">6</td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kes-26"
+              id="kes-26"
+              label="kes-26"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="td-26"
+              id="td-26"
+              label="td-26"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="n-26"
+              id="n-26"
+              label="n-26"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="s-26"
+              id="s-26"
+              label="s-26"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="rr-26"
+              id="rr-26"
+              label="rr-26"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="crt-26"
+              id="crt-26"
+              label="crt-26"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="set02-26"
+              id="set02-26"
+              label="set02-26"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="02-26"
+              id="02-26"
+              label="02-26"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="ews-26"
+              id="ews-26"
+              label="ews-26"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c oral"
+              name="oral-26"
+              id="oral-26"
+              label="oral-26"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c"
+              name="ngt-cairan-masuk-c-26"
+              id="ngt-cairan-masuk-c-26"
+              label="ngt-cairan-masuk-c-26"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c infus"
+              name="infus-26"
+              id="infus-26"
+              label="infus-26"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-masuk-c"
+              name="tranf-26"
+              id="tranf-26"
+              label="tranf-26"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c urine"
+              name="urine-26"
+              id="urine-26"
+              label="urine-26"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="ngt-cairan-keluar-c-26"
+              id="ngt-cairan-keluar-c-26"
+              label="ngt-cairan-keluar-c-26"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="muntah-26"
+              id="muntah-26"
+              label="muntah-26"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="bab-26"
+              id="bab-26"
+              label="bab-26"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              class="cairan-keluar-c"
+              name="drain-26"
+              id="drain-26"
+              label="drain-26"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-27"
+              id="tgl-27"
+              label="tgl-27"
+              myid="check_cara"
+            />
+          </td>
+          <td colspan="10">&nbsp;</td>
+          <td colspan="4">
+            <label for=""><b>CAIRAN MASUK :</b></label>
+            <input
+              readonly
+              placeholder="input ini otomatis dari semua nilai cairan masuk"
+              style="width: 100%"
+              type="text"
+              name="total-cairan-masuk-c"
+              id="total-cairan-masuk-c"
+              label="total-cairan-masuk-c"
+              myid="check_cara"
+            />
+          </td>
+
+          <td colspan="5">
+            <label for=""><b>CAIRAN KELUAR :</b></label>
+            <input
+              readonly
+              placeholder="input ini otomatis dari semua nilai cairan keluar"
+              style="width: 100%"
+              type="text"
+              name="total-cairan-keluar-c"
+              id="total-cairan-keluar-c"
+              label="total-cairan-keluar-c"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="10" style="text-align: center"><b>INPUT</b></td>
+          <td colspan="10" style="text-align: center"><b>OUTPUT</b></td>
+        </tr>
+        <tr>
+          <td colspan="3">INFUS</td>
+          <td colspan="7">
+            <input
+              readonly
+              placeholder="input ini otomatis terisi dari kalkulasi nilai infus"
+              style="width: 100%"
+              class="total-input"
+              type="text"
+              name="total-input-infus"
+              id="total-input-infus"
+              label="total-input-infus"
+              myid="check_cara"
+            />
+          </td>
+          <td colspan="3">URINE</td>
+          <td colspan="7">
+            <input
+              readonly
+              placeholder="input ini otomatis terisi dari kalkulasi nilai urine"
+              style="width: 100%"
+              class="total-output"
+              type="text"
+              name="total-output-urine"
+              id="total-output-urine"
+              label="total-output-urine"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">ORAL</td>
+          <td colspan="7">
+            <input
+              readonly
+              placeholder="input ini otomatis terisi dari kalkulasi nilai oral"
+              style="width: 100%"
+              class="total-input"
+              type="text"
+              name="total-input-oral"
+              id="total-input-oral"
+              label="total-input-oral"
+              myid="check_cara"
+            />
+          </td>
+          <td colspan="3">LAIN-LAIN</td>
+          <td colspan="7">
+            <input
+              style="width: 100%"
+              class="total-output"
+              type="text"
+              name="total-output-lain-lain"
+              id="total-output-lain-lain"
+              label="total-output-lain-lain"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">LAIN - LAIN</td>
+          <td colspan="7">
+            <input
+              style="width: 100%"
+              class="total-input"
+              type="text"
+              name="total-input-lain-lain"
+              id="total-input-lain-lain"
+              label="total-input-lain-lain"
+              myid="check_cara"
+            />
+          </td>
+          <td colspan="3">IWL</td>
+          <td colspan="7">
+            <input
+              style="width: 100%"
+              class="total-output"
+              type="text"
+              name="total-output-iwl"
+              id="total-output-iwl"
+              label="total-output-iwl"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">TOTAL</td>
+          <td colspan="7">
+            <input
+              readonly
+              placeholder="input ini otomatis terisi dari nilai infus, oral, dan lain - lain"
+              style="width: 100%"
+              type="text"
+              name="total-input"
+              id="total-input"
+              label="total-input"
+              myid="check_cara"
+            />
+          </td>
+          <td colspan="3">TOTAL</td>
+          <td colspan="7">
+            <input
+              readonly
+              placeholder="input ini otomatis terisi dari nilai urine, lain - lain, dan iwl"
+              style="width: 100%"
+              type="text"
+              name="total-output"
+              id="total-output"
+              label="total-output"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="20">
+            <div style="display: flex; gap: 5px">
+              <label for=""><b>BALANCE :</b></label>
+              <input
+                readonly
+                placeholder="input ini otomatis terisi dari selisih nilai total input dengan output"
+                style="flex: 1"
+                type="text"
+                name="balance"
+                id="balance"
+                label="balance"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const cairanMasukA = document.querySelectorAll(".cairan-masuk-a");
+        const cairanMasukB = document.querySelectorAll(".cairan-masuk-b");
+        const cairanMasukC = document.querySelectorAll(".cairan-masuk-c");
+        const cairanKeluarA = document.querySelectorAll(".cairan-keluar-a");
+        const cairanKeluarB = document.querySelectorAll(".cairan-keluar-b");
+        const cairanKeluarC = document.querySelectorAll(".cairan-keluar-c");
+        const totalCairanMasukA = document.querySelector(
+          "input[name='total-cairan-masuk-a']"
+        );
+        const totalCairanMasukB = document.querySelector(
+          "input[name='total-cairan-masuk-b']"
+        );
+        const totalCairanMasukC = document.querySelector(
+          "input[name='total-cairan-masuk-c']"
+        );
+        const totalCairanKeluarA = document.querySelector(
+          "input[name='total-cairan-keluar-a']"
+        );
+        const totalCairanKeluarB = document.querySelector(
+          "input[name='total-cairan-keluar-b']"
+        );
+        const totalCairanKeluarC = document.querySelector(
+          "input[name='total-cairan-keluar-c']"
+        );
+
+        const totalInputLainLain = document.querySelector(
+          "input[name='total-input-lain-lain']"
+        );
+
+        const totalOutputLainLain = document.querySelector(
+          "input[name='total-output-lain-lain']"
+        );
+        const totalOutputIWL = document.querySelector(
+          "input[name='total-output-iwl']"
+        );
+
+        const inputInfus = [
+          ...cairanMasukA,
+          ...cairanMasukB,
+          ...cairanMasukC,
+        ].filter((element) => element.classList.contains("infus"));
+        const inputOral = [
+          ...cairanMasukA,
+          ...cairanMasukB,
+          ...cairanMasukC,
+        ].filter((element) => element.classList.contains("oral"));
+        const outputUrine = [
+          ...cairanKeluarA,
+          ...cairanKeluarB,
+          ...cairanKeluarC,
+        ].filter((element) => element.classList.contains("urine"));
+
+        const totalInput = document.querySelectorAll(".total-input");
+        const totalOutput = document.querySelectorAll(".total-output");
+
+        const totalInputInfus = document.querySelector(
+          "input[name='total-input-infus']"
+        );
+        const totalInputOral = document.querySelector(
+          "input[name='total-input-oral']"
+        );
+        const totalOutputUrine = document.querySelector(
+          "input[name='total-output-urine']"
+        );
+        const totalInputResult = document.querySelector(
+          "input[name='total-input']"
+        );
+        const totalOutputResult = document.querySelector(
+          "input[name='total-output']"
+        );
+
+        const balance = document.querySelector('input[name="balance"]');
+
+        function hitungTotalCairan(cairan, totalCairan) {
+          return function () {
+            let total = 0;
+            cairan.forEach((input) => {
+              const nilaiCairan = parseFloat(input.value) || 0;
+              total += nilaiCairan;
+            });
+            totalCairan.value = total;
+
+            hitungTotalInputOutput();
+            hitungBalance();
+          };
+        }
+
+        function hitungTotalInputOutput() {
+          totalInputResult.value =
+            (parseFloat(totalInputInfus.value) || 0) +
+            (parseFloat(totalInputOral.value) || 0) +
+            (parseFloat(totalInputLainLain.value) || 0);
+
+          totalOutputResult.value =
+            (parseFloat(totalOutputUrine.value) || 0) +
+            (parseFloat(totalOutputLainLain.value) || 0) +
+            (parseFloat(totalOutputIWL.value) || 0);
+        }
+
+        function hitungBalance() {
+          balance.value =
+            (parseFloat(totalInputResult.value) || 0) -
+            (parseFloat(totalOutputResult.value) || 0);
+        }
+
+        cairanMasukA.forEach((input) => {
+          input.addEventListener(
+            "input",
+            hitungTotalCairan(cairanMasukA, totalCairanMasukA)
+          );
+        });
+        cairanMasukB.forEach((input) => {
+          input.addEventListener(
+            "input",
+            hitungTotalCairan(cairanMasukB, totalCairanMasukB)
+          );
+        });
+        cairanMasukC.forEach((input) => {
+          input.addEventListener(
+            "input",
+            hitungTotalCairan(cairanMasukC, totalCairanMasukC)
+          );
+        });
+        cairanKeluarA.forEach((input) => {
+          input.addEventListener(
+            "input",
+            hitungTotalCairan(cairanKeluarA, totalCairanKeluarA)
+          );
+        });
+        cairanKeluarB.forEach((input) => {
+          input.addEventListener(
+            "input",
+            hitungTotalCairan(cairanKeluarB, totalCairanKeluarB)
+          );
+        });
+        cairanKeluarC.forEach((input) => {
+          input.addEventListener(
+            "input",
+            hitungTotalCairan(cairanKeluarC, totalCairanKeluarC)
+          );
+        });
+        inputInfus.forEach((input) => {
+          input.addEventListener(
+            "input",
+            hitungTotalCairan(inputInfus, totalInputInfus)
+          );
+        });
+        inputOral.forEach((input) => {
+          input.addEventListener(
+            "input",
+            hitungTotalCairan(inputOral, totalInputOral)
+          );
+        });
+        outputUrine.forEach((input) => {
+          input.addEventListener(
+            "input",
+            hitungTotalCairan(outputUrine, totalOutputUrine)
+          );
+        });
+
+        totalInputLainLain.addEventListener("input", hitungTotalInputOutput);
+        totalOutputLainLain.addEventListener("input", hitungTotalInputOutput);
+        totalOutputIWL.addEventListener("input", hitungTotalInputOutput);
+        var radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(function (radio) {
+          radio.addEventListener("click", function () {
+            if (this.classList.contains("clicked")) {
+              this.checked = false;
+              this.classList.remove("clicked");
+            } else {
+              var name = this.getAttribute("name");
+              var radios = document.querySelectorAll(
+                'input[type="radio"][name="' + name + '"]'
+              );
+              radios.forEach(function (r) {
+                r.classList.remove("clicked");
+              });
+              this.classList.add("clicked");
+            }
+            console.log(this.name + " diubah menjadi: " + this.checked);
+          });
+        });
+
+        var textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
