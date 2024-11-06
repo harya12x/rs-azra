@@ -37,36 +37,131 @@
       Sebelum menanda tangani formulir persetujuan ini, harap mengetahui bahwa:
     </p>
 
-    <ul>
-      <li>
-        Anda mempunyai hak untuk berpartisipasi di dalam pemeriksaan dengan
-        dasar keharasiaan.
-      </li>
-      <li>
-        Anda mempunyai hak untuk menarik persetujuan dari tes HIV sebelum
-        pemeriksaan tersebut dilangsungkan.
-      </li>
-    </ul>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td>
+            <input
+              type="checkbox"
+              name="mempunyai-hak-berpartisipasi"
+              id="mempunyai-hak-berpartisipasi"
+              label="mempunyai-hak-berpartisipasi"
+              myid="check_cara"
+              value="Anda mempunyai hak untuk berpartisipasi di dalam pemeriksaan dengan
+            dasar keharasiaan."
+            />
+            <label
+              >Anda mempunyai hak untuk berpartisipasi di dalam pemeriksaan
+              dengan dasar keharasiaan.</label
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="checkbox"
+              name="mempunyai-hak-menarik-persetujuan"
+              id="mempunyai-hak-menarik-persetujuan"
+              label="mempunyai-hak-menarik-persetujuan"
+              myid="check_cara"
+              value="Anda mempunyai hak untuk menarik persetujuan dari tes HIV sebelum
+                pemeriksaan tersebut dilangsungkan."
+            />
+            <label
+              >Anda mempunyai hak untuk menarik persetujuan dari tes HIV sebelum
+              pemeriksaan tersebut dilangsungkan.</label
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
 
     <fieldset>
       Saya telah menerima informasi dan konseling menyangkut hal - hal berikut
       ini:
-      <ol type="a">
-        <li>Keberadaan dan kegunaan dari tesing HIV</li>
-        <li>Tujuan dan kegunaan dari tes HIV</li>
-        <li>Apa yang dapat dan tidak dapat diberitahukan dari tes HIV</li>
-        <li>
-          Keuntungan serta risiko dari tes HIV dan dari mengetahui hasil tes HIV
-          saya
-        </li>
-        <li>
-          Pemahaman dari positif, negative, false negative, dan hasil tes
-          intermediate serta dampak dari masa jendela
-        </li>
-        <li>
-          Pengukuran untuk pencegahan dari pemaparan dan penularan akan HIV
-        </li>
-      </ol>
+
+      <div style="margin-left: 15px">
+        <input
+          type="checkbox"
+          name="keberadaan-kegunaan-tes-hiv"
+          id="keberadaan-kegunaan-tes-hiv"
+          label="keberadaan-kegunaan-tes-hiv"
+          myid="check_cara"
+          value="Keberadaan dan kegunaan dari tesing HIV"
+        />
+        <label for="">Keberadaan dan kegunaan dari tesing HIV</label>
+      </div>
+      <div style="margin-left: 15px">
+        <input
+          type="checkbox"
+          name="tujuan-tes-hiv"
+          id="tujuan-tes-hiv"
+          label="tujuan-tes-hiv"
+          myid="check_cara"
+          value="Keberadaan dan kegunaan dari tesing HIV"
+        />
+        <label for="">Tujuan dan kegunaan dari tes HIV</label>
+      </div>
+      <div style="margin-left: 15px">
+        <input
+          type="checkbox"
+          name="yg-dpt-tdk-dpt-diberitahukan"
+          id="yg-dpt-tdk-dpt-diberitahukan"
+          label="yg-dpt-tdk-dpt-diberitahukan"
+          myid="check_cara"
+          value="Apa yang dapat dan tidak dapat diberitahukan dari tes HIV"
+        />
+        <label for=""
+          >Apa yang dapat dan tidak dapat diberitahukan dari tes HIV</label
+        >
+      </div>
+      <div style="margin-left: 15px">
+        <input
+          type="checkbox"
+          name="keuntungan-serta-risiko"
+          id="keuntungan-serta-risiko"
+          label="keuntungan-serta-risiko"
+          myid="check_cara"
+          value="Keuntungan serta risiko dari tes HIV dan dari mengetahui hasil tes HIV
+          saya"
+        />
+        <label for=""
+          >Keuntungan serta risiko dari tes HIV dan dari mengetahui hasil tes
+          HIV saya</label
+        >
+      </div>
+      <div style="margin-left: 15px">
+        <input
+          type="checkbox"
+          name="positif-negatif-false-negative-hasil-tes-intermediate"
+          id="positif-negatif-false-negative-hasil-tes-intermediate"
+          label="positif-negatif-false-negative-hasil-tes-intermediate"
+          myid="check_cara"
+          value="Pemahaman dari positif, negative, false negative, dan hasil tes
+          intermediate serta dampak dari masa jendela"
+        />
+        <label for=""
+          >Pemahaman dari positif, negative, false negative, dan hasil tes
+          intermediate serta dampak dari masa jendela</label
+        >
+      </div>
+      <div style="margin-left: 15px">
+        <input
+          type="checkbox"
+          name="pengukuran-utk-pencegahan-dri-pemaparan-hiv"
+          id="pengukuran-utk-pencegahan-dri-pemaparan-hiv"
+          label="pengukuran-utk-pencegahan-dri-pemaparan-hiv"
+          myid="check_cara"
+          value="Pemahaman dari positif, negative, false negative, dan hasil tes
+        intermediate serta dampak dari masa jendela"
+        />
+        <label for=""
+          >Pengukuran untuk pencegahan dari pemaparan dan penularan akan
+          HIV</label
+        >
+      </div>
     </fieldset>
 
     <br />
@@ -147,6 +242,27 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        var checkboxButtons = document.querySelectorAll(
+          'input[type="checkbox"]'
+        );
+        checkboxButtons.forEach(function (checkbox) {
+          checkbox.addEventListener("click", function () {
+            if (this.classList.contains("clicked")) {
+              this.checked = false;
+              this.classList.remove("clicked");
+            } else {
+              var name = this.getAttribute("name");
+              var checkboxes = document.querySelectorAll(
+                'input[type="radio"][name="' + name + '"]'
+              );
+              checkboxes.forEach(function (r) {
+                r.classList.remove("clicked");
+              });
+              this.classList.add("clicked");
+            }
+            console.log(this.name + " diubah menjadi: " + this.checked);
+          });
+        });
         var textInputs = document.querySelectorAll('input[type="text"]');
         textInputs.forEach(function (input) {
           input.addEventListener("change", function () {
