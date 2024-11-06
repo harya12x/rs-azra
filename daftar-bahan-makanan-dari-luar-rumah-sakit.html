@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DAFTAR BAHAN MAKANAN DARI LUAR RUMAH SAKIT</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">
+      DAFTAR BAHAN MAKANAN DARI LUAR RUMAH SAKIT <br />
+      RS. AZRA BOGOR
+    </h1>
+
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td>Nama Pasien</td>
+          <td>
+            <input
+              name="nama_pasien"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+            />
+          </td>
+          <td>Jenis Kelamin</td>
+          <td>
+            <input
+              type="radio"
+              name="jenis-kelamin"
+              id="laki-laki"
+              myid="check_cara"
+              value="L"
+              label="jenis kelamin"
+            />
+            <label for="l">L</label>
+            <input
+              type="radio"
+              name="jenis-kelamin"
+              id="perempuan"
+              myid="check_cara"
+              value="P"
+              label="jenis kelamin"
+            />
+            <label for="l">P</label>
+          </td>
+          <td>
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              myid="check_cara"
+              name="no_rm"
+              id="no_rm"
+              label="nomor rekam medis"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="2">Umur</td>
+          <td rowspan="2" colspan="3">
+            <input
+              type="text"
+              size="5"
+              name="umur-thn-pengkajian"
+              id="umur-thn-pengkajian"
+              label="umur-thn-pengkajian"
+              myid="check_cara"
+              placeholder="..."
+            />
+            <label for="">TH</label>
+
+            <input
+              type="text"
+              size="5"
+              name="umur-bln-pengkajian"
+              id="umur-bln-pengkajian"
+              label="umur-bln-pengkajian"
+              myid="check_cara"
+              placeholder="..."
+            />
+            <label for="">BLN</label>
+          </td>
+          <td>
+            <label for="kelas"> Kelas </label>
+          </td>
+          <td>
+            <input
+              type="text"
+              name="kelas"
+              id="kelas"
+              label="kelas"
+              placeholder="..."
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Kamar</td>
+          <td>
+            <input
+              type="text"
+              name="kamar"
+              id="kamar"
+              myid="check_cara"
+              placeholder="..."
+              label="kamar"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table table-bordered">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Tanggal</th>
+          <th>Makanan / Bahan Makanan</th>
+          <th>Tempat Penyimpanan</th>
+          <th>Kesesuaian Penyimpanan Bahan Makanan</th>
+          <th>Ttd / Nama Petugas</th>
+          <th>Keterangan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="no-daftar-bahan-1"
+              id="no-daftar-bahan-1"
+              label="no-daftar-bahan-1"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-daftar-bahan-1"
+              id="tgl-daftar-bahan-1"
+              label="tgl-daftar-bahan-1"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="bahan-makanan-1"
+              id="bahan-makanan-1"
+              label="bahan-makanan-1"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tempat-penyimpanan-1"
+              id="tempat-penyimpanan-1"
+              label="tempat-penyimpanan-1"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kesesuaian-penyimpanan-bahan-makanan-1"
+              id="kesesuaian-penyimpanan-bahan-makanan-1"
+              label="kesesuaian-penyimpanan-bahan-makanan-1"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="nama-petugas-1"
+              id="nama-petugas-1"
+              label="nama-petugas-1"
+              type="text"
+              myid="check_cara"
+            />
+            <font id="ttdnya1"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="keterangan-1"
+              id="keterangan-1"
+              label="keterangan-1"
+              type="text"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="no-daftar-bahan-2"
+              id="no-daftar-bahan-2"
+              label="no-daftar-bahan-2"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-daftar-bahan-2"
+              id="tgl-daftar-bahan-2"
+              label="tgl-daftar-bahan-2"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="bahan-makanan-2"
+              id="bahan-makanan-2"
+              label="bahan-makanan-2"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tempat-penyimpanan-2"
+              id="tempat-penyimpanan-2"
+              label="tempat-penyimpanan-2"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kesesuaian-penyimpanan-bahan-makanan-2"
+              id="kesesuaian-penyimpanan-bahan-makanan-2"
+              label="kesesuaian-penyimpanan-bahan-makanan-2"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="nama-petugas-2"
+              id="nama-petugas-2"
+              label="nama-petugas-2"
+              type="text"
+              myid="check_cara"
+            />
+            <font id="ttdnya1"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="keterangan-2"
+              id="keterangan-2"
+              label="keterangan-2"
+              type="text"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="no-daftar-bahan-3"
+              id="no-daftar-bahan-3"
+              label="no-daftar-bahan-3"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-daftar-bahan-3"
+              id="tgl-daftar-bahan-3"
+              label="tgl-daftar-bahan-3"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="bahan-makanan-3"
+              id="bahan-makanan-3"
+              label="bahan-makanan-3"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tempat-penyimpanan-3"
+              id="tempat-penyimpanan-3"
+              label="tempat-penyimpanan-3"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kesesuaian-penyimpanan-bahan-makanan-3"
+              id="kesesuaian-penyimpanan-bahan-makanan-3"
+              label="kesesuaian-penyimpanan-bahan-makanan-3"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="nama-petugas-3"
+              id="nama-petugas-3"
+              label="nama-petugas-3"
+              type="text"
+              myid="check_cara"
+            />
+            <font id="ttdnya1"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="keterangan-3"
+              id="keterangan-3"
+              label="keterangan-3"
+              type="text"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="no-daftar-bahan-4"
+              id="no-daftar-bahan-4"
+              label="no-daftar-bahan-4"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-daftar-bahan-4"
+              id="tgl-daftar-bahan-4"
+              label="tgl-daftar-bahan-4"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="bahan-makanan-4"
+              id="bahan-makanan-4"
+              label="bahan-makanan-4"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tempat-penyimpanan-4"
+              id="tempat-penyimpanan-4"
+              label="tempat-penyimpanan-4"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kesesuaian-penyimpanan-bahan-makanan-4"
+              id="kesesuaian-penyimpanan-bahan-makanan-4"
+              label="kesesuaian-penyimpanan-bahan-makanan-4"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="nama-petugas-4"
+              id="nama-petugas-4"
+              label="nama-petugas-4"
+              type="text"
+              myid="check_cara"
+            />
+            <font id="ttdnya1"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="keterangan-4"
+              id="keterangan-4"
+              label="keterangan-4"
+              type="text"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="no-daftar-bahan-5"
+              id="no-daftar-bahan-5"
+              label="no-daftar-bahan-5"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-daftar-bahan-5"
+              id="tgl-daftar-bahan-5"
+              label="tgl-daftar-bahan-5"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="bahan-makanan-5"
+              id="bahan-makanan-5"
+              label="bahan-makanan-5"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tempat-penyimpanan-5"
+              id="tempat-penyimpanan-5"
+              label="tempat-penyimpanan-5"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kesesuaian-penyimpanan-bahan-makanan-5"
+              id="kesesuaian-penyimpanan-bahan-makanan-5"
+              label="kesesuaian-penyimpanan-bahan-makanan-5"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="nama-petugas-5"
+              id="nama-petugas-5"
+              label="nama-petugas-5"
+              type="text"
+              myid="check_cara"
+            />
+            <font id="ttdnya1"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="keterangan-5"
+              id="keterangan-5"
+              label="keterangan-5"
+              type="text"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="no-daftar-bahan-6"
+              id="no-daftar-bahan-6"
+              label="no-daftar-bahan-6"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-daftar-bahan-6"
+              id="tgl-daftar-bahan-6"
+              label="tgl-daftar-bahan-6"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="bahan-makanan-6"
+              id="bahan-makanan-6"
+              label="bahan-makanan-6"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tempat-penyimpanan-6"
+              id="tempat-penyimpanan-6"
+              label="tempat-penyimpanan-6"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kesesuaian-penyimpanan-bahan-makanan-6"
+              id="kesesuaian-penyimpanan-bahan-makanan-6"
+              label="kesesuaian-penyimpanan-bahan-makanan-6"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="nama-petugas-6"
+              id="nama-petugas-6"
+              label="nama-petugas-6"
+              type="text"
+              myid="check_cara"
+            />
+            <font id="ttdnya1"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="keterangan-6"
+              id="keterangan-6"
+              label="keterangan-6"
+              type="text"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="no-daftar-bahan-7"
+              id="no-daftar-bahan-7"
+              label="no-daftar-bahan-7"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-daftar-bahan-7"
+              id="tgl-daftar-bahan-7"
+              label="tgl-daftar-bahan-7"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="bahan-makanan-7"
+              id="bahan-makanan-7"
+              label="bahan-makanan-7"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tempat-penyimpanan-7"
+              id="tempat-penyimpanan-7"
+              label="tempat-penyimpanan-7"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kesesuaian-penyimpanan-bahan-makanan-7"
+              id="kesesuaian-penyimpanan-bahan-makanan-7"
+              label="kesesuaian-penyimpanan-bahan-makanan-7"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="nama-petugas-7"
+              id="nama-petugas-7"
+              label="nama-petugas-7"
+              type="text"
+              myid="check_cara"
+            />
+            <font id="ttdnya1"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="keterangan-7"
+              id="keterangan-7"
+              label="keterangan-7"
+              type="text"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="no-daftar-bahan-8"
+              id="no-daftar-bahan-8"
+              label="no-daftar-bahan-8"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-daftar-bahan-8"
+              id="tgl-daftar-bahan-8"
+              label="tgl-daftar-bahan-8"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="bahan-makanan-8"
+              id="bahan-makanan-8"
+              label="bahan-makanan-8"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tempat-penyimpanan-8"
+              id="tempat-penyimpanan-8"
+              label="tempat-penyimpanan-8"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kesesuaian-penyimpanan-bahan-makanan-8"
+              id="kesesuaian-penyimpanan-bahan-makanan-8"
+              label="kesesuaian-penyimpanan-bahan-makanan-8"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="nama-petugas-8"
+              id="nama-petugas-8"
+              label="nama-petugas-8"
+              type="text"
+              myid="check_cara"
+            />
+            <font id="ttdnya1"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="keterangan-8"
+              id="keterangan-8"
+              label="keterangan-8"
+              type="text"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="no-daftar-bahan-9"
+              id="no-daftar-bahan-9"
+              label="no-daftar-bahan-9"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-daftar-bahan-9"
+              id="tgl-daftar-bahan-9"
+              label="tgl-daftar-bahan-9"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="bahan-makanan-9"
+              id="bahan-makanan-9"
+              label="bahan-makanan-9"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tempat-penyimpanan-9"
+              id="tempat-penyimpanan-9"
+              label="tempat-penyimpanan-9"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kesesuaian-penyimpanan-bahan-makanan-9"
+              id="kesesuaian-penyimpanan-bahan-makanan-9"
+              label="kesesuaian-penyimpanan-bahan-makanan-9"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="nama-petugas-9"
+              id="nama-petugas-9"
+              label="nama-petugas-9"
+              type="text"
+              myid="check_cara"
+            />
+            <font id="ttdnya1"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="keterangan-9"
+              id="keterangan-9"
+              label="keterangan-9"
+              type="text"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="no-daftar-bahan-10"
+              id="no-daftar-bahan-10"
+              label="no-daftar-bahan-10"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-daftar-bahan-10"
+              id="tgl-daftar-bahan-10"
+              label="tgl-daftar-bahan-10"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="bahan-makanan-10"
+              id="bahan-makanan-10"
+              label="bahan-makanan-10"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tempat-penyimpanan-10"
+              id="tempat-penyimpanan-10"
+              label="tempat-penyimpanan-10"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kesesuaian-penyimpanan-bahan-makanan-10"
+              id="kesesuaian-penyimpanan-bahan-makanan-10"
+              label="kesesuaian-penyimpanan-bahan-makanan-10"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="nama-petugas-10"
+              id="nama-petugas-10"
+              label="nama-petugas-10"
+              type="text"
+              myid="check_cara"
+            />
+            <font id="ttdnya1"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="keterangan-10"
+              id="keterangan-10"
+              label="keterangan-10"
+              type="text"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="no-daftar-bahan-11"
+              id="no-daftar-bahan-11"
+              label="no-daftar-bahan-11"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-daftar-bahan-11"
+              id="tgl-daftar-bahan-11"
+              label="tgl-daftar-bahan-11"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="bahan-makanan-11"
+              id="bahan-makanan-11"
+              label="bahan-makanan-11"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tempat-penyimpanan-11"
+              id="tempat-penyimpanan-11"
+              label="tempat-penyimpanan-11"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kesesuaian-penyimpanan-bahan-makanan-11"
+              id="kesesuaian-penyimpanan-bahan-makanan-11"
+              label="kesesuaian-penyimpanan-bahan-makanan-11"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="nama-petugas-11"
+              id="nama-petugas-11"
+              label="nama-petugas-11"
+              type="text"
+              myid="check_cara"
+            />
+            <font id="ttdnya1"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="keterangan-11"
+              id="keterangan-11"
+              label="keterangan-11"
+              type="text"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="no-daftar-bahan-12"
+              id="no-daftar-bahan-12"
+              label="no-daftar-bahan-12"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-daftar-bahan-12"
+              id="tgl-daftar-bahan-12"
+              label="tgl-daftar-bahan-12"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="bahan-makanan-12"
+              id="bahan-makanan-12"
+              label="bahan-makanan-12"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tempat-penyimpanan-12"
+              id="tempat-penyimpanan-12"
+              label="tempat-penyimpanan-12"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kesesuaian-penyimpanan-bahan-makanan-12"
+              id="kesesuaian-penyimpanan-bahan-makanan-12"
+              label="kesesuaian-penyimpanan-bahan-makanan-12"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="nama-petugas-12"
+              id="nama-petugas-12"
+              label="nama-petugas-12"
+              type="text"
+              myid="check_cara"
+            />
+            <font id="ttdnya1"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="keterangan-12"
+              id="keterangan-12"
+              label="keterangan-12"
+              type="text"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="no-daftar-bahan-13"
+              id="no-daftar-bahan-13"
+              label="no-daftar-bahan-13"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-daftar-bahan-13"
+              id="tgl-daftar-bahan-13"
+              label="tgl-daftar-bahan-13"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="bahan-makanan-13"
+              id="bahan-makanan-13"
+              label="bahan-makanan-13"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tempat-penyimpanan-13"
+              id="tempat-penyimpanan-13"
+              label="tempat-penyimpanan-13"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kesesuaian-penyimpanan-bahan-makanan-13"
+              id="kesesuaian-penyimpanan-bahan-makanan-13"
+              label="kesesuaian-penyimpanan-bahan-makanan-13"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="nama-petugas-13"
+              id="nama-petugas-13"
+              label="nama-petugas-13"
+              type="text"
+              myid="check_cara"
+            />
+            <font id="ttdnya1"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="keterangan-13"
+              id="keterangan-13"
+              label="keterangan-13"
+              type="text"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="no-daftar-bahan-14"
+              id="no-daftar-bahan-14"
+              label="no-daftar-bahan-14"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-daftar-bahan-14"
+              id="tgl-daftar-bahan-14"
+              label="tgl-daftar-bahan-14"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="bahan-makanan-14"
+              id="bahan-makanan-14"
+              label="bahan-makanan-14"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tempat-penyimpanan-14"
+              id="tempat-penyimpanan-14"
+              label="tempat-penyimpanan-14"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kesesuaian-penyimpanan-bahan-makanan-14"
+              id="kesesuaian-penyimpanan-bahan-makanan-14"
+              label="kesesuaian-penyimpanan-bahan-makanan-14"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="nama-petugas-14"
+              id="nama-petugas-14"
+              label="nama-petugas-14"
+              type="text"
+              myid="check_cara"
+            />
+            <font id="ttdnya1"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="keterangan-14"
+              id="keterangan-14"
+              label="keterangan-14"
+              type="text"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="no-daftar-bahan-15"
+              id="no-daftar-bahan-15"
+              label="no-daftar-bahan-15"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-daftar-bahan-15"
+              id="tgl-daftar-bahan-15"
+              label="tgl-daftar-bahan-15"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="bahan-makanan-15"
+              id="bahan-makanan-15"
+              label="bahan-makanan-15"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tempat-penyimpanan-15"
+              id="tempat-penyimpanan-15"
+              label="tempat-penyimpanan-15"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kesesuaian-penyimpanan-bahan-makanan-15"
+              id="kesesuaian-penyimpanan-bahan-makanan-15"
+              label="kesesuaian-penyimpanan-bahan-makanan-15"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="nama-petugas-15"
+              id="nama-petugas-15"
+              label="nama-petugas-15"
+              type="text"
+              myid="check_cara"
+            />
+            <font id="ttdnya1"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="keterangan-15"
+              id="keterangan-15"
+              label="keterangan-15"
+              type="text"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="no-daftar-bahan-16"
+              id="no-daftar-bahan-16"
+              label="no-daftar-bahan-16"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tgl-daftar-bahan-16"
+              id="tgl-daftar-bahan-16"
+              label="tgl-daftar-bahan-16"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="bahan-makanan-16"
+              id="bahan-makanan-16"
+              label="bahan-makanan-16"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="tempat-penyimpanan-16"
+              id="tempat-penyimpanan-16"
+              label="tempat-penyimpanan-16"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="kesesuaian-penyimpanan-bahan-makanan-16"
+              id="kesesuaian-penyimpanan-bahan-makanan-16"
+              label="kesesuaian-penyimpanan-bahan-makanan-16"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="nama-petugas-16"
+              id="nama-petugas-16"
+              label="nama-petugas-16"
+              type="text"
+              myid="check_cara"
+            />
+            <font id="ttdnya1"></font>
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              name="keterangan-16"
+              id="keterangan-16"
+              label="keterangan-16"
+              type="text"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><b>Keterangan :</b></p>
+    <ol type="1">
+      <li style="margin-left: 20px">
+        Daftar kesesuaian penyimpanan bahan makanan dari luar rumah sakit diisi
+        setiap hari oleh petugas gizi di ruang rawat inap.
+      </li>
+      <li style="margin-left: 20px">
+        <p>Kriteria kesesuaian penyimpanan bahan makanan :</p>
+        <ol type="a">
+          <li style="margin-left: 20px">
+            Bahan makanan segar (buah, sayur, susu, bahan makanan mentah)
+            disimpan di dalam kulkas
+          </li>
+          <li style="margin-left: 20px">
+            Makanan kering (biscuit/roti) disimpan pada suhu ruangan dan dalam
+            kondisi tertutup
+          </li>
+          <li style="margin-left: 20px">
+            Makanan matang disarankan untuk segera dikonsumsi dan disimpan dalam
+            suhu ruang selama 2 (dua) jam setelah masuk ruang rawat inap.
+          </li>
+        </ol>
+      </li>
+    </ol>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(function (radio) {
+          radio.addEventListener("click", function () {
+            if (this.classList.contains("clicked")) {
+              this.checked = false;
+              this.classList.remove("clicked");
+            } else {
+              var name = this.getAttribute("name");
+              var radios = document.querySelectorAll(
+                'input[type="radio"][name="' + name + '"]'
+              );
+              radios.forEach(function (r) {
+                r.classList.remove("clicked");
+              });
+              this.classList.add("clicked");
+            }
+            console.log(this.name + " diubah menjadi: " + this.checked);
+          });
+        });
+
+        var textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
