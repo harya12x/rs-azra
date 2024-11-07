@@ -31,6 +31,134 @@
       padding: 5px;
     }
   </style>
+
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title"><b>SURAT PERMINTAAN BIMBINGAN ROHANI</b></h1>
 
@@ -51,8 +179,20 @@
         </tr>
       </tbody>
     </table>
-    <table width="100%" class="table">
+    <table width="100%" class="table table-bordered">
       <tbody>
+        <input
+          type="hidden"
+          id="src_ttd_1"
+          name="src_ttd_1"
+          myid="check_cara"
+        />
+        <input
+          type="hidden"
+          id="src_ttd_2"
+          name="src_ttd_2"
+          myid="check_cara"
+        />
         <tr>
           <td>Nama :</td>
           <td style="width: 40%">
@@ -62,6 +202,7 @@
               name="nama-pasien"
               id="nama-pasien"
               label="nama-pasien"
+              value="{VNAMA_PASIEN}"
               placeholder="......"
               myid="check_cara"
             />
@@ -76,6 +217,7 @@
                 id="umur-pasien"
                 label="umur-pasien"
                 placeholder="......"
+                value="{VAGE}"
                 myid="check_cara"
               />
               <label for="">tahun</label>
@@ -92,6 +234,7 @@
               id="no-rm"
               label="no-rm"
               placeholder="......"
+              value="{NO_RM}"
               myid="check_cara"
             />
           </td>
@@ -108,6 +251,7 @@
               label="ruangan"
               placeholder="......"
               myid="check_cara"
+              value="{VNAMARUANGAN}"
             />
           </td>
           <td colspan="2">&nbsp;</td>
@@ -164,35 +308,115 @@
           <td colspan="2">&nbsp;</td>
         </tr>
         <tr>
-          <td colspan="2" style="text-align: center">
-            <p>Perawat</p>
-            (
-            <input
-              style="width: 95%"
-              type="text"
-              name="nama-perawat"
-              id="nama-perawat"
-              label="nama-perawat"
-              myid="check_cara"
-              placeholder="......"
-            />
-            <font id="ttd2"></font>
-            )
+          <td colspan="2">
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <p>Perawat</p>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <br />
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat"
+                id="paraf_ex_ttd_perawat"
+                data-name="paraf"
+                data-id="ex_ttd_perawat"
+              />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+              <br />
+              <label for="">
+                (
+                <input
+                  style="width: 85%"
+                  type="text"
+                  name="nama-perawat"
+                  id="nama-perawat"
+                  label="nama-perawat"
+                  myid="check_cara"
+                  placeholder="......"
+                />
+                <font id="ttd2"></font>
+                )
+              </label>
+            </div>
           </td>
-          <td colspan="2" style="text-align: center">
-            <p>Pasien/Keluarga Pasien</p>
-            (
-            <input
-              style="width: 95%"
-              type="text"
-              name="nama-pasien"
-              id="nama-pasien"
-              label="nama-pasien"
-              myid="check_cara"
-              placeholder="......"
-            />
-            <font id="ttd2"></font>
-            )
+          <td colspan="2">
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <p>Pasien/Keluarga Pasien</p>
+              <label
+                class="label text-center"
+                id="def_img_ex_keluarga_pasien"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <br />
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_keluarga_pasien"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_keluarga_pasien"
+                id="paraf_ex_keluarga_pasien"
+                data-name="paraf"
+                data-id="ex_keluarga_pasien"
+              />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_keluarga_pasien"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+              <br />
+              <label for="">
+                (
+                <input
+                  style="width: 85%"
+                  type="text"
+                  name="nama-pasien"
+                  id="nama-pasien"
+                  label="nama-pasien"
+                  myid="check_cara"
+                  placeholder="......"
+                />
+                <font id="ttd2"></font>
+                )
+              </label>
+            </div>
           </td>
         </tr>
         <tr>
@@ -208,9 +432,10 @@
             </h3>
 
             <textarea
-              name="hasil-bimbingan-rohani"
-              id="hasil-bimbingan-rohani"
-              label="hasil-bimbingan-rohani"
+              type="textarea"
+              name="hasil_bimbingan_rohani"
+              id="hasil_bimbingan_rohani"
+              label="hasil_bimbingan_rohani"
               style="width: 100%; margin-top: 5px; padding: 5px"
               myid="check_cara"
               rows="10"
@@ -220,19 +445,60 @@
         <tr>
           <td colspan="3">&nbsp;</td>
           <td>
-            <p>Pembimbing Rohani</p>
-            (
-            <input
-              style="width: 95%"
-              type="text"
-              name="pembimbing-rohani"
-              id="pembimbing-rohani"
-              label="pembimbing-rohani"
-              myid="check_cara"
-              placeholder="......"
-            />
-            <font id="ttd2"></font>
-            )
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <p>Pembimbing Rohani</p>
+
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_pembimbing_rohani"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <br />
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_pembimbing_rohani"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_pembimbing_rohani"
+                id="paraf_ex_ttd_pembimbing_rohani"
+                data-name="paraf"
+                data-id="ex_ttd_pembimbing_rohani"
+              />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_pembimbing_rohani"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+              <br />
+              <label for="">
+                (
+                <input
+                  style="width: 85%"
+                  type="text"
+                  name="pembimbing-rohani"
+                  id="pembimbing-rohani"
+                  label="pembimbing-rohani"
+                  myid="check_cara"
+                  placeholder="......"
+                />
+                <font id="ttd2"></font>
+                )
+              </label>
+            </div>
           </td>
         </tr>
       </tbody>
