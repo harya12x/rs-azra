@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SKRINING MANAJEMEN PELAYANAN PASIEN RS. AZRA BOGOR</title>
   </head>
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"
+  ></script>
   <style>
     * {
       margin: 0;
@@ -31,12 +36,171 @@
       padding: 5px;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+
+      $("input[type='radio']")
+        .off("change")
+        .on("change", function () {
+          let total = 0;
+          let percol = $(this).data("percol");
+          console.log(percol);
+
+          $("[data-hitung" + percol + "]").each(function () {
+            let radioValue = 0;
+            radioValue = $(this).val() || 0;
+
+            if ($(this).is(":checked")) {
+              radioValue = parseInt(radioValue);
+              console.log(radioValue);
+              total += radioValue;
+            }
+          });
+
+          $(`#totalskor` + percol).val(total);
+        });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">SKRINING MANAJEMEN PELAYANAN PASIEN RS AZRA BOGOR</h1>
 
-    <table width="100%" class="table-bordered">
+    <table width="100%" class="table table-bordered">
       <tbody>
         <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
           <td style="width: 20%">Nama Pasien :</td>
           <td>
             <input
@@ -46,6 +210,7 @@
               label="nama-pasien"
               placeholder="......"
               myid="check_cara"
+              value="{VNAMA_PASIEN}"
               style="width: 100%"
             />
           </td>
@@ -60,6 +225,7 @@
               label="no-rek-medis"
               placeholder="......"
               myid="check_cara"
+              value="{NO_RM}"
               style="width: 100%"
             />
           </td>
@@ -72,8 +238,10 @@
               name="tgl-lahir"
               id="tgl-lahir"
               label="tgl-lahir"
-              placeholder="......"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
+              value="{VBIRTH_DATE}"
               style="width: 100%"
             />
           </td>
@@ -140,6 +308,8 @@
           <td>Pasien dirawat oleh 3 atau lebih DPJP</td>
           <td style="text-align: center">
             <input
+              data-percol="1"
+              data-hitung1="1"
               class="awal-skor"
               type="radio"
               name="awal-skor-penaggung-jawab-pelayanan-pasien"
@@ -152,6 +322,8 @@
           </td>
           <td style="text-align: center">
             <input
+              data-percol="2"
+              data-hitung2="2"
               class="lanjut-skor"
               type="radio"
               name="lanjut-skor-penaggung-jawab-pelayanan-pasien"
@@ -168,6 +340,8 @@
           <td>Pasien dirawat oleh kurang dari 3 DPJP</td>
           <td style="text-align: center">
             <input
+              data-percol="1"
+              data-hitung1="1"
               class="awal-skor"
               type="radio"
               name="awal-skor-penaggung-jawab-pelayanan-pasien"
@@ -180,6 +354,8 @@
           </td>
           <td style="text-align: center">
             <input
+              data-percol="2"
+              data-hitung2="2"
               class="lanjut-skor"
               type="radio"
               name="lanjut-skor-penaggung-jawab-pelayanan-pasien"
@@ -199,6 +375,8 @@
           <td>Prediksi lama rawat &gt; 14 hari</td>
           <td style="text-align: center">
             <input
+              data-percol="1"
+              data-hitung1="1"
               class="awal-skor"
               type="radio"
               name="awal-skor-prediksi-lama-hari-rawat"
@@ -211,6 +389,8 @@
           </td>
           <td style="text-align: center">
             <input
+              data-percol="2"
+              data-hitung2="2"
               class="lanjut-skor"
               type="radio"
               name="lanjut-skor-prediksi-lama-hari-rawat"
@@ -227,6 +407,8 @@
           <td>Prediksi lama rawat 7 - 14 hari</td>
           <td style="text-align: center">
             <input
+              data-percol="1"
+              data-hitung1="1"
               class="awal-skor"
               type="radio"
               name="awal-skor-prediksi-lama-hari-rawat"
@@ -239,6 +421,8 @@
           </td>
           <td style="text-align: center">
             <input
+              data-percol="2"
+              data-hitung2="2"
               class="lanjut-skor"
               type="radio"
               name="lanjut-skor-prediksi-lama-hari-rawat"
@@ -255,6 +439,8 @@
           <td>Prediksi lama rawat &lt; 7 hari</td>
           <td style="text-align: center">
             <input
+              data-percol="1"
+              data-hitung1="1"
               class="awal-skor"
               type="radio"
               name="awal-skor-prediksi-lama-hari-rawat"
@@ -267,6 +453,8 @@
           </td>
           <td style="text-align: center">
             <input
+              data-percol="2"
+              data-hitung2="2"
               class="lanjut-skor"
               type="radio"
               name="lanjut-skor-prediksi-lama-hari-rawat"
@@ -288,6 +476,8 @@
           <td>Naik kelas / turun kelas</td>
           <td style="text-align: center">
             <input
+              data-percol="1"
+              data-hitung1="1"
               class="awal-skor"
               type="radio"
               name="awal-skor-administrasi-dan-sosial"
@@ -300,6 +490,8 @@
           </td>
           <td style="text-align: center">
             <input
+              data-percol="2"
+              data-hitung2="2"
               class="lanjut-skor"
               type="radio"
               name="lanjut-skor-administrasi-dan-sosial"
@@ -316,6 +508,8 @@
           <td>Tanpa keluarga / penanggung jawab</td>
           <td style="text-align: center">
             <input
+              data-percol="1"
+              data-hitung1="1"
               class="awal-skor"
               type="radio"
               name="awal-skor-administrasi-dan-sosial"
@@ -328,6 +522,8 @@
           </td>
           <td style="text-align: center">
             <input
+              data-percol="2"
+              data-hitung2="2"
               class="lanjut-skor"
               type="radio"
               name="lanjut-skor-administrasi-dan-sosial"
@@ -349,6 +545,8 @@
           <td>Kepulangannya kritis</td>
           <td style="text-align: center">
             <input
+              data-percol="1"
+              data-hitung1="1"
               class="awal-skor"
               type="radio"
               name="awal-skor-kondisi-klinis-pasien"
@@ -361,6 +559,8 @@
           </td>
           <td style="text-align: center">
             <input
+              data-percol="2"
+              data-hitung2="2"
               class="lanjut-skor"
               type="radio"
               name="lanjut-skor-kondisi-klinis-pasien"
@@ -377,6 +577,8 @@
           <td>Sering readmisi</td>
           <td style="text-align: center">
             <input
+              data-percol="1"
+              data-hitung1="1"
               class="awal-skor"
               type="radio"
               name="awal-skor-kondisi-klinis-pasien"
@@ -389,6 +591,8 @@
           </td>
           <td style="text-align: center">
             <input
+              data-percol="2"
+              data-hitung2="2"
               class="lanjut-skor"
               type="radio"
               name="lanjut-skor-kondisi-klinis-pasien"
@@ -405,6 +609,8 @@
           <td>Kasus dengan penyakit fatal</td>
           <td style="text-align: center">
             <input
+              data-percol="1"
+              data-hitung1="1"
               class="awal-skor"
               type="radio"
               name="awal-skor-kondisi-klinis-pasien"
@@ -417,6 +623,8 @@
           </td>
           <td style="text-align: center">
             <input
+              data-percol="2"
+              data-hitung2="2"
               class="lanjut-skor"
               type="radio"
               name="lanjut-skor-kondisi-klinis-pasien"
@@ -433,6 +641,8 @@
           <td>Kasus dengan penyakit terminal</td>
           <td style="text-align: center">
             <input
+              data-percol="1"
+              data-hitung1="1"
               class="awal-skor"
               type="radio"
               name="awal-skor-kondisi-klinis-pasien"
@@ -445,6 +655,8 @@
           </td>
           <td style="text-align: center">
             <input
+              data-percol="2"
+              data-hitung2="2"
               class="lanjut-skor"
               type="radio"
               name="lanjut-skor-kondisi-klinis-pasien"
@@ -466,6 +678,8 @@
           <td>Pasien dengan risiko komplain</td>
           <td style="text-align: center">
             <input
+              data-percol="1"
+              data-hitung1="1"
               class="awal-skor"
               type="radio"
               name="awal-skor-masalah-khusus"
@@ -478,6 +692,8 @@
           </td>
           <td style="text-align: center">
             <input
+              data-percol="2"
+              data-hitung2="2"
               class="lanjut-skor"
               type="radio"
               name="lanjut-skor-masalah-khusus"
@@ -494,6 +710,8 @@
           <td>Pasien dengan masalah hukum</td>
           <td style="text-align: center">
             <input
+              data-percol="1"
+              data-hitung1="1"
               class="awal-skor"
               type="radio"
               name="awal-skor-masalah-khusus"
@@ -506,6 +724,8 @@
           </td>
           <td style="text-align: center">
             <input
+              data-percol="2"
+              data-hitung2="2"
               class="lanjut-skor"
               type="radio"
               name="lanjut-skor-masalah-khusus"
@@ -522,6 +742,8 @@
           <td>Pasien titipan</td>
           <td style="text-align: center">
             <input
+              data-percol="1"
+              data-hitung1="1"
               class="awal-skor"
               type="radio"
               name="awal-skor-masalah-khusus"
@@ -534,6 +756,8 @@
           </td>
           <td style="text-align: center">
             <input
+              data-percol="2"
+              data-hitung2="2"
               class="lanjut-skor"
               type="radio"
               name="lanjut-skor-masalah-khusus"
@@ -553,9 +777,9 @@
             <input
               style="width: 100%"
               type="text"
-              name="total-awal-skor"
-              id="total-awal-skor"
-              label="total-awal-skor"
+              name="totalskor1"
+              id="totalskor1"
+              label="totalskor1"
               myid="check_cara"
             />
           </td>
@@ -563,9 +787,9 @@
             <input
               style="width: 100%"
               type="text"
-              name="total-lanjut-skor"
-              id="total-lanjut-skor"
-              label="total-lanjut-skor"
+              name="totalskor2"
+              id="totalskor2"
+              label="totalskor2"
               myid="check_cara"
             />
           </td>
@@ -610,16 +834,49 @@
               <div>
                 <label style="text-align: center" for="">Bogor, tanggal</label>
                 <input
-                  style="flex: 1"
+                  name="17_tgl2"
                   type="text"
-                  name="tgl-permintaan"
-                  id="tgl-permintaan"
-                  label="tgl-permintaan"
+                  id="17_tgl2"
                   placeholder="dd/mm/yyyy"
+                  class="datepicker hasDatepicker"
                   myid="check_cara"
+                  fdprocessedid="pu3o7g"
                 />
               </div>
               <p style="margin-top: 5px">Perawat Penanggung jawab Pasien</p>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_petugas"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_petugas"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_petugas"
+                id="paraf_ex_ttd_petugas"
+                data-name="paraf"
+                data-id="ex_ttd_petugas"
+              />>
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_petugas"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+              <br />
               <label for="">
                 (
                 <input
@@ -643,48 +900,6 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const skorAwal = document.querySelectorAll(".awal-skor");
-        const lanjutSkor = document.querySelectorAll(".lanjut-skor");
-        const totalAwalSkor = document.querySelector("#total-awal-skor");
-        const totalLanjutSkor = document.querySelector("#total-lanjut-skor");
-        console.log(totalLanjutSkor);
-        function hitungTotalAwalSkor() {
-          let total = 0;
-
-          // Loop melalui setiap input biaya perawatan
-          skorAwal.forEach((input) => {
-            if (input.checked) {
-              total += parseFloat(input.value);
-            }
-          });
-
-          // Tampilkan hasil penjumlahan
-          totalAwalSkor.value = total;
-        }
-
-        function hitungTotalLanjutSkor() {
-          let total = 0;
-
-          // Loop melalui setiap input biaya perawatan
-          lanjutSkor.forEach((input) => {
-            if (input.checked) {
-              total += parseFloat(input.value);
-            }
-          });
-
-          // Tampilkan hasil penjumlahan
-          totalLanjutSkor.value = total;
-        }
-
-        // Tambahkan event listener untuk setiap input biaya perawatan
-        skorAwal.forEach((input) => {
-          input.addEventListener("change", hitungTotalAwalSkor);
-        });
-
-        lanjutSkor.forEach((input) => {
-          input.addEventListener("change", hitungTotalLanjutSkor);
-        });
-
         var radioButtons = document.querySelectorAll('input[type="radio"]');
         radioButtons.forEach(function (radio) {
           radio.addEventListener("click", function () {
