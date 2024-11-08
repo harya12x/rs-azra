@@ -4,6 +4,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PENGKAJIAN AWAL INSTALASI GAWAT DARURAT</title>
   </head>
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"
+  ></script>
   <style>
     * {
       margin: 0;
@@ -30,6 +35,190 @@
       background-color: #dfe8f6;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+
+      $('input[type="radio"]')
+        .off("change")
+        .on("change", function () {
+          let total = 0;
+          let percol = $(this).data("percol");
+          console.log(percol);
+          $("[data-hitung" + percol + "]").each(function () {
+            let radioValue = parseFloat($(this).val() || 0);
+
+            if ($(this).is(":checked")) {
+              console.log(radioValue);
+              total += radioValue;
+            }
+          });
+
+          $(`#totalskor` + percol).val(total);
+        });
+
+      $(".resusitasi").on("change", function () {
+        const anyResusitasiChecked = $(".resusitasi:checked").length > 0;
+        $(".emergency, .urgent, .less-urgent, .non-urgent").prop(
+          "disabled",
+          anyResusitasiChecked
+        );
+      });
+
+      $(".emergency").on("change", function () {
+        const anyEmergencyChecked = $(".emergency:checked").length > 0;
+        $(".resusitasi, .urgent, .less-urgent, .non-urgent").prop(
+          "disabled",
+          anyEmergencyChecked
+        );
+      });
+
+      $(".urgent").on("change", function () {
+        const anyUrgentChecked = $(".urgent:checked").length > 0;
+        $(".resusitasi, .emergency, .less-urgent, .non-urgent").prop(
+          "disabled",
+          anyUrgentChecked
+        );
+      });
+
+      $(".less-urgent").on("change", function () {
+        const anyLessUrgentChecked = $(".less-urgent:checked").length > 0;
+        $(".resusitasi, .emergency, .urgent, .non-urgent").prop(
+          "disabled",
+          anyLessUrgentChecked
+        );
+      });
+
+      $(".non-urgent").on("change", function () {
+        const anyNonUrgentChecked = $(".non-urgent:checked").length > 0;
+        $(".resusitasi, .emergency, .urgent, .less-urgent").prop(
+          "disabled",
+          anyNonUrgentChecked
+        );
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">
       PENGKAJIAN AWAL INSTALASI GAWAT DARURAT RS. AZRA BOGOR
@@ -58,30 +247,12 @@
               size="30"
               myid="check_cara"
               label="nama pasien"
+              value="{VNAMA_PASIEN}"
               placeholder="..."
             />
           </td>
           <td>Jenis Kelamin</td>
-          <td>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="laki-laki"
-              myid="check_cara"
-              value="L"
-              label="jenis kelamin"
-            />
-            <label for="l">L</label>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="perempuan"
-              myid="check_cara"
-              value="P"
-              label="jenis kelamin"
-            />
-            <label for="l">P</label>
-          </td>
+          <td>{VSEX}</td>
           <td>
             <label for="">Nomor Rekam Medis</label>
           </td>
@@ -92,6 +263,7 @@
               name="no_rm"
               id="no_rm"
               label="nomor rekam medis"
+              value="{NO_RM}"
               placeholder="......"
             />
           </td>
@@ -104,8 +276,10 @@
               name="tgl_lahira2"
               type="text"
               id="tgl_lahir"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
+              value="{VBIRTH_DATE}"
               label="tanggal lahir"
             />
           </td>
@@ -118,6 +292,7 @@
               name="umur-pengkajian"
               id="umur-pengkajian"
               myid="check_cara"
+              value="{VAGE}"
               placeholder="..."
             />
           </td>
@@ -142,7 +317,8 @@
               name="tgl"
               type="text"
               id="tgl"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               label="tanggal"
             />
@@ -156,6 +332,7 @@
               name="jam"
               id="jam"
               label="jam"
+              mtype="pukul"
               myid="check_cara"
               placeholder="..."
             />
@@ -229,6 +406,7 @@
                   <td><p>Keluhan Utama</p></td>
                   <td width="85%">
                     <textarea
+                      type="textarea"
                       style="width: 100%"
                       name="keluhan-utama"
                       id="keluhan-utama"
@@ -267,6 +445,7 @@
                   </td>
                   <td style="background-color: red">
                     <input
+                      class="ats resusitasi"
                       type="checkbox"
                       name="sumbatan"
                       id="sumbatan"
@@ -278,6 +457,7 @@
                   </td>
                   <td style="background-color: yellow">
                     <input
+                      class="ats emergency"
                       type="checkbox"
                       name="kuning-bebas-emergency"
                       id="kuning-bebas-emergency"
@@ -343,6 +523,7 @@
                   </td>
                   <td style="background-color: yellow">
                     <input
+                      class="ats urgent"
                       type="checkbox"
                       name="kuning-bebas-urgent"
                       id="kuning-bebas-urgent"
@@ -354,6 +535,7 @@
                   </td>
                   <td style="background-color: #92d050">
                     <input
+                      class="ats less-urgent"
                       type="checkbox"
                       name="hijau-bebas-less-urgent"
                       id="hijau-bebas-less-urgent"
@@ -365,6 +547,7 @@
                   </td>
                   <td style="background-color: #92d050">
                     <input
+                      class="ats non-urgent"
                       type="checkbox"
                       name="hijau-bebas-non-urgent"
                       id="hijau-bebas-non-urgent"
@@ -383,6 +566,7 @@
                   <td style="background-color: red">
                     <div>
                       <input
+                        class="ats resusitasi"
                         type="checkbox"
                         name="henti-nafas"
                         id="henti-nafas"
@@ -396,6 +580,7 @@
                     </div>
                     <div>
                       <input
+                        class="ats resusitasi"
                         type="checkbox"
                         name="frek-nafas-lt-10"
                         id="frek-nafas-lt-10"
@@ -409,6 +594,7 @@
                     </div>
                     <div>
                       <input
+                        class="ats resusitasi"
                         type="checkbox"
                         name="sianosis"
                         id="sianosis"
@@ -422,6 +608,7 @@
                   <td style="background-color: yellow">
                     <div>
                       <input
+                        class="ats emergency"
                         type="checkbox"
                         name="frek-nafas-gt-32"
                         id="frek-nafas-gt-32"
@@ -435,6 +622,7 @@
                     </div>
                     <div>
                       <input
+                        class="ats emergency"
                         type="checkbox"
                         name="wheezing-emergency"
                         label="wheezing-emergency"
@@ -448,6 +636,7 @@
                   <td style="background-color: yellow">
                     <div>
                       <input
+                        class="ats urgent"
                         type="checkbox"
                         name="frek-nafas-24-32"
                         label="frek-nafas-24-32"
@@ -461,6 +650,7 @@
                     </div>
                     <div>
                       <input
+                        class="ats urgent"
                         type="checkbox"
                         name="wheezing-urgent"
                         id="wheezing-urgent"
@@ -473,6 +663,7 @@
                   </td>
                   <td style="background-color: #92d050">
                     <input
+                      class="ats less-urgent"
                       type="checkbox"
                       name="frek-nafas-21-23"
                       id="frek-nafas-21-23"
@@ -486,6 +677,7 @@
                   </td>
                   <td style="background-color: #92d050">
                     <input
+                      class="ats non-urgent"
                       type="checkbox"
                       name="frek-nafas-16-20"
                       id="frek-nafas-16-20"
@@ -506,6 +698,7 @@
                   <td style="background-color: red">
                     <div>
                       <input
+                        class="ats resusitasi"
                         type="checkbox"
                         name="henti-jantung"
                         id="henti-jantung"
@@ -519,6 +712,7 @@
                     </div>
                     <div>
                       <input
+                        class="ats resusitasi"
                         type="checkbox"
                         name="nadi-tak-teraba"
                         id="nadi-tak-teraba"
@@ -532,6 +726,7 @@
                     </div>
                     <div>
                       <input
+                        class="ats resusitasi"
                         type="checkbox"
                         name="pucat"
                         id="pucat"
@@ -543,6 +738,7 @@
                     </div>
                     <div>
                       <input
+                        class="ats resusitasi"
                         type="checkbox"
                         name="akral-dingin"
                         id="akral-dingin"
@@ -556,6 +752,7 @@
                   <td style="background-color: yellow">
                     <div>
                       <input
+                        class="ats emergency"
                         type="checkbox"
                         name="nadi-teraba-lemah"
                         id="nadi-teraba-lemah"
@@ -569,6 +766,7 @@
                     </div>
                     <div>
                       <input
+                        class="ats emergency"
                         type="checkbox"
                         name="frek-nadi-lt-50"
                         id="frek-nadi-lt-50"
@@ -609,6 +807,7 @@
                   <td style="background-color: yellow">
                     <div>
                       <input
+                        class="ats urgent"
                         type="checkbox"
                         name="frek-nadi-120-150"
                         id="frek-nadi-120-150"
@@ -622,6 +821,7 @@
                     </div>
                     <div>
                       <input
+                        class="ats urgent"
                         type="checkbox"
                         name="td-sistol-ge-160"
                         id="td-sistol-ge-160"
@@ -635,6 +835,7 @@
                     </div>
                     <div>
                       <input
+                        class="ats urgent"
                         type="checkbox"
                         name="td-diastole-ge-100"
                         id="td-diastole-ge-100"
@@ -650,6 +851,7 @@
                   <td style="background-color: #92d050">
                     <div>
                       <input
+                        class="ats less-urgent"
                         type="checkbox"
                         name="frek-nadi-100-120"
                         id="frek-nadi-100-120"
@@ -663,6 +865,7 @@
                     </div>
                     <div>
                       <input
+                        class="ats less-urgent"
                         type="checkbox"
                         name="td-sistol-lt-160"
                         id="td-sistol-lt-160"
@@ -676,8 +879,12 @@
                     </div>
                     <div>
                       <input
+                        class="ats less-urgent"
                         type="checkbox"
                         name="td-diastole-lt-100"
+                        id="td-diastole-lt-100"
+                        label="td-diastole-lt-100"
+                        myid="check_cara"
                         value="TD Diastole &lt; 100 mmHg"
                       />
                       <label for="td-diastole-lt-100"
@@ -688,6 +895,7 @@
                   <td style="background-color: #92d050">
                     <div>
                       <input
+                        class="ats non-urgent"
                         type="checkbox"
                         name="frek-nadi-80-100"
                         id="frek-nadi-80-100"
@@ -701,6 +909,7 @@
                     </div>
                     <div>
                       <input
+                        class="ats non-urgent"
                         type="checkbox"
                         name="td-sistol-120"
                         id="td-sistol-120"
@@ -714,6 +923,7 @@
                     </div>
                     <div>
                       <input
+                        class="ats non-urgent"
                         type="checkbox"
                         name="td-diastole-100-mmhg"
                         id="td-diastole-100-mmhg"
@@ -734,6 +944,7 @@
                   </td>
                   <td style="background-color: red">
                     <input
+                      class="ats resusitasi"
                       type="checkbox"
                       name="gcs-lt-9"
                       id="gcs-lt-9"
@@ -745,6 +956,7 @@
                   </td>
                   <td style="background-color: yellow">
                     <input
+                      class="ats emergency"
                       type="checkbox"
                       name="gcs-9-12"
                       id="gcs-9-12"
@@ -756,6 +968,7 @@
                   </td>
                   <td style="background-color: yellow">
                     <input
+                      class="ats urgent"
                       type="checkbox"
                       name="gcs-gt-12"
                       id="gcs-gt-12"
@@ -767,6 +980,7 @@
                   </td>
                   <td style="background-color: #92d050">
                     <input
+                      class="ats less-urgent"
                       type="checkbox"
                       name="gcs-15-less-urgent"
                       id="gcs-15-less-urgent"
@@ -778,6 +992,7 @@
                   </td>
                   <td style="background-color: #92d050">
                     <input
+                      class="ats non-urgent"
                       type="checkbox"
                       name="gcs-15-non-urgent"
                       id="gcs-15-non-urgent"
@@ -799,7 +1014,7 @@
         </tr>
         <tr>
           <td>
-            <table width="100%" class="table">
+            <table width="100%" class="table table-bordered">
               <thead>
                 <tr>
                   <th><input type="radio" name="" id="" label="" /></th>
@@ -1156,108 +1371,181 @@
                     style="padding-left: 10px; padding-right: 10px"
                     colspan="3"
                   >
-                    <div style="display: flex; justify-content: space-between">
-                      <label for="nyeri">0</label>
-                      <label for="nyeri">1</label>
-                      <label for="nyeri">2</label>
-                      <label for="nyeri">3</label>
-                      <label for="nyeri">4</label>
-                      <label for="nyeri">5</label>
-                      <label for="nyeri">6</label>
-                      <label for="nyeri">7</label>
-                      <label for="nyeri">8</label>
-                      <label for="nyeri">9</label>
-                      <label for="nyeri">10</label>
-                    </div>
-                    <div style="display: flex; justify-content: space-between">
-                      <input
-                        type="radio"
-                        name="nyeri"
-                        id="nyeri"
-                        label="nyeri"
-                        value="0"
-                        myid="check_cara"
+                    <div class="margin-10v" align="center">
+                      <img
+                        src="images/askep/wongbaker.png"
+                        style="width: 100%"
                       />
-                      <input
-                        type="radio"
-                        name="nyeri"
-                        id="nyeri"
-                        label="nyeri"
-                        value="1"
-                        myid="check_cara"
-                      />
-                      <input
-                        type="radio"
-                        name="nyeri"
-                        id="nyeri"
-                        label="nyeri"
-                        value="2"
-                        myid="check_cara"
-                      />
-                      <input
-                        type="radio"
-                        name="nyeri"
-                        id="nyeri"
-                        label="nyeri"
-                        value="3"
-                        myid="check_cara"
-                      />
-                      <input
-                        type="radio"
-                        name="nyeri"
-                        id="nyeri"
-                        label="nyeri"
-                        value="4"
-                        myid="check_cara"
-                      />
-                      <input
-                        type="radio"
-                        name="nyeri"
-                        id="nyeri"
-                        label="nyeri"
-                        value="5"
-                        myid="check_cara"
-                      />
-                      <input
-                        type="radio"
-                        name="nyeri"
-                        id="nyeri"
-                        label="nyeri"
-                        value="6"
-                        myid="check_cara"
-                      />
-                      <input
-                        type="radio"
-                        name="nyeri"
-                        id="nyeri"
-                        label="nyeri"
-                        value="7"
-                        myid="check_cara"
-                      />
-                      <input
-                        type="radio"
-                        name="nyeri"
-                        id="nyeri"
-                        label="nyeri"
-                        value="8"
-                        myid="check_cara"
-                      />
-                      <input
-                        type="radio"
-                        name="nyeri"
-                        id="nyeri"
-                        label="nyeri"
-                        value="9"
-                        myid="check_cara"
-                      />
-                      <input
-                        type="radio"
-                        name="nyeri"
-                        id="nyeri"
-                        label="nyeri"
-                        value="10"
-                        myid="check_cara"
-                      />
+                      <table style="width: 100%" class="table">
+                        <tbody>
+                          <tr>
+                            <td width="15%">
+                              <div
+                                style="display: flex; justify-content: center"
+                              >
+                                <label
+                                  class="radio"
+                                  style="width: fit-content; padding-left: 15px"
+                                >
+                                  <input
+                                    myid="check_cara"
+                                    type="radio"
+                                    name="apakah_nyeri"
+                                    value="0"
+                                  />
+                                  <i></i> &nbsp;
+                                </label>
+                              </div>
+                            </td>
+                            <td width="20%">
+                              <div
+                                style="
+                                  display: flex;
+                                  justify-content: center;
+                                  padding-left: 15px;
+                                "
+                              >
+                                <label class="radio">
+                                  <input
+                                    myid="check_cara"
+                                    type="radio"
+                                    name="apakah_nyeri"
+                                    value="2"
+                                  />
+                                  <i></i> &nbsp;
+                                </label>
+                              </div>
+                            </td>
+                            <td width="13%">
+                              <div
+                                style="
+                                  display: flex;
+                                  justify-content: center;
+                                  padding-left: 15px;
+                                "
+                              >
+                                <label class="radio">
+                                  <input
+                                    myid="check_cara"
+                                    type="radio"
+                                    name="apakah_nyeri"
+                                    value="4"
+                                  />
+                                  <i></i> &nbsp;
+                                </label>
+                              </div>
+                            </td>
+                            <td width="21%">
+                              <div
+                                style="
+                                  display: flex;
+                                  justify-content: center;
+                                  padding-left: 15px;
+                                "
+                              >
+                                <label class="radio">
+                                  <input
+                                    myid="check_cara"
+                                    type="radio"
+                                    name="apakah_nyeri"
+                                    value="6"
+                                  />
+                                  <i></i> &nbsp;
+                                </label>
+                              </div>
+                            </td>
+                            <td width="14%">
+                              <div
+                                style="
+                                  display: flex;
+                                  justify-content: center;
+                                  padding-left: 15px;
+                                "
+                              >
+                                <label class="radio">
+                                  <input
+                                    myid="check_cara"
+                                    type="radio"
+                                    name="apakah_nyeri"
+                                    value="8"
+                                  />
+                                  <i></i> &nbsp;
+                                </label>
+                              </div>
+                            </td>
+                            <td>
+                              <div
+                                style="
+                                  display: flex;
+                                  justify-content: center;
+                                  padding-left: 15px;
+                                "
+                              >
+                                <label class="radio">
+                                  <input
+                                    myid="check_cara"
+                                    type="radio"
+                                    name="apakah_nyeri"
+                                    value="10"
+                                  />
+                                  <i></i> &nbsp;
+                                </label>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td align="center">0</td>
+                            <td align="center">2</td>
+                            <td align="center">4</td>
+                            <td align="center">6</td>
+                            <td align="center">8</td>
+                            <td align="center">10</td>
+                          </tr>
+                          <tr>
+                            <td
+                              align="center"
+                              style="border-top: none !important"
+                            >
+                              Tidak nyeri
+                            </td>
+                            <td
+                              align="center"
+                              style="border-top: none !important"
+                            >
+                              Nyeri Sedikit
+                            </td>
+                            <td
+                              align="center"
+                              style="border-top: none !important"
+                            >
+                              Agak mengganggu
+                            </td>
+                            <td
+                              align="center"
+                              style="border-top: none !important"
+                            >
+                              Mengganggu Aktifitas
+                            </td>
+                            <td
+                              align="center"
+                              style="border-top: none !important"
+                            >
+                              Sangat mengganggu
+                            </td>
+                            <td
+                              align="center"
+                              style="border-top: none !important"
+                            >
+                              Tak tertahankan
+                            </td>
+                          </tr>
+                          <!-- <tr>
+                                                <td colspan="6">
+                                                    <div style="width:100%;border-bottom: 1px solid black;">&nbsp;</div>
+                                                </td>
+                                            </tr> -->
+                        </tbody>
+                      </table>
                     </div>
                     <section style="margin-top: 10px">
                       <p>0 - 3: Ringan</p>
@@ -1284,9 +1572,10 @@
                           name="nyeri-diprovokasi"
                           id="nyeri-diprovokasi"
                           label="nyeri-diprovokasi"
-                          placeholder="..."
                           myid="check_cara"
+                          placeholder="..."
                           style="width: 50%"
+                          fdprocessedid="hag21m"
                         />
                       </div>
                       <div
@@ -1298,9 +1587,10 @@
                           name="sifat-nyeri"
                           id="sifat-nyeri"
                           label="sifat-nyeri"
-                          placeholder="..."
                           myid="check_cara"
+                          placeholder="..."
                           style="width: 50%"
+                          fdprocessedid="12pjpg"
                         />
                       </div>
                       <div
@@ -1312,9 +1602,10 @@
                           name="lokasi-nyeri"
                           id="lokasi-nyeri"
                           label="lokasi-nyeri"
-                          placeholder="..."
                           myid="check_cara"
+                          placeholder="..."
                           style="width: 50%"
+                          fdprocessedid="2dts8"
                         />
                       </div>
                       <div
@@ -1326,9 +1617,10 @@
                           name="penjalaran-nyeri"
                           id="penjalaran-nyeri"
                           label="penjalaran-nyeri"
-                          placeholder="..."
                           myid="check_cara"
+                          placeholder="..."
                           style="width: 50%"
+                          fdprocessedid="nm6pa7"
                         />
                       </div>
                       <div
@@ -1340,9 +1632,10 @@
                           name="skala-nyeri"
                           id="skala-nyeri"
                           label="skala-nyeri"
-                          placeholder="..."
                           myid="check_cara"
+                          placeholder="..."
                           style="width: 50%"
+                          fdprocessedid="8sgxrq"
                         />
                       </div>
                       <div
@@ -1354,9 +1647,10 @@
                           name="durasi-nyeri"
                           id="durasi-nyeri"
                           label="durasi-nyeri"
-                          placeholder="..."
                           myid="check_cara"
+                          placeholder="..."
                           style="width: 50%"
+                          fdprocessedid="nsz4yc"
                         />
                       </div>
                       <div
@@ -1368,9 +1662,10 @@
                           name="frekuensi"
                           id="frekuensi"
                           label="frekuensi"
-                          placeholder="..."
                           myid="check_cara"
+                          placeholder="..."
                           style="width: 50%"
+                          fdprocessedid="u1iu2x"
                         />
                       </div>
                     </fieldset>
@@ -1625,6 +1920,7 @@
                 <label for="jam-diberitahukan-ke-dokter">Jam</label>
                 <input
                   type="text"
+                  mtype="pukul"
                   placeholder="00.00"
                   name="jam-diberitahukan-ke-dokter"
                   id="jam-diberitahukan-ke-dokter"
@@ -1676,6 +1972,8 @@
               <input
                 type="radio"
                 class="mst"
+                data-percol="1"
+                data-hitung1="1"
                 name="penurunan-berat-badan"
                 id="penurunan-berat-badan"
                 label="penurunan-berat-badan"
@@ -1691,6 +1989,8 @@
               <input
                 type="radio"
                 class="mst"
+                data-percol="1"
+                data-hitung1="1"
                 name="penurunan-berat-badan"
                 id="penurunan-berat-badan"
                 label="penurunan-berat-badan"
@@ -1713,6 +2013,8 @@
               <input
                 type="radio"
                 class="mst"
+                data-percol="1"
+                data-hitung1="1"
                 name="penurunan-berat-badan"
                 id="penurunan-berat-badan"
                 label="penurunan-berat-badan"
@@ -1726,6 +2028,8 @@
               <input
                 type="radio"
                 class="mst"
+                data-percol="1"
+                data-hitung1="1"
                 name="penurunan-berat-badan"
                 id="penurunan-berat-badan"
                 label="penurunan-berat-badan"
@@ -1738,6 +2042,8 @@
               <input
                 type="radio"
                 class="mst"
+                data-percol="1"
+                data-hitung1="1"
                 name="penurunan-berat-badan"
                 id="penurunan-berat-badan"
                 label="penurunan-berat-badan"
@@ -1751,6 +2057,8 @@
               <input
                 type="radio"
                 class="mst"
+                data-percol="1"
+                data-hitung1="1"
                 name="penurunan-berat-badan"
                 id="penurunan-berat-badan"
                 label="penurunan-berat-badan"
@@ -1763,6 +2071,8 @@
               <input
                 type="radio"
                 class="mst"
+                data-percol="1"
+                data-hitung1="1"
                 name="penurunan-berat-badan"
                 id="penurunan-berat-badan"
                 label="penurunan-berat-badan"
@@ -1785,6 +2095,8 @@
               <input
                 type="radio"
                 class="mst"
+                data-percol="1"
+                data-hitung1="1"
                 name="asupan-makan-menurun"
                 id="asupan-makan-menurun"
                 label="asupan-makan-menurun"
@@ -1797,6 +2109,8 @@
               <input
                 type="radio"
                 class="mst"
+                data-percol="1"
+                data-hitung1="1"
                 name="asupan-makan-menurun"
                 id="asupan-makan-menurun"
                 label="asupan-makan-menurun"
@@ -1818,6 +2132,8 @@
               <input
                 type="radio"
                 class="mst"
+                data-percol="1"
+                data-hitung1="1"
                 name="diagnosa-pasien-berhubungan-dengan-gizi"
                 id="diagnosa-pasien-berhubungan-dengan-gizi"
                 label="diagnosa-pasien-berhubungan-dengan-gizi"
@@ -1832,6 +2148,8 @@
               <input
                 type="radio"
                 class="mst"
+                data-percol="1"
+                data-hitung1="1"
                 name="diagnosa-pasien-berhubungan-dengan-gizi"
                 id="diagnosa-pasien-berhubungan-dengan-gizi"
                 label="diagnosa-pasien-berhubungan-dengan-gizi"
@@ -1850,9 +2168,9 @@
               <label for="">Total skor A + B + C = </label>
               <input
                 type="text"
-                name="skor-mst"
-                id="skor-mst"
-                label="skor-mst"
+                name="totalskor1"
+                id="totalskor1"
+                label="totalskor1"
                 myid="check_cara"
                 placeholder="..."
               />
@@ -3457,9 +3775,21 @@
           <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
           <td bgcolor="#FFFFFF">
             <input
+              name="17_tanggal"
+              type="text"
+              id="17_tanggal"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
+              size="10"
+              myid="check_cara"
+            />
+            <br />
+            <br />
+            <input
               name="17_pukul"
               type="text"
               id="17_pukul"
+              mtype="pukul"
               placeholder="00:00"
               size="10"
               myid="check_cara"
@@ -3480,16 +3810,40 @@
               myid="check_cara"
             />
             <br />
-            <select
-              type="select"
-              name="perawatnya"
-              id="perawatnya"
-              myid="check_cara"
-              iscombo="t"
-              onchange="get_ttd2();"
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_perawat_yang_mengkaji"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
             >
-              <option></option>
-            </select>
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_perawat_yang_mengkaji"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_perawat_yang_mengkaji"
+              id="paraf_ex_ttd_perawat_yang_mengkaji"
+              data-name="paraf"
+              data-id="ex_ttd_perawat_yang_mengkaji"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_perawat_yang_mengkaji"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
             <br />
             <font id="ttdnya2"></font>
           </td>
@@ -3502,25 +3856,6 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const mst = document.querySelectorAll(".mst");
-      const skorMST = document.querySelector("input[name='skor-mst']");
-
-      function hitungSkorMST() {
-        let totalSkor = 0;
-
-        mst.forEach((input) => {
-          if (input.checked) {
-            totalSkor += parseFloat(input.value);
-          }
-        });
-
-        skorMST.value = `${totalSkor}`;
-      }
-
-      mst.forEach((input) => {
-        input.addEventListener("change", hitungSkorMST);
-      });
-
       var radioButtons = document.querySelectorAll('input[type="radio"]');
       radioButtons.forEach(function (radio) {
         radio.addEventListener("click", function () {
