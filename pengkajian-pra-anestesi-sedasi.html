@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PENGKAJIAN PRA ANESTESIA / SEDASI</title>
   </head>
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"
+  ></script>
   <style>
     * {
       margin: 0;
@@ -31,10 +36,136 @@
       padding: 5px;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">PENGKAJIAN PRA ANESTESIA / SEDASI RS. AZRA BOGOR</h1>
 
-    <table class="table-bordered" width="100%">
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
           <input
@@ -58,30 +189,12 @@
               size="30"
               myid="check_cara"
               label="nama pasien"
+              value="{VNAMA_PASIEN}"
               placeholder="..."
             />
           </td>
           <td bgcolor="#DFE8F6">Jenis Kelamin</td>
-          <td bgcolor="#DFE8F6">
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="jenis-kelamin"
-              label="jenis-kelamin"
-              value="L"
-              myid="check_cara"
-            />
-            <label for="l">L</label>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="jenis-kelamin"
-              label="jenis-kelamin"
-              value="P"
-              myid="check_cara"
-            />
-            <label for="l">P</label>
-          </td>
+          <td bgcolor="#DFE8F6">{VSEX}</td>
           <td bgcolor="#DFE8F6">
             <label for="">Nomor Rekam Medis</label>
           </td>
@@ -92,6 +205,7 @@
               id="no-rek-medis"
               label="no-rek-medis"
               myid="check_cara"
+              value="{NO_RM}"
               placeholder="......"
             />
           </td>
@@ -104,8 +218,10 @@
               name="tgl_lahira2"
               type="text"
               id="tgl_lahir"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
+              value="{VBIRTH_DATE}"
               label="tanggal lahir"
             />
           </td>
@@ -119,6 +235,7 @@
               name="umur"
               myid="check_cara"
               id="umur"
+              value="{VAGE}"
               label="umur"
             />
           </td>
@@ -147,6 +264,7 @@
               id="kamar"
               placeholder="..."
               myid="check_cara"
+              value="{VNAMARUANGAN}"
               label="kamar"
             />
           </td>
@@ -207,7 +325,8 @@
               id="jenis-riwayat-operasi"
               label="jenis-riwayat-operasi"
               myid="check_cara"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
             />
           </td>
           <td>
@@ -687,7 +806,8 @@
               id="tahun-mendapat-transfusi"
               label="tahun-mendapat-transfusi"
               myid="check_cara"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
             />)
           </td>
           <td>
@@ -721,7 +841,8 @@
               id="tahun-pemeriksaan-hiv"
               label="tahun-pemeriksaan-hiv"
               myid="check_cara"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
             />)
           </td>
           <td>
@@ -2077,6 +2198,7 @@
               id="puasa-mulai-jam"
               label="puasa-mulai-jam"
               placeholder="......"
+              mtype="pukul"
               style="width: 100%"
               myid="check_cara"
             />
@@ -2088,7 +2210,8 @@
               name="puasa-mulai-tanggal"
               id="puasa-mulai-tanggal"
               label="puasa-mulai-tanggal"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
             />
           </td>
@@ -2290,14 +2413,55 @@
         <tr>
           <td style="width: 10%">Dokter yang merekomendasi</td>
           <td>
-            <label for="">Dr.</label>
-            <input
-              type="text"
-              name="dokter-yang-merekomendasi"
-              myid="check_cara"
-              id="dokter-yang-merekomendasi"
-            />
-            <font id="ttdnya2"></font>
+            <div
+              style="display: flex; flex-direction: column; align-items: start"
+            >
+              <label for=""
+                >Dr.
+                <input
+                  type="text"
+                  name="dokter-yang-merekomendasi"
+                  myid="check_cara"
+                  id="dokter-yang-merekomendasi"
+                  label="dokter-yang-merekomendasi"
+              /></label>
+
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_dokter_yg_merekomendasi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_dokter_yg_merekomendasi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_dokter_yg_merekomendasi"
+                id="paraf_ex_ttd_dokter_yg_merekomendasi"
+                data-name="paraf"
+                data-id="ex_ttd_dokter_yg_merekomendasi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_dokter_yg_merekomendasi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+              <br />
+              <font id="ttdnya2"></font>
+            </div>
           </td>
         </tr>
       </tbody>
