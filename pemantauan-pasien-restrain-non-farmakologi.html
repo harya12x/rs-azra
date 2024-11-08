@@ -31,6 +31,132 @@
       padding: 5px;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">
       PEMANTAUAN PASIEN RESTRAIN NON FARMAKOLOGI RS. AZRA BOGOR
@@ -47,6 +173,7 @@
               id="nama-pasien"
               label="nama-pasien"
               placeholder="......"
+              value="{VNAMA_PASIEN}"
               myid="check_cara"
             />
           </td>
@@ -61,6 +188,7 @@
               id="umur-pasien"
               label="umur-pasien"
               placeholder="......"
+              value="{VAGE}"
               myid="check_cara"
             />
           </td>
@@ -72,31 +200,13 @@
               id="no-rek-medis"
               label="no-rek-medis"
               placeholder="......"
+              value="{NO_RM}"
               myid="check_cara"
             />
           </td>
         </tr>
         <tr>
-          <td>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="jenis-kelamin"
-              label="jenis-kelamin"
-              value="L"
-              myid="check_cara"
-            />
-            <label for="">L /</label>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="jenis-kelamin"
-              label="jenis-kelamin"
-              value="P"
-              myid="check_cara"
-            />
-            <label for="">P</label>
-          </td>
+          <td>{VSEX}</td>
           <td>
             <div style="display: flex; gap: 5px">
               <label for="">Kelas / Kamar :</label>
@@ -108,6 +218,7 @@
                 label="kelas-kamar"
                 placeholder="......"
                 myid="check_cara"
+                value="{VNAMAKELAS} / {VNAMARUANGAN}"
               />
             </div>
           </td>
@@ -162,6 +273,7 @@
           <td>&nbsp;</td>
           <td>
             <textarea
+              type="textarea"
               style="width: 100%; padding: 5px"
               name="kondisi-kooperatif-atau-tdk-kooperatif"
               id="kondisi-kooperatif-atau-tdk-kooperatif"
@@ -279,7 +391,8 @@
               name="tgl-pukul-pemantauan-1"
               id="tgl-pukul-pemantauan-1"
               label="tgl-pukul-pemantauan-1"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -306,15 +419,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_1"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_1"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-1"
-              id="paraf-perawat-bidan-a-1"
-              label="paraf-perawat-bidan-a-1"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_1"
+              id="paraf_ex_paraf_perawat_bidan_a_1"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_1"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_1"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -323,7 +460,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-1"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-1"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-1"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -410,15 +548,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_1"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_1"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-1"
-              id="paraf-perawat-bidan-b-1"
-              label="paraf-perawat-bidan-b-1"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_1"
+              id="paraf_ex_paraf_perawat_bidan_b_1"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_1"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_1"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -429,7 +591,8 @@
               name="tgl-pukul-pemantauan-2"
               id="tgl-pukul-pemantauan-2"
               label="tgl-pukul-pemantauan-2"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -456,15 +619,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_2"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_2"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-2"
-              id="paraf-perawat-bidan-a-2"
-              label="paraf-perawat-bidan-a-2"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_2"
+              id="paraf_ex_paraf_perawat_bidan_a_2"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_2"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_2"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -473,7 +660,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-2"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-2"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-2"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -560,15 +748,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_2"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_2"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-2"
-              id="paraf-perawat-bidan-b-2"
-              label="paraf-perawat-bidan-b-2"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_2"
+              id="paraf_ex_paraf_perawat_bidan_b_2"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_2"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_2"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -579,7 +791,8 @@
               name="tgl-pukul-pemantauan-3"
               id="tgl-pukul-pemantauan-3"
               label="tgl-pukul-pemantauan-3"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -606,15 +819,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_3"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_3"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-3"
-              id="paraf-perawat-bidan-a-3"
-              label="paraf-perawat-bidan-a-3"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_3"
+              id="paraf_ex_paraf_perawat_bidan_a_3"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_3"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_3"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -623,7 +860,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-3"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-3"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-3"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -710,15 +948,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_3"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_3"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-3"
-              id="paraf-perawat-bidan-b-3"
-              label="paraf-perawat-bidan-b-3"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_3"
+              id="paraf_ex_paraf_perawat_bidan_b_3"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_3"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_3"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -729,7 +991,8 @@
               name="tgl-pukul-pemantauan-4"
               id="tgl-pukul-pemantauan-4"
               label="tgl-pukul-pemantauan-4"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -756,15 +1019,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_4"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_4"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-4"
-              id="paraf-perawat-bidan-a-4"
-              label="paraf-perawat-bidan-a-4"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_4"
+              id="paraf_ex_paraf_perawat_bidan_a_4"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_4"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_4"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -773,7 +1060,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-4"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-4"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-4"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -860,15 +1148,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_4"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_4"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-4"
-              id="paraf-perawat-bidan-b-4"
-              label="paraf-perawat-bidan-b-4"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_4"
+              id="paraf_ex_paraf_perawat_bidan_b_4"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_4"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_4"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -879,7 +1191,8 @@
               name="tgl-pukul-pemantauan-5"
               id="tgl-pukul-pemantauan-5"
               label="tgl-pukul-pemantauan-5"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -906,15 +1219,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_5"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_5"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-5"
-              id="paraf-perawat-bidan-a-5"
-              label="paraf-perawat-bidan-a-5"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_5"
+              id="paraf_ex_paraf_perawat_bidan_a_5"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_5"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_5"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -923,7 +1260,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-5"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-5"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-5"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -1010,15 +1348,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_5"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_5"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-5"
-              id="paraf-perawat-bidan-b-5"
-              label="paraf-perawat-bidan-b-5"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_5"
+              id="paraf_ex_paraf_perawat_bidan_b_5"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_5"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_5"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -1029,7 +1391,8 @@
               name="tgl-pukul-pemantauan-6"
               id="tgl-pukul-pemantauan-6"
               label="tgl-pukul-pemantauan-6"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -1056,15 +1419,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_6"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_6"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-6"
-              id="paraf-perawat-bidan-a-6"
-              label="paraf-perawat-bidan-a-6"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_6"
+              id="paraf_ex_paraf_perawat_bidan_a_6"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_6"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_6"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -1073,7 +1460,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-6"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-6"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-6"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -1160,15 +1548,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_6"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_6"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-6"
-              id="paraf-perawat-bidan-b-6"
-              label="paraf-perawat-bidan-b-6"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_6"
+              id="paraf_ex_paraf_perawat_bidan_b_6"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_6"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_6"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -1179,7 +1591,8 @@
               name="tgl-pukul-pemantauan-7"
               id="tgl-pukul-pemantauan-7"
               label="tgl-pukul-pemantauan-7"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -1206,15 +1619,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_7"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_7"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-7"
-              id="paraf-perawat-bidan-a-7"
-              label="paraf-perawat-bidan-a-7"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_7"
+              id="paraf_ex_paraf_perawat_bidan_a_7"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_7"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_7"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -1223,7 +1660,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-7"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-7"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-7"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -1310,15 +1748,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_7"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_7"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-7"
-              id="paraf-perawat-bidan-b-7"
-              label="paraf-perawat-bidan-b-7"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_7"
+              id="paraf_ex_paraf_perawat_bidan_b_7"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_7"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_7"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -1329,7 +1791,8 @@
               name="tgl-pukul-pemantauan-8"
               id="tgl-pukul-pemantauan-8"
               label="tgl-pukul-pemantauan-8"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -1356,15 +1819,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_8"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_8"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-8"
-              id="paraf-perawat-bidan-a-8"
-              label="paraf-perawat-bidan-a-8"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_8"
+              id="paraf_ex_paraf_perawat_bidan_a_8"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_8"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_8"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -1373,7 +1860,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-8"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-8"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-8"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -1460,15 +1948,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_8"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_8"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-8"
-              id="paraf-perawat-bidan-b-8"
-              label="paraf-perawat-bidan-b-8"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_8"
+              id="paraf_ex_paraf_perawat_bidan_b_8"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_8"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_8"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -1479,7 +1991,8 @@
               name="tgl-pukul-pemantauan-9"
               id="tgl-pukul-pemantauan-9"
               label="tgl-pukul-pemantauan-9"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -1506,15 +2019,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_9"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_9"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-9"
-              id="paraf-perawat-bidan-a-9"
-              label="paraf-perawat-bidan-a-9"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_9"
+              id="paraf_ex_paraf_perawat_bidan_a_9"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_9"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_9"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -1523,7 +2060,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-9"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-9"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-9"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -1610,15 +2148,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_9"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_9"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-9"
-              id="paraf-perawat-bidan-b-9"
-              label="paraf-perawat-bidan-b-9"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_9"
+              id="paraf_ex_paraf_perawat_bidan_b_9"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_9"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_9"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -1629,7 +2191,8 @@
               name="tgl-pukul-pemantauan-10"
               id="tgl-pukul-pemantauan-10"
               label="tgl-pukul-pemantauan-10"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -1656,15 +2219,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_10"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_10"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-10"
-              id="paraf-perawat-bidan-a-10"
-              label="paraf-perawat-bidan-a-10"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_10"
+              id="paraf_ex_paraf_perawat_bidan_a_10"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_10"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_10"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -1673,7 +2260,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-10"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-10"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-10"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -1760,15 +2348,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_10"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_10"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-10"
-              id="paraf-perawat-bidan-b-10"
-              label="paraf-perawat-bidan-b-10"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_10"
+              id="paraf_ex_paraf_perawat_bidan_b_10"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_10"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_10"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -1779,7 +2391,8 @@
               name="tgl-pukul-pemantauan-11"
               id="tgl-pukul-pemantauan-11"
               label="tgl-pukul-pemantauan-11"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -1806,15 +2419,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_11"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_11"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-11"
-              id="paraf-perawat-bidan-a-11"
-              label="paraf-perawat-bidan-a-11"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_11"
+              id="paraf_ex_paraf_perawat_bidan_a_11"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_11"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_11"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -1823,7 +2460,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-11"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-11"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-11"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -1910,15 +2548,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_11"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_11"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-11"
-              id="paraf-perawat-bidan-b-11"
-              label="paraf-perawat-bidan-b-11"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_11"
+              id="paraf_ex_paraf_perawat_bidan_b_11"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_11"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_11"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -1929,7 +2591,8 @@
               name="tgl-pukul-pemantauan-12"
               id="tgl-pukul-pemantauan-12"
               label="tgl-pukul-pemantauan-12"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -1956,15 +2619,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_12"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_12"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-12"
-              id="paraf-perawat-bidan-a-12"
-              label="paraf-perawat-bidan-a-12"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_12"
+              id="paraf_ex_paraf_perawat_bidan_a_12"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_12"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_12"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -1973,7 +2660,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-12"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-12"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-12"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -2060,15 +2748,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_12"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_12"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-12"
-              id="paraf-perawat-bidan-b-12"
-              label="paraf-perawat-bidan-b-12"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_12"
+              id="paraf_ex_paraf_perawat_bidan_b_12"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_12"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_12"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -2079,7 +2791,8 @@
               name="tgl-pukul-pemantauan-13"
               id="tgl-pukul-pemantauan-13"
               label="tgl-pukul-pemantauan-13"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -2106,15 +2819,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_13"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_13"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-13"
-              id="paraf-perawat-bidan-a-13"
-              label="paraf-perawat-bidan-a-13"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_13"
+              id="paraf_ex_paraf_perawat_bidan_a_13"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_13"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_13"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -2123,7 +2860,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-13"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-13"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-13"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -2210,15 +2948,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_13"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_13"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-13"
-              id="paraf-perawat-bidan-b-13"
-              label="paraf-perawat-bidan-b-13"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_13"
+              id="paraf_ex_paraf_perawat_bidan_b_13"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_13"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_13"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -2229,7 +2991,8 @@
               name="tgl-pukul-pemantauan-14"
               id="tgl-pukul-pemantauan-14"
               label="tgl-pukul-pemantauan-14"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -2256,15 +3019,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_14"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_14"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-14"
-              id="paraf-perawat-bidan-a-14"
-              label="paraf-perawat-bidan-a-14"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_14"
+              id="paraf_ex_paraf_perawat_bidan_a_14"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_14"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_14"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -2273,7 +3060,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-14"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-14"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-14"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -2360,15 +3148,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_14"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_14"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-14"
-              id="paraf-perawat-bidan-b-14"
-              label="paraf-perawat-bidan-b-14"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_14"
+              id="paraf_ex_paraf_perawat_bidan_b_14"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_14"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_14"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -2379,7 +3191,8 @@
               name="tgl-pukul-pemantauan-15"
               id="tgl-pukul-pemantauan-15"
               label="tgl-pukul-pemantauan-15"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -2406,15 +3219,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_15"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_15"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-15"
-              id="paraf-perawat-bidan-a-15"
-              label="paraf-perawat-bidan-a-15"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_15"
+              id="paraf_ex_paraf_perawat_bidan_a_15"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_15"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_15"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -2423,7 +3260,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-15"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-15"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-15"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -2510,15 +3348,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_15"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_15"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-15"
-              id="paraf-perawat-bidan-b-15"
-              label="paraf-perawat-bidan-b-15"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_15"
+              id="paraf_ex_paraf_perawat_bidan_b_15"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_15"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_15"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -2529,7 +3391,8 @@
               name="tgl-pukul-pemantauan-16"
               id="tgl-pukul-pemantauan-16"
               label="tgl-pukul-pemantauan-16"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -2556,15 +3419,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_16"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_16"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-16"
-              id="paraf-perawat-bidan-a-16"
-              label="paraf-perawat-bidan-a-16"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_16"
+              id="paraf_ex_paraf_perawat_bidan_a_16"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_16"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_16"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -2573,7 +3460,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-16"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-16"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-16"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -2660,15 +3548,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_16"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_16"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-16"
-              id="paraf-perawat-bidan-b-16"
-              label="paraf-perawat-bidan-b-16"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_16"
+              id="paraf_ex_paraf_perawat_bidan_b_16"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_16"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_16"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -2679,7 +3591,8 @@
               name="tgl-pukul-pemantauan-17"
               id="tgl-pukul-pemantauan-17"
               label="tgl-pukul-pemantauan-17"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -2706,15 +3619,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_17"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_17"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-17"
-              id="paraf-perawat-bidan-a-17"
-              label="paraf-perawat-bidan-a-17"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_17"
+              id="paraf_ex_paraf_perawat_bidan_a_17"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_17"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_17"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -2723,7 +3660,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-17"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-17"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-17"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -2810,15 +3748,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_17"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_17"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-17"
-              id="paraf-perawat-bidan-b-17"
-              label="paraf-perawat-bidan-b-17"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_17"
+              id="paraf_ex_paraf_perawat_bidan_b_17"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_17"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_17"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -2829,7 +3791,8 @@
               name="tgl-pukul-pemantauan-18"
               id="tgl-pukul-pemantauan-18"
               label="tgl-pukul-pemantauan-18"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -2856,15 +3819,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_18"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_18"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-18"
-              id="paraf-perawat-bidan-a-18"
-              label="paraf-perawat-bidan-a-18"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_18"
+              id="paraf_ex_paraf_perawat_bidan_a_18"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_18"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_18"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -2873,7 +3860,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-18"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-18"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-18"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -2960,15 +3948,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_18"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_18"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-18"
-              id="paraf-perawat-bidan-b-18"
-              label="paraf-perawat-bidan-b-18"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_18"
+              id="paraf_ex_paraf_perawat_bidan_b_18"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_18"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_18"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -2979,7 +3991,8 @@
               name="tgl-pukul-pemantauan-19"
               id="tgl-pukul-pemantauan-19"
               label="tgl-pukul-pemantauan-19"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -3006,15 +4019,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_19"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_19"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-19"
-              id="paraf-perawat-bidan-a-19"
-              label="paraf-perawat-bidan-a-19"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_19"
+              id="paraf_ex_paraf_perawat_bidan_a_19"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_19"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_19"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -3023,7 +4060,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-19"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-19"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-19"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -3110,15 +4148,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_19"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_19"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-19"
-              id="paraf-perawat-bidan-b-19"
-              label="paraf-perawat-bidan-b-19"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_19"
+              id="paraf_ex_paraf_perawat_bidan_b_19"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_19"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_19"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -3129,7 +4191,8 @@
               name="tgl-pukul-pemantauan-20"
               id="tgl-pukul-pemantauan-20"
               label="tgl-pukul-pemantauan-20"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -3156,15 +4219,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_20"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_20"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-20"
-              id="paraf-perawat-bidan-a-20"
-              label="paraf-perawat-bidan-a-20"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_20"
+              id="paraf_ex_paraf_perawat_bidan_a_20"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_20"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_20"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -3173,7 +4260,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-20"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-20"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-20"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -3260,15 +4348,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_20"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_20"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-20"
-              id="paraf-perawat-bidan-b-20"
-              label="paraf-perawat-bidan-b-20"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_20"
+              id="paraf_ex_paraf_perawat_bidan_b_20"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_20"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_20"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -3279,7 +4391,8 @@
               name="tgl-pukul-pemantauan-21"
               id="tgl-pukul-pemantauan-21"
               label="tgl-pukul-pemantauan-21"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -3306,15 +4419,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_21"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_21"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-21"
-              id="paraf-perawat-bidan-a-21"
-              label="paraf-perawat-bidan-a-21"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_21"
+              id="paraf_ex_paraf_perawat_bidan_a_21"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_21"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_21"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -3323,7 +4460,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-21"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-21"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-21"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -3410,15 +4548,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_21"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_21"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-21"
-              id="paraf-perawat-bidan-b-21"
-              label="paraf-perawat-bidan-b-21"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_21"
+              id="paraf_ex_paraf_perawat_bidan_b_21"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_21"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_21"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -3429,7 +4591,8 @@
               name="tgl-pukul-pemantauan-22"
               id="tgl-pukul-pemantauan-22"
               label="tgl-pukul-pemantauan-22"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -3456,15 +4619,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_22"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_22"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-22"
-              id="paraf-perawat-bidan-a-22"
-              label="paraf-perawat-bidan-a-22"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_22"
+              id="paraf_ex_paraf_perawat_bidan_a_22"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_22"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_22"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -3473,7 +4660,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-22"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-22"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-22"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -3560,15 +4748,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_22"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_22"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-22"
-              id="paraf-perawat-bidan-b-22"
-              label="paraf-perawat-bidan-b-22"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_22"
+              id="paraf_ex_paraf_perawat_bidan_b_22"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_22"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_22"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -3579,7 +4791,8 @@
               name="tgl-pukul-pemantauan-23"
               id="tgl-pukul-pemantauan-23"
               label="tgl-pukul-pemantauan-23"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -3606,15 +4819,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_23"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_23"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-23"
-              id="paraf-perawat-bidan-a-23"
-              label="paraf-perawat-bidan-a-23"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_23"
+              id="paraf_ex_paraf_perawat_bidan_a_23"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_23"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_23"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -3623,7 +4860,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-23"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-23"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-23"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -3710,15 +4948,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_23"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_23"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-23"
-              id="paraf-perawat-bidan-b-23"
-              label="paraf-perawat-bidan-b-23"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_23"
+              id="paraf_ex_paraf_perawat_bidan_b_23"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_23"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_23"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -3729,7 +4991,8 @@
               name="tgl-pukul-pemantauan-24"
               id="tgl-pukul-pemantauan-24"
               label="tgl-pukul-pemantauan-24"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -3756,15 +5019,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_24"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_24"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-24"
-              id="paraf-perawat-bidan-a-24"
-              label="paraf-perawat-bidan-a-24"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_24"
+              id="paraf_ex_paraf_perawat_bidan_a_24"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_24"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_24"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -3773,7 +5060,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-24"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-24"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-24"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -3860,15 +5148,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_24"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_24"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-24"
-              id="paraf-perawat-bidan-b-24"
-              label="paraf-perawat-bidan-b-24"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_24"
+              id="paraf_ex_paraf_perawat_bidan_b_24"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_24"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_24"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -3879,7 +5191,8 @@
               name="tgl-pukul-pemantauan-25"
               id="tgl-pukul-pemantauan-25"
               label="tgl-pukul-pemantauan-25"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -3906,15 +5219,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_25"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_25"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-25"
-              id="paraf-perawat-bidan-a-25"
-              label="paraf-perawat-bidan-a-25"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_25"
+              id="paraf_ex_paraf_perawat_bidan_a_25"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_25"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_25"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -3923,7 +5260,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-25"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-25"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-25"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -4010,15 +5348,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_b_25"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_b_25"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-25"
-              id="paraf-perawat-bidan-b-25"
-              label="paraf-perawat-bidan-b-25"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_b_25"
+              id="paraf_ex_paraf_perawat_bidan_b_25"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_b_25"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_b_25"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
         <tr>
@@ -4029,7 +5391,8 @@
               name="tgl-pukul-pemantauan-26"
               id="tgl-pukul-pemantauan-26"
               label="tgl-pukul-pemantauan-26"
-              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -4056,15 +5419,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_26"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_26"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-a-26"
-              id="paraf-perawat-bidan-a-26"
-              label="paraf-perawat-bidan-a-26"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_26"
+              id="paraf_ex_paraf_perawat_bidan_a_26"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_26"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_26"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
           <td>
             <input
@@ -4073,7 +5460,8 @@
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-26"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-26"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-26"
-              placeholder="......"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
               myid="check_cara"
             />
           </td>
@@ -4160,15 +5548,39 @@
             />
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_26"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_bidan_a_26"
+                src=""
+                style="display: none"
+            /></label>
             <input
-              style="width: 100%"
-              type="text"
-              name="paraf-perawat-bidan-b-26"
-              id="paraf-perawat-bidan-b-26"
-              label="paraf-perawat-bidan-b-26"
-              placeholder="......"
               myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_bidan_a_26"
+              id="paraf_ex_paraf_perawat_bidan_a_26"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_bidan_a_26"
             />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_bidan_a_26"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
       </tbody>
