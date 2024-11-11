@@ -31,9 +31,137 @@
       padding: 5px;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
-    <h1 class="title">RINGKASAN PULANG</h1>
-    <h1 class="title">RS. AZRA BOGOR</h1>
+    <h1 class="title">
+      RINGKASAN PULANG <br />
+      RS. AZRA BOGOR
+    </h1>
     <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
@@ -59,29 +187,11 @@
               myid="check_cara"
               label="nama pasien"
               placeholder="..."
+              value="{VNAMA_PASIEN}"
             />
           </td>
           <td>Jenis Kelamin</td>
-          <td>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="jenis-kelamin"
-              label="jenis-kelamin"
-              myid="check_cara"
-              value="L"
-            />
-            <label for="l">L</label>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="jenis-kelamin"
-              label="jenis-kelamin"
-              myid="check_cara"
-              value="P"
-            />
-            <label for="l">P</label>
-          </td>
+          <td>{VSEX}</td>
           <td>
             <label for="">Nomor Rekam Medis</label>
           </td>
@@ -93,20 +203,23 @@
               label="no-rek-medis"
               myid="check_cara"
               placeholder="......"
+              value="{NO_RM}"
             />
           </td>
         </tr>
 
         <tr>
-          <td bgcolor="">Tanggal Lahir</td>
-          <td bgcolor="">
+          <td>Tanggal Lahir</td>
+          <td>
             <input
+              class="datepicker hasDatepicker"
               name="tgl_lahira2"
               type="text"
               id="tgl_lahir"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
               myid="check_cara"
               label="tanggal lahir"
+              value="{VBIRTH_DATE}"
             />
           </td>
 
@@ -120,6 +233,7 @@
               label="umur-pasien"
               myid="check_cara"
               placeholder="......"
+              value="{VAGE}"
             />
           </td>
           <td>
@@ -133,6 +247,7 @@
               placeholder="..."
               myid="check_cara"
               label="kelas"
+              value="{VNAMAKELAS}"
             />
           </td>
         </tr>
@@ -140,22 +255,24 @@
           <td>Tanggal</td>
           <td>
             <input
+              class="datepicker hasDatepicker"
               type="text"
               name="tgl"
               id="tgl"
               label="tgl"
               myid="check_cara"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
             />
           </td>
 
           <td>Jam</td>
           <td>
             <input
-              type="time"
+              type="text"
               name="jam"
               id="jam"
               label="jam"
+              mtype="pukul"
               myid="check_cara"
               placeholder="00.00"
             />
@@ -170,6 +287,7 @@
               label="kamar"
               myid="check_cara"
               placeholder="......"
+              value="{VNAMARUANGAN}"
             />
           </td>
         </tr>
@@ -319,14 +437,12 @@
                 />
                 <label for="">Lainnya</label>
                 <input
-                  disabled
                   size="40"
                   type="text"
                   name="alat-bantu-lainnya"
                   id="alat-bantu-lainnya"
                   label="alat-bantu-lainnya"
                   myid="check_cara"
-                  id=""
                 />
               </div>
             </section>
@@ -426,7 +542,6 @@
                 />
                 <label for="">Lainnya</label>
                 <input
-                  disabled
                   size="40"
                   type="text"
                   name="detail-alat-kesehatan-lainnya"
@@ -468,7 +583,6 @@
               </div>
               <div>
                 <input
-                  disabled
                   type="checkbox"
                   class="jenis-perawatan-khusus"
                   name="perawatan-khusus-di-rumah-home-visit"
@@ -481,7 +595,6 @@
               </div>
               <div>
                 <input
-                  disabled
                   type="checkbox"
                   class="jenis-perawatan-khusus"
                   name="perawatan-khusus-di-rumah-home-care"
@@ -495,7 +608,6 @@
 
               <div>
                 <input
-                  disabled
                   type="checkbox"
                   class="jenis-perawatan-khusus"
                   name="perawatan-khusus-di-rumah-lainnya"
@@ -506,7 +618,6 @@
                 />
                 <label for="">Lainnya</label>
                 <input
-                  disabled
                   size="40"
                   type="text"
                   name="detail-perawatan-khusus-di-rumah-lainnya"
@@ -612,6 +723,7 @@
             <div style="display: flex; padding-left: 10px; gap: 10px">
               <label for=""><b>a.</b></label>
               <textarea
+                type="textarea"
                 name="diagnosis-keperawatan-1"
                 id="diagnosis-keperawatan-1"
                 label="diagnosis-keperawatan-1"
@@ -623,6 +735,7 @@
             <div style="display: flex; padding-left: 10px; gap: 10px">
               <label for=""><b>b.</b></label>
               <textarea
+                type="textarea"
                 name="diagnosis-keperawatan-2"
                 id="diagnosis-keperawatan-2"
                 label="diagnosis-keperawatan-2"
@@ -634,6 +747,7 @@
             <div style="display: flex; padding-left: 10px; gap: 10px">
               <label for=""><b>c.</b></label>
               <textarea
+                type="textarea"
                 name="diagnosis-keperawatan-3"
                 id="diagnosis-keperawatan-3"
                 label="diagnosis-keperawatan-3"
@@ -645,6 +759,7 @@
             <div style="display: flex; padding-left: 10px; gap: 10px">
               <label for=""><b>d.</b></label>
               <textarea
+                type="textarea"
                 name="diagnosis-keperawatan-4"
                 id="diagnosis-keperawatan-4"
                 label="diagnosis-keperawatan-4"
@@ -665,6 +780,7 @@
             <div style="display: flex; padding-left: 10px; gap: 10px">
               <label for=""><b>a.</b></label>
               <textarea
+                type="textarea"
                 name="tindakan-keperawatan-1"
                 id="tindakan-keperawatan-1"
                 label="tindakan-keperawatan-1"
@@ -676,6 +792,7 @@
             <div style="display: flex; padding-left: 10px; gap: 10px">
               <label for=""><b>b.</b></label>
               <textarea
+                type="textarea"
                 name="tindakan-keperawatan-2"
                 id="tindakan-keperawatan-2"
                 label="tindakan-keperawatan-2"
@@ -687,6 +804,7 @@
             <div style="display: flex; padding-left: 10px; gap: 10px">
               <label for=""><b>c.</b></label>
               <textarea
+                type="textarea"
                 name="tindakan-keperawatan-3"
                 id="tindakan-keperawatan-3"
                 label="tindakan-keperawatan-3"
@@ -698,6 +816,7 @@
             <div style="display: flex; padding-left: 10px; gap: 10px">
               <label for=""><b>d.</b></label>
               <textarea
+                type="textarea"
                 name="tindakan-keperawatan-4"
                 id="tindakan-keperawatan-4"
                 label="tindakan-keperawatan-4"
@@ -712,6 +831,8 @@
           <td style="padding-left: 10px">
             <b>Evaluasi:</b>
             <textarea
+              rows="4"
+              type="textarea"
               name="evaluasi"
               id="evaluasi"
               label="evaluasi"
@@ -818,14 +939,12 @@
                 />
                 <label for="">Ada</label>
                 <input
-                  disabled
                   type="text"
                   name="detail-batas-cairan"
                   id="detail-batas-cairan"
                   label="detail-batas-cairan"
                   myid="check_cara"
                   placeholder="..."
-                  id=""
                 />
                 <label for="">cc/Jam</label>
               </div>
@@ -1494,7 +1613,6 @@
               />
               <label for="">Lainnya</label>
               <input
-                disabled
                 type="text"
                 name="detail-keterampilan-khusus-lainnya"
                 id="detail-keterampilan-khusus-lainnya"
@@ -1559,22 +1677,24 @@
                       <input
                         style="flex: 1"
                         type="text"
+                        class="datepicker hasDatepicker"
                         name="tanggal-pemeriksaan-laboratorium-a"
                         id="tanggal-pemeriksaan-laboratorium-a"
                         label="tanggal-pemeriksaan-laboratorium-a"
                         myid="check_cara"
-                        placeholder="dd/mm/yyyy"
+                        placeholder="dd-mm-yy"
                       />
                     </div>
                     <div style="display: flex; gap: 5px">
                       <input
                         style="flex: 1"
                         type="text"
+                        class="datepicker hasDatepicker"
                         name="tanggal-pemeriksaan-laboratorium-b"
                         id="tanggal-pemeriksaan-laboratorium-b"
                         label="tanggal-pemeriksaan-laboratorium-b"
                         myid="check_cara"
-                        placeholder="dd/mm/yyyy"
+                        placeholder="dd-mm-yy"
                       />
                     </div>
                   </td>
@@ -1604,7 +1724,6 @@
                     </div>
                   </td>
                 </tr>
-
                 <tr>
                   <td style="text-align: center">2.</td>
                   <td>
@@ -1641,22 +1760,24 @@
                       <input
                         style="flex: 1"
                         type="text"
+                        class="datepicker hasDatepicker"
                         name="tanggal-pemeriksaan-radiologi-a"
                         id="tanggal-pemeriksaan-radiologi-a"
                         label="tanggal-pemeriksaan-radiologi-a"
                         myid="check_cara"
-                        placeholder="dd/mm/yyyy"
+                        placeholder="dd-mm-yy"
                       />
                     </div>
                     <div style="display: flex; gap: 5px">
                       <input
                         style="flex: 1"
                         type="text"
+                        class="datepicker hasDatepicker"
                         name="tanggal-pemeriksaan-radiologi-b"
                         id="tanggal-pemeriksaan-radiologi-b"
                         label="tanggal-pemeriksaan-radiologi-b"
                         myid="check_cara"
-                        placeholder="dd/mm/yyyy"
+                        placeholder="dd-mm-yy"
                       />
                     </div>
                   </td>
@@ -1705,13 +1826,14 @@
                   <td>
                     <div style="display: flex; gap: 5px">
                       <input
+                        class="datepicker hasDatepicker"
                         style="flex: 1"
                         type="text"
                         name="tanggal-pemeriksaan-ekg"
                         id="tanggal-pemeriksaan-ekg"
                         label="tanggal-pemeriksaan-ekg"
                         myid="check_cara"
-                        placeholder="dd/mm/yyyy"
+                        placeholder="dd-mm-yy"
                       />
                     </div>
                   </td>
@@ -1757,12 +1879,13 @@
                     <div style="display: flex; gap: 5px">
                       <input
                         style="flex: 1"
+                        class="datepicker hasDatepicker"
                         type="text"
                         name="tgl-pemeriksaan-echocardiography-treadmill"
                         id="tgl-pemeriksaan-echocardiography-treadmill"
                         label="tgl-pemeriksaan-echocardiography-treadmill"
                         myid="check_cara"
-                        placeholder="dd/mm/yyyy"
+                        placeholder="dd-mm-yy"
                       />
                     </div>
                   </td>
@@ -1809,11 +1932,12 @@
                       <input
                         style="flex: 1"
                         type="text"
+                        class="datepicker hasDatepicker"
                         name="tanggal-pemeriksaan-gastroscopy-colonoscopy"
                         id="tanggal-pemeriksaan-gastroscopy-colonoscopy"
                         label="tanggal-pemeriksaan-gastroscopy-colonoscopy"
                         myid="check_cara"
-                        placeholder="dd/mm/yyyy"
+                        placeholder="dd-mm-yy"
                       />
                     </div>
                   </td>
@@ -2573,22 +2697,24 @@
                     <input
                       style="width: 100%"
                       type="text"
+                      class="datepicker hasDatepicker"
                       name="tanggal-kontrol-selanjutnya-1"
                       id="tanggal-kontrol-selanjutnya-1"
                       label="tanggal-kontrol-selanjutnya-1"
+                      placeholder="dd-mm-yy"
                       myid="check_cara"
-                      placeholder="......"
                     />
                   </td>
                   <td>
                     <input
                       style="width: 100%"
-                      type="time"
+                      type="text"
                       name="jam-kontrol-selanjutnya-1"
                       id="jam-kontrol-selanjutnya-1"
                       label="jam-kontrol-selanjutnya-1"
                       myid="check_cara"
-                      placeholder="......"
+                      mtype="pukul"
+                      placeholder="00.00"
                     />
                   </td>
                   <td>
@@ -2619,23 +2745,25 @@
                   <td>
                     <input
                       style="width: 100%"
+                      class="datepicker hasDatepicker"
                       type="text"
                       name="tanggal-kontrol-selanjutnya-2"
                       id="tanggal-kontrol-selanjutnya-2"
                       label="tanggal-kontrol-selanjutnya-2"
+                      placeholder="dd-mm-yy"
                       myid="check_cara"
-                      placeholder="......"
                     />
                   </td>
                   <td>
                     <input
                       style="width: 100%"
-                      type="time"
+                      type="text"
                       name="jam-kontrol-selanjutnya-2"
                       id="jam-kontrol-selanjutnya-2"
                       label="jam-kontrol-selanjutnya-2"
+                      mtype="pukul"
                       myid="check_cara"
-                      placeholder="......"
+                      placeholder="00.00"
                     />
                   </td>
                   <td>
@@ -2667,22 +2795,24 @@
                     <input
                       style="width: 100%"
                       type="text"
+                      class="datepicker hasDatepicker"
                       name="tanggal-kontrol-selanjutnya-3"
                       id="tanggal-kontrol-selanjutnya-3"
                       label="tanggal-kontrol-selanjutnya-3"
+                      placeholder="dd-mm-yy"
                       myid="check_cara"
-                      placeholder="......"
                     />
                   </td>
                   <td>
                     <input
                       style="width: 100%"
-                      type="time"
+                      type="text"
                       name="jam-kontrol-selanjutnya-3"
                       id="jam-kontrol-selanjutnya-3"
                       label="jam-kontrol-selanjutnya-3"
+                      mtype="pukul"
                       myid="check_cara"
-                      placeholder="......"
+                      placeholder="00.00"
                     />
                   </td>
                   <td>
@@ -2714,9 +2844,11 @@
                     <input
                       style="width: 100%"
                       type="text"
+                      class="datepicker hasDatepicker"
                       name="tanggal-kontrol-selanjutnya-4"
                       id="tanggal-kontrol-selanjutnya-4"
                       label="tanggal-kontrol-selanjutnya-4"
+                      placeholder="dd-mm-yy"
                       myid="check_cara"
                       placeholder="......"
                     />
@@ -2724,12 +2856,13 @@
                   <td>
                     <input
                       style="width: 100%"
-                      type="time"
+                      type="text"
                       name="jam-kontrol-selanjutnya-4"
                       id="jam-kontrol-selanjutnya-4"
                       label="jam-kontrol-selanjutnya-4"
+                      mtype="pukul"
                       myid="check_cara"
-                      placeholder="......"
+                      placeholder="00.00"
                     />
                   </td>
                   <td>
@@ -2771,22 +2904,43 @@
           <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
           <td bgcolor="#FFFFFF">
             <input
+              name="17_tanggal"
+              type="text"
+              id="17_tanggal"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
+              size="15"
+              myid="check_cara"
+            />
+            <br />
+            <input
               name="17_pukul"
               type="text"
               id="17_pukul"
+              mtype="pukul"
               placeholder="00:00"
-              size="10"
+              size="15"
               myid="check_cara"
             />
           </td>
           <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
           <td bgcolor="#FFFFFF">
             <input
-              name="17_pukul"
+              name="18_tanggal"
               type="text"
-              id="17_pukul"
+              id="18_tanggal"
+              class="datepicker hasDatepicker"
+              placeholder="dd-mm-yy"
+              size="15"
+              myid="check_cara"
+            />
+            <br />
+            <input
+              name="18_pukul"
+              type="text"
+              id="18_pukul"
               placeholder="00:00"
-              size="10"
+              size="15"
               myid="check_cara"
             />
           </td>
@@ -2795,46 +2949,94 @@
           <td bgcolor="#FFFFFF">Nama</td>
           <td bgcolor="#FFFFFF">
             <input
-              name="17_nama3"
+              name="17_nama_perawat"
               type="text"
-              id="17_nama3"
+              id="17_nama_perawat"
               size="25"
               myid="check_cara"
             />
             <br />
-            <select
-              type="select"
-              name="perawatnya"
-              id="perawatnya"
-              myid="check_cara"
-              iscombo="t"
-              onchange="get_ttd2();"
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_17_ttd_perawat"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
             >
-              <option></option>
-            </select>
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_17_ttd_perawat"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_17_ttd_perawat"
+              id="paraf_ex_paraf_17_ttd_perawat"
+              data-name="paraf"
+              data-id="ex_paraf_17_ttd_perawat"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_17_ttd_perawat"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
 
             <font id="ttdnya2"></font>
           </td>
           <td bgcolor="#FFFFFF">Nama</td>
           <td bgcolor="#FFFFFF">
             <input
-              name="17_nama3"
+              name="17_nama_pasien_keluarga"
               type="text"
-              id="17_nama3"
+              id="17_nama_pasien_keluarga"
               size="25"
               myid="check_cara"
             />
             <br />
-            <select
-              type="select"
-              name="perawatnya"
-              id="perawatnya"
-              myid="check_cara"
-              iscombo="t"
-              onchange="get_ttd2();"
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_17_nama_pasien_keluarga"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
             >
-              <option></option>
-            </select>
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_17_nama_pasien_keluarga"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_17_nama_pasien_keluarga"
+              id="paraf_ex_paraf_17_nama_pasien_keluarga"
+              data-name="paraf"
+              data-id="ex_paraf_17_nama_pasien_keluarga"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_17_nama_pasien_keluarga"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
 
             <font id="ttdnya2"></font>
           </td>
@@ -2842,100 +3044,6 @@
       </tbody>
     </table>
     <script>
-      const alatBantuButtons = document.querySelectorAll(
-        'input[name="alat-bantu"]'
-      );
-      const alatBantuLainnya = document.querySelector(
-        'input[name="alat-bantu-lainnya"]'
-      );
-      const alatKesehatanButton = document.querySelector(
-        'input[name="alat-kesehatan-lainnya"]'
-      );
-      const alatKesehatanLainnya = document.querySelector(
-        'input[name="detail-alat-kesehatan-lainnya"]'
-      );
-      const perawatanKhususButtons = document.querySelectorAll(
-        'input[name="perawatan-khusus-di-rumah"]'
-      );
-
-      const jenisperawatanKhususButtons = document.querySelectorAll(
-        ".jenis-perawatan-khusus"
-      );
-      const perawatanKhususLainnya = document.querySelector(
-        'input[name="detail-perawatan-khusus-di-rumah-lainnya"]'
-      );
-      const keterampilanKhususButtons = document.querySelector(
-        'input[name="keterampilan-khusus-lainnya"]'
-      );
-      const detailKeterampilanKhususLainnya = document.querySelector(
-        'input[name="detail-keterampilan-khusus-lainnya"]'
-      );
-      const batasCairanButtons = document.querySelectorAll(
-        'input[name="batas-cairan"]'
-      );
-      const batasCairanLainnya = document.querySelector(
-        'input[name="detail-batas-cairan"]'
-      );
-
-      alatBantuButtons.forEach((alatBantu) => {
-        alatBantu.addEventListener("click", function () {
-          if (alatBantu.value == "Lainnya") {
-            alatBantuLainnya.removeAttribute("disabled");
-          } else {
-            alatBantuLainnya.setAttribute("disabled", true);
-            alatBantuLainnya.value = "";
-          }
-        });
-      });
-
-      alatKesehatanButton.addEventListener("click", function () {
-        if (alatKesehatanButton.checked) {
-          alatKesehatanLainnya.removeAttribute("disabled");
-        } else {
-          alatKesehatanLainnya.setAttribute("disabled", true);
-          alatKesehatanLainnya.value = "";
-        }
-      });
-      // alatKesehatanButton.forEach((alatKesehatan) => {
-      // });
-
-      perawatanKhususButtons.forEach((perawatanKhusus) => {
-        perawatanKhusus.addEventListener("click", function () {
-          if (perawatanKhusus.value == "Ada") {
-            jenisperawatanKhususButtons.forEach((jenisperawatanKhusus) => {
-              jenisperawatanKhusus.removeAttribute("disabled");
-            });
-            perawatanKhususLainnya.removeAttribute("disabled");
-          } else {
-            jenisperawatanKhususButtons.forEach((jenisperawatanKhusus) => {
-              jenisperawatanKhusus.setAttribute("disabled", true);
-            });
-            perawatanKhususLainnya.setAttribute("disabled", true);
-            perawatanKhususLainnya.value = "";
-          }
-        });
-      });
-
-      keterampilanKhususButtons.addEventListener("click", function () {
-        if (keterampilanKhususButtons.checked) {
-          detailKeterampilanKhususLainnya.removeAttribute("disabled");
-        } else {
-          detailKeterampilanKhususLainnya.setAttribute("disabled", true);
-          detailKeterampilanKhususLainnya.value = "";
-        }
-      });
-
-      batasCairanButtons.forEach((batasCairan) => {
-        batasCairan.addEventListener("click", function () {
-          if (batasCairan.value == "Ada") {
-            batasCairanLainnya.removeAttribute("disabled");
-          } else {
-            batasCairanLainnya.setAttribute("disabled", true);
-            batasCairanLainnya.value = "";
-          }
-        });
-      });
-
       document.addEventListener("DOMContentLoaded", function () {
         var radioButtons = document.querySelectorAll('input[type="radio"]');
         radioButtons.forEach(function (radio) {
