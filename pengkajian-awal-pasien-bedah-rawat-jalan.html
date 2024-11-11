@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pengkajian Awal Pasien Bedah Rawat Jalan</title>
   </head>
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"
+  ></script>
   <style>
     * {
       margin: 0;
@@ -31,6 +36,283 @@
       background-color: #dfe8f6;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+
+      $(".risiko-jatuh-dewasa").on("click", function () {
+        const nilai = parseFloat($(this).val() || 0);
+        const name = $(this).attr("name");
+
+        switch (name) {
+          case "riwayat-jatuh":
+            $("input[name='hasil-riwayat-jatuh']").val(nilai);
+            break;
+          case "diagnosa-sekunder":
+            $("input[name='hasil-diagnosa-sekunder']").val(nilai);
+            break;
+          case "alat-bantu":
+            $("input[name='hasil-alat-bantu']").val(nilai);
+            break;
+          case "terpasang-infus":
+            $("input[name='hasil-terpasang-infus']").val(nilai);
+            break;
+          case "gaya-berjalan":
+            $("input[name='hasil-gaya-berjalan']").val(nilai);
+            break;
+          default:
+            break;
+        }
+      });
+
+      $(".risiko-jatuh-bayi-anak").on("click", function () {
+        const nilai = parseFloat($(this).val() || 0);
+        const name = $(this).attr("name");
+
+        switch (name) {
+          case "umur-bayi-anak":
+            $("input[name='hasil-umur-bayi-anak']").val(nilai);
+            break;
+          case "jenis-kelamin-bayi-anak":
+            $("input[name='hasil-jenis-kelamin-bayi-anak']").val(nilai);
+            break;
+          case "diagnosa-bayi-anak":
+            $("input[name='hasil-diagnosa-bayi-anak']").val(nilai);
+            break;
+          case "gangguan-kognitif-bayi-anak":
+            $("input[name='hasil-gangguan-kognitif-bayi-anak']").val(nilai);
+            break;
+          case "faktor-lingkungan-bayi-anak":
+            $("input[name='hasil-faktor-lingkungan-bayi-anak']").val(nilai);
+            break;
+          case "respon-thdp-operasi-bayi-anak":
+            $("input[name='hasil-respon-thdp-operasi-bayi-anak']").val(nilai);
+            break;
+          case "penggunaan-obat-bayi-anak":
+            $("input[name='hasil-penggunaan-obat-bayi-anak']").val(nilai);
+            break;
+          default:
+            break;
+        }
+      });
+
+      $('input[type="radio"]')
+        .off("change")
+        .on("change", function () {
+          let total = 0;
+          let percol = $(this).data("percol");
+          // console.log(percol);
+
+          function cekStatus(names, valueIfYes) {
+            return $(`input[name='${names.join("'], input[name='")}']`).is(
+              ":checked[value='Ya']"
+            )
+              ? valueIfYes
+              : 0;
+          }
+
+          function hitungTotalSkriningLansia() {
+            let hasil = 0;
+            const totalRiwayatJatuhLamaJatuh = cekStatus(
+              ["riwayat-jatuh-lansia", "lama-jatuh-lansia"],
+              6
+            );
+
+            const totalDeliriumDisorientasiAgitasi = cekStatus(
+              ["delirium-lansia", "disorientasi-lansia", "agitasi-lansia"],
+              14
+            );
+
+            const totalKacamataBuramGlaukoma = cekStatus(
+              [
+                "kacamata-lansia",
+                "penglihatan-buram-lansia",
+                "glaukoma-lansia",
+              ],
+              1
+            );
+
+            const totalKebiasaanBerkemih = cekStatus(
+              ["kebiasaan-berkemih-lansia"],
+              2
+            );
+
+            const totalTransferMobilitas = $(
+              "input[name='transfer-lansia'], input[name='mobilitas-lansia']"
+            )
+              .filter(":checked")
+              .get()
+              .reduce((sum, input) => sum + parseFloat($(input).val()) || 0, 0);
+
+            const transferMobilitasScore =
+              totalTransferMobilitas >= 4 && totalTransferMobilitas <= 6
+                ? 7
+                : 0;
+
+            $("input[name='hasil-riwayat-jatuh-lansia']").val(
+              totalRiwayatJatuhLamaJatuh
+            );
+            $("input[name='hasil-status-mental-lansia']").val(
+              totalDeliriumDisorientasiAgitasi
+            );
+            $("input[name='hasil-penglihatan-buram-lansia']").val(
+              totalKacamataBuramGlaukoma
+            );
+            $("input[name='hasil-kebiasaan-berkemih-lansia']").val(
+              totalKebiasaanBerkemih
+            );
+            $("input[name='hasil-transfer-mobilitas-lansia']").val(
+              transferMobilitasScore
+            );
+
+            return (hasil =
+              totalRiwayatJatuhLamaJatuh +
+              totalDeliriumDisorientasiAgitasi +
+              totalKacamataBuramGlaukoma +
+              totalKebiasaanBerkemih +
+              transferMobilitasScore);
+          }
+
+          $("[data-hitung" + percol + "]").each(function () {
+            let radioValue = 0;
+            radioValue = $(this).val() || 0;
+
+            if ($(this).is(":checked")) {
+              radioValue = parseInt(radioValue);
+              if (percol == 4) {
+                total = hitungTotalSkriningLansia();
+              } else {
+                // console.log(radioValue);
+                total += radioValue;
+              }
+            }
+          });
+
+          $(`#totalskor` + percol).val(total);
+        });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">
       PENGKAJIAN AWAL PASIEN BEDAH RAWAT JALAN RS AZRA BOGOR
@@ -59,30 +341,12 @@
               size="30"
               myid="check_cara"
               label="nama pasien"
+              value="{VNAMA_PASIEN}"
               placeholder="..."
             />
           </td>
           <td>Jenis Kelamin</td>
-          <td>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="laki-laki"
-              myid="check_cara"
-              value="L"
-              label="jenis kelamin"
-            />
-            <label for="l">L</label>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="perempuan"
-              myid="check_cara"
-              value="P"
-              label="jenis kelamin"
-            />
-            <label for="l">P</label>
-          </td>
+          <td>{VSEX}</td>
           <td>
             <label for="">Nomor Rekam Medis</label>
           </td>
@@ -93,6 +357,7 @@
               name="no_rm"
               id="no_rm"
               label="nomor rekam medis"
+              value="{NO_RM}"
               placeholder="......"
             />
           </td>
@@ -105,8 +370,10 @@
               name="tgl_lahira2"
               type="text"
               id="tgl_lahir"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
+              value="{VBIRTH_DATE}"
               label="tanggal lahir"
             />
           </td>
@@ -114,11 +381,12 @@
           <td>Umur</td>
           <td>
             <input
-              type="number"
+              type="text"
               size="5"
               name="umur"
               id="umur"
               myid="check_cara"
+              value="{VAGE}"
               placeholder="..."
             />
           </td>
@@ -143,7 +411,8 @@
               name="tgl"
               type="text"
               id="tgl"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               label="tanggal"
             />
@@ -157,8 +426,9 @@
               name="jam"
               id="jam"
               label="jam"
+              mtype="pukul"
               myid="check_cara"
-              placeholder="..."
+              placeholder="00.00"
             />
           </td>
           <td colspan="2"></td>
@@ -194,6 +464,7 @@
                 id="tekanan-darah"
                 label="tekanan-darah"
                 myid="check_cara"
+                value="{VTD}"
                 placeholder="..."
               />
               <label for="tekanan-darah">mmHg,</label>
@@ -208,6 +479,7 @@
                 id="tekanan-darah"
                 label="tekanan-darah"
                 myid="check_cara"
+                value="{VNADI}"
                 placeholder="..."
               />
               <label for="frek-nadi">x/menit,</label>
@@ -222,6 +494,7 @@
                 id="tekanan-darah"
                 label="tekanan-darah"
                 myid="check_cara"
+                value="{VNAFAS}"
                 placeholder="..."
               />
               <label for="frek-nafas">x/menit,</label>
@@ -236,6 +509,7 @@
                 id="tekanan-darah"
                 label="tekanan-darah"
                 myid="check_cara"
+                value="{VSUHU}"
                 placeholder="..."
               />
               <label for="frek-nafas">&deg;C</label>
@@ -444,8 +718,8 @@
           </td>
         </tr>
         <tr>
-          <td></td>
-          <td>
+          <td>&nbsp;</td>
+          <td colspan="2">
             <div>
               <input
                 type="checkbox"
@@ -470,7 +744,7 @@
           </td>
         </tr>
         <tr>
-          <td></td>
+          <td>&nbsp;</td>
           <td>
             <div>
               <input
@@ -536,6 +810,7 @@
                 id="bb"
                 label="bb"
                 myid="check_cara"
+                value="{VBB}"
                 placeholder="..."
               />
               <label for="bb">Kg,</label>
@@ -550,6 +825,7 @@
                 id="tb"
                 label="tb"
                 myid="check_cara"
+                value="{VTB}"
                 placeholder="..."
               />
               <label for="tb">cm,</label>
@@ -601,6 +877,8 @@
               <input
                 class="mst-pasien-dewasa"
                 type="radio"
+                data-percol="1"
+                data-hitung1="1"
                 name="penurunan-berat-badan"
                 id="penurunan-berat-badan"
                 label="penurunan-berat-badan"
@@ -619,6 +897,8 @@
               <input
                 class="mst-pasien-dewasa"
                 type="radio"
+                data-percol="1"
+                data-hitung1="1"
                 name="penurunan-berat-badan"
                 id="penurunan-berat-badan"
                 label="penurunan-berat-badan"
@@ -643,6 +923,8 @@
               <input
                 class="mst-pasien-dewasa"
                 type="radio"
+                data-percol="1"
+                data-hitung1="1"
                 name="penurunan-berat-badan"
                 id="penurunan-berat-badan"
                 label="penurunan-berat-badan"
@@ -659,6 +941,8 @@
               <input
                 class="mst-pasien-dewasa"
                 type="radio"
+                data-percol="1"
+                data-hitung1="1"
                 name="penurunan-berat-badan"
                 id="penurunan-berat-badan"
                 label="penurunan-berat-badan"
@@ -675,6 +959,8 @@
               <input
                 class="mst-pasien-dewasa"
                 type="radio"
+                data-percol="1"
+                data-hitung1="1"
                 name="penurunan-berat-badan"
                 id="penurunan-berat-badan"
                 label="penurunan-berat-badan"
@@ -691,6 +977,8 @@
               <input
                 class="mst-pasien-dewasa"
                 type="radio"
+                data-percol="1"
+                data-hitung1="1"
                 name="penurunan-berat-badan"
                 id="penurunan-berat-badan"
                 label="penurunan-berat-badan"
@@ -712,6 +1000,8 @@
                 <input
                   class="mst-pasien-dewasa"
                   type="radio"
+                  data-percol="1"
+                  data-hitung1="1"
                   name="asupan-makan-menurun"
                   id="asupan-makan-menurun"
                   label="asupan-makan-menurun"
@@ -724,6 +1014,8 @@
                 <input
                   class="mst-pasien-dewasa"
                   type="radio"
+                  data-percol="1"
+                  data-hitung1="1"
                   name="asupan-makan-menurun"
                   id="asupan-makan-menurun"
                   label="asupan-makan-menurun"
@@ -742,9 +1034,9 @@
               <input
                 readonly
                 type="text"
-                name="total-skor-mst"
-                id="total-skor-mst"
-                label="total-skor-mst"
+                name="totalskor1"
+                id="totalskor1"
+                label="totalskor1"
                 myid="check_cara"
                 placeholder="..."
               />
@@ -774,108 +1066,158 @@
         </tr>
         <tr>
           <td style="padding-left: 10px; padding-right: 10px" colspan="3">
-            <div style="display: flex; justify-content: space-between">
-              <label for="nyeri">0</label>
-              <label for="nyeri">1</label>
-              <label for="nyeri">2</label>
-              <label for="nyeri">3</label>
-              <label for="nyeri">4</label>
-              <label for="nyeri">5</label>
-              <label for="nyeri">6</label>
-              <label for="nyeri">7</label>
-              <label for="nyeri">8</label>
-              <label for="nyeri">9</label>
-              <label for="nyeri">10</label>
-            </div>
-            <div style="display: flex; justify-content: space-between">
-              <input
-                type="radio"
-                name="nyeri"
-                id="nyeri"
-                label="nyeri"
-                myid="check_cara"
-                value="0"
-              />
-              <input
-                type="radio"
-                name="nyeri"
-                id="nyeri"
-                label="nyeri"
-                myid="check_cara"
-                value="1"
-              />
-              <input
-                type="radio"
-                name="nyeri"
-                id="nyeri"
-                label="nyeri"
-                myid="check_cara"
-                value="2"
-              />
-              <input
-                type="radio"
-                name="nyeri"
-                id="nyeri"
-                label="nyeri"
-                myid="check_cara"
-                value="3"
-              />
-              <input
-                type="radio"
-                name="nyeri"
-                id="nyeri"
-                label="nyeri"
-                myid="check_cara"
-                value="4"
-              />
-              <input
-                type="radio"
-                name="nyeri"
-                id="nyeri"
-                label="nyeri"
-                myid="check_cara"
-                value="5"
-              />
-              <input
-                type="radio"
-                name="nyeri"
-                id="nyeri"
-                label="nyeri"
-                myid="check_cara"
-                value="6"
-              />
-              <input
-                type="radio"
-                name="nyeri"
-                id="nyeri"
-                label="nyeri"
-                myid="check_cara"
-                value="7"
-              />
-              <input
-                type="radio"
-                name="nyeri"
-                id="nyeri"
-                label="nyeri"
-                myid="check_cara"
-                value="8"
-              />
-              <input
-                type="radio"
-                name="nyeri"
-                id="nyeri"
-                label="nyeri"
-                myid="check_cara"
-                value="9"
-              />
-              <input
-                type="radio"
-                name="nyeri"
-                id="nyeri"
-                label="nyeri"
-                myid="check_cara"
-                value="10"
-              />
+            <div class="margin-10v" align="center">
+              <img src="images/askep/wongbaker.png" style="width: 100%" />
+              <table style="width: 100%" class="table">
+                <tbody>
+                  <tr>
+                    <td width="15%">
+                      <div style="display: flex; justify-content: center">
+                        <label
+                          class="radio"
+                          style="width: fit-content; padding-left: 15px"
+                        >
+                          <input
+                            myid="check_cara"
+                            type="radio"
+                            name="apakah_nyeri"
+                            value="0"
+                          />
+                          <i></i> &nbsp;
+                        </label>
+                      </div>
+                    </td>
+                    <td width="20%">
+                      <div
+                        style="
+                          display: flex;
+                          justify-content: center;
+                          padding-left: 15px;
+                        "
+                      >
+                        <label class="radio">
+                          <input
+                            myid="check_cara"
+                            type="radio"
+                            name="apakah_nyeri"
+                            value="2"
+                          />
+                          <i></i> &nbsp;
+                        </label>
+                      </div>
+                    </td>
+                    <td width="13%">
+                      <div
+                        style="
+                          display: flex;
+                          justify-content: center;
+                          padding-left: 15px;
+                        "
+                      >
+                        <label class="radio">
+                          <input
+                            myid="check_cara"
+                            type="radio"
+                            name="apakah_nyeri"
+                            value="4"
+                          />
+                          <i></i> &nbsp;
+                        </label>
+                      </div>
+                    </td>
+                    <td width="21%">
+                      <div
+                        style="
+                          display: flex;
+                          justify-content: center;
+                          padding-left: 15px;
+                        "
+                      >
+                        <label class="radio">
+                          <input
+                            myid="check_cara"
+                            type="radio"
+                            name="apakah_nyeri"
+                            value="6"
+                          />
+                          <i></i> &nbsp;
+                        </label>
+                      </div>
+                    </td>
+                    <td width="14%">
+                      <div
+                        style="
+                          display: flex;
+                          justify-content: center;
+                          padding-left: 15px;
+                        "
+                      >
+                        <label class="radio">
+                          <input
+                            myid="check_cara"
+                            type="radio"
+                            name="apakah_nyeri"
+                            value="8"
+                          />
+                          <i></i> &nbsp;
+                        </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div
+                        style="
+                          display: flex;
+                          justify-content: center;
+                          padding-left: 15px;
+                        "
+                      >
+                        <label class="radio">
+                          <input
+                            myid="check_cara"
+                            type="radio"
+                            name="apakah_nyeri"
+                            value="10"
+                          />
+                          <i></i> &nbsp;
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center">0</td>
+                    <td align="center">2</td>
+                    <td align="center">4</td>
+                    <td align="center">6</td>
+                    <td align="center">8</td>
+                    <td align="center">10</td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="border-top: none !important">
+                      Tidak nyeri
+                    </td>
+                    <td align="center" style="border-top: none !important">
+                      Nyeri Sedikit
+                    </td>
+                    <td align="center" style="border-top: none !important">
+                      Agak mengganggu
+                    </td>
+                    <td align="center" style="border-top: none !important">
+                      Mengganggu Aktifitas
+                    </td>
+                    <td align="center" style="border-top: none !important">
+                      Sangat mengganggu
+                    </td>
+                    <td align="center" style="border-top: none !important">
+                      Tak tertahankan
+                    </td>
+                  </tr>
+                  <!-- <tr>
+                                        <td colspan="6">
+                                            <div style="width:100%;border-bottom: 1px solid black;">&nbsp;</div>
+                                        </td>
+                                    </tr> -->
+                </tbody>
+              </table>
             </div>
             <section style="margin-top: 10px">
               <p>0 - 3: Ringan</p>
@@ -901,6 +1243,7 @@
                   myid="check_cara"
                   placeholder="..."
                   style="width: 50%"
+                  fdprocessedid="hag21m"
                 />
               </div>
               <div style="display: flex; justify-content: space-between">
@@ -913,6 +1256,7 @@
                   myid="check_cara"
                   placeholder="..."
                   style="width: 50%"
+                  fdprocessedid="12pjpg"
                 />
               </div>
               <div style="display: flex; justify-content: space-between">
@@ -925,6 +1269,7 @@
                   myid="check_cara"
                   placeholder="..."
                   style="width: 50%"
+                  fdprocessedid="2dts8"
                 />
               </div>
               <div style="display: flex; justify-content: space-between">
@@ -937,6 +1282,7 @@
                   myid="check_cara"
                   placeholder="..."
                   style="width: 50%"
+                  fdprocessedid="nm6pa7"
                 />
               </div>
               <div style="display: flex; justify-content: space-between">
@@ -949,6 +1295,7 @@
                   myid="check_cara"
                   placeholder="..."
                   style="width: 50%"
+                  fdprocessedid="8sgxrq"
                 />
               </div>
               <div style="display: flex; justify-content: space-between">
@@ -961,6 +1308,7 @@
                   myid="check_cara"
                   placeholder="..."
                   style="width: 50%"
+                  fdprocessedid="nsz4yc"
                 />
               </div>
               <div style="display: flex; justify-content: space-between">
@@ -973,6 +1321,7 @@
                   myid="check_cara"
                   placeholder="..."
                   style="width: 50%"
+                  fdprocessedid="u1iu2x"
                 />
               </div>
             </fieldset>
@@ -1124,6 +1473,8 @@
                     <input
                       class="risiko-jatuh-dewasa"
                       type="radio"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="riwayat-jatuh"
                       id="riwayat-jatuh"
                       label="riwayat-jatuh"
@@ -1149,6 +1500,8 @@
                     <input
                       class="risiko-jatuh-dewasa"
                       type="radio"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="riwayat-jatuh"
                       id="riwayat-jatuh"
                       label="riwayat-jatuh"
@@ -1167,6 +1520,8 @@
                     <input
                       class="risiko-jatuh-dewasa"
                       type="radio"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="diagnosa-sekunder"
                       id="diagnosa-sekunder"
                       label="diagnosa-sekunder"
@@ -1192,6 +1547,8 @@
                     <input
                       class="risiko-jatuh-dewasa"
                       type="radio"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="diagnosa-sekunder"
                       id="diagnosa-sekunder"
                       label="diagnosa-sekunder"
@@ -1210,6 +1567,8 @@
                     <input
                       class="risiko-jatuh-dewasa"
                       type="radio"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="alat-bantu"
                       id="alat-bantu"
                       label="alat-bantu"
@@ -1235,6 +1594,8 @@
                     <input
                       class="risiko-jatuh-dewasa"
                       type="radio"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="alat-bantu"
                       id="alat-bantu"
                       label="alat-bantu"
@@ -1251,6 +1612,8 @@
                     <input
                       class="risiko-jatuh-dewasa"
                       type="radio"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="alat-bantu"
                       id="alat-bantu"
                       label="alat-bantu"
@@ -1269,6 +1632,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh-dewasa"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="terpasang-infus"
                       id="terpasang-infus"
                       label="terpasang-infus"
@@ -1294,6 +1659,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh-dewasa"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="terpasang-infus"
                       id="terpasang-infus"
                       label="terpasang-infus"
@@ -1312,6 +1679,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh-dewasa"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="gaya-berjalan"
                       id="gaya-berjalan"
                       label="gaya-berjalan"
@@ -1337,6 +1706,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh-dewasa"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="gaya-berjalan"
                       id="gaya-berjalan"
                       label="gaya-berjalan"
@@ -1352,6 +1723,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh-dewasa"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="gaya-berjalan"
                       id="gaya-berjalan"
                       label="gaya-berjalan"
@@ -1368,9 +1741,9 @@
                     <input
                       readonly
                       type="text"
-                      name="total-risiko-jatuh-pasien-dewasa"
-                      id="total-risiko-jatuh-pasien-dewasa"
-                      label="total-risiko-jatuh-pasien-dewasa"
+                      name="totalskor2"
+                      id="totalskor2"
+                      label="totalskor2"
                       myid="check_cara"
                       placeholder="......"
                     />
@@ -1421,9 +1794,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="umur"
-                      label="umur"
-                      id="umur"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="umur-bayi-anak"
+                      label="umur-bayi-anak"
+                      id="umur-bayi-anak"
                       value="4"
                       myid="check_cara"
                     />
@@ -1433,9 +1808,9 @@
                   <td rowspan="4">
                     <input
                       type="text"
-                      name="hasil-umur"
-                      id="hasil-umur"
-                      label="hasil-umur"
+                      name="hasil-umur-bayi-anak"
+                      id="hasil-umur-bayi-anak"
+                      label="hasil-umur-bayi-anak"
                       myid="check_cara"
                       placeholder="......"
                     />
@@ -1446,9 +1821,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="umur"
-                      label="umur"
-                      id="umur"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="umur-bayi-anak"
+                      label="umur-bayi-anak"
+                      id="umur-bayi-anak"
                       value="3"
                       myid="check_cara"
                     />
@@ -1461,9 +1838,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="umur"
-                      label="umur"
-                      id="umur"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="umur-bayi-anak"
+                      label="umur-bayi-anak"
+                      id="umur-bayi-anak"
                       value="2"
                       myid="check_cara"
                     />
@@ -1476,9 +1855,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="umur"
-                      label="umur"
-                      id="umur"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="umur-bayi-anak"
+                      label="umur-bayi-anak"
+                      id="umur-bayi-anak"
                       value="1"
                       myid="check_cara"
                     />
@@ -1494,9 +1875,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="jenis-kelamin"
-                      label="jenis-kelamin"
-                      id="jenis-kelamin"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="jenis-kelamin-bayi-anak"
+                      label="jenis-kelamin-bayi-anak"
+                      id="jenis-kelamin-bayi-anak"
                       value="2"
                       myid="check_cara"
                     />
@@ -1506,9 +1889,9 @@
                   <td rowspan="2">
                     <input
                       type="text"
-                      name="hasil-jenis-kelamin"
-                      id="hasil-jenis-kelamin"
-                      label="hasil-jenis-kelamin"
+                      name="hasil-jenis-kelamin-bayi-anak"
+                      id="hasil-jenis-kelamin-bayi-anak"
+                      label="hasil-jenis-kelamin-bayi-anak"
                       myid="check_cara"
                       placeholder="......"
                     />
@@ -1519,9 +1902,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="jenis-kelamin"
-                      label="jenis-kelamin"
-                      id="jenis-kelamin"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="jenis-kelamin-bayi-anak"
+                      label="jenis-kelamin-bayi-anak"
+                      id="jenis-kelamin-bayi-anak"
                       value="1"
                       myid="check_cara"
                     />
@@ -1537,21 +1922,23 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="diagnosa"
-                      id="diagnosa"
-                      label="diagnosa"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="diagnosa-bayi-anak"
+                      id="diagnosa-bayi-anak"
+                      label="diagnosa-bayi-anak"
                       myid="check_cara"
                       value="4"
                     />
-                    <label for="diagnosa">Kelaianan neurologi</label>
+                    <label for="diagnosa-bayi-anak">Kelaianan neurologi</label>
                   </td>
                   <td>4</td>
                   <td rowspan="4">
                     <input
                       type="text"
-                      name="hasil-diagnosa"
-                      id="hasil-diagnosa"
-                      label="hasil-diagnosa"
+                      name="hasil-diagnosa-bayi-anak"
+                      id="hasil-diagnosa-bayi-anak"
+                      label="hasil-diagnosa-bayi-anak"
                       myid="check_cara"
                       placeholder="......"
                     />
@@ -1562,9 +1949,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="diagnosa"
-                      id="diagnosa"
-                      label="diagnosa"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="diagnosa-bayi-anak"
+                      id="diagnosa-bayi-anak"
+                      label="diagnosa-bayi-anak"
                       myid="check_cara"
                       value="3"
                     />
@@ -1581,9 +1970,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="diagnosa"
-                      id="diagnosa"
-                      label="diagnosa"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="diagnosa-bayi-anak"
+                      id="diagnosa-bayi-anak"
+                      label="diagnosa-bayi-anak"
                       myid="check_cara"
                       value="2"
                     />
@@ -1596,9 +1987,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="diagnosa"
-                      id="diagnosa"
-                      label="diagnosa"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="diagnosa-bayi-anak"
+                      id="diagnosa-bayi-anak"
+                      label="diagnosa-bayi-anak"
                       myid="check_cara"
                       value="1"
                     />
@@ -1614,9 +2007,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="gangguan-kognitif"
-                      id="gangguan-kognitif"
-                      label="gangguan-kognitif"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="gangguan-kognitif-bayi-anak"
+                      id="gangguan-kognitif-bayi-anak"
+                      label="gangguan-kognitif-bayi-anak"
                       myid="check_cara"
                       value="3"
                     />
@@ -1626,9 +2021,9 @@
                   <td rowspan="3">
                     <input
                       type="text"
-                      name="hasil-gangguan-kognitif"
-                      id="hasil-gangguan-kognitif"
-                      label="hasil-gangguan-kognitif"
+                      name="hasil-gangguan-kognitif-bayi-anak"
+                      id="hasil-gangguan-kognitif-bayi-anak"
+                      label="hasil-gangguan-kognitif-bayi-anak"
                       myid="check_cara"
                       placeholder="......"
                     />
@@ -1639,9 +2034,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="gangguan-kognitif"
-                      id="gangguan-kognitif"
-                      label="gangguan-kognitif"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="gangguan-kognitif-bayi-anak"
+                      id="gangguan-kognitif-bayi-anak"
+                      label="gangguan-kognitif-bayi-anak"
                       myid="check_cara"
                       value="2"
                     />
@@ -1654,9 +2051,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="gangguan-kognitif"
-                      id="gangguan-kognitif"
-                      label="gangguan-kognitif"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="gangguan-kognitif-bayi-anak"
+                      id="gangguan-kognitif-bayi-anak"
+                      label="gangguan-kognitif-bayi-anak"
                       myid="check_cara"
                       value="1"
                     />
@@ -1672,9 +2071,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="faktor-lingkungan"
-                      id="faktor-lingkungan"
-                      label="faktor-lingkungan"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="faktor-lingkungan-bayi-anak"
+                      id="faktor-lingkungan-bayi-anak"
+                      label="faktor-lingkungan-bayi-anak"
                       myid="check_cara"
                       value="4"
                     />
@@ -1686,9 +2087,9 @@
                   <td rowspan="4">
                     <input
                       type="text"
-                      name="hasil-faktor-lingkungan"
-                      id="hasil-faktor-lingkungan"
-                      label="hasil-faktor-lingkungan"
+                      name="hasil-faktor-lingkungan-bayi-anak"
+                      id="hasil-faktor-lingkungan-bayi-anak"
+                      label="hasil-faktor-lingkungan-bayi-anak"
                       myid="check_cara"
                       placeholder="......"
                     />
@@ -1699,9 +2100,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="faktor-lingkungan"
-                      id="faktor-lingkungan"
-                      label="faktor-lingkungan"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="faktor-lingkungan-bayi-anak"
+                      id="faktor-lingkungan-bayi-anak"
+                      label="faktor-lingkungan-bayi-anak"
                       myid="check_cara"
                       value="3"
                     />
@@ -1716,9 +2119,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="faktor-lingkungan"
-                      id="faktor-lingkungan"
-                      label="faktor-lingkungan"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="faktor-lingkungan-bayi-anak"
+                      id="faktor-lingkungan-bayi-anak"
+                      label="faktor-lingkungan-bayi-anak"
                       myid="check_cara"
                       value="2"
                     />
@@ -1731,9 +2136,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="faktor-lingkungan"
-                      id="faktor-lingkungan"
-                      label="faktor-lingkungan"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="faktor-lingkungan-bayi-anak"
+                      id="faktor-lingkungan-bayi-anak"
+                      label="faktor-lingkungan-bayi-anak"
                       myid="check_cara"
                       value="1"
                     />
@@ -1749,9 +2156,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="respon-thdp-operasi"
-                      id="respon-thdp-operasi"
-                      label="respon-thdp-operasi"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="respon-thdp-operasi-bayi-anak"
+                      id="respon-thdp-operasi-bayi-anak"
+                      label="respon-thdp-operasi-bayi-anak"
                       myid="check_cara"
                       value="3"
                     />
@@ -1761,9 +2170,9 @@
                   <td rowspan="3">
                     <input
                       type="text"
-                      name="hasil-respon-thdp-operasi"
-                      id="hasil-respon-thdp-operasi"
-                      label="hasil-respon-thdp-operasi"
+                      name="hasil-respon-thdp-operasi-bayi-anak"
+                      id="hasil-respon-thdp-operasi-bayi-anak"
+                      label="hasil-respon-thdp-operasi-bayi-anak"
                       myid="check_cara"
                       placeholder="......"
                     />
@@ -1774,9 +2183,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="respon-thdp-operasi"
-                      id="respon-thdp-operasi"
-                      label="respon-thdp-operasi"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="respon-thdp-operasi-bayi-anak"
+                      id="respon-thdp-operasi-bayi-anak"
+                      label="respon-thdp-operasi-bayi-anak"
                       myid="check_cara"
                       value="2"
                     />
@@ -1789,9 +2200,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="respon-thdp-operasi"
-                      id="respon-thdp-operasi"
-                      label="respon-thdp-operasi"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="respon-thdp-operasi-bayi-anak"
+                      id="respon-thdp-operasi-bayi-anak"
+                      label="respon-thdp-operasi-bayi-anak"
                       myid="check_cara"
                       value="1"
                     />
@@ -1808,9 +2221,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="penggunaan-obat"
-                      id="penggunaan-obat"
-                      label="penggunaan-obat"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="penggunaan-obat-bayi-anak"
+                      id="penggunaan-obat-bayi-anak"
+                      label="penggunaan-obat-bayi-anak"
                       myid="check_cara"
                       value="3"
                     />
@@ -1825,9 +2240,9 @@
                   <td rowspan="3">
                     <input
                       type="text"
-                      name="hasil-penggunaan-obat"
-                      id="hasil-penggunaan-obat"
-                      label="hasil-penggunaan-obat"
+                      name="hasil-penggunaan-obat-bayi-anak"
+                      id="hasil-penggunaan-obat-bayi-anak"
+                      label="hasil-penggunaan-obat-bayi-anak"
                       myid="check_cara"
                       placeholder="......"
                     />
@@ -1838,9 +2253,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="penggunaan-obat"
-                      id="penggunaan-obat"
-                      label="penggunaan-obat"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="penggunaan-obat-bayi-anak"
+                      id="penggunaan-obat-bayi-anak"
+                      label="penggunaan-obat-bayi-anak"
                       myid="check_cara"
                       value="2"
                     />
@@ -1853,9 +2270,11 @@
                     <input
                       class="risiko-jatuh-bayi-anak"
                       type="radio"
-                      name="penggunaan-obat"
-                      id="penggunaan-obat"
-                      label="penggunaan-obat"
+                      data-percol="3"
+                      data-hitung3="3"
+                      name="penggunaan-obat-bayi-anak"
+                      id="penggunaan-obat-bayi-anak"
+                      label="penggunaan-obat-bayi-anak"
                       myid="check_cara"
                       value="1"
                     />
@@ -1870,9 +2289,9 @@
                     <input
                       readonly
                       type="text"
-                      name="total-risiko-jatuh-pasien-bayi-anak"
-                      id="total-risiko-jatuh-pasien-bayi-anak"
-                      label="total-risiko-jatuh-pasien-bayi-anak"
+                      name="totalskor3"
+                      id="totalskor3"
+                      label="totalskor3"
                       myid="check_cara"
                       placeholder="......"
                     />
@@ -1933,6 +2352,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="riwayat-jatuh-lansia"
                       label="riwayat-jatuh-lansia"
                       id="riwayat-jatuh-lansia"
@@ -1946,6 +2367,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="riwayat-jatuh-lansia"
                       label="riwayat-jatuh-lansia"
                       id="riwayat-jatuh-lansia"
@@ -1975,6 +2398,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="lama-jatuh-lansia"
                       label="lama-jatuh-lansia"
                       id="lama-jatuh-lansia"
@@ -1987,6 +2412,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="lama-jatuh-lansia"
                       label="lama-jatuh-lansia"
                       id="lama-jatuh-lansia"
@@ -2007,6 +2434,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="delirium-lansia"
                       label="delirium-lansia"
                       id="delirium-lansia"
@@ -2019,6 +2448,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="delirium-lansia"
                       label="delirium-lansia"
                       id="delirium-lansia"
@@ -2048,6 +2479,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="disorientasi-lansia"
                       label="disorientasi-lansia"
                       id="disorientasi-lansia"
@@ -2061,6 +2494,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="disorientasi-lansia"
                       label="disorientasi-lansia"
                       id="disorientasi-lansia"
@@ -2079,6 +2514,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="agitasi-lansia"
                       id="agitasi-lansia"
                       label="agitasi-lansia"
@@ -2091,6 +2528,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="agitasi-lansia"
                       id="agitasi-lansia"
                       label="agitasi-lansia"
@@ -2108,6 +2547,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="kacamata-lansia"
                       label="kacamata-lansia"
                       id="kacamata-lansia"
@@ -2120,6 +2561,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="kacamata-lansia"
                       label="kacamata-lansia"
                       id="kacamata-lansia"
@@ -2146,6 +2589,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="penglihatan-buram-lansia"
                       id="penglihatan-buram-lansia"
                       label="penglihatan-buram-lansia"
@@ -2158,6 +2603,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="penglihatan-buram-lansia"
                       id="penglihatan-buram-lansia"
                       label="penglihatan-buram-lansia"
@@ -2175,6 +2622,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="glaukoma-lansia"
                       label="glaukoma-lansia"
                       id="glaukoma-lansia"
@@ -2187,6 +2636,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="glaukoma-lansia"
                       label="glaukoma-lansia"
                       id="glaukoma-lansia"
@@ -2208,9 +2659,11 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
-                      name="berkemih-lansia"
-                      label="berkemih-lansia"
-                      id="berkemih-lansia"
+                      data-percol="4"
+                      data-hitung4="4"
+                      name="kebiasaan-berkemih-lansia"
+                      label="kebiasaan-berkemih-lansia"
+                      id="kebiasaan-berkemih-lansia"
                       value="Ya"
                       myid="check_cara"
                     />
@@ -2220,9 +2673,11 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
-                      name="berkemih-lansia"
-                      label="berkemih-lansia"
-                      id="berkemih-lansia"
+                      data-percol="4"
+                      data-hitung4="4"
+                      name="kebiasaan-berkemih-lansia"
+                      label="kebiasaan-berkemih-lansia"
+                      id="kebiasaan-berkemih-lansia"
                       value="Tidak"
                       myid="check_cara"
                     />
@@ -2232,9 +2687,9 @@
                   <td>
                     <input
                       type="text"
-                      name="hasil-berkemih-lansia"
-                      id="hasil-berkemih-lansia"
-                      label="hasil-berkemih-lansia"
+                      name="hasil-kebiasaan-berkemih-lansia"
+                      id="hasil-kebiasaan-berkemih-lansia"
+                      label="hasil-kebiasaan-berkemih-lansia"
                       myid="check_cara"
                       placeholder="......"
                     />
@@ -2251,6 +2706,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="transfer-lansia"
                       label="transfer-lansia"
                       id="transfer-lansia"
@@ -2283,6 +2740,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="transfer-lansia"
                       label="transfer-lansia"
                       id="transfer-lansia"
@@ -2298,6 +2757,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="transfer-lansia"
                       label="transfer-lansia"
                       id="transfer-lansia"
@@ -2315,6 +2776,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="transfer-lansia"
                       label="transfer-lansia"
                       id="transfer-lansia"
@@ -2332,6 +2795,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="mobilitas-lansia"
                       id="mobilitas-lansia"
                       label="mobilitas-lansia"
@@ -2347,6 +2812,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="mobilitas-lansia"
                       id="mobilitas-lansia"
                       label="mobilitas-lansia"
@@ -2362,6 +2829,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="mobilitas-lansia"
                       id="mobilitas-lansia"
                       label="mobilitas-lansia"
@@ -2377,6 +2846,8 @@
                     <input
                       class="risiko-jatuh-lansia"
                       type="radio"
+                      data-percol="4"
+                      data-hitung4="4"
                       name="mobilitas-lansia"
                       id="mobilitas-lansia"
                       label="mobilitas-lansia"
@@ -2392,9 +2863,9 @@
                     <input
                       readonly
                       type="text"
-                      name="total-risiko-jatuh-pasien-lansia"
-                      id="total-risiko-jatuh-pasien-lansia"
-                      label="total-risiko-jatuh-pasien-lansia"
+                      name="totalskor4"
+                      id="totalskor4"
+                      label="totalskor4"
                       myid="check_cara"
                       placeholder="......"
                     />
@@ -2730,28 +3201,30 @@
               <label for="penterjemah">Bahasa isyarat:</label>
             </div>
           </td>
-          <td style="display: flex; gap: 10px">
-            <div style="padding-left: 5px">
-              <input
-                type="radio"
-                name="bahasa-isyarat"
-                label="bahasa-isyarat"
-                id="bahasa-isyarat"
-                myid="check_cara"
-                value="Tidak"
-              />
-              <label for="bahasa-isyarat">Tidak</label>
-            </div>
-            <div style="padding-left: 5px">
-              <input
-                type="radio"
-                name="bahasa-isyarat"
-                label="bahasa-isyarat"
-                id="bahasa-isyarat"
-                myid="check_cara"
-                value="Ya"
-              />
-              <label for="bahasa-isyarat">Ya</label>
+          <td>
+            <div style="display: flex; gap: 10px">
+              <div style="padding-left: 5px">
+                <input
+                  type="radio"
+                  name="bahasa-isyarat"
+                  label="bahasa-isyarat"
+                  id="bahasa-isyarat"
+                  myid="check_cara"
+                  value="Tidak"
+                />
+                <label for="bahasa-isyarat">Tidak</label>
+              </div>
+              <div style="padding-left: 5px">
+                <input
+                  type="radio"
+                  name="bahasa-isyarat"
+                  label="bahasa-isyarat"
+                  id="bahasa-isyarat"
+                  myid="check_cara"
+                  value="Ya"
+                />
+                <label for="bahasa-isyarat">Ya</label>
+              </div>
             </div>
           </td>
         </tr>
@@ -2928,10 +3401,21 @@
           <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
           <td bgcolor="#FFFFFF">
             <input
+              name="17_tanggal"
+              type="text"
+              id="17_tanggal"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
+              size="10"
+              myid="check_cara"
+            />
+            <br />
+            <input
               name="17_pukul"
               type="text"
               id="17_pukul"
               placeholder="00:00"
+              mtype="pukul"
               size="10"
               myid="check_cara"
             />
@@ -2951,16 +3435,39 @@
               myid="check_cara"
             />
             <br />
-            <select
-              type="select"
-              name="perawatnya"
-              id="perawatnya"
-              myid="check_cara"
-              iscombo="t"
-              onchange="get_ttd2();"
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_perawat_bidan_a_26"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
             >
-              <option></option>
-            </select>
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_perawat_rawat_bedah"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_perawat_rawat_bedah"
+              id="paraf_ex_paraf_perawat_rawat_bedah"
+              data-name="paraf"
+              data-id="ex_paraf_perawat_rawat_bedah"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_perawat_rawat_bedah"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
             <br />
             <font id="ttdnya2"></font>
           </td>
@@ -2972,387 +3479,6 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // data input form risiko jatuh dewasa
-        const risikoJatuhDewasa = document.querySelectorAll(
-          ".risiko-jatuh-dewasa"
-        );
-
-        // data input form risiko jatuh bayi dan anak
-        const risikoJatuhBayiAnak = document.querySelectorAll(
-          ".risiko-jatuh-bayi-anak"
-        );
-
-        // data input form risiko jatuh lansia
-        const risikoJatuhLansia = document.querySelectorAll(
-          ".risiko-jatuh-lansia"
-        );
-
-        // data input form mst pasien dewasa
-        const mstPasienDewasa = document.querySelectorAll(".mst-pasien-dewasa");
-
-        // total hasil input form risiko jatuh dewasa
-        const totalrisikoJatuhDewasa = document.querySelector(
-          "input[name='total-risiko-jatuh-pasien-dewasa']"
-        );
-
-        // total hasil input form risiko jatuh bayi dan anak
-        const totalRisikoJatuhBayiAnak = document.querySelector(
-          "input[name='total-risiko-jatuh-pasien-bayi-anak']"
-        );
-
-        // total hasil input form risiko jatuh lansia
-        const totalRisikoJatuhLansia = document.querySelector(
-          "input[name='total-risiko-jatuh-pasien-lansia']"
-        );
-
-        // total hasil input form mst pasien dewasa
-        const totalMSTPasienDewasa = document.querySelector(
-          "input[name='total-skor-mst']"
-        );
-
-        // hasil input form risiko jatuh dewasa
-        const hasilRiwayatJatuh = document.querySelector(
-          "input[name='hasil-riwayat-jatuh']"
-        );
-        const hasilDiagnosaSekunder = document.querySelector(
-          "input[name='hasil-diagnosa-sekunder']"
-        );
-        const hasilAlatBantu = document.querySelector(
-          "input[name='hasil-alat-bantu']"
-        );
-        const hasilTerpasangInfus = document.querySelector(
-          "input[name='hasil-terpasang-infus']"
-        );
-        const hasilGayaBerjalan = document.querySelector(
-          "input[name='hasil-gaya-berjalan']"
-        );
-
-        // hasil input form risiko jatuh bayi dan anak
-        const hasilUmur = document.querySelector("input[name='hasil-umur']");
-        const hasilJenisKelamin = document.querySelector(
-          "input[name='hasil-jenis-kelamin']"
-        );
-        const hasilDiagnosa = document.querySelector(
-          "input[name='hasil-diagnosa']"
-        );
-        const hasilGangguanKognitif = document.querySelector(
-          "input[name='hasil-gangguan-kognitif']"
-        );
-        const hasilFaktorLingkungan = document.querySelector(
-          "input[name='hasil-faktor-lingkungan']"
-        );
-        const hasilResponThdpOperasi = document.querySelector(
-          "input[name='hasil-respon-thdp-operasi']"
-        );
-        const hasilPenggunaanObat = document.querySelector(
-          "input[name='hasil-penggunaan-obat']"
-        );
-
-        // hasil input form risiko jatuh lansia
-        const hasilRiwayatJatuhLansia = document.querySelector(
-          "input[name='hasil-riwayat-jatuh-lansia']"
-        );
-        const hasilStatusMentalLansia = document.querySelector(
-          "input[name='hasil-status-mental-lansia']"
-        );
-        const hasilPenglihatanLansia = document.querySelector(
-          "input[name='hasil-penglihatan-buram-lansia']"
-        );
-        const hasilKebiasaanBerkemihLansia = document.querySelector(
-          "input[name='hasil-berkemih-lansia']"
-        );
-        const hasilTransferLansia = document.querySelector(
-          "input[name='hasil-transfer-mobilitas-lansia']"
-        );
-
-        function hitungTotalRisikoDewasa() {
-          let total = 0;
-          hasilRiwayatJatuh.value = 0;
-          hasilDiagnosaSekunder.value = 0;
-          hasilTerpasangInfus.value = 0;
-
-          risikoJatuhDewasa.forEach((input) => {
-            if (input.checked) {
-              total += parseFloat(input.value);
-            }
-          });
-
-          const hasilRiwayatJatuhYa = Array.from(risikoJatuhDewasa)
-            .filter((input) => input.name === "riwayat-jatuh")
-            .some((input) => input.checked && input.value == 25);
-
-          if (hasilRiwayatJatuhYa) hasilRiwayatJatuh.value = 25;
-
-          const hasilDiagnosaSekunderYa = Array.from(risikoJatuhDewasa)
-            .filter((input) => input.name === "diagnosa-sekunder")
-            .some((input) => input.checked && input.value == 15);
-
-          if (hasilDiagnosaSekunderYa) hasilDiagnosaSekunder.value = 15;
-
-          const hasilAlatBantuYa = Array.from(risikoJatuhDewasa).filter(
-            (input) => input.name === "alat-bantu"
-          );
-
-          hasilAlatBantuYa.forEach((element) => {
-            console.log(element.classList.contains("clicked"));
-            if (element.classList.contains("clicked")) {
-              hasilAlatBantu.value = element.value;
-            }
-          });
-
-          const hasilTerpasangInfusYa = Array.from(risikoJatuhDewasa)
-            .filter((input) => input.name === "terpasang-infus")
-            .some((input) => input.checked && input.value == 20);
-
-          if (hasilTerpasangInfusYa) hasilTerpasangInfus.value = 20;
-
-          const hasilGayaBerjalanYa = Array.from(risikoJatuhDewasa).filter(
-            (input) => input.name === "gaya-berjalan"
-          );
-
-          hasilGayaBerjalanYa.forEach((element) => {
-            console.log(element.classList.contains("clicked"));
-            if (element.classList.contains("clicked")) {
-              hasilGayaBerjalan.value = element.value;
-            }
-          });
-
-          let hasil = total;
-          if (total < 25) {
-            hasil += `, Risiko rendah`;
-          } else if (total >= 25 && total < 44) {
-            hasil += `, Risiko sedang`;
-          } else {
-            hasil += `, Risiko tinggi`;
-          }
-          totalrisikoJatuhDewasa.value = hasil;
-        }
-
-        function hitungTotalRisikoBayiAnak() {
-          let total = 0;
-          hasilUmur.value = 0;
-          hasilJenisKelamin.value = 0;
-          hasilDiagnosa.value = 0;
-          hasilGangguanKognitif.value = 0;
-          hasilFaktorLingkungan.value = 0;
-          hasilResponThdpOperasi.value = 0;
-          hasilPenggunaanObat.value = 0;
-
-          // Loop melalui setiap input biaya perawatan
-          risikoJatuhBayiAnak.forEach((input) => {
-            if (input.checked) {
-              total += parseFloat(input.value);
-            }
-          });
-
-          const hasilUmurYa = Array.from(risikoJatuhBayiAnak).filter(
-            (input) => input.name === "umur"
-          );
-
-          hasilUmurYa.forEach((element) => {
-            console.log(element.classList.contains("clicked"));
-            if (element.classList.contains("clicked")) {
-              hasilUmur.value = element.value;
-            }
-          });
-
-          const hasilJenisKelaminYa = Array.from(risikoJatuhBayiAnak).filter(
-            (input) => input.name === "jenis-kelamin"
-          );
-
-          hasilJenisKelaminYa.forEach((element) => {
-            console.log(element.classList.contains("clicked"));
-            if (element.classList.contains("clicked")) {
-              hasilJenisKelamin.value = element.value;
-            }
-          });
-
-          const hasilDiagnosaYa = Array.from(risikoJatuhBayiAnak).filter(
-            (input) => input.name === "diagnosa"
-          );
-
-          hasilDiagnosaYa.forEach((element) => {
-            console.log(element.classList.contains("clicked"));
-            if (element.classList.contains("clicked")) {
-              hasilDiagnosa.value = element.value;
-            }
-          });
-
-          const hasilGangguanKognitifYa = Array.from(
-            risikoJatuhBayiAnak
-          ).filter((input) => input.name === "gangguan-kognitif");
-
-          hasilGangguanKognitifYa.forEach((element) => {
-            console.log(element.classList.contains("clicked"));
-            if (element.classList.contains("clicked")) {
-              hasilGangguanKognitif.value = element.value;
-            }
-          });
-
-          const hasilFaktorLingkunganYa = Array.from(
-            risikoJatuhBayiAnak
-          ).filter((input) => input.name === "faktor-lingkungan");
-
-          hasilFaktorLingkunganYa.forEach((element) => {
-            console.log(element.classList.contains("clicked"));
-            if (element.classList.contains("clicked")) {
-              hasilFaktorLingkungan.value = element.value;
-            }
-          });
-
-          const hasilResponThdpOperasiYa = Array.from(
-            risikoJatuhBayiAnak
-          ).filter((input) => input.name === "respon-thdp-operasi");
-
-          hasilResponThdpOperasiYa.forEach((element) => {
-            console.log(element.classList.contains("clicked"));
-            if (element.classList.contains("clicked")) {
-              hasilResponThdpOperasi.value = element.value;
-            }
-          });
-
-          const hasilPenggunaanObatYa = Array.from(risikoJatuhBayiAnak).filter(
-            (input) => input.name === "penggunaan-obat"
-          );
-
-          hasilPenggunaanObatYa.forEach((element) => {
-            console.log(element.classList.contains("clicked"));
-            if (element.classList.contains("clicked")) {
-              hasilPenggunaanObat.value = element.value;
-            }
-          });
-
-          let hasil = total;
-          if (total < 11) {
-            hasil += `, Risiko rendah`;
-          } else {
-            hasil += `, Risiko tinggi`;
-          }
-          totalRisikoJatuhBayiAnak.value = hasil;
-        }
-
-        function hitungTotalRisikoLansia() {
-          let total = 0;
-          let totalTransferMobilitas = 0;
-          let totalDeliriumDisorientasiAgitasi = 0;
-          let totalKacamataBuramGlaukoma = 0;
-          let totaltransferMobilitas = 0;
-          let totalKebiasaanBerkemih = 0;
-          let totalRiwayatJatuhLamaJatuh = 0;
-
-          const riwayatJatuhLamaJatuh = Array.from(risikoJatuhLansia)
-            .filter(
-              (input) =>
-                input.name === "riwayat-jatuh-lansia" ||
-                input.name === "lama-jatuh-lansia"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const deliriumDisorientasiAgitasi = Array.from(risikoJatuhLansia)
-            .filter(
-              (input) =>
-                input.name === "delirium-lansia" ||
-                input.name === "disorientasi-lansia" ||
-                input.name === "agitasi-lansia"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const kacamataBuramGlaukoma = Array.from(risikoJatuhLansia)
-            .filter(
-              (input) =>
-                input.name === "kacamata-lansia" ||
-                input.name === "penglihatan-buram-lansia" ||
-                input.name === "glaukoma-lansia"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const kebiasaanBerkemih = Array.from(risikoJatuhLansia)
-            .filter((input) => input.name == "berkemih-lansia")
-            .some((input) => input.checked && input.value === "Ya");
-
-          const transferMobilitas = Array.from(risikoJatuhLansia).filter(
-            (input) =>
-              input.name === "transfer-lansia" ||
-              input.name === "mobilitas-lansia"
-          );
-
-          if (riwayatJatuhLamaJatuh) totalRiwayatJatuhLamaJatuh = 6;
-          hasilRiwayatJatuhLansia.value = totalRiwayatJatuhLamaJatuh;
-
-          if (deliriumDisorientasiAgitasi)
-            totalDeliriumDisorientasiAgitasi = 14;
-          hasilStatusMentalLansia.value = totalDeliriumDisorientasiAgitasi;
-
-          if (kacamataBuramGlaukoma) totalKacamataBuramGlaukoma = 1;
-          hasilPenglihatanLansia.value = totalKacamataBuramGlaukoma;
-
-          if (kebiasaanBerkemih) totalKebiasaanBerkemih = 2;
-          hasilKebiasaanBerkemihLansia.value = totalKebiasaanBerkemih;
-
-          transferMobilitas.forEach((input) => {
-            if (input.checked) {
-              totalTransferMobilitas += parseFloat(input.value);
-            }
-            totaltransferMobilitas = 0;
-            if (totalTransferMobilitas < 4) {
-              totaltransferMobilitas = 0;
-            } else if (
-              totalTransferMobilitas >= 4 &&
-              totalTransferMobilitas <= 6
-            ) {
-              totaltransferMobilitas = 7;
-            }
-          });
-          hasilTransferLansia.value = totaltransferMobilitas;
-
-          total =
-            totalRiwayatJatuhLamaJatuh +
-            totalDeliriumDisorientasiAgitasi +
-            totalKacamataBuramGlaukoma +
-            totalKebiasaanBerkemih +
-            totaltransferMobilitas;
-          // Tampilkan hasil penjumlahan
-          let keterangan;
-
-          if (total < 6) {
-            keterangan = "risiko rendah";
-          } else if (total >= 6 && total <= 16) {
-            keterangan = "risiko sedang";
-          } else if (total > 16 && total <= 30) {
-            keterangan = "risiko tinggi";
-          }
-          totalRisikoJatuhLansia.value = `${total}, ${keterangan}`;
-        }
-
-        function hitungMSTPasienDewasa() {
-          let total = 0;
-
-          mstPasienDewasa.forEach((input) => {
-            if (input.checked) {
-              total += parseFloat(input.value);
-            }
-          });
-
-          totalMSTPasienDewasa.value = total;
-          console.log(total);
-        }
-
-        // Tambahkan event listener untuk setiap input biaya perawatan
-        risikoJatuhDewasa.forEach((input) => {
-          input.addEventListener("change", hitungTotalRisikoDewasa);
-        });
-        risikoJatuhBayiAnak.forEach((input) => {
-          input.addEventListener("change", hitungTotalRisikoBayiAnak);
-        });
-
-        risikoJatuhLansia.forEach((input) => {
-          input.addEventListener("change", hitungTotalRisikoLansia);
-        });
-
-        mstPasienDewasa.forEach((input) => {
-          input.addEventListener("change", hitungMSTPasienDewasa);
-        });
-
         var radioButtons = document.querySelectorAll('input[type="radio"]');
         radioButtons.forEach(function (radio) {
           radio.addEventListener("click", function () {
