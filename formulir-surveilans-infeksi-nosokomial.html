@@ -31,10 +31,136 @@
       padding: 5px;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">FORMULIR SURVEILANS INFEKSI NOSOKOMIAL RS. AZRA BOGOR</h1>
 
-    <table class="table-bordered" width="100%">
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
           <input
@@ -58,30 +184,12 @@
               size="30"
               myid="check_cara"
               label="nama pasien"
+              value="{VNAMA_PASIEN}"
               placeholder="..."
             />
           </td>
           <td>Jenis Kelamin</td>
-          <td>
-            <input
-              type="radio"
-              name="no-rek-medis"
-              id="jenis-kelamin"
-              label="jenis kelamin"
-              value="L"
-              myid="check_cara"
-            />
-            <label for="l">L</label>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="jenis-kelamin"
-              label="jenis kelamin"
-              value="P"
-              myid="check_cara"
-            />
-            <label for="l">P</label>
-          </td>
+          <td>{VSEX}</td>
           <th colspan="2">
             <label for="">NOMOR REKAM MEDIS</label>
           </th>
@@ -103,8 +211,10 @@
               name="tgl_lahira2"
               type="text"
               id="tgl_lahir"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
+              value="{VBIRTH_DATE}"
               label="tanggal lahir"
             />
           </td>
@@ -118,6 +228,7 @@
               name="umur"
               myid="check_cara"
               id="umur"
+              value="{VAGE}"
               label="umur"
             />
           </td>
@@ -145,6 +256,7 @@
               name="dpjp"
               id="dpjp"
               label="dpjp"
+              value="{VDPJP}"
               placeholder="..."
               myid="check_cara"
             />
@@ -162,13 +274,14 @@
               placeholder="..."
               myid="check_cara"
               label="kamar"
+              value="{VNAMARUANGAN}"
             />
           </td>
         </tr>
       </tbody>
     </table>
 
-    <table width="100%">
+    <table width="100%" class="table">
       <tbody>
         <tr>
           <td width="20%">
@@ -182,7 +295,8 @@
                 name="tgl-masuk"
                 id="tgl-masuk"
                 label="tgl-masuk"
-                placeholder="dd/mm/yyyy"
+                placeholder="dd-mm-yy"
+                class="datepicker hasDatepicker"
                 myid="check_cara"
               />
               <label for="">/</label>
@@ -192,6 +306,7 @@
                 name="jam-masuk"
                 id="jam-masuk"
                 label="jam-masuk"
+                mtype="pukul"
                 placeholder="00.00"
                 myid="check_cara"
               />
@@ -262,7 +377,8 @@
                 name="tgl-pindah-ruangan-1"
                 id="tgl-pindah-ruangan-1"
                 label="tgl-pindah-ruangan-1"
-                placeholder="......"
+                placeholder="dd-mm-yy"
+                class="datepicker hasDatepicker"
                 myid="check_cara"
               />
             </div>
@@ -289,7 +405,8 @@
                 name="tgl-pindah-ruangan-2"
                 id="tgl-pindah-ruangan-2"
                 label="tgl-pindah-ruangan-2"
-                placeholder="......"
+                placeholder="dd-mm-yy"
+                class="datepicker hasDatepicker"
                 myid="check_cara"
               />
             </div>
@@ -316,14 +433,15 @@
                 name="tgl-pindah-ruangan-3"
                 id="tgl-pindah-ruangan-3"
                 label="tgl-pindah-ruangan-3"
-                placeholder="......"
+                placeholder="dd-mm-yy"
+                class="datepicker hasDatepicker"
                 myid="check_cara"
               />
             </div>
           </td>
         </tr>
         <tr>
-          <td>
+          <td colspan="2">
             <b>III. Faktor Risiko Selama di Rawat</b>
           </td>
         </tr>
@@ -397,6 +515,7 @@
           </td>
           <td>
             <textarea
+              type="textarea"
               style="width: 100%"
               rows="6"
               name="lokasi-1"
@@ -412,7 +531,8 @@
               name="tgl-mulai-1"
               id="tgl-mulai-1"
               label="tgl-mulai-1"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
             />
           </td>
@@ -423,7 +543,8 @@
               name="tgl-s-d-1"
               id="tgl-s-d-1"
               label="tgl-s-d-1"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
             />
           </td>
@@ -445,12 +566,14 @@
               name="tgl-infeksi-1"
               id="tgl-infeksi-1"
               label="tgl-infeksi-1"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
             />
           </td>
           <td>
             <textarea
+              type="textarea"
               style="width: 100%"
               rows="6"
               name="catatan-1"
@@ -488,6 +611,7 @@
           </td>
           <td>
             <textarea
+              type="textarea"
               style="width: 100%"
               rows="3"
               name="lokasi-2"
@@ -503,7 +627,8 @@
               name="tgl-mulai-2"
               id="tgl-mulai-2"
               label="tgl-mulai-2"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
             />
           </td>
@@ -514,7 +639,8 @@
               name="tgl-s-d-2"
               id="tgl-s-d-2"
               label="tgl-s-d-2"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
             />
           </td>
@@ -536,12 +662,14 @@
               name="tgl-infeksi-2"
               id="tgl-infeksi-2"
               label="tgl-infeksi-2"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
             />
           </td>
           <td>
             <textarea
+              type="textarea"
               style="width: 100%"
               rows="3"
               name="catatan-2"
@@ -580,6 +708,7 @@
           </td>
           <td>
             <textarea
+              type="textarea"
               style="width: 100%"
               rows="4"
               name="lokasi-3"
@@ -595,7 +724,8 @@
               name="tgl-mulai-3"
               id="tgl-mulai-3"
               label="tgl-mulai-3"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
             />
           </td>
@@ -606,7 +736,8 @@
               name="tgl-s-d-3"
               id="tgl-s-d-3"
               label="tgl-s-d-3"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
             />
           </td>
@@ -628,12 +759,14 @@
               name="tgl-infeksi-3"
               id="tgl-infeksi-3"
               label="tgl-infeksi-3"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
             />
           </td>
           <td>
             <textarea
+              type="textarea"
               style="width: 100%"
               rows="4"
               name="catatan-3"
@@ -677,7 +810,8 @@
               name="tgl-mulai-4"
               id="tgl-mulai-4"
               label="tgl-mulai-4"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
             />
           </td>
@@ -688,7 +822,8 @@
               name="tgl-s-d-4"
               id="tgl-s-d-4"
               label="tgl-s-d-4"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
             />
           </td>
@@ -710,7 +845,8 @@
               name="tgl-infeksi-4"
               id="tgl-infeksi-4"
               label="tgl-infeksi-4"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
             />
           </td>
@@ -729,7 +865,7 @@
       </tbody>
     </table>
 
-    <table width="100%">
+    <table width="100%" class="table table-bordered">
       <tbody>
         <tr>
           <td>&nbsp;</td>
@@ -891,7 +1027,8 @@
             <input
               type="text"
               style="width: 100%"
-              placeholder="....."
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               name="tgl-hasil-laboratorium"
               id="tgl-hasil-laboratorium"
               label="tgl-hasil-laboratorium"
@@ -902,7 +1039,7 @@
       </tbody>
     </table>
 
-    <table width="100%">
+    <table width="100%" class="table table-bordered">
       <tbody>
         <tr>
           <td width="1%"><b>IV.</b></td>
@@ -915,9 +1052,9 @@
             <input
               type="text"
               style="width: 100%"
-              name="diagnosa"
-              id="diagnosa"
-              label="diagnosa"
+              name="tindakan-operasi-diagnosa"
+              id="tindakan-operasi-diagnosa"
+              label="tindakan-operasi-diagnosa"
               myid="check_cara"
               placeholder="....."
             />
@@ -935,7 +1072,8 @@
                 name="tgl-operasi-1"
                 id="tgl-operasi-1"
                 label="tgl-operasi-1"
-                placeholder="......"
+                placeholder="dd-mm-yy"
+                class="datepicker hasDatepicker"
                 myid="check_cara"
               />
               <label for="">Lama Operasi</label>
@@ -983,7 +1121,8 @@
                 name="tgl-operasi-2"
                 id="tgl-operasi-2"
                 label="tgl-operasi-2"
-                placeholder="......"
+                placeholder="dd-mm-yy"
+                class="datepicker hasDatepicker"
                 myid="check_cara"
               />
               <label for="">Lama Operasi</label>
@@ -1022,7 +1161,7 @@
         <tr>
           <td>&nbsp;</td>
           <td>3. Jenis Operasi</td>
-          <td>
+          <td colspan="2">
             <div style="display: flex; gap: 20px">
               <div>
                 <input
@@ -1074,7 +1213,7 @@
         <tr>
           <td>&nbsp;</td>
           <td>4. Tindakan Operasi</td>
-          <td>
+          <td colspan="2">
             <input
               type="radio"
               name="tindakan-operasi"
@@ -1098,7 +1237,7 @@
         <tr>
           <td>&nbsp;</td>
           <td>5. ASA Score</td>
-          <td>
+          <td colspan="2">
             <div style="display: flex; gap: 20px">
               <div>
                 <p>1</p>
@@ -1194,7 +1333,7 @@
               id="hari-ini-ke-1"
               label="hari-ini-ke-1"
               myid="check_cara"
-              placeholder="dd/mm/yyyy"
+              placeholder="......"
             />
           </td>
         </tr>
@@ -1244,7 +1383,7 @@
               id="hari-ini-ke-2"
               label="hari-ini-ke-2"
               myid="check_cara"
-              placeholder="dd/mm/yyyy"
+              placeholder="......"
             />
           </td>
         </tr>
@@ -1270,18 +1409,18 @@
             <label for="">Ada</label>
             <input
               type="radio"
-              name="pneunomia"
-              id="pneunomia"
-              label="pneunomia"
+              name="pneumonia"
+              id="pneumonia"
+              label="pneumonia"
               value="Ada"
               myid="check_cara"
             />
             <label for="">/ Tidak ada</label>
             <input
               type="radio"
-              name="pneunomia"
-              id="pneunomia"
-              label="pneunomia"
+              name="pneumonia"
+              id="pneumonia"
+              label="pneumonia"
               value="Tidak ada"
               myid="check_cara"
             />
@@ -1294,7 +1433,7 @@
               id="hari-ini-ke-3"
               label="hari-ini-ke-3"
               myid="check_cara"
-              placeholder="dd/mm/yyyy"
+              placeholder="......"
             />
           </td>
         </tr>
@@ -1344,7 +1483,7 @@
               id="hari-ini-ke-4"
               label="hari-ini-ke-4"
               myid="check_cara"
-              placeholder="dd/mm/yyyy"
+              placeholder="......"
             />
           </td>
         </tr>
@@ -1394,7 +1533,7 @@
               id="hari-ini-ke-4"
               label="hari-ini-ke-4"
               myid="check_cara"
-              placeholder="dd/mm/yyyy"
+              placeholder="......"
             />
           </td>
         </tr>
@@ -1449,7 +1588,8 @@
                 id="mulai-tgl-pemakaian-1"
                 label="mulai-tgl-pemakaian-1"
                 myid="check_cara"
-                placeholder="......"
+                placeholder="dd-mm-yy"
+                class="datepicker hasDatepicker"
               />
               <label for="">s/d</label>
               <input
@@ -1459,7 +1599,8 @@
                 id="selesai-tgl-pemakaian-1"
                 label="selesai-tgl-pemakaian-1"
                 myid="check_cara"
-                placeholder="......"
+                placeholder="dd-mm-yy"
+                class="datepicker hasDatepicker"
               />
             </div>
           </td>
@@ -1496,7 +1637,8 @@
                 id="mulai-tgl-pemakaian-2"
                 label="mulai-tgl-pemakaian-2"
                 myid="check_cara"
-                placeholder="......"
+                placeholder="dd-mm-yy"
+                class="datepicker hasDatepicker"
               />
               <label for="">s/d</label>
               <input
@@ -1506,7 +1648,8 @@
                 id="selesai-tgl-pemakaian-2"
                 label="selesai-tgl-pemakaian-2"
                 myid="check_cara"
-                placeholder="......"
+                placeholder="dd-mm-yy"
+                class="datepicker hasDatepicker"
               />
             </div>
           </td>
@@ -1584,36 +1727,104 @@
       </tbody>
     </table>
     <br />
-    <table width="100%">
+    <table width="100%" class="table">
       <tbody>
         <tr>
           <td style="text-align: center" width="50%">
             <p>Perawat Penanggung Jawab / Pengisi Formulir</p>
-            <br />
-            <br />
-            (<input
-              size="40"
-              type="text"
-              name="perawat-penanggung-jawab"
-              id="perawat-penanggung-jawab"
-              label="perawat-penanggung-jawab"
-              placeholder="......"
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_kepala_ruangan"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_kepala_ruangan"
+                src=""
+                style="display: none"
+            /></label>
+            <input
               myid="check_cara"
-            />)
+              type="hidden"
+              name="paraf_ex_paraf_kepala_ruangan"
+              id="paraf_ex_paraf_kepala_ruangan"
+              data-name="paraf"
+              data-id="ex_paraf_kepala_ruangan"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_kepala_ruangan"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
+            <label for="">
+              (<input
+                size="40"
+                type="text"
+                name="perawat-penanggung-jawab"
+                id="perawat-penanggung-jawab"
+                label="perawat-penanggung-jawab"
+                placeholder="......"
+                myid="check_cara"
+              />)
+            </label>
           </td>
           <td style="text-align: center" width="50%">
             <p>Kepala Ruangan</p>
-            <br />
-            <br />
-            (<input
-              size="40"
-              type="text"
-              name="kepala-ruangan"
-              id="kepala-ruangan"
-              label="kepala-ruangan"
-              placeholder="......"
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_penanggung_jawab_pengisi_formulir"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_penanggung_jawab_pengisi_formulir"
+                src=""
+                style="display: none"
+            /></label>
+            <input
               myid="check_cara"
-            />)
+              type="hidden"
+              name="paraf_ex_paraf_penanggung_jawab_pengisi_formulir"
+              id="paraf_ex_paraf_penanggung_jawab_pengisi_formulir"
+              data-name="paraf"
+              data-id="ex_paraf_penanggung_jawab_pengisi_formulir"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_penanggung_jawab_pengisi_formulir"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
+            <label for="">
+              (<input
+                size="40"
+                type="text"
+                name="kepala-ruangan"
+                id="kepala-ruangan"
+                label="kepala-ruangan"
+                placeholder="......"
+                myid="check_cara"
+              />)
+            </label>
           </td>
         </tr>
       </tbody>
