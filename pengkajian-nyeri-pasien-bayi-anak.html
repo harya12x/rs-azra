@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PENGKAJIAN NYERI PASIEN BAYI / ANAK RS. AZRA BOGOR</title>
   </head>
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"
+  ></script>
   <style>
     * {
       margin: 0;
@@ -31,6 +36,154 @@
       padding: 5px;
     }
   </style>
+
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+
+      $('input[type="radio"]')
+        .off("change")
+        .on("change", function () {
+          let total = 0;
+          let percol = $(this).data("percol");
+          console.log(percol);
+
+          $("[data-hitung" + percol + "]").each(function () {
+            let radioValue = 0;
+            radioValue = $(this).val() || 0;
+
+            if ($(this).is(":checked")) {
+              radioValue = parseInt(radioValue);
+              console.log(radioValue);
+              total += radioValue;
+            }
+          });
+
+          $(`#totalskor` + percol).val(total);
+        });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">PENGKAJIAN NYERI PASIEN BAYI / ANAK RS. AZRA BOGOR</h1>
 
@@ -58,30 +211,12 @@
               size="30"
               myid="check_cara"
               label="nama pasien"
+              value="{VNAMA_PASIEN}"
               placeholder="..."
             />
           </td>
           <td>Jenis Kelamin</td>
-          <td>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="laki-laki"
-              myid="check_cara"
-              value="L"
-              label="jenis kelamin"
-            />
-            <label for="l">L</label>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="perempuan"
-              myid="check_cara"
-              value="P"
-              label="jenis kelamin"
-            />
-            <label for="l">P</label>
-          </td>
+          <td>{VSEX}</td>
           <td>
             <label for="">Nomor Rekam Medis</label>
           </td>
@@ -92,6 +227,7 @@
               name="no_rm"
               id="no_rm"
               label="nomor rekam medis"
+              value="{NO_RM}"
             />
           </td>
         </tr>
@@ -103,7 +239,8 @@
               name="tgl_lahir"
               type="text"
               id="tgl_lahir"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               label="tanggal lahir"
             />
@@ -118,6 +255,7 @@
               id="umur"
               myid="check_cara"
               placeholder="..."
+              value="{VAGE}"
             />
           </td>
           <td>
@@ -131,6 +269,7 @@
               placeholder="..."
               myid="check_cara"
               label="kelas"
+              value="{VNAMAKELAS}"
             />
           </td>
         </tr>
@@ -143,7 +282,8 @@
               id="kamar"
               myid="check_cara"
               placeholder="..."
-              aria-label="kamar"
+              label="kamar"
+              value="{VNAMARUANGAN}"
             />
           </td>
         </tr>
@@ -162,7 +302,7 @@
               name="tgl-pengkajian-1"
               id="tgl-pengkajian-1"
               myid="check_cara"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
             />
           </th>
           <th>
@@ -172,7 +312,7 @@
               name="tgl-pengkajian-2"
               id="tgl-pengkajian-2"
               myid="check_cara"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
             />
           </th>
           <th>
@@ -182,7 +322,7 @@
               name="tgl-pengkajian-3"
               id="tgl-pengkajian-3"
               myid="check_cara"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
             />
           </th>
           <th>
@@ -192,7 +332,7 @@
               name="tgl-pengkajian-4"
               id="tgl-pengkajian-4"
               myid="check_cara"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
             />
           </th>
           <th>
@@ -202,7 +342,7 @@
               name="tgl-pengkajian-5"
               id="tgl-pengkajian-5"
               myid="check_cara"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
             />
           </th>
           <th>
@@ -212,7 +352,7 @@
               name="tgl-pengkajian-6"
               id="tgl-pengkajian-6"
               myid="check_cara"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
             />
           </th>
           <th>
@@ -222,7 +362,7 @@
               name="tgl-pengkajian-7"
               id="tgl-pengkajian-7"
               myid="check_cara"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
             />
           </th>
         </tr>
@@ -236,6 +376,7 @@
               id="jam-pengkajian-1"
               myid="check_cara"
               placeholder="00.00"
+              mtype="pukul"
             />
           </th>
           <th>
@@ -246,6 +387,7 @@
               id="jam-pengkajian-2"
               myid="check_cara"
               placeholder="00.00"
+              mtype="pukul"
             />
           </th>
           <th>
@@ -256,6 +398,7 @@
               id="jam-pengkajian-3"
               myid="check_cara"
               placeholder="00.00"
+              mtype="pukul"
             />
           </th>
           <th>
@@ -266,6 +409,7 @@
               id="jam-pengkajian-4"
               myid="check_cara"
               placeholder="00.00"
+              mtype="pukul"
             />
           </th>
           <th>
@@ -276,6 +420,7 @@
               id="jam-pengkajian-5"
               myid="check_cara"
               placeholder="00.00"
+              mtype="pukul"
             />
           </th>
           <th>
@@ -286,6 +431,7 @@
               id="jam-pengkajian-6"
               myid="check_cara"
               placeholder="00.00"
+              mtype="pukul"
             />
           </th>
           <th>
@@ -296,6 +442,7 @@
               id="jam-pengkajian-7"
               myid="check_cara"
               placeholder="00.00"
+              mtype="pukul"
             />
           </th>
         </tr>
@@ -309,6 +456,8 @@
             <input
               style="width: 100%"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               type="radio"
               name="wajah-1"
               myid="check_cara"
@@ -321,6 +470,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="wajah-2"
               myid="check_cara"
               value="0"
@@ -332,6 +483,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="wajah-3"
               myid="check_cara"
               id="wajah-3"
@@ -343,6 +496,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="wajah-4"
               myid="check_cara"
               id="wajah-4"
@@ -354,6 +509,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung1="5"
               name="wajah-5"
               myid="check_cara"
               value="0"
@@ -365,6 +522,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-6"
+              data-percol="6"
+              data-hitung6="6"
               name="wajah-6"
               myid="check_cara"
               value="0"
@@ -376,6 +535,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-7"
+              data-percol="7"
+              data-hitung7="7"
               name="wajah-7"
               myid="check_cara"
               value="0"
@@ -391,6 +552,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               value="1"
               name="wajah-1"
               id="wajah-1"
@@ -402,6 +565,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               value="1"
               name="wajah-2"
               id="wajah-2"
@@ -413,6 +578,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               value="1"
               name="wajah-3"
               myid="check_cara"
@@ -424,6 +591,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               value="1"
               name="wajah-4"
               myid="check_cara"
@@ -435,6 +604,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung1="5"
               value="1"
               name="wajah-5"
               myid="check_cara"
@@ -446,6 +617,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-6"
+              data-percol="6"
+              data-hitung6="6"
               value="1"
               name="wajah-6"
               myid="check_cara"
@@ -457,6 +630,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-7"
+              data-percol="7"
+              data-hitung7="7"
               value="1"
               name="wajah-7"
               myid="check_cara"
@@ -475,6 +650,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="wajah-1"
               myid="check_cara"
               value="2"
@@ -486,6 +663,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="wajah-2"
               myid="check_cara"
               value="2"
@@ -497,6 +676,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="wajah-3"
               myid="check_cara"
               value="2"
@@ -508,6 +689,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="wajah-4"
               myid="check_cara"
               value="2"
@@ -519,6 +702,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung1="5"
               name="wajah-5"
               myid="check_cara"
               value="2"
@@ -530,6 +715,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-6"
+              data-percol="6"
+              data-hitung6="6"
               name="wajah-6"
               myid="check_cara"
               value="2"
@@ -541,6 +728,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-7"
+              data-percol="7"
+              data-hitung7="7"
               name="wajah-7"
               myid="check_cara"
               value="2"
@@ -557,6 +746,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="ekstremitas-1"
               myid="check_cara"
               value="0"
@@ -568,6 +759,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="ekstremitas-2"
               myid="check_cara"
               value="0"
@@ -579,6 +772,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="ekstremitas-3"
               myid="check_cara"
               value="0"
@@ -590,6 +785,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="ekstremitas-4"
               myid="check_cara"
               value="0"
@@ -601,6 +798,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung1="5"
               name="ekstremitas-5"
               myid="check_cara"
               value="0"
@@ -612,6 +811,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-6"
+              data-percol="6"
+              data-hitung6="6"
               name="ekstremitas-6"
               myid="check_cara"
               value="0"
@@ -623,6 +824,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-7"
+              data-percol="7"
+              data-hitung7="7"
               name="ekstremitas-7"
               myid="check_cara"
               value="0"
@@ -638,6 +841,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="ekstremitas-1"
               myid="check_cara"
               value="1"
@@ -649,6 +854,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="ekstremitas-2"
               myid="check_cara"
               value="1"
@@ -660,6 +867,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="ekstremitas-3"
               myid="check_cara"
               value="1"
@@ -671,6 +880,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="ekstremitas-4"
               myid="check_cara"
               value="1"
@@ -682,6 +893,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung1="5"
               name="ekstremitas-5"
               myid="check_cara"
               value="1"
@@ -693,6 +906,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-6"
+              data-percol="6"
+              data-hitung6="6"
               name="ekstremitas-6"
               myid="check_cara"
               value="1"
@@ -704,6 +919,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-7"
+              data-percol="7"
+              data-hitung7="7"
               name="ekstremitas-7"
               myid="check_cara"
               value="1"
@@ -719,6 +936,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="ekstremitas-1"
               myid="check"
               value="2"
@@ -730,6 +949,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="ekstremitas-2"
               myid="check"
               value="2"
@@ -741,6 +962,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="ekstremitas-3"
               myid="check"
               value="2"
@@ -752,6 +975,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="ekstremitas-4"
               myid="check"
               value="2"
@@ -763,6 +988,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung1="5"
               name="ekstremitas-5"
               myid="check"
               value="2"
@@ -774,6 +1001,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-6"
+              data-percol="6"
+              data-hitung6="6"
               name="ekstremitas-6"
               myid="check"
               value="2"
@@ -785,6 +1014,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-7"
+              data-percol="7"
+              data-hitung7="7"
               name="ekstremitas-7"
               myid="check"
               value="2"
@@ -801,6 +1032,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               value="0"
               name="gerakan-1"
               id="gerakan-1"
@@ -812,6 +1045,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               value="0"
               name="gerakan-2"
               id="gerakan-2"
@@ -823,6 +1058,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               value="0"
               name="gerakan-3"
               id="gerakan-3"
@@ -834,6 +1071,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               value="0"
               name="gerakan-4"
               id="gerakan-4"
@@ -845,6 +1084,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung1="5"
               value="0"
               name="gerakan-5"
               id="gerakan-5"
@@ -856,6 +1097,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-6"
+              data-percol="6"
+              data-hitung6="6"
               value="0"
               name="gerakan-6"
               id="gerakan-6"
@@ -867,6 +1110,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-7"
+              data-percol="7"
+              data-hitung7="7"
               value="0"
               name="gerakan-7"
               id="gerakan-7"
@@ -882,6 +1127,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="gerakan-1"
               value="1"
               id="gerakan-1"
@@ -893,6 +1140,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="gerakan-2"
               value="1"
               id="gerakan-2"
@@ -904,6 +1153,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="gerakan-3"
               value="1"
               id="gerakan-3"
@@ -915,6 +1166,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="gerakan-4"
               value="1"
               id="gerakan-4"
@@ -926,6 +1179,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung1="5"
               name="gerakan-5"
               value="1"
               id="gerakan-5"
@@ -937,6 +1192,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-6"
+              data-percol="6"
+              data-hitung6="6"
               name="gerakan-6"
               value="1"
               id="gerakan-6"
@@ -948,6 +1205,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-7"
+              data-percol="7"
+              data-hitung7="7"
               name="gerakan-7"
               value="1"
               id="gerakan-7"
@@ -963,6 +1222,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="gerakan-1"
               value="2"
               id="gerakan-1"
@@ -974,6 +1235,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="gerakan-2"
               value="2"
               id="gerakan-2"
@@ -985,6 +1248,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="gerakan-3"
               value="2"
               id="gerakan-3"
@@ -996,6 +1261,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="gerakan-4"
               value="2"
               id="gerakan-4"
@@ -1007,6 +1274,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung1="5"
               name="gerakan-5"
               value="2"
               id="gerakan-5"
@@ -1018,6 +1287,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-6"
+              data-percol="6"
+              data-hitung6="6"
               name="gerakan-6"
               value="2"
               id="gerakan-6"
@@ -1029,6 +1300,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-7"
+              data-percol="7"
+              data-hitung7="7"
               name="gerakan-7"
               value="2"
               id="gerakan-7"
@@ -1045,6 +1318,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="menangis-1"
               id="menangis-1"
               value="0"
@@ -1056,6 +1331,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="menangis-2"
               id="menangis-2"
               value="0"
@@ -1067,6 +1344,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="menangis-3"
               id="menangis-3"
               value="0"
@@ -1078,6 +1357,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="menangis-4"
               id="menangis-4"
               value="0"
@@ -1089,6 +1370,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung1="5"
               name="menangis-5"
               id="menangis-5"
               value="0"
@@ -1100,6 +1383,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-6"
+              data-percol="6"
+              data-hitung6="6"
               name="menangis-6"
               id="menangis-6"
               value="0"
@@ -1111,6 +1396,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-7"
+              data-percol="7"
+              data-hitung7="7"
               name="menangis-7"
               id="menangis-7"
               value="0"
@@ -1126,6 +1413,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="menangis-1"
               value="1"
               id="menangis-1"
@@ -1137,6 +1426,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="menangis-2"
               value="1"
               id="menangis-2"
@@ -1148,6 +1439,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="menangis-3"
               value="1"
               id="menangis-3"
@@ -1159,6 +1452,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="menangis-4"
               value="1"
               id="menangis-4"
@@ -1170,6 +1465,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung1="5"
               name="menangis-5"
               value="1"
               id="menangis-5"
@@ -1181,6 +1478,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-6"
+              data-percol="6"
+              data-hitung6="6"
               name="menangis-6"
               value="1"
               id="menangis-6"
@@ -1192,6 +1491,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-7"
+              data-percol="7"
+              data-hitung7="7"
               name="menangis-7"
               value="1"
               id="menangis-7"
@@ -1207,6 +1508,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="menangis-1"
               value="2"
               id="menangis-1"
@@ -1218,6 +1521,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="menangis-2"
               value="2"
               id="menangis-2"
@@ -1229,6 +1534,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="menangis-3"
               value="2"
               id="menangis-3"
@@ -1240,6 +1547,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="menangis-4"
               value="2"
               id="menangis-4"
@@ -1251,6 +1560,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung1="5"
               name="menangis-5"
               value="2"
               id="menangis-5"
@@ -1262,6 +1573,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-6"
+              data-percol="6"
+              data-hitung6="6"
               name="menangis-6"
               value="2"
               id="menangis-6"
@@ -1273,6 +1586,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-7"
+              data-percol="7"
+              data-hitung7="7"
               name="menangis-7"
               value="2"
               id="menangis-7"
@@ -1291,6 +1606,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="kemampuan-ditenangkan-1"
               id="kemampuan-ditenangkan-1"
               value="0"
@@ -1302,6 +1619,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="kemampuan-ditenangkan-2"
               id="kemampuan-ditenangkan-2"
               value="0"
@@ -1313,6 +1632,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="kemampuan-ditenangkan-3"
               id="kemampuan-ditenangkan-3"
               value="0"
@@ -1324,6 +1645,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="kemampuan-ditenangkan-4"
               id="kemampuan-ditenangkan-4"
               value="0"
@@ -1335,6 +1658,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung1="5"
               name="kemampuan-ditenangkan-5"
               id="kemampuan-ditenangkan-5"
               value="0"
@@ -1346,6 +1671,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-6"
+              data-percol="6"
+              data-hitung6="6"
               name="kemampuan-ditenangkan-6"
               id="kemampuan-ditenangkan-6"
               value="0"
@@ -1357,6 +1684,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-7"
+              data-percol="7"
+              data-hitung7="7"
               name="kemampuan-ditenangkan-7"
               id="kemampuan-ditenangkan-7"
               value="0"
@@ -1375,6 +1704,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="kemampuan-ditenangkan-1"
               value="1"
               id="kemampuan-ditenangkan-1"
@@ -1386,6 +1717,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="kemampuan-ditenangkan-2"
               value="1"
               id="kemampuan-ditenangkan-2"
@@ -1397,6 +1730,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="kemampuan-ditenangkan-3"
               value="1"
               id="kemampuan-ditenangkan-3"
@@ -1408,6 +1743,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="kemampuan-ditenangkan-4"
               value="1"
               id="kemampuan-ditenangkan-4"
@@ -1419,6 +1756,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung1="5"
               name="kemampuan-ditenangkan-5"
               value="1"
               id="kemampuan-ditenangkan-5"
@@ -1430,6 +1769,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-6"
+              data-percol="6"
+              data-hitung6="6"
               name="kemampuan-ditenangkan-6"
               value="1"
               id="kemampuan-ditenangkan-6"
@@ -1441,6 +1782,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-7"
+              data-percol="7"
+              data-hitung7="7"
               name="kemampuan-ditenangkan-7"
               value="1"
               id="kemampuan-ditenangkan-7"
@@ -1459,6 +1802,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="kemampuan-ditenangkan-1"
               value="2"
               id="kemampuan-ditenangkan-1"
@@ -1470,6 +1815,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="kemampuan-ditenangkan-2"
               value="2"
               id="kemampuan-ditenangkan-2"
@@ -1481,6 +1828,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="kemampuan-ditenangkan-3"
               value="2"
               id="kemampuan-ditenangkan-3"
@@ -1492,6 +1841,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="kemampuan-ditenangkan-4"
               value="2"
               id="kemampuan-ditenangkan-4"
@@ -1503,6 +1854,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung1="5"
               name="kemampuan-ditenangkan-5"
               value="2"
               id="kemampuan-ditenangkan-5"
@@ -1514,6 +1867,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-6"
+              data-percol="6"
+              data-hitung6="6"
               name="kemampuan-ditenangkan-6"
               value="2"
               id="kemampuan-ditenangkan-6"
@@ -1525,6 +1880,8 @@
               style="width: 100%"
               type="radio"
               class="skor-kategori-7"
+              data-percol="7"
+              data-hitung7="7"
               name="kemampuan-ditenangkan-7"
               value="2"
               id="kemampuan-ditenangkan-7"
@@ -1541,9 +1898,10 @@
             <input
               readonly
               type="text"
-              name="skor-total-1"
-              id="skor-total-1"
-              label="skor-total-1"
+              name="totalskor1"
+              style="text-align: center"
+              id="totalskor1"
+              label="totalskor1"
               myid="check_cara"
             />
           </td>
@@ -1551,9 +1909,10 @@
             <input
               readonly
               type="text"
-              name="skor-total-2"
-              id="skor-total-2"
-              label="skor-total-2"
+              name="totalskor2"
+              style="text-align: center"
+              id="totalskor2"
+              label="totalskor2"
               myid="check_cara"
             />
           </td>
@@ -1561,9 +1920,10 @@
             <input
               readonly
               type="text"
-              name="skor-total-3"
-              id="skor-total-3"
-              label="skor-total-3"
+              name="totalskor3"
+              style="text-align: center"
+              id="totalskor3"
+              label="totalskor3"
               myid="check_cara"
             />
           </td>
@@ -1571,9 +1931,10 @@
             <input
               readonly
               type="text"
-              name="skor-total-4"
-              id="skor-total-4"
-              label="skor-total-4"
+              name="totalskor4"
+              style="text-align: center"
+              id="totalskor4"
+              label="totalskor4"
               myid="check_cara"
             />
           </td>
@@ -1581,9 +1942,10 @@
             <input
               readonly
               type="text"
-              name="skor-total-5"
-              id="skor-total-5"
-              label="skor-total-5"
+              name="totalskor5"
+              style="text-align: center"
+              id="totalskor5"
+              label="totalskor5"
               myid="check_cara"
             />
           </td>
@@ -1591,9 +1953,10 @@
             <input
               readonly
               type="text"
-              name="skor-total-6"
-              id="skor-total-6"
-              label="skor-total-6"
+              name="totalskor6"
+              style="text-align: center"
+              id="totalskor6"
+              label="totalskor6"
               myid="check_cara"
             />
           </td>
@@ -1601,9 +1964,10 @@
             <input
               readonly
               type="text"
-              name="skor-total-7"
-              id="skor-total-7"
-              label="skor-total-7"
+              name="totalskor7"
+              style="text-align: center"
+              id="totalskor7"
+              label="totalskor7"
               myid="check_cara"
             />
           </td>
@@ -1618,9 +1982,44 @@
               <input
                 type="text"
                 name="nama-perawat-1"
-                myid="check_cara"
                 id="nama-perawat-1"
+                label="nama-perawat-1"
+                myid="check_cara"
               />
+              <br />
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_nama_perawat_1"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_nama_perawat_1"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_nama_perawat_1"
+                id="paraf_ex_ttd_nama_perawat_1"
+                data-name="paraf"
+                data-id="ex_ttd_nama_perawat_1"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_nama_perawat_1"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
               <font id="ttdnya2"></font>
             </div>
           </td>
@@ -1629,9 +2028,44 @@
               <input
                 type="text"
                 name="nama-perawat-2"
-                myid="check_cara"
                 id="nama-perawat-2"
+                label="nama-perawat-2"
+                myid="check_cara"
               />
+              <br />
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_nama_perawat_2"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_nama_perawat_2"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_nama_perawat_2"
+                id="paraf_ex_ttd_nama_perawat_2"
+                data-name="paraf"
+                data-id="ex_ttd_nama_perawat_2"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_nama_perawat_2"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
               <font id="ttdnya2"></font>
             </div>
           </td>
@@ -1640,9 +2074,44 @@
               <input
                 type="text"
                 name="nama-perawat-3"
-                myid="check_cara"
                 id="nama-perawat-3"
+                label="nama-perawat-3"
+                myid="check_cara"
               />
+              <br />
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_3"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_3"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_3"
+                id="paraf_ex_ttd_perawat_3"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_3"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_3"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
               <font id="ttdnya2"></font>
             </div>
           </td>
@@ -1651,9 +2120,44 @@
               <input
                 type="text"
                 name="nama-perawat-4"
-                myid="check_cara"
                 id="nama-perawat-4"
+                label="nama-perawat-4"
+                myid="check_cara"
               />
+              <br />
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat-4"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat-4"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat-4"
+                id="paraf_ex_ttd_perawat-4"
+                data-name="paraf"
+                data-id="ex_ttd_perawat-4"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat-4"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
               <font id="ttdnya2"></font>
             </div>
           </td>
@@ -1662,9 +2166,44 @@
               <input
                 type="text"
                 name="nama-perawat-5"
-                myid="check_cara"
                 id="nama-perawat-5"
+                label="nama-perawat-5"
+                myid="check_cara"
               />
+              <br />
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_5"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_5"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_5"
+                id="paraf_ex_ttd_perawat_5"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_5"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_petugas"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
               <font id="ttdnya2"></font>
             </div>
           </td>
@@ -1673,9 +2212,44 @@
               <input
                 type="text"
                 name="nama-perawat-6"
-                myid="check_cara"
                 id="nama-perawat-6"
+                label="nama-perawat-6"
+                myid="check_cara"
               />
+              <br />
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_6"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_6"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_6"
+                id="paraf_ex_ttd_perawat_6"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_6"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_petugas_6"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
               <font id="ttdnya2"></font>
             </div>
           </td>
@@ -1684,9 +2258,44 @@
               <input
                 type="text"
                 name="nama-perawat-7"
-                myid="check_cara"
                 id="nama-perawat-7"
+                label="nama-perawat-7"
+                myid="check_cara"
               />
+              <br />
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_7"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_7"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_7"
+                id="paraf_ex_ttd_perawat_7"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_7"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_7"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
               <font id="ttdnya2"></font>
             </div>
           </td>
@@ -1705,180 +2314,6 @@
     </table>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const skorKategori1 = document.querySelectorAll(".skor-kategori-1");
-        const skorKategori2 = document.querySelectorAll(".skor-kategori-2");
-        const skorKategori3 = document.querySelectorAll(".skor-kategori-3");
-        const skorKategori4 = document.querySelectorAll(".skor-kategori-4");
-        const skorKategori5 = document.querySelectorAll(".skor-kategori-5");
-        const skorKategori6 = document.querySelectorAll(".skor-kategori-6");
-        const skorKategori7 = document.querySelectorAll(".skor-kategori-7");
-
-        const skorTotal1 = document.querySelector("#skor-total-1");
-        const skorTotal2 = document.querySelector("#skor-total-2");
-        const skorTotal3 = document.querySelector("#skor-total-3");
-        const skorTotal4 = document.querySelector("#skor-total-4");
-        const skorTotal5 = document.querySelector("#skor-total-5");
-        const skorTotal6 = document.querySelector("#skor-total-6");
-        const skorTotal7 = document.querySelector("#skor-total-7");
-
-        function penghitunganSkorKategori1() {
-          let total = 0;
-          let hasil;
-
-          skorKategori1.forEach((input) => {
-            if (input.classList.contains("clicked")) {
-              total += parseFloat(input.value);
-            }
-          });
-
-          if (total <= 3) {
-            hasil = "Nyeri ringan";
-          } else if (total >= 4 && total <= 6) {
-            hasil = "Nyeri sedang";
-          } else if (total >= 7 && total <= 10) {
-            hasil = "Nyeri berat";
-          }
-          skorTotal1.value = `${total}, ${hasil}`;
-        }
-
-        skorKategori1.forEach((input) => {
-          input.addEventListener("change", penghitunganSkorKategori1);
-        });
-
-        function penghitunganSkorKategori2() {
-          let total = 0;
-
-          skorKategori2.forEach((input) => {
-            if (input.classList.contains("clicked")) {
-              total += parseFloat(input.value);
-            }
-          });
-          if (total <= 3) {
-            hasil = "Nyeri ringan";
-          } else if (total >= 4 && total <= 6) {
-            hasil = "Nyeri sedang";
-          } else if (total >= 7 && total <= 10) {
-            hasil = "Nyeri berat";
-          }
-          skorTotal2.value = `${total}, ${hasil}`;
-        }
-
-        skorKategori2.forEach((input) => {
-          input.addEventListener("change", penghitunganSkorKategori2);
-        });
-
-        function penghitunganSkorKategori3() {
-          let total = 0;
-
-          skorKategori3.forEach((input) => {
-            if (input.classList.contains("clicked")) {
-              total += parseFloat(input.value);
-            }
-          });
-          if (total <= 3) {
-            hasil = "Nyeri ringan";
-          } else if (total >= 4 && total <= 6) {
-            hasil = "Nyeri sedang";
-          } else if (total >= 7 && total <= 10) {
-            hasil = "Nyeri berat";
-          }
-          skorTotal3.value = `${total}, ${hasil}`;
-        }
-
-        skorKategori3.forEach((input) => {
-          input.addEventListener("change", penghitunganSkorKategori3);
-        });
-
-        function penghitunganSkorKategori4() {
-          let total = 0;
-
-          skorKategori4.forEach((input) => {
-            if (input.classList.contains("clicked")) {
-              total += parseFloat(input.value);
-            }
-          });
-
-          if (total <= 3) {
-            hasil = "Nyeri ringan";
-          } else if (total >= 4 && total <= 6) {
-            hasil = "Nyeri sedang";
-          } else if (total >= 7 && total <= 10) {
-            hasil = "Nyeri berat";
-          }
-          skorTotal4.value = `${total}, ${hasil}`;
-        }
-
-        skorKategori4.forEach((input) => {
-          input.addEventListener("change", penghitunganSkorKategori4);
-        });
-
-        function penghitunganSkorKategori5() {
-          let total = 0;
-
-          skorKategori5.forEach((input) => {
-            if (input.classList.contains("clicked")) {
-              total += parseFloat(input.value);
-            }
-          });
-
-          if (total <= 3) {
-            hasil = "Nyeri ringan";
-          } else if (total >= 4 && total <= 6) {
-            hasil = "Nyeri sedang";
-          } else if (total >= 7 && total <= 10) {
-            hasil = "Nyeri berat";
-          }
-          skorTotal5.value = `${total}, ${hasil}`;
-        }
-
-        skorKategori5.forEach((input) => {
-          input.addEventListener("change", penghitunganSkorKategori5);
-        });
-
-        function penghitunganSkorKategori6() {
-          let total = 0;
-
-          skorKategori6.forEach((input) => {
-            if (input.classList.contains("clicked")) {
-              total += parseFloat(input.value);
-            }
-          });
-          if (total <= 3) {
-            hasil = "Nyeri ringan";
-          } else if (total >= 4 && total <= 6) {
-            hasil = "Nyeri sedang";
-          } else if (total >= 7 && total <= 10) {
-            hasil = "Nyeri berat";
-          }
-          skorTotal6.value = `${total}, ${hasil}`;
-        }
-
-        skorKategori6.forEach((input) => {
-          input.addEventListener("change", penghitunganSkorKategori6);
-        });
-
-        function penghitunganSkorKategori7() {
-          let total = 0;
-
-          skorKategori7.forEach((input) => {
-            if (input.classList.contains("clicked")) {
-              total += parseFloat(input.value);
-            }
-          });
-          if (total <= 3) {
-            hasil = "Nyeri ringan";
-          } else if (total >= 4 && total <= 6) {
-            hasil = "Nyeri sedang";
-          } else if (total >= 7 && total <= 10) {
-            hasil = "Nyeri berat";
-          }
-          skorTotal7.value = `${total}, ${hasil}`;
-        }
-
-        skorKategori7.forEach((input) => {
-          input.addEventListener("change", penghitunganSkorKategori7);
-        });
-
         var radioButtons = document.querySelectorAll('input[type="radio"]');
         radioButtons.forEach(function (radio) {
           radio.addEventListener("click", function () {
