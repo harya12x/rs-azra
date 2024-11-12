@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PENGKAJIAN LANJUTAN RISIKO JATUH PASIEN GERIATRI</title>
   </head>
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"
+  ></script>
   <style>
     * {
       margin: 0;
@@ -31,10 +36,219 @@
       padding: 5px;
     }
   </style>
+
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+
+      $('input[type="radio"]')
+        .off("change")
+        .on("change", function () {
+          let total = 0;
+          let percol = $(this).data("percol");
+          console.log(percol);
+
+          function cekStatus(names, valueIfYes) {
+            return $(`input[name='${names.join("'], input[name='")}']`).is(
+              ":checked[value='Ya']"
+            )
+              ? valueIfYes
+              : 0;
+          }
+
+          function hitungTotalSkriningLansia(percol) {
+            let hasil = 0;
+            const totalRiwayatJatuhLamaJatuh = cekStatus(
+              [`riwayat-jatuh-${percol}`, `lama-jatuh-${percol}`],
+              6
+            );
+
+            const totalDeliriumDisorientasiAgitasi = cekStatus(
+              [
+                `delirium-${percol}`,
+                `disorientasi-${percol}`,
+                `agitasi-${percol}`,
+              ],
+              14
+            );
+
+            const totalKacamataBuramGlaukoma = cekStatus(
+              [
+                `kacamata-${percol}`,
+                `penglihatan-buram-${percol}`,
+                `glaukoma-${percol}`,
+              ],
+              1
+            );
+
+            const totalKebiasaanBerkemih = cekStatus(
+              [`kebiasaan-berkemih-${percol}`],
+              2
+            );
+
+            const totalTransferMobilitas = $(
+              `input[name='transfer-${percol}'], input[name='mobilitas-${percol}']`
+            )
+              .filter(":checked")
+              .get()
+              .reduce((sum, input) => sum + parseFloat($(input).val()) || 0, 0);
+
+            const transferMobilitasScore =
+              totalTransferMobilitas >= 4 && totalTransferMobilitas <= 6
+                ? 7
+                : 0;
+
+            // console.log(totalRiwayatJatuhLamaJatuh);
+            // console.log("percol " + percol);
+            return (hasil =
+              totalRiwayatJatuhLamaJatuh +
+              totalDeliriumDisorientasiAgitasi +
+              totalKacamataBuramGlaukoma +
+              totalKebiasaanBerkemih +
+              transferMobilitasScore);
+          }
+
+          $("[data-hitung" + percol + "]").each(function () {
+            let radioValue = 0;
+            radioValue = $(this).val() || 0;
+
+            if ($(this).is(":checked")) {
+              radioValue = parseInt(radioValue);
+              // total += hitungTotalSkriningLansia(percol);
+              console.log(radioValue);
+              total = hitungTotalSkriningLansia(percol);
+            }
+          });
+
+          $(`#totalskor` + percol).val(total);
+        });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">PENGKAJIAN LANJUTAN RISIKO JATUH PASIEN GERIATRI</h1>
 
-    <table class="table-bordered" width="100%">
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
           <input
@@ -49,8 +263,8 @@
             name="src_ttd_2"
             myid="check_cara"
           />
-          <td bgcolor="#DFE8F6">Nama:</td>
-          <td bgcolor="#DFE8F6">
+          <td>Nama:</td>
+          <td>
             <input
               name="nama_pasien"
               type="text"
@@ -58,65 +272,51 @@
               size="30"
               myid="check_cara"
               label="nama pasien"
+              value="{VNAMA_PASIEN}"
               placeholder="..."
             />
           </td>
-          <td bgcolor="#DFE8F6">Jenis Kelamin</td>
-          <td bgcolor="#DFE8F6">
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="laki-laki"
-              myid="check_cara"
-              value="L"
-              label="jenis kelamin"
-            />
-            <label for="l">L</label>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="perempuan"
-              myid="check_cara"
-              value="P"
-              label="jenis kelamin"
-            />
-            <label for="l">P</label>
-          </td>
-          <td bgcolor="#DFE8F6">
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
             <label for="">Nomor Rekam Medis</label>
           </td>
-          <td bgcolor="#DFE8F6">
+          <td>
             <input
               type="text"
               myid="check_cara"
               name="no_rm"
               id="no_rm"
               label="nomor rekam medis"
+              value="{NO_RM}"
             />
           </td>
         </tr>
 
         <tr>
-          <td rowspan="2" bgcolor="">Tanggal Lahir</td>
-          <td rowspan="2" bgcolor="">
+          <td rowspan="2">Tanggal Lahir</td>
+          <td rowspan="2">
             <input
               name="tgl_lahir"
               type="text"
               id="tgl_lahir"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               label="tanggal lahir"
+              value="{VBIRTH_DATE}"
             />
           </td>
 
           <td rowspan="2">Umur</td>
           <td rowspan="2">
             <input
-              type="number"
+              type="text"
               size="5"
               name="umur"
               id="umur"
               myid="check_cara"
+              value="{VAGE}"
               placeholder="..."
             />
           </td>
@@ -131,12 +331,13 @@
               placeholder="..."
               myid="check_cara"
               label="kelas"
+              value="{VNAMAKELAS}"
             />
           </td>
         </tr>
         <tr>
-          <td bgcolor="#DFE8F6">Kamar</td>
-          <td bgcolor="#DFE8F6">
+          <td>Kamar</td>
+          <td>
             <input
               type="text"
               name="kamar"
@@ -144,6 +345,7 @@
               myid="check_cara"
               placeholder="..."
               aria-label="kamar"
+              value="{VNAMARUANGAN}"
             />
           </td>
         </tr>
@@ -171,6 +373,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="riwayat-jatuh-1"
               value="Ya"
@@ -182,6 +386,8 @@
 
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="riwayat-jatuh-1"
               value="Tidak"
@@ -193,6 +399,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="riwayat-jatuh-2"
               value="Ya"
@@ -204,6 +412,8 @@
 
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="riwayat-jatuh-2"
               value="Tidak"
@@ -215,6 +425,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="riwayat-jatuh-3"
               value="Ya"
@@ -226,6 +438,8 @@
 
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="riwayat-jatuh-3"
               value="Tidak"
@@ -237,6 +451,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="riwayat-jatuh-4"
               value="Ya"
@@ -248,6 +464,8 @@
 
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="riwayat-jatuh-4"
               value="Tidak"
@@ -259,6 +477,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="riwayat-jatuh-5"
               value="Ya"
@@ -270,6 +490,8 @@
 
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="riwayat-jatuh-5"
               value="Tidak"
@@ -281,6 +503,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="riwayat-jatuh-6"
               value="Ya"
@@ -292,6 +516,8 @@
 
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="riwayat-jatuh-6"
               value="Tidak"
@@ -309,6 +535,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="lama-jatuh-1"
               value="Ya"
@@ -319,6 +547,8 @@
             <br />
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="lama-jatuh-1"
               value="Tidak"
@@ -330,6 +560,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="lama-jatuh-2"
               value="Ya"
@@ -340,6 +572,8 @@
             <br />
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="lama-jatuh-2"
               value="Tidak"
@@ -351,6 +585,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="lama-jatuh-3"
               value="Ya"
@@ -361,6 +597,8 @@
             <br />
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="lama-jatuh-3"
               value="Tidak"
@@ -372,6 +610,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="lama-jatuh-4"
               value="Ya"
@@ -382,6 +622,8 @@
             <br />
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="lama-jatuh-4"
               value="Tidak"
@@ -393,6 +635,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="lama-jatuh-5"
               value="Ya"
@@ -403,6 +647,8 @@
             <br />
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="lama-jatuh-5"
               value="Tidak"
@@ -414,6 +660,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="lama-jatuh-6"
               value="Ya"
@@ -424,6 +672,8 @@
             <br />
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="lama-jatuh-6"
               value="Tidak"
@@ -446,9 +696,11 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="delirium-1"
-              value="Tidak"
+              value="Ya"
               id="delirium-1"
               myid="check_cara"
             />
@@ -456,6 +708,8 @@
             <br />
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="delirium-1"
               value="Tidak"
@@ -467,9 +721,11 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="delirium-2"
-              value="Tidak"
+              value="Ya"
               id="delirium-2"
               myid="check_cara"
             />
@@ -477,6 +733,8 @@
             <br />
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="delirium-2"
               value="Tidak"
@@ -488,9 +746,11 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="delirium-3"
-              value="Tidak"
+              value="Ya"
               id="delirium-3"
               myid="check_cara"
             />
@@ -498,6 +758,8 @@
             <br />
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="delirium-3"
               value="Tidak"
@@ -509,9 +771,11 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="delirium-4"
-              value="Tidak"
+              value="Ya"
               id="delirium-4"
               myid="check_cara"
             />
@@ -519,6 +783,8 @@
             <br />
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="delirium-4"
               value="Tidak"
@@ -530,9 +796,11 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="delirium-5"
-              value="Tidak"
+              value="Ya"
               id="delirium-5"
               myid="check_cara"
             />
@@ -540,6 +808,8 @@
             <br />
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="delirium-5"
               value="Tidak"
@@ -551,9 +821,11 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="delirium-6"
-              value="Tidak"
+              value="Ya"
               id="delirium-6"
               myid="check_cara"
             />
@@ -561,6 +833,8 @@
             <br />
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="delirium-6"
               value="Tidak"
@@ -579,9 +853,11 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="disorientasi-1"
-              value="Tidak"
+              value="Ya"
               id="disorientasi-1"
               myid="check_cara"
             />
@@ -589,6 +865,8 @@
             <br />
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="disorientasi-1"
               value="Tidak"
@@ -600,9 +878,11 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="disorientasi-2"
-              value="Tidak"
+              value="Ya"
               id="disorientasi-2"
               myid="check_cara"
             />
@@ -610,6 +890,8 @@
             <br />
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="disorientasi-2"
               value="Tidak"
@@ -621,9 +903,11 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="disorientasi-3"
-              value="Tidak"
+              value="Ya"
               id="disorientasi-3"
               myid="check_cara"
             />
@@ -631,6 +915,8 @@
             <br />
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="disorientasi-3"
               value="Tidak"
@@ -642,9 +928,11 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="disorientasi-4"
-              value="Tidak"
+              value="Ya"
               id="disorientasi-4"
               myid="check_cara"
             />
@@ -652,6 +940,8 @@
             <br />
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="disorientasi-4"
               value="Tidak"
@@ -663,9 +953,11 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="disorientasi-5"
-              value="Tidak"
+              value="Ya"
               id="disorientasi-5"
               myid="check_cara"
             />
@@ -673,6 +965,8 @@
             <br />
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="disorientasi-5"
               value="Tidak"
@@ -684,9 +978,11 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="disorientasi-6"
-              value="Tidak"
+              value="Ya"
               id="disorientasi-6"
               myid="check_cara"
             />
@@ -694,6 +990,8 @@
             <br />
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="disorientasi-6"
               value="Tidak"
@@ -711,9 +1009,11 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="agitasi-1"
-              value="Tidak"
+              value="Ya"
               id="agitasi-1"
               myid="check_cara"
             />
@@ -721,6 +1021,8 @@
             <br />
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="agitasi-1"
               value="Tidak"
@@ -732,9 +1034,11 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="agitasi-2"
-              value="Tidak"
+              value="Ya"
               id="agitasi-2"
               myid="check_cara"
             />
@@ -742,6 +1046,8 @@
             <br />
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="agitasi-2"
               value="Tidak"
@@ -753,9 +1059,11 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="agitasi-3"
-              value="Tidak"
+              value="Ya"
               id="agitasi-3"
               myid="check_cara"
             />
@@ -763,6 +1071,8 @@
             <br />
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="agitasi-3"
               value="Tidak"
@@ -774,9 +1084,11 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="agitasi-4"
-              value="Tidak"
+              value="Ya"
               id="agitasi-4"
               myid="check_cara"
             />
@@ -784,6 +1096,8 @@
             <br />
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="agitasi-4"
               value="Tidak"
@@ -795,9 +1109,11 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="agitasi-5"
-              value="Tidak"
+              value="Ya"
               id="agitasi-5"
               myid="check_cara"
             />
@@ -805,6 +1121,8 @@
             <br />
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="agitasi-5"
               value="Tidak"
@@ -816,9 +1134,11 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="agitasi-6"
-              value="Tidak"
+              value="Ya"
               id="agitasi-6"
               myid="check_cara"
             />
@@ -826,6 +1146,8 @@
             <br />
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="agitasi-6"
               value="Tidak"
@@ -844,6 +1166,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="kacamata-1"
               value="Ya"
@@ -854,6 +1178,8 @@
             <br />
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="kacamata-1"
               value="Tidak"
@@ -865,6 +1191,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="kacamata-2"
               value="Ya"
@@ -875,6 +1203,8 @@
             <br />
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="kacamata-2"
               value="Tidak"
@@ -886,6 +1216,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="kacamata-3"
               value="Ya"
@@ -896,6 +1228,8 @@
             <br />
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="kacamata-3"
               value="Tidak"
@@ -907,6 +1241,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="kacamata-4"
               value="Ya"
@@ -917,6 +1253,8 @@
             <br />
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="kacamata-4"
               value="Tidak"
@@ -928,6 +1266,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="kacamata-5"
               value="Ya"
@@ -938,6 +1278,8 @@
             <br />
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="kacamata-5"
               value="Tidak"
@@ -949,6 +1291,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="kacamata-6"
               value="Ya"
@@ -959,6 +1303,8 @@
             <br />
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="kacamata-6"
               value="Tidak"
@@ -974,6 +1320,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="penglihatan-buram-1"
               value="Ya"
@@ -984,6 +1332,8 @@
             <br />
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="penglihatan-buram-1"
               value="Tidak"
@@ -995,6 +1345,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="penglihatan-buram-2"
               value="Ya"
@@ -1005,6 +1357,8 @@
             <br />
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="penglihatan-buram-2"
               value="Tidak"
@@ -1016,6 +1370,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="penglihatan-buram-3"
               value="Ya"
@@ -1026,6 +1382,8 @@
             <br />
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="penglihatan-buram-3"
               value="Tidak"
@@ -1037,6 +1395,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="penglihatan-buram-4"
               value="Ya"
@@ -1047,6 +1407,8 @@
             <br />
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="penglihatan-buram-4"
               value="Tidak"
@@ -1058,6 +1420,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="penglihatan-buram-5"
               value="Ya"
@@ -1068,6 +1432,8 @@
             <br />
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="penglihatan-buram-5"
               value="Tidak"
@@ -1079,6 +1445,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="penglihatan-buram-6"
               value="Ya"
@@ -1089,6 +1457,8 @@
             <br />
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="penglihatan-buram-6"
               value="Tidak"
@@ -1104,6 +1474,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="glaukoma-1"
               value="Ya"
@@ -1114,6 +1486,8 @@
             <br />
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="glaukoma-1"
               value="Tidak"
@@ -1125,6 +1499,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="glaukoma-2"
               value="Ya"
@@ -1135,6 +1511,8 @@
             <br />
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="glaukoma-2"
               value="Tidak"
@@ -1146,6 +1524,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="glaukoma-3"
               value="Ya"
@@ -1156,6 +1536,8 @@
             <br />
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="glaukoma-3"
               value="Tidak"
@@ -1167,6 +1549,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="glaukoma-4"
               value="Ya"
@@ -1177,6 +1561,8 @@
             <br />
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="glaukoma-4"
               value="Tidak"
@@ -1188,6 +1574,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="glaukoma-5"
               value="Ya"
@@ -1198,6 +1586,8 @@
             <br />
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="glaukoma-5"
               value="Tidak"
@@ -1209,6 +1599,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="glaukoma-6"
               value="Ya"
@@ -1219,6 +1611,8 @@
             <br />
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="glaukoma-6"
               value="Tidak"
@@ -1241,6 +1635,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="kebiasaan-berkemih-1"
               value="Ya"
@@ -1251,6 +1647,8 @@
             <br />
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="kebiasaan-berkemih-1"
               value="Tidak"
@@ -1262,6 +1660,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="kebiasaan-berkemih-2"
               value="Ya"
@@ -1272,6 +1672,8 @@
             <br />
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="kebiasaan-berkemih-2"
               value="Tidak"
@@ -1283,6 +1685,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="kebiasaan-berkemih-3"
               value="Ya"
@@ -1293,6 +1697,8 @@
             <br />
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="kebiasaan-berkemih-3"
               value="Tidak"
@@ -1304,6 +1710,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="kebiasaan-berkemih-4"
               value="Ya"
@@ -1314,6 +1722,8 @@
             <br />
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="kebiasaan-berkemih-4"
               value="Tidak"
@@ -1325,6 +1735,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="kebiasaan-berkemih-5"
               value="Ya"
@@ -1335,6 +1747,8 @@
             <br />
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="kebiasaan-berkemih-5"
               value="Tidak"
@@ -1346,6 +1760,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="kebiasaan-berkemih-6"
               value="Ya"
@@ -1356,6 +1772,8 @@
             <br />
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="kebiasaan-berkemih-6"
               value="Tidak"
@@ -1381,6 +1799,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="transfer-1"
               id="transfer-1"
@@ -1391,6 +1811,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="transfer-2"
               id="transfer-2"
@@ -1401,6 +1823,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="transfer-3"
               id="transfer-3"
@@ -1411,6 +1835,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="transfer-4"
               id="transfer-4"
@@ -1421,6 +1847,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="transfer-5"
               id="transfer-5"
@@ -1431,6 +1859,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="transfer-6"
               id="transfer-6"
@@ -1445,6 +1875,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="transfer-1"
               id="transfer-1"
@@ -1455,6 +1887,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="transfer-2"
               id="transfer-2"
@@ -1465,6 +1899,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="transfer-3"
               id="transfer-3"
@@ -1475,6 +1911,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="transfer-4"
               id="transfer-4"
@@ -1485,6 +1923,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="transfer-5"
               id="transfer-5"
@@ -1495,6 +1935,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="transfer-6"
               id="transfer-6"
@@ -1509,6 +1951,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="transfer-1"
               id="transfer-1"
@@ -1519,6 +1963,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="transfer-2"
               id="transfer-2"
@@ -1529,6 +1975,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="transfer-3"
               id="transfer-3"
@@ -1539,6 +1987,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="transfer-4"
               id="transfer-4"
@@ -1549,6 +1999,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="transfer-5"
               id="transfer-5"
@@ -1559,6 +2011,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="transfer-6"
               id="transfer-6"
@@ -1573,6 +2027,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="transfer-1"
               id="transfer-1"
@@ -1583,6 +2039,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="transfer-2"
               id="transfer-2"
@@ -1593,6 +2051,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="transfer-3"
               id="transfer-3"
@@ -1603,6 +2063,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="transfer-4"
               id="transfer-4"
@@ -1613,6 +2075,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="transfer-5"
               id="transfer-5"
@@ -1623,6 +2087,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="transfer-6"
               id="transfer-6"
@@ -1639,6 +2105,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="mobilitas-1"
               id="mobilitas-1"
@@ -1649,6 +2117,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="mobilitas-2"
               id="mobilitas-2"
@@ -1659,6 +2129,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="mobilitas-3"
               id="mobilitas-3"
@@ -1669,6 +2141,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="mobilitas-4"
               id="mobilitas-4"
@@ -1679,6 +2153,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="mobilitas-5"
               id="mobilitas-5"
@@ -1689,6 +2165,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="mobilitas-6"
               id="mobilitas-6"
@@ -1703,6 +2181,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="mobilitas-1"
               id="mobilitas-1"
@@ -1713,6 +2193,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="mobilitas-2"
               id="mobilitas-2"
@@ -1723,6 +2205,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="mobilitas-3"
               id="mobilitas-3"
@@ -1733,6 +2217,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="mobilitas-4"
               id="mobilitas-4"
@@ -1743,6 +2229,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="mobilitas-5"
               id="mobilitas-5"
@@ -1753,6 +2241,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="mobilitas-6"
               id="mobilitas-6"
@@ -1767,6 +2257,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="mobilitas-1"
               id="mobilitas-1"
@@ -1777,6 +2269,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="mobilitas-2"
               id="mobilitas-2"
@@ -1787,6 +2281,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="mobilitas-3"
               id="mobilitas-3"
@@ -1797,6 +2293,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="mobilitas-4"
               id="mobilitas-4"
@@ -1807,6 +2305,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="mobilitas-5"
               id="mobilitas-5"
@@ -1817,6 +2317,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="mobilitas-6"
               id="mobilitas-6"
@@ -1831,6 +2333,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               class="skor-kategori-1"
               name="mobilitas-1"
               id="mobilitas-1"
@@ -1841,6 +2345,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               class="skor-kategori-2"
               name="mobilitas-2"
               id="mobilitas-2"
@@ -1851,6 +2357,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               class="skor-kategori-3"
               name="mobilitas-3"
               id="mobilitas-3"
@@ -1861,6 +2369,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               class="skor-kategori-4"
               name="mobilitas-4"
               id="mobilitas-4"
@@ -1871,6 +2381,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               class="skor-kategori-5"
               name="mobilitas-5"
               id="mobilitas-5"
@@ -1881,6 +2393,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               class="skor-kategori-6"
               name="mobilitas-6"
               id="mobilitas-6"
@@ -1894,8 +2408,8 @@
           <td>
             <input
               type="text"
-              name="jumlah-skor-1"
-              id="jumlah-skor-1"
+              name="totalskor1"
+              id="totalskor1"
               placeholder="....."
               myid="check_cara"
               style="width: 100%"
@@ -1904,8 +2418,8 @@
           <td>
             <input
               type="text"
-              name="jumlah-skor-2"
-              id="jumlah-skor-2"
+              name="totalskor2"
+              id="totalskor2"
               placeholder="....."
               myid="check_cara"
               style="width: 100%"
@@ -1914,8 +2428,8 @@
           <td>
             <input
               type="text"
-              name="jumlah-skor-3"
-              id="jumlah-skor-3"
+              name="totalskor3"
+              id="totalskor3"
               placeholder="....."
               myid="check_cara"
               style="width: 100%"
@@ -1924,8 +2438,8 @@
           <td>
             <input
               type="text"
-              name="jumlah-skor-4"
-              id="jumlah-skor-4"
+              name="totalskor4"
+              id="totalskor4"
               placeholder="....."
               myid="check_cara"
               style="width: 100%"
@@ -1934,8 +2448,8 @@
           <td>
             <input
               type="text"
-              name="jumlah-skor-5"
-              id="jumlah-skor-5"
+              name="totalskor5"
+              id="totalskor5"
               placeholder="....."
               myid="check_cara"
               style="width: 100%"
@@ -1944,8 +2458,8 @@
           <td>
             <input
               type="text"
-              name="jumlah-skor-6"
-              id="jumlah-skor-6"
+              name="totalskor6"
+              id="totalskor6"
               placeholder="....."
               myid="check_cara"
               style="width: 100%"
@@ -1956,497 +2470,6 @@
     </table>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const skorKategori1 = document.querySelectorAll(".skor-kategori-1");
-        const skorKategori2 = document.querySelectorAll(".skor-kategori-2");
-        const skorKategori3 = document.querySelectorAll(".skor-kategori-3");
-        const skorKategori4 = document.querySelectorAll(".skor-kategori-4");
-        const skorKategori5 = document.querySelectorAll(".skor-kategori-5");
-        const skorKategori6 = document.querySelectorAll(".skor-kategori-6");
-
-        const jumlahSkor1 = document.querySelector("#jumlah-skor-1");
-        const jumlahSkor2 = document.querySelector("#jumlah-skor-2");
-        const jumlahSkor3 = document.querySelector("#jumlah-skor-3");
-        const jumlahSkor4 = document.querySelector("#jumlah-skor-4");
-        const jumlahSkor5 = document.querySelector("#jumlah-skor-5");
-        const jumlahSkor6 = document.querySelector("#jumlah-skor-6");
-
-        function hitungSkorKategori1() {
-          let total = 0;
-          let totalTransferMobilitas = 0;
-          let totalDeliriumDisorientasiAgitasi = 0;
-          let totalKacamataBuramGlaukoma = 0;
-          let totaltransferMobilitas = 0;
-          let totalKebiasaanBerkemih = 0;
-          let totalRiwayatJatuhLamaJatuh = 0;
-
-          const riwayatJatuhLamaJatuh = Array.from(skorKategori1)
-            .filter(
-              (input) =>
-                input.name === "riwayat-jatuh-1" ||
-                input.name === "lama-jatuh-1"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const deliriumDisorientasiAgitasi = Array.from(skorKategori1)
-            .filter(
-              (input) =>
-                input.name === "delirium-1" ||
-                input.name === "disorientasi-1" ||
-                input.name === "agitasi-1"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const kacamataBuramGlaukoma = Array.from(skorKategori1)
-            .filter(
-              (input) =>
-                input.name === "kacamata-1" ||
-                input.name === "penglihatan-buram-1" ||
-                input.name === "glaukoma-1"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const kebiasaanBerkemih = Array.from(skorKategori1)
-            .filter((input) => input.name == "berkemih-1")
-            .some((input) => input.checked && input.value === "Ya");
-
-          const transferMobilitas = Array.from(skorKategori1).filter(
-            (input) =>
-              input.name === "transfer-1" || input.name === "mobilitas-1"
-          );
-
-          if (riwayatJatuhLamaJatuh) totalRiwayatJatuhLamaJatuh = 6;
-          if (deliriumDisorientasiAgitasi)
-            totalDeliriumDisorientasiAgitasi = 14;
-          if (kacamataBuramGlaukoma) totalKacamataBuramGlaukoma = 1;
-          if (kebiasaanBerkemih) totalKebiasaanBerkemih = 2;
-
-          transferMobilitas.forEach((input) => {
-            if (input.classList.contains("clicked")) {
-              totalTransferMobilitas += parseFloat(input.value);
-            }
-            totaltransferMobilitas = 0;
-            if (totalTransferMobilitas < 4) {
-              totaltransferMobilitas = 0;
-            } else if (
-              totalTransferMobilitas >= 4 &&
-              totalTransferMobilitas <= 6
-            ) {
-              totaltransferMobilitas = 7;
-            }
-          });
-
-          total =
-            totalRiwayatJatuhLamaJatuh +
-            totalDeliriumDisorientasiAgitasi +
-            totalKacamataBuramGlaukoma +
-            totalKebiasaanBerkemih +
-            totaltransferMobilitas;
-
-          jumlahSkor1.value = `${total}`;
-        }
-
-        skorKategori1.forEach((input) => {
-          input.addEventListener("change", hitungSkorKategori1);
-        });
-
-        function hitungSkorKategori2() {
-          let total = 0;
-          let totalTransferMobilitas = 0;
-          let totalDeliriumDisorientasiAgitasi = 0;
-          let totalKacamataBuramGlaukoma = 0;
-          let totaltransferMobilitas = 0;
-          let totalKebiasaanBerkemih = 0;
-          let totalRiwayatJatuhLamaJatuh = 0;
-
-          const riwayatJatuhLamaJatuh = Array.from(skorKategori2)
-            .filter(
-              (input) =>
-                input.name === "riwayat-jatuh-2" ||
-                input.name === "lama-jatuh-2"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const deliriumDisorientasiAgitasi = Array.from(skorKategori2)
-            .filter(
-              (input) =>
-                input.name === "delirium-2" ||
-                input.name === "disorientasi-2" ||
-                input.name === "agitasi-2"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const kacamataBuramGlaukoma = Array.from(skorKategori2)
-            .filter(
-              (input) =>
-                input.name === "kacamata-2" ||
-                input.name === "penglihatan-buram-2" ||
-                input.name === "glaukoma-2"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const kebiasaanBerkemih = Array.from(skorKategori2)
-            .filter((input) => input.name == "berkemih-2")
-            .some((input) => input.checked && input.value === "Ya");
-
-          const transferMobilitas = Array.from(skorKategori2).filter(
-            (input) =>
-              input.name === "transfer-2" || input.name === "mobilitas-2"
-          );
-
-          if (riwayatJatuhLamaJatuh) totalRiwayatJatuhLamaJatuh = 6;
-          if (deliriumDisorientasiAgitasi)
-            totalDeliriumDisorientasiAgitasi = 14;
-          if (kacamataBuramGlaukoma) totalKacamataBuramGlaukoma = 1;
-          if (kebiasaanBerkemih) totalKebiasaanBerkemih = 2;
-
-          transferMobilitas.forEach((input) => {
-            if (input.classList.contains("clicked")) {
-              totalTransferMobilitas += parseFloat(input.value);
-            }
-            totaltransferMobilitas = 0;
-            if (totalTransferMobilitas < 4) {
-              totaltransferMobilitas = 0;
-            } else if (
-              totalTransferMobilitas >= 4 &&
-              totalTransferMobilitas <= 6
-            ) {
-              totaltransferMobilitas = 7;
-            }
-          });
-
-          total =
-            totalRiwayatJatuhLamaJatuh +
-            totalDeliriumDisorientasiAgitasi +
-            totalKacamataBuramGlaukoma +
-            totalKebiasaanBerkemih +
-            totaltransferMobilitas;
-          // Tampilkan hasil penjumlahan
-
-          jumlahSkor2.value = `${total}`;
-        }
-
-        skorKategori2.forEach((input) => {
-          input.addEventListener("change", hitungSkorKategori2);
-        });
-
-        function hitungSkorKategori3() {
-          let total = 0;
-          let totalTransferMobilitas = 0;
-          let totalDeliriumDisorientasiAgitasi = 0;
-          let totalKacamataBuramGlaukoma = 0;
-          let totaltransferMobilitas = 0;
-          let totalKebiasaanBerkemih = 0;
-          let totalRiwayatJatuhLamaJatuh = 0;
-
-          const riwayatJatuhLamaJatuh = Array.from(skorKategori3)
-            .filter(
-              (input) =>
-                input.name === "riwayat-jatuh-3" ||
-                input.name === "lama-jatuh-3"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const deliriumDisorientasiAgitasi = Array.from(skorKategori3)
-            .filter(
-              (input) =>
-                input.name === "delirium-3" ||
-                input.name === "disorientasi-3" ||
-                input.name === "agitasi-3"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const kacamataBuramGlaukoma = Array.from(skorKategori3)
-            .filter(
-              (input) =>
-                input.name === "kacamata-3" ||
-                input.name === "penglihatan-buram-3" ||
-                input.name === "glaukoma-3"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const kebiasaanBerkemih = Array.from(skorKategori3)
-            .filter((input) => input.name == "berkemih-3")
-            .some((input) => input.checked && input.value === "Ya");
-
-          const transferMobilitas = Array.from(skorKategori3).filter(
-            (input) =>
-              input.name === "transfer-3" || input.name === "mobilitas-3"
-          );
-
-          if (riwayatJatuhLamaJatuh) totalRiwayatJatuhLamaJatuh = 6;
-          if (deliriumDisorientasiAgitasi)
-            totalDeliriumDisorientasiAgitasi = 14;
-          if (kacamataBuramGlaukoma) totalKacamataBuramGlaukoma = 1;
-          if (kebiasaanBerkemih) totalKebiasaanBerkemih = 2;
-
-          transferMobilitas.forEach((input) => {
-            if (input.classList.contains("clicked")) {
-              totalTransferMobilitas += parseFloat(input.value);
-            }
-            totaltransferMobilitas = 0;
-            if (totalTransferMobilitas < 4) {
-              totaltransferMobilitas = 0;
-            } else if (
-              totalTransferMobilitas >= 4 &&
-              totalTransferMobilitas <= 6
-            ) {
-              totaltransferMobilitas = 7;
-            }
-          });
-
-          total =
-            totalRiwayatJatuhLamaJatuh +
-            totalDeliriumDisorientasiAgitasi +
-            totalKacamataBuramGlaukoma +
-            totalKebiasaanBerkemih +
-            totaltransferMobilitas;
-          // Tampilkan hasil penjumlahan
-
-          jumlahSkor3.value = `${total}`;
-        }
-
-        skorKategori3.forEach((input) => {
-          input.addEventListener("change", hitungSkorKategori3);
-        });
-
-        function hitungSkorKategori4() {
-          let total = 0;
-          let totalTransferMobilitas = 0;
-          let totalDeliriumDisorientasiAgitasi = 0;
-          let totalKacamataBuramGlaukoma = 0;
-          let totaltransferMobilitas = 0;
-          let totalKebiasaanBerkemih = 0;
-          let totalRiwayatJatuhLamaJatuh = 0;
-
-          const riwayatJatuhLamaJatuh = Array.from(skorKategori4)
-            .filter(
-              (input) =>
-                input.name === "riwayat-jatuh-4" ||
-                input.name === "lama-jatuh-4"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const deliriumDisorientasiAgitasi = Array.from(skorKategori4)
-            .filter(
-              (input) =>
-                input.name === "delirium-4" ||
-                input.name === "disorientasi-4" ||
-                input.name === "agitasi-4"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const kacamataBuramGlaukoma = Array.from(skorKategori4)
-            .filter(
-              (input) =>
-                input.name === "kacamata-4" ||
-                input.name === "penglihatan-buram-4" ||
-                input.name === "glaukoma-4"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const kebiasaanBerkemih = Array.from(skorKategori4)
-            .filter((input) => input.name == "berkemih-4")
-            .some((input) => input.checked && input.value === "Ya");
-
-          const transferMobilitas = Array.from(skorKategori4).filter(
-            (input) =>
-              input.name === "transfer-4" || input.name === "mobilitas-4"
-          );
-
-          if (riwayatJatuhLamaJatuh) totalRiwayatJatuhLamaJatuh = 6;
-          if (deliriumDisorientasiAgitasi)
-            totalDeliriumDisorientasiAgitasi = 14;
-          if (kacamataBuramGlaukoma) totalKacamataBuramGlaukoma = 1;
-          if (kebiasaanBerkemih) totalKebiasaanBerkemih = 2;
-
-          transferMobilitas.forEach((input) => {
-            if (input.classList.contains("clicked")) {
-              totalTransferMobilitas += parseFloat(input.value);
-            }
-            totaltransferMobilitas = 0;
-            if (totalTransferMobilitas < 4) {
-              totaltransferMobilitas = 0;
-            } else if (
-              totalTransferMobilitas >= 4 &&
-              totalTransferMobilitas <= 6
-            ) {
-              totaltransferMobilitas = 7;
-            }
-          });
-
-          total =
-            totalRiwayatJatuhLamaJatuh +
-            totalDeliriumDisorientasiAgitasi +
-            totalKacamataBuramGlaukoma +
-            totalKebiasaanBerkemih +
-            totaltransferMobilitas;
-
-          jumlahSkor4.value = `${total}`;
-        }
-
-        skorKategori4.forEach((input) => {
-          input.addEventListener("change", hitungSkorKategori4);
-        });
-
-        function hitungSkorKategori5() {
-          let total = 0;
-          let totalTransferMobilitas = 0;
-          let totalDeliriumDisorientasiAgitasi = 0;
-          let totalKacamataBuramGlaukoma = 0;
-          let totaltransferMobilitas = 0;
-          let totalKebiasaanBerkemih = 0;
-          let totalRiwayatJatuhLamaJatuh = 0;
-
-          const riwayatJatuhLamaJatuh = Array.from(skorKategori5)
-            .filter(
-              (input) =>
-                input.name === "riwayat-jatuh-5" ||
-                input.name === "lama-jatuh-5"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const deliriumDisorientasiAgitasi = Array.from(skorKategori5)
-            .filter(
-              (input) =>
-                input.name === "delirium-5" ||
-                input.name === "disorientasi-5" ||
-                input.name === "agitasi-5"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const kacamataBuramGlaukoma = Array.from(skorKategori5)
-            .filter(
-              (input) =>
-                input.name === "kacamata-5" ||
-                input.name === "penglihatan-buram-5" ||
-                input.name === "glaukoma-5"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const kebiasaanBerkemih = Array.from(skorKategori5)
-            .filter((input) => input.name == "berkemih-5")
-            .some((input) => input.checked && input.value === "Ya");
-
-          const transferMobilitas = Array.from(skorKategori5).filter(
-            (input) =>
-              input.name === "transfer-5" || input.name === "mobilitas-5"
-          );
-
-          if (riwayatJatuhLamaJatuh) totalRiwayatJatuhLamaJatuh = 6;
-          if (deliriumDisorientasiAgitasi)
-            totalDeliriumDisorientasiAgitasi = 14;
-          if (kacamataBuramGlaukoma) totalKacamataBuramGlaukoma = 1;
-          if (kebiasaanBerkemih) totalKebiasaanBerkemih = 2;
-
-          transferMobilitas.forEach((input) => {
-            if (input.classList.contains("clicked")) {
-              totalTransferMobilitas += parseFloat(input.value);
-            }
-            totaltransferMobilitas = 0;
-            if (totalTransferMobilitas < 5) {
-              totaltransferMobilitas = 0;
-            } else if (
-              totalTransferMobilitas >= 4 &&
-              totalTransferMobilitas <= 6
-            ) {
-              totaltransferMobilitas = 7;
-            }
-          });
-
-          total =
-            totalRiwayatJatuhLamaJatuh +
-            totalDeliriumDisorientasiAgitasi +
-            totalKacamataBuramGlaukoma +
-            totalKebiasaanBerkemih +
-            totaltransferMobilitas;
-          // Tampilkan hasil penjumlahan
-
-          jumlahSkor5.value = `${total}`;
-        }
-
-        skorKategori5.forEach((input) => {
-          input.addEventListener("change", hitungSkorKategori5);
-        });
-
-        function hitungSkorKategori6() {
-          let total = 0;
-          let totalTransferMobilitas = 0;
-          let totalDeliriumDisorientasiAgitasi = 0;
-          let totalKacamataBuramGlaukoma = 0;
-          let totaltransferMobilitas = 0;
-          let totalKebiasaanBerkemih = 0;
-          let totalRiwayatJatuhLamaJatuh = 0;
-
-          const riwayatJatuhLamaJatuh = Array.from(skorKategori6)
-            .filter(
-              (input) =>
-                input.name === "riwayat-jatuh-6" ||
-                input.name === "lama-jatuh-6"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const deliriumDisorientasiAgitasi = Array.from(skorKategori6)
-            .filter(
-              (input) =>
-                input.name === "delirium-6" ||
-                input.name === "disorientasi-6" ||
-                input.name === "agitasi-6"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const kacamataBuramGlaukoma = Array.from(skorKategori6)
-            .filter(
-              (input) =>
-                input.name === "kacamata-6" ||
-                input.name === "penglihatan-buram-6" ||
-                input.name === "glaukoma-6"
-            )
-            .some((input) => input.checked && input.value === "Ya");
-
-          const kebiasaanBerkemih = Array.from(skorKategori6)
-            .filter((input) => input.name == "berkemih-6")
-            .some((input) => input.checked && input.value === "Ya");
-
-          const transferMobilitas = Array.from(skorKategori6).filter(
-            (input) =>
-              input.name === "transfer-6" || input.name === "mobilitas-6"
-          );
-
-          if (riwayatJatuhLamaJatuh) totalRiwayatJatuhLamaJatuh = 6;
-          if (deliriumDisorientasiAgitasi)
-            totalDeliriumDisorientasiAgitasi = 14;
-          if (kacamataBuramGlaukoma) totalKacamataBuramGlaukoma = 1;
-          if (kebiasaanBerkemih) totalKebiasaanBerkemih = 2;
-
-          transferMobilitas.forEach((input) => {
-            if (input.classList.contains("clicked")) {
-              totalTransferMobilitas += parseFloat(input.value);
-            }
-            totaltransferMobilitas = 0;
-            if (totalTransferMobilitas < 4) {
-              totaltransferMobilitas = 0;
-            } else if (
-              totalTransferMobilitas >= 4 &&
-              totalTransferMobilitas <= 6
-            ) {
-              totaltransferMobilitas = 7;
-            }
-          });
-
-          total =
-            totalRiwayatJatuhLamaJatuh +
-            totalDeliriumDisorientasiAgitasi +
-            totalKacamataBuramGlaukoma +
-            totalKebiasaanBerkemih +
-            totaltransferMobilitas;
-
-          jumlahSkor6.value = `${total}`;
-        }
-
-        skorKategori6.forEach((input) => {
-          input.addEventListener("change", hitungSkorKategori6);
-        });
-
         var radioButtons = document.querySelectorAll('input[type="radio"]');
         radioButtons.forEach(function (radio) {
           radio.addEventListener("click", function () {
