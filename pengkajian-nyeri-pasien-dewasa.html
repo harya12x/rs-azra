@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PENGKAJIAN NYERI PASIEN DEWASA</title>
   </head>
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"
+  ></script>
   <style>
     * {
       margin: 0;
@@ -31,9 +36,156 @@
       padding: 5px;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+
+      $('input[type="radio"]')
+        .off("change")
+        .on("change", function () {
+          let total = 0;
+          let percol = $(this).data("percol");
+          console.log(percol);
+
+          $("[data-hitung" + percol + "]").each(function () {
+            let radioValue = 0;
+            radioValue = $(this).val() || 0;
+
+            if ($(this).is(":checked")) {
+              radioValue = parseInt(radioValue);
+              console.log(radioValue);
+              total += radioValue;
+            }
+          });
+
+          $(`#totalskor` + percol).val(total);
+        });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">PENGKAJIAN NYERI PASIEN DEWASA RS. AZRA BOGOR</h1>
-    <table class="table-bordered" width="100%">
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
           <input
@@ -58,29 +210,11 @@
               myid="check_cara"
               label="nama pasien"
               placeholder="..."
+              value="{VNAMA_PASIEN}"
             />
           </td>
           <td bgcolor="#DFE8F6">Jenis Kelamin</td>
-          <td bgcolor="#DFE8F6">
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="laki-laki"
-              myid="check_cara"
-              value="L"
-              label="jenis kelamin"
-            />
-            <label for="l">L</label>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="perempuan"
-              myid="check_cara"
-              value="P"
-              label="jenis kelamin"
-            />
-            <label for="l">P</label>
-          </td>
+          <td bgcolor="#DFE8F6">{VSEX}</td>
           <td bgcolor="#DFE8F6">
             <label for="">Nomor Rekam Medis</label>
           </td>
@@ -91,6 +225,7 @@
               name="no_rm"
               id="no_rm"
               label="nomor rekam medis"
+              value="{NO_RM}"
             />
           </td>
         </tr>
@@ -102,9 +237,11 @@
               name="tgl_lahir"
               type="text"
               id="tgl_lahir"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               label="tanggal lahir"
+              value="{VBIRTH_DATE}"
             />
           </td>
 
@@ -116,6 +253,7 @@
               name="umur"
               id="umur"
               myid="check_cara"
+              value="{VAGE}"
               placeholder="..."
             />
           </td>
@@ -130,6 +268,7 @@
               placeholder="..."
               myid="check_cara"
               label="kelas"
+              value="{VNAMAKELAS}"
             />
           </td>
         </tr>
@@ -143,6 +282,7 @@
               myid="check_cara"
               placeholder="..."
               aria-label="kamar"
+              value="{VNAMARUANGAN}"
             />
           </td>
         </tr>
@@ -168,7 +308,8 @@
               type="text"
               name="tanggal-kajian-ulang-1"
               id="tanggal-kajian-ulang-1"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               style="width: 100%"
             />
@@ -178,7 +319,8 @@
               type="text"
               name="tanggal-kajian-ulang-2"
               id="tanggal-kajian-ulang-2"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               style="width: 100%"
             />
@@ -188,7 +330,8 @@
               type="text"
               name="tanggal-kajian-ulang-3"
               id="tanggal-kajian-ulang-3"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               style="width: 100%"
             />
@@ -198,7 +341,8 @@
               type="text"
               name="tanggal-kajian-ulang-4"
               id="tanggal-kajian-ulang-4"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               style="width: 100%"
             />
@@ -208,7 +352,8 @@
               type="text"
               name="tanggal-kajian-ulang-5"
               id="tanggal-kajian-ulang-5"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               style="width: 100%"
             />
@@ -225,6 +370,8 @@
             <input
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="ekspresi-wajah-1"
               id="ekspresi-wajah-1"
               value="1"
@@ -235,6 +382,8 @@
             <input
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="ekspresi-wajah-2"
               id="ekspresi-wajah-2"
               value="1"
@@ -245,6 +394,8 @@
             <input
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="ekspresi-wajah-3"
               id="ekspresi-wajah-3"
               value="1"
@@ -255,6 +406,8 @@
             <input
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="ekspresi-wajah-4"
               id="ekspresi-wajah-4"
               value="1"
@@ -265,6 +418,8 @@
             <input
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung5="5"
               name="ekspresi-wajah-5"
               id="ekspresi-wajah-5"
               value="1"
@@ -279,6 +434,8 @@
             <input
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="ekspresi-wajah-1"
               id="ekspresi-wajah-2"
               value="2"
@@ -289,6 +446,8 @@
             <input
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="ekspresi-wajah-2"
               id="ekspresi-wajah-2"
               value="2"
@@ -299,6 +458,8 @@
             <input
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="ekspresi-wajah-3"
               id="ekspresi-wajah-3"
               value="2"
@@ -310,6 +471,8 @@
               type="radio"
               class="skor-kategori-4"
               name="ekspresi-wajah-4"
+              data-percol="4"
+              data-hitung4="4"
               id="ekspresi-wajah-4"
               value="2"
               myid="check_cara"
@@ -319,6 +482,8 @@
             <input
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung5="5"
               name="ekspresi-wajah-5"
               id="ekspresi-wajah-5"
               value="2"
@@ -333,6 +498,8 @@
             <input
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="ekspresi-wajah-1"
               id="ekspresi-wajah-1"
               value="3"
@@ -343,6 +510,8 @@
             <input
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="ekspresi-wajah-2"
               id="ekspresi-wajah-2"
               value="3"
@@ -353,6 +522,8 @@
             <input
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="ekspresi-wajah-3"
               id="ekspresi-wajah-3"
               value="3"
@@ -363,6 +534,8 @@
             <input
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="ekspresi-wajah-4"
               id="ekspresi-wajah-4"
               value="3"
@@ -373,6 +546,8 @@
             <input
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung5="5"
               name="ekspresi-wajah-5"
               id="ekspresi-wajah-5"
               value="3"
@@ -387,6 +562,8 @@
             <input
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="ekspresi-wajah-1"
               id="ekspresi-wajah-1"
               value="4"
@@ -397,6 +574,8 @@
             <input
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="ekspresi-wajah-2"
               id="ekspresi-wajah-2"
               value="4"
@@ -407,6 +586,8 @@
             <input
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="ekspresi-wajah-3"
               id="ekspresi-wajah-3"
               value="4"
@@ -417,6 +598,8 @@
             <input
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="ekspresi-wajah-4"
               id="ekspresi-wajah-4"
               value="4"
@@ -427,6 +610,8 @@
             <input
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung5="5"
               name="ekspresi-wajah-5"
               id="ekspresi-wajah-5"
               value="4"
@@ -443,6 +628,8 @@
             <input
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="anggota-gerak-bagian-atas-1"
               id="anggota-gerak-bagian-atas-1"
               value="1"
@@ -453,6 +640,8 @@
             <input
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="anggota-gerak-bagian-atas-2"
               id="anggota-gerak-bagian-atas-2"
               value="1"
@@ -463,6 +652,8 @@
             <input
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="anggota-gerak-bagian-atas-3"
               id="anggota-gerak-bagian-atas-3"
               value="1"
@@ -473,6 +664,8 @@
             <input
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="anggota-gerak-bagian-atas-4"
               id="anggota-gerak-bagian-atas-4"
               value="1"
@@ -483,6 +676,8 @@
             <input
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung5="5"
               name="anggota-gerak-bagian-atas-5"
               id="anggota-gerak-bagian-atas-5"
               value="1"
@@ -497,6 +692,8 @@
             <input
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="anggota-gerak-bagian-atas-1"
               id="anggota-gerak-bagian-atas-1"
               value="2"
@@ -507,6 +704,8 @@
             <input
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="anggota-gerak-bagian-atas-2"
               id="anggota-gerak-bagian-atas-2"
               value="2"
@@ -517,6 +716,8 @@
             <input
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="anggota-gerak-bagian-atas-3"
               id="anggota-gerak-bagian-atas-3"
               value="2"
@@ -527,6 +728,8 @@
             <input
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="anggota-gerak-bagian-atas-4"
               id="anggota-gerak-bagian-atas-4"
               value="2"
@@ -537,6 +740,8 @@
             <input
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung5="5"
               name="anggota-gerak-bagian-atas-5"
               id="anggota-gerak-bagian-atas-5"
               value="2"
@@ -551,6 +756,8 @@
             <input
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="anggota-gerak-bagian-atas-1"
               id="anggota-gerak-bagian-atas-1"
               value="3"
@@ -561,6 +768,8 @@
             <input
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="anggota-gerak-bagian-atas-2"
               id="anggota-gerak-bagian-atas-2"
               value="3"
@@ -571,6 +780,8 @@
             <input
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="anggota-gerak-bagian-atas-3"
               id="anggota-gerak-bagian-atas-3"
               value="3"
@@ -581,6 +792,8 @@
             <input
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="anggota-gerak-bagian-atas-4"
               id="anggota-gerak-bagian-atas-4"
               value="3"
@@ -591,6 +804,8 @@
             <input
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung5="5"
               name="anggota-gerak-bagian-atas-5"
               id="anggota-gerak-bagian-atas-5"
               value="3"
@@ -605,6 +820,8 @@
             <input
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="anggota-gerak-bagian-atas-1"
               id="anggota-gerak-bagian-atas-1"
               value="4"
@@ -615,6 +832,8 @@
             <input
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="anggota-gerak-bagian-atas-2"
               id="anggota-gerak-bagian-atas-2"
               value="4"
@@ -625,6 +844,8 @@
             <input
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="anggota-gerak-bagian-atas-3"
               id="anggota-gerak-bagian-atas-3"
               value="4"
@@ -635,6 +856,8 @@
             <input
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="anggota-gerak-bagian-atas-4"
               id="anggota-gerak-bagian-atas-4"
               value="4"
@@ -645,6 +868,8 @@
             <input
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung5="5"
               name="anggota-gerak-bagian-atas-5"
               id="anggota-gerak-bagian-atas-5"
               value="4"
@@ -661,6 +886,8 @@
             <input
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="kepatuhan-dengan-ventilasi-1"
               id="kepatuhan-dengan-ventilasi-1"
               value="1"
@@ -671,6 +898,8 @@
             <input
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="kepatuhan-dengan-ventilasi-2"
               id="kepatuhan-dengan-ventilasi-2"
               value="1"
@@ -681,6 +910,8 @@
             <input
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="kepatuhan-dengan-ventilasi-3"
               id="kepatuhan-dengan-ventilasi-3"
               value="1"
@@ -691,6 +922,8 @@
             <input
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="kepatuhan-dengan-ventilasi-4"
               id="kepatuhan-dengan-ventilasi-4"
               value="1"
@@ -701,6 +934,8 @@
             <input
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung5="5"
               name="kepatuhan-dengan-ventilasi-5"
               id="kepatuhan-dengan-ventilasi-5"
               value="1"
@@ -715,6 +950,8 @@
             <input
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="kepatuhan-dengan-ventilasi-1"
               id="kepatuhan-dengan-ventilasi-1"
               value="2"
@@ -725,6 +962,8 @@
             <input
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="kepatuhan-dengan-ventilasi-2"
               id="kepatuhan-dengan-ventilasi-2"
               value="2"
@@ -735,6 +974,8 @@
             <input
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="kepatuhan-dengan-ventilasi-3"
               id="kepatuhan-dengan-ventilasi-3"
               value="2"
@@ -745,6 +986,8 @@
             <input
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="kepatuhan-dengan-ventilasi-4"
               id="kepatuhan-dengan-ventilasi-4"
               value="2"
@@ -755,6 +998,8 @@
             <input
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung5="5"
               name="kepatuhan-dengan-ventilasi-5"
               id="kepatuhan-dengan-ventilasi-5"
               value="2"
@@ -769,6 +1014,8 @@
             <input
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="kepatuhan-dengan-ventilasi-1"
               id="kepatuhan-dengan-ventilasi-1"
               value="3"
@@ -779,6 +1026,8 @@
             <input
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="kepatuhan-dengan-ventilasi-2"
               id="kepatuhan-dengan-ventilasi-2"
               value="3"
@@ -789,6 +1038,8 @@
             <input
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="kepatuhan-dengan-ventilasi-3"
               id="kepatuhan-dengan-ventilasi-3"
               value="3"
@@ -799,6 +1050,8 @@
             <input
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="kepatuhan-dengan-ventilasi-4"
               id="kepatuhan-dengan-ventilasi-4"
               value="3"
@@ -809,6 +1062,8 @@
             <input
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung5="5"
               name="kepatuhan-dengan-ventilasi-5"
               id="kepatuhan-dengan-ventilasi-5"
               value="3"
@@ -823,6 +1078,8 @@
             <input
               type="radio"
               class="skor-kategori-1"
+              data-percol="1"
+              data-hitung1="1"
               name="kepatuhan-dengan-ventilasi-1"
               id="kepatuhan-dengan-ventilasi-1"
               value="4"
@@ -833,6 +1090,8 @@
             <input
               type="radio"
               class="skor-kategori-2"
+              data-percol="2"
+              data-hitung2="2"
               name="kepatuhan-dengan-ventilasi-2"
               id="kepatuhan-dengan-ventilasi-2"
               value="4"
@@ -843,6 +1102,8 @@
             <input
               type="radio"
               class="skor-kategori-3"
+              data-percol="3"
+              data-hitung3="3"
               name="kepatuhan-dengan-ventilasi-3"
               id="kepatuhan-dengan-ventilasi-3"
               value="4"
@@ -853,6 +1114,8 @@
             <input
               type="radio"
               class="skor-kategori-4"
+              data-percol="4"
+              data-hitung4="4"
               name="kepatuhan-dengan-ventilasi-4"
               id="kepatuhan-dengan-ventilasi-4"
               value="4"
@@ -863,6 +1126,8 @@
             <input
               type="radio"
               class="skor-kategori-5"
+              data-percol="5"
+              data-hitung5="5"
               name="kepatuhan-dengan-ventilasi-5"
               id="kepatuhan-dengan-ventilasi-5"
               value="4"
@@ -875,51 +1140,51 @@
           <td>
             <input
               type="text"
-              name="jumlah-skor-1"
-              id="jumlah-skor-1"
+              name="totalskor1"
+              id="totalskor1"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="text-align: center; width: 100%"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-2"
-              id="jumlah-skor-2"
+              name="totalskor2"
+              id="totalskor2"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="text-align: center; width: 100%"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-3"
-              id="jumlah-skor-3"
+              name="totalskor3"
+              id="totalskor3"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="text-align: center; width: 100%"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-4"
-              id="jumlah-skor-4"
+              name="totalskor4"
+              id="totalskor4"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="text-align: center; width: 100%"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-5"
-              id="jumlah-skor-5"
+              name="totalskor5"
+              id="totalskor5"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="text-align: center; width: 100%"
             />
           </td>
         </tr>
@@ -936,6 +1201,40 @@
                 style="width: 100%"
                 id="nama-petugas-1"
               />
+              <br />
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_nama_petugas_1"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_nama_petugas_1"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_nama_petugas_1"
+                id="paraf_ex_ttd_nama_petugas_1"
+                data-name="paraf"
+                data-id="ex_ttd_nama_petugas_1"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_nama_petugas_1"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
               <font id="ttdnya2"></font>
             </div>
           </td>
@@ -948,6 +1247,41 @@
                 style="width: 100%"
                 id="nama-petugas-2"
               />
+
+              <br />
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_nama_petugas_2"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_nama_petugas_2"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_nama_petugas_2"
+                id="paraf_ex_ttd_nama_petugas_2"
+                data-name="paraf"
+                data-id="ex_ttd_nama_petugas_2"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_nama_petugas_2"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
               <font id="ttdnya2"></font>
             </div>
           </td>
@@ -960,6 +1294,41 @@
                 style="width: 100%"
                 id="nama-petugas-3"
               />
+
+              <br />
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_nama_petugas_3"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_nama_petugas_3"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_nama_petugas_3"
+                id="paraf_ex_ttd_nama_petugas_3"
+                data-name="paraf"
+                data-id="ex_ttd_nama_petugas_3"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_nama_petugas_3"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
               <font id="ttdnya2"></font>
             </div>
           </td>
@@ -972,6 +1341,41 @@
                 style="width: 100%"
                 id="nama-petugas-4"
               />
+
+              <br />
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_petugas_4"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_petugas_4"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_petugas_4"
+                id="paraf_ex_ttd_petugas_4"
+                data-name="paraf"
+                data-id="ex_ttd_petugas_4"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_petugas_4"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
               <font id="ttdnya2"></font>
             </div>
           </td>
@@ -984,6 +1388,41 @@
                 style="width: 100%"
                 id="nama-petugas-5"
               />
+
+              <br />
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_petugas_5"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_petugas_5"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_petugas_5"
+                id="paraf_ex_ttd_petugas_5"
+                data-name="paraf"
+                data-id="ex_ttd_petugas_5"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_petugas_5"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
               <font id="ttdnya2"></font>
             </div>
           </td>
@@ -1002,132 +1441,6 @@
     </table>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const skorKategori1 = document.querySelectorAll(".skor-kategori-1");
-        const skorKategori2 = document.querySelectorAll(".skor-kategori-2");
-        const skorKategori3 = document.querySelectorAll(".skor-kategori-3");
-        const skorKategori4 = document.querySelectorAll(".skor-kategori-4");
-        const skorKategori5 = document.querySelectorAll(".skor-kategori-5");
-
-        const jumlahSkor1 = document.querySelector("#jumlah-skor-1");
-        const jumlahSkor2 = document.querySelector("#jumlah-skor-2");
-        const jumlahSkor3 = document.querySelector("#jumlah-skor-3");
-        const jumlahSkor4 = document.querySelector("#jumlah-skor-4");
-        const jumlahSkor5 = document.querySelector("#jumlah-skor-5");
-
-        function penghitunganSkorKategori1() {
-          let total = 0;
-          let hasil;
-
-          skorKategori1.forEach((input) => {
-            if (input.classList.contains("clicked")) {
-              total += parseFloat(input.value);
-            }
-          });
-
-          if (total <= 3) {
-            hasil = "Nyeri ringan";
-          } else if (total >= 4 && total <= 11) {
-            hasil = "Nyeri sedang";
-          } else if (total == 12) {
-            hasil = "Nyeri berat";
-          }
-          jumlahSkor1.value = `${total}, ${hasil}`;
-        }
-
-        skorKategori1.forEach((input) => {
-          input.addEventListener("change", penghitunganSkorKategori1);
-        });
-
-        function penghitunganSkorKategori2() {
-          let total = 0;
-
-          skorKategori2.forEach((input) => {
-            if (input.classList.contains("clicked")) {
-              total += parseFloat(input.value);
-            }
-          });
-          if (total <= 3) {
-            hasil = "Nyeri ringan";
-          } else if (total >= 4 && total <= 11) {
-            hasil = "Nyeri sedang";
-          } else if (total == 12) {
-            hasil = "Nyeri berat";
-          }
-          jumlahSkor2.value = `${total}, ${hasil}`;
-        }
-
-        skorKategori2.forEach((input) => {
-          input.addEventListener("change", penghitunganSkorKategori2);
-        });
-
-        function penghitunganSkorKategori3() {
-          let total = 0;
-
-          skorKategori3.forEach((input) => {
-            if (input.classList.contains("clicked")) {
-              total += parseFloat(input.value);
-            }
-          });
-          if (total <= 3) {
-            hasil = "Nyeri ringan";
-          } else if (total >= 4 && total <= 11) {
-            hasil = "Nyeri sedang";
-          } else if (total == 12) {
-            hasil = "Nyeri berat";
-          }
-          jumlahSkor3.value = `${total}, ${hasil}`;
-        }
-
-        skorKategori3.forEach((input) => {
-          input.addEventListener("change", penghitunganSkorKategori3);
-        });
-
-        function penghitunganSkorKategori4() {
-          let total = 0;
-
-          skorKategori4.forEach((input) => {
-            if (input.classList.contains("clicked")) {
-              total += parseFloat(input.value);
-            }
-          });
-
-          if (total <= 3) {
-            hasil = "Nyeri ringan";
-          } else if (total >= 4 && total <= 11) {
-            hasil = "Nyeri sedang";
-          } else if (total == 12) {
-            hasil = "Nyeri berat";
-          }
-          jumlahSkor4.value = `${total}, ${hasil}`;
-        }
-
-        skorKategori4.forEach((input) => {
-          input.addEventListener("change", penghitunganSkorKategori4);
-        });
-
-        function penghitunganSkorKategori5() {
-          let total = 0;
-
-          skorKategori5.forEach((input) => {
-            if (input.classList.contains("clicked")) {
-              total += parseFloat(input.value);
-            }
-          });
-
-          if (total <= 3) {
-            hasil = "Nyeri ringan";
-          } else if (total >= 4 && total <= 11) {
-            hasil = "Nyeri sedang";
-          } else if (total == 12) {
-            hasil = "Nyeri berat";
-          }
-          jumlahSkor5.value = `${total}, ${hasil}`;
-        }
-
-        skorKategori5.forEach((input) => {
-          input.addEventListener("change", penghitunganSkorKategori5);
-        });
-
         var radioButtons = document.querySelectorAll('input[type="radio"]');
         radioButtons.forEach(function (radio) {
           radio.addEventListener("click", function () {
