@@ -59,29 +59,11 @@
               myid="check_cara"
               label="nama pasien"
               placeholder="..."
+              value="{VNAMA_PASIEN}"
             />
           </td>
           <td>Jenis Kelamin</td>
-          <td>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="laki-laki"
-              myid="check_cara"
-              value="L"
-              label="jenis kelamin"
-            />
-            <label for="l">L</label>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="perempuan"
-              myid="check_cara"
-              value="P"
-              label="jenis kelamin"
-            />
-            <label for="l">P</label>
-          </td>
+          <td>{VSEX}</td>
           <td>
             <label for="">Nomor Rekam Medis</label>
           </td>
@@ -92,6 +74,7 @@
               name="no_rm"
               id="no_rm"
               label="nomor rekam medis"
+              value="{NO_RM}"
             />
           </td>
         </tr>
@@ -103,9 +86,11 @@
               name="tgl_lahira2"
               type="text"
               id="tgl_lahir"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               label="tanggal lahir"
+              value="{VBIRTH_DATE}"
             />
           </td>
 
@@ -118,6 +103,7 @@
               id="umur-pengkajian"
               myid="check_cara"
               placeholder="..."
+              value="{VAGE}"
             />
           </td>
           <td>
@@ -125,39 +111,58 @@
           </td>
           <td>
             <input
-              name="kelasa2"
+              name="poli"
               type="text"
-              id="kelas"
+              id="poli"
               placeholder="..."
               myid="check_cara"
-              label="kelas"
+              label="poli"
             />
           </td>
         </tr>
         <tr>
           <td>
-            <label for="kelas"> Kamar </label>
+            <label for="kamar"> Kamar </label>
           </td>
           <td>
             <input
-              name="kelasa2"
+              name="kamar"
               type="text"
-              id="kelas"
+              id="kamar"
               placeholder="..."
               myid="check_cara"
-              label="kelas"
+              label="kamar"
+              value="{VNAMARUANGAN}"
             />
           </td>
         </tr>
         <tr>
           <td style="font-weight: bold">RENCANA OPERASI TANGGAL:</td>
           <td>
-            <input type="date" />
+            <input
+              name="tgl-operasi"
+              type="text"
+              id="tgl-operasi"
+              placeholder="dd-mm-yy"
+              myid="check_cara"
+              label="tgl-operasi"
+              class="datepicker hasDatepicker"
+              fdprocessedid="clw3uk"
+            />
           </td>
 
           <td style="font-weight: bold">JAM</td>
           <td colspan="2">
-            <input type="time" />
+            <input
+              name="jam-operasi"
+              type="text"
+              id="jam-operasi"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam-operasi"
+              mtype="pukul"
+              fdprocessedid="clw3uk"
+            />
           </td>
           <td style="padding-left: 5px; font-weight: bold">
             <input
@@ -190,6 +195,7 @@
               label="nama-operasi"
               size="50"
               placeholder="..."
+              myid="check_cara"
             />
           </td>
 
@@ -574,7 +580,8 @@
                 id="tgl-booking-ruang-operasi"
                 label="tgl-booking-ruang-operasi"
                 myid="check_cara"
-                placeholder="dd/mm/yyyy"
+                placeholder="dd-mm-yy"
+                class="datepicker hasDatepicker"
               />
               <label for="jam">Jam:</label>
               <input
@@ -583,6 +590,7 @@
                 id="jam-booking-ruang-operasi"
                 label="jam-booking-ruang-operasi"
                 myid="check_cara"
+                mtype="pukul"
                 placeholder="00.00"
               />
             </div>
@@ -622,6 +630,7 @@
                 label="mulai-puasa"
                 placeholder="00.00"
                 style="width: 100%"
+                mtype="pukul"
                 myid="check_cara"
               />
             </div>
@@ -707,9 +716,9 @@
                       <input
                         style="width: 100%"
                         type="text"
-                        name="Hb"
-                        id="Hb"
-                        label="Hb"
+                        name="hasil-laboratorium-Hb"
+                        id="hasil-laboratorium-Hb"
+                        label="hasil-laboratorium-Hb"
                         placeholder="......"
                         myid="check_cara"
                       />
@@ -721,9 +730,9 @@
                       <input
                         type="text"
                         style="width: 100%"
-                        name="l"
-                        id="l"
-                        label="l"
+                        name="hasil-laboratorium-l"
+                        id="hasil-laboratorium-l"
+                        label="hasil-laboratorium-l"
                         placeholder="......"
                         myid="check_cara"
                       />
@@ -737,9 +746,9 @@
                       <input
                         style="width: 100%"
                         type="text"
-                        name="Tr"
-                        id="Tr"
-                        label="Tr"
+                        name="hasil-laboratorium-Tr"
+                        id="hasil-laboratorium-Tr"
+                        label="hasil-laboratorium-Tr"
                         placeholder="......"
                         myid="check_cara"
                       />
@@ -754,9 +763,9 @@
                       <input
                         style="width: 100%"
                         type="text"
-                        name="BT"
-                        id="BT"
-                        label="BT"
+                        name="hasil-laboratorium-BT"
+                        id="hasil-laboratorium-BT"
+                        label="hasil-laboratorium-BT"
                         placeholder="......"
                         myid="check_cara"
                       />
@@ -768,9 +777,9 @@
                       <input
                         style="width: 100%"
                         type="text"
-                        name="PT"
-                        id="PT"
-                        label="PT"
+                        name="hasil-laboratorium-PT"
+                        id="hasil-laboratorium-PT"
+                        label="hasil-laboratorium-PT"
                         placeholder="......"
                         myid="check_cara"
                       />
@@ -784,9 +793,9 @@
                       <input
                         style="width: 100%"
                         type="text"
-                        name="CT"
-                        id="CT"
-                        label="CT"
+                        name="hasil-laboratorium-CT"
+                        id="hasil-laboratorium-CT"
+                        label="hasil-laboratorium-CT"
                         placeholder="......"
                         myid="check_cara"
                       />
@@ -798,9 +807,9 @@
                       <input
                         style="width: 100%"
                         type="text"
-                        name="APTT"
-                        id="APTT"
-                        label="APTT"
+                        name="hasil-laboratorium-APTT"
+                        id="hasil-laboratorium-APTT"
+                        label="hasil-laboratorium-APTT"
                         placeholder="......"
                         myid="check_cara"
                       />
@@ -892,12 +901,13 @@
                       <input
                         style="width: 100%"
                         type="text"
-                        name="TD"
-                        id="TD"
-                        label="TD"
+                        name="ttv-TD"
+                        id="ttv-TD"
+                        label="ttv-TD"
                         myid="check_cara"
+                        value="{VTD}"
                       />
-                      <label for="TD">mmhg</label>
+                      <label for="ttv-TD">mmhg</label>
                     </div>
                   </td>
                   <td>
@@ -906,13 +916,13 @@
                       <input
                         style="width: 100%"
                         type="text"
-                        name="keterangan-N"
-                        id="keterangan-N"
-                        label="keterangan-N"
+                        name="ttv-N"
+                        id="ttv-N"
+                        label="ttv-N"
                         placeholder="......"
                         myid="check_cara"
                       />
-                      <label for="keterangan-N">x/mnt</label>
+                      <label for="ttv-N">x/mnt</label>
                     </div>
                   </td>
                 </tr>
@@ -923,13 +933,13 @@
                       <input
                         style="width: 100%"
                         type="text"
-                        name="keterangan-S"
-                        id="keterangan-S"
-                        label="keterangan-S"
+                        name="ttv-S"
+                        id="ttv-S"
+                        label="ttv-S"
                         placeholder="......"
                         myid="check_cara"
                       />
-                      <label for="keterangan-S">x/mnt</label>
+                      <label for="ttv-S">x/mnt</label>
                     </div>
                   </td>
                   <td>
@@ -938,13 +948,13 @@
                       <input
                         style="width: 100%"
                         type="text"
-                        name="keterangan-P"
-                        id="keterangan-P"
-                        label="keterangan-P"
+                        name="hasil-laboratorium-P"
+                        id="hasil-laboratorium-P"
+                        label="hasil-laboratorium-P"
                         placeholder="......"
                         myid="check_cara"
                       />
-                      <label for="keterangan-P">x/mnt</label>
+                      <label for="hasil-laboratorium-P">x/mnt</label>
                     </div>
                   </td>
                 </tr>
@@ -958,6 +968,7 @@
                         name="BB"
                         id="BB"
                         label="BB"
+                        value="{VBB}"
                         placeholder="......"
                         myid="check_cara"
                       />
@@ -1118,10 +1129,12 @@
                       <label for="jam-obat">Jam:</label>
                       <input
                         style="width: 100%"
-                        type="time"
+                        type="text"
                         name="jam-obat"
                         id="jam-obat"
                         label="jam-obat"
+                        mtype="pukul"
+                        placeholder="00.00"
                         myid="check_cara"
                       />
                     </div>
@@ -1280,9 +1293,9 @@
               <input
                 style="width: 100%"
                 type="text"
-                name="jam-awal-klisma"
-                id="jam-awal-klisma"
-                label="jam-awal-klisma"
+                name="jam-1-klisma"
+                id="jam-1-klisma"
+                label="jam-1-klisma"
                 myid="check_cara"
                 placeholder="......"
               />
@@ -1290,9 +1303,9 @@
               <input
                 style="width: 100%"
                 type="text"
-                name="jam-awal-klisma"
-                id="jam-awal-klisma"
-                label="jam-awal-klisma"
+                name="jam-2-klisma"
+                id="jam-2-klisma"
+                label="jam-2-klisma"
                 myid="check_cara"
                 placeholder="......"
               />
@@ -1385,16 +1398,27 @@
           <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
           <td bgcolor="#FFFFFF">
             <input
+              name="17_tgl"
+              type="text"
+              id="17_tgl"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
+              size="30"
+              myid="check_cara"
+            />
+            <br />
+            <input
               name="17_pukul"
               type="text"
               id="17_pukul"
-              placeholder="dd/mm/yyyy/00:00"
+              placeholder="00.00"
+              mtype="pukul"
               size="30"
               myid="check_cara"
             />
           </td>
 
-          <td bgcolor="#FFFFFF">&nbsp;</td>
+          <td bgcolor="#FFFFFF" colspan="2">&nbsp;</td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -1402,11 +1426,9 @@
           <td colspan="2">
             <div><strong>Penerima</strong></div>
           </td>
-          <td>
+          <td colspan="2">
             <div><strong>Penanggung jawab,</strong></div>
           </td>
-
-          <td>&nbsp;</td>
         </tr>
 
         <tr>
@@ -1415,50 +1437,98 @@
 
           <td bgcolor="#FFFFFF">
             <input
-              name="17_nama3"
+              name="nama-penerima"
               type="text"
-              id="17_nama3"
+              id="nama-penerima"
               size="25"
               myid="check_cara"
             />
             <br />
-            <select
-              type="select"
-              name="perawatnya"
-              id="perawatnya"
-              myid="check_cara"
-              iscombo="t"
-              onchange="get_ttd2();"
-            >
-              <option></option>
-            </select>
-            <br />
-            <font id="ttdnya2"></font>
-          </td>
-          <td>
-            <input
-              name="17_nama3"
-              type="text"
-              id="17_nama3"
-              size="25"
-              myid="check_cara"
-            />
-            <br />
-            <select
-              type="select"
-              name="perawatnya"
-              id="perawatnya"
-              myid="check_cara"
-              iscombo="t"
-              onchange="get_ttd2();"
-            >
-              <option></option>
-            </select>
-            <br />
-            <font id="ttdnya2"></font>
-          </td>
 
-          <td bgcolor="#FFFFFF">&nbsp;</td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_nama_penerima"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_nama_penerima"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_nama_penerima"
+              id="paraf_ex_paraf_nama_penerima"
+              data-name="paraf"
+              data-id="ex_paraf_nama_penerima"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_nama_penerima"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
+            <font id="ttdnya2"></font>
+          </td>
+          <td colspan="2">
+            <input
+              name="nama-penanggungjawab"
+              type="text"
+              id="nama-penanggungjawab"
+              size="25"
+              myid="check_cara"
+            />
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_nama_penanggung_jawab"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_nama_penanggung_jawab"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_nama_penanggung_jawab"
+              id="paraf_ex_paraf_nama_penanggung_jawab"
+              data-name="paraf"
+              data-id="ex_paraf_nama_penanggung_jawab"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_nama_penanggung_jawab"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
+            <font id="ttdnya2"></font>
+          </td>
         </tr>
       </tbody>
     </table>
