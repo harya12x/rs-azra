@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PENGKAJIAN RISIKO JATUH PASIEN BAYI DAN ANAK</title>
   </head>
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"
+  ></script>
   <style>
     * {
       margin: 0;
@@ -31,12 +36,159 @@
       padding: 5px;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+
+      $('input[type="radio"]')
+        .off("change")
+        .on("change", function () {
+          let total = 0;
+          let percol = $(this).data("percol");
+          console.log(percol);
+
+          $("[data-hitung" + percol + "]").each(function () {
+            let radioValue = 0;
+            radioValue = $(this).val() || 0;
+
+            if ($(this).is(":checked")) {
+              radioValue = parseInt(radioValue);
+              console.log(radioValue);
+              total += radioValue;
+            }
+          });
+
+          $(`#totalskor` + percol).val(total);
+        });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">
       PENGKAJIAN RISIKO JATUH PASIEN BAYI DAN ANAK RS. AZRA BOGOR
     </h1>
 
-    <table class="table-bordered" width="100%">
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
           <input
@@ -51,8 +203,8 @@
             name="src_ttd_2"
             myid="check_cara"
           />
-          <td bgcolor="#DFE8F6">Nama Pasien</td>
-          <td bgcolor="#DFE8F6">
+          <td>Nama Pasien</td>
+          <td>
             <input
               name="nama_pasien"
               type="text"
@@ -60,53 +212,38 @@
               size="30"
               myid="check_cara"
               label="nama pasien"
+              value="{VNAMA_PASIEN}"
               placeholder="..."
             />
           </td>
-          <td bgcolor="#DFE8F6">Jenis Kelamin</td>
-          <td bgcolor="#DFE8F6">
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="laki-laki"
-              myid="check_cara"
-              value="L"
-              label="jenis kelamin"
-            />
-            <label for="l">L</label>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="perempuan"
-              myid="check_cara"
-              value="P"
-              label="jenis kelamin"
-            />
-            <label for="l">P</label>
-          </td>
-          <td bgcolor="#DFE8F6">
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
             <label for="">Nomor Rekam Medis</label>
           </td>
-          <td bgcolor="#DFE8F6">
+          <td>
             <input
               type="text"
               myid="check_cara"
               name="no_rm"
               id="no_rm"
               label="nomor rekam medis"
+              value="{NO_RM}"
             />
           </td>
         </tr>
 
         <tr>
-          <td rowspan="2" bgcolor="">Tanggal Lahir</td>
-          <td rowspan="2" bgcolor="">
+          <td rowspan="2">Tanggal Lahir</td>
+          <td rowspan="2">
             <input
               name="tgl_lahir"
               type="text"
               id="tgl_lahir"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
+              value="{VBIRTH_DATE}"
               label="tanggal lahir"
             />
           </td>
@@ -119,11 +256,12 @@
               name="umur"
               id="umur"
               myid="check_cara"
+              value="{VAGE}"
               placeholder="..."
             />
           </td>
           <td>
-            <label for="kelas"> Kelas </label>
+            <label for="kelas">Kelas</label>
           </td>
           <td>
             <input
@@ -132,25 +270,28 @@
               id="kelas"
               placeholder="..."
               myid="check_cara"
+              value="{VNAMAKELAS}"
               label="kelas"
             />
           </td>
         </tr>
         <tr>
-          <td bgcolor="#DFE8F6">Kamar</td>
-          <td bgcolor="#DFE8F6">
+          <td>Kamar</td>
+          <td>
             <input
               type="text"
               name="kamar"
               id="kamar"
               myid="check_cara"
               placeholder="..."
-              aria-label="kamar"
+              value="{VNAMARUANGAN}"
+              label="kamar"
             />
           </td>
         </tr>
       </tbody>
     </table>
+
     <table width="100%" class="table table-bordered">
       <thead>
         <tr>
@@ -164,7 +305,8 @@
             <input
               style="width: 100%"
               type="text"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               name="tgl-pengkajian-1"
               id="tgl-pengkajian-1"
@@ -174,7 +316,8 @@
             <input
               style="width: 100%"
               type="text"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               name="tgl-pengkajian-2"
               id="tgl-pengkajian-2"
@@ -184,7 +327,8 @@
             <input
               style="width: 100%"
               type="text"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               name="tgl-pengkajian-3"
               id="tgl-pengkajian-3"
@@ -194,7 +338,8 @@
             <input
               style="width: 100%"
               type="text"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               name="tgl-pengkajian-4"
               id="tgl-pengkajian-4"
@@ -204,7 +349,8 @@
             <input
               style="width: 100%"
               type="text"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               name="tgl-pengkajian-5"
               id="tgl-pengkajian-5"
@@ -214,7 +360,8 @@
             <input
               style="width: 100%"
               type="text"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               name="tgl-pengkajian-6"
               id="tgl-pengkajian-6"
@@ -224,7 +371,8 @@
             <input
               style="width: 100%"
               type="text"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               name="tgl-pengkajian-7"
               id="tgl-pengkajian-7"
@@ -234,7 +382,8 @@
             <input
               style="width: 100%"
               type="text"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               name="tgl-pengkajian-8"
               id="tgl-pengkajian-8"
@@ -244,7 +393,8 @@
             <input
               style="width: 100%"
               type="text"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               name="tgl-pengkajian-9"
               id="tgl-pengkajian-9"
@@ -255,11 +405,13 @@
       <tbody>
         <tr>
           <td rowspan="4">Umur</td>
-          <td>Di bawah 3 tahun</td>
+          <td width="25%">Di bawah 3 tahun</td>
           <td>4</td>
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="umur-1"
               id="umur-1"
               value="4"
@@ -269,6 +421,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="umur-2"
               id="umur-2"
               value="4"
@@ -278,6 +432,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="umur-3"
               id="umur-3"
               value="4"
@@ -287,6 +443,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="umur-4"
               id="umur-4"
               value="4"
@@ -296,6 +454,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="umur-5"
               id="umur-5"
               value="4"
@@ -305,6 +465,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="umur-6"
               id="umur-6"
               value="4"
@@ -314,6 +476,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="umur-7"
               id="umur-7"
               value="4"
@@ -323,6 +487,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="umur-8"
               id="umur-8"
               value="4"
@@ -332,6 +498,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="umur-9"
               id="umur-9"
               value="4"
@@ -345,6 +513,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="umur-1"
               id="umur-1"
               value="3"
@@ -354,6 +524,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="umur-2"
               id="umur-2"
               value="3"
@@ -363,6 +535,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="umur-3"
               id="umur-3"
               value="3"
@@ -372,6 +546,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="umur-4"
               id="umur-4"
               value="3"
@@ -381,6 +557,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="umur-5"
               id="umur-5"
               value="3"
@@ -390,6 +568,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="umur-6"
               id="umur-6"
               value="3"
@@ -399,6 +579,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="umur-7"
               id="umur-7"
               value="3"
@@ -408,6 +590,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="umur-8"
               id="umur-8"
               value="3"
@@ -417,6 +601,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="umur-9"
               id="umur-9"
               value="3"
@@ -430,6 +616,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="umur-1"
               id="umur-1"
               value="2"
@@ -439,6 +627,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="umur-2"
               id="umur-2"
               value="2"
@@ -448,6 +638,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="umur-3"
               id="umur-3"
               value="2"
@@ -457,6 +649,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="umur-4"
               id="umur-4"
               value="2"
@@ -466,6 +660,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="umur-5"
               id="umur-5"
               value="2"
@@ -475,6 +671,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="umur-6"
               id="umur-6"
               value="2"
@@ -484,6 +682,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="umur-7"
               id="umur-7"
               value="2"
@@ -493,6 +693,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="umur-8"
               id="umur-8"
               value="2"
@@ -502,6 +704,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="umur-9"
               id="umur-9"
               value="2"
@@ -515,6 +719,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="umur-1"
               id="umur-1"
               value="1"
@@ -524,6 +730,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="umur-2"
               id="umur-2"
               value="1"
@@ -533,6 +741,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="umur-3"
               id="umur-3"
               value="1"
@@ -542,6 +752,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="umur-4"
               id="umur-4"
               value="1"
@@ -551,6 +763,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="umur-5"
               id="umur-5"
               value="1"
@@ -560,6 +774,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="umur-6"
               id="umur-6"
               value="1"
@@ -569,6 +785,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="umur-7"
               id="umur-7"
               value="1"
@@ -578,6 +796,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="umur-8"
               id="umur-8"
               value="1"
@@ -587,6 +807,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="umur-9"
               id="umur-9"
               value="1"
@@ -601,6 +823,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="jenis-kelamin-1"
               id="jenis-kelamin-1"
               value="2"
@@ -686,6 +910,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="jenis-kelamin-1"
               id="jenis-kelamin-1"
               value="1"
@@ -695,6 +921,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="jenis-kelamin-2"
               id="jenis-kelamin-2"
               value="1"
@@ -704,6 +932,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="jenis-kelamin-3"
               id="jenis-kelamin-3"
               value="1"
@@ -713,6 +943,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="jenis-kelamin-4"
               id="jenis-kelamin-4"
               value="1"
@@ -722,6 +954,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="jenis-kelamin-5"
               id="jenis-kelamin-5"
               value="1"
@@ -731,6 +965,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="jenis-kelamin-6"
               id="jenis-kelamin-6"
               value="1"
@@ -740,6 +976,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="jenis-kelamin-7"
               id="jenis-kelamin-7"
               value="1"
@@ -749,6 +987,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="jenis-kelamin-8"
               id="jenis-kelamin-8"
               value="1"
@@ -758,6 +998,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="jenis-kelamin-9"
               id="jenis-kelamin-9"
               value="1"
@@ -772,6 +1014,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="diagnosa-1"
               id="diagnosa-1"
               value="4"
@@ -781,6 +1025,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="diagnosa-2"
               id="diagnosa-2"
               value="4"
@@ -790,6 +1036,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="diagnosa-3"
               id="diagnosa-3"
               value="4"
@@ -799,6 +1047,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="diagnosa-4"
               id="diagnosa-4"
               value="4"
@@ -808,6 +1058,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="diagnosa-5"
               id="diagnosa-5"
               value="4"
@@ -817,6 +1069,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="diagnosa-6"
               id="diagnosa-6"
               value="4"
@@ -826,6 +1080,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="diagnosa-7"
               id="diagnosa-7"
               value="4"
@@ -835,6 +1091,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="diagnosa-8"
               id="diagnosa-8"
               value="4"
@@ -844,6 +1102,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="diagnosa-9"
               id="diagnosa-9"
               value="4"
@@ -860,6 +1120,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="diagnosa-1"
               id="diagnosa-1"
               value="3"
@@ -869,6 +1131,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="diagnosa-2"
               id="diagnosa-2"
               value="3"
@@ -878,6 +1142,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="diagnosa-3"
               id="diagnosa-3"
               value="3"
@@ -887,6 +1153,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="diagnosa-4"
               id="diagnosa-4"
               value="3"
@@ -896,6 +1164,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="diagnosa-5"
               id="diagnosa-5"
               value="3"
@@ -905,6 +1175,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="diagnosa-6"
               id="diagnosa-6"
               value="3"
@@ -914,6 +1186,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="diagnosa-7"
               id="diagnosa-7"
               value="3"
@@ -923,6 +1197,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="diagnosa-8"
               id="diagnosa-8"
               value="3"
@@ -932,6 +1208,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="diagnosa-9"
               id="diagnosa-9"
               value="3"
@@ -945,6 +1223,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="diagnosa-1"
               id="diagnosa-1"
               value="2"
@@ -954,6 +1234,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="diagnosa-2"
               id="diagnosa-2"
               value="2"
@@ -963,6 +1245,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="diagnosa-3"
               id="diagnosa-3"
               value="2"
@@ -972,6 +1256,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="diagnosa-4"
               id="diagnosa-4"
               value="2"
@@ -981,6 +1267,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="diagnosa-5"
               id="diagnosa-5"
               value="2"
@@ -990,6 +1278,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="diagnosa-6"
               id="diagnosa-6"
               value="2"
@@ -999,6 +1289,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="diagnosa-7"
               id="diagnosa-7"
               value="2"
@@ -1008,6 +1300,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="diagnosa-8"
               id="diagnosa-8"
               value="2"
@@ -1017,6 +1311,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="diagnosa-9"
               id="diagnosa-9"
               value="2"
@@ -1030,6 +1326,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="diagnosa-1"
               id="diagnosa-1"
               value="1"
@@ -1039,6 +1337,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="diagnosa-2"
               id="diagnosa-2"
               value="1"
@@ -1048,6 +1348,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="diagnosa-3"
               id="diagnosa-3"
               value="1"
@@ -1057,6 +1359,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="diagnosa-4"
               id="diagnosa-4"
               value="1"
@@ -1066,6 +1370,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="diagnosa-5"
               id="diagnosa-5"
               value="1"
@@ -1075,6 +1381,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="diagnosa-6"
               id="diagnosa-6"
               value="1"
@@ -1084,6 +1392,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="diagnosa-7"
               id="diagnosa-7"
               value="1"
@@ -1093,6 +1403,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="diagnosa-8"
               id="diagnosa-8"
               value="1"
@@ -1102,6 +1414,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="diagnosa-9"
               id="diagnosa-9"
               value="1"
@@ -1116,6 +1430,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="gangguan-kognitif-1"
               id="gangguan-kognitif-1"
               value="3"
@@ -1125,6 +1441,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="gangguan-kognitif-2"
               id="gangguan-kognitif-2"
               value="3"
@@ -1134,6 +1452,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="gangguan-kognitif-3"
               id="gangguan-kognitif-3"
               value="3"
@@ -1143,6 +1463,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="gangguan-kognitif-4"
               id="gangguan-kognitif-4"
               value="3"
@@ -1152,6 +1474,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="gangguan-kognitif-5"
               id="gangguan-kognitif-5"
               value="3"
@@ -1161,6 +1485,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="gangguan-kognitif-6"
               id="gangguan-kognitif-6"
               value="3"
@@ -1170,6 +1496,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="gangguan-kognitif-7"
               id="gangguan-kognitif-7"
               value="3"
@@ -1179,6 +1507,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="gangguan-kognitif-8"
               id="gangguan-kognitif-8"
               value="3"
@@ -1188,6 +1518,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="gangguan-kognitif-9"
               id="gangguan-kognitif-9"
               value="3"
@@ -1201,6 +1533,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="gangguan-kognitif-1"
               id="gangguan-kognitif-1"
               value="2"
@@ -1210,6 +1544,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="gangguan-kognitif-2"
               id="gangguan-kognitif-2"
               value="2"
@@ -1219,6 +1555,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="gangguan-kognitif-3"
               id="gangguan-kognitif-3"
               value="2"
@@ -1228,6 +1566,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="gangguan-kognitif-4"
               id="gangguan-kognitif-4"
               value="2"
@@ -1237,6 +1577,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="gangguan-kognitif-5"
               id="gangguan-kognitif-5"
               value="2"
@@ -1246,6 +1588,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="gangguan-kognitif-6"
               id="gangguan-kognitif-6"
               value="2"
@@ -1255,6 +1599,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="gangguan-kognitif-7"
               id="gangguan-kognitif-7"
               value="2"
@@ -1264,6 +1610,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="gangguan-kognitif-8"
               id="gangguan-kognitif-8"
               value="2"
@@ -1273,6 +1621,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="gangguan-kognitif-9"
               id="gangguan-kognitif-9"
               value="2"
@@ -1286,6 +1636,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="gangguan-kognitif-1"
               id="gangguan-kognitif-1"
               value="1"
@@ -1295,6 +1647,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="gangguan-kognitif-2"
               id="gangguan-kognitif-2"
               value="1"
@@ -1304,6 +1658,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="gangguan-kognitif-3"
               id="gangguan-kognitif-3"
               value="1"
@@ -1313,6 +1669,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="gangguan-kognitif-4"
               id="gangguan-kognitif-4"
               value="1"
@@ -1322,6 +1680,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="gangguan-kognitif-5"
               id="gangguan-kognitif-5"
               value="1"
@@ -1331,6 +1691,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="gangguan-kognitif-6"
               id="gangguan-kognitif-6"
               value="1"
@@ -1340,6 +1702,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="gangguan-kognitif-7"
               id="gangguan-kognitif-7"
               value="1"
@@ -1349,6 +1713,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="gangguan-kognitif-8"
               id="gangguan-kognitif-8"
               value="1"
@@ -1358,6 +1724,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="gangguan-kognitif-9"
               id="gangguan-kognitif-9"
               value="1"
@@ -1372,6 +1740,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="faktor-lingkungan-1"
               id="faktor-lingkungan-1"
               value="4"
@@ -1381,6 +1751,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="faktor-lingkungan-2"
               id="faktor-lingkungan-2"
               value="4"
@@ -1390,6 +1762,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="faktor-lingkungan-3"
               id="faktor-lingkungan-3"
               value="4"
@@ -1399,6 +1773,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="faktor-lingkungan-4"
               id="faktor-lingkungan-4"
               value="4"
@@ -1408,6 +1784,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="faktor-lingkungan-5"
               id="faktor-lingkungan-5"
               value="4"
@@ -1417,6 +1795,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="faktor-lingkungan-6"
               id="faktor-lingkungan-6"
               value="4"
@@ -1426,6 +1806,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="faktor-lingkungan-7"
               id="faktor-lingkungan-7"
               value="4"
@@ -1435,6 +1817,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="faktor-lingkungan-8"
               id="faktor-lingkungan-8"
               value="4"
@@ -1444,6 +1828,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="faktor-lingkungan-9"
               id="faktor-lingkungan-9"
               value="4"
@@ -1457,6 +1843,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="faktor-lingkungan-1"
               id="faktor-lingkungan-1"
               value="3"
@@ -1466,6 +1854,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="faktor-lingkungan-2"
               id="faktor-lingkungan-2"
               value="3"
@@ -1475,6 +1865,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="faktor-lingkungan-3"
               id="faktor-lingkungan-3"
               value="3"
@@ -1484,6 +1876,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="faktor-lingkungan-4"
               id="faktor-lingkungan-4"
               value="3"
@@ -1493,6 +1887,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="faktor-lingkungan-5"
               id="faktor-lingkungan-5"
               value="3"
@@ -1502,6 +1898,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="faktor-lingkungan-6"
               id="faktor-lingkungan-6"
               value="3"
@@ -1511,6 +1909,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="faktor-lingkungan-7"
               id="faktor-lingkungan-7"
               value="3"
@@ -1520,6 +1920,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="faktor-lingkungan-8"
               id="faktor-lingkungan-8"
               value="3"
@@ -1529,6 +1931,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="faktor-lingkungan-9"
               id="faktor-lingkungan-9"
               value="3"
@@ -1542,6 +1946,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="faktor-lingkungan-1"
               id="faktor-lingkungan-1"
               value="2"
@@ -1551,6 +1957,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="faktor-lingkungan-2"
               id="faktor-lingkungan-2"
               value="2"
@@ -1560,6 +1968,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="faktor-lingkungan-3"
               id="faktor-lingkungan-3"
               value="2"
@@ -1569,6 +1979,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="faktor-lingkungan-4"
               id="faktor-lingkungan-4"
               value="2"
@@ -1578,6 +1990,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="faktor-lingkungan-5"
               id="faktor-lingkungan-5"
               value="2"
@@ -1587,6 +2001,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="faktor-lingkungan-6"
               id="faktor-lingkungan-6"
               value="2"
@@ -1596,6 +2012,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="faktor-lingkungan-7"
               id="faktor-lingkungan-7"
               value="2"
@@ -1605,6 +2023,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="faktor-lingkungan-8"
               id="faktor-lingkungan-8"
               value="2"
@@ -1614,6 +2034,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="faktor-lingkungan-9"
               id="faktor-lingkungan-9"
               value="2"
@@ -1627,6 +2049,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="faktor-lingkungan-1"
               id="faktor-lingkungan-1"
               value="1"
@@ -1636,6 +2060,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="faktor-lingkungan-2"
               id="faktor-lingkungan-2"
               value="1"
@@ -1645,6 +2071,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="faktor-lingkungan-3"
               id="faktor-lingkungan-3"
               value="1"
@@ -1654,6 +2082,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="faktor-lingkungan-4"
               id="faktor-lingkungan-4"
               value="1"
@@ -1663,6 +2093,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="faktor-lingkungan-5"
               id="faktor-lingkungan-5"
               value="1"
@@ -1672,6 +2104,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="faktor-lingkungan-6"
               id="faktor-lingkungan-6"
               value="1"
@@ -1681,6 +2115,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="faktor-lingkungan-7"
               id="faktor-lingkungan-7"
               value="1"
@@ -1690,6 +2126,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="faktor-lingkungan-8"
               id="faktor-lingkungan-8"
               value="1"
@@ -1699,6 +2137,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="faktor-lingkungan-9"
               id="faktor-lingkungan-9"
               value="1"
@@ -1715,6 +2155,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-1"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-1"
               value="3"
@@ -1724,6 +2166,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-2"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-2"
               value="3"
@@ -1733,6 +2177,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-3"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-3"
               value="3"
@@ -1742,6 +2188,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-4"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-4"
               value="3"
@@ -1751,6 +2199,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-5"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-5"
               value="3"
@@ -1760,6 +2210,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-6"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-6"
               value="3"
@@ -1769,6 +2221,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-7"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-7"
               value="3"
@@ -1778,6 +2232,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-8"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-8"
               value="3"
@@ -1787,6 +2243,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-9"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-9"
               value="3"
@@ -1800,6 +2258,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-1"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-1"
               value="2"
@@ -1809,6 +2269,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-2"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-2"
               value="2"
@@ -1818,6 +2280,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-3"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-3"
               value="2"
@@ -1827,6 +2291,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-4"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-4"
               value="2"
@@ -1836,6 +2302,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-5"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-5"
               value="2"
@@ -1845,6 +2313,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-6"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-6"
               value="2"
@@ -1854,6 +2324,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-7"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-7"
               value="2"
@@ -1863,6 +2335,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-8"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-8"
               value="2"
@@ -1872,6 +2346,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-9"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-9"
               value="2"
@@ -1885,6 +2361,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-1"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-1"
               value="1"
@@ -1894,6 +2372,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-2"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-2"
               value="1"
@@ -1903,6 +2383,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-3"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-3"
               value="1"
@@ -1912,6 +2394,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-4"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-4"
               value="1"
@@ -1921,6 +2405,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-5"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-5"
               value="1"
@@ -1930,6 +2416,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-6"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-6"
               value="1"
@@ -1939,6 +2427,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-7"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-7"
               value="1"
@@ -1948,6 +2438,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-8"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-8"
               value="1"
@@ -1957,6 +2449,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="respon-terhadap-operasi-obat-penenang-efek-anestesi-9"
               id="respon-terhadap-operasi-obat-penenang-efek-anestesi-9"
               value="1"
@@ -1975,6 +2469,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="penggunaan-obat-1"
               id="penggunaan-obat-1"
               value="3"
@@ -1984,6 +2480,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="penggunaan-obat-2"
               id="penggunaan-obat-2"
               value="3"
@@ -1993,6 +2491,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="penggunaan-obat-3"
               id="penggunaan-obat-3"
               value="3"
@@ -2002,6 +2502,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="penggunaan-obat-4"
               id="penggunaan-obat-4"
               value="3"
@@ -2011,6 +2513,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="penggunaan-obat-5"
               id="penggunaan-obat-5"
               value="3"
@@ -2020,6 +2524,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="penggunaan-obat-6"
               id="penggunaan-obat-6"
               value="3"
@@ -2029,6 +2535,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="penggunaan-obat-7"
               id="penggunaan-obat-7"
               value="3"
@@ -2038,6 +2546,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="penggunaan-obat-8"
               id="penggunaan-obat-8"
               value="3"
@@ -2047,6 +2557,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="penggunaan-obat-9"
               id="penggunaan-obat-9"
               value="3"
@@ -2060,6 +2572,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="penggunaan-obat-1"
               id="penggunaan-obat-1"
               value="2"
@@ -2069,6 +2583,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="penggunaan-obat-2"
               id="penggunaan-obat-2"
               value="2"
@@ -2078,6 +2594,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="penggunaan-obat-3"
               id="penggunaan-obat-3"
               value="2"
@@ -2087,6 +2605,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="penggunaan-obat-4"
               id="penggunaan-obat-4"
               value="2"
@@ -2096,6 +2616,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="penggunaan-obat-5"
               id="penggunaan-obat-5"
               value="2"
@@ -2105,6 +2627,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="penggunaan-obat-6"
               id="penggunaan-obat-6"
               value="2"
@@ -2114,6 +2638,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="penggunaan-obat-7"
               id="penggunaan-obat-7"
               value="2"
@@ -2123,6 +2649,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="penggunaan-obat-8"
               id="penggunaan-obat-8"
               value="2"
@@ -2132,6 +2660,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="penggunaan-obat-9"
               id="penggunaan-obat-9"
               value="2"
@@ -2145,6 +2675,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="penggunaan-obat-1"
               id="penggunaan-obat-1"
               value="1"
@@ -2154,6 +2686,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="penggunaan-obat-2"
               id="penggunaan-obat-2"
               value="1"
@@ -2163,6 +2697,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="penggunaan-obat-3"
               id="penggunaan-obat-3"
               value="1"
@@ -2172,6 +2708,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="penggunaan-obat-4"
               id="penggunaan-obat-4"
               value="1"
@@ -2181,6 +2719,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="penggunaan-obat-5"
               id="penggunaan-obat-5"
               value="1"
@@ -2190,6 +2730,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="penggunaan-obat-6"
               id="penggunaan-obat-6"
               value="1"
@@ -2199,6 +2741,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="penggunaan-obat-7"
               id="penggunaan-obat-7"
               value="1"
@@ -2208,6 +2752,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="penggunaan-obat-8"
               id="penggunaan-obat-8"
               value="1"
@@ -2217,6 +2763,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="penggunaan-obat-9"
               id="penggunaan-obat-9"
               value="1"
@@ -2230,91 +2778,91 @@
           <td>
             <input
               type="text"
-              name="jumlah-skor-1"
-              id="jumlah-skor-1"
+              name="totalskor1"
+              id="totalskor1"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; text-align: center"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-2"
-              id="jumlah-skor-2"
+              name="totalskor2"
+              id="totalskor2"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; text-align: center"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-3"
-              id="jumlah-skor-3"
+              name="totalskor3"
+              id="totalskor3"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; text-align: center"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-4"
-              id="jumlah-skor-4"
+              name="totalskor4"
+              id="totalskor4"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; text-align: center"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-5"
-              id="jumlah-skor-5"
+              name="totalskor5"
+              id="totalskor5"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; text-align: center"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-6"
-              id="jumlah-skor-6"
+              name="totalskor6"
+              id="totalskor6"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; text-align: center"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-7"
-              id="jumlah-skor-7"
+              name="totalskor7"
+              id="totalskor7"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; text-align: center"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-8"
-              id="jumlah-skor-8"
+              name="totalskor8"
+              id="totalskor8"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; text-align: center"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-9"
-              id="jumlah-skor-9"
+              name="totalskor9"
+              id="totalskor9"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; text-align: center"
             />
           </td>
         </tr>
@@ -2322,14 +2870,53 @@
           <td style="text-align: end" colspan="2"><b>Nama Petugas</b></td>
           <td>&nbsp;</td>
           <td colspan="9">
-            <input
-              type="text"
-              name="nama-petugas"
-              id="nama-petugas"
-              placeholder="....."
-              myid="check_cara"
-              style="width: 100%"
-            />
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <input
+                type="text"
+                name="nama-petugas"
+                id="nama-petugas"
+                placeholder="....."
+                myid="check_cara"
+                style="width: 100%"
+              />
+
+              <br />
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_nama_petugas"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_nama_petugas"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_nama_petugas"
+                id="paraf_ex_ttd_nama_petugas"
+                data-name="paraf"
+                data-id="ex_ttd_nama_petugas"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_nama_petugas"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+            </div>
           </td>
         </tr>
         <tr>
