@@ -31,6 +31,158 @@
       padding: 5px;
     }
   </style>
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"
+  ></script>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+
+      $('input[type="radio"]')
+        .off("change")
+        .on("change", function () {
+          let total = 0;
+          let percol = $(this).data("percol");
+          console.log(percol);
+
+          $("[data-hitung" + percol + "]").each(function () {
+            let radioValue = 0;
+            radioValue = $(this).val() || 0;
+
+            if ($(this).is(":checked")) {
+              radioValue = parseInt(radioValue);
+              console.log(radioValue);
+              total += radioValue;
+            }
+          });
+
+          $(`#totalskor` + percol).val(total);
+        });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">PENGKAJIAN RISIKO JATUH PASIEN DEWASA RS. AZRA BOGOR</h1>
     <table class="table-bordered" width="100%">
@@ -48,8 +200,8 @@
             name="src_ttd_2"
             myid="check_cara"
           />
-          <td bgcolor="#DFE8F6">Nama:</td>
-          <td bgcolor="#DFE8F6">
+          <td>Nama:</td>
+          <td>
             <input
               name="nama_pasien"
               type="text"
@@ -57,53 +209,38 @@
               size="30"
               myid="check_cara"
               label="nama pasien"
+              value="{VNAMA_PASIEN}"
               placeholder="..."
             />
           </td>
-          <td bgcolor="#DFE8F6">Jenis Kelamin</td>
-          <td bgcolor="#DFE8F6">
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="laki-laki"
-              myid="check_cara"
-              value="L"
-              label="jenis kelamin"
-            />
-            <label for="l">L</label>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="perempuan"
-              myid="check_cara"
-              value="P"
-              label="jenis kelamin"
-            />
-            <label for="l">P</label>
-          </td>
-          <td bgcolor="#DFE8F6">
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
             <label for="">Nomor Rekam Medis</label>
           </td>
-          <td bgcolor="#DFE8F6">
+          <td>
             <input
               type="text"
               myid="check_cara"
               name="no_rm"
               id="no_rm"
               label="nomor rekam medis"
+              value="{NO_RM}"
             />
           </td>
         </tr>
 
         <tr>
-          <td rowspan="2" bgcolor="">Tanggal Lahir</td>
-          <td rowspan="2" bgcolor="">
+          <td rowspan="2">Tanggal Lahir</td>
+          <td rowspan="2">
             <input
               name="tgl_lahir"
               type="text"
               id="tgl_lahir"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
+              value="{VBIRTH_DATE}"
               label="tanggal lahir"
             />
           </td>
@@ -117,6 +254,7 @@
               id="umur"
               myid="check_cara"
               placeholder="..."
+              value="{VAGE}"
             />
           </td>
           <td>
@@ -130,19 +268,21 @@
               placeholder="..."
               myid="check_cara"
               label="kelas"
+              value="{VNAMAKELAS}"
             />
           </td>
         </tr>
         <tr>
-          <td bgcolor="#DFE8F6">Kamar</td>
-          <td bgcolor="#DFE8F6">
+          <td>Kamar</td>
+          <td>
             <input
               type="text"
               name="kamar"
               id="kamar"
               myid="check_cara"
               placeholder="..."
-              aria-label="kamar"
+              label="kamar"
+              value="{VNAMARUANGAN}"
             />
           </td>
         </tr>
@@ -161,7 +301,8 @@
             <input
               style="width: 100%"
               type="text"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               name="tgl-pengkajian-1"
               id="tgl-pengkajian-1"
@@ -171,7 +312,8 @@
             <input
               style="width: 100%"
               type="text"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               name="tgl-pengkajian-2"
               id="tgl-pengkajian-2"
@@ -181,7 +323,8 @@
             <input
               style="width: 100%"
               type="text"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               name="tgl-pengkajian-3"
               id="tgl-pengkajian-3"
@@ -191,7 +334,8 @@
             <input
               style="width: 100%"
               type="text"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               name="tgl-pengkajian-4"
               id="tgl-pengkajian-4"
@@ -201,7 +345,8 @@
             <input
               style="width: 100%"
               type="text"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               name="tgl-pengkajian-5"
               id="tgl-pengkajian-5"
@@ -211,7 +356,8 @@
             <input
               style="width: 100%"
               type="text"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               name="tgl-pengkajian-6"
               id="tgl-pengkajian-6"
@@ -221,7 +367,8 @@
             <input
               style="width: 100%"
               type="text"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               name="tgl-pengkajian-7"
               id="tgl-pengkajian-7"
@@ -231,7 +378,8 @@
             <input
               style="width: 100%"
               type="text"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               name="tgl-pengkajian-8"
               id="tgl-pengkajian-8"
@@ -241,7 +389,8 @@
             <input
               style="width: 100%"
               type="text"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               name="tgl-pengkajian-9"
               id="tgl-pengkajian-9"
@@ -257,6 +406,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="riwayat-jatuh-1"
               id="riwayat-jatuh-1"
               value="25"
@@ -266,6 +417,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="riwayat-jatuh-2"
               id="riwayat-jatuh-2"
               value="25"
@@ -275,6 +428,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="riwayat-jatuh-3"
               id="riwayat-jatuh-3"
               value="25"
@@ -284,6 +439,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="riwayat-jatuh-4"
               id="riwayat-jatuh-4"
               value="25"
@@ -293,6 +450,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="riwayat-jatuh-5"
               id="riwayat-jatuh-5"
               value="25"
@@ -302,6 +461,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="riwayat-jatuh-6"
               id="riwayat-jatuh-6"
               value="25"
@@ -311,6 +472,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="riwayat-jatuh-7"
               id="riwayat-jatuh-7"
               value="25"
@@ -320,6 +483,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="riwayat-jatuh-8"
               id="riwayat-jatuh-8"
               value="25"
@@ -329,6 +494,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="riwayat-jatuh-9"
               id="riwayat-jatuh-9"
               value="25"
@@ -342,6 +509,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="riwayat-jatuh-1"
               id="riwayat-jatuh-1"
               value="0"
@@ -351,6 +520,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="riwayat-jatuh-2"
               id="riwayat-jatuh-2"
               value="0"
@@ -360,6 +531,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="riwayat-jatuh-3"
               id="riwayat-jatuh-3"
               value="0"
@@ -369,6 +542,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="riwayat-jatuh-4"
               id="riwayat-jatuh-4"
               value="0"
@@ -378,6 +553,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="riwayat-jatuh-5"
               id="riwayat-jatuh-5"
               value="0"
@@ -387,6 +564,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="riwayat-jatuh-6"
               id="riwayat-jatuh-6"
               value="0"
@@ -396,6 +575,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="riwayat-jatuh-7"
               id="riwayat-jatuh-7"
               value="0"
@@ -405,6 +586,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="riwayat-jatuh-8"
               id="riwayat-jatuh-8"
               value="0"
@@ -414,6 +597,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="riwayat-jatuh-9"
               id="riwayat-jatuh-9"
               value="0"
@@ -430,6 +615,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="diagnosa-sekunder-1"
               id="diagnosa-sekunder-1"
               value="15"
@@ -439,6 +626,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="diagnosa-sekunder-2"
               id="diagnosa-sekunder-2"
               value="15"
@@ -448,6 +637,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="diagnosa-sekunder-3"
               id="diagnosa-sekunder-3"
               value="15"
@@ -457,6 +648,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="diagnosa-sekunder-4"
               id="diagnosa-sekunder-4"
               value="15"
@@ -466,6 +659,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="diagnosa-sekunder-5"
               id="diagnosa-sekunder-5"
               value="15"
@@ -475,6 +670,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="diagnosa-sekunder-6"
               id="diagnosa-sekunder-6"
               value="15"
@@ -484,6 +681,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="diagnosa-sekunder-7"
               id="diagnosa-sekunder-7"
               value="15"
@@ -493,6 +692,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="diagnosa-sekunder-8"
               id="diagnosa-sekunder-8"
               value="15"
@@ -502,6 +703,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="diagnosa-sekunder-9"
               id="diagnosa-sekunder-9"
               value="15"
@@ -515,6 +718,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="diagnosa-sekunder-1"
               id="diagnosa-sekunder-1"
               value="0"
@@ -524,6 +729,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="diagnosa-sekunder-2"
               id="diagnosa-sekunder-2"
               value="0"
@@ -533,6 +740,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="diagnosa-sekunder-3"
               id="diagnosa-sekunder-3"
               value="0"
@@ -542,6 +751,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="diagnosa-sekunder-4"
               id="diagnosa-sekunder-4"
               value="0"
@@ -551,6 +762,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="diagnosa-sekunder-5"
               id="diagnosa-sekunder-5"
               value="0"
@@ -560,6 +773,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="diagnosa-sekunder-6"
               id="diagnosa-sekunder-6"
               value="0"
@@ -569,6 +784,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="diagnosa-sekunder-7"
               id="diagnosa-sekunder-7"
               value="0"
@@ -578,6 +795,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="diagnosa-sekunder-8"
               id="diagnosa-sekunder-8"
               value="0"
@@ -587,6 +806,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="diagnosa-sekunder-9"
               id="diagnosa-sekunder-9"
               value="0"
@@ -603,6 +824,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="alat-bantu-1"
               id="alat-bantu-1"
               value="30"
@@ -612,6 +835,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="alat-bantu-2"
               id="alat-bantu-2"
               value="30"
@@ -621,6 +846,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="alat-bantu-3"
               id="alat-bantu-3"
               value="30"
@@ -630,6 +857,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="alat-bantu-4"
               id="alat-bantu-4"
               value="30"
@@ -639,6 +868,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="alat-bantu-5"
               id="alat-bantu-5"
               value="30"
@@ -648,6 +879,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="alat-bantu-6"
               id="alat-bantu-6"
               value="30"
@@ -657,6 +890,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="alat-bantu-7"
               id="alat-bantu-7"
               value="30"
@@ -666,6 +901,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="alat-bantu-8"
               id="alat-bantu-8"
               value="30"
@@ -675,6 +912,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="alat-bantu-9"
               id="alat-bantu-9"
               value="30"
@@ -688,6 +927,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="alat-bantu-1"
               id="alat-bantu-1"
               value="15"
@@ -697,6 +938,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="alat-bantu-2"
               id="alat-bantu-2"
               value="15"
@@ -706,6 +949,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="alat-bantu-3"
               id="alat-bantu-3"
               value="15"
@@ -715,6 +960,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="alat-bantu-4"
               id="alat-bantu-4"
               value="15"
@@ -724,6 +971,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="alat-bantu-5"
               id="alat-bantu-5"
               value="15"
@@ -733,6 +982,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="alat-bantu-6"
               id="alat-bantu-6"
               value="15"
@@ -742,6 +993,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="alat-bantu-7"
               id="alat-bantu-7"
               value="15"
@@ -751,6 +1004,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="alat-bantu-8"
               id="alat-bantu-8"
               value="15"
@@ -760,6 +1015,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="alat-bantu-9"
               id="alat-bantu-9"
               value="15"
@@ -773,6 +1030,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="alat-bantu-1"
               id="alat-bantu-1"
               value="0"
@@ -782,6 +1041,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="alat-bantu-2"
               id="alat-bantu-2"
               value="0"
@@ -791,6 +1052,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="alat-bantu-3"
               id="alat-bantu-3"
               value="0"
@@ -800,6 +1063,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="alat-bantu-4"
               id="alat-bantu-4"
               value="0"
@@ -809,6 +1074,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="alat-bantu-5"
               id="alat-bantu-5"
               value="0"
@@ -818,6 +1085,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="alat-bantu-6"
               id="alat-bantu-6"
               value="0"
@@ -827,6 +1096,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="alat-bantu-7"
               id="alat-bantu-7"
               value="0"
@@ -836,6 +1107,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="alat-bantu-8"
               id="alat-bantu-8"
               value="0"
@@ -845,6 +1118,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="alat-bantu-9"
               id="alat-bantu-9"
               value="0"
@@ -861,6 +1136,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="terpasang-infus-1"
               id="terpasang-infus-1"
               value="20"
@@ -870,6 +1147,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="terpasang-infus-2"
               id="terpasang-infus-2"
               value="20"
@@ -879,6 +1158,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="terpasang-infus-3"
               id="terpasang-infus-3"
               value="20"
@@ -888,6 +1169,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="terpasang-infus-4"
               id="terpasang-infus-4"
               value="20"
@@ -897,6 +1180,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="terpasang-infus-5"
               id="terpasang-infus-5"
               value="20"
@@ -906,6 +1191,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="terpasang-infus-6"
               id="terpasang-infus-6"
               value="20"
@@ -915,6 +1202,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="terpasang-infus-7"
               id="terpasang-infus-7"
               value="20"
@@ -924,6 +1213,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="terpasang-infus-8"
               id="terpasang-infus-8"
               value="20"
@@ -933,6 +1224,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="terpasang-infus-9"
               id="terpasang-infus-9"
               value="20"
@@ -946,6 +1239,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="terpasang-infus-1"
               id="terpasang-infus-1"
               value="0"
@@ -955,6 +1250,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="terpasang-infus-2"
               id="terpasang-infus-2"
               value="0"
@@ -964,6 +1261,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="terpasang-infus-3"
               id="terpasang-infus-3"
               value="0"
@@ -973,6 +1272,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="terpasang-infus-4"
               id="terpasang-infus-4"
               value="0"
@@ -982,6 +1283,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="terpasang-infus-5"
               id="terpasang-infus-5"
               value="0"
@@ -991,6 +1294,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="terpasang-infus-6"
               id="terpasang-infus-6"
               value="0"
@@ -1000,6 +1305,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="terpasang-infus-7"
               id="terpasang-infus-7"
               value="0"
@@ -1009,6 +1316,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="terpasang-infus-8"
               id="terpasang-infus-8"
               value="0"
@@ -1018,6 +1327,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="terpasang-infus-9"
               id="terpasang-infus-9"
               value="0"
@@ -1034,6 +1345,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="gaya-berjalan-1"
               id="gaya-berjalan-1"
               value="20"
@@ -1043,6 +1356,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="gaya-berjalan-2"
               id="gaya-berjalan-2"
               value="20"
@@ -1052,6 +1367,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="gaya-berjalan-3"
               id="gaya-berjalan-3"
               value="20"
@@ -1061,6 +1378,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="gaya-berjalan-4"
               id="gaya-berjalan-4"
               value="20"
@@ -1070,6 +1389,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="gaya-berjalan-5"
               id="gaya-berjalan-5"
               value="20"
@@ -1079,6 +1400,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="gaya-berjalan-6"
               id="gaya-berjalan-6"
               value="20"
@@ -1088,6 +1411,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="gaya-berjalan-7"
               id="gaya-berjalan-7"
               value="20"
@@ -1097,6 +1422,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="gaya-berjalan-8"
               id="gaya-berjalan-8"
               value="20"
@@ -1106,6 +1433,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="gaya-berjalan-9"
               id="gaya-berjalan-9"
               value="20"
@@ -1119,6 +1448,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="gaya-berjalan-1"
               id="gaya-berjalan-1"
               value="10"
@@ -1128,6 +1459,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="gaya-berjalan-2"
               id="gaya-berjalan-2"
               value="10"
@@ -1137,6 +1470,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="gaya-berjalan-3"
               id="gaya-berjalan-3"
               value="10"
@@ -1146,6 +1481,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="gaya-berjalan-4"
               id="gaya-berjalan-4"
               value="10"
@@ -1154,6 +1491,8 @@
           </td>
           <td>
             <input
+              data-percol="5"
+              data-hitung5="5"
               type="radio"
               name="gaya-berjalan-5"
               id="gaya-berjalan-5"
@@ -1163,6 +1502,8 @@
           </td>
           <td>
             <input
+              data-percol="6"
+              data-hitung6="6"
               type="radio"
               name="gaya-berjalan-6"
               id="gaya-berjalan-6"
@@ -1173,6 +1514,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="gaya-berjalan-7"
               id="gaya-berjalan-7"
               value="10"
@@ -1182,6 +1525,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="gaya-berjalan-8"
               id="gaya-berjalan-8"
               value="10"
@@ -1191,6 +1536,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="gaya-berjalan-9"
               id="gaya-berjalan-9"
               value="10"
@@ -1204,6 +1551,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="gaya-berjalan-1"
               id="gaya-berjalan-1"
               value="0"
@@ -1213,6 +1562,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="gaya-berjalan-2"
               id="gaya-berjalan-2"
               value="0"
@@ -1222,6 +1573,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="gaya-berjalan-3"
               id="gaya-berjalan-3"
               value="0"
@@ -1231,6 +1584,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="gaya-berjalan-4"
               id="gaya-berjalan-4"
               value="0"
@@ -1240,6 +1595,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="gaya-berjalan-5"
               id="gaya-berjalan-5"
               value="0"
@@ -1249,6 +1606,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="gaya-berjalan-6"
               id="gaya-berjalan-6"
               value="0"
@@ -1258,6 +1617,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="gaya-berjalan-7"
               id="gaya-berjalan-7"
               value="0"
@@ -1267,6 +1628,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="gaya-berjalan-8"
               id="gaya-berjalan-8"
               value="0"
@@ -1276,6 +1639,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="gaya-berjalan-9"
               id="gaya-berjalan-9"
               value="0"
@@ -1292,6 +1657,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="status-mental-1"
               id="status-mental-1"
               value="15"
@@ -1301,6 +1668,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="status-mental-2"
               id="status-mental-2"
               value="15"
@@ -1310,6 +1679,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="status-mental-3"
               id="status-mental-3"
               value="15"
@@ -1319,6 +1690,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="status-mental-4"
               id="status-mental-4"
               value="15"
@@ -1328,6 +1701,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="status-mental-5"
               id="status-mental-5"
               value="15"
@@ -1337,6 +1712,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="status-mental-6"
               id="status-mental-6"
               value="15"
@@ -1346,6 +1723,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="status-mental-7"
               id="status-mental-7"
               value="15"
@@ -1355,6 +1734,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="status-mental-8"
               id="status-mental-8"
               value="15"
@@ -1364,6 +1745,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="status-mental-9"
               id="status-mental-9"
               value="15"
@@ -1377,6 +1760,8 @@
           <td>
             <input
               type="radio"
+              data-percol="1"
+              data-hitung1="1"
               name="status-mental-1"
               id="status-mental-1"
               value="0"
@@ -1386,6 +1771,8 @@
           <td>
             <input
               type="radio"
+              data-percol="2"
+              data-hitung2="2"
               name="status-mental-2"
               id="status-mental-2"
               value="0"
@@ -1395,6 +1782,8 @@
           <td>
             <input
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="status-mental-3"
               id="status-mental-3"
               value="0"
@@ -1404,6 +1793,8 @@
           <td>
             <input
               type="radio"
+              data-percol="4"
+              data-hitung4="4"
               name="status-mental-4"
               id="status-mental-4"
               value="0"
@@ -1413,6 +1804,8 @@
           <td>
             <input
               type="radio"
+              data-percol="5"
+              data-hitung5="5"
               name="status-mental-5"
               id="status-mental-5"
               value="0"
@@ -1422,6 +1815,8 @@
           <td>
             <input
               type="radio"
+              data-percol="6"
+              data-hitung6="6"
               name="status-mental-6"
               id="status-mental-6"
               value="0"
@@ -1431,6 +1826,8 @@
           <td>
             <input
               type="radio"
+              data-percol="7"
+              data-hitung7="7"
               name="status-mental-7"
               id="status-mental-7"
               value="0"
@@ -1440,6 +1837,8 @@
           <td>
             <input
               type="radio"
+              data-percol="8"
+              data-hitung8="8"
               name="status-mental-8"
               id="status-mental-8"
               value="0"
@@ -1449,6 +1848,8 @@
           <td>
             <input
               type="radio"
+              data-percol="9"
+              data-hitung9="9"
               name="status-mental-9"
               id="status-mental-9"
               value="0"
@@ -1456,97 +1857,107 @@
             />
           </td>
         </tr>
+
         <tr>
           <td style="text-align: end" colspan="2"><b>Total</b></td>
           <td>&nbsp;</td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-1"
-              id="jumlah-skor-1"
+              readonly
+              name="totalskor1"
+              id="totalskor1"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; text-align: center"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-2"
-              id="jumlah-skor-2"
+              readonly
+              name="totalskor2"
+              id="totalskor2"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; text-align: center"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-3"
-              id="jumlah-skor-3"
+              readonly
+              name="totalskor3"
+              id="totalskor3"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; text-align: center"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-4"
-              id="jumlah-skor-4"
+              readonly
+              name="totalskor4"
+              id="totalskor4"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; text-align: center"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-5"
-              id="jumlah-skor-5"
+              readonly
+              name="totalskor5"
+              id="totalskor5"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; text-align: center"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-6"
-              id="jumlah-skor-6"
+              readonly
+              name="totalskor6"
+              id="totalskor6"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; text-align: center"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-7"
-              id="jumlah-skor-7"
+              readonly
+              name="totalskor7"
+              id="totalskor7"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; text-align: center"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-8"
-              id="jumlah-skor-8"
+              readonly
+              name="totalskor8"
+              id="totalskor8"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; text-align: center"
             />
           </td>
           <td>
             <input
               type="text"
-              name="jumlah-skor-9"
-              id="jumlah-skor-9"
+              readonly
+              name="totalskor9"
+              id="totalskor9"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; text-align: center"
             />
           </td>
         </tr>
@@ -1554,14 +1965,53 @@
           <td style="text-align: end" colspan="2"><b>Nama Petugas</b></td>
           <td>&nbsp;</td>
           <td colspan="9">
-            <input
-              type="text"
-              name="nama-petugas"
-              id="nama-petugas"
-              placeholder="....."
-              myid="check_cara"
-              style="width: 100%"
-            />
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <input
+                type="text"
+                name="nama-petugas"
+                id="nama-petugas"
+                placeholder="....."
+                myid="check_cara"
+                style="width: 100%"
+              />
+
+              <br />
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_nama_petugas"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_nama_petugas"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_nama_petugas"
+                id="paraf_ex_ttd_nama_petugas"
+                data-name="paraf"
+                data-id="ex_ttd_nama_petugas"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_nama_petugas"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+            </div>
           </td>
         </tr>
         <tr>
