@@ -20,7 +20,148 @@
     .table-bordered tr:nth-child(odd) {
       background-color: #dfe8f6;
     }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      border: 1px solid black;
+      padding: 5px;
+    }
+
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <div style="display: flex; flex-direction: column; align-items: center">
       <h1 class="title"><u>SURAT PERINTAH JALAN</u></h1>
@@ -55,7 +196,7 @@
     <p>Dengan ini diberikan perintah kepada :</p>
     <br />
 
-    <table class="table-bordered" width="100%">
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
           <td>Nama:</td>
@@ -160,7 +301,8 @@
               type="text"
               name="hari-tanggal"
               label="hari-tanggal"
-              placeholder="..."
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               id="hari-tanggal"
               myid="check_cara"
             />
@@ -170,22 +312,30 @@
     </table>
 
     <br />
-    <table width="100%">
+    <table class="table" width="100%">
       <tbody>
         <tr>
           <td>
-            <div style="display: flex; gap: 10px">
-              <label for="">Bogor, </label>
-              <input
-                style="flex: 1"
-                type="text"
-                name="tanggal"
-                id="tanggal"
-                myid="check_cara"
-                placeholder="dd/mm/yyyy"
-              />
-            </div>
+            <label for="">Bogor, Tanggal / Pukul</label>
+          </td>
+          <td colspan="3">
+            <input
+              type="text"
+              name="tanggal-surat-keluar"
+              id="tanggal-surat-keluar"
+              myid="check_cara"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
+            />
             <br />
+            <input
+              type="text"
+              name="pukul-surat-keluar"
+              id="pukul-surat-keluar"
+              myid="check_cara"
+              placeholder="00.00"
+              mtype="pukul"
+            />
           </td>
         </tr>
         <tr>
@@ -193,11 +343,45 @@
             <label for="">Yang ditugaskan,</label>
             <input
               type="text"
-              name="nama-petugas-4"
+              name="yg-ditugaskan"
+              id="yg-ditugaskan"
               myid="check_cara"
               style="width: 100%"
-              id="nama-petugas-4"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_yg_ditugaskan"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_yg_ditugaskan"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_yg_ditugaskan"
+              id="paraf_ex_ttd_yg_ditugaskan"
+              data-name="paraf"
+              data-id="ex_ttd_yg_ditugaskan"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_yg_ditugaskan"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
             <font id="ttdnya2"></font>
           </td>
           <td>
@@ -205,10 +389,44 @@
             <input
               type="text"
               name="pemeriksa"
+              id="pemeriksa"
               myid="check_cara"
               style="width: 100%"
-              id="pemeriksa"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemeriksa"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemeriksa"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemeriksa"
+              id="paraf_ex_ttd_pemeriksa"
+              data-name="paraf"
+              data-id="ex_ttd_pemeriksa"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemeriksa"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
             <font id="ttdnya2"></font>
           </td>
           <td>
@@ -216,10 +434,43 @@
             <input
               type="text"
               name="mengetahui"
+              id="mengetahui"
               myid="check_cara"
               style="width: 100%"
-              id="mengetahui"
             />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_yg_ditugaskan"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_mengetahui"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_mengetahui"
+              id="paraf_ex_ttd_mengetahui"
+              data-name="paraf"
+              data-id="ex_ttd_mengetahui"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_mengetahui"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
             <font id="ttdnya2"></font>
           </td>
           <td>
@@ -227,10 +478,43 @@
             <input
               type="text"
               name="menyetujui"
+              id="menyetujui"
               myid="check_cara"
               style="width: 100%"
-              id="menyetujui"
             />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_menyetujui"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_menyetujui"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_menyetujui"
+              id="paraf_ex_ttd_menyetujui"
+              data-name="paraf"
+              data-id="ex_ttd_menyetujui"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_menyetujui"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
             <font id="ttdnya2"></font>
           </td>
         </tr>
