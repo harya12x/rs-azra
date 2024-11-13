@@ -33,6 +33,132 @@
       padding: 5px;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h2 class="title">RS. AZRA BOGOR</h2>
     <table class="table">
@@ -48,7 +174,7 @@
       </tbody>
     </table>
 
-    <table width="100%">
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
           <td colspan="2">
@@ -65,9 +191,10 @@
             <input
               style="width: 100%"
               type="text"
-              name="nama-yg-ttd"
-              id="nama-yg-ttd"
-              label="nama-yg-ttd"
+              value="{VNAMA_PASIEN}"
+              name="nama-pasien"
+              id="nama-pasien"
+              label="nama-pasien"
               myid="check_cara"
               placeholder="......"
             />
@@ -79,9 +206,10 @@
             <input
               style="width: 100%"
               type="text"
-              name="umur-yg-ttd"
-              id="umur-yg-ttd"
-              label="umur-yg-ttd"
+              value="{VAGE}"
+              name="umur-pasien"
+              id="umur-pasien"
+              label="umur-pasien"
               myid="check_cara"
               placeholder="......"
             />
@@ -93,9 +221,9 @@
             <input
               style="width: 100%"
               type="text"
-              name="alamat-yg-ttd"
-              id="alamat-yg-ttd"
-              label="alamat-yg-ttd"
+              name="alamat-pasien"
+              id="alamat-pasien"
+              label="alamat-pasien"
               myid="check_cara"
               placeholder="......"
             />
@@ -107,9 +235,9 @@
             <input
               style="width: 100%"
               type="text"
-              name="no-ktp-yg-ttd"
-              id="no-ktp-yg-ttd"
-              label="no-ktp-yg-ttd"
+              name="no-ktp-pasien"
+              id="no-ktp-pasien"
+              label="no-ktp-pasien"
               myid="check_cara"
               placeholder="......"
             />
@@ -118,7 +246,7 @@
       </tbody>
     </table>
 
-    <table width="100%">
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
           <td colspan="2">
@@ -128,6 +256,7 @@
               kepentingan :
             </p>
             <textarea
+              type="textarea"
               style="width: 100%"
               name="alasan-kepentingan-meninggalkan-rs"
               id="alasan-kepentingan-meninggalkan-rs"
@@ -148,7 +277,8 @@
                 id="tgl-meninggalkan-rs"
                 label="tgl-meninggalkan-rs"
                 myid="check_cara"
-                placeholder="......"
+                placeholder="dd-mm-yy"
+                class="datepicker hasDatePicker"
               />
             </div>
           </td>
@@ -184,7 +314,8 @@
                 id="mulai-pukul"
                 label="mulai-pukul"
                 myid="check_cara"
-                placeholder="......"
+                mtype="pukul"
+                placeholder="00.00"
               />
               <label for="">s/d pukul</label>
               <input
@@ -194,7 +325,8 @@
                 id="selesai-pukul"
                 label="selesai-pukul"
                 myid="check_cara"
-                placeholder="......"
+                mtype="pukul"
+                placeholder="00.00"
               />
             </div>
           </td>
@@ -267,9 +399,8 @@
     </table>
 
     <br />
-    <br />
 
-    <table width="100%">
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
           <td colspan="2">
@@ -341,6 +472,7 @@
               Selama berada di luar Rumah Sakit AZRA Bogor pasien beralamat di :
             </p>
             <textarea
+              type="textarea"
               style="width: 100%"
               name="alamat-luar-rs-azra"
               id="alamat-luar-rs-azra"
@@ -369,40 +501,50 @@
 
     <br />
 
-    <label for="">(<sup>*</sup>) Coret yang tidak perlu</label>
+    <label for="">(<sup>*</sup>) Pilih salah satu yang sesuai</label>
     <br />
 
-    <table width="100%">
+    <table class="table" width="100%">
       <tbody>
         <tr>
-          <td style="display: flex; justify-content: end">
-            <div style="text-align: center">
-              <div>
-                <label for="">Bogor, </label>
-                <input
-                  size="30"
-                  type="text"
-                  name="tgl-permohonan"
-                  id="tgl-permohonan"
-                  label="tgl-permohonan"
-                  myid="check_cara"
-                  placeholder="......"
-                />
-              </div>
-              <p>Pemohon</p>
-              <br />
-              <br />
-              <br />
-              <input
-                size="40"
-                type="text"
-                name="pemohon"
-                id="pemohon"
-                label="pemohon"
-                myid="check_cara"
-                placeholder="......"
-              />
-            </div>
+          <td width="20%"><label for="">Bogor, tanggal / pukul</label></td>
+          <td>
+            <input
+              size="30"
+              type="text"
+              name="tgl-permohonan"
+              id="tgl-permohonan"
+              label="tgl-permohonan"
+              myid="check_cara"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
+            />
+            <br />
+            <input
+              size="30"
+              type="text"
+              name="pukul-permohonan"
+              id="pukul-permohonan"
+              label="pukul-permohonan"
+              myid="check_cara"
+              mtype="pukul"
+              placeholder="00.00"
+              class="datepicker hasDatePicker"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td><p>Pemohon</p></td>
+          <td>
+            <input
+              size="30"
+              type="text"
+              name="pemohon"
+              id="pemohon"
+              label="pemohon"
+              myid="check_cara"
+              placeholder="......"
+            />
           </td>
         </tr>
       </tbody>
