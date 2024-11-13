@@ -262,6 +262,7 @@
               id="alasan-kepentingan-meninggalkan-rs"
               label="alasan-kepentingan-meninggalkan-rs"
               placeholder="......"
+              myid="check_cara"
               rows="5"
             ></textarea>
           </td>
@@ -479,6 +480,7 @@
               label="alamat-luar-rs-azra"
               placeholder="......"
               rows="5"
+              myid="check_cara"
             ></textarea>
           </td>
         </tr>
@@ -545,6 +547,41 @@
               myid="check_cara"
               placeholder="......"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemohon"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemohon"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemohon"
+              id="paraf_ex_ttd_pemohon"
+              data-name="paraf"
+              data-id="ex_ttd_pemohon"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemohon"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
       </tbody>
@@ -574,12 +611,6 @@
 
         var textInputs = document.querySelectorAll('input[type="text"]');
         textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-        var textareaInputs = document.querySelectorAll("textarea");
-        textareaInputs.forEach(function (input) {
           input.addEventListener("change", function () {
             console.log(this.name + " diubah menjadi: " + this.value);
           });
