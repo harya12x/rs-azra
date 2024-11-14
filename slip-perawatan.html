@@ -47,26 +47,24 @@
         });
       });
 
-      $('input[type="text"]')
-        .off("change")
-        .on("change", function () {
-          let total = 0;
-          let percol = $(this).data("percol");
-          console.log(percol);
+      $('input[type="text"]').on("input", function () {
+        let total = 0;
+        let percol = $(this).data("percol");
+        console.log(percol);
 
-          $("[data-hitung" + percol + "]").each(function () {
-            let radioValue = 0;
-            radioValue = $(this).val() || 0;
+        $("[data-hitung" + percol + "]").each(function () {
+          let radioValue = 0;
+          radioValue = $(this).val() || 0;
 
-            if ($(this).val() !== "") {
-              radioValue = parseInt(radioValue);
-              console.log(radioValue);
-              total += radioValue;
-            }
-          });
-
-          $(`#totalskor` + percol).val(total);
+          if ($(this).val() !== "") {
+            radioValue = parseInt(radioValue);
+            console.log(radioValue);
+            total += radioValue;
+          }
         });
+
+        $(`#totalskor` + percol).val(total);
+      });
     });
 
     // Untuk Keperluan TTD
@@ -301,6 +299,7 @@
               type="text"
               name="perawatan-1"
               label="perawatan 1"
+              myid="check_cara"
               placeholder="......"
               id="perawatan-1"
             />
@@ -331,6 +330,7 @@
               type="text"
               name="perawatan-2"
               label="perawatan 2"
+              myid="check_cara"
               placeholder="......"
               id="perawatan-2"
             />
@@ -361,6 +361,7 @@
               type="text"
               name="perawatan-3"
               label="perawatan 3"
+              myid="check_cara"
               placeholder="......"
               id="perawatan-3"
             />
@@ -391,6 +392,7 @@
               type="text"
               name="perawatan-4"
               label="perawatan 4"
+              myid="check_cara"
               placeholder="......"
               id="perawatan-4"
             />
@@ -421,6 +423,7 @@
               type="text"
               name="perawatan-5"
               label="perawatan 5"
+              myid="check_cara"
               placeholder="......"
               id="perawatan-5"
             />
@@ -451,6 +454,7 @@
               type="text"
               name="perawatan-6"
               label="perawatan 6"
+              myid="check_cara"
               placeholder="......"
               id="perawatan-6"
             />
