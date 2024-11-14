@@ -32,6 +32,132 @@
       padding: 5px;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">
       PENUNDAAN DAN WAKTU TUNGGU PEMERIKSAAN, TINDAKAN DAN / ATAU DIAGNOSTIK
@@ -62,30 +188,12 @@
               size="30"
               myid="check_cara"
               label="nama pasien"
+              value="{VNAMA_PASIEN}"
               placeholder="..."
             />
           </td>
           <td>Jenis Kelamin</td>
-          <td>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="jenis-kelamin"
-              label="jenis-kelamin"
-              value="L"
-              myid="check_cara"
-            />
-            <label for="l">L</label>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="jenis-kelamin"
-              label="jenis-kelamin"
-              value="P"
-              myid="check_cara"
-            />
-            <label for="l">P</label>
-          </td>
+          <td>{VSEX}</td>
           <td>
             <label for="">Nomor Rekam Medis</label>
           </td>
@@ -96,6 +204,7 @@
               id="no-rek-medis"
               label="no-rek-medis"
               myid="check_cara"
+              value="{NO_RM}"
               placeholder="......"
             />
           </td>
@@ -108,7 +217,8 @@
               name="tgl_lahira2"
               type="text"
               id="tgl_lahir"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
               label="tanggal lahir"
             />
@@ -123,6 +233,7 @@
               name="umur"
               myid="check_cara"
               id="umur"
+              value="{VAGE}"
               label="umur"
             />
           </td>
@@ -209,6 +320,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-1"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_1"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_1"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_1"
+              id="paraf_ex_ttd_pemberi_informasi_1"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_1"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_1"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -219,6 +365,41 @@
               label="nama-ttd-penerima-informasi-1"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_1"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_1"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_1"
+              id="paraf_ex_ttd_penerima_informasi_1"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_1"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_1"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
         <tr>
@@ -261,6 +442,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-2"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_2"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_2"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_2"
+              id="paraf_ex_ttd_pemberi_informasi_2"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_2"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_2"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -271,6 +487,41 @@
               label="nama-ttd-penerima-informasi-2"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_2"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_2"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_2"
+              id="paraf_ex_ttd_penerima_informasi_2"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_2"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_2"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
         <tr>
@@ -313,6 +564,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-3"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_3"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_3"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_3"
+              id="paraf_ex_ttd_pemberi_informasi_3"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_3"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_3"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -323,6 +609,41 @@
               label="nama-ttd-penerima-informasi-3"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_3"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_3"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_3"
+              id="paraf_ex_ttd_penerima_informasi_3"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_3"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_3"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
         <tr>
@@ -365,6 +686,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-4"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_4"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_4"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_4"
+              id="paraf_ex_ttd_pemberi_informasi_4"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_4"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_4"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -375,6 +731,41 @@
               label="nama-ttd-penerima-informasi-4"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_4"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_4"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_4"
+              id="paraf_ex_ttd_penerima_informasi_4"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_4"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_4"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
         <tr>
@@ -417,6 +808,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-5"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_5"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_5"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_5"
+              id="paraf_ex_ttd_pemberi_informasi_5"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_5"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_5"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -427,6 +853,41 @@
               label="nama-ttd-penerima-informasi-5"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_5"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_5"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_5"
+              id="paraf_ex_ttd_penerima_informasi_5"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_5"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_5"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
         <tr>
@@ -469,6 +930,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-6"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_6"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_6"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_6"
+              id="paraf_ex_ttd_pemberi_informasi_6"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_6"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_6"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -479,6 +975,41 @@
               label="nama-ttd-penerima-informasi-6"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_6"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_6"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_6"
+              id="paraf_ex_ttd_penerima_informasi_6"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_6"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_6"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
         <tr>
@@ -521,6 +1052,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-7"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_7"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_7"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_7"
+              id="paraf_ex_ttd_pemberi_informasi_7"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_7"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_7"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -531,6 +1097,41 @@
               label="nama-ttd-penerima-informasi-7"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_7"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_7"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_7"
+              id="paraf_ex_ttd_penerima_informasi_7"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_7"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_7"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
         <tr>
@@ -573,6 +1174,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-8"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_8"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_8"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_8"
+              id="paraf_ex_ttd_pemberi_informasi_8"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_8"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_8"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -583,6 +1219,41 @@
               label="nama-ttd-penerima-informasi-8"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_8"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_8"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_8"
+              id="paraf_ex_ttd_penerima_informasi_8"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_8"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_8"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
         <tr>
@@ -625,6 +1296,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-9"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_9"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_9"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_9"
+              id="paraf_ex_ttd_pemberi_informasi_9"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_9"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_9"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -635,6 +1341,41 @@
               label="nama-ttd-penerima-informasi-9"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_9"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_9"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_9"
+              id="paraf_ex_ttd_penerima_informasi_9"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_9"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_9"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
         <tr>
@@ -677,6 +1418,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-10"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_10"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_10"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_10"
+              id="paraf_ex_ttd_pemberi_informasi_10"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_10"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_10"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -687,6 +1463,41 @@
               label="nama-ttd-penerima-informasi-10"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_10"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_10"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_10"
+              id="paraf_ex_ttd_penerima_informasi_10"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_10"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_10"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
         <tr>
@@ -729,6 +1540,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-11"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_11"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_11"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_11"
+              id="paraf_ex_ttd_pemberi_informasi_11"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_11"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_11"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -739,6 +1585,41 @@
               label="nama-ttd-penerima-informasi-11"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_11"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_11"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_11"
+              id="paraf_ex_ttd_penerima_informasi_11"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_11"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_11"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
         <tr>
@@ -781,6 +1662,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-12"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_12"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_12"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_12"
+              id="paraf_ex_ttd_pemberi_informasi_12"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_12"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_12"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -791,6 +1707,41 @@
               label="nama-ttd-penerima-informasi-12"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_12"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_12"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_12"
+              id="paraf_ex_ttd_penerima_informasi_12"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_12"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_12"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
         <tr>
@@ -833,6 +1784,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-13"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_13"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_13"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_13"
+              id="paraf_ex_ttd_pemberi_informasi_13"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_13"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_13"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -843,6 +1829,41 @@
               label="nama-ttd-penerima-informasi-13"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_13"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_13"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_13"
+              id="paraf_ex_ttd_penerima_informasi_13"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_13"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_13"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
         <tr>
@@ -885,6 +1906,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-14"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_14"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_14"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_14"
+              id="paraf_ex_ttd_pemberi_informasi_14"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_14"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_14"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -895,6 +1951,41 @@
               label="nama-ttd-penerima-informasi-14"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_14"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_14"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_14"
+              id="paraf_ex_ttd_penerima_informasi_14"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_14"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_14"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
         <tr>
@@ -937,6 +2028,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-15"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_15"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_15"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_15"
+              id="paraf_ex_ttd_pemberi_informasi_15"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_15"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_15"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -947,6 +2073,41 @@
               label="nama-ttd-penerima-informasi-15"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_15"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_15"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_15"
+              id="paraf_ex_ttd_penerima_informasi_15"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_15"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_15"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
         <tr>
@@ -989,6 +2150,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-16"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_16"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_16"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_16"
+              id="paraf_ex_ttd_pemberi_informasi_16"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_16"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_16"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -999,6 +2195,41 @@
               label="nama-ttd-penerima-informasi-16"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_16"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_16"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_16"
+              id="paraf_ex_ttd_penerima_informasi_16"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_16"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_16"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
         <tr>
@@ -1041,6 +2272,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-17"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_17"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_17"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_17"
+              id="paraf_ex_ttd_pemberi_informasi_17"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_17"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_17"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -1051,6 +2317,41 @@
               label="nama-ttd-penerima-informasi-17"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_17"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_17"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_17"
+              id="paraf_ex_ttd_penerima_informasi_17"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_17"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_17"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
         <tr>
@@ -1093,6 +2394,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-18"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_18"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_18"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_18"
+              id="paraf_ex_ttd_pemberi_informasi_18"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_18"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_18"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -1103,6 +2439,41 @@
               label="nama-ttd-penerima-informasi-18"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_18"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_18"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_18"
+              id="paraf_ex_ttd_penerima_informasi_18"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_18"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_18"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
         <tr>
@@ -1145,6 +2516,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-19"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_19"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_19"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_19"
+              id="paraf_ex_ttd_pemberi_informasi_19"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_19"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_19"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -1155,6 +2561,41 @@
               label="nama-ttd-penerima-informasi-19"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_19"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_19"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_19"
+              id="paraf_ex_ttd_penerima_informasi_19"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_19"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_19"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
         <tr>
@@ -1197,6 +2638,41 @@
               label="nama-pemberi-informasi-ttd-pemberi-informasi-20"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_informasi_20"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_informasi_20"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_informasi_20"
+              id="paraf_ex_ttd_pemberi_informasi_20"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_informasi_20"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_informasi_20"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
           <td width="22.5%">
             <input
@@ -1207,6 +2683,41 @@
               label="nama-ttd-penerima-informasi-20"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_20"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_20"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_20"
+              id="paraf_ex_ttd_penerima_informasi_20"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_20"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_20"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
       </tbody>
