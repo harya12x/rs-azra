@@ -17,15 +17,173 @@
       margin-bottom: 10px;
     }
 
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      border: 1px solid black;
+      padding: 5px;
+    }
+
     .table-bordered tr:nth-child(odd) {
       background-color: #dfe8f6;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+
+      $('input[type="text"]')
+        .off("change")
+        .on("change", function () {
+          let total = 0;
+          let percol = $(this).data("percol");
+          console.log(percol);
+
+          $("[data-hitung" + percol + "]").each(function () {
+            let radioValue = 0;
+            radioValue = $(this).val() || 0;
+
+            if ($(this).val() !== "") {
+              radioValue = parseInt(radioValue);
+              console.log(radioValue);
+              total += radioValue;
+            }
+          });
+
+          $(`#totalskor` + percol).val(total);
+        });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">SLIP PERAWATAN</h1>
     <h2 class="title">No. 02507</h2>
     <hr />
-    <table class="table-bordered" width="100%">
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
           <td>Nama Pasien :</td>
@@ -37,6 +195,7 @@
               myid="check_cara"
               id="nama-pasien"
               placeholder="......"
+              value="{VNAMA_PASIEN}"
               label="nama pasien"
             />
           </td>
@@ -50,6 +209,7 @@
               name="nama-dokter"
               myid="check_cara"
               id="nama-dokter"
+              value="{VDPJP}"
               placeholder="......"
               label="nama dokter"
             />
@@ -64,6 +224,7 @@
               name="ruangan"
               myid="check_cara"
               id="ruangan"
+              value="{VNAMARUANGAN}"
               placeholder="......"
               label="ruangan"
             />
@@ -78,6 +239,7 @@
               name="no-rek-med"
               myid="check_cara"
               id="no-rek-med"
+              value="{NO_RM}"
               placeholder="......"
               label="no rek med"
             />
@@ -87,7 +249,7 @@
     </table>
     <br />
 
-    <table class="table-bordered" width="100%">
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
           <td>-</td>
@@ -99,6 +261,8 @@
                 style="flex: 1"
                 type="text"
                 class="slip-perawatan"
+                data-percol="1"
+                data-hitung1="1"
                 myid="check_cara"
                 name="jasa-dokter"
                 id="jasa-dokter"
@@ -118,6 +282,8 @@
                 style="flex: 1"
                 type="text"
                 class="slip-perawatan"
+                data-percol="1"
+                data-hitung1="1"
                 myid="check_cara"
                 name="tindakan"
                 id="tindakan"
@@ -146,6 +312,8 @@
                 style="flex: 1"
                 type="text"
                 class="slip-perawatan"
+                data-percol="1"
+                data-hitung1="1"
                 myid="check_cara"
                 name="biaya-perawatan-1"
                 id="biaya-perawatan-1"
@@ -174,6 +342,8 @@
                 style="flex: 1"
                 type="text"
                 class="slip-perawatan"
+                data-percol="1"
+                data-hitung1="1"
                 myid="check_cara"
                 name="biaya-perawatan-2"
                 id="biaya-perawatan-2"
@@ -202,6 +372,8 @@
                 style="flex: 1"
                 type="text"
                 class="slip-perawatan"
+                data-percol="1"
+                data-hitung1="1"
                 myid="check_cara"
                 name="biaya-perawatan-3"
                 id="biaya-perawatan-3"
@@ -230,6 +402,8 @@
                 style="flex: 1"
                 type="text"
                 class="slip-perawatan"
+                data-percol="1"
+                data-hitung1="1"
                 myid="check_cara"
                 name="biaya-perawatan-4"
                 id="biaya-perawatan-4"
@@ -258,6 +432,8 @@
                 style="flex: 1"
                 type="text"
                 class="slip-perawatan"
+                data-percol="1"
+                data-hitung1="1"
                 myid="check_cara"
                 name="biaya-perawatan-5"
                 id="biaya-perawatan-5"
@@ -286,6 +462,8 @@
                 style="flex: 1"
                 type="text"
                 class="slip-perawatan"
+                data-percol="1"
+                data-hitung1="1"
                 myid="check_cara"
                 name="biaya-perawatan-6"
                 id="biaya-perawatan-6"
@@ -304,8 +482,8 @@
               <input
                 style="flex: 1"
                 type="text"
-                name="jumlah-seluruhnya"
-                id="jumlah-seluruhnya"
+                name="totalskor1"
+                id="totalskor1"
                 placeholder="....."
                 myid="check_cara"
                 label="jumlah seluruhnya"
@@ -317,7 +495,7 @@
     </table>
 
     <br />
-    <table width="100%" class="table-bordered">
+    <table width="100%" class="table table-bordered">
       <tbody>
         <tr>
           <td style="width: 20%">
@@ -331,7 +509,8 @@
               id="tanggal-slip"
               myid="check_cara"
               label="tanggal slip"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
             />
           </td>
         </tr>
@@ -348,6 +527,40 @@
               placeholder="......"
               label="dokter"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_yg_memeriksa"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_dokter_yg_memeriksa"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_dokter_yg_memeriksa"
+              id="paraf_ex_ttd_dokter_yg_memeriksa"
+              data-name="paraf"
+              data-id="ex_ttd_dokter_yg_memeriksa"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_dokter_yg_memeriksa"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
             <font id="ttdnya2"></font>
           </td>
         </tr>
@@ -363,6 +576,40 @@
               placeholder="......"
               label="kasir"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_kasir"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_kasir"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_kasir"
+              id="paraf_ex_ttd_kasir"
+              data-name="paraf"
+              data-id="ex_ttd_kasir"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_kasir"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
             <font id="ttdnya2"></font>
           </td>
         </tr>
@@ -372,27 +619,6 @@
       document.addEventListener("DOMContentLoaded", function () {
         var textInputs = document.querySelectorAll('input[type="text"]');
         textInputs.forEach(function (input) {
-          const slipPerawatan = document.querySelectorAll(".slip-perawatan");
-          let jumlahSeluruhnya = document.querySelector("#jumlah-seluruhnya");
-
-          function hitungTotal() {
-            let total = 0;
-
-            // Loop melalui setiap input biaya perawatan
-            slipPerawatan.forEach((input) => {
-              // Konversi nilai input ke angka dan tambahkan ke total
-              const nilai = parseFloat(input.value) || 0;
-              total += nilai;
-            });
-
-            // Tampilkan hasil penjumlahan
-            jumlahSeluruhnya.value = total;
-          }
-
-          // Tambahkan event listener untuk setiap input biaya perawatan
-          slipPerawatan.forEach((input) => {
-            input.addEventListener("input", hitungTotal);
-          });
           input.addEventListener("change", function () {
             console.log(this.name + " diubah menjadi: " + this.value);
           });
