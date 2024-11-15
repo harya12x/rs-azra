@@ -31,9 +31,135 @@
       padding: 5px;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">PEMBERIAN INFORMASI RUJUK RS. AZRA BOGOR</h1>
-    <table class="table-bordered" width="100%">
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
           <input
@@ -57,30 +183,12 @@
               size="30"
               myid="check_cara"
               label="nama pasien"
+              value="{VNAMA_PASIEN}"
               placeholder="..."
             />
           </td>
           <td>Jenis Kelamin</td>
-          <td>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="laki-laki"
-              myid="check_cara"
-              value="L"
-              label="jenis kelamin"
-            />
-            <label for="l">L</label>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="perempuan"
-              myid="check_cara"
-              value="P"
-              label="jenis kelamin"
-            />
-            <label for="l">P</label>
-          </td>
+          <td>{VSEX}</td>
           <td>
             <label for="">Nomor Rekam Medis</label>
           </td>
@@ -91,6 +199,7 @@
               name="no_rm"
               id="no_rm"
               label="nomor rekam medis"
+              value="{NO_RM}"
             />
           </td>
         </tr>
@@ -102,9 +211,10 @@
               name="tgl_lahir"
               type="text"
               id="tgl_lahir"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
               myid="check_cara"
               label="tanggal lahir"
+              value="{VBIRTH_DATE}"
             />
           </td>
 
@@ -117,6 +227,7 @@
               id="umur-pengkajian"
               myid="check_cara"
               placeholder="..."
+              value="{VAGE}"
             />
           </td>
           <td>
@@ -128,6 +239,7 @@
               type="text"
               id="instalasi"
               placeholder="..."
+              value="{VINSTALASI}"
               myid="check_cara"
               label="instalasi"
             />
@@ -162,6 +274,7 @@
                 id="dokter-yang-merawat"
                 label="dokter-yang-merawat"
                 myid="check_cara"
+                value="{VDPJP}"
                 placeholder="......"
               />
             </div>
@@ -215,18 +328,53 @@
         <tr>
           <td style="text-align: center">1.</td>
           <td>Diagnosa pasien</td>
-          <td>
-            <input
+          <td width="50%">
+            <textarea
+              type="textarea"
               style="width: 100%"
-              type="text"
+              rows="4"
               name="isi-informasi-diagnosa-pasien"
               id="isi-informasi-diagnosa-pasien"
               label="isi-informasi-diagnosa-pasien"
               placeholder="......"
               myid="check_cara"
-            />
+            ></textarea>
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_diagnosa_pasien"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_diagnosa_pasien"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_diagnosa_pasien"
+              id="paraf_ex_ttd_penerima_informasi_diagnosa_pasien"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_diagnosa_pasien"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_diagnosa_pasien"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <input
               style="width: 100%"
               type="text"
@@ -242,17 +390,52 @@
           <td style="text-align: center">2.</td>
           <td>Terapi dan tindakan yang diperlukan</td>
           <td>
-            <input
+            <textarea
+              type="textarea"
               style="width: 100%"
-              type="text"
+              rows="4"
               name="isi-informasi-terapi-tindakan-diperlukan"
               id="isi-informasi-terapi-tindakan-diperlukan"
               label="isi-informasi-terapi-tindakan-diperlukan"
               placeholder="......"
               myid="check_cara"
-            />
+            ></textarea>
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_terapi_tindakan"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_terapi_tindakan"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_terapi_tindakan"
+              id="paraf_ex_ttd_penerima_informasi_terapi_tindakan"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_terapi_tindakan"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_terapi_tindakan"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <input
               style="width: 100%"
               type="text"
@@ -268,17 +451,52 @@
           <td style="text-align: center">3.</td>
           <td>Alasan dan tujuan rujuk</td>
           <td>
-            <input
+            <textarea
+              type="textarea"
               style="width: 100%"
-              type="text"
+              rows="4"
               name="isi-informasi-alasan-tujuan-rujuk"
               id="isi-informasi-alasan-tujuan-rujuk"
               label="isi-informasi-alasan-tujuan-rujuk"
               placeholder="......"
               myid="check_cara"
-            />
+            ></textarea>
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_alasan_tujuan_rujuk"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_alasan_tujuan_rujuk"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_alasan_tujuan_rujuk"
+              id="paraf_ex_ttd_penerima_informasi_alasan_tujuan_rujuk"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_alasan_tujuan_rujuk"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_alasan_tujuan_rujuk"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <input
               style="width: 100%"
               type="text"
@@ -294,17 +512,52 @@
           <td style="text-align: center">4.</td>
           <td>Risiko yang dapat timbul apabila tidak dilakukan rujuk</td>
           <td>
-            <input
+            <textarea
+              type="textarea"
               style="width: 100%"
-              type="text"
+              rows="4"
               name="isi-informasi-risiko-apabila-tdk-dilakukan-rujuk"
               id="isi-informasi-risiko-apabila-tdk-dilakukan-rujuk"
               label="isi-informasi-risiko-apabila-tdk-dilakukan-rujuk"
               placeholder="......"
               myid="check_cara"
-            />
+            ></textarea>
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_risiko_apabila_tdk_dilakukan_rujuk"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_risiko_apabila_tdk_dilakukan_rujuk"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_risiko_apabila_tdk_dilakukan_rujuk"
+              id="paraf_ex_ttd_penerima_informasi_risiko_apabila_tdk_dilakukan_rujuk"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_risiko_apabila_tdk_dilakukan_rujuk"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_risiko_apabila_tdk_dilakukan_rujuk"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <input
               style="width: 100%"
               type="text"
@@ -320,15 +573,16 @@
           <td style="text-align: center">5.</td>
           <td>Transportasi dan pendamping selama rujukan</td>
           <td>
-            <input
+            <textarea
+              type="textarea"
               style="width: 100%"
-              type="text"
+              rows="4"
               name="isi-informasi-transportasi-pendamping-selama-rujukan"
               id="isi-informasi-transportasi-pendamping-selama-rujukan"
               label="isi-informasi-transportasi-pendamping-selama-rujukan"
               placeholder="......"
               myid="check_cara"
-            />
+            ></textarea>
           </td>
           <td>
             <input
@@ -340,21 +594,57 @@
               placeholder="......"
               myid="check_cara"
             />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_transportasi_pendamping_selama_rujukan"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_transportasi_pendamping_selama_rujukan"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_transportasi_pendamping_selama_rujukan"
+              id="paraf_ex_ttd_penerima_informasi_transportasi_pendamping_selama_rujukan"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_transportasi_pendamping_selama_rujukan"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_transportasi_pendamping_selama_rujukan"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
           </td>
         </tr>
         <tr>
           <td style="text-align: center">6.</td>
           <td>Risiko atau penyakit yang dapat timbul selama rujukan</td>
           <td>
-            <input
+            <textarea
+              type="textarea"
               style="width: 100%"
-              type="text"
+              rows="4"
               name="isi-informasi-risiko-yg-dpt-timbul-selama-rujukan"
               id="isi-informasi-risiko-yg-dpt-timbul-selama-rujukan"
               label="isi-informasi-risiko-yg-dpt-timbul-selama-rujukan"
               placeholder="......"
               myid="check_cara"
-            />
+            ></textarea>
           </td>
           <td>
             <input
@@ -366,6 +656,40 @@
               placeholder="......"
               myid="check_cara"
             />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_paraf_penerima_informasi_risiko_selama_rujukan"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_paraf_penerima_informasi_risiko_selama_rujukan"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_paraf_penerima_informasi_risiko_selama_rujukan"
+              id="paraf_ex_ttd_paraf_penerima_informasi_risiko_selama_rujukan"
+              data-name="paraf"
+              data-id="ex_ttd_paraf_penerima_informasi_risiko_selama_rujukan"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_paraf_penerima_informasi_risiko_selama_rujukan"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
           </td>
         </tr>
         <tr>
@@ -385,17 +709,52 @@
             </div>
           </td>
           <td>
-            <input
+            <textarea
+              type="textarea"
               style="width: 100%"
-              type="text"
+              rows="4"
               name="isi-informasi-lain-lain"
               id="isi-informasi-lain-lain"
               label="isi-informasi-lain-lain"
               placeholder="......"
               myid="check_cara"
-            />
+            ></textarea>
           </td>
           <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penerima_informasi_lain_lain"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penerima_informasi_lain_lain"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penerima_informasi_lain_lain"
+              id="paraf_ex_ttd_penerima_informasi_lain_lain"
+              data-name="paraf"
+              data-id="ex_ttd_penerima_informasi_lain_lain"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penerima_informasi_lain_lain"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <input
               style="width: 100%"
               type="text"
@@ -408,7 +767,7 @@
           </td>
         </tr>
         <tr>
-          <td colspan="2">
+          <td colspan="3">
             <label for="">Dengan ini menyatakan bahwa saya Dokter</label>
             <input
               type="text"
@@ -423,7 +782,41 @@
               memberikan kesempatan untuk bertanya atau berdiskusi</label
             >
           </td>
-          <td colspan="2">
+          <td colspan="1">
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_dokter_yg_memberikan_informasi_rujuk"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_dokter_yg_memberikan_informasi_rujuk"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_dokter_yg_memberikan_informasi_rujuk"
+              id="paraf_ex_ttd_dokter_yg_memberikan_informasi_rujuk"
+              data-name="paraf"
+              data-id="ex_ttd_dokter_yg_memberikan_informasi_rujuk"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_dokter_yg_memberikan_informasi_rujuk"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <input
               style="width: 100%"
               type="text"
@@ -437,12 +830,46 @@
           </td>
         </tr>
         <tr>
-          <td colspan="2">
+          <td colspan="3">
             Dengan ini menyatakan bahwa saya / keluarga pasien telah menerima
             informasi sebagaimana di atas yang saya beri tanda / paraf (pada
             kolom tanda) dan telah memahaminya
           </td>
-          <td colspan="2">
+          <td colspan="1">
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_yang_menerima"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_yang_menerima"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_yang_menerima"
+              id="paraf_ex_ttd_pasien_yang_menerima"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_yang_menerima"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_yang_menerima"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <input
               style="width: 100%"
               type="text"
