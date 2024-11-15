@@ -68,44 +68,27 @@
           $(`#totalskor` + percol).val(total);
         });
 
-      $(".resusitasi").on("change", function () {
-        const anyResusitasiChecked = $(".resusitasi:checked").length > 0;
-        $(".emergency, .urgent, .less-urgent, .non-urgent").prop(
-          "disabled",
-          anyResusitasiChecked
-        );
-      });
+      $(".ats").on("change", function () {
+        const totalTriaseMerahChecked = $(".ats.triase-merah:checked").length;
+        const totalTriaseKuningChecked = $(".ats.triase-kuning:checked").length;
+        const totalTriaseHijauChecked = $(".ats.triase-hijau:checked").length;
 
-      $(".emergency").on("change", function () {
-        const anyEmergencyChecked = $(".emergency:checked").length > 0;
-        $(".resusitasi, .urgent, .less-urgent, .non-urgent").prop(
-          "disabled",
-          anyEmergencyChecked
-        );
-      });
-
-      $(".urgent").on("change", function () {
-        const anyUrgentChecked = $(".urgent:checked").length > 0;
-        $(".resusitasi, .emergency, .less-urgent, .non-urgent").prop(
-          "disabled",
-          anyUrgentChecked
-        );
-      });
-
-      $(".less-urgent").on("change", function () {
-        const anyLessUrgentChecked = $(".less-urgent:checked").length > 0;
-        $(".resusitasi, .emergency, .urgent, .non-urgent").prop(
-          "disabled",
-          anyLessUrgentChecked
-        );
-      });
-
-      $(".non-urgent").on("change", function () {
-        const anyNonUrgentChecked = $(".non-urgent:checked").length > 0;
-        $(".resusitasi, .emergency, .urgent, .less-urgent").prop(
-          "disabled",
-          anyNonUrgentChecked
-        );
+        if (
+          totalTriaseMerahChecked > totalTriaseKuningChecked &&
+          totalTriaseMerahChecked > totalTriaseHijauChecked
+        ) {
+          $("input[name='kesimpulan-triase']").val("Triase Merah");
+        } else if (
+          totalTriaseKuningChecked > totalTriaseMerahChecked &&
+          totalTriaseKuningChecked > totalTriaseHijauChecked
+        ) {
+          $("input[name='kesimpulan-triase']").val("Triase Kuning");
+        } else if (
+          totalTriaseHijauChecked > totalTriaseMerahChecked &&
+          totalTriaseHijauChecked > totalTriaseKuningChecked
+        ) {
+          $("input[name='kesimpulan-triase']").val("Triase Hijau");
+        }
       });
     });
 
@@ -445,7 +428,7 @@
                   </td>
                   <td style="background-color: red">
                     <input
-                      class="ats resusitasi"
+                      class="ats resusitasi triase-merah"
                       type="checkbox"
                       name="sumbatan"
                       id="sumbatan"
@@ -457,7 +440,7 @@
                   </td>
                   <td style="background-color: yellow">
                     <input
-                      class="ats emergency"
+                      class="ats emergency triase-kuning"
                       type="checkbox"
                       name="kuning-bebas-emergency"
                       id="kuning-bebas-emergency"
@@ -477,6 +460,7 @@
                         id="tekanan-darah"
                         label="tekanan-darah"
                         myid="check_cara"
+                        value="{VTD}"
                         placeholder="......"
                       />
                       <label for="">mmHg</label>
@@ -490,6 +474,7 @@
                         id="frek-nadi"
                         label="frek-nadi"
                         myid="check_cara"
+                        value="{VNADI}"
                         placeholder="......"
                       />
                       <label for="">x/mnt</label>
@@ -504,6 +489,7 @@
                         label="frek-nafas"
                         myid="check_cara"
                         placeholder="......"
+                        value="{VNAFAS}"
                       />
                       <label for="">x/mnt</label>
                     </div>
@@ -517,13 +503,14 @@
                         label="suhu"
                         myid="check_cara"
                         placeholder="......"
+                        value="{VSUHU}"
                       />
                       <label for=""><sup>&deg;</sup>c</label>
                     </div>
                   </td>
                   <td style="background-color: yellow">
                     <input
-                      class="ats urgent"
+                      class="ats urgent triase-kuning"
                       type="checkbox"
                       name="kuning-bebas-urgent"
                       id="kuning-bebas-urgent"
@@ -535,7 +522,7 @@
                   </td>
                   <td style="background-color: #92d050">
                     <input
-                      class="ats less-urgent"
+                      class="ats less-urgent triase-hijau"
                       type="checkbox"
                       name="hijau-bebas-less-urgent"
                       id="hijau-bebas-less-urgent"
@@ -547,7 +534,7 @@
                   </td>
                   <td style="background-color: #92d050">
                     <input
-                      class="ats non-urgent"
+                      class="ats non-urgent triase-hijau"
                       type="checkbox"
                       name="hijau-bebas-non-urgent"
                       id="hijau-bebas-non-urgent"
@@ -566,7 +553,7 @@
                   <td style="background-color: red">
                     <div>
                       <input
-                        class="ats resusitasi"
+                        class="ats resusitasi triase-merah"
                         type="checkbox"
                         name="henti-nafas"
                         id="henti-nafas"
@@ -580,7 +567,7 @@
                     </div>
                     <div>
                       <input
-                        class="ats resusitasi"
+                        class="ats resusitasi triase-merah"
                         type="checkbox"
                         name="frek-nafas-lt-10"
                         id="frek-nafas-lt-10"
@@ -594,7 +581,7 @@
                     </div>
                     <div>
                       <input
-                        class="ats resusitasi"
+                        class="ats resusitasi triase-merah"
                         type="checkbox"
                         name="sianosis"
                         id="sianosis"
@@ -608,7 +595,7 @@
                   <td style="background-color: yellow">
                     <div>
                       <input
-                        class="ats emergency"
+                        class="ats emergency triase-kuning"
                         type="checkbox"
                         name="frek-nafas-gt-32"
                         id="frek-nafas-gt-32"
@@ -622,7 +609,7 @@
                     </div>
                     <div>
                       <input
-                        class="ats emergency"
+                        class="ats emergency triase-kuning"
                         type="checkbox"
                         name="wheezing-emergency"
                         label="wheezing-emergency"
@@ -636,7 +623,7 @@
                   <td style="background-color: yellow">
                     <div>
                       <input
-                        class="ats urgent"
+                        class="ats urgent triase-kuning"
                         type="checkbox"
                         name="frek-nafas-24-32"
                         label="frek-nafas-24-32"
@@ -650,7 +637,7 @@
                     </div>
                     <div>
                       <input
-                        class="ats urgent"
+                        class="ats urgent triase-kuning"
                         type="checkbox"
                         name="wheezing-urgent"
                         id="wheezing-urgent"
@@ -663,7 +650,7 @@
                   </td>
                   <td style="background-color: #92d050">
                     <input
-                      class="ats less-urgent"
+                      class="ats less-urgent triase-hijau"
                       type="checkbox"
                       name="frek-nafas-21-23"
                       id="frek-nafas-21-23"
@@ -677,7 +664,7 @@
                   </td>
                   <td style="background-color: #92d050">
                     <input
-                      class="ats non-urgent"
+                      class="ats non-urgent triase-hijau"
                       type="checkbox"
                       name="frek-nafas-16-20"
                       id="frek-nafas-16-20"
@@ -698,7 +685,7 @@
                   <td style="background-color: red">
                     <div>
                       <input
-                        class="ats resusitasi"
+                        class="ats resusitasi triase-merah"
                         type="checkbox"
                         name="henti-jantung"
                         id="henti-jantung"
@@ -712,7 +699,7 @@
                     </div>
                     <div>
                       <input
-                        class="ats resusitasi"
+                        class="ats resusitasi triase-merah"
                         type="checkbox"
                         name="nadi-tak-teraba"
                         id="nadi-tak-teraba"
@@ -726,7 +713,7 @@
                     </div>
                     <div>
                       <input
-                        class="ats resusitasi"
+                        class="ats resusitasi triase-merah"
                         type="checkbox"
                         name="pucat"
                         id="pucat"
@@ -738,7 +725,7 @@
                     </div>
                     <div>
                       <input
-                        class="ats resusitasi"
+                        class="ats resusitasi triase-merah"
                         type="checkbox"
                         name="akral-dingin"
                         id="akral-dingin"
@@ -752,7 +739,7 @@
                   <td style="background-color: yellow">
                     <div>
                       <input
-                        class="ats emergency"
+                        class="ats emergency triase-kuning"
                         type="checkbox"
                         name="nadi-teraba-lemah"
                         id="nadi-teraba-lemah"
@@ -766,7 +753,7 @@
                     </div>
                     <div>
                       <input
-                        class="ats emergency"
+                        class="ats emergency triase-kuning"
                         type="checkbox"
                         name="frek-nadi-lt-50"
                         id="frek-nadi-lt-50"
@@ -807,7 +794,7 @@
                   <td style="background-color: yellow">
                     <div>
                       <input
-                        class="ats urgent"
+                        class="ats urgent triase-kuning"
                         type="checkbox"
                         name="frek-nadi-120-150"
                         id="frek-nadi-120-150"
@@ -821,7 +808,7 @@
                     </div>
                     <div>
                       <input
-                        class="ats urgent"
+                        class="ats urgent triase-kuning"
                         type="checkbox"
                         name="td-sistol-ge-160"
                         id="td-sistol-ge-160"
@@ -835,7 +822,7 @@
                     </div>
                     <div>
                       <input
-                        class="ats urgent"
+                        class="ats urgent triase-kuning"
                         type="checkbox"
                         name="td-diastole-ge-100"
                         id="td-diastole-ge-100"
@@ -851,7 +838,7 @@
                   <td style="background-color: #92d050">
                     <div>
                       <input
-                        class="ats less-urgent"
+                        class="ats less-urgent triase-hijau"
                         type="checkbox"
                         name="frek-nadi-100-120"
                         id="frek-nadi-100-120"
@@ -865,7 +852,7 @@
                     </div>
                     <div>
                       <input
-                        class="ats less-urgent"
+                        class="ats less-urgent triase-hijau"
                         type="checkbox"
                         name="td-sistol-lt-160"
                         id="td-sistol-lt-160"
@@ -879,7 +866,7 @@
                     </div>
                     <div>
                       <input
-                        class="ats less-urgent"
+                        class="ats less-urgent triase-hijau"
                         type="checkbox"
                         name="td-diastole-lt-100"
                         id="td-diastole-lt-100"
@@ -895,7 +882,7 @@
                   <td style="background-color: #92d050">
                     <div>
                       <input
-                        class="ats non-urgent"
+                        class="ats non-urgent triase-hijau"
                         type="checkbox"
                         name="frek-nadi-80-100"
                         id="frek-nadi-80-100"
@@ -909,7 +896,7 @@
                     </div>
                     <div>
                       <input
-                        class="ats non-urgent"
+                        class="ats non-urgent triase-hijau"
                         type="checkbox"
                         name="td-sistol-120"
                         id="td-sistol-120"
@@ -923,7 +910,7 @@
                     </div>
                     <div>
                       <input
-                        class="ats non-urgent"
+                        class="ats non-urgent triase-hijau"
                         type="checkbox"
                         name="td-diastole-100-mmhg"
                         id="td-diastole-100-mmhg"
@@ -944,7 +931,7 @@
                   </td>
                   <td style="background-color: red">
                     <input
-                      class="ats resusitasi"
+                      class="ats resusitasi triase-merah"
                       type="checkbox"
                       name="gcs-lt-9"
                       id="gcs-lt-9"
@@ -956,7 +943,7 @@
                   </td>
                   <td style="background-color: yellow">
                     <input
-                      class="ats emergency"
+                      class="ats emergency triase-kuning"
                       type="checkbox"
                       name="gcs-9-12"
                       id="gcs-9-12"
@@ -968,7 +955,7 @@
                   </td>
                   <td style="background-color: yellow">
                     <input
-                      class="ats urgent"
+                      class="ats urgent triase-kuning"
                       type="checkbox"
                       name="gcs-gt-12"
                       id="gcs-gt-12"
@@ -980,7 +967,7 @@
                   </td>
                   <td style="background-color: #92d050">
                     <input
-                      class="ats less-urgent"
+                      class="ats less-urgent triase-hijau"
                       type="checkbox"
                       name="gcs-15-less-urgent"
                       id="gcs-15-less-urgent"
@@ -992,7 +979,7 @@
                   </td>
                   <td style="background-color: #92d050">
                     <input
-                      class="ats non-urgent"
+                      class="ats non-urgent triase-hijau"
                       type="checkbox"
                       name="gcs-15-non-urgent"
                       id="gcs-15-non-urgent"
@@ -1005,11 +992,35 @@
                 </tr>
               </tbody>
             </table>
+
+            <br />
+            <div>
+              <label>Kesimpulan :</label>
+              <input
+                type="text"
+                name="kesimpulan-triase"
+                id="kesimpulan-triase"
+                label="kesimpulan-triase"
+                myid="check_cara"
+                readonly
+              />
+            </div>
+            <br />
           </td>
         </tr>
         <tr>
           <td>
-            <h1><b>DOA</b></h1>
+            <div style="display: flex; gap: 5px">
+              <label style="font-size: 2em"><b>DOA</b></label>
+              <input
+                type="checkbox"
+                name="doa"
+                id="doa"
+                label="doa"
+                value="true"
+                myid="check_cara"
+              />
+            </div>
           </td>
         </tr>
         <tr>
@@ -2480,6 +2491,7 @@
                       id="pukul-1"
                       mtype="pukul"
                       label="pukul-1"
+                      placeholder="00.00"
                       myid="check_cara"
                     />
                   </td>
@@ -2543,6 +2555,7 @@
                       id="pukul-2"
                       mtype="pukul"
                       label="pukul-2"
+                      placeholder="00.00"
                       myid="check_cara"
                     />
                   </td>
@@ -2606,6 +2619,7 @@
                       id="pukul-3"
                       mtype="pukul"
                       label="pukul-3"
+                      placeholder="00.00"
                       myid="check_cara"
                     />
                   </td>
@@ -2669,6 +2683,7 @@
                       id="pukul-4"
                       mtype="pukul"
                       label="pukul-4"
+                      placeholder="00.00"
                       myid="check_cara"
                     />
                   </td>
@@ -2732,6 +2747,7 @@
                       id="pukul-5"
                       mtype="pukul"
                       label="pukul-5"
+                      placeholder="00.00"
                       myid="check_cara"
                     />
                   </td>
@@ -2820,6 +2836,7 @@
                       id="pukul-tindakan-1"
                       mtype="pukul"
                       label="pukul-tindakan-1"
+                      placeholder="00.00"
                       myid="check_cara"
                     />
                   </td>
@@ -2896,6 +2913,7 @@
                       id="pukul-tindakan-2"
                       mtype="pukul"
                       label="pukul-tindakan-2"
+                      placeholder="00.00"
                       myid="check_cara"
                     />
                   </td>
@@ -2972,6 +2990,7 @@
                       id="pukul-tindakan-3"
                       mtype="pukul"
                       label="pukul-tindakan-3"
+                      placeholder="00.00"
                       myid="check_cara"
                     />
                   </td>
@@ -3048,6 +3067,7 @@
                       id="pukul-tindakan-4"
                       mtype="pukul"
                       label="pukul-tindakan-4"
+                      placeholder="00.00"
                       myid="check_cara"
                     />
                   </td>
@@ -3999,6 +4019,7 @@
               id="17_nama3"
               size="25"
               myid="check_cara"
+              value="{VDPJP}"
             />
             <br />
             <br />
