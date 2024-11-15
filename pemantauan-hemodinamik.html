@@ -30,6 +30,252 @@
       padding: 5px;
     }
   </style>
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"
+  ></script>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+
+      // Ambil semua elemen yang diperlukan dengan jQuery
+      const cairanMasuk = {
+        A: $(".cairan-masuk-a"),
+        B: $(".cairan-masuk-b"),
+        C: $(".cairan-masuk-c"),
+      };
+      const cairanKeluar = {
+        A: $(".cairan-keluar-a"),
+        B: $(".cairan-keluar-b"),
+        C: $(".cairan-keluar-c"),
+      };
+
+      const totalCairanMasuk = {
+        A: $("input[name='totalskor1']"),
+        B: $("input[name='totalskor3']"),
+        C: $("input[name='totalskor5']"),
+      };
+
+      const totalCairanKeluar = {
+        A: $("input[name='totalskor2']"),
+        B: $("input[name='totalskor4']"),
+        C: $("input[name='totalskor6']"),
+      };
+
+      const totalInputLainLain = $("input[name='total-input-lain-lain']");
+      const totalInputInfus = $("input[name='totalskor-infus']");
+      const totalInputOral = $("input[name='totalskor-oral']");
+      const totalOutputUrine = $("input[name='totalskor-urine']");
+      const totalOutputLainLain = $("input[name='total-output-lain-lain']");
+      const totalOutputIWL = $("input[name='totalskor-iwl']");
+      const totalInputResult = $("input[name='totalskor-input']");
+      const totalOutputResult = $("input[name='totalskor-output']");
+      const balance = $('input[name="balance"]');
+
+      const infus = $(".infus");
+      const oral = $(".oral");
+      const urine = $(".urine");
+
+      infus.on("input", function () {
+        hitungTotalCairan(infus, totalInputInfus);
+      });
+      oral.on("input", function () {
+        hitungTotalCairan(oral, totalInputOral);
+      });
+      urine.on("input", function () {
+        hitungTotalCairan(urine, totalOutputUrine);
+      });
+
+      // Fungsi menghitung total input/output cairan
+      function hitungTotalCairan(inputs, totalElement) {
+        let total = 0;
+        inputs.each(function () {
+          total += parseFloat($(this).val()) || 0;
+        });
+        totalElement.val(total);
+        console.log(total);
+        hitungTotalInputOutput();
+      }
+
+      // Fungsi untuk menghitung total input/output lainnya
+      function hitungTotalInputOutput() {
+        totalInputResult.val(
+          (parseFloat(totalCairanMasuk.A.val()) || 0) +
+            (parseFloat(totalCairanMasuk.B.val()) || 0) +
+            (parseFloat(totalCairanMasuk.C.val()) || 0) +
+            (parseFloat(totalInputLainLain.val()) || 0)
+        );
+
+        totalOutputResult.val(
+          (parseFloat(totalCairanKeluar.A.val()) || 0) +
+            (parseFloat(totalCairanKeluar.B.val()) || 0) +
+            (parseFloat(totalCairanKeluar.C.val()) || 0) +
+            (parseFloat(totalOutputLainLain.val()) || 0) +
+            (parseFloat(totalOutputIWL.val()) || 0)
+        );
+
+        balance.val(
+          (parseFloat(totalInputResult.val()) || 0) -
+            (parseFloat(totalOutputResult.val()) || 0)
+        );
+      }
+
+      // Fungsi untuk menghitung skor berdasarkan data-hitung dan data-percol
+      function hitungSkorPerKolom(percol) {
+        let total = 0;
+        $(`[data-hitung${percol}]`).each(function () {
+          total += parseInt($(this).val()) || 0;
+        });
+        $(`#totalskor${percol}`).val(total);
+      }
+
+      // Tambahkan event listener ke semua input cairan masuk
+      $.each(cairanMasuk, function (key, inputs) {
+        inputs.on("input", function () {
+          hitungTotalCairan(inputs, totalCairanMasuk[key]);
+        });
+      });
+
+      // Tambahkan event listener ke semua input cairan keluar
+      $.each(cairanKeluar, function (key, inputs) {
+        inputs.on("input", function () {
+          hitungTotalCairan(inputs, totalCairanKeluar[key]);
+        });
+      });
+
+      // Event listener untuk input data lain-lain dan IWL
+      totalInputLainLain.on("input", hitungTotalInputOutput);
+      totalOutputLainLain.on("input", hitungTotalInputOutput);
+      totalOutputIWL.on("input", hitungTotalInputOutput);
+
+      // Event listener untuk input text yang memiliki data-hitung dan data-percol
+      $('input[type="text"][data-percol]').on("input", function () {
+        hitungSkorPerKolom($(this).data("percol"));
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">
       PEMANTAUAN HEMODINAMIK <br />
@@ -60,30 +306,12 @@
               size="30"
               myid="check_cara"
               label="nama pasien"
+              value="{VNAMA_PASIEN}"
               placeholder="..."
             />
           </td>
           <td>Jenis Kelamin</td>
-          <td>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="laki-laki"
-              myid="check_cara"
-              value="L"
-              label="jenis kelamin"
-            />
-            <label for="l">L</label>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="perempuan"
-              myid="check_cara"
-              value="P"
-              label="jenis kelamin"
-            />
-            <label for="l">P</label>
-          </td>
+          <td>{VSEX}</td>
           <td>
             <label for="">Nomor Rekam Medis</label>
           </td>
@@ -94,6 +322,7 @@
               name="no_rm"
               id="no_rm"
               label="nomor rekam medis"
+              value="{NO_RM}"
             />
           </td>
         </tr>
@@ -105,7 +334,8 @@
               name="tgl_lahir"
               type="text"
               id="tgl_lahir"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
               label="tanggal lahir"
             />
@@ -119,6 +349,7 @@
               name="umur-pengkajian"
               id="umur-pengkajian"
               myid="check_cara"
+              value="{VAGE}"
               placeholder="..."
             />
           </td>
@@ -130,6 +361,7 @@
               name="kelas"
               type="text"
               id="kelas"
+              value="{VNAMAKELAS}"
               placeholder="..."
               myid="check_cara"
               label="kelas"
@@ -143,9 +375,10 @@
               type="text"
               name="kamar"
               id="kamar"
+              value="{VNAMARUANGAN}"
               myid="check_cara"
               placeholder="..."
-              aria-label="kamar"
+              label="kamar"
             />
           </td>
         </tr>
@@ -190,6 +423,8 @@
               name="tgl-1"
               id="tgl-1"
               label="tgl-1"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -288,6 +523,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a oral"
               name="oral-1"
               id="oral-1"
@@ -299,6 +536,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a"
               name="ngt-cairan-masuk-a-1"
               id="ngt-cairan-masuk-a-1"
@@ -310,6 +549,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a infus"
               name="infus-1"
               id="infus-1"
@@ -321,6 +562,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a"
               name="tranf-1"
               id="tranf-1"
@@ -333,6 +576,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a urine"
+              data-percol="2"
+              data-hitung2="2"
               name="urine-1"
               id="urine-1"
               label="urine-1"
@@ -344,6 +589,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="ngt-cairan-keluar-a-1"
               id="ngt-cairan-keluar-a-1"
               label="ngt-cairan-keluar-a-1"
@@ -355,6 +602,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="muntah-1"
               id="muntah-1"
               label="muntah-1"
@@ -366,6 +615,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="bab-1"
               id="bab-1"
               label="bab-1"
@@ -377,6 +628,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="drain-1"
               id="drain-1"
               label="drain-1"
@@ -392,6 +645,8 @@
               name="tgl-2"
               id="tgl-2"
               label="tgl-2"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -490,6 +745,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a oral"
               name="oral-2"
               id="oral-2"
@@ -501,6 +758,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a"
               name="ngt-cairan-masuk-a-2"
               id="ngt-cairan-masuk-a-2"
@@ -512,6 +771,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a infus"
               name="infus-2"
               id="infus-2"
@@ -523,6 +784,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a"
               name="tranf-2"
               id="tranf-2"
@@ -535,6 +798,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a urine"
+              data-percol="2"
+              data-hitung2="2"
               name="urine-2"
               id="urine-2"
               label="urine-2"
@@ -546,6 +811,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="ngt-cairan-keluar-a-2"
               id="ngt-cairan-keluar-a-2"
               label="ngt-cairan-keluar-a-2"
@@ -557,6 +824,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="muntah-2"
               id="muntah-2"
               label="muntah-2"
@@ -568,6 +837,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="bab-2"
               id="bab-2"
               label="bab-2"
@@ -579,6 +850,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="drain-2"
               id="drain-2"
               label="drain-2"
@@ -594,6 +867,8 @@
               name="tgl-3"
               id="tgl-3"
               label="tgl-3"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -692,6 +967,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a oral"
               name="oral-3"
               id="oral-3"
@@ -703,6 +980,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a"
               name="ngt-cairan-masuk-a-3"
               id="ngt-cairan-masuk-a-3"
@@ -714,6 +993,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a infus"
               name="infus-3"
               id="infus-3"
@@ -725,6 +1006,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a"
               name="tranf-3"
               id="tranf-3"
@@ -737,6 +1020,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a urine"
+              data-percol="2"
+              data-hitung2="2"
               name="urine-3"
               id="urine-3"
               label="urine-3"
@@ -748,6 +1033,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="ngt-cairan-keluar-a-3"
               id="ngt-cairan-keluar-a-3"
               label="ngt-cairan-keluar-a-3"
@@ -759,6 +1046,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="muntah-3"
               id="muntah-3"
               label="muntah-3"
@@ -770,6 +1059,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="bab-3"
               id="bab-3"
               label="bab-3"
@@ -781,6 +1072,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="drain-3"
               id="drain-3"
               label="drain-3"
@@ -796,6 +1089,8 @@
               name="tgl-4"
               id="tgl-4"
               label="tgl-4"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -894,6 +1189,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a oral"
               name="oral-4"
               id="oral-4"
@@ -905,6 +1202,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a"
               name="ngt-cairan-masuk-a-4"
               id="ngt-cairan-masuk-a-4"
@@ -916,6 +1215,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a infus"
               name="infus-4"
               id="infus-4"
@@ -927,6 +1228,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a"
               name="tranf-4"
               id="tranf-4"
@@ -939,6 +1242,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a urine"
+              data-percol="2"
+              data-hitung2="2"
               name="urine-4"
               id="urine-4"
               label="urine-4"
@@ -950,6 +1255,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="ngt-cairan-keluar-a-4"
               id="ngt-cairan-keluar-a-4"
               label="ngt-cairan-keluar-a-4"
@@ -961,6 +1268,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="muntah-4"
               id="muntah-4"
               label="muntah-4"
@@ -972,6 +1281,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="bab-4"
               id="bab-4"
               label="bab-4"
@@ -983,6 +1294,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="drain-4"
               id="drain-4"
               label="drain-4"
@@ -998,6 +1311,8 @@
               name="tgl-5"
               id="tgl-5"
               label="tgl-5"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -1096,6 +1411,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a oral"
               name="oral-5"
               id="oral-5"
@@ -1107,6 +1424,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a"
               name="ngt-cairan-masuk-a-5"
               id="ngt-cairan-masuk-a-5"
@@ -1118,6 +1437,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a infus"
               name="infus-5"
               id="infus-5"
@@ -1129,6 +1450,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a"
               name="tranf-5"
               id="tranf-5"
@@ -1141,6 +1464,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a urine"
+              data-percol="2"
+              data-hitung2="2"
               name="urine-5"
               id="urine-5"
               label="urine-5"
@@ -1152,6 +1477,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="ngt-cairan-keluar-a-5"
               id="ngt-cairan-keluar-a-5"
               label="ngt-cairan-keluar-a-5"
@@ -1163,6 +1490,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="muntah-5"
               id="muntah-5"
               label="muntah-5"
@@ -1174,6 +1503,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="bab-5"
               id="bab-5"
               label="bab-5"
@@ -1185,6 +1516,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="drain-5"
               id="drain-5"
               label="drain-5"
@@ -1200,6 +1533,8 @@
               name="tgl-6"
               id="tgl-6"
               label="tgl-6"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -1298,6 +1633,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a oral"
               name="oral-6"
               id="oral-6"
@@ -1309,6 +1646,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a"
               name="ngt-cairan-masuk-a-6"
               id="ngt-cairan-masuk-a-6"
@@ -1320,6 +1659,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a infus"
               name="infus-6"
               id="infus-6"
@@ -1331,6 +1672,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a"
               name="tranf-6"
               id="tranf-6"
@@ -1343,6 +1686,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a urine"
+              data-percol="2"
+              data-hitung2="2"
               name="urine-6"
               id="urine-6"
               label="urine-6"
@@ -1354,6 +1699,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="ngt-cairan-keluar-a-6"
               id="ngt-cairan-keluar-a-6"
               label="ngt-cairan-keluar-a-6"
@@ -1365,6 +1712,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="muntah-6"
               id="muntah-6"
               label="muntah-6"
@@ -1376,6 +1725,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="bab-6"
               id="bab-6"
               label="bab-6"
@@ -1387,6 +1738,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="drain-6"
               id="drain-6"
               label="drain-6"
@@ -1402,6 +1755,8 @@
               name="tgl-7"
               id="tgl-7"
               label="tgl-7"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -1500,6 +1855,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a oral"
               name="oral-7"
               id="oral-7"
@@ -1511,6 +1868,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a"
               name="ngt-cairan-masuk-a-7"
               id="ngt-cairan-masuk-a-7"
@@ -1522,6 +1881,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a infus"
               name="infus-7"
               id="infus-7"
@@ -1533,6 +1894,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a"
               name="tranf-7"
               id="tranf-7"
@@ -1545,6 +1908,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a urine"
+              data-percol="2"
+              data-hitung2="2"
               name="urine-7"
               id="urine-7"
               label="urine-7"
@@ -1556,6 +1921,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="ngt-cairan-keluar-a-7"
               id="ngt-cairan-keluar-a-7"
               label="ngt-cairan-keluar-a-7"
@@ -1567,6 +1934,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="muntah-7"
               id="muntah-7"
               label="muntah-7"
@@ -1578,6 +1947,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="bab-7"
               id="bab-7"
               label="bab-7"
@@ -1589,6 +1960,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="drain-7"
               id="drain-7"
               label="drain-7"
@@ -1604,6 +1977,8 @@
               name="tgl-8"
               id="tgl-8"
               label="tgl-8"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -1702,6 +2077,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a oral"
               name="oral-8"
               id="oral-8"
@@ -1713,6 +2090,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a"
               name="ngt-cairan-masuk-a-8"
               id="ngt-cairan-masuk-a-8"
@@ -1724,6 +2103,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a infus"
               name="infus-8"
               id="infus-8"
@@ -1735,6 +2116,8 @@
             <input
               style="width: 100%"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               class="cairan-masuk-a"
               name="tranf-8"
               id="tranf-8"
@@ -1747,6 +2130,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a urine"
+              data-percol="2"
+              data-hitung2="2"
               name="urine-8"
               id="urine-8"
               label="urine-8"
@@ -1758,6 +2143,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="ngt-cairan-keluar-a-8"
               id="ngt-cairan-keluar-a-8"
               label="ngt-cairan-keluar-a-8"
@@ -1769,6 +2156,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="muntah-8"
               id="muntah-8"
               label="muntah-8"
@@ -1780,6 +2169,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="bab-8"
               id="bab-8"
               label="bab-8"
@@ -1791,6 +2182,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-a"
+              data-percol="2"
+              data-hitung2="2"
               name="drain-8"
               id="drain-8"
               label="drain-8"
@@ -1806,6 +2199,8 @@
               name="tgl-9"
               id="tgl-9"
               label="tgl-9"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -1817,9 +2212,9 @@
               placeholder="input ini otomatis dari semua nilai cairan masuk"
               style="width: 100%"
               type="text"
-              name="total-cairan-masuk-a"
-              id="total-cairan-masuk-a"
-              label="total-cairan-masuk-a"
+              name="totalskor1"
+              id="totalskor1"
+              label="totalskor1"
               myid="check_cara"
             />
           </td>
@@ -1831,9 +2226,9 @@
               placeholder="input ini otomatis dari semua nilai cairan keluar"
               style="width: 100%"
               type="text"
-              name="total-cairan-keluar-a"
-              id="total-cairan-keluar-a"
-              label="total-cairan-keluar-a"
+              name="totalskor2"
+              id="totalskor2"
+              label="totalskor2"
               myid="check_cara"
             />
           </td>
@@ -1846,6 +2241,8 @@
               name="tgl-10"
               id="tgl-10"
               label="tgl-10"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -1945,6 +2342,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b oral"
+              data-percol="3"
+              data-hitung3="3"
               name="oral-10"
               id="oral-10"
               label="oral-10"
@@ -1956,6 +2355,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b"
+              data-percol="3"
+              data-hitung3="3"
               name="ngt-cairan-masuk-b-10"
               id="ngt-cairan-masuk-b-10"
               label="ngt-cairan-masuk-b-10"
@@ -1967,6 +2368,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b infus"
+              data-percol="3"
+              data-hitung3="3"
               name="infus-10"
               id="infus-10"
               label="infus-10"
@@ -1978,6 +2381,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b"
+              data-percol="3"
+              data-hitung3="3"
               name="tranf-10"
               id="tranf-10"
               label="tranf-10"
@@ -1989,6 +2394,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b urine"
+              data-percol="4"
+              data-hitung4="4"
               name="urine-10"
               id="urine-10"
               label="urine-10"
@@ -2000,6 +2407,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="ngt-cairan-keluar-b-10"
               id="ngt-cairan-keluar-b-10"
               label="ngt-cairan-keluar-b-10"
@@ -2011,6 +2420,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="muntah-10"
               id="muntah-10"
               label="muntah-10"
@@ -2022,6 +2433,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="bab-10"
               id="bab-10"
               label="bab-10"
@@ -2033,6 +2446,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="drain-10"
               id="drain-10"
               label="drain-10"
@@ -2048,6 +2463,8 @@
               name="tgl-11"
               id="tgl-11"
               label="tgl-11"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -2147,6 +2564,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b oral"
+              data-percol="3"
+              data-hitung3="3"
               name="oral-11"
               id="oral-11"
               label="oral-11"
@@ -2158,6 +2577,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b"
+              data-percol="3"
+              data-hitung3="3"
               name="ngt-cairan-masuk-b-11"
               id="ngt-cairan-masuk-b-11"
               label="ngt-cairan-masuk-b-11"
@@ -2169,6 +2590,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b infus"
+              data-percol="3"
+              data-hitung3="3"
               name="infus-11"
               id="infus-11"
               label="infus-11"
@@ -2180,6 +2603,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b"
+              data-percol="3"
+              data-hitung3="3"
               name="tranf-11"
               id="tranf-11"
               label="tranf-11"
@@ -2191,6 +2616,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b urine"
+              data-percol="4"
+              data-hitung4="4"
               name="urine-11"
               id="urine-11"
               label="urine-11"
@@ -2202,6 +2629,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="ngt-cairan-keluar-b-11"
               id="ngt-cairan-keluar-b-11"
               label="ngt-cairan-keluar-b-11"
@@ -2213,6 +2642,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="muntah-11"
               id="muntah-11"
               label="muntah-11"
@@ -2224,6 +2655,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="bab-11"
               id="bab-11"
               label="bab-11"
@@ -2235,6 +2668,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="drain-11"
               id="drain-11"
               label="drain-11"
@@ -2250,6 +2685,8 @@
               name="tgl-12"
               id="tgl-12"
               label="tgl-12"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -2349,6 +2786,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b oral"
+              data-percol="3"
+              data-hitung3="3"
               name="oral-12"
               id="oral-12"
               label="oral-12"
@@ -2360,6 +2799,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b"
+              data-percol="3"
+              data-hitung3="3"
               name="ngt-cairan-masuk-b-12"
               id="ngt-cairan-masuk-b-12"
               label="ngt-cairan-masuk-b-12"
@@ -2371,6 +2812,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b infus"
+              data-percol="3"
+              data-hitung3="3"
               name="infus-12"
               id="infus-12"
               label="infus-12"
@@ -2382,6 +2825,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b"
+              data-percol="3"
+              data-hitung3="3"
               name="tranf-12"
               id="tranf-12"
               label="tranf-12"
@@ -2393,6 +2838,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b urine"
+              data-percol="4"
+              data-hitung4="4"
               name="urine-12"
               id="urine-12"
               label="urine-12"
@@ -2404,6 +2851,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="ngt-cairan-keluar-b-12"
               id="ngt-cairan-keluar-b-12"
               label="ngt-cairan-keluar-b-12"
@@ -2415,6 +2864,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="muntah-12"
               id="muntah-12"
               label="muntah-12"
@@ -2426,6 +2877,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="bab-12"
               id="bab-12"
               label="bab-12"
@@ -2437,6 +2890,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="drain-12"
               id="drain-12"
               label="drain-12"
@@ -2452,6 +2907,8 @@
               name="tgl-13"
               id="tgl-13"
               label="tgl-13"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -2551,6 +3008,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b oral"
+              data-percol="3"
+              data-hitung3="3"
               name="oral-13"
               id="oral-13"
               label="oral-13"
@@ -2562,6 +3021,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b"
+              data-percol="3"
+              data-hitung3="3"
               name="ngt-cairan-masuk-b-13"
               id="ngt-cairan-masuk-b-13"
               label="ngt-cairan-masuk-b-13"
@@ -2573,6 +3034,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b infus"
+              data-percol="3"
+              data-hitung3="3"
               name="infus-13"
               id="infus-13"
               label="infus-13"
@@ -2584,6 +3047,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b"
+              data-percol="3"
+              data-hitung3="3"
               name="tranf-13"
               id="tranf-13"
               label="tranf-13"
@@ -2595,6 +3060,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b urine"
+              data-percol="4"
+              data-hitung4="4"
               name="urine-13"
               id="urine-13"
               label="urine-13"
@@ -2606,6 +3073,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="ngt-cairan-keluar-b-13"
               id="ngt-cairan-keluar-b-13"
               label="ngt-cairan-keluar-b-13"
@@ -2617,6 +3086,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="muntah-13"
               id="muntah-13"
               label="muntah-13"
@@ -2628,6 +3099,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="bab-13"
               id="bab-13"
               label="bab-13"
@@ -2639,6 +3112,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="drain-13"
               id="drain-13"
               label="drain-13"
@@ -2654,6 +3129,8 @@
               name="tgl-14"
               id="tgl-14"
               label="tgl-14"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -2753,6 +3230,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b oral"
+              data-percol="3"
+              data-hitung3="3"
               name="oral-14"
               id="oral-14"
               label="oral-14"
@@ -2764,6 +3243,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b"
+              data-percol="3"
+              data-hitung3="3"
               name="ngt-cairan-masuk-b-14"
               id="ngt-cairan-masuk-b-14"
               label="ngt-cairan-masuk-b-14"
@@ -2775,6 +3256,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b infus"
+              data-percol="3"
+              data-hitung3="3"
               name="infus-14"
               id="infus-14"
               label="infus-14"
@@ -2786,6 +3269,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b"
+              data-percol="3"
+              data-hitung3="3"
               name="tranf-14"
               id="tranf-14"
               label="tranf-14"
@@ -2797,6 +3282,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b urine"
+              data-percol="4"
+              data-hitung4="4"
               name="urine-14"
               id="urine-14"
               label="urine-14"
@@ -2808,6 +3295,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="ngt-cairan-keluar-b-14"
               id="ngt-cairan-keluar-b-14"
               label="ngt-cairan-keluar-b-14"
@@ -2819,6 +3308,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="muntah-14"
               id="muntah-14"
               label="muntah-14"
@@ -2830,6 +3321,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="bab-14"
               id="bab-14"
               label="bab-14"
@@ -2841,6 +3334,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="drain-14"
               id="drain-14"
               label="drain-14"
@@ -2856,6 +3351,8 @@
               name="tgl-15"
               id="tgl-15"
               label="tgl-15"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -2955,6 +3452,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b oral"
+              data-percol="3"
+              data-hitung3="3"
               name="oral-15"
               id="oral-15"
               label="oral-15"
@@ -2966,6 +3465,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b"
+              data-percol="3"
+              data-hitung3="3"
               name="ngt-cairan-masuk-b-15"
               id="ngt-cairan-masuk-b-15"
               label="ngt-cairan-masuk-b-15"
@@ -2977,6 +3478,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b infus"
+              data-percol="3"
+              data-hitung3="3"
               name="infus-15"
               id="infus-15"
               label="infus-15"
@@ -2988,6 +3491,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b"
+              data-percol="3"
+              data-hitung3="3"
               name="tranf-15"
               id="tranf-15"
               label="tranf-15"
@@ -2999,6 +3504,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b urine"
+              data-percol="4"
+              data-hitung4="4"
               name="urine-15"
               id="urine-15"
               label="urine-15"
@@ -3010,6 +3517,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="ngt-cairan-keluar-b-15"
               id="ngt-cairan-keluar-b-15"
               label="ngt-cairan-keluar-b-15"
@@ -3021,6 +3530,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="muntah-15"
               id="muntah-15"
               label="muntah-15"
@@ -3032,6 +3543,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="bab-15"
               id="bab-15"
               label="bab-15"
@@ -3043,6 +3556,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="drain-15"
               id="drain-15"
               label="drain-15"
@@ -3058,6 +3573,8 @@
               name="tgl-16"
               id="tgl-16"
               label="tgl-16"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -3157,6 +3674,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b oral"
+              data-percol="3"
+              data-hitung3="3"
               name="oral-16"
               id="oral-16"
               label="oral-16"
@@ -3168,6 +3687,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b"
+              data-percol="3"
+              data-hitung3="3"
               name="ngt-cairan-masuk-b-16"
               id="ngt-cairan-masuk-b-16"
               label="ngt-cairan-masuk-b-16"
@@ -3179,6 +3700,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b infus"
+              data-percol="3"
+              data-hitung3="3"
               name="infus-16"
               id="infus-16"
               label="infus-16"
@@ -3190,6 +3713,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-b"
+              data-percol="3"
+              data-hitung3="3"
               name="tranf-16"
               id="tranf-16"
               label="tranf-16"
@@ -3201,6 +3726,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b urine"
+              data-percol="4"
+              data-hitung4="4"
               name="urine-16"
               id="urine-16"
               label="urine-16"
@@ -3212,6 +3739,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="ngt-cairan-keluar-b-16"
               id="ngt-cairan-keluar-b-16"
               label="ngt-cairan-keluar-b-16"
@@ -3223,6 +3752,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="muntah-16"
               id="muntah-16"
               label="muntah-16"
@@ -3234,6 +3765,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="bab-16"
               id="bab-16"
               label="bab-16"
@@ -3245,6 +3778,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-b"
+              data-percol="4"
+              data-hitung4="4"
               name="drain-16"
               id="drain-16"
               label="drain-16"
@@ -3260,6 +3795,8 @@
               name="tgl-17"
               id="tgl-17"
               label="tgl-17"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -3271,9 +3808,9 @@
               placeholder="input ini otomatis dari semua nilai cairan masuk"
               style="width: 100%"
               type="text"
-              name="total-cairan-masuk-b"
-              id="total-cairan-masuk-b"
-              label="total-cairan-masuk-b"
+              name="totalskor3"
+              id="totalskor3"
+              label="totalskor3"
               myid="check_cara"
             />
           </td>
@@ -3285,9 +3822,9 @@
               placeholder="input ini otomatis dari semua nilai cairan keluar"
               style="width: 100%"
               type="text"
-              name="total-cairan-keluar-b"
-              id="total-cairan-keluar-b"
-              label="total-cairan-keluar-b"
+              name="totalskor4"
+              id="totalskor4"
+              label="totalskor4"
               myid="check_cara"
             />
           </td>
@@ -3300,6 +3837,8 @@
               name="tgl-18"
               id="tgl-18"
               label="tgl-18"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -3399,6 +3938,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c oral"
+              data-percol="5"
+              data-hitung5="5"
               name="oral-18"
               id="oral-18"
               label="oral-18"
@@ -3410,6 +3951,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c"
+              data-percol="5"
+              data-hitung5="5"
               name="ngt-cairan-masuk-c-18"
               id="ngt-cairan-masuk-c-18"
               label="ngt-cairan-masuk-c-18"
@@ -3421,6 +3964,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c infus"
+              data-percol="5"
+              data-hitung5="5"
               name="infus-18"
               id="infus-18"
               label="infus-18"
@@ -3432,6 +3977,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c"
+              data-percol="5"
+              data-hitung5="5"
               name="tranf-18"
               id="tranf-18"
               label="tranf-18"
@@ -3443,6 +3990,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c urine"
+              data-percol="6"
+              data-hitung6="6"
               name="urine-18"
               id="urine-18"
               label="urine-18"
@@ -3454,6 +4003,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="ngt-cairan-keluar-c-18"
               id="ngt-cairan-keluar-c-18"
               label="ngt-cairan-keluar-c-18"
@@ -3465,6 +4016,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="muntah-18"
               id="muntah-18"
               label="muntah-18"
@@ -3476,6 +4029,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="bab-18"
               id="bab-18"
               label="bab-18"
@@ -3487,6 +4042,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="drain-18"
               id="drain-18"
               label="drain-18"
@@ -3502,6 +4059,8 @@
               name="tgl-19"
               id="tgl-19"
               label="tgl-19"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -3601,6 +4160,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c oral"
+              data-percol="5"
+              data-hitung5="5"
               name="oral-19"
               id="oral-19"
               label="oral-19"
@@ -3612,6 +4173,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c"
+              data-percol="5"
+              data-hitung5="5"
               name="ngt-cairan-masuk-c-19"
               id="ngt-cairan-masuk-c-19"
               label="ngt-cairan-masuk-c-19"
@@ -3623,6 +4186,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c infus"
+              data-percol="5"
+              data-hitung5="5"
               name="infus-19"
               id="infus-19"
               label="infus-19"
@@ -3634,6 +4199,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c"
+              data-percol="5"
+              data-hitung5="5"
               name="tranf-19"
               id="tranf-19"
               label="tranf-19"
@@ -3645,6 +4212,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c urine"
+              data-percol="6"
+              data-hitung6="6"
               name="urine-19"
               id="urine-19"
               label="urine-19"
@@ -3656,6 +4225,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="ngt-cairan-keluar-c-19"
               id="ngt-cairan-keluar-c-19"
               label="ngt-cairan-keluar-c-19"
@@ -3667,6 +4238,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="muntah-19"
               id="muntah-19"
               label="muntah-19"
@@ -3678,6 +4251,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="bab-19"
               id="bab-19"
               label="bab-19"
@@ -3689,6 +4264,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="drain-19"
               id="drain-19"
               label="drain-19"
@@ -3704,6 +4281,8 @@
               name="tgl-20"
               id="tgl-20"
               label="tgl-20"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -3803,6 +4382,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c oral"
+              data-percol="5"
+              data-hitung5="5"
               name="oral-20"
               id="oral-20"
               label="oral-20"
@@ -3814,6 +4395,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c"
+              data-percol="5"
+              data-hitung5="5"
               name="ngt-cairan-masuk-c-20"
               id="ngt-cairan-masuk-c-20"
               label="ngt-cairan-masuk-c-20"
@@ -3825,6 +4408,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c infus"
+              data-percol="5"
+              data-hitung5="5"
               name="infus-20"
               id="infus-20"
               label="infus-20"
@@ -3836,6 +4421,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c"
+              data-percol="5"
+              data-hitung5="5"
               name="tranf-20"
               id="tranf-20"
               label="tranf-20"
@@ -3847,6 +4434,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c urine"
+              data-percol="6"
+              data-hitung6="6"
               name="urine-20"
               id="urine-20"
               label="urine-20"
@@ -3858,6 +4447,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="ngt-cairan-keluar-c-20"
               id="ngt-cairan-keluar-c-20"
               label="ngt-cairan-keluar-c-20"
@@ -3869,6 +4460,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="muntah-20"
               id="muntah-20"
               label="muntah-20"
@@ -3880,6 +4473,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="bab-20"
               id="bab-20"
               label="bab-20"
@@ -3891,6 +4486,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="drain-20"
               id="drain-20"
               label="drain-20"
@@ -3906,6 +4503,8 @@
               name="tgl-21"
               id="tgl-21"
               label="tgl-21"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -4005,6 +4604,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c oral"
+              data-percol="5"
+              data-hitung5="5"
               name="oral-21"
               id="oral-21"
               label="oral-21"
@@ -4016,6 +4617,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c"
+              data-percol="5"
+              data-hitung5="5"
               name="ngt-cairan-masuk-c-21"
               id="ngt-cairan-masuk-c-21"
               label="ngt-cairan-masuk-c-21"
@@ -4027,6 +4630,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c infus"
+              data-percol="5"
+              data-hitung5="5"
               name="infus-21"
               id="infus-21"
               label="infus-21"
@@ -4038,6 +4643,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c"
+              data-percol="5"
+              data-hitung5="5"
               name="tranf-21"
               id="tranf-21"
               label="tranf-21"
@@ -4049,6 +4656,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c urine"
+              data-percol="6"
+              data-hitung6="6"
               name="urine-21"
               id="urine-21"
               label="urine-21"
@@ -4060,6 +4669,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="ngt-cairan-keluar-c-21"
               id="ngt-cairan-keluar-c-21"
               label="ngt-cairan-keluar-c-21"
@@ -4071,6 +4682,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="muntah-21"
               id="muntah-21"
               label="muntah-21"
@@ -4082,6 +4695,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="bab-21"
               id="bab-21"
               label="bab-21"
@@ -4093,6 +4708,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="drain-22"
               id="drain-22"
               label="drain-22"
@@ -4108,6 +4725,8 @@
               name="tgl-22"
               id="tgl-22"
               label="tgl-22"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -4207,6 +4826,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c oral"
+              data-percol="5"
+              data-hitung5="5"
               name="oral-22"
               id="oral-22"
               label="oral-22"
@@ -4218,6 +4839,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c"
+              data-percol="5"
+              data-hitung5="5"
               name="ngt-cairan-masuk-c-22"
               id="ngt-cairan-masuk-c-22"
               label="ngt-cairan-masuk-c-22"
@@ -4229,6 +4852,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c infus"
+              data-percol="5"
+              data-hitung5="5"
               name="infus-22"
               id="infus-22"
               label="infus-22"
@@ -4240,6 +4865,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c"
+              data-percol="5"
+              data-hitung5="5"
               name="tranf-22"
               id="tranf-22"
               label="tranf-22"
@@ -4251,6 +4878,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c urine"
+              data-percol="6"
+              data-hitung6="6"
               name="urine-22"
               id="urine-22"
               label="urine-22"
@@ -4262,6 +4891,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="ngt-cairan-keluar-c-22"
               id="ngt-cairan-keluar-c-22"
               label="ngt-cairan-keluar-c-22"
@@ -4273,6 +4904,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="muntah-22"
               id="muntah-22"
               label="muntah-22"
@@ -4284,6 +4917,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="bab-22"
               id="bab-22"
               label="bab-22"
@@ -4295,6 +4930,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="drain-22"
               id="drain-22"
               label="drain-22"
@@ -4310,6 +4947,8 @@
               name="tgl-23"
               id="tgl-23"
               label="tgl-23"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -4409,6 +5048,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c oral"
+              data-percol="5"
+              data-hitung5="5"
               name="oral-23"
               id="oral-23"
               label="oral-23"
@@ -4420,6 +5061,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c"
+              data-percol="5"
+              data-hitung5="5"
               name="ngt-cairan-masuk-c-23"
               id="ngt-cairan-masuk-c-23"
               label="ngt-cairan-masuk-c-23"
@@ -4431,6 +5074,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c infus"
+              data-percol="5"
+              data-hitung5="5"
               name="infus-23"
               id="infus-23"
               label="infus-23"
@@ -4442,6 +5087,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c"
+              data-percol="5"
+              data-hitung5="5"
               name="tranf-23"
               id="tranf-23"
               label="tranf-23"
@@ -4453,6 +5100,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c urine"
+              data-percol="6"
+              data-hitung6="6"
               name="urine-23"
               id="urine-23"
               label="urine-23"
@@ -4464,6 +5113,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="ngt-cairan-keluar-c-23"
               id="ngt-cairan-keluar-c-23"
               label="ngt-cairan-keluar-c-23"
@@ -4475,6 +5126,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="muntah-23"
               id="muntah-23"
               label="muntah-23"
@@ -4486,6 +5139,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="bab-23"
               id="bab-23"
               label="bab-23"
@@ -4497,6 +5152,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="drain-23"
               id="drain-23"
               label="drain-23"
@@ -4512,6 +5169,8 @@
               name="tgl-24"
               id="tgl-24"
               label="tgl-24"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -4611,6 +5270,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c oral"
+              data-percol="5"
+              data-hitung5="5"
               name="oral-24"
               id="oral-24"
               label="oral-24"
@@ -4622,6 +5283,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c"
+              data-percol="5"
+              data-hitung5="5"
               name="ngt-cairan-masuk-c-24"
               id="ngt-cairan-masuk-c-24"
               label="ngt-cairan-masuk-c-24"
@@ -4633,6 +5296,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c infus"
+              data-percol="5"
+              data-hitung5="5"
               name="infus-24"
               id="infus-24"
               label="infus-24"
@@ -4644,6 +5309,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c"
+              data-percol="5"
+              data-hitung5="5"
               name="tranf-24"
               id="tranf-24"
               label="tranf-24"
@@ -4655,6 +5322,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c urine"
+              data-percol="6"
+              data-hitung6="6"
               name="urine-24"
               id="urine-24"
               label="urine-24"
@@ -4666,6 +5335,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="ngt-cairan-keluar-c-24"
               id="ngt-cairan-keluar-c-24"
               label="ngt-cairan-keluar-c-24"
@@ -4677,6 +5348,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="muntah-24"
               id="muntah-24"
               label="muntah-24"
@@ -4688,6 +5361,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="bab-24"
               id="bab-24"
               label="bab-24"
@@ -4699,6 +5374,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="drain-24"
               id="drain-24"
               label="drain-24"
@@ -4714,6 +5391,8 @@
               name="tgl-25"
               id="tgl-25"
               label="tgl-25"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -4813,6 +5492,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c oral"
+              data-percol="5"
+              data-hitung5="5"
               name="oral-25"
               id="oral-25"
               label="oral-25"
@@ -4824,6 +5505,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c"
+              data-percol="5"
+              data-hitung5="5"
               name="ngt-cairan-masuk-c-25"
               id="ngt-cairan-masuk-c-25"
               label="ngt-cairan-masuk-c-25"
@@ -4835,6 +5518,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c infus"
+              data-percol="5"
+              data-hitung5="5"
               name="infus-25"
               id="infus-25"
               label="infus-25"
@@ -4846,6 +5531,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c"
+              data-percol="5"
+              data-hitung5="5"
               name="tranf-25"
               id="tranf-25"
               label="tranf-25"
@@ -4857,6 +5544,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c urine"
+              data-percol="6"
+              data-hitung6="6"
               name="urine-25"
               id="urine-25"
               label="urine-25"
@@ -4868,6 +5557,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="ngt-cairan-keluar-c-25"
               id="ngt-cairan-keluar-c-25"
               label="ngt-cairan-keluar-c-25"
@@ -4879,6 +5570,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="muntah-25"
               id="muntah-25"
               label="muntah-25"
@@ -4890,6 +5583,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="bab-25"
               id="bab-25"
               label="bab-25"
@@ -4901,6 +5596,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="drain-25"
               id="drain-25"
               label="drain-25"
@@ -4916,6 +5613,8 @@
               name="tgl-26"
               id="tgl-26"
               label="tgl-26"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -5015,6 +5714,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c oral"
+              data-percol="5"
+              data-hitung5="5"
               name="oral-26"
               id="oral-26"
               label="oral-26"
@@ -5026,6 +5727,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c"
+              data-percol="5"
+              data-hitung5="5"
               name="ngt-cairan-masuk-c-26"
               id="ngt-cairan-masuk-c-26"
               label="ngt-cairan-masuk-c-26"
@@ -5037,6 +5740,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c infus"
+              data-percol="5"
+              data-hitung5="5"
               name="infus-26"
               id="infus-26"
               label="infus-26"
@@ -5048,6 +5753,8 @@
               style="width: 100%"
               type="text"
               class="cairan-masuk-c"
+              data-percol="5"
+              data-hitung5="5"
               name="tranf-26"
               id="tranf-26"
               label="tranf-26"
@@ -5059,6 +5766,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c urine"
+              data-percol="6"
+              data-hitung6="6"
               name="urine-26"
               id="urine-26"
               label="urine-26"
@@ -5070,6 +5779,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="ngt-cairan-keluar-c-26"
               id="ngt-cairan-keluar-c-26"
               label="ngt-cairan-keluar-c-26"
@@ -5081,6 +5792,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="muntah-26"
               id="muntah-26"
               label="muntah-26"
@@ -5092,6 +5805,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="bab-26"
               id="bab-26"
               label="bab-26"
@@ -5103,6 +5818,8 @@
               style="width: 100%"
               type="text"
               class="cairan-keluar-c"
+              data-percol="6"
+              data-hitung6="6"
               name="drain-26"
               id="drain-26"
               label="drain-26"
@@ -5118,6 +5835,8 @@
               name="tgl-27"
               id="tgl-27"
               label="tgl-27"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
               myid="check_cara"
             />
           </td>
@@ -5129,9 +5848,9 @@
               placeholder="input ini otomatis dari semua nilai cairan masuk"
               style="width: 100%"
               type="text"
-              name="total-cairan-masuk-c"
-              id="total-cairan-masuk-c"
-              label="total-cairan-masuk-c"
+              name="totalskor5"
+              id="totalskor5"
+              label="totalskor5"
               myid="check_cara"
             />
           </td>
@@ -5143,9 +5862,9 @@
               placeholder="input ini otomatis dari semua nilai cairan keluar"
               style="width: 100%"
               type="text"
-              name="total-cairan-keluar-c"
-              id="total-cairan-keluar-c"
-              label="total-cairan-keluar-c"
+              name="totalskor6"
+              id="totalskor6"
+              label="totalskor6"
               myid="check_cara"
             />
           </td>
@@ -5163,9 +5882,9 @@
               style="width: 100%"
               class="total-input"
               type="text"
-              name="total-input-infus"
-              id="total-input-infus"
-              label="total-input-infus"
+              name="totalskor-infus"
+              id="totalskor-infus"
+              label="totalskor-infus"
               myid="check_cara"
             />
           </td>
@@ -5177,9 +5896,9 @@
               style="width: 100%"
               class="total-output"
               type="text"
-              name="total-output-urine"
-              id="total-output-urine"
-              label="total-output-urine"
+              name="totalskor-urine"
+              id="totalskor-urine"
+              label="totalskor-urine"
               myid="check_cara"
             />
           </td>
@@ -5193,9 +5912,9 @@
               style="width: 100%"
               class="total-input"
               type="text"
-              name="total-input-oral"
-              id="total-input-oral"
-              label="total-input-oral"
+              name="totalskor-oral"
+              id="totalskor-oral"
+              label="totalskor-oral"
               myid="check_cara"
             />
           </td>
@@ -5231,9 +5950,9 @@
               style="width: 100%"
               class="total-output"
               type="text"
-              name="total-output-iwl"
-              id="total-output-iwl"
-              label="total-output-iwl"
+              name="totalskor-iwl"
+              id="totalskor-iwl"
+              label="totalskor-iwl"
               myid="check_cara"
             />
           </td>
@@ -5246,9 +5965,9 @@
               placeholder="input ini otomatis terisi dari nilai infus, oral, dan lain - lain"
               style="width: 100%"
               type="text"
-              name="total-input"
-              id="total-input"
-              label="total-input"
+              name="totalskor-input"
+              id="totalskor-input"
+              label="totalskor-input"
               myid="check_cara"
             />
           </td>
@@ -5259,9 +5978,9 @@
               placeholder="input ini otomatis terisi dari nilai urine, lain - lain, dan iwl"
               style="width: 100%"
               type="text"
-              name="total-output"
-              id="total-output"
-              label="total-output"
+              name="totalskor-output"
+              id="totalskor-output"
+              label="totalskor-output"
               myid="check_cara"
             />
           </td>
@@ -5288,169 +6007,6 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const cairanMasukA = document.querySelectorAll(".cairan-masuk-a");
-        const cairanMasukB = document.querySelectorAll(".cairan-masuk-b");
-        const cairanMasukC = document.querySelectorAll(".cairan-masuk-c");
-        const cairanKeluarA = document.querySelectorAll(".cairan-keluar-a");
-        const cairanKeluarB = document.querySelectorAll(".cairan-keluar-b");
-        const cairanKeluarC = document.querySelectorAll(".cairan-keluar-c");
-        const totalCairanMasukA = document.querySelector(
-          "input[name='total-cairan-masuk-a']"
-        );
-        const totalCairanMasukB = document.querySelector(
-          "input[name='total-cairan-masuk-b']"
-        );
-        const totalCairanMasukC = document.querySelector(
-          "input[name='total-cairan-masuk-c']"
-        );
-        const totalCairanKeluarA = document.querySelector(
-          "input[name='total-cairan-keluar-a']"
-        );
-        const totalCairanKeluarB = document.querySelector(
-          "input[name='total-cairan-keluar-b']"
-        );
-        const totalCairanKeluarC = document.querySelector(
-          "input[name='total-cairan-keluar-c']"
-        );
-
-        const totalInputLainLain = document.querySelector(
-          "input[name='total-input-lain-lain']"
-        );
-
-        const totalOutputLainLain = document.querySelector(
-          "input[name='total-output-lain-lain']"
-        );
-        const totalOutputIWL = document.querySelector(
-          "input[name='total-output-iwl']"
-        );
-
-        const inputInfus = [
-          ...cairanMasukA,
-          ...cairanMasukB,
-          ...cairanMasukC,
-        ].filter((element) => element.classList.contains("infus"));
-        const inputOral = [
-          ...cairanMasukA,
-          ...cairanMasukB,
-          ...cairanMasukC,
-        ].filter((element) => element.classList.contains("oral"));
-        const outputUrine = [
-          ...cairanKeluarA,
-          ...cairanKeluarB,
-          ...cairanKeluarC,
-        ].filter((element) => element.classList.contains("urine"));
-
-        const totalInput = document.querySelectorAll(".total-input");
-        const totalOutput = document.querySelectorAll(".total-output");
-
-        const totalInputInfus = document.querySelector(
-          "input[name='total-input-infus']"
-        );
-        const totalInputOral = document.querySelector(
-          "input[name='total-input-oral']"
-        );
-        const totalOutputUrine = document.querySelector(
-          "input[name='total-output-urine']"
-        );
-        const totalInputResult = document.querySelector(
-          "input[name='total-input']"
-        );
-        const totalOutputResult = document.querySelector(
-          "input[name='total-output']"
-        );
-
-        const balance = document.querySelector('input[name="balance"]');
-
-        function hitungTotalCairan(cairan, totalCairan) {
-          return function () {
-            let total = 0;
-            cairan.forEach((input) => {
-              const nilaiCairan = parseFloat(input.value) || 0;
-              total += nilaiCairan;
-            });
-            totalCairan.value = total;
-
-            hitungTotalInputOutput();
-            hitungBalance();
-          };
-        }
-
-        function hitungTotalInputOutput() {
-          totalInputResult.value =
-            (parseFloat(totalInputInfus.value) || 0) +
-            (parseFloat(totalInputOral.value) || 0) +
-            (parseFloat(totalInputLainLain.value) || 0);
-
-          totalOutputResult.value =
-            (parseFloat(totalOutputUrine.value) || 0) +
-            (parseFloat(totalOutputLainLain.value) || 0) +
-            (parseFloat(totalOutputIWL.value) || 0);
-        }
-
-        function hitungBalance() {
-          balance.value =
-            (parseFloat(totalInputResult.value) || 0) -
-            (parseFloat(totalOutputResult.value) || 0);
-        }
-
-        cairanMasukA.forEach((input) => {
-          input.addEventListener(
-            "input",
-            hitungTotalCairan(cairanMasukA, totalCairanMasukA)
-          );
-        });
-        cairanMasukB.forEach((input) => {
-          input.addEventListener(
-            "input",
-            hitungTotalCairan(cairanMasukB, totalCairanMasukB)
-          );
-        });
-        cairanMasukC.forEach((input) => {
-          input.addEventListener(
-            "input",
-            hitungTotalCairan(cairanMasukC, totalCairanMasukC)
-          );
-        });
-        cairanKeluarA.forEach((input) => {
-          input.addEventListener(
-            "input",
-            hitungTotalCairan(cairanKeluarA, totalCairanKeluarA)
-          );
-        });
-        cairanKeluarB.forEach((input) => {
-          input.addEventListener(
-            "input",
-            hitungTotalCairan(cairanKeluarB, totalCairanKeluarB)
-          );
-        });
-        cairanKeluarC.forEach((input) => {
-          input.addEventListener(
-            "input",
-            hitungTotalCairan(cairanKeluarC, totalCairanKeluarC)
-          );
-        });
-        inputInfus.forEach((input) => {
-          input.addEventListener(
-            "input",
-            hitungTotalCairan(inputInfus, totalInputInfus)
-          );
-        });
-        inputOral.forEach((input) => {
-          input.addEventListener(
-            "input",
-            hitungTotalCairan(inputOral, totalInputOral)
-          );
-        });
-        outputUrine.forEach((input) => {
-          input.addEventListener(
-            "input",
-            hitungTotalCairan(outputUrine, totalOutputUrine)
-          );
-        });
-
-        totalInputLainLain.addEventListener("input", hitungTotalInputOutput);
-        totalOutputLainLain.addEventListener("input", hitungTotalInputOutput);
-        totalOutputIWL.addEventListener("input", hitungTotalInputOutput);
         var radioButtons = document.querySelectorAll('input[type="radio"]');
         radioButtons.forEach(function (radio) {
           radio.addEventListener("click", function () {
