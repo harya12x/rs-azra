@@ -31,6 +31,132 @@
       padding: 5px;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <table width="100%" class="table">
       <tbody>
@@ -44,7 +170,7 @@
 
     <br />
 
-    <table width="100%">
+    <table class="table" width="100%">
       <tbody>
         <tr>
           <td>Nama Pasien :</td>
@@ -56,30 +182,12 @@
               id="nama-pasien"
               label="nama-pasien"
               myid="check_cara"
+              value="{VNAMA_PASIEN}"
               placeholder="......"
             />
           </td>
           <td>Jenis Kelamin :</td>
-          <td>
-            <label for="">L</label>
-            <input
-              type="radio"
-              name="jk-pasien"
-              id="jk-pasien"
-              label="jk-pasien"
-              myid="check_cara"
-              value="L"
-            />
-            <label for="">/ P</label>
-            <input
-              type="radio"
-              name="jk-pasien"
-              id="jk-pasien"
-              label="jk-pasien"
-              myid="check_cara"
-              value="P"
-            />
-          </td>
+          <td>{VSEX}</td>
           <td>No. Rekam Medis :</td>
           <td>
             <input
@@ -89,6 +197,7 @@
               id="no-rek-medis"
               label="no-rek-medis"
               myid="check_cara"
+              value="{NO_RM}"
               placeholder="......"
             />
           </td>
@@ -103,7 +212,9 @@
               id="tgl-lahir"
               label="tgl-lahir"
               myid="check_cara"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              value="{VBIRTH_DATE}"
+              class="datepicker hasDatePicker"
             />
           </td>
           <td>Tanggal Masuk :</td>
@@ -115,7 +226,8 @@
               id="tgl-masuk"
               label="tgl-masuk"
               myid="check_cara"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
             />
           </td>
         </tr>
@@ -155,7 +267,8 @@
               id="waktu-transfer"
               label="waktu-transfer"
               myid="check_cara"
-              placeholder="......"
+              mtype="pukul"
+              placeholder="00.00"
             />
           </td>
           <td>Waktu tiba :</td>
@@ -167,7 +280,8 @@
               id="waktu-tiba"
               label="waktu-tiba"
               myid="check_cara"
-              placeholder="......"
+              mtype="pukul"
+              placeholder="00.00"
             />
           </td>
         </tr>
@@ -176,10 +290,10 @@
 
     <p><b>I. RINGKASAN RIWAYAT PASIEN</b></p>
 
-    <table width="100%">
+    <table class="table" width="100%">
       <tbody>
         <tr>
-          <td style="padding-left: 10px">Anamnesis</td>
+          <td colspan="2" style="padding-left: 10px">Anamnesis</td>
         </tr>
         <tr>
           <td style="padding-left: 10px">
@@ -205,19 +319,22 @@
           </td>
         </tr>
         <tr>
-          <td style="padding-left: 10px; display: flex; gap: 5px">
-            <input
-              type="checkbox"
-              name="anamnesis-riwayat-penyakit"
-              id="anamnesis-riwayat-penyakit"
-              label="anamnesis-riwayat-penyakit"
-              value="Riwayat Penyakit"
-              myid="check_cara"
-            />
-            <label for="">Riwayat Penyakit :</label>
+          <td>
+            <div style="padding-left: 5px; gap: 5px">
+              <input
+                type="checkbox"
+                name="anamnesis-riwayat-penyakit"
+                id="anamnesis-riwayat-penyakit"
+                label="anamnesis-riwayat-penyakit"
+                value="Riwayat Penyakit"
+                myid="check_cara"
+              />
+              <label for="">Riwayat Penyakit :</label>
+            </div>
           </td>
           <td width="85%">
             <textarea
+              type="textarea"
               rows="4"
               style="width: 100%"
               type="text"
@@ -295,6 +412,7 @@
               id="tensi"
               label="tensi"
               myid="check_cara"
+              value="{VTD}"
             />
             <label for="">mmHg</label>
 
@@ -306,6 +424,7 @@
               name="suhu"
               id="suhu"
               label="suhu"
+              value="{VSUHU}"
               myid="check_cara"
             />
             <label for="">&deg;c</label>
@@ -318,6 +437,7 @@
               name="nadi"
               id="nadi"
               label="nadi"
+              value="{VNADI}"
               myid="check_cara"
             />
             <label for="">x/mnt</label>
@@ -335,22 +455,24 @@
           </td>
         </tr>
         <tr>
-          <td style="padding-left: 10px; display: flex; gap: 5px">
-            <input
-              type="checkbox"
-              name="anamnesis-pemeriksaan-fisik"
-              id="anamnesis-pemeriksaan-fisik"
-              label="anamnesis-pemeriksaan-fisik"
-              value="Pemeriksaan Fisik"
-              myid="check_cara"
-            />
-            <label for="">Pemeriksaan Fisik :</label>
+          <td>
+            <div style="padding-left: 5px; gap: 5px">
+              <input
+                type="checkbox"
+                name="anamnesis-pemeriksaan-fisik"
+                id="anamnesis-pemeriksaan-fisik"
+                label="anamnesis-pemeriksaan-fisik"
+                value="Pemeriksaan Fisik"
+                myid="check_cara"
+              />
+              <label for="">Pemeriksaan Fisik :</label>
+            </div>
           </td>
           <td width="85%">
             <textarea
               rows="4"
               style="width: 100%"
-              type="text"
+              type="textarea"
               name="detail-pemeriksaan-fisik"
               id="detail-pemeriksaan-fisik"
               label="detail-pemeriksaan-fisik"
@@ -416,7 +538,7 @@
             <textarea
               rows="4"
               style="width: 100%"
-              type="text"
+              type="textarea"
               name="pemeriksaan-penunjang-yg-sdh-dilakukan"
               id="pemeriksaan-penunjang-yg-sdh-dilakukan"
               label="pemeriksaan-penunjang-yg-sdh-dilakukan"
@@ -436,7 +558,7 @@
             <textarea
               rows="4"
               style="width: 100%"
-              type="text"
+              type="textarea"
               name="diagnosis-kerja"
               id="diagnosis-kerja"
               label="diagnosis-kerja"
@@ -456,7 +578,7 @@
             <textarea
               rows="4"
               style="width: 100%"
-              type="text"
+              type="textarea"
               name="tindakan-medis-yg-sdh-dilakukan"
               id="tindakan-medis-yg-sdh-dilakukan"
               label="tindakan-medis-yg-sdh-dilakukan"
@@ -476,7 +598,7 @@
             <textarea
               rows="7"
               style="width: 100%"
-              type="text"
+              type="textarea"
               name="tindakan-medis-yg-sdh-dilakukan"
               id="tindakan-medis-yg-sdh-dilakukan"
               label="tindakan-medis-yg-sdh-dilakukan"
@@ -496,7 +618,7 @@
             <textarea
               rows="5"
               style="width: 100%"
-              type="text"
+              type="textarea"
               name="lain-lain"
               id="lain-lain"
               label="lain-lain"
@@ -507,15 +629,70 @@
       </tbody>
     </table>
 
-    <br />
-    <table width="100%">
+    <table class="table" width="100%">
       <tbody>
         <tr>
-          <td style="display: flex; justify-content: end">
+          <td>Tanggal / Pukul</td>
+          <td>
+            <input
+              type="text"
+              name="tgl-rujukan"
+              id="tgl-rujukan"
+              label="tgl-rujukan"
+              myid="check_cara"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
+            />
+            <br />
+            <input
+              type="text"
+              name="pukul-rujukan"
+              id="pukul-rujukan"
+              label="pukul-rujukan"
+              myid="check_cara"
+              placeholder="00.00"
+              mtype="pukul"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td><p>Dokter Pengirim</p></td>
+          <td>
             <div>
-              <p style="text-align: center">Dokter Pengirim</p>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_yg_mengetahui"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_mengetahui"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_mengetahui"
+                id="paraf_ex_ttd_mengetahui"
+                data-name="paraf"
+                data-id="ex_ttd_mengetahui"
+              />
               <br />
-              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_mengetahui"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+              <font id="ttdnya2"></font>
               <br />
               (<input
                 size="30"
