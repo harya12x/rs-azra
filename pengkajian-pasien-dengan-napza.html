@@ -1,0 +1,1172 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PENGKAJIAN PASIEN DENGAN NAPZA</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
+  <body>
+    <h1 class="title">
+      PENGKAJIAN PASIEN DENGAN NAPZA <br />
+      RS. AZRA BOGOR
+    </h1>
+
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td>Nama Pasien</td>
+          <td>
+            <input
+              name="nama_pasien2"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              value="{VNAMA_PASIEN}"
+              placeholder="..."
+            />
+          </td>
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              name="no_rm"
+              id="no_rm"
+              label="no_rm"
+              myid="check_cara"
+              value="NO_RM"
+              label="nomor rekam medis"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td>Tanggal Lahir</td>
+          <td>
+            <input
+              name="tgl_lahira2"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
+              value="{VBIRTH_DATE}"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td>Umur</td>
+          <td>
+            <input
+              type="text"
+              size="5"
+              name="umur"
+              id="umur"
+              label="umur"
+              value="{VAGE}"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <label for="kelas"> Kelas </label>
+          </td>
+          <td>
+            <input
+              name="kelas2"
+              type="text"
+              id="kelas"
+              placeholder="..."
+              value="{VNAMAKELAS}"
+              myid="check_cara"
+              label="kelas"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>TANGGAL/JAM PENGKAJIAN:</td>
+          <td colspan="3">
+            <input
+              type="text"
+              name="tanggal-pengkajian"
+              id="tanggal-pengkajian"
+              label="tanggal-pengkajian"
+              myid="check_cara"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
+            />
+            /
+            <input
+              type="text"
+              name="jam-pengkajian"
+              id="jam-pengkajian"
+              label="jam-pengkajian"
+              myid="check_cara"
+              mtype="pukul"
+              placeholder="00.00"
+            />
+          </td>
+          <td>Kamar</td>
+          <td>
+            <input
+              type="text"
+              name="kamar"
+              id="kamar"
+              myid="check_cara"
+              placeholder="..."
+              aria-label="kamar"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table table-bordered" width="100%">
+      <tr>
+        <td>1.</td>
+        <td>
+          <label for="">Informasi diperoleh dari:</label>
+          <input
+            type="text"
+            name="sumber-perolehan-informasi"
+            id="sumber-perolehan-informasi"
+            label="sumber-perolehan-informasi"
+            placeholder="......"
+            myid="check_cara"
+          />
+          <label for="">Hubungan dengan pasien:</label>
+          <input
+            type="text"
+            name="hubungan-dgn-pasien"
+            id="hubungan-dgn-pasien"
+            label="hubungan-dgn-pasien"
+            placeholder="......"
+            myid="check_cara"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>2.</td>
+        <td>
+          <div style="display: flex; gap: 5px">
+            <label for=""
+              >Riwayat kesehatan sekarang (alasan masuk rumah sakit):</label
+            >
+            <input
+              style="flex: 1"
+              type="text"
+              name="sumber-perolehan-informasi"
+              id="sumber-perolehan-informasi"
+              label="sumber-perolehan-informasi"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>3.</td>
+        <td>
+          <div style="display: flex; gap: 5px">
+            <label for="">Hubungan dengan orang terdekat:</label>
+            <div>
+              <input
+                type="radio"
+                name="hubungan-dgn-org-terdekat"
+                id="hubungan-dgn-org-terdekat"
+                label="hubungan-dgn-org-terdekat"
+                value="Tidak masalah"
+                myid="check_cara"
+              />
+              <label for="">Tidak Masalah</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="hubungan-dgn-org-terdekat"
+                id="hubungan-dgn-org-terdekat"
+                label="hubungan-dgn-org-terdekat"
+                value="Bermasalah"
+                myid="check_cara"
+              />
+              <label for="">Bermasalah</label>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>4.</td>
+        <td>
+          <div style="display: flex; gap: 5px">
+            <label for="">Adakah pengalaman tidak menyenangkan:</label>
+            <div>
+              <input
+                type="radio"
+                name="adakah-pengalaman-tdk-menyenangkan"
+                id="adakah-pengalaman-tdk-menyenangkan"
+                label="adakah-pengalaman-tdk-menyenangkan"
+                value="Tidak"
+                myid="check_cara"
+              />
+              <label for="">Tidak</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="adakah-pengalaman-tdk-menyenangkan"
+                id="adakah-pengalaman-tdk-menyenangkan"
+                label="adakah-pengalaman-tdk-menyenangkan"
+                value="Ya"
+                myid="check_cara"
+              />
+              <label for="">Ya</label>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: center" colspan="2">
+          <b>Jika ada masalah NAPZA lanjutkan ke pertanyaan berikutnya</b>
+        </td>
+      </tr>
+      <tr>
+        <td>5.</td>
+        <td>
+          <div style="display: flex; gap: 5px">
+            <label for="">Jika ya, pengalaman yang dirasakan</label>
+            <div>
+              <input
+                type="checkbox"
+                name="sering-disakiti"
+                id="sering-disakiti"
+                label="sering-disakiti"
+                value="Sering disakiti"
+                myid="check_cara"
+              />
+              <label for="">Sering disakiti</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="sering-mengalami-kegagalan"
+                id="sering-mengalami-kegagalan"
+                label="sering-mengalami-kegagalan"
+                value="Sering mengalami kegagalan"
+                myid="check_cara"
+              />
+              <label for="">Sering mengalami kegagalan</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="tdk-diterima-lingkungannya"
+                id="tdk-diterima-lingkungannya"
+                label="tdk-diterima-lingkungannya"
+                value="Tidak diterima lingkungannya"
+                myid="check_cara"
+              />
+              <label for="">Tidak diterima lingkungannya</label>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="3">6.</td>
+        <td>
+          <label for="">Penyebab penyalahgunaan NAPZA</label>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div style="display: flex; gap: 5px">
+            <div>
+              <input
+                type="checkbox"
+                name="keluarga-punya-riwayat-ketergantungan-narkotika"
+                id="keluarga-punya-riwayat-ketergantungan-narkotika"
+                label="keluarga-punya-riwayat-ketergantungan-narkotika"
+                myid="check_cara"
+                value="true"
+              />
+              <label for=""
+                >Keluarga punya riwayat ketergantungan narkotika</label
+              >
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="keluarga-dgn-manajemen-yg-kacau"
+                id="keluarga-dgn-manajemen-yg-kacau"
+                label="keluarga-dgn-manajemen-yg-kacau"
+                myid="check_cara"
+                value="true"
+              />
+              <label for="">Keluarga dengan manajemen yang kacau</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="keluarga-dgn-konflik-yg-tinggi"
+                id="keluarga-dgn-konflik-yg-tinggi"
+                label="keluarga-dgn-konflik-yg-tinggi"
+                myid="check_cara"
+                value="true"
+              />
+              <label for="">Kelurga dengan konflik yang tinggi</label>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div style="display: flex; gap: 5px">
+            <div>
+              <input
+                type="checkbox"
+                name="keluarga-dgn-orangtua-otoriter"
+                id="keluarga-dgn-orangtua-otoriter"
+                label="keluarga-dgn-orangtua-otoriter"
+                myid="check_cara"
+                value="true"
+              />
+              <label for="">Kelurga dengan orangtua otoriter</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="keluarga-yg-perfeksionis"
+                id="keluarga-yg-perfeksionis"
+                label="keluarga-yg-perfeksionis"
+                myid="check_cara"
+                value="true"
+              />
+              <label for="">Kelurga yang perfeksionis</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="keluarga-yg-neurosis"
+                id="keluarga-yg-neurosis"
+                label="keluarga-yg-neurosis"
+                myid="check_cara"
+                value="true"
+              />
+              <label for="">Kelurga yang neurosis</label>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="2">7.</td>
+        <td>
+          <label for=""
+            >Sejak kapan pengalaman yang tidak menyenangkan dirasakan</label
+          >
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div style="display: flex; gap: 5px; align-items: center">
+            <div>
+              <input
+                type="radio"
+                name="sejak-pengalaman-tdk-menyenangkan-dirasakan"
+                id="sejak-pengalaman-tdk-menyenangkan-dirasakan"
+                label="sejak-pengalaman-tdk-menyenangkan-dirasakan"
+                myid="check_cara"
+                value="SD/SMP/SMA/S1"
+              />
+              <label for="">SD/SMP/SMA/S1 <sup>&ast;</sup></label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="sejak-pengalaman-tdk-menyenangkan-dirasakan"
+                id="sejak-pengalaman-tdk-menyenangkan-dirasakan"
+                label="sejak-pengalaman-tdk-menyenangkan-dirasakan"
+                myid="check_cara"
+                value="Setelah bekerja"
+              />
+              <label for="">Setelah bekerja</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="sejak-pengalaman-tdk-menyenangkan-dirasakan"
+                id="sejak-pengalaman-tdk-menyenangkan-dirasakan"
+                label="sejak-pengalaman-tdk-menyenangkan-dirasakan"
+                myid="check_cara"
+                value="Setelah berkeluarga"
+              />
+              <label for="">Setelah berkeluarga</label>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>8.</td>
+        <td>
+          <div style="display: flex; gap: 5px">
+            <label for="">Perasaan apa yang timbul saat ini :</label>
+            <div>
+              <input
+                type="checkbox"
+                name="perasaan-tdk-masalah"
+                id="perasaan-tdk-masalah"
+                label="perasaan-tdk-masalah"
+                myid="check_cara"
+                value="true"
+              />
+              <label for="">Tidak masalah</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="perasaan-kecewa"
+                id="perasaan-kecewa"
+                label="perasaan-kecewa"
+                myid="check_cara"
+                value="true"
+              />
+              <label for="">Kecewa</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="perasaan-stres-berat"
+                id="perasaan-stres-berat"
+                label="perasaan-stres-berat"
+                myid="check_cara"
+                value="true"
+              />
+              <label for="">Stres berat</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="perasaan-menarik-diri"
+                id="perasaan-menarik-diri"
+                label="perasaan-menarik-diri"
+                myid="check_cara"
+                value="true"
+              />
+              <label for="">Menarik diri</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="perasaan-marah"
+                id="perasaan-marah"
+                label="perasaan-marah"
+                myid="check_cara"
+                value="true"
+              />
+              <label for="">Marah</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="perasaan-depresi"
+                id="perasaan-depresi"
+                label="perasaan-depresi"
+                myid="check_cara"
+                value="true"
+              />
+              <label for="">Depresi</label>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>9.</td>
+        <td>
+          <div style="display: flex; gap: 5px">
+            <label for="">Tindakan pencegahan yang dilakukan : </label>
+            <div>
+              <input
+                type="radio"
+                name="tindakan-pencegahan"
+                id="tindakan-pencegahan"
+                label="tindakan-pencegahan"
+                myid="check_cara"
+                value="Tidak dilakukan"
+              />
+              <label for="">Tidak dilakukan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tindakan-pencegahan"
+                id="tindakan-pencegahan"
+                label="tindakan-pencegahan"
+                myid="check_cara"
+                value="Dunia malam"
+              />
+              <label for="">Dunia malam</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tindakan-pencegahan"
+                id="tindakan-pencegahan"
+                label="tindakan-pencegahan"
+                myid="check_cara"
+                value="Penggunaan NAPZA"
+              />
+              <label for="">Penggunaan NAPZA</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tindakan-pencegahan"
+                id="tindakan-pencegahan"
+                label="tindakan-pencegahan"
+                myid="check_cara"
+                value="Mendekatkan diri pada tuhan"
+              />
+              <label for="">Mendekatkan diri pada tuhan</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="tindakan-pencegahan"
+                id="tindakan-pencegahan"
+                label="tindakan-pencegahan"
+                myid="check_cara"
+                value="Konsultasi dokter ahli"
+              />
+              <label for="">Konsultasi dokter ahli</label>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>10.</td>
+        <td>
+          <div style="display: flex; gap: 5px">
+            <label for="">Riwayat pemakaian NAPZA :</label>
+            <div>
+              <input
+                type="radio"
+                name="riwayat-pemakaian-napza"
+                id="riwayat-pemakaian-napza"
+                label="riwayat-pemakaian-napza"
+                myid="check_cara"
+                value="Tidak"
+              />
+              <label for="">Tidak</label>
+            </div>
+            /
+            <div>
+              <input
+                type="radio"
+                name="riwayat-pemakaian-napza"
+                id="riwayat-pemakaian-napza"
+                label="riwayat-pemakaian-napza"
+                myid="check_cara"
+                value="Ya"
+              />
+              <label for="">Ya</label>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="4">11.</td>
+        <td><label for="">Jenis zat yang digunakan :</label></td>
+      </tr>
+      <tr>
+        <td>
+          <input
+            type="checkbox"
+            name="jenis-zat-narkotika"
+            id="jenis-zat-narkotika"
+            label="jenis-zat-narkotika"
+            myid="check_cara"
+            value="true"
+          />
+          <label for="">Narkotika, sebutkan</label>
+          <input
+            type="text"
+            name="jenis-narkotika"
+            id="jenis-narkotika"
+            label="jenis-narkotika"
+            myid="check_cara"
+            placeholder="......"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input
+            type="checkbox"
+            name="jenis-zat-psikotoprika"
+            id="jenis-zat-psikotoprika"
+            label="jenis-zat-psikotoprika"
+            myid="check_cara"
+            value="true"
+          />
+          <label for="">Psikotoprika, sebutkan</label>
+          <input
+            type="text"
+            name="jenis-psikotoprika"
+            id="jenis-psikotoprika"
+            label="jenis-psikotoprika"
+            myid="check_cara"
+            placeholder="......"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input
+            type="checkbox"
+            name="jenis-zat-adiktif-lainnya"
+            id="jenis-zat-adiktif-lainnya"
+            label="jenis-zat-adiktif-lainnya"
+            myid="check_cara"
+            value="true"
+          />
+          <label for="">Zat adiktif lainnya, sebutkan</label>
+          <input
+            type="text"
+            name="jenis-zat-adiktif"
+            id="jenis-zat-adiktif"
+            label="jenis-zat-adiktif"
+            myid="check_cara"
+            placeholder="......"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>12.</td>
+        <td>
+          <div style="display: flex; gap: 10px">
+            <label for="">Cara penggunaan obat :</label>
+
+            <div>
+              <input
+                type="radio"
+                name="cara-penggunaan-obat"
+                id="cara-penggunaan-obat"
+                label="cara-penggunaan-obat"
+                myid="check_cara"
+                value="Dihisap/dihirup"
+              />
+              <label for="">Dihisap/dihirup</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="cara-penggunaan-obat"
+                id="cara-penggunaan-obat"
+                label="cara-penggunaan-obat"
+                myid="check_cara"
+                value="Disuntik"
+              />
+              <label for="">Disuntik</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="cara-penggunaan-obat"
+                id="cara-penggunaan-obat"
+                label="cara-penggunaan-obat"
+                myid="check_cara"
+                value="Diminum"
+              />
+              <label for="">Diminum</label>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>13.</td>
+        <td>
+          <div style="display: flex; gap: 5px; align-items: center">
+            <label for="">Sejak kapan penggunaan NAPZA</label>
+            <div>
+              <input
+                size="3"
+                type="text"
+                name="lama-penggunaan-napza"
+                id="lama-penggunaan-napza"
+                label="lama-penggunaan-napza"
+                myid="check_cara"
+                placeholder="......"
+              />
+              <label for="">minggu/bulan <sup>&ast;</sup></label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="sejak-kapan-penggunaan-napza"
+                id="sejak-kapan-penggunaan-napza"
+                label="sejak-kapan-penggunaan-napza"
+                myid="check_cara"
+                value="SD/SMP/SMA/S1"
+              />
+              <label for="">SD/SMP/SMA/S1 <sup>&ast;</sup></label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="sejak-kapan-penggunaan-napza"
+                id="sejak-kapan-penggunaan-napza"
+                label="sejak-kapan-penggunaan-napza"
+                myid="check_cara"
+                value="Bekerja"
+              />
+              <label for="">Bekerja</label>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="4">14.</td>
+        <td>Reaksi yang timbul konsumsi NAPZA</td>
+      </tr>
+      <tr>
+        <td>
+          <div style="display: flex; gap: 10px">
+            <label for="">a. Kecanduan</label>
+            <div>
+              <input
+                type="radio"
+                name="kecanduan"
+                id="kecanduan"
+                label="kecanduan"
+                myid="check_cara"
+                value="Tidak"
+              />
+              <label for="">Tidak</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="kecanduan"
+                id="kecanduan"
+                label="kecanduan"
+                myid="check_cara"
+                value="Ya"
+              />
+              <label for="">Ya, jelaskan reaksi yang timbul</label>
+            </div>
+            <input
+              style="flex: 1"
+              type="text"
+              name="reaksi-kecanduan-yg-timbul"
+              id="reaksi-kecanduan-yg-timbul"
+              label="reaksi-kecanduan-yg-timbul"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div style="display: flex; gap: 10px">
+            <label for="">b. Intoksikasi (keracunan)</label>
+            <div>
+              <input
+                type="radio"
+                name="intoksikasi"
+                id="intoksikasi"
+                label="intoksikasi"
+                myid="check_cara"
+                value="Tidak"
+              />
+              <label for="">Tidak</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="intoksikasi"
+                id="intoksikasi"
+                label="intoksikasi"
+                myid="check_cara"
+                value="Ya"
+              />
+              <label for="">Ya, jelaskan reaksi yang timbul</label>
+            </div>
+            <input
+              style="flex: 1"
+              type="text"
+              name="reaksi-intoksikasi-yg-timbul"
+              id="reaksi-intoksikasi-yg-timbul"
+              label="reaksi-intoksikasi-yg-timbul"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div style="display: flex; gap: 10px">
+            <label for="">c. Overdosis (OD)</label>
+            <div>
+              <input
+                type="radio"
+                name="overdosis"
+                id="overdosis"
+                label="overdosis"
+                myid="check_cara"
+                value="Tidak"
+              />
+              <label for="">Tidak</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="overdosis"
+                id="overdosis"
+                label="overdosis"
+                myid="check_cara"
+                value="Ya"
+              />
+              <label for="">Ya, jelaskan reaksi yang timbul</label>
+            </div>
+            <input
+              style="flex: 1"
+              type="text"
+              name="reaksi-overdosis-yg-timbul"
+              id="reaksi-overdosis-yg-timbul"
+              label="reaksi-overdosis-yg-timbul"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="3">15.</td>
+        <td>Apakah pernah menjalani rehabilitasi</td>
+      </tr>
+      <tr>
+        <td>
+          <div style="display: flex; gap: 10px">
+            <label for="">a. Rehabilitasi psikososial</label>
+            <div>
+              <input
+                type="radio"
+                name="rehabilitasi-psikososial"
+                id="rehabilitasi-psikososial"
+                label="rehabilitasi-psikososial"
+                myid="check_cara"
+                value="Tidak"
+              />
+              <label for="">Tidak</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="rehabilitasi-psikososial"
+                id="rehabilitasi-psikososial"
+                label="rehabilitasi-psikososial"
+                myid="check_cara"
+                value="Ya"
+              />
+              <label for="">Ya, di mana:</label>
+            </div>
+            <input
+              style="flex: 1"
+              type="text"
+              name="tempat-rehabilitasi-psikososial"
+              id="tempat-rehabilitasi-psikososial"
+              label="tempat-rehabilitasi-psikososial"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <label for="">Berapa lama:</label>
+            <input
+              style="flex: 1"
+              type="text"
+              name="durasi-rehabilitasi-psikososial"
+              id="durasi-rehabilitasi-psikososial"
+              label="durasi-rehabilitasi-psikososial"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div style="display: flex; gap: 10px">
+            <label for="">a. Rehabilitasi kejiwaan</label>
+            <div>
+              <input
+                type="radio"
+                name="rehabilitasi-kejiwaan"
+                id="rehabilitasi-kejiwaan"
+                label="rehabilitasi-kejiwaan"
+                myid="check_cara"
+                value="Tidak"
+              />
+              <label for="">Tidak</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="rehabilitasi-kejiwaan"
+                id="rehabilitasi-kejiwaan"
+                label="rehabilitasi-kejiwaan"
+                myid="check_cara"
+                value="Ya"
+              />
+              <label for="">Ya, di mana:</label>
+            </div>
+            <input
+              style="flex: 1"
+              type="text"
+              name="tempat-rehabilitasi-kejiwaan"
+              id="tempat-rehabilitasi-kejiwaan"
+              label="tempat-rehabilitasi-kejiwaan"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <label for="">Berapa lama:</label>
+            <input
+              style="flex: 1"
+              type="text"
+              name="durasi-rehabilitasi-kejiwaan"
+              id="durasi-rehabilitasi-kejiwaan"
+              label="durasi-rehabilitasi-kejiwaan"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <br />
+
+    <table width="100%" class="table">
+      <tbody>
+        <tr>
+          <td>Nama yang mengkaji :</td>
+          <td>
+            <input
+              type="text"
+              size="50"
+              name="nama-yg-mengkaji"
+              id="nama-yg-mengkaji"
+              label="nama-yg-mengkaji"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Tanda tangan :</td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_yang_mengkaji"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_yang_mengkaji"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_yang_mengkaji"
+              id="paraf_ex_ttd_yang_mengkaji"
+              data-name="paraf"
+              data-id="ex_ttd_yang_mengkaji"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_yang_mengkaji"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <font id="ttdnya2"></font>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
