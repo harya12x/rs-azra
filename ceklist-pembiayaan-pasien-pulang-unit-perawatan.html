@@ -33,6 +33,132 @@
       padding: 5px;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">
       CEK LIST PEMBIAYAAN PASIEN PULANG UNIT PERAWATAN RS. AZRA BOGOR
@@ -50,6 +176,7 @@
               id="nama-pasien"
               label="nama-pasien"
               myid="check_cara"
+              value="{VNAMA_PASIEN}"
               placeholder="......"
             />
           </td>
@@ -64,6 +191,7 @@
               id="umur-pasien"
               label="umur-pasien"
               myid="check_cara"
+              value="{VAGE}"
               placeholder="......"
             />
           </td>
@@ -106,6 +234,7 @@
               id="no-rm"
               label="no-rm"
               myid="check_cara"
+              value="{NO_RM}"
               placeholder="......"
             />
           </td>
@@ -120,6 +249,7 @@
               id="ruang-kelas"
               label="ruang-kelas"
               myid="check_cara"
+              value="{VNAMARUANGAN} / {VNAMAKELAS}"
               placeholder="......"
             />
           </td>
@@ -1008,41 +1138,78 @@
     </table>
 
     <br />
-    <table width="100%">
+    <table width="100%" class="table">
       <tbody>
         <tr>
+          <td>Bogor, tanggal / pukul</td>
           <td>
-            <div style="display: flex; justify-content: end">
-              <div>
-                <label for="">Bogor,</label>
-                <input
-                  style="margin-left: 10px"
-                  type="text"
-                  name="tgl-ceklist-pembiayaan-plng"
-                  id="tgl-ceklist-pembiayaan-plng"
-                  label="tgl-ceklist-pembiayaan-plng"
-                  myid="check_cara"
-                  placeholder="dd/mm/yyyy"
-                />
-                <p style="text-align: center">Penanggung Jawab,</p>
-                <br />
-                <br />
-                <br />
-                <div style="display: flex; gap: 5px">
-                  (
-                  <input
-                    style="flex: 1"
-                    type="text"
-                    name="penanggung-jawab-ceklist-pembiayaan-plng"
-                    id="penanggung-jawab-ceklist-pembiayaan-plng"
-                    label="penanggung-jawab-ceklist-pembiayaan-plng"
-                    myid="check_cara"
-                    placeholder="dd/mm/yyyy"
-                  />
-                  )
-                </div>
-              </div>
-            </div>
+            <input
+              type="text"
+              name="tgl-ceklist-pembiayaan-plng"
+              id="tgl-ceklist-pembiayaan-plng"
+              label="tgl-ceklist-pembiayaan-plng"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+            />
+            <br />
+            <input
+              type="text"
+              name="pukul-ceklist-pembiayaan-plng"
+              id="pukul-ceklist-pembiayaan-plng"
+              label="pukul-ceklist-pembiayaan-plng"
+              myid="check_cara"
+              placeholder="00.00"
+              mtype="pukul"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td><p>Penanggung Jawab</p></td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_penanggung_jawab"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_penanggung_jawab"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_penanggung_jawab"
+              id="paraf_ex_paraf_penanggung_jawab"
+              data-name="paraf"
+              data-id="ex_paraf_penanggung_jawab"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_penanggung_jawab"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
+            (
+            <input
+              type="text"
+              name="penanggung-jawab-ceklist-pembiayaan-plng"
+              id="penanggung-jawab-ceklist-pembiayaan-plng"
+              label="penanggung-jawab-ceklist-pembiayaan-plng"
+              myid="check_cara"
+            />
+            )
           </td>
         </tr>
       </tbody>
