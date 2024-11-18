@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      PENGKAJIAN PRA BEDAH DAN PENANDAAN LOKASI BEDAH RS. AZRA BOGOR
+    </title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
+  <body>
+    <h1 class="title">PENGKAJIAN PRA BEDAH DAN PENANDAAN LOKASI BEDAH</h1>
+    <h1 class="title">RS. AZRA BOGOR</h1>
+
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td>Nama Pasien</td>
+          <td>
+            <input
+              name="nama_pasien2"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              value="{VNAMA_PASIEN}"
+              placeholder="..."
+            />
+          </td>
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              name="no-rek-medis"
+              id="no-rek-medis"
+              label="no-rek-medis"
+              myid="check_cara"
+              value="{NO_RM}"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan="2">Tanggal Lahir</td>
+          <td rowspan="2">
+            <input
+              name="tgl_lahira2"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd-mm-yy"
+              class="datepicker hasDatePicker"
+              myid="check_cara"
+              value="{VBIRTH_DATE}"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td rowspan="2">Umur</td>
+          <td rowspan="2">
+            <input
+              type="text"
+              size="5"
+              placeholder="..."
+              name="umur"
+              myid="check_cara"
+              id="umur"
+              label="umur"
+              value="{VAGE}"
+            />
+          </td>
+          <td>
+            <label for="poli"> Poli </label>
+          </td>
+          <td>
+            <input
+              name="polia2"
+              type="text"
+              id="poli"
+              placeholder="..."
+              myid="check_cara"
+              label="poli"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="kamar"> Kamar </label>
+          </td>
+          <td>
+            <input
+              name="kamara2"
+              type="text"
+              id="kamar"
+              placeholder="..."
+              myid="check_cara"
+              label="kamar"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td colspan="3">
+            <div style="display: flex; gap: 5px">
+              <label for=""><b>DOKTER OPERATOR :</b></label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="dokter-operator"
+                id="dokter-operator"
+                label="dokter-operator"
+                myid="check_cara"
+                placeholder="......"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><b>Pengkajian Pra Operasi</b></td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <label for=""><b>Jam :</b></label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="jam-pengkajian"
+                id="jam-pengkajian"
+                label="jam-pengkajian"
+                myid="check_cara"
+                mtype="pukul"
+                placeholder="00.00"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <label for=""><b>Tanggal :</b></label>
+              <input
+                style="flex: 1"
+                type="text"
+                name="tgl-pengkajian"
+                id="tgl-pengkajian"
+                label="tgl-pengkajian"
+                myid="check_cara"
+                placeholder="dd-mm-yy"
+                class="datepicker hasDatePicker"
+              />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td width="50%">
+            <p>DATA SUBJEKTIF (Anamnesis)</p>
+            <textarea
+              style="width: 100%"
+              rows="6"
+              type="textarea"
+              name="anamnesis"
+              id="anamnesis"
+              label="anamnesis"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+          <td>
+            <p>DATA OBJEKTIF (Pemeriksaan Fisik/Lab/Ro)</p>
+            <textarea
+              style="width: 100%"
+              rows="6"
+              type="textarea"
+              name="pemeriksaan-fisik-lab-ro"
+              id="pemeriksaan-fisik-lab-ro"
+              label="pemeriksaan-fisik-lab-ro"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td width="50%">
+            <p>DIAGNOSA PRA OPERASI</p>
+            <textarea
+              style="width: 100%"
+              rows="6"
+              type="textarea"
+              name="diagnosa-pra-operasi"
+              id="diagnosa-pra-operasi"
+              label="diagnosa-pra-operasi"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+          <td>
+            <p>RENCANA OPERASI</p>
+            <textarea
+              style="width: 100%"
+              rows="6"
+              type="textarea"
+              name="rencana-operasi"
+              id="rencana-operasi"
+              label="rencana-operasi"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center" colspan="2">
+            <p><b>NAMA dan TANDA TANGAN DOKTER OPERATOR</b></p>
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_dokter_operator"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_dokter_operator"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_dokter_operator"
+              id="paraf_ex_ttd_dokter_operator"
+              data-name="paraf"
+              data-id="ex_ttd_dokter_operator"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_dokter_operator"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
+            <font id="ttdnya2"></font>
+            <br />
+            (
+            <input
+              size="80"
+              type="text"
+              name="nama-ttd"
+              id="nama-ttd"
+              label="nama-ttd"
+              placeholder="......"
+              myid="check_cara"
+            />
+            )
+            <p>
+              Berikut tanda pada gambar sesuai dengan penandaan lokasi oeprasi
+              pada tubuh pasien
+            </p>
+            <p>
+              Berikan penandaan pada lokasi tubuh pasien dengan tanda
+              <b>LINGKARAN</b> dan <b>INISIAL DOKTER</b>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <img
+              src="../Documents/gambar-pengkajian-bedah-perempuan.jpeg"
+              myid="check_cara"
+              myimage="yes"
+              id="gambar-pengkajian-bedah-perempuan"
+              name="gambar-pengkajian-bedah-perempuan"
+              style="height: 600px"
+            />
+          </td>
+
+          <td>
+            <img
+              src="../Documents/gambar-pengkajian-bedah-laki-laki.jpeg"
+              myid="check_cara"
+              myimage="yes"
+              id="gambar-pengkajian-bedah-laki-laki"
+              name="gambar-pengkajian-bedah-laki-laki"
+              style="height: 600px"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <img
+                src="../Documents/gambar-pengkajian-bedah-wajah-kaki.jpeg"
+                myid="check_cara"
+                myimage="yes"
+                id="gambar-pengkajian-bedah-perempuan"
+                name="gambar-pengkajian-bedah-perempuan"
+                style="height: 1000px"
+              />
+            </div>
+          </td>
+
+          <td>
+            <div style="display: flex; justify-content: center">
+              <img
+                src="../Documents/gambar-pengkajian-bedah-tangan-telapak-kaki.jpeg"
+                myid="check_cara"
+                myimage="yes"
+                id="gambar-pengkajian-bedah-laki-laki"
+                name="gambar-pengkajian-bedah-laki-laki"
+                style="height: 1000px"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" style="text-align: center">
+            <p>
+              Saya menyatakan bahwa lokasi operasi yang telah ditetapkan pada
+              gambar adalah benar
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <p>Posisi pasien dalam operasi:</p>
+            <textarea
+              style="width: 100%"
+              rows="6"
+              type="textarea"
+              name="posisi-pasien-dalam-operasi"
+              id="posisi-pasien-dalam-operasi"
+              label="posisi-pasien-dalam-operasi"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <p>
+              Deskripsikan secara singkat apabila tidak dapat dilakukan
+              penandaan pada tubuh pasien :
+            </p>
+            <textarea
+              style="width: 100%"
+              rows="6"
+              type="textarea"
+              name="deskripsi-singkat"
+              id="deskripsi-singkat"
+              label="deskripsi-singkat"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(function (radio) {
+          radio.addEventListener("click", function () {
+            if (this.classList.contains("clicked")) {
+              this.checked = false;
+              this.classList.remove("clicked");
+            } else {
+              var name = this.getAttribute("name");
+              var radios = document.querySelectorAll(
+                'input[type="radio"][name="' + name + '"]'
+              );
+              radios.forEach(function (r) {
+                r.classList.remove("clicked");
+              });
+              this.classList.add("clicked");
+            }
+            console.log(this.name + " diubah menjadi: " + this.checked);
+          });
+        });
+
+        var textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+        var textAreas = document.querySelectorAll("textarea");
+        textAreas.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
