@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form ACS</title>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.slim.js"
+      integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+
+      const satuan = $(".satuan");
+      const jumlah = $(".jumlah");
+      const harga = $(".harga");
+      const totalHargaInput = {
+        A: $("input[name='totalskor1']"),
+        B: $("input[name='totalskor2']"),
+        C: $("input[name='totalskor3']"),
+        D: $("input[name='totalskor4']"),
+        E: $("input[name='totalskor5']"),
+        F: $("input[name='totalskor6']"),
+        G: $("input[name='totalskor7']"),
+      };
+      const totalSatuan = $("input[name='total-satuan']");
+      const totalJumlah = $("input[name='total-jumlah']");
+      const totalHarga = $("input[name='total-harga']");
+      const totalHargaKeseluruhan = $("input[name='total-harga-keseluruhan']");
+
+      satuan.on("input", function () {
+        hitungTotalCairan(satuan, totalSatuan);
+      });
+      jumlah.on("input", function () {
+        hitungTotalCairan(jumlah, totalJumlah);
+      });
+      harga.on("input", function () {
+        hitungTotalCairan(harga, totalHarga);
+      });
+
+      function hitungTotalCairan(inputs, totalElement) {
+        let total = 0;
+        inputs.each(function () {
+          total += parseFloat($(this).val()) || 0;
+        });
+        totalElement.val(total);
+        console.log(total);
+        hitungtotalHargaKeseluruhan();
+      }
+
+      function hitungtotalHargaKeseluruhan() {
+        totalHargaKeseluruhan.val(
+          (parseFloat(totalHargaInput.A.val()) || 0) +
+            (parseFloat(totalHargaInput.B.val()) || 0) +
+            (parseFloat(totalHargaInput.C.val()) || 0) +
+            (parseFloat(totalHargaInput.D.val()) || 0) +
+            (parseFloat(totalHargaInput.E.val()) || 0) +
+            (parseFloat(totalHargaInput.F.val()) || 0) +
+            (parseFloat(totalHargaInput.G.val()) || 0)
+        );
+      }
+
+      $('input[type="text"]').on("input", function () {
+        let total = 1;
+        let percol = $(this).data("percol");
+        console.log(percol);
+
+        $("[data-hitung" + percol + "]").each(function () {
+          let radioValue = 0;
+          radioValue = $(this).val() || 0;
+
+          if ($(this).val() !== "") {
+            radioValue = parseInt(radioValue);
+            console.log(radioValue);
+            total = total * radioValue;
+          }
+        });
+        $(`#totalskor` + percol).val(total);
+        hitungtotalHargaKeseluruhan();
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
+  <body>
+    <h1 class="title">Form ACS</h1>
+
+    <fieldset style="margin: 5px">
+      <h3 style="padding: 5px"><b>RUMAH SAKIT AZRA</b></h3>
+
+      <h3 class="title">FORMULIR TAMBAHAN MAKANAN PASIEN</h3>
+
+      <table width="100%" class="table table-bordered">
+        <tbody>
+          <tr>
+            <td>Tanggal :</td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="tgl-tambahan"
+                id="tgl-tambahan"
+                label="tgl-tambahan"
+                myid="check_cara"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Nama Pasien :</td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="nama-pasien"
+                id="nama-pasien"
+                label="nama-pasien"
+                myid="check_cara"
+                value="{VNAMA_PASIEN}"
+                placeholder="......"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Nomor MR :</td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="nomor-mr"
+                id="nomor-mr"
+                label="nomor-mr"
+                myid="check_cara"
+                placeholder="......"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Kamar/Bed :</td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="kamar-bed"
+                id="kamar-bed"
+                label="kamar-bed"
+                myid="check_cara"
+                placeholder="......"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Lantai/Kelas :</td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="lantai-kelas"
+                id="lantai-kelas"
+                label="lantai-kelas"
+                myid="check_cara"
+                value="{VNAMAKELAS}"
+                placeholder="......"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table width="100%" class="table table-bordered">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Uraian</th>
+            <th>Satuan</th>
+            <th>Jumlah</th>
+            <th>Harga (Rp)</th>
+            <th>Jumlah Harga (Rp)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="no-uraian-1"
+                id="no-uraian-1"
+                label="no-uraian-1"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="uraian-1"
+                id="uraian-1"
+                label="uraian-1"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="satuan-1"
+                id="satuan-1"
+                label="satuan-1"
+                class="satuan"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                data-percol="1"
+                data-hitung1="1"
+                name="jumlah-1"
+                id="jumlah-1"
+                label="jumlah-1"
+                class="jumlah"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                data-percol="1"
+                data-hitung1="1"
+                name="harga-1"
+                id="harga-1"
+                label="harga-1"
+                class="harga"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="totalskor1"
+                id="totalskor1"
+                label="totalskor1"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="no-uraian-2"
+                id="no-uraian-2"
+                label="no-uraian-2"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="uraian-2"
+                id="uraian-2"
+                label="uraian-2"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="satuan-2"
+                id="satuan-2"
+                label="satuan-2"
+                class="satuan"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-2"
+                data-percol="2"
+                data-hitung2="2"
+                id="jumlah-2"
+                label="jumlah-2"
+                class="jumlah"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="harga-2"
+                data-percol="2"
+                data-hitung2="2"
+                id="harga-2"
+                label="harga-2"
+                class="harga"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="totalskor2"
+                id="totalskor2"
+                label="totalskor2"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="no-uraian-3"
+                id="no-uraian-3"
+                label="no-uraian-3"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="uraian-3"
+                id="uraian-3"
+                label="uraian-3"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="satuan-3"
+                id="satuan-3"
+                label="satuan-3"
+                class="satuan"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                data-percol="3"
+                data-hitung3="3"
+                name="jumlah-3"
+                id="jumlah-3"
+                label="jumlah-3"
+                class="jumlah"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                data-percol="3"
+                data-hitung3="3"
+                name="harga-3"
+                id="harga-3"
+                label="harga-3"
+                class="harga"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="totalskor3"
+                id="totalskor3"
+                label="totalskor3"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="no-uraian-4"
+                id="no-uraian-4"
+                label="no-uraian-4"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="uraian-4"
+                id="uraian-4"
+                label="uraian-4"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="satuan-4"
+                id="satuan-4"
+                label="satuan-4"
+                class="satuan"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                data-percol="4"
+                data-hitung4="4"
+                name="jumlah-4"
+                id="jumlah-4"
+                label="jumlah-4"
+                class="jumlah"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                data-percol="4"
+                data-hitung4="4"
+                name="harga-4"
+                id="harga-4"
+                label="harga-4"
+                class="harga"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="totalskor4"
+                id="totalskor4"
+                label="totalskor4"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="no-uraian-5"
+                id="no-uraian-5"
+                label="no-uraian-5"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="uraian-5"
+                id="uraian-5"
+                label="uraian-5"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="satuan-5"
+                id="satuan-5"
+                label="satuan-5"
+                class="satuan"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                data-percol="5"
+                data-hitung5="5"
+                name="jumlah-5"
+                id="jumlah-5"
+                label="jumlah-5"
+                class="jumlah"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                data-percol="5"
+                data-hitung5="5"
+                name="harga-5"
+                id="harga-5"
+                label="harga-5"
+                class="harga"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="totalskor5"
+                id="totalskor5"
+                label="totalskor5"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="no-uraian-6"
+                id="no-uraian-6"
+                label="no-uraian-6"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="uraian-6"
+                id="uraian-6"
+                label="uraian-6"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="satuan-6"
+                id="satuan-6"
+                label="satuan-6"
+                class="satuan"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                data-percol="6"
+                data-hitung6="6"
+                name="jumlah-6"
+                id="jumlah-6"
+                label="jumlah-6"
+                class="jumlah"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                data-percol="6"
+                data-hitung6="6"
+                name="harga-6"
+                id="harga-6"
+                label="harga-6"
+                class="harga"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="totalskor6"
+                id="totalskor6"
+                label="totalskor6"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="no-uraian-7"
+                id="no-uraian-7"
+                label="no-uraian-7"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="uraian-7"
+                id="uraian-7"
+                label="uraian-7"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="satuan-7"
+                id="satuan-7"
+                label="satuan-7"
+                class="satuan"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                data-percol="7"
+                data-hitung7="7"
+                name="jumlah-7"
+                id="jumlah-7"
+                label="jumlah-7"
+                class="jumlah"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                data-percol="7"
+                data-hitung7="7"
+                name="harga-7"
+                id="harga-7"
+                label="harga-7"
+                class="harga"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="totalskor7"
+                id="totalskor7"
+                label="totalskor7"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="no-uraian-8"
+                id="no-uraian-8"
+                label="no-uraian-8"
+                myid="check_cara"
+              />
+            </td>
+            <td style="text-align: center">Jumlah</td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="total-satuan"
+                id="total-satuan"
+                label="total-satuan"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="total-jumlah"
+                id="total-jumlah"
+                label="total-jumlah"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="total-harga"
+                id="total-harga"
+                label="total-harga"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="text"
+                name="total-harga-keseluruhan"
+                id="total-harga-keseluruhan"
+                label="total-harga-keseluruhan"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">Tanggal / Pukul</td>
+            <td colspan="4">
+              <input
+                type="text"
+                name="tgl-acs"
+                id="tgl-acs"
+                label="tgl-acs"
+                myid="check_cara"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+              />
+              <br />
+              <input
+                type="text"
+                name="pukul-acs"
+                id="pukul-acs"
+                label="pukul-acs"
+                myid="check_cara"
+                placeholder="00.00"
+                mtype="pukul"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4" style="text-align: center">RS AZRA</td>
+            <td style="text-align: center">Catering</td>
+            <td style="text-align: center">Pihak Pasien</td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align: center">Perawat</td>
+            <td colspan="2" style="text-align: center">Ahli Gizi</td>
+            <td rowspan="2">
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
+                <input
+                  style="width: 100%"
+                  type="text"
+                  name="nama-jelas-catering"
+                  id="nama-jelas-catering"
+                  label="nama-jelas-catering"
+                  myid="check_cara"
+                />
+                <br />
+
+                <label
+                  class="label text-center"
+                  id="def_img_ex_ttd_catering"
+                  style="font-style: italic; width: 100px; height: 100px"
+                  >paraf</label
+                >
+                <label class="label text-center">
+                  <img
+                    class="text-center"
+                    id="image_paraf_ex_ttd_catering"
+                    src=""
+                    style="display: none"
+                /></label>
+                <input
+                  myid="check_cara"
+                  type="hidden"
+                  name="paraf_ex_ttd_catering"
+                  id="paraf_ex_ttd_catering"
+                  data-name="paraf"
+                  data-id="ex_ttd_catering"
+                />
+                <br />
+                <label class="label text-center">
+                  <a
+                    id="CreateTTD"
+                    class="btn btn-default btn-xs pointer text-center"
+                    data-id="ex_ttd_catering"
+                    style="text-align: center"
+                  >
+                    <i class="fa fa-edit"> </i>
+                    PENTABLET
+                  </a>
+                </label>
+
+                <font id="ttdnya1"></font>
+              </div>
+            </td>
+            <td rowspan="2">
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
+                <input
+                  style="width: 100%"
+                  type="text"
+                  name="nama-jelas-pihak-pasien"
+                  id="nama-jelas-pihak-pasien"
+                  label="nama-jelas-pihak-pasien"
+                  myid="check_cara"
+                />
+                <br />
+                <label
+                  class="label text-center"
+                  id="def_img_ex_ttd_pihak_pasien"
+                  style="font-style: italic; width: 100px; height: 100px"
+                  >paraf</label
+                >
+                <label class="label text-center">
+                  <img
+                    class="text-center"
+                    id="image_paraf_ex_ttd_pihak_pasien"
+                    src=""
+                    style="display: none"
+                /></label>
+                <input
+                  myid="check_cara"
+                  type="hidden"
+                  name="paraf_ex_ttd_pihak_pasien"
+                  id="paraf_ex_ttd_pihak_pasien"
+                  data-name="paraf"
+                  data-id="ex_ttd_pihak_pasien"
+                />
+                <br />
+                <label class="label text-center">
+                  <a
+                    id="CreateTTD"
+                    class="btn btn-default btn-xs pointer text-center"
+                    data-id="ex_ttd_pihak_pasien"
+                    style="text-align: center"
+                  >
+                    <i class="fa fa-edit"> </i>
+                    PENTABLET
+                  </a>
+                </label>
+
+                <font id="ttdnya1"></font>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
+                <input
+                  style="width: 100%"
+                  type="text"
+                  name="nama-jelas-perawat"
+                  id="nama-jelas-perawat"
+                  label="nama-jelas-perawat"
+                  myid="check_cara"
+                />
+                <br />
+                <label
+                  class="label text-center"
+                  id="def_img_ex_ttd_pihak_perawat"
+                  style="font-style: italic; width: 100px; height: 100px"
+                  >paraf</label
+                >
+                <label class="label text-center">
+                  <img
+                    class="text-center"
+                    id="image_paraf_ex_ttd_pihak_perawat"
+                    src=""
+                    style="display: none"
+                /></label>
+                <input
+                  myid="check_cara"
+                  type="hidden"
+                  name="paraf_ex_ttd_pihak_perawat"
+                  id="paraf_ex_ttd_pihak_perawat"
+                  data-name="paraf"
+                  data-id="ex_ttd_pihak_perawat"
+                />
+                <br />
+                <label class="label text-center">
+                  <a
+                    id="CreateTTD"
+                    class="btn btn-default btn-xs pointer text-center"
+                    data-id="ex_ttd_pihak_perawat"
+                    style="text-align: center"
+                  >
+                    <i class="fa fa-edit"> </i>
+                    PENTABLET
+                  </a>
+                </label>
+
+                <font id="ttdnya1"></font>
+              </div>
+            </td>
+            <td colspan="2">
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
+                <input
+                  style="width: 100%"
+                  type="text"
+                  name="nama-jelas-ahli-gizi"
+                  id="nama-jelas-ahli-gizi"
+                  label="nama-jelas-ahli-gizi"
+                  myid="check_cara"
+                />
+                <br />
+                <label
+                  class="label text-center"
+                  id="def_img_ex_ttd_pihak_ahli_gizi"
+                  style="font-style: italic; width: 100px; height: 100px"
+                  >paraf</label
+                >
+                <label class="label text-center">
+                  <img
+                    class="text-center"
+                    id="image_paraf_ex_ttd_pihak_ahli_gizi"
+                    src=""
+                    style="display: none"
+                /></label>
+                <input
+                  myid="check_cara"
+                  type="hidden"
+                  name="paraf_ex_ttd_pihak_ahli_gizi"
+                  id="paraf_ex_ttd_pihak_ahli_gizi"
+                  data-name="paraf"
+                  data-id="ex_ttd_pihak_ahli_gizi"
+                />
+                <br />
+                <label class="label text-center">
+                  <a
+                    id="CreateTTD"
+                    class="btn btn-default btn-xs pointer text-center"
+                    data-id="ex_ttd_pihak_ahli_gizi"
+                    style="text-align: center"
+                  >
+                    <i class="fa fa-edit"> </i>
+                    PENTABLET
+                  </a>
+                </label>
+                <font id="ttdnya1"></font>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align: center">Nama Jelas</td>
+            <td colspan="2" style="text-align: center">Nama Jelas</td>
+            <td style="text-align: center">Nama Jelas</td>
+            <td style="text-align: center">Nama Jelas</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin: 5px"><b>Rangkap 2</b></h3>
+      <ol style="margin-left: 25px" type="1">
+        <li>Putih : Ahli Gizi Rumah Sakit</li>
+        <li>Merah : Arsip Pasien</li>
+      </ol>
+    </fieldset>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(function (radio) {
+          radio.addEventListener("click", function () {
+            if (this.classList.contains("clicked")) {
+              this.checked = false;
+              this.classList.remove("clicked");
+            } else {
+              var name = this.getAttribute("name");
+              var radios = document.querySelectorAll(
+                'input[type="radio"][name="' + name + '"]'
+              );
+              radios.forEach(function (r) {
+                r.classList.remove("clicked");
+              });
+              this.classList.add("clicked");
+            }
+            console.log(this.name + " diubah menjadi: " + this.checked);
+          });
+        });
+
+        var textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
