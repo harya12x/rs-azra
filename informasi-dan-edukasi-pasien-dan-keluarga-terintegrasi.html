@@ -7761,61 +7761,6 @@
       </tbody>
     </table>
     <script>
-      const lainLain = document.querySelector('input[name="lain-lain"]');
-      const kebutuhanLainnya = document.querySelector(
-        'input[name="kebutuhan-lainnya"]'
-      );
-      const hambatanButtons = document.querySelectorAll(
-        'input[name="hambatan"]'
-      );
-      const kesediaanMenerimaInformasiButtons = document.querySelectorAll(
-        'input[name="kesediaan-menerima-informasi"]'
-      );
-      const alasanTidakBersediaInput = document.querySelector(
-        'input[name="alasan-tidak-bersedia"]'
-      );
-
-      const detailHambatanButtons = document.querySelectorAll(
-        'input[name="detail-hambatan"]'
-      );
-
-      hambatanButtons.forEach((hambatan) => {
-        hambatan.addEventListener("click", function () {
-          if (hambatan.value == "Ya") {
-            detailHambatanButtons.forEach((detailHambatan) => {
-              detailHambatan.setAttribute("disabled", false);
-            });
-          } else {
-            detailHambatanButtons.forEach((detailHambatan) => {
-              detailHambatan.setAttribute("disabled", true);
-            });
-          }
-        });
-      });
-
-      kesediaanMenerimaInformasiButtons.forEach(
-        (kesediaanMenerimaInformasi) => {
-          kesediaanMenerimaInformasi.addEventListener("click", function () {
-            if (kesediaanMenerimaInformasi.value == "Tidak") {
-              alasanTidakBersediaInput.removeAttribute("disabled");
-            } else {
-              alasanTidakBersediaInput.setAttribute("disabled", true);
-              alasanTidakBersediaInput.value = "";
-            }
-          });
-        }
-      );
-
-      lainLain.addEventListener("click", function () {
-        if (lainLain.checked == true) {
-          console.log("test");
-          kebutuhanLainnya.removeAttribute("disabled");
-        } else {
-          kebutuhanLainnya.setAttribute("disabled", true);
-          kebutuhanLainnya.value = "";
-        }
-      });
-
       document.addEventListener("DOMContentLoaded", function () {
         var radioButtons = document.querySelectorAll('input[type="radio"]');
         radioButtons.forEach(function (radio) {
