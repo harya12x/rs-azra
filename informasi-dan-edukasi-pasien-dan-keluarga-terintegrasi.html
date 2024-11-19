@@ -31,6 +31,132 @@
       padding: 5px;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">
       INFORMASI DAN EDUKASI PASIEN DAN KELUARGA TERINTEGRASI
@@ -48,6 +174,7 @@
               id="nama-pasien"
               label="nama-pasien"
               placeholder="......"
+              value="{VNAMA_PASIEN}"
               myid="check_cara"
             />
           </td>
@@ -62,6 +189,7 @@
               id="jenis-kelamin-pasien"
               label="jenis-kelamin-pasien"
               placeholder="......"
+              value="{VSEX}"
               myid="check_cara"
             />
           </td>
@@ -76,6 +204,7 @@
               id="no-rm-pasien"
               label="no-rm-pasien"
               placeholder="......"
+              value="{NO_RM}"
               myid="check_cara"
             />
           </td>
@@ -90,6 +219,8 @@
               id="tgl-lahir-pasien"
               label="tgl-lahir-pasien"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
+              value="{VBIRTH_DATE}"
               myid="check_cara"
             />
           </td>
@@ -673,6 +804,7 @@
               id="tgl-jam-edukasi-1"
               label="tgl-jam-edukasi-1"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -787,6 +919,7 @@
               id="tgl-re-edukasi-re-demonstrasi-1"
               label="tgl-re-edukasi-re-demonstrasi-1"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -800,6 +933,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_1"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_1"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_1"
+              id="paraf_ex_ttd_pemberi_edukasi_1"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_1"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_1"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -812,6 +980,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_1"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_1"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_1"
+              id="paraf_ex_ttd_pasien_edukasi_1"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_1"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_1"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -836,6 +1039,7 @@
               id="tgl-jam-edukasi-2"
               label="tgl-jam-edukasi-2"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -950,6 +1154,7 @@
               id="tgl-re-edukasi-re-demonstrasi-2"
               label="tgl-re-edukasi-re-demonstrasi-2"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -963,6 +1168,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_2"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_2"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_2"
+              id="paraf_ex_ttd_pemberi_edukasi_2"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_2"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_2"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -975,6 +1215,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_2"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_2"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_2"
+              id="paraf_ex_ttd_pasien_edukasi_2"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_2"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_2"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -999,6 +1274,7 @@
               id="tgl-jam-edukasi-3"
               label="tgl-jam-edukasi-3"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -1113,6 +1389,7 @@
               id="tgl-re-edukasi-re-demonstrasi-3"
               label="tgl-re-edukasi-re-demonstrasi-3"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -1126,6 +1403,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_3"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_3"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_3"
+              id="paraf_ex_ttd_pemberi_edukasi_3"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_3"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_3"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -1138,6 +1450,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_3"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_3"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_3"
+              id="paraf_ex_ttd_pasien_edukasi_3"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_3"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_3"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -1162,6 +1509,7 @@
               id="tgl-jam-edukasi-4"
               label="tgl-jam-edukasi-4"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -1276,6 +1624,7 @@
               id="tgl-re-edukasi-re-demonstrasi-4"
               label="tgl-re-edukasi-re-demonstrasi-4"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -1289,6 +1638,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_4"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_4"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_4"
+              id="paraf_ex_ttd_pemberi_edukasi_4"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_4"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_4"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -1301,6 +1685,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_4"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_4"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_4"
+              id="paraf_ex_ttd_pasien_edukasi_4"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_4"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_4"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -1325,6 +1744,7 @@
               id="tgl-jam-edukasi-5"
               label="tgl-jam-edukasi-5"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -1439,6 +1859,7 @@
               id="tgl-re-edukasi-re-demonstrasi-5"
               label="tgl-re-edukasi-re-demonstrasi-5"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -1452,6 +1873,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_5"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_5"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_5"
+              id="paraf_ex_ttd_pemberi_edukasi_5"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_5"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_5"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -1464,6 +1920,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_5"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_5"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_5"
+              id="paraf_ex_ttd_pasien_edukasi_5"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_5"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_5"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -1480,6 +1971,7 @@
               id="tgl-jam-edukasi-6"
               label="tgl-jam-edukasi-6"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -1594,6 +2086,7 @@
               id="tgl-re-edukasi-re-demonstrasi-6"
               label="tgl-re-edukasi-re-demonstrasi-6"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -1607,6 +2100,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_6"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_6"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_6"
+              id="paraf_ex_ttd_pemberi_edukasi_6"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_6"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_6"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -1619,6 +2147,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_6"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_6"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_6"
+              id="paraf_ex_ttd_pasien_edukasi_6"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_6"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_6"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -1643,6 +2206,7 @@
               id="tgl-jam-edukasi-7"
               label="tgl-jam-edukasi-7"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -1757,6 +2321,7 @@
               id="tgl-re-edukasi-re-demonstrasi-7"
               label="tgl-re-edukasi-re-demonstrasi-7"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -1770,6 +2335,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_7"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_7"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_7"
+              id="paraf_ex_ttd_pemberi_edukasi_7"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_7"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_7"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -1782,6 +2382,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_7"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_7"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_7"
+              id="paraf_ex_ttd_pasien_edukasi_7"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_7"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_7"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -1806,6 +2441,7 @@
               id="tgl-jam-edukasi-8"
               label="tgl-jam-edukasi-8"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -1920,6 +2556,7 @@
               id="tgl-re-edukasi-re-demonstrasi-8"
               label="tgl-re-edukasi-re-demonstrasi-8"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -1933,6 +2570,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_8"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_8"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_8"
+              id="paraf_ex_ttd_pemberi_edukasi_8"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_8"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_8"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -1945,6 +2617,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_8"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_8"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_8"
+              id="paraf_ex_ttd_pasien_edukasi_8"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_8"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_8"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -1960,6 +2667,7 @@
               id="tgl-jam-edukasi-9"
               label="tgl-jam-edukasi-9"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -2074,6 +2782,7 @@
               id="tgl-re-edukasi-re-demonstrasi-9"
               label="tgl-re-edukasi-re-demonstrasi-9"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -2087,6 +2796,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_9"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_9"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_9"
+              id="paraf_ex_ttd_pemberi_edukasi_9"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_9"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_9"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -2099,6 +2843,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_9"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_9"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_9"
+              id="paraf_ex_ttd_pasien_edukasi_9"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_9"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_9"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -2123,6 +2902,7 @@
               id="tgl-jam-edukasi-10"
               label="tgl-jam-edukasi-10"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -2237,6 +3017,7 @@
               id="tgl-re-edukasi-re-demonstrasi-10"
               label="tgl-re-edukasi-re-demonstrasi-10"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -2250,6 +3031,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_10"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_10"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_10"
+              id="paraf_ex_ttd_pemberi_edukasi_10"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_10"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_10"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -2262,6 +3078,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_10"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_10"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_10"
+              id="paraf_ex_ttd_pasien_edukasi_10"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_10"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_10"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -2277,6 +3128,7 @@
               id="tgl-jam-edukasi-11"
               label="tgl-jam-edukasi-11"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -2391,6 +3243,7 @@
               id="tgl-re-edukasi-re-demonstrasi-11"
               label="tgl-re-edukasi-re-demonstrasi-11"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -2404,6 +3257,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_11"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_11"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_11"
+              id="paraf_ex_ttd_pemberi_edukasi_11"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_11"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_11"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -2416,6 +3304,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_11"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_11"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_11"
+              id="paraf_ex_ttd_pasien_edukasi_11"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_11"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_11"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -2431,6 +3354,7 @@
               id="tgl-jam-edukasi-12"
               label="tgl-jam-edukasi-12"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -2545,6 +3469,7 @@
               id="tgl-re-edukasi-re-demonstrasi-12"
               label="tgl-re-edukasi-re-demonstrasi-12"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -2558,6 +3483,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_12"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_12"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_12"
+              id="paraf_ex_ttd_pemberi_edukasi_12"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_12"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_12"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -2570,6 +3530,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_12"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_12"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_12"
+              id="paraf_ex_ttd_pasien_edukasi_12"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_12"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_12"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -2585,6 +3580,7 @@
               id="tgl-jam-edukasi-13"
               label="tgl-jam-edukasi-13"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -2699,6 +3695,7 @@
               id="tgl-re-edukasi-re-demonstrasi-13"
               label="tgl-re-edukasi-re-demonstrasi-13"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -2712,6 +3709,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_13"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_13"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_13"
+              id="paraf_ex_ttd_pemberi_edukasi_13"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_13"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_13"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -2724,6 +3756,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_13"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_13"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_13"
+              id="paraf_ex_ttd_pasien_edukasi_13"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_13"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_13"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -2739,6 +3806,7 @@
               id="tgl-jam-edukasi-14"
               label="tgl-jam-edukasi-14"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -2853,6 +3921,7 @@
               id="tgl-re-edukasi-re-demonstrasi-14"
               label="tgl-re-edukasi-re-demonstrasi-14"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -2866,6 +3935,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_14"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_14"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_14"
+              id="paraf_ex_ttd_pemberi_edukasi_14"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_14"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_14"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -2878,6 +3982,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_14"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_14"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_14"
+              id="paraf_ex_ttd_pasien_edukasi_14"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_14"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_14"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -2902,6 +4041,7 @@
               id="tgl-jam-edukasi-15"
               label="tgl-jam-edukasi-15"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -3016,6 +4156,7 @@
               id="tgl-re-edukasi-re-demonstrasi-15"
               label="tgl-re-edukasi-re-demonstrasi-15"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -3029,6 +4170,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_15"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_15"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_15"
+              id="paraf_ex_ttd_pemberi_edukasi_15"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_15"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_15"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -3041,6 +4217,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_15"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_15"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_15"
+              id="paraf_ex_ttd_pasien_edukasi_15"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_15"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_15"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -3058,6 +4269,7 @@
               id="tgl-jam-edukasi-16"
               label="tgl-jam-edukasi-16"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -3172,6 +4384,7 @@
               id="tgl-re-edukasi-re-demonstrasi-16"
               label="tgl-re-edukasi-re-demonstrasi-16"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -3185,6 +4398,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_16"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_16"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_16"
+              id="paraf_ex_ttd_pemberi_edukasi_16"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_16"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_16"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -3197,6 +4445,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_16"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_16"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_16"
+              id="paraf_ex_ttd_pasien_edukasi_16"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_16"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_16"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -3224,6 +4507,7 @@
               id="tgl-jam-edukasi-17"
               label="tgl-jam-edukasi-17"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -3338,6 +4622,7 @@
               id="tgl-re-edukasi-re-demonstrasi-17"
               label="tgl-re-edukasi-re-demonstrasi-17"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -3351,6 +4636,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_17"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_17"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_17"
+              id="paraf_ex_ttd_pemberi_edukasi_17"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_17"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_17"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -3363,6 +4683,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_17"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_17"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_17"
+              id="paraf_ex_ttd_pasien_edukasi_17"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_17"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_17"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -3378,6 +4733,7 @@
               id="tgl-jam-edukasi-18"
               label="tgl-jam-edukasi-18"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -3492,6 +4848,7 @@
               id="tgl-re-edukasi-re-demonstrasi-18"
               label="tgl-re-edukasi-re-demonstrasi-18"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -3505,6 +4862,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_18"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_18"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_18"
+              id="paraf_ex_ttd_pemberi_edukasi_18"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_18"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_18"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -3517,6 +4909,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_18"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_18"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_18"
+              id="paraf_ex_ttd_pasien_edukasi_18"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_18"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_18"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -3532,6 +4959,7 @@
               id="tgl-jam-edukasi-19"
               label="tgl-jam-edukasi-19"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -3646,6 +5074,7 @@
               id="tgl-re-edukasi-re-demonstrasi-19"
               label="tgl-re-edukasi-re-demonstrasi-19"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -3659,6 +5088,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_19"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_19"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_19"
+              id="paraf_ex_ttd_pemberi_edukasi_19"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_19"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_19"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -3671,6 +5135,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_19"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_19"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_19"
+              id="paraf_ex_ttd_pasien_edukasi_19"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_19"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_19"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -3695,6 +5194,7 @@
               id="tgl-jam-edukasi-20"
               label="tgl-jam-edukasi-20"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -3809,6 +5309,7 @@
               id="tgl-re-edukasi-re-demonstrasi-20"
               label="tgl-re-edukasi-re-demonstrasi-20"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -3822,6 +5323,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_20"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_20"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_20"
+              id="paraf_ex_ttd_pemberi_edukasi_20"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_20"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_20"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -3834,6 +5370,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_20"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_20"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_20"
+              id="paraf_ex_ttd_pasien_edukasi_20"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_20"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_20"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -3858,6 +5429,7 @@
               id="tgl-jam-edukasi-21"
               label="tgl-jam-edukasi-21"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -3972,6 +5544,7 @@
               id="tgl-re-edukasi-re-demonstrasi-21"
               label="tgl-re-edukasi-re-demonstrasi-21"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -3985,6 +5558,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_21"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_21"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_21"
+              id="paraf_ex_ttd_pemberi_edukasi_21"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_21"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_21"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -3997,6 +5605,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_21"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_21"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_21"
+              id="paraf_ex_ttd_pasien_edukasi_21"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_21"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_21"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -4021,6 +5664,7 @@
               id="tgl-jam-edukasi-22"
               label="tgl-jam-edukasi-22"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -4135,6 +5779,7 @@
               id="tgl-re-edukasi-re-demonstrasi-22"
               label="tgl-re-edukasi-re-demonstrasi-22"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -4148,6 +5793,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_22"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_22"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_22"
+              id="paraf_ex_ttd_pemberi_edukasi_22"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_22"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_22"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -4160,6 +5840,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_22"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_22"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_22"
+              id="paraf_ex_ttd_pasien_edukasi_22"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_22"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_22"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -4184,6 +5899,7 @@
               id="tgl-jam-edukasi-23"
               label="tgl-jam-edukasi-23"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -4298,6 +6014,7 @@
               id="tgl-re-edukasi-re-demonstrasi-23"
               label="tgl-re-edukasi-re-demonstrasi-23"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -4311,6 +6028,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_23"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_23"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_23"
+              id="paraf_ex_ttd_pemberi_edukasi_23"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_23"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_23"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -4323,6 +6075,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_23"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_23"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_23"
+              id="paraf_ex_ttd_pasien_edukasi_23"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_23"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_23"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -4347,6 +6134,7 @@
               id="tgl-jam-edukasi-24"
               label="tgl-jam-edukasi-24"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -4461,6 +6249,7 @@
               id="tgl-re-edukasi-re-demonstrasi-24"
               label="tgl-re-edukasi-re-demonstrasi-24"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -4474,6 +6263,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_24"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_24"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_24"
+              id="paraf_ex_ttd_pemberi_edukasi_24"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_24"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_24"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -4486,6 +6310,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_24"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_24"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_24"
+              id="paraf_ex_ttd_pasien_edukasi_24"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_24"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_24"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -4510,6 +6369,7 @@
               id="tgl-jam-edukasi-25"
               label="tgl-jam-edukasi-25"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -4624,6 +6484,7 @@
               id="tgl-re-edukasi-re-demonstrasi-25"
               label="tgl-re-edukasi-re-demonstrasi-25"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -4637,6 +6498,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_25"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_25"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_25"
+              id="paraf_ex_ttd_pemberi_edukasi_25"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_25"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_25"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -4649,6 +6545,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_25"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_25"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_25"
+              id="paraf_ex_ttd_pasien_edukasi_25"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_25"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_25"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -4673,6 +6604,7 @@
               id="tgl-jam-edukasi-26"
               label="tgl-jam-edukasi-26"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -4787,6 +6719,7 @@
               id="tgl-re-edukasi-re-demonstrasi-26"
               label="tgl-re-edukasi-re-demonstrasi-26"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -4800,6 +6733,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_26"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_26"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_26"
+              id="paraf_ex_ttd_pemberi_edukasi_26"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_26"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_26"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -4812,6 +6780,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_26"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_26"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_26"
+              id="paraf_ex_ttd_pasien_edukasi_26"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_26"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_26"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -4836,6 +6839,7 @@
               id="tgl-jam-edukasi-27"
               label="tgl-jam-edukasi-27"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -4950,6 +6954,7 @@
               id="tgl-re-edukasi-re-demonstrasi-27"
               label="tgl-re-edukasi-re-demonstrasi-27"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -4963,6 +6968,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_27"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_27"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_27"
+              id="paraf_ex_ttd_pemberi_edukasi_27"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_27"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_27"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -4975,6 +7015,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_27"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_27"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_27"
+              id="paraf_ex_ttd_pasien_edukasi_27"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_27"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_27"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -4999,6 +7074,7 @@
               id="tgl-jam-edukasi-28"
               label="tgl-jam-edukasi-28"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -5113,6 +7189,7 @@
               id="tgl-re-edukasi-re-demonstrasi-28"
               label="tgl-re-edukasi-re-demonstrasi-28"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -5126,6 +7203,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_28"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_28"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_28"
+              id="paraf_ex_ttd_pemberi_edukasi_28"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_28"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_28"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -5138,6 +7250,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_28"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_28"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_28"
+              id="paraf_ex_ttd_pasien_edukasi_28"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_28"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_28"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -5162,6 +7309,7 @@
               id="tgl-jam-edukasi-29"
               label="tgl-jam-edukasi-29"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -5276,6 +7424,7 @@
               id="tgl-re-edukasi-re-demonstrasi-29"
               label="tgl-re-edukasi-re-demonstrasi-29"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -5289,6 +7438,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_29"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_29"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_29"
+              id="paraf_ex_ttd_pemberi_edukasi_29"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_29"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_29"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -5301,6 +7485,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_29"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_29"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_29"
+              id="paraf_ex_ttd_pasien_edukasi_29"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_29"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_29"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
@@ -5325,6 +7544,7 @@
               id="tgl-jam-edukasi-30"
               label="tgl-jam-edukasi-30"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -5439,6 +7659,7 @@
               id="tgl-re-edukasi-re-demonstrasi-30"
               label="tgl-re-edukasi-re-demonstrasi-30"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -5452,6 +7673,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pemberi_edukasi_30"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pemberi_edukasi_30"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pemberi_edukasi_30"
+              id="paraf_ex_ttd_pemberi_edukasi_30"
+              data-name="paraf"
+              data-id="ex_ttd_pemberi_edukasi_30"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pemberi_edukasi_30"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
           <td>
@@ -5464,6 +7720,41 @@
               placeholder="......"
               myid="check_cara"
             />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_edukasi_30"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_edukasi_30"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_edukasi_30"
+              id="paraf_ex_ttd_pasien_edukasi_30"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_edukasi_30"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_edukasi_30"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
             <font id="ttd2"></font>
           </td>
         </tr>
