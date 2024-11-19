@@ -31,6 +31,133 @@
       padding: 5px;
     }
   </style>
+
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">
       PENGKAJIAN AWAL TERAPI OKUPASI <br />
@@ -54,36 +181,18 @@
           <td>Nama Pasien</td>
           <td>
             <input
-              name="nama_pasien2"
+              name="nama_pasien"
               type="text"
               id="nama_pasien"
               size="30"
               myid="check_cara"
               label="nama pasien"
               placeholder="..."
+              value="{VNAMA_PASIEN}"
             />
           </td>
           <td>Jenis Kelamin</td>
-          <td>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="laki-laki"
-              myid="check_cara"
-              value="L"
-              label="jenis kelamin"
-            />
-            <label for="l">L</label>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="perempuan"
-              myid="check_cara"
-              value="P"
-              label="jenis kelamin"
-            />
-            <label for="l">P</label>
-          </td>
+          <td>{VSEX}</td>
           <td>
             <label for="">Nomor Rekam Medis</label>
           </td>
@@ -93,6 +202,7 @@
               myid="check_cara"
               name="no_rm"
               id="no_rm"
+              value="NO_RM"
               label="nomor rekam medis"
             />
           </td>
@@ -102,10 +212,12 @@
           <td>Tanggal Lahir</td>
           <td>
             <input
-              name="tgl_lahira2"
+              name="tgl_lahir"
               type="text"
               id="tgl_lahir"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
+              value="{VBIRTH_DATE}"
               myid="check_cara"
               label="tanggal lahir"
             />
@@ -116,8 +228,10 @@
             <input
               type="text"
               size="5"
-              name="umur-pengkajian"
-              id="umur-pengkajian"
+              name="umur_pengkajian"
+              id="umur_pengkajian"
+              label="umur_pengkajian"
+              value="{VAGE}"
               myid="check_cara"
               placeholder="..."
             />
@@ -141,10 +255,11 @@
           <td>
             <input
               type="text"
-              name="tgl-fisioterapis"
-              id="tgl-fisioterapis"
-              label="tgl-fisioterapis"
-              placeholder="......"
+              name="tgl_fisioterapis"
+              id="tgl_fisioterapis"
+              label="tgl_fisioterapis"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -153,10 +268,11 @@
           <td colspan="2">
             <input
               type="text"
-              name="jam-fisioterapis"
-              id="jam-fisioterapis"
-              label="jam-fisioterapis"
-              placeholder="......"
+              name="jam_fisioterapis"
+              id="jam_fisioterapis"
+              label="jam_fisioterapis"
+              placeholder="00.00"
+              mtype="pukul"
               myid="check_cara"
             />
           </td>
@@ -206,6 +322,7 @@
                 id="ttv-td"
                 name="ttv-td"
                 label="ttv-td"
+                value="{VTD}"
                 myid="check_cara"
                 placeholder="......"
               />
@@ -215,6 +332,7 @@
                 id="ttv-nadi"
                 name="ttv-nadi"
                 label="ttv-nadi"
+                value="{VNADI}"
                 myid="check_cara"
                 placeholder="......"
               />
@@ -224,6 +342,7 @@
                 id="ttv-rr"
                 name="ttv-rr"
                 label="ttv-rr"
+                value="{VRR}"
                 myid="check_cara"
                 placeholder="......"
               />
@@ -233,6 +352,7 @@
                 id="ttv-suhu"
                 name="ttv-suhu"
                 label="ttv-suhu"
+                value="{VSUHU}"
                 myid="check_cara"
                 placeholder="......"
               />
@@ -257,6 +377,7 @@
         <tr>
           <td colspan="2">
             <textarea
+              type="textarea"
               style="width: 100%"
               name="masalah-terapi-okupasi"
               id="masalah-terapi-okupasi"
@@ -273,6 +394,7 @@
           <td colspan="2">
             <p>TUJUAN TERAPI OKUPASI</p>
             <textarea
+              type="textarea"
               style="width: 100%"
               name="tujuan-terapi-okupasi"
               id="tujuan-terapi-okupasi"
@@ -282,19 +404,21 @@
             ></textarea>
             <p>PROGRAM TERAPI</p>
             <textarea
+              type="textarea"
               style="width: 100%"
-              name="program-terapi"
-              id="program-terapi"
-              label="program-terapi"
+              name="perencanaan-program-terapi"
+              id="perencanaan-program-terapi"
+              label="perencanaan-program-terapi"
               myid="check_cara"
               rows="8"
             ></textarea>
             <p>EDUKASI</p>
             <textarea
+              type="textarea"
               style="width: 100%"
-              name="edukasi"
-              id="edukasi"
-              label="edukasi"
+              name="perencanaan-terapi-edukasi"
+              id="perencanaan-terapi-edukasi"
+              label="perencanaan-terapi-edukasi"
               myid="check_cara"
               rows="8"
             ></textarea>
@@ -312,10 +436,6 @@
               <strong>Fisioterapis yang mengkaji</strong>
             </div>
           </td>
-
-          <td>&nbsp;</td>
-
-          <td>&nbsp;</td>
         </tr>
         <tr>
           <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
@@ -325,7 +445,7 @@
               type="text"
               id="17_tgl2"
               placeholder="dd/mm/yyyy"
-              size="10"
+              class="datepicker"
               myid="check_cara"
             />
             <br />
@@ -334,43 +454,60 @@
               type="text"
               id="17_pukul"
               placeholder="00:00"
-              size="10"
+              mtype="pukul"
               myid="check_cara"
             />
           </td>
-
-          <td bgcolor="#FFFFFF">&nbsp;</td>
-
-          <td bgcolor="#FFFFFF">&nbsp;</td>
         </tr>
         <tr>
           <td bgcolor="#FFFFFF">Nama</td>
           <td bgcolor="#FFFFFF">
             <input
-              name="17_nama"
+              name="fisioterapis_yg_mengkaji"
               type="text"
-              id="17_nama"
+              id="fisioterapis_yg_mengkaji"
               size="25"
               myid="check_cara"
             />
             <br />
-            <select
-              type="select"
-              name="dokternya"
-              id="dokternya"
-              myid="check_cara"
-              iscombo="t"
-              onchange="get_ttd2();"
+
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_fisioterapi_yg_mengkaji"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
             >
-              <option></option>
-            </select>
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_fisioterapi_yg_mengkaji"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_fisioterapi_yg_mengkaji"
+              id="paraf_ex_ttd_fisioterapi_yg_mengkaji"
+              data-name="paraf"
+              data-id="ex_ttd_fisioterapi_yg_mengkaji"
+            />
+            <br />
+
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_fisioterapi_yg_mengkaji"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
             <br />
             <font id="ttdnya1"></font>
           </td>
-
-          <td bgcolor="#FFFFFF">&nbsp;</td>
-
-          <td bgcolor="#FFFFFF">&nbsp;</td>
         </tr>
       </tbody>
     </table>
