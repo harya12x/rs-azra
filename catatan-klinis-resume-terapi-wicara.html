@@ -31,10 +31,136 @@
       padding: 5px;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">CATATAN KLINIS / RESUME TERAPI WICARA RS. AZRA BOGOR</h1>
 
-    <table class="table-bordered" width="100%">
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
           <input
@@ -58,6 +184,7 @@
               size="30"
               myid="check_cara"
               label="nama pasien"
+              value="{VNAMA_PASIEN}"
               placeholder="..."
             />
           </td>
@@ -72,32 +199,14 @@
               id="no-rek-medis"
               label="no-rek-medis"
               myid="check_cara"
+              value="{NO_RM}"
               placeholder="......"
             />
           </td>
         </tr>
         <tr>
           <td>Jenis Kelamin</td>
-          <td>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="jenis-kelamin"
-              label="jenis-kelamin"
-              value="L"
-              myid="check_cara"
-            />
-            <label for="l">L</label>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="jenis-kelamin"
-              label="jenis-kelamin"
-              value="P"
-              myid="check_cara"
-            />
-            <label for="l">P</label>
-          </td>
+          <td>{VSEX}</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
         </tr>
@@ -111,6 +220,7 @@
               name="umur"
               myid="check_cara"
               id="umur"
+              value="VAGE"
               label="umur"
             />
           </td>
@@ -128,6 +238,7 @@
               type="text"
               id="tanggal"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
               label="tanggal"
             />
@@ -142,6 +253,7 @@
               type="text"
               id="jam"
               placeholder="00.00"
+              mtype="pukul"
               myid="check_cara"
               label="jam"
             />
@@ -288,6 +400,7 @@
           <td>
             <p><b>HAMBATAN KEBERHASILAN</b></p>
             <textarea
+              type="textarea"
               rows="8"
               style="width: 100%"
               name="hambatan-keberhasilan"
@@ -302,6 +415,7 @@
           <td>
             <p><b>REKOMENDASI TINDAK LANJUT</b></p>
             <textarea
+              type="textarea"
               rows="8"
               style="width: 100%"
               name="rekomendasi-tindak-lanjut"
@@ -315,42 +429,83 @@
       </tbody>
     </table>
 
-    <table width="100%">
+    <table class="table" width="100%">
       <tbody>
         <tr>
-          <td width="80%">&nbsp;</td>
+          <td width="50%"><label for="">Bogor, tanggal / pukul</label></td>
           <td>
-            <div style="display: flex; gap: 5px; margin-top: 15px">
-              <label for="">Bogor, </label>
-              <input
-                style="flex: 1"
-                name="tgl-terapi"
-                type="text"
-                id="tgl-terapi"
-                label="tgl-terapi"
-                placeholder="dd/mm/yyyy"
-                myid="check_cara"
-              />
-            </div>
+            <input
+              type="text"
+              name="tgl-terapi"
+              id="tgl-terapi"
+              label="tgl-terapi"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+            />
             <br />
-            <p style="text-align: center">Terapi Wicara yang mengkaji,</p>
+            <input
+              type="text"
+              name="pukul-terapi"
+              id="pukul-terapi"
+              label="pukul-terapi"
+              placeholder="00.00"
+              mtype="pukul"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td><p>Terapi Wicara yang mengkaji,</p></td>
+          <td>
+            (<input
+              type="text"
+              style="flex: 1"
+              name="terapi-wicara-yg-mengkaji"
+              type="text"
+              id="terapi-wicara-yg-mengkaji"
+              label="terapi-wicara-yg-mengkaji"
+              placeholder="......"
+              myid="check_cara"
+            />)
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_terapi_wicara_yg_mengkaji"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_terapi_wicara_yg_mengkaji"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_terapi_wicara_yg_mengkaji"
+              id="paraf_ex_paraf_terapi_wicara_yg_mengkaji"
+              data-name="paraf"
+              data-id="ex_paraf_terapi_wicara_yg_mengkaji"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_terapi_wicara_yg_mengkaji"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
 
             <br />
-            <br />
-            <br />
-            <br />
-            <div style="display: flex; gap: 2px">
-              (<input
-                type="text"
-                style="flex: 1"
-                name="terapi-wicara-yg-mengkaji"
-                type="text"
-                id="terapi-wicara-yg-mengkaji"
-                label="terapi-wicara-yg-mengkaji"
-                placeholder="......"
-                myid="check_cara"
-              />)
-            </div>
+            <font id="ttdnya2"></font>
           </td>
         </tr>
       </tbody>
