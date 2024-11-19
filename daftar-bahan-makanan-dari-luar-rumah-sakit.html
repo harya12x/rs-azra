@@ -31,6 +31,158 @@
       padding: 5px;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+
+      $("label[id='def_img_ex_ttd_nama_pasien_keluarga']").each(function (
+        index
+      ) {
+        $(this).attr("id", `def_img_ex_ttd_nama_pasien_keluarga_${index + 1}`);
+        console.log($(this).attr("id"));
+      });
+
+      $("img[id='image_paraf_ex_ttd_nama_pasien_keluarga']").each(function (
+        index
+      ) {
+        $(this).attr(
+          "id",
+          `image_paraf_ex_ttd_nama_pasien_keluarga_${index + 1}`
+        );
+      });
+
+      $("input[id='paraf_ex_ttd_nama_pasien_keluarga']").each(function (index) {
+        $(this)
+          .attr("id", `image_paraf_ex_ttd_nama_pasien_keluarga_${index + 1}`)
+          .attr("name", `image_paraf_ex_ttd_nama_pasien_keluarga_${index + 1}`)
+          .attr("data-id", `ex_ttd_nama_pasien_keluarga_${index + 1}`);
+      });
+      $("a[data-id='ex_ttd_nama_pasien_keluarga']").each(function (index) {
+        $(this).attr("data-id", `ex_ttd_nama_pasien_keluarga_${index + 1}`);
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">
       DAFTAR BAHAN MAKANAN DARI LUAR RUMAH SAKIT <br />
@@ -62,29 +214,11 @@
               myid="check_cara"
               label="nama pasien"
               placeholder="..."
+              value="{VNAMA_PASIEN}"
             />
           </td>
           <td>Jenis Kelamin</td>
-          <td>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="laki-laki"
-              myid="check_cara"
-              value="L"
-              label="jenis kelamin"
-            />
-            <label for="l">L</label>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="perempuan"
-              myid="check_cara"
-              value="P"
-              label="jenis kelamin"
-            />
-            <label for="l">P</label>
-          </td>
+          <td>{VSEX}</td>
           <td>
             <label for="">Nomor Rekam Medis</label>
           </td>
@@ -94,6 +228,7 @@
               myid="check_cara"
               name="no_rm"
               id="no_rm"
+              value="{NO_RM}"
               label="nomor rekam medis"
             />
           </td>
@@ -103,25 +238,13 @@
           <td rowspan="2" colspan="3">
             <input
               type="text"
-              size="5"
               name="umur-thn-pengkajian"
               id="umur-thn-pengkajian"
               label="umur-thn-pengkajian"
               myid="check_cara"
               placeholder="..."
+              value="{VAGE}"
             />
-            <label for="">TH</label>
-
-            <input
-              type="text"
-              size="5"
-              name="umur-bln-pengkajian"
-              id="umur-bln-pengkajian"
-              label="umur-bln-pengkajian"
-              myid="check_cara"
-              placeholder="..."
-            />
-            <label for="">BLN</label>
           </td>
           <td>
             <label for="kelas"> Kelas </label>
@@ -132,6 +255,7 @@
               name="kelas"
               id="kelas"
               label="kelas"
+              value="{VNAMAKELAS}"
               placeholder="..."
               myid="check_cara"
             />
@@ -187,6 +311,7 @@
               label="tgl-daftar-bahan-1"
               myid="check_cara"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
             />
           </td>
           <td>
@@ -231,6 +356,43 @@
               type="text"
               myid="check_cara"
             />
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_petugas_1"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_petugas_1"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_petugas_1"
+              id="paraf_ex_paraf_petugas_1"
+              data-name="paraf"
+              data-id="ex_paraf_petugas_1"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_petugas_1"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
             <font id="ttdnya1"></font>
           </td>
           <td>
@@ -266,6 +428,7 @@
               label="tgl-daftar-bahan-2"
               myid="check_cara"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
             />
           </td>
           <td>
@@ -310,6 +473,43 @@
               type="text"
               myid="check_cara"
             />
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_petugas_2"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_petugas_2"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_petugas_2"
+              id="paraf_ex_paraf_petugas_2"
+              data-name="paraf"
+              data-id="ex_paraf_petugas_2"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_petugas_2"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
             <font id="ttdnya1"></font>
           </td>
           <td>
@@ -345,6 +545,7 @@
               label="tgl-daftar-bahan-3"
               myid="check_cara"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
             />
           </td>
           <td>
@@ -389,6 +590,43 @@
               type="text"
               myid="check_cara"
             />
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_petugas_3"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_petugas_3"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_petugas_3"
+              id="paraf_ex_paraf_petugas_3"
+              data-name="paraf"
+              data-id="ex_paraf_petugas_3"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_petugas_3"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
             <font id="ttdnya1"></font>
           </td>
           <td>
@@ -424,6 +662,7 @@
               label="tgl-daftar-bahan-4"
               myid="check_cara"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
             />
           </td>
           <td>
@@ -468,6 +707,43 @@
               type="text"
               myid="check_cara"
             />
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_petugas_4"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_petugas_4"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_petugas_4"
+              id="paraf_ex_paraf_petugas_4"
+              data-name="paraf"
+              data-id="ex_paraf_petugas_4"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_petugas_4"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
             <font id="ttdnya1"></font>
           </td>
           <td>
@@ -503,6 +779,7 @@
               label="tgl-daftar-bahan-5"
               myid="check_cara"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
             />
           </td>
           <td>
@@ -547,6 +824,43 @@
               type="text"
               myid="check_cara"
             />
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_petugas_5"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_petugas_5"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_petugas_5"
+              id="paraf_ex_paraf_petugas_5"
+              data-name="paraf"
+              data-id="ex_paraf_petugas_5"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_petugas_5"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
             <font id="ttdnya1"></font>
           </td>
           <td>
@@ -582,6 +896,7 @@
               label="tgl-daftar-bahan-6"
               myid="check_cara"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
             />
           </td>
           <td>
@@ -626,6 +941,43 @@
               type="text"
               myid="check_cara"
             />
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_petugas_6"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_petugas_6"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_petugas_6"
+              id="paraf_ex_paraf_petugas_6"
+              data-name="paraf"
+              data-id="ex_paraf_petugas_6"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_petugas_6"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
             <font id="ttdnya1"></font>
           </td>
           <td>
@@ -661,6 +1013,7 @@
               label="tgl-daftar-bahan-7"
               myid="check_cara"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
             />
           </td>
           <td>
@@ -705,6 +1058,43 @@
               type="text"
               myid="check_cara"
             />
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_petugas_7"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_petugas_7"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_petugas_7"
+              id="paraf_ex_paraf_petugas_7"
+              data-name="paraf"
+              data-id="ex_paraf_petugas_7"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_petugas_7"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
             <font id="ttdnya1"></font>
           </td>
           <td>
@@ -740,6 +1130,7 @@
               label="tgl-daftar-bahan-8"
               myid="check_cara"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
             />
           </td>
           <td>
@@ -784,6 +1175,43 @@
               type="text"
               myid="check_cara"
             />
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_petugas_8"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_petugas_8"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_petugas_8"
+              id="paraf_ex_paraf_petugas_8"
+              data-name="paraf"
+              data-id="ex_paraf_petugas_8"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_petugas_8"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
             <font id="ttdnya1"></font>
           </td>
           <td>
@@ -819,6 +1247,7 @@
               label="tgl-daftar-bahan-9"
               myid="check_cara"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
             />
           </td>
           <td>
@@ -863,6 +1292,43 @@
               type="text"
               myid="check_cara"
             />
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_petugas_9"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_petugas_9"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_petugas_9"
+              id="paraf_ex_paraf_petugas_9"
+              data-name="paraf"
+              data-id="ex_paraf_petugas_9"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_petugas_9"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
             <font id="ttdnya1"></font>
           </td>
           <td>
@@ -898,6 +1364,7 @@
               label="tgl-daftar-bahan-10"
               myid="check_cara"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
             />
           </td>
           <td>
@@ -942,6 +1409,43 @@
               type="text"
               myid="check_cara"
             />
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_petugas_10"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_petugas_10"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_petugas_10"
+              id="paraf_ex_paraf_petugas_10"
+              data-name="paraf"
+              data-id="ex_paraf_petugas_10"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_petugas_10"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
             <font id="ttdnya1"></font>
           </td>
           <td>
@@ -977,6 +1481,7 @@
               label="tgl-daftar-bahan-11"
               myid="check_cara"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
             />
           </td>
           <td>
@@ -1021,6 +1526,43 @@
               type="text"
               myid="check_cara"
             />
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_petugas_11"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_petugas_11"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_petugas_11"
+              id="paraf_ex_paraf_petugas_11"
+              data-name="paraf"
+              data-id="ex_paraf_petugas_11"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_petugas_11"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
             <font id="ttdnya1"></font>
           </td>
           <td>
@@ -1056,6 +1598,7 @@
               label="tgl-daftar-bahan-12"
               myid="check_cara"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
             />
           </td>
           <td>
@@ -1100,6 +1643,43 @@
               type="text"
               myid="check_cara"
             />
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_petugas_12"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_petugas_12"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_petugas_12"
+              id="paraf_ex_paraf_petugas_12"
+              data-name="paraf"
+              data-id="ex_paraf_petugas_12"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_petugas_12"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
             <font id="ttdnya1"></font>
           </td>
           <td>
@@ -1135,6 +1715,7 @@
               label="tgl-daftar-bahan-13"
               myid="check_cara"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
             />
           </td>
           <td>
@@ -1179,6 +1760,43 @@
               type="text"
               myid="check_cara"
             />
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_petugas_13"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_petugas_13"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_petugas_13"
+              id="paraf_ex_paraf_petugas_13"
+              data-name="paraf"
+              data-id="ex_paraf_petugas_13"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_petugas_13"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
             <font id="ttdnya1"></font>
           </td>
           <td>
@@ -1214,6 +1832,7 @@
               label="tgl-daftar-bahan-14"
               myid="check_cara"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
             />
           </td>
           <td>
@@ -1258,6 +1877,43 @@
               type="text"
               myid="check_cara"
             />
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_petugas_14"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_petugas_14"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_petugas_14"
+              id="paraf_ex_paraf_petugas_14"
+              data-name="paraf"
+              data-id="ex_paraf_petugas_14"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_petugas_14"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
             <font id="ttdnya1"></font>
           </td>
           <td>
@@ -1293,6 +1949,7 @@
               label="tgl-daftar-bahan-15"
               myid="check_cara"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
             />
           </td>
           <td>
@@ -1337,6 +1994,43 @@
               type="text"
               myid="check_cara"
             />
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_petugas_15"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_petugas_15"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_petugas_15"
+              id="paraf_ex_paraf_petugas_15"
+              data-name="paraf"
+              data-id="ex_paraf_petugas_15"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_petugas_15"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
             <font id="ttdnya1"></font>
           </td>
           <td>
@@ -1372,6 +2066,7 @@
               label="tgl-daftar-bahan-16"
               myid="check_cara"
               placeholder="dd/mm/yyyy"
+              class="datepicker"
             />
           </td>
           <td>
@@ -1416,6 +2111,43 @@
               type="text"
               myid="check_cara"
             />
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_petugas_16"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_petugas_16"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_petugas_16"
+              id="paraf_ex_paraf_petugas_16"
+              data-name="paraf"
+              data-id="ex_paraf_petugas_16"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_petugas_16"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
             <font id="ttdnya1"></font>
           </td>
           <td>
