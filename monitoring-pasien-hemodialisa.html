@@ -1,0 +1,3835 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MONITORING PASIEN HEMODIALISA</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">MONITORING PASIEN HEMODIALISA</h1>
+
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td width="15%">Tanggal :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="tgl-monitoring-hemodialisa"
+              id="tgl-monitoring-hemodialisa"
+              label="tgl-monitoring-hemodialisa"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+            />
+          </td>
+          <td width="15%">No. Tempat Tidur :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="no-tempat-tidur"
+              id="no-tempat-tidur"
+              label="no-tempat-tidur"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td width="15%">Jam :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="jam-monitoring-hemodialisa"
+              id="jam-monitoring-hemodialisa"
+              label="jam-monitoring-hemodialisa"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="00.00"
+              mtype="pukul"
+            />
+          </td>
+          <td width="15%">&nbsp;</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="no-tempat-tidur-2"
+              id="no-tempat-tidur-2"
+              label="no-tempat-tidur-2"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td width="15%">Dokter yang merawat :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="dokter-yg-merawat"
+              id="dokter-yg-merawat"
+              label="dokter-yg-merawat"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td width="15%">Mulai HD :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="mulai-hd"
+              id="mulai-hd"
+              label="mulai-hd"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td width="15%">Diagnosa Medis :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="diagnosa-medis"
+              id="diagnosa-medis"
+              label="diagnosa-medis"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td width="15%">Selesai HD :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="selesai-hd"
+              id="selesai-hd"
+              label="selesai-hd"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td width="15%">HD Ke :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="hd-ke"
+              id="hd-ke"
+              label="hd-ke"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td width="15%">Lama HD :</td>
+          <td width="35%">
+            <div style="display: flex; gap: 5px">
+              <input
+                type="text"
+                name="lama-hd"
+                id="lama-hd"
+                label="lama-hd"
+                style="flex: 1"
+                myid="check_cara"
+                placeholder="......"
+              />
+
+              <label for="">Jam :</label>
+              <input
+                type="text"
+                name="jam-hd"
+                id="jam-hd"
+                label="jam-hd"
+                style="flex: 1"
+                myid="check_cara"
+                placeholder="......"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td width="15%">Status Rawat :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="status-rawat"
+              id="status-rawat"
+              label="status-rawat"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td width="15%">UF Target / Uf Goal :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="uf-target-uf-goal"
+              id="uf-target-uf-goal"
+              label="uf-target-uf-goal"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td width="15%">BB Kering (DW) :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="bb-kering"
+              id="bb-kering"
+              label="bb-kering"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td width="15%">Volume Priming :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="volume-priming"
+              id="volume-priming"
+              label="volume-priming"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td width="15%">BB HD Terakhir :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="bb-hd-terakhir"
+              id="bb-hd-terakhir"
+              label="bb-hd-terakhir"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td width="15%">Heparinisasi :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="heparinisasi"
+              id="heparinisasi"
+              label="heparinisasi"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td width="15%">Mesin HD :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="mesin-hd"
+              id="mesin-hd"
+              label="mesin-hd"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td width="15%">Dosis Sirkulasi :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="dosis-sirkulasi"
+              id="dosis-sirkulasi"
+              label="dosis-sirkulasi"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td width="15%">Jenis Dialiser :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="jenis-dialiser"
+              id="jenis-dialiser"
+              label="jenis-dialiser"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td width="15%">Dosis Awal :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="dosis-awal"
+              id="dosis-awal"
+              label="dosis-awal"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td width="15%">Dialiser :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="dialiser"
+              id="dialiser"
+              label="dialiser"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+          <td width="15%">Dosis Maintenance :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="dosis-maintenance"
+              id="dosis-maintenance"
+              label="dosis-maintenance"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td width="15%">Dialisat :</td>
+          <td width="35%">
+            <input
+              type="radio"
+              name="dialisat"
+              id="dialisat"
+              label="dialisat"
+              myid="check_cara"
+              value="Asetat"
+            />
+            <label for="">Asetat / </label>
+            <input
+              type="radio"
+              name="dialisat"
+              id="dialisat"
+              label="dialisat"
+              myid="check_cara"
+              value="Bikarbonat"
+            />
+            <label for="">Bikarbonat</label>
+          </td>
+          <td width="15%">Tanpa Heparine, Penyebab :</td>
+          <td width="35%">
+            <input
+              type="text"
+              name="penyebab-tanpa-heparine"
+              id="penyebab-tanpa-heparine"
+              label="penyebab-tanpa-heparine"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td width="15%">Akses Vaskular :</td>
+          <td width="35%">
+            <input
+              type="radio"
+              name="akses-vaskular"
+              id="akses-vaskular"
+              label="akses-vaskular"
+              myid="check_cara"
+              value="Cimino"
+            />
+            <label for="">Cimino / </label>
+            <input
+              type="radio"
+              name="akses-vaskular"
+              id="akses-vaskular"
+              label="akses-vaskular"
+              myid="check_cara"
+              value="DL catheter"
+            />
+            <label for="">DL catheter</label>
+          </td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table table-bordered">
+      <thead>
+        <tr>
+          <th colspan="2">PENGKAJIAN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td width="20%"><b>KELUHAN UTAMA :</b></td>
+          <td>
+            <input
+              type="text"
+              name="keluhan-utama"
+              id="keluhan-utama"
+              label="keluhan-utama"
+              style="width: 100%"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <th colspan="2">PEMERIKSAAN FISIK</th>
+        </tr>
+        <tr>
+          <td width="20%">Keadaan Umum</td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="radio"
+                name="keadaan-umum"
+                id="keadaan-umum"
+                label="keadaan-umum"
+                myid="check_cara"
+                value="Baik"
+              />
+              <label for="">Baik / </label>
+              <input
+                type="radio"
+                name="keadaan-umum"
+                id="keadaan-umum"
+                label="keadaan-umum"
+                myid="check_cara"
+                value="Sedang"
+              />
+              <label for="">Sedang / </label>
+              <input
+                type="radio"
+                name="keadaan-umum"
+                id="keadaan-umum"
+                label="keadaan-umum"
+                myid="check_cara"
+                value="Berat"
+              />
+              <label for="">Berat</label>
+
+              <label style="margin-left: 50px" for="">GCS :</label>
+              <input
+                type="text"
+                name="gcs"
+                id="gcs"
+                label="gcs"
+                style="flex: 1"
+                myid="check_cara"
+                placeholder="......"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td width="20%">Tekanan Darah</td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                type="text"
+                name="tekanan-darah-mmhg"
+                id="tekanan-darah-mmhg"
+                label="tekanan-darah-mmhg"
+                style="flex: 1"
+                myid="check_cara"
+                placeholder="......"
+              />
+              <label for="">mmhg</label>
+
+              <label style="margin-left: 50px" for="">MAP :</label>
+              <input
+                type="text"
+                name="tekanan-darah-map"
+                id="tekanan-darah-map"
+                label="tekanan-darah-map"
+                style="flex: 1"
+                myid="check_cara"
+                placeholder="......"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td width="20%">Nadi</td>
+          <td>
+            <input
+              type="radio"
+              name="nadi"
+              id="nadi"
+              label="nadi"
+              myid="check_cara"
+              value="Regular"
+            />
+            <label for="">Regular / </label>
+            <input
+              type="radio"
+              name="nadi"
+              id="nadi"
+              label="nadi"
+              myid="check_cara"
+              value="Irregular"
+            />
+            <label for="">Irregular</label>
+          </td>
+        </tr>
+        <tr>
+          <td width="20%">Suhu</td>
+          <td>
+            <input
+              type="text"
+              name="suhu"
+              id="suhu"
+              label="suhu"
+              myid="check_cara"
+              placeholder="......"
+            />
+            <label for=""><sup>&deg;</sup>c</label>
+          </td>
+        </tr>
+        <tr>
+          <td width="20%">Respirasi</td>
+          <td>
+            <div style="display: flex; gap: 8px">
+              <input
+                type="checkbox"
+                name="respirasi-ronchi"
+                id="respirasi-ronchi"
+                label="respirasi-ronchi"
+                myid="check_cara"
+                value="Ronchi"
+              />
+              <label for="">Ronchi </label>
+              <input
+                type="checkbox"
+                name="respirasi-wheezing"
+                id="respirasi-wheezing"
+                label="respirasi-wheezing"
+                myid="check_cara"
+                value="wheezing"
+              />
+              <label for="">wheezing</label>
+              <input
+                type="checkbox"
+                name="respirasi-kusmaul"
+                id="respirasi-kusmaul"
+                label="respirasi-kusmaul"
+                myid="check_cara"
+                value="kusmaul"
+              />
+              <label for="">kusmaul </label>
+              <input
+                type="checkbox"
+                name="respirasi-dipsneu"
+                id="respirasi-dipsneu"
+                label="respirasi-dipsneu"
+                myid="check_cara"
+                value="dipsneu"
+              />
+              <label for="">dipsneu</label>
+              <input
+                type="checkbox"
+                name="respirasi-normal"
+                id="respirasi-normal"
+                label="respirasi-normal"
+                myid="check_cara"
+                value="normal"
+              />
+              <label for="">normal</label>
+
+              <label style="margin-left: 10px" for="">Frekuensi</label>
+              <input
+                type="text"
+                name="frekuensi-nadi"
+                id="frekuensi-nadi"
+                label="frekuensi-nadi"
+                myid="check_cara"
+                placeholder="......"
+              />
+              <label for="">x/menit</label>
+              <label style="margin-left: 10px" for="">SPO2</label>
+              <input
+                type="text"
+                name="frekuensi-spo2"
+                id="frekuensi-spo2"
+                label="frekuensi-spo2"
+                myid="check_cara"
+                placeholder="......"
+              />
+              <label for="">x/menit</label>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td colspan="2">
+            Risiko Jatuh : Pilih salah satu pilihan yang sesuai dengan cara
+            mengklik pada pilihan
+          </td>
+          <td>Skor</td>
+        </tr>
+        <tr>
+          <td rowspan="2">1. Riwayat jatuh</td>
+          <td>Tidak</td>
+          <td>
+            <input
+              class="risiko-jatuh"
+              type="radio"
+              name="riwayat-jatuh"
+              id="riwayat-jatuh"
+              label="riwayat-jatuh"
+              myid="check_cara"
+              value="0"
+            />
+            <label for="">0</label>
+          </td>
+        </tr>
+        <tr>
+          <td>Ya</td>
+          <td>
+            <input
+              class="risiko-jatuh"
+              type="radio"
+              name="riwayat-jatuh"
+              id="riwayat-jatuh"
+              label="riwayat-jatuh"
+              myid="check_cara"
+              value="25"
+            />
+            <label for="">25</label>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="2">2. Diagnosa Medis Sekunder (&gt; 1 diagnosa)</td>
+          <td>Tidak</td>
+          <td>
+            <input
+              class="risiko-jatuh"
+              type="radio"
+              name="diagnosa-medis-sekunder"
+              id="diagnosa-medis-sekunder"
+              label="diagnosa-medis-sekunder"
+              myid="check_cara"
+              value="0"
+            />
+            <label for="">0</label>
+          </td>
+        </tr>
+        <tr>
+          <td>Ya</td>
+          <td>
+            <input
+              class="risiko-jatuh"
+              type="radio"
+              name="diagnosa-medis-sekunder"
+              id="diagnosa-medis-sekunder"
+              label="diagnosa-medis-sekunder"
+              myid="check_cara"
+              value="15"
+            />
+            <label for="">15</label>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="2">3. Alat Bantu Jalan</td>
+          <td>Bedrest (bantuan perawat)</td>
+          <td>
+            <input
+              class="risiko-jatuh"
+              type="radio"
+              name="alat-bantu-jalan"
+              id="alat-bantu-jalan"
+              label="alat-bantu-jalan"
+              myid="check_cara"
+              value="0"
+            />
+            <label for="">0</label>
+          </td>
+        </tr>
+        <tr>
+          <td>Penopang, Tongkat, Walker, Kruk</td>
+          <td>
+            <input
+              class="risiko-jatuh"
+              type="radio"
+              name="alat-bantu-jalan"
+              id="alat-bantu-jalan"
+              label="alat-bantu-jalan"
+              myid="check_cara"
+              value="15"
+            />
+            <label for="">15</label>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="3">4. Memakai Terapi Heparine</td>
+          <td>Memegang Furniture (Kursi, Lemari)</td>
+          <td>
+            <input
+              class="risiko-jatuh"
+              type="radio"
+              name="memakai-terapi-heparine"
+              id="memakai-terapi-heparine"
+              label="memakai-terapi-heparine"
+              myid="check_cara"
+              value="30"
+            />
+            <label for="">30</label>
+          </td>
+        </tr>
+        <tr>
+          <td>Tidak</td>
+          <td>
+            <input
+              class="risiko-jatuh"
+              type="radio"
+              name="memakai-terapi-heparine"
+              id="memakai-terapi-heparine"
+              label="memakai-terapi-heparine"
+              myid="check_cara"
+              value="0"
+            />
+            <label for="">0</label>
+          </td>
+        </tr>
+        <tr>
+          <td>Ya</td>
+          <td>
+            <input
+              class="risiko-jatuh"
+              type="radio"
+              name="memakai-terapi-heparine"
+              id="memakai-terapi-heparine"
+              label="memakai-terapi-heparine"
+              myid="check_cara"
+              value="20"
+            />
+            <label for="">20</label>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="3">5. Cara berjalan / berpindah</td>
+          <td>Normal / Bedrest / Imobilisasi</td>
+          <td>
+            <input
+              class="risiko-jatuh"
+              type="radio"
+              name="cara-berjalan-berpindah"
+              id="cara-berjalan-berpindah"
+              label="cara-berjalan-berpindah"
+              myid="check_cara"
+              value="0"
+            />
+            <label for="">0</label>
+          </td>
+        </tr>
+        <tr>
+          <td>Lemah</td>
+          <td>
+            <input
+              class="risiko-jatuh"
+              type="radio"
+              name="cara-berjalan-berpindah"
+              id="cara-berjalan-berpindah"
+              label="cara-berjalan-berpindah"
+              myid="check_cara"
+              value="15"
+            />
+            <label for="">15</label>
+          </td>
+        </tr>
+        <tr>
+          <td>Terganggu</td>
+          <td>
+            <input
+              class="risiko-jatuh"
+              type="radio"
+              name="cara-berjalan-berpindah"
+              id="cara-berjalan-berpindah"
+              label="cara-berjalan-berpindah"
+              myid="check_cara"
+              value="30"
+            />
+            <label for="">30</label>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="2">6. Status Mental</td>
+          <td>Orientasi sesuai kemampuan diri sendiri</td>
+          <td>
+            <input
+              class="risiko-jatuh"
+              type="radio"
+              name="status-mental"
+              id="status-mental"
+              label="status-mental"
+              myid="check_cara"
+              value="0"
+            />
+            <label for="">0</label>
+          </td>
+        </tr>
+        <tr>
+          <td>Lupa Keterbatasan</td>
+          <td>
+            <input
+              class="risiko-jatuh"
+              type="radio"
+              name="status-mental"
+              id="status-mental"
+              label="status-mental"
+              myid="check_cara"
+              value="15"
+            />
+            <label for="">15</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">Kesimpulan : 0 - 24 (tidak berisiko),</label>
+            <label for="">25 - 50 (risiko rendah),</label>
+            <label for="">&gt; 50 (risiko tinggi)</label>
+          </td>
+          <td style="text-align: end">Total</td>
+          <td>
+            <input
+              readonly
+              type="text"
+              name="total-risiko-jatuh"
+              id="total-risiko-jatuh"
+              label="total-risiko-jatuh"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Diagonsis Keperawatan</th>
+          <th>Tujuan dan Kriteria Hasil</th>
+          <th>Intervensi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="width: 33%">
+            <div>
+              <input
+                type="checkbox"
+                name="diagnosis-keperawatan-pola-napas-tidak-efektif"
+                id="diagnosis-keperawatan-pola-napas-tidak-efektif"
+                label="diagnosis-keperawatan-pola-napas-tidak-efektif"
+                myid="check_cara"
+                value="Pola nafas tidak efektif"
+              />
+              <label for="">Pola napas tidak efektif (D.0005) b/d : </label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="d00005-sindrom-hipoventilasi"
+                id="d00005-sindrom-hipoventilasi"
+                label="d00005-sindrom-hipoventilasi"
+                myid="check_cara"
+                value="Sindrom hipoventilasi"
+              />
+              <label for="">Sindrom hipoventilasi</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="d00005-depresi-pusat-pernapasan"
+                id="d00005-depresi-pusat-pernapasan"
+                label="d00005-depresi-pusat-pernapasan"
+                myid="check_cara"
+                value="Depresi pusat pernapasan"
+              />
+              <label for="">Depresi pusat pernapasan</label>
+            </div>
+
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="d00005-penurunan-energi"
+                id="d00005-penurunan-energi"
+                label="d00005-penurunan-energi"
+                myid="check_cara"
+                value="Penurunan Energi"
+              />
+              <label for="">Penurunan Energi</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="d00005-posisi-tubuh-yg-menghambat-ekspansi-paru"
+                id="d00005-posisi-tubuh-yg-menghambat-ekspansi-paru"
+                label="d00005-posisi-tubuh-yg-menghambat-ekspansi-paru"
+                myid="check_cara"
+                value="Posisi tubuh yang menghambat ekspansi paru"
+              />
+              <label for="">Posisi tubuh yang menghambat ekspansi paru</label>
+            </div>
+          </td>
+          <td style="width: 33%">
+            <div>
+              <label for="">Pola Napas L.01001 Membaik Kriteria hasil : </label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="dispsneu-menurun"
+                id="dispsneu-menurun"
+                label="dispsneu-menurun"
+                myid="check_cara"
+                value="Dipsneu menurun"
+              />
+              <label for="">Dipsneu menurun</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="penggunaan-obat-bantu-napas-menurun"
+                id="penggunaan-obat-bantu-napas-menurun"
+                label="penggunaan-obat-bantu-napas-menurun"
+                myid="check_cara"
+                value="Penggunaan otot bantu napas menurun"
+              />
+              <label for="">Penggunaan otot bantu napas menurun</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="fase-expirasi-memanjang-menurun"
+                id="fase-expirasi-memanjang-menurun"
+                label="fase-expirasi-memanjang-menurun"
+                myid="check_cara"
+                value="Fase expirasi memanjang menurun"
+              />
+              <label for="">Fase expirasi memanjang menurun</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="frekuensi-napas-membaik"
+                id="frekuensi-napas-membaik"
+                label="frekuensi-napas-membaik"
+                myid="check_cara"
+                value="Frekuensi napas membaik"
+              />
+              <label for="">Frekuensi napas membaik</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="kedalaman-napas-membaik"
+                id="kedalaman-napas-membaik"
+                label="kedalaman-napas-membaik"
+                myid="check_cara"
+                value="Kedalaman napas membaik"
+              />
+              <label for="">Kedalaman napas membaik</label>
+            </div>
+          </td>
+          <td style="width: 33%">
+            <div>
+              <label for=""
+                >Manajemen jalan napas ( I.01011 ) Pemantauan Respirasi
+                (I.01014)</label
+              >
+            </div>
+            <p style="margin-top: 5px"><b>Observasi</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="monitor-pola-napas"
+                id="monitor-pola-napas"
+                label="monitor-pola-napas"
+                myid="check_cara"
+                value="Monitor pola napas ( frekwensi, kedalaman,usaha napas)"
+              />
+              <label for=""
+                >Monitor pola napas ( frekwensi, kedalaman,usaha napas)</label
+              >
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="monitor-bunyi-napas-tambahan"
+                id="monitor-bunyi-napas-tambahan"
+                label="monitor-bunyi-napas-tambahan"
+                myid="check_cara"
+                value="Monitor bunyi napas tambahan"
+              />
+              <label for="">Monitor bunyi napas tambahan</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="monitor-sputum"
+                id="monitor-sputum"
+                label="monitor-sputum"
+                myid="check_cara"
+                value="Monitor sputum ( jumlah, warna, aroma)"
+              />
+              <label for="">Monitor sputum ( jumlah, warna, aroma)</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="monitor-frekwensi-irama-kedalaman-upaya-napas"
+                id="monitor-frekwensi-irama-kedalaman-upaya-napas"
+                label="monitor-frekwensi-irama-kedalaman-upaya-napas"
+                myid="check_cara"
+                value="Monitor frekwensi, irama, kedalaman dan upaya napas"
+              />
+              <label for=""
+                >Monitor frekwensi, irama, kedalaman dan upaya napas</label
+              >
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="monitor-pola-napas"
+                id="monitor-pola-napas"
+                label="monitor-pola-napas"
+                myid="check_cara"
+                value="Monitor pola napas ( bradipnea, takipnea, hiperventilassi, kussmaul, cheyne-stokes, Biot, ataksik)"
+              />
+              <label for=""
+                >Monitor pola napas ( bradipnea, takipnea, hiperventilassi,
+                kussmaul, cheyne-stokes, Biot, ataksik)</label
+              >
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="palpasi-kesimetrisan-ekspansi-paru"
+                id="palpasi-kesimetrisan-ekspansi-paru"
+                label="palpasi-kesimetrisan-ekspansi-paru"
+                myid="check_cara"
+                value="Palpasi kesimetrisan ekspansi paru"
+              />
+              <label for="">Palpasi kesimetrisan ekspansi paru</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="monitor-adanya-sumbatan-jalan-napas"
+                id="monitor-adanya-sumbatan-jalan-napas"
+                label="monitor-adanya-sumbatan-jalan-napas"
+                myid="check_cara"
+                value="Monitor adanya sumbatan jalan napas"
+              />
+              <label for="">Monitor adanya sumbatan jalan napas</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="monitor-saturasi-oksigen"
+                id="monitor-saturasi-oksigen"
+                label="monitor-saturasi-oksigen"
+                myid="check_cara"
+                value="Monitor saturasi oksigen"
+              />
+              <label for="">Monitor saturasi oksigen</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="monitor-agd"
+                id="monitor-agd"
+                label="monitor-agd"
+                myid="check_cara"
+                value="Monitor AGD"
+              />
+              <label for="">Monitor AGD</label>
+            </div>
+            <br />
+            <p style="margin-top: 5px"><b>Terapeutik</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="lakukan-su-pada-saat-hd"
+                id="lakukan-su-pada-saat-hd"
+                label="lakukan-su-pada-saat-hd"
+                myid="check_cara"
+                value="Lakukan SU pada saat HD"
+              />
+              <label for="">Lakukan SU pada saat HD</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="posisikan-semi-fowler-atau-fowler"
+                id="posisikan-semi-fowler-atau-fowler"
+                label="posisikan-semi-fowler-atau-fowler"
+                myid="check_cara"
+                value="Posisikan semi-fowler atau fowler"
+              />
+              <label for="">Posisikan semi-fowler atau fowler</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="berikan-oksigen-jika-perlu"
+                id="berikan-oksigen-jika-perlu"
+                label="berikan-oksigen-jika-perlu"
+                myid="check_cara"
+                value="Berikan oksigen, jika perlu"
+              />
+              <label for="">Berikan oksigen, jika perlu</label>
+            </div>
+            <br />
+            <p style="margin-top: 5px"><b>Edukasi</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="atur-interval-pemantauan-respirasi-sesuai-kondisi-pasien"
+                id="atur-interval-pemantauan-respirasi-sesuai-kondisi-pasien"
+                label="atur-interval-pemantauan-respirasi-sesuai-kondisi-pasien"
+                myid="check_cara"
+                value="Atur interval pemantauan respirasi sesuai kondisi pasien"
+              />
+              <label
+                >Atur interval pemantauan respirasi sesuai kondisi pasien</label
+              >
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="jelaskan-tujuan-dan-prosedur-pemantauan"
+                id="jelaskan-tujuan-dan-prosedur-pemantauan"
+                label="jelaskan-tujuan-dan-prosedur-pemantauan"
+                myid="check_cara"
+                value="Jelaskan tujuan dan prosedur pemantauan"
+              />
+              <label>Jelaskan tujuan dan prosedur pemantauan</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="informasikan-hasil-pemantauan-jika-perlu"
+                id="informasikan-hasil-pemantauan-jika-perlu"
+                label="informasikan-hasil-pemantauan-jika-perlu"
+                myid="check_cara"
+                value="Informasikan hasil pemantauan, jika perlu"
+              />
+              <label>Informasikan hasil pemantauan, jika perlu</label>
+            </div>
+            <br />
+            <p style="margin-top: 5px"><b>Kolaborasi</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="kolaborasi-pemberian"
+                id="kolaborasi-pemberian"
+                label="kolaborasi-pemberian"
+                myid="check_cara"
+                value="kolaborasi pemberian"
+              />
+              <label>kolaborasi pemberian :</label>
+            </div>
+            <div style="margin-left: 40px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="kolaborasi-pemberian-transfusi"
+                id="kolaborasi-pemberian-transfusi"
+                label="kolaborasi-pemberian-transfusi"
+                myid="check_cara"
+                value="Transfusi"
+              />
+              <label>Transfusi :</label>
+            </div>
+            <div style="margin-left: 40px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="kolaborasi-pemberian-antibiotik"
+                id="kolaborasi-pemberian-antibiotik"
+                label="kolaborasi-pemberian-antibiotik"
+                myid="check_cara"
+                value="Antibiotik"
+              />
+              <label>Antibiotik :</label>
+            </div>
+            <div style="margin-left: 40px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="kolaborasi-pemberian-bronchodilator"
+                id="kolaborasi-pemberian-bronchodilator"
+                label="kolaborasi-pemberian-bronchodilator"
+                myid="check_cara"
+                value="Bronchodilator"
+              />
+              <label>Bronchodilator :</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div>
+              <input
+                type="checkbox"
+                name="d00005-hipervolemia"
+                id="d00005-hipervolemia"
+                label="d00005-hipervolemia"
+                myid="check_cara"
+                value="HIPERVOLEMIA"
+              />
+              <label for="">HIPERVOLEMIA ( D.0022) b/d :</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="hipervolemia-gangguan-mekanisme"
+                id="hipervolemia-gangguan-mekanisme"
+                label="hipervolemia-gangguan-mekanisme"
+                myid="check_cara"
+                value="Gangguan Mekanisme Regulasi: filtrasi glomrolus"
+              />
+              <label for=""
+                >Gangguan Mekanisme Regulasi: filtrasi glomrolus</label
+              >
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="hipervolemia-kelebihan-asupan-cairan"
+                id="hipervolemia-kelebihan-asupan-cairan"
+                label="hipervolemia-kelebihan-asupan-cairan"
+                myid="check_cara"
+                value="Kelebihan Asupan Cairan"
+              />
+              <label for="">Kelebihan Asupan Cairan</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="hipervolemia-kelebihan-asupan-natrium"
+                id="hipervolemia-kelebihan-asupan-natrium"
+                label="hipervolemia-kelebihan-asupan-natrium"
+                myid="check_cara"
+                value="Kelebihan Asupan Natrium"
+              />
+              <label for="">Kelebihan Asupan Natrium</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <label for=""
+                >Keseimbangan cairan (L.03020) Meningkat Kriteria hasil:
+              </label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="keseimbangan-cairan-output-urine-meningkat"
+                id="keseimbangan-cairan-output-urine-meningkat"
+                label="keseimbangan-cairan-output-urine-meningkat"
+                myid="check_cara"
+                value="Output urine meningkat"
+              />
+              <label for="">Output urine meningkat</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="keseimbangan-cairan-edema-menurun"
+                id="keseimbangan-cairan-edema-menurun"
+                label="keseimbangan-cairan-edema-menurun"
+                myid="check_cara"
+                value="Edema menurun"
+              />
+              <label for="">Edema menurun</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="keseimbangan-cairan-tekanan-darah-membaik"
+                id="keseimbangan-cairan-tekanan-darah-membaik"
+                label="keseimbangan-cairan-tekanan-darah-membaik"
+                myid="check_cara"
+                value="Tekanan darah membaik"
+              />
+              <label for="">Tekanan darah membaik</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="keseimbangan-cairan-frekuensi-nadi-membaik"
+                id="keseimbangan-cairan-frekuensi-nadi-membaik"
+                label="keseimbangan-cairan-frekuensi-nadi-membaik"
+                myid="check_cara"
+                value="Frekuensi nadi membaik"
+              />
+              <label for="">Frekuensi nadi membaik</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="keseimbangan-cairan-kekuatan-nadi-membaik"
+                id="keseimbangan-cairan-kekuatan-nadi-membaik"
+                label="keseimbangan-cairan-kekuatan-nadi-membaik"
+                myid="check_cara"
+                value="Kekuatan nadi membaik"
+              />
+              <label for="">Kekuatan nadi membaik</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="keseimbangan-cairan-kurgor-kulit-membaik"
+                id="keseimbangan-cairan-kurgor-kulit-membaik"
+                label="keseimbangan-cairan-kurgor-kulit-membaik"
+                myid="check_cara"
+                value="Kurgor kulit membaik"
+              />
+              <label for="">Kurgor kulit membaik</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <label for=""
+                >Manajemen Hipervolemia (I.03114), Pemantauan cairan (I.03101),
+                Observasi Dukungan Kepatuhan Program Pengobatan (I.12361)</label
+              >
+            </div>
+            <p style="margin-top: 5px"><b>Observasi</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="periksa-tanda-dan-gejala-hipervolemia"
+                id="periksa-tanda-dan-gejala-hipervolemia"
+                label="periksa-tanda-dan-gejala-hipervolemia"
+                myid="check_cara"
+                value="Periksa tanda dan gejala hipervolemia"
+              />
+              <label for="">Periksa tanda dan gejala hipervolemia</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="identifikasi-penyebab-hipervolemia"
+                id="identifikasi-penyebab-hipervolemia"
+                label="identifikasi-penyebab-hipervolemia"
+                myid="check_cara"
+                value="Identifikasi penyebab hipervolemia"
+              />
+              <label for="">Identifikasi penyebab hipervolemia</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="monitor-tanda-hemokonsentrasi"
+                id="monitor-tanda-hemokonsentrasi"
+                label="monitor-tanda-hemokonsentrasi"
+                myid="check_cara"
+                value="Monitor tanda hemokonsentrasi (kadar natrium)"
+              />
+              <label for=""
+                >Monitor tanda hemokonsentrasi (kadar natrium)</label
+              >
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="monitor-status-haemodinamik"
+                id="monitor-status-haemodinamik"
+                label="monitor-status-haemodinamik"
+                myid="check_cara"
+                value="Monitor status haemodinamik"
+              />
+              <label for="">Monitor status haemodinamik</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="monitor-intake-dan-output-cairan"
+                id="monitor-intake-dan-output-cairan"
+                label="monitor-intake-dan-output-cairan"
+                myid="check_cara"
+                value="Monitor intake dan output cairan"
+              />
+              <label for="">Monitor intake dan output cairan</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="monitor-efek-samping-diuretik"
+                id="monitor-efek-samping-diuretik"
+                label="monitor-efek-samping-diuretik"
+                myid="check_cara"
+                value="Monitor efek samping diuretik"
+              />
+              <label for="">Monitor efek samping diuretik</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="identifikasi-sumber-masukan-cairan-masa-interdialisis"
+                id="identifikasi-sumber-masukan-cairan-masa-interdialisis"
+                label="identifikasi-sumber-masukan-cairan-masa-interdialisis"
+                myid="check_cara"
+                value="Identifikasi sumber masukan cairan masa interdialisis"
+              />
+              <label for=""
+                >Identifikasi sumber masukan cairan masa interdialisis</label
+              >
+            </div>
+            <br />
+            <p style="margin-top: 5px"><b>Terapeutik</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="timbang-bb-sebelum-dan-sesudah-hd"
+                id="timbang-bb-sebelum-dan-sesudah-hd"
+                label="timbang-bb-sebelum-dan-sesudah-hd"
+                myid="check_cara"
+                value="Timbang BB sebelum dan sesudah HD"
+              />
+              <label for="">Timbang BB sebelum dan sesudah HD</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="batasi-asupan-garam"
+                id="batasi-asupan-garam"
+                label="batasi-asupan-garam"
+                myid="check_cara"
+                value="Batasi asupan garam"
+              />
+              <label for="">Batasi asupan garam</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="tinggikan-kepala-30-45"
+                id="tinggikan-kepala-30-45"
+                label="tinggikan-kepala-30-45"
+                myid="check_cara"
+                value="Tinggikan Kepala 30 - 45"
+              />
+              <label for="">Tinggikan Kepala 30 - 45&deg;</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="batasi-masukan-cairan-pada-saat-priming-wash-out-hd"
+                id="batasi-masukan-cairan-pada-saat-priming-wash-out-hd"
+                label="batasi-masukan-cairan-pada-saat-priming-wash-out-hd"
+                myid="check_cara"
+                value="Batasi masukan cairan pada saat priming & wash out HD"
+              />
+              <label for=""
+                >Batasi masukan cairan pada saat priming & wash out HD</label
+              >
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="lakukan-hd-dengan-uf-tmp"
+                id="lakukan-hd-dengan-uf-tmp"
+                label="lakukan-hd-dengan-uf-tmp"
+                myid="check_cara"
+                value="Lakukan HD dengan UF & TMP sesuai dengan kenaikan BB interdialisis"
+              />
+              <label for=""
+                >Lakukan HD dengan UF & TMP sesuai dengan kenaikan BB
+                interdialisis</label
+              >
+            </div>
+            <br />
+            <p style="margin-top: 5px"><b>Edukasi</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="ajarkan-cara-membatasi-cairan"
+                id="ajarkan-cara-membatasi-cairan"
+                label="ajarkan-cara-membatasi-cairan"
+                myid="check_cara"
+                value="Ajarkan cara membatasi cairan"
+              />
+              <label for="">Ajarkan cara membatasi cairan</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="ajarkan-cara-mengukur-dan-mencatat-asupan-dan-haluaran-cairan"
+                id="ajarkan-cara-mengukur-dan-mencatat-asupan-dan-haluaran-cairan"
+                label="ajarkan-cara-mengukur-dan-mencatat-asupan-dan-haluaran-cairan"
+                myid="check_cara"
+                value="Ajarkan cara mengukur dan mencatat asupan dan haluaran cairan"
+              />
+              <label for=""
+                >Ajarkan cara mengukur dan mencatat asupan dan haluaran
+                cairan</label
+              >
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="jelaskan-pada-keluarga-klien-rasional-pembatasan-cairan"
+                id="jelaskan-pada-keluarga-klien-rasional-pembatasan-cairan"
+                label="jelaskan-pada-keluarga-klien-rasional-pembatasan-cairan"
+                myid="check_cara"
+                value="Jelaskan pada keluarga & klien rasional pembatasan cairan"
+              />
+              <label for=""
+                >Jelaskan pada keluarga & klien rasional pembatasan
+                cairan</label
+              >
+            </div>
+            <br />
+            <p style="margin-top: 5px"><b>Kolaborasi</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="kolaborasi-dalam-pemberian-diuretik"
+                id="kolaborasi-dalam-pemberian-diuretik"
+                label="kolaborasi-dalam-pemberian-diuretik"
+                myid="check_cara"
+                value="Kolaborasi dalam pemberian diuretik"
+              />
+              <label for="">Kolaborasi dalam pemberian diuretik</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="kolaborasi-penggantian-kehilangan-kalium-natrium-akibat-diuretic"
+                id="kolaborasi-penggantian-kehilangan-kalium-natrium-akibat-diuretic"
+                label="kolaborasi-penggantian-kehilangan-kalium-natrium-akibat-diuretic"
+                myid="check_cara"
+                value="Kolaborasi penggantian kehilangan kalium, natrium akibat diuretic"
+              />
+              <label for=""
+                >Kolaborasi penggantian kehilangan kalium, natrium akibat
+                diuretic</label
+              >
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div>
+              <input
+                type="checkbox"
+                name="risiko-penurunan-curah-jantung"
+                id="risiko-penurunan-curah-jantung"
+                label="risiko-penurunan-curah-jantung"
+                myid="check_cara"
+                value="RISIKO PENURUNAN CURAH JANTUNG"
+              />
+              <label for=""
+                >RISIKO PENURUNAN CURAH JANTUNG (D.00011) b/d
+              </label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="perubahan-irama-jantung"
+                id="perubahan-irama-jantung"
+                label="perubahan-irama-jantung"
+                myid="check_cara"
+                value="Perubahan irama jantung"
+              />
+              <label for="">Perubahan irama jantung </label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="perubahan-frekuensi-jantung"
+                id="perubahan-frekuensi-jantung"
+                label="perubahan-frekuensi-jantung"
+                myid="check_cara"
+                value="Perubahan frekuensi jantung"
+              />
+              <label for="">Perubahan frekuensi jantung </label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="perubahan-kontraktilitas"
+                id="perubahan-kontraktilitas"
+                label="perubahan-kontraktilitas"
+                myid="check_cara"
+                value="Perubahan kontraktilitas"
+              />
+              <label for="">Perubahan kontraktilitas</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="perubahan-preload"
+                id="perubahan-preload"
+                label="perubahan-preload"
+                myid="check_cara"
+                value="Perubahan preload"
+              />
+              <label for="">Perubahan preload</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="perubahan-afterload"
+                id="perubahan-afterload"
+                label="perubahan-afterload"
+                myid="check_cara"
+                value="Perubahan afterload"
+              />
+              <label for="">Perubahan afterload</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <label for="">Curah jantung meningkat (L.02008)</label>
+            </div>
+            <p style="margin-top: 5px">Kriteria hasil:</p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="kekuatan-nadi-perifer-meningkat"
+                id="kekuatan-nadi-perifer-meningkat"
+                label="kekuatan-nadi-perifer-meningkat"
+                myid="check_cara"
+                value="Kekuatan nadi perifer meningkat"
+              />
+              <label for="">Kekuatan nadi perifer meningkat</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="palpitasi-menurun"
+                id="palpitasi-menurun"
+                label="palpitasi-menurun"
+                myid="check_cara"
+                value="Palpitasi menurun"
+              />
+              <label for="">Palpitasi menurun</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="bradikari-menurun"
+                id="bradikari-menurun"
+                label="bradikari-menurun"
+                myid="check_cara"
+                value="Bradikari menurun"
+              />
+              <label for="">Bradikari menurun</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="tachikardi-menurun"
+                id="tachikardi-menurun"
+                label="tachikardi-menurun"
+                myid="check_cara"
+                value="Tachikardi menurun"
+              />
+              <label for="">Tachikardi menurun</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="edema-menurun"
+                id="edema-menurun"
+                label="edema-menurun"
+                myid="check_cara"
+                value="Edema menurun"
+              />
+              <label for="">Edema menurun</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="tekanan-darah-membaik"
+                id="tekanan-darah-membaik"
+                label="tekanan-darah-membaik"
+                myid="check_cara"
+                value="Tekanan darah membaik"
+              />
+              <label for="">Tekanan darah membaik</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <label for=""
+                >Perawatan jantung (I.02075), perawatan jantung akut (I.02076)
+              </label>
+            </div>
+            <p style="margin-top: 5px"><b>Observasi</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="identifikasi-tanda-gejala-primer"
+                id="identifikasi-tanda-gejala-primer"
+                label="identifikasi-tanda-gejala-primer"
+                myid="check_cara"
+                value="Identifikasi tanda primer Penurunan curah jantung"
+              />
+              <label for=""
+                >Identifikasi tanda/gejala primer Penurunan curah jantung</label
+              >
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="monitor-tekanan-darah"
+                id="monitor-tekanan-darah"
+                label="monitor-tekanan-darah"
+                myid="check_cara"
+                value="Monitor tekanan darah"
+              />
+              <label for="">Monitor tekanan darah</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="monitor-intake-dan-output-cairan"
+                id="monitor-intake-dan-output-cairan"
+                label="monitor-intake-dan-output-cairan"
+                myid="check_cara"
+                value="Monitor intake dan output cairan"
+              />
+              <label for="">Monitor intake dan output cairan</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="monitor-saturasi-oksigen"
+                id="monitor-saturasi-oksigen"
+                label="monitor-saturasi-oksigen"
+                myid="check_cara"
+                value="Monitor saturasi oksigen"
+              />
+              <label for="">Monitor saturasi oksigen</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="monitor-keluhan-nyeri-dada"
+                id="monitor-keluhan-nyeri-dada"
+                label="monitor-keluhan-nyeri-dada"
+                myid="check_cara"
+                value="Monitor keluhan nyeri dada"
+              />
+              <label for="">Monitor keluhan nyeri dada</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="identifikasi-karakteristik-nyeri-dada"
+                id="identifikasi-karakteristik-nyeri-dada"
+                label="identifikasi-karakteristik-nyeri-dada"
+                myid="check_cara"
+                value="Identifikasi karakteristik nyeri dada"
+              />
+              <label for="">Identifikasi karakteristik nyeri dada</label>
+            </div>
+            <br />
+            <p style="margin-top: 5px"><b>Teurapeutik</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="posisikan-pasien-semi-fowler-atau-fowler"
+                id="posisikan-pasien-semi-fowler-atau-fowler"
+                label="posisikan-pasien-semi-fowler-atau-fowler"
+                myid="check_cara"
+                value="Posisikan pasien semi-fowler atau fowler"
+              />
+              <label for="">Posisikan pasien semi-fowler atau fowler</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="beriksan-oksigen-bila-spo2-kurang-94"
+                id="beriksan-oksigen-bila-spo2-kurang-94"
+                label="beriksan-oksigen-bila-spo2-kurang-94"
+                myid="check_cara"
+                value="Berikan oksigen bila SPO2 &lt; 94"
+              />
+              <label for="">Berikan oksigen bila SPO2 &lt; 94&percnt;</label>
+            </div>
+
+            <br />
+            <p style="margin-top: 5px"><b>Edukasi</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="anjurkan-segera-melaporkan-jika-nyeri-dada-selama-hd"
+                id="anjurkan-segera-melaporkan-jika-nyeri-dada-selama-hd"
+                label="anjurkan-segera-melaporkan-jika-nyeri-dada-selama-hd"
+                myid="check_cara"
+                value="Segera melaporkan jika nyeri dada selama HD"
+              />
+              <label for=""
+                >Anjurkan segera melaporkan jika nyeri dada selama HD</label
+              >
+            </div>
+            <br />
+            <p style="margin-top: 5px"><b>Kolaborasi</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="kolaborasi-pemberian-obat"
+                id="kolaborasi-pemberian-obat"
+                label="kolaborasi-pemberian-obat"
+                myid="check_cara"
+                value="Kolaborasi Pemberian Obat"
+              />
+              <label for=""
+                >Kolaborasi Pemberian Obat (aritmia, antiplatelet, antiangina,
+                morfin, inotropik) jika perlu.</label
+              >
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="pemeriksaan-x-ray-dada"
+                id="pemeriksaan-x-ray-dada"
+                label="pemeriksaan-x-ray-dada"
+                myid="check_cara"
+                value="Pemeriksaan X-Ray dada, jika perlu."
+              />
+              <label for="">Pemeriksaan X-Ray dada, jika perlu.</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div>
+              <input
+                type="checkbox"
+                name="risiko-ketidakseimbangan-elektrolit"
+                id="risiko-ketidakseimbangan-elektrolit"
+                label="risiko-ketidakseimbangan-elektrolit"
+                myid="check_cara"
+                value="RISIKO KETIDAKSEIMBANGAN ELEKTROLIT"
+              />
+              <label for=""
+                >RISIKO KETIDAKSEIMBANGAN ELEKTROLIT (D.0037) b/d</label
+              >
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="ketidakseimbangan-cairan"
+                id="ketidakseimbangan-cairan"
+                label="ketidakseimbangan-cairan"
+                myid="check_cara"
+                value="Ketidakseimbangan cairan"
+              />
+              <label for="">Ketidakseimbangan cairan</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="kelebihan-volume-cairan"
+                id="kelebihan-volume-cairan"
+                label="kelebihan-volume-cairan"
+                myid="check_cara"
+                value="Kelebihan volume cairan"
+              />
+              <label for="">Kelebihan volume cairan</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="gangguan-mekanisme-regulasi"
+                id="gangguan-mekanisme-regulasi"
+                label="gangguan-mekanisme-regulasi"
+                myid="check_cara"
+                value="gangguan mekansime regulasi (DM)"
+              />
+              <label for="">gangguan mekansime regulasi (DM)</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="disfungsi-ginjal"
+                id="disfungsi-ginjal"
+                label="disfungsi-ginjal"
+                myid="check_cara"
+                value="Disfungsi ginjal"
+              />
+              <label for="">Disfungsi ginjal</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="disfungsi-regulasi-endokrin"
+                id="disfungsi-regulasi-endokrin"
+                label="disfungsi-regulasi-endokrin"
+                myid="check_cara"
+                value="Disfungsi regulasi endokrin"
+              />
+              <label for="">Disfungsi regulasi endokrin</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <label for=""
+                >Keseimbangan elektrolit meningkat ((L.03021))</label
+              >
+            </div>
+            <p style="margin-top: 5px">Kriteria hasil :</p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="serum-natrium-membaik"
+                id="serum-natrium-membaik"
+                label="serum-natrium-membaik"
+                myid="check_cara"
+                value="Serum Natrium membaik"
+              />
+              <label for="">Serum Natrium membaik</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="serum-kalium-membaik"
+                id="serum-kalium-membaik"
+                label="serum-kalium-membaik"
+                myid="check_cara"
+                value="Serum kalium membaik"
+              />
+              <label for="">Serum kalium membaik</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="serum-clorida-membaik"
+                id="serum-clorida-membaik"
+                label="serum-clorida-membaik"
+                myid="check_cara"
+                value="Serum clorida membaik"
+              />
+              <label for="">Serum clorida membaik</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <label for="">Pemantauan Elektrolit (I.03122)</label>
+            </div>
+            <p style="margin-top: 5px"><b>Observasi</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="kemungkinan-penyebab-ketidakseimbangan-elektrolit"
+                id="kemungkinan-penyebab-ketidakseimbangan-elektrolit"
+                label="kemungkinan-penyebab-ketidakseimbangan-elektrolit"
+                myid="check_cara"
+                value="kemungkinan penyebab ketidakseimbangan elektrolit"
+              />
+              <label for=""
+                >Monitor kemungkinan penyebab ketidakseimbangan elektrolit ( ) 2
+                Monitor kadar elektrolit serum</label
+              >
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="kemungkinan-penyebab-ketidakseimbangan-elektrolit"
+                id="kemungkinan-penyebab-ketidakseimbangan-elektrolit"
+                label="kemungkinan-penyebab-ketidakseimbangan-elektrolit"
+                myid="check_cara"
+                value="hiponatremia, hipernatremia, hipokalemia, hiperkalemia"
+              />
+              <label for=""
+                >Monitor tanda dan gejala hiponatremia, hipernatremia,
+                hipokalemia, hiperkalemia
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div>
+              <input
+                type="checkbox"
+                name="risiko-ketidakseimbangan-cairan"
+                id="risiko-ketidakseimbangan-cairan"
+                label="risiko-ketidakseimbangan-cairan"
+                myid="check_cara"
+                value="RISIKO KETIDAKSEIMBANGAN CAIRAN"
+              />
+              <label for=""> RISIKO KETIDAKSEIMBANGAN CAIRAN (D.0036) </label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="d0036-penyakit-ginjal"
+                id="d0036-penyakit-ginjal"
+                label="d0036-penyakit-ginjal"
+                myid="check_cara"
+                value="Penyakit ginjal"
+              />
+              <label for="">Penyakit ginjal</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="d0036-asites"
+                id="d0036-asites"
+                label="d0036-asites"
+                myid="check_cara"
+                value="Asites"
+              />
+              <label for="">Asites</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="d0036-pendarahan"
+                id="d0036-pendarahan"
+                label="d0036-pendarahan"
+                myid="check_cara"
+                value="Pendarahan"
+              />
+              <label for="">Pendarahan</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <label for=""
+                >Keseimbangan cairan meningkat diberi kode L.03020</label
+              >
+            </div>
+            <p style="margin-top: 5px">Kriteria hasil :</p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="L03020-output-urine-meningkat"
+                id="L03020-output-urine-meningkat"
+                label="L03020-output-urine-meningkat"
+                myid="check_cara"
+                value="Output urine meningkat"
+              />
+              <label for="">Output urine meningkat</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="L03020-edema-menurun"
+                id="L03020-edema-menurun"
+                label="L03020-edema-menurun"
+                myid="check_cara"
+                value="Edema menurun"
+              />
+              <label for="">Edema menurun</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="L03020-tekanan-darah-membaik"
+                id="L03020-tekanan-darah-membaik"
+                label="L03020-tekanan-darah-membaik"
+                myid="check_cara"
+                value="Tekanan darah membaik"
+              />
+              <label for="">Tekanan darah membaik</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="L03020-kekuatan-nadi-meningkat"
+                id="L03020-kekuatan-nadi-meningkat"
+                label="L03020-kekuatan-nadi-meningkat"
+                myid="check_cara"
+                value="Kekuatan nadi meningkat"
+              />
+              <label for="">Kekuatan nadi meningkat</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="L03020-berat-badan-membaik"
+                id="L03020-berat-badan-membaik"
+                label="L03020-berat-badan-membaik"
+                myid="check_cara"
+                value="Berat badan membaik"
+              />
+              <label for="">Berat badan membaik</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <label for=""
+                >Manajemen Cairan (I.03098), Pemantauan Cairan (I.03121)</label
+              >
+            </div>
+            <p style="margin-top: 5px"><b>Observasi</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="sebelum-dianalisis-sesudah-dianalisis"
+                id="sebelum-dianalisis-sesudah-dianalisis"
+                label="sebelum-dianalisis-sesudah-dianalisis"
+                myid="check_cara"
+                value="BB sebelum dialisis dan sesudah dialisis"
+              />
+              <label for=""
+                >Monitor BB sebelum dialisis dan sesudah dialisis</label
+              >
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="tekanan-darah-nadi-respirasi"
+                id="tekanan-darah-nadi-respirasi"
+                label="tekanan-darah-nadi-respirasi"
+                myid="check_cara"
+                value="Monitor Tekanan darah, nadi, respirasi"
+              />
+              <label for="">Monitor Tekanan darah, nadi, respirasi</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="waktu-pengisian-kapiler"
+                id="waktu-pengisian-kapiler"
+                label="waktu-pengisian-kapiler"
+                myid="check_cara"
+                value="Monitor waktu pengisan kapiler (CRT)"
+              />
+              <label for="">Monitor waktu pengisan kapiler (CRT)</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="turgor-kulit"
+                id="turgor-kulit"
+                label="turgor-kulit"
+                myid="check_cara"
+                value="Monitor turgor kulit"
+              />
+              <label for="">Monitor turgor kulit</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="intake-output-cairan"
+                id="intake-output-cairan"
+                label="intake-output-cairan"
+                myid="check_cara"
+                value="Monitor intake output cairan"
+              />
+              <label for="">Monitor intake output cairan</label>
+            </div>
+            <br />
+            <p style="margin-top: 5px"><b>Terapeutik</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="catat-intake-output-cairan"
+                id="catat-intake-output-cairan"
+                label="catat-intake-output-cairan"
+                myid="check_cara"
+                value="Catat intake output cairan"
+              />
+              <label for="">Catat intake output cairan</label>
+            </div>
+            <br />
+            <p style="margin-top: 5px"><b>Edukasi</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="tujuan-pemantauan"
+                id="tujuan-pemantauan"
+                label="tujuan-pemantauan"
+                myid="check_cara"
+                value="Jelaskan tujuan pemantauan"
+              />
+              <label for="">Jelaskan tujuan pemantauan</label>
+            </div>
+            <br />
+            <p style="margin-top: 5px"><b>Kolaborasi</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="berikan-obat-diuresis"
+                id="berikan-obat-diuresis"
+                label="berikan-obat-diuresis"
+                myid="check_cara"
+                value="Berikan obat diuresis"
+              />
+              <label for="">Berikan obat diuresis</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div>
+              <input
+                type="checkbox"
+                name="nyeri-akut"
+                id="nyeri-akut"
+                label="nyeri-akut"
+                myid="check_cara"
+                value="NYERI AKUT"
+              />
+              <label for="">NYERI AKUT (D.0077) b/d</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="agen-pencedera-fisiologi"
+                id="agen-pencedera-fisiologi"
+                label="agen-pencedera-fisiologi"
+                myid="check_cara"
+                value="Agen pencedera fisiologi"
+              />
+              <label for="">Agen pencedera fisiologi</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="agen-pencedera-kimiawi"
+                id="agen-pencedera-kimiawi"
+                label="agen-pencedera-kimiawi"
+                myid="check_cara"
+                value="Agen pencedera kimiawi"
+              />
+              <label for="">Agen pencedera kimiawi</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="agen-pencedera-fisik"
+                id="agen-pencedera-fisik"
+                label="agen-pencedera-fisik"
+                myid="check_cara"
+                value="Agen pencedera fisik"
+              />
+              <label for="">Agen pencedera fisik</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <label for="">Tingkat nyeri (L.08066) Menurun</label>
+            </div>
+            <p style="margin-top: 5px">Kriteria hasil :</p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="keluhan-nyeri-menurun"
+                id="keluhan-nyeri-menurun"
+                label="keluhan-nyeri-menurun"
+                value="Keluhan nyeri menurun"
+                myid="check_cara"
+              />
+              <label for="">Keluhan nyeri menurun</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="meringis-menurun"
+                id="meringis-menurun"
+                label="meringis-menurun"
+                value="Meringis menurun"
+                myid="check_cara"
+              />
+              <label for="">Meringis menurun</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="sikap-protektif-menurun"
+                id="sikap-protektif-menurun"
+                label="sikap-protektif-menurun"
+                value="Sikap protektif menurun"
+                myid="check_cara"
+              />
+              <label for="">Sikap protektif menurun</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="gelisah-menurun"
+                id="gelisah-menurun"
+                label="gelisah-menurun"
+                value="Gelisah menurun"
+                myid="check_cara"
+              />
+              <label for="">Gelisah menurun</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <label for=""
+                >Manajemen nyeri (I.08238 ), Pemberian analgesik (I.08243),
+                Edukasi manajemen nyeri (I.12391), Pemantauan nyeri (I.08242),
+                Terapi relaksasi (I.09326)</label
+              >
+            </div>
+            <p style="margin-top: 5px"><b>Observasi</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="lokasi-karakteristik-durasi"
+                id="lokasi-karakteristik-durasi"
+                label="lokasi-karakteristik-durasi"
+                myid="check_cara"
+                value="Identifikasi lokasi karakteristik, durasi frekuensi"
+              />
+              <label for=""
+                >Identifikasi lokasi karakteristis, durasi frekuensi, kualitas,
+                intensitas nyeri</label
+              >
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="identifikasi-skala-nyeri"
+                id="identifikasi-skala-nyeri"
+                label="identifikasi-skala-nyeri"
+                myid="check_cara"
+                value="Identifikasi skala nyeri"
+              />
+              <label for="">Identifikasi skala nyeri</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="identifikasi-respon-nyeri-non-verbal"
+                id="identifikasi-respon-nyeri-non-verbal"
+                label="identifikasi-respon-nyeri-non-verbal"
+                myid="check_cara"
+                value="Identifikasi respon nyeri non verbal"
+              />
+              <label for="">Identifikasi respon nyeri non verbal</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="identifikasi-faktor-yg-memperberat"
+                id="identifikasi-faktor-yg-memperberat"
+                label="identifikasi-faktor-yg-memperberat"
+                myid="check_cara"
+                value="Identifikasi faktor yang memperberat"
+              />
+              <label for=""
+                >Identifikasi faktor yang memperberat dan mengurangi
+                nyeri</label
+              >
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="identifikasi-riwayat-alergi-obat"
+                id="identifikasi-riwayat-alergi-obat"
+                label="identifikasi-riwayat-alergi-obat"
+                myid="check_cara"
+                value="Identifikasi riwayat alergi obat"
+              />
+              <label for="">Identifikasi riwayat alergi obat</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="monitor-ttv-sebelum-dan-sesudah"
+                id="monitor-ttv-sebelum-dan-sesudah"
+                label="monitor-ttv-sebelum-dan-sesudah"
+                myid="check_cara"
+                value="Monitor TTV sebelum dan sesudah"
+              />
+              <label for=""
+                >Monitor TTV sebelum dan sesudah pemberian analgesic</label
+              >
+            </div>
+            <br />
+            <p style="margin-top: 5px"><b>Teurapeutik</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="teknik-non-farmakologi"
+                id="teknik-non-farmakologi"
+                label="teknik-non-farmakologi"
+                myid="check_cara"
+                value="teknik non farmakologi untuk mengurangi rasa nyeri"
+              />
+              <label for=""
+                >Berikan teknik non farmakologi untuk mengurangi rasa
+                nyeri</label
+              >
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="fasilitasi-istirahat-dan-tidur"
+                id="fasilitasi-istirahat-dan-tidur"
+                label="fasilitasi-istirahat-dan-tidur"
+                myid="check_cara"
+                value="Fasilitasi istirahat dan tidur"
+              />
+              <label for="">Fasilitasi istirahat dan tidur</label>
+            </div>
+            <br />
+            <p style="margin-top: 5px"><b>Edukasi</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="strategi-meredakan-nyeri"
+                id="strategi-meredakan-nyeri"
+                label="strategi-meredakan-nyeri"
+                myid="check_cara"
+                value="Jelaskan strategi meredakan nyeri"
+              />
+              <label for="">Jelaskan strategi meredakan nyeri</label>
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="strategi-meredakan-nyeri"
+                id="strategi-meredakan-nyeri"
+                label="strategi-meredakan-nyeri"
+                myid="check_cara"
+                value="teknik non farmakologi untuk mengurangi nyeri"
+              />
+              <label for=""
+                >Ajarkan teknik non farmakologi untuk mengurangi rasa
+                nyeri</label
+              >
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="menggunakan-analgesik-secara-tepat"
+                id="menggunakan-analgesik-secara-tepat"
+                label="menggunakan-analgesik-secara-tepat"
+                myid="check_cara"
+                value="Anjurkan menggunakan analgetik secara tepat"
+              />
+              <label for="">Anjurkan menggunakan analgetik secara tepat</label>
+            </div>
+            <br />
+            <p style="margin-top: 5px"><b>Kolaborasi</b></p>
+            <div style="margin-left: 20px; margin-top: 5px">
+              <input
+                type="checkbox"
+                name="pemberian-terapi-analgenik"
+                id="pemberian-terapi-analgenik"
+                label="pemberian-terapi-analgenik"
+                myid="check_cara"
+                value="Untuk pemberian terapi analgetik, bila perlu"
+              />
+              <label for="">Untuk pemberian terapi analgetik, bila perlu</label>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table table-bordered inisiasi">
+      <thead>
+        <tr>
+          <th colspan="2">Inisiasi</th>
+          <th>
+            QB <br />
+            ml/mnt
+          </th>
+          <th>
+            QD <br />
+            ml/mnt
+          </th>
+          <th>
+            Tek Arteri <br />
+            mmHg
+          </th>
+          <th>
+            Tek Vena <br />
+            mmHg
+          </th>
+          <th>
+            TMP <br />
+            mmHg
+          </th>
+          <th>
+            UFR <br />
+            ml/jam
+          </th>
+          <th>
+            TD <br />
+            mmHg
+          </th>
+          <th>Nadi/Suhu</th>
+          <th>
+            P <br />
+            x/mnt
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-1" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-2" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-3" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-4" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-5" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-5" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-6" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-6" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-7" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-7" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-8" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-8" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-9" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-9" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-10" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-10" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-11" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-11" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-a-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="inisiasi-b-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qb-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="qd-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-arteri-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tek-vena-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="tmp-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="ufr-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="td-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nadi-suhu-12" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="p-12" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="11"><b>Terminasi</b></td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-inisiasi-a-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-inisiasi-b-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-qb-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-qd-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-tek-arteri-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-tek-vena-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-tmp-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-ufr-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-td-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-nadi-suhu-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="terminasi-p-1" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-inisiasi-a-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-inisiasi-b-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-qb-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-qd-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-tek-arteri-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-tek-vena-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-tmp-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-ufr-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-td-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="terminasi-nadi-suhu-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="terminasi-p-2" id="" />
+          </td>
+        </tr>
+        <tr style="text-align: center">
+          <td rowspan="2"><b>PKL</b></td>
+          <td rowspan="2"><b>Nama</b></td>
+          <td colspan="5"><b>CAIRAN MASUK</b></td>
+          <td colspan="4"><b>CAIRAN KELUAR</b></td>
+        </tr>
+        <tr style="text-align: center">
+          <td>Minum</td>
+          <td>Infus</td>
+          <td>Transfusi</td>
+          <td>Sisa Priming</td>
+          <td>Wash Out</td>
+          <td>Urine</td>
+          <td>Pendarahan</td>
+          <td colspan="2">Muntah</td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="pkl-1" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nama-1" id="" />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-minum-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-infus-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-transfusi-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-sisa-priming-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-wash-out-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-urine-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-pendarahan-1"
+              id=""
+            />
+          </td>
+          <td colspan="2">
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-muntah-1"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="pkl-2" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nama-2" id="" />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-minum-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-infus-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-transfusi-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-sisa-priming-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-wash-out-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-urine-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-pendarahan-2"
+              id=""
+            />
+          </td>
+          <td colspan="2">
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-muntah-2"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="pkl-3" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nama-3" id="" />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-minum-3"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-infus-3"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-transfusi-3"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-sisa-priming-3"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-wash-out-3"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-urine-3"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-pendarahan-3"
+              id=""
+            />
+          </td>
+          <td colspan="2">
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-muntah-3"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input style="width: 100%" type="text" name="pkl-4" id="" />
+          </td>
+          <td>
+            <input style="width: 100%" type="text" name="nama-4" id="" />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-minum-4"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-infus-4"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-transfusi-4"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-sisa-priming-4"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-masuk-wash-out-4"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-urine-4"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-pendarahan-4"
+              id=""
+            />
+          </td>
+          <td colspan="2">
+            <input
+              style="width: 100%"
+              type="text"
+              name="cairan-keluar-muntah-4"
+              id=""
+            />
+          </td>
+        </tr>
+        <tr style="text-align: center">
+          <td colspan="2" rowspan="2"><b>Jumlah</b></td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-cairan-masuk-minum"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-cairan-masuk-infus"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-cairan-masuk-transfusi"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-cairan-masuk-sisa-priming"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-cairan-masuk-wash-out"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-cairan-keluar-urine"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-cairan-keluar-pendarahan"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+          <td colspan="2">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-cairan-keluar-muntah"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-semua-cairan-masuk"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+          <td colspan="4">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="jumlah-semua-cairan-keluar"
+                id=""
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+        </tr>
+        <tr style="text-align: center">
+          <td><b>PKL</b></td>
+          <td><b>Nama</b></td>
+          <td colspan="9"><b>EVALUASI</b></td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-pkl-1"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-nama-1"
+              id=""
+            />
+          </td>
+          <td colspan="5">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <label for="">Subjektif:</label>
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-subjektif-1"
+                id=""
+              />
+            </div>
+          </td>
+          <td colspan="4">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <label for="">Assessment:</label>
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-assessment-1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-pkl-2"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-nama-2"
+              id=""
+            />
+          </td>
+          <td colspan="5">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-subjektif-2"
+                id=""
+              />
+            </div>
+          </td>
+          <td colspan="4">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-assessment-2"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-pkl-3"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-nama-3"
+              id=""
+            />
+          </td>
+          <td colspan="5">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-subjektif-3"
+                id=""
+              />
+            </div>
+          </td>
+          <td colspan="4">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-assessment-3"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-pkl-4"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-nama-4"
+              id=""
+            />
+          </td>
+          <td colspan="5">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <label for="">Objektif:</label>
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-objektif-1"
+                id=""
+              />
+            </div>
+          </td>
+          <td colspan="4">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <label for="">Planning:</label>
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-planning-1"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-pkl-5"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-nama-5"
+              id=""
+            />
+          </td>
+          <td colspan="5">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-objektif-2"
+                id=""
+              />
+            </div>
+          </td>
+          <td colspan="4">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-planning-2"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-pkl-6"
+              id=""
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%"
+              type="text"
+              name="evaluasi-nama-6"
+              id=""
+            />
+          </td>
+          <td colspan="5">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-objektif-3"
+                id=""
+              />
+            </div>
+          </td>
+          <td colspan="4">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="evaluasi-planning-3"
+                id=""
+              />
+            </div>
+          </td>
+        </tr>
+        <tr style="text-align: center">
+          <td colspan="12"><b>CATATAN</b></td>
+        </tr>
+        <tr>
+          <td colspan="12">
+            <input style="width: 100%" type="text" name="catatan-1" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="12">
+            <input style="width: 100%" type="text" name="catatan-2" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="12">
+            <input style="width: 100%" type="text" name="catatan-3" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="12">
+            <input style="width: 100%" type="text" name="catatan-4" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="12">
+            <input style="width: 100%" type="text" name="catatan-5" id="" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="12">
+            <input style="width: 100%" type="text" name="catatan-6" id="" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+    <hr />
+    <br />
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const risikoJatuh = document.querySelectorAll(".risiko-jatuh");
+        const totalRisikoJatuh = document.querySelector(
+          "input[name='total-risiko-jatuh']"
+        );
+
+        function hitungTotalRisikoJatuh() {
+          let total = 0;
+          let kesimpulan = "";
+
+          risikoJatuh.forEach((input) => {
+            if (input.checked) {
+              total += parseFloat(input.value) || 0;
+            }
+          });
+
+          if (total < 25) {
+            kesimpulan += `${total}, tidak berisiko`;
+          } else if (total >= 25 && total <= 50) {
+            kesimpulan += `${total}, risiko rendah`;
+          } else if (total > 50) {
+            kesimpulan += `${total}, risiko tinggi`;
+          }
+
+          totalRisikoJatuh.value = kesimpulan;
+        }
+
+        risikoJatuh.forEach((input) => {
+          input.addEventListener("input", hitungTotalRisikoJatuh);
+        });
+      });
+    </script>
+  </body>
+</html>
