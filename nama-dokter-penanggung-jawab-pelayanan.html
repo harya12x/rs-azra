@@ -1,0 +1,2207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NAMA DOKTER PENANGGUNG JAWAB PELAYANAN</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+
+    .diagonal {
+      position: relative;
+    }
+    .diagonal::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      border-top: 1px solid black;
+      border-left: 1px solid black;
+      transform: rotate(45deg);
+      transform-origin: center;
+    }
+    .diagonal .top-left {
+      align-self: flex-start;
+      margin: 5px;
+      font-size: 12px;
+    }
+    .diagonal .bottom-right {
+      align-self: flex-end;
+      margin: 5px;
+      font-size: 12px;
+    }
+
+    .line {
+      position: absolute;
+      height: 40px;
+      top: 40px;
+      bottom: 0;
+      margin: auto;
+      left: -5px;
+      width: 100%;
+      border-top: 1px solid #000;
+      -webkit-transform: rotate(14deg);
+      -ms-transform: rotate(14deg);
+      transform: rotate(14deg);
+    }
+    .diagonal span.lb {
+      position: absolute;
+      bottom: 2px;
+      left: 2px;
+    }
+    .diagonal span.rt {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+    }
+
+    .header {
+      font-weight: bold;
+      text-align: center;
+    }
+    input[type="text"]:not(#lokasi):not(#bulan-tahun),
+    input[type="number"],
+    input[type="date"],
+    input[type="time"] {
+      width: 95%;
+    }
+  </style>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+  </script>
+  <body>
+    <h1 class="title">NAMA DOKTER PENANGGUNG JAWAB PELAYANAN</h1>
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td>Nama Pasien</td>
+          <td>
+            <input
+              name="nama_pasien2"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              value="{VNAMA_PASIEN}"
+              placeholder="..."
+            />
+          </td>
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              name="no_rm"
+              id="no_rm"
+              label="no_rm"
+              myid="check_cara"
+              value="{NO_RM}"
+              label="nomor rekam medis"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan="2">Tanggal Lahir</td>
+          <td rowspan="2">
+            <input
+              name="tgl_lahira2"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              value="{VBIRTH_DATE}"
+              label="tanggal lahir"
+            />
+          </td>
+          <td rowspan="2">Umur</td>
+          <td rowspan="2">
+            <input
+              type="text"
+              size="5"
+              name="umur"
+              id="umur"
+              label="umur"
+              value="{VAGE}"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <label for="kelas"> Kelas </label>
+          </td>
+          <td>
+            <input
+              name="kelas2"
+              type="text"
+              id="kelas"
+              placeholder="..."
+              myid="check_cara"
+              value="{VNAMAKELAS}"
+              label="kelas"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Kamar</td>
+          <td>
+            <input
+              type="text"
+              name="kamar"
+              id="kamar"
+              myid="check_cara"
+              placeholder="..."
+              label="kamar"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th rowspan="2" align="center">Diagnosa</th>
+          <th colspan="3" align="center">DPJP</th>
+          <th colspan="3" align="center">DPJP Utama</th>
+          <th rowspan="2" align="center">Keterangan</th>
+        </tr>
+        <tr>
+          <th style="width: 250px" align="center">Nama</th>
+          <th style="width: 100px" align="center">Tgl. Mulai</th>
+          <th style="width: 100px" align="center">Tgl. Akhir</th>
+          <th style="width: 250px" align="center">Nama</th>
+          <th style="width: 100px" align="center">Tgl. Mulai</th>
+          <th style="width: 100px" align="center">Tgl. Akhir</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-1"
+              id="diagnosa-1"
+              label="diagnosa-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-1"
+              id="nama-dpjp-1"
+              label="nama-dpjp-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-1"
+              id="tgl-mulai-dpjp-1"
+              label="tgl-mulai-dpjp-1"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-1"
+              id="tgl-akhir-dpjp-1"
+              label="tgl-akhir-dpjp-1"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-1"
+              id="nama-dpjp-utama-1"
+              label="nama-dpjp-utama-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-1"
+              id="tgl-mulai-dpjp-utama-1"
+              label="tgl-mulai-dpjp-utama-1"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-1"
+              id="tgl-akhir-dpjp-utama-1"
+              label="tgl-akhir-dpjp-utama-1"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-1"
+              id="keterangan-1"
+              label="keterangan-1"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-2"
+              id="diagnosa-2"
+              label="diagnosa-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-2"
+              id="nama-dpjp-2"
+              label="nama-dpjp-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-2"
+              id="tgl-mulai-dpjp-2"
+              label="tgl-mulai-dpjp-2"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-2"
+              id="tgl-akhir-dpjp-2"
+              label="tgl-akhir-dpjp-2"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-2"
+              id="nama-dpjp-utama-2"
+              label="nama-dpjp-utama-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-2"
+              id="tgl-mulai-dpjp-utama-2"
+              label="tgl-mulai-dpjp-utama-2"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-2"
+              id="tgl-akhir-dpjp-utama-2"
+              label="tgl-akhir-dpjp-utama-2"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-2"
+              id="keterangan-2"
+              label="keterangan-2"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-3"
+              id="diagnosa-3"
+              label="diagnosa-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-3"
+              id="nama-dpjp-3"
+              label="nama-dpjp-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-3"
+              id="tgl-mulai-dpjp-3"
+              label="tgl-mulai-dpjp-3"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-3"
+              id="tgl-akhir-dpjp-3"
+              label="tgl-akhir-dpjp-3"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-3"
+              id="nama-dpjp-utama-3"
+              label="nama-dpjp-utama-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-3"
+              id="tgl-mulai-dpjp-utama-3"
+              label="tgl-mulai-dpjp-utama-3"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-3"
+              id="tgl-akhir-dpjp-utama-3"
+              label="tgl-akhir-dpjp-utama-3"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-3"
+              id="keterangan-3"
+              label="keterangan-3"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-4"
+              id="diagnosa-4"
+              label="diagnosa-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-4"
+              id="nama-dpjp-4"
+              label="nama-dpjp-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-4"
+              id="tgl-mulai-dpjp-4"
+              label="tgl-mulai-dpjp-4"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-4"
+              id="tgl-akhir-dpjp-4"
+              label="tgl-akhir-dpjp-4"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-4"
+              id="nama-dpjp-utama-4"
+              label="nama-dpjp-utama-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-4"
+              id="tgl-mulai-dpjp-utama-4"
+              label="tgl-mulai-dpjp-utama-4"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-4"
+              id="tgl-akhir-dpjp-utama-4"
+              label="tgl-akhir-dpjp-utama-4"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-4"
+              id="keterangan-4"
+              label="keterangan-4"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-5"
+              id="diagnosa-5"
+              label="diagnosa-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-5"
+              id="nama-dpjp-5"
+              label="nama-dpjp-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-5"
+              id="tgl-mulai-dpjp-5"
+              label="tgl-mulai-dpjp-5"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-5"
+              id="tgl-akhir-dpjp-5"
+              label="tgl-akhir-dpjp-5"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-5"
+              id="nama-dpjp-utama-5"
+              label="nama-dpjp-utama-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-5"
+              id="tgl-mulai-dpjp-utama-5"
+              label="tgl-mulai-dpjp-utama-5"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-5"
+              id="tgl-akhir-dpjp-utama-5"
+              label="tgl-akhir-dpjp-utama-5"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-5"
+              id="keterangan-5"
+              label="keterangan-5"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-6"
+              id="diagnosa-6"
+              label="diagnosa-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-6"
+              id="nama-dpjp-6"
+              label="nama-dpjp-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-6"
+              id="tgl-mulai-dpjp-6"
+              label="tgl-mulai-dpjp-6"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-6"
+              id="tgl-akhir-dpjp-6"
+              label="tgl-akhir-dpjp-6"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-6"
+              id="nama-dpjp-utama-6"
+              label="nama-dpjp-utama-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-6"
+              id="tgl-mulai-dpjp-utama-6"
+              label="tgl-mulai-dpjp-utama-6"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-6"
+              id="tgl-akhir-dpjp-utama-6"
+              label="tgl-akhir-dpjp-utama-6"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-6"
+              id="keterangan-6"
+              label="keterangan-6"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-7"
+              id="diagnosa-7"
+              label="diagnosa-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-7"
+              id="nama-dpjp-7"
+              label="nama-dpjp-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-7"
+              id="tgl-mulai-dpjp-7"
+              label="tgl-mulai-dpjp-7"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-7"
+              id="tgl-akhir-dpjp-7"
+              label="tgl-akhir-dpjp-7"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-7"
+              id="nama-dpjp-utama-7"
+              label="nama-dpjp-utama-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-7"
+              id="tgl-mulai-dpjp-utama-7"
+              label="tgl-mulai-dpjp-utama-7"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-7"
+              id="tgl-akhir-dpjp-utama-7"
+              label="tgl-akhir-dpjp-utama-7"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-7"
+              id="keterangan-7"
+              label="keterangan-7"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-8"
+              id="diagnosa-8"
+              label="diagnosa-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-8"
+              id="nama-dpjp-8"
+              label="nama-dpjp-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-8"
+              id="tgl-mulai-dpjp-8"
+              label="tgl-mulai-dpjp-8"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-8"
+              id="tgl-akhir-dpjp-8"
+              label="tgl-akhir-dpjp-8"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-8"
+              id="nama-dpjp-utama-8"
+              label="nama-dpjp-utama-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-8"
+              id="tgl-mulai-dpjp-utama-8"
+              label="tgl-mulai-dpjp-utama-8"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-8"
+              id="tgl-akhir-dpjp-utama-8"
+              label="tgl-akhir-dpjp-utama-8"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-8"
+              id="keterangan-8"
+              label="keterangan-8"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-9"
+              id="diagnosa-9"
+              label="diagnosa-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-9"
+              id="nama-dpjp-9"
+              label="nama-dpjp-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-9"
+              id="tgl-mulai-dpjp-9"
+              label="tgl-mulai-dpjp-9"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-9"
+              id="tgl-akhir-dpjp-9"
+              label="tgl-akhir-dpjp-9"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-9"
+              id="nama-dpjp-utama-9"
+              label="nama-dpjp-utama-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-9"
+              id="tgl-mulai-dpjp-utama-9"
+              label="tgl-mulai-dpjp-utama-9"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-9"
+              id="tgl-akhir-dpjp-utama-9"
+              label="tgl-akhir-dpjp-utama-9"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-9"
+              id="keterangan-9"
+              label="keterangan-9"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-10"
+              id="diagnosa-10"
+              label="diagnosa-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-10"
+              id="nama-dpjp-10"
+              label="nama-dpjp-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-10"
+              id="tgl-mulai-dpjp-10"
+              label="tgl-mulai-dpjp-10"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-10"
+              id="tgl-akhir-dpjp-10"
+              label="tgl-akhir-dpjp-10"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-10"
+              id="nama-dpjp-utama-10"
+              label="nama-dpjp-utama-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-10"
+              id="tgl-mulai-dpjp-utama-10"
+              label="tgl-mulai-dpjp-utama-10"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-10"
+              id="tgl-akhir-dpjp-utama-10"
+              label="tgl-akhir-dpjp-utama-10"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-10"
+              id="keterangan-10"
+              label="keterangan-10"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-11"
+              id="diagnosa-11"
+              label="diagnosa-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-11"
+              id="nama-dpjp-11"
+              label="nama-dpjp-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-11"
+              id="tgl-mulai-dpjp-11"
+              label="tgl-mulai-dpjp-11"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-11"
+              id="tgl-akhir-dpjp-11"
+              label="tgl-akhir-dpjp-11"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-11"
+              id="nama-dpjp-utama-11"
+              label="nama-dpjp-utama-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-11"
+              id="tgl-mulai-dpjp-utama-11"
+              label="tgl-mulai-dpjp-utama-11"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-11"
+              id="tgl-akhir-dpjp-utama-11"
+              label="tgl-akhir-dpjp-utama-11"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-11"
+              id="keterangan-11"
+              label="keterangan-11"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-12"
+              id="diagnosa-12"
+              label="diagnosa-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-12"
+              id="nama-dpjp-12"
+              label="nama-dpjp-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-12"
+              id="tgl-mulai-dpjp-12"
+              label="tgl-mulai-dpjp-12"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-12"
+              id="tgl-akhir-dpjp-12"
+              label="tgl-akhir-dpjp-12"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-12"
+              id="nama-dpjp-utama-12"
+              label="nama-dpjp-utama-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-12"
+              id="tgl-mulai-dpjp-utama-12"
+              label="tgl-mulai-dpjp-utama-12"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-12"
+              id="tgl-akhir-dpjp-utama-12"
+              label="tgl-akhir-dpjp-utama-12"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-12"
+              id="keterangan-12"
+              label="keterangan-12"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-13"
+              id="diagnosa-13"
+              label="diagnosa-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-13"
+              id="nama-dpjp-13"
+              label="nama-dpjp-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-13"
+              id="tgl-mulai-dpjp-13"
+              label="tgl-mulai-dpjp-13"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-13"
+              id="tgl-akhir-dpjp-13"
+              label="tgl-akhir-dpjp-13"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-13"
+              id="nama-dpjp-utama-13"
+              label="nama-dpjp-utama-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-13"
+              id="tgl-mulai-dpjp-utama-13"
+              label="tgl-mulai-dpjp-utama-13"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-13"
+              id="tgl-akhir-dpjp-utama-13"
+              label="tgl-akhir-dpjp-utama-13"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-13"
+              id="keterangan-13"
+              label="keterangan-13"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-14"
+              id="diagnosa-14"
+              label="diagnosa-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-14"
+              id="nama-dpjp-14"
+              label="nama-dpjp-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-14"
+              id="tgl-mulai-dpjp-14"
+              label="tgl-mulai-dpjp-14"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-14"
+              id="tgl-akhir-dpjp-14"
+              label="tgl-akhir-dpjp-14"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-14"
+              id="nama-dpjp-utama-14"
+              label="nama-dpjp-utama-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-14"
+              id="tgl-mulai-dpjp-utama-14"
+              label="tgl-mulai-dpjp-utama-14"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-14"
+              id="tgl-akhir-dpjp-utama-14"
+              label="tgl-akhir-dpjp-utama-14"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-14"
+              id="keterangan-14"
+              label="keterangan-14"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-15"
+              id="diagnosa-15"
+              label="diagnosa-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-15"
+              id="nama-dpjp-15"
+              label="nama-dpjp-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-15"
+              id="tgl-mulai-dpjp-15"
+              label="tgl-mulai-dpjp-15"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-15"
+              id="tgl-akhir-dpjp-15"
+              label="tgl-akhir-dpjp-15"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-15"
+              id="nama-dpjp-utama-15"
+              label="nama-dpjp-utama-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-15"
+              id="tgl-mulai-dpjp-utama-15"
+              label="tgl-mulai-dpjp-utama-15"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-15"
+              id="tgl-akhir-dpjp-utama-15"
+              label="tgl-akhir-dpjp-utama-15"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-15"
+              id="keterangan-15"
+              label="keterangan-15"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-16"
+              id="diagnosa-16"
+              label="diagnosa-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-16"
+              id="nama-dpjp-16"
+              label="nama-dpjp-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-16"
+              id="tgl-mulai-dpjp-16"
+              label="tgl-mulai-dpjp-16"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-16"
+              id="tgl-akhir-dpjp-16"
+              label="tgl-akhir-dpjp-16"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-16"
+              id="nama-dpjp-utama-16"
+              label="nama-dpjp-utama-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-16"
+              id="tgl-mulai-dpjp-utama-16"
+              label="tgl-mulai-dpjp-utama-16"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-16"
+              id="tgl-akhir-dpjp-utama-16"
+              label="tgl-akhir-dpjp-utama-16"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-16"
+              id="keterangan-16"
+              label="keterangan-16"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-17"
+              id="diagnosa-17"
+              label="diagnosa-17"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-17"
+              id="nama-dpjp-17"
+              label="nama-dpjp-17"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-17"
+              id="tgl-mulai-dpjp-17"
+              label="tgl-mulai-dpjp-17"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-17"
+              id="tgl-akhir-dpjp-17"
+              label="tgl-akhir-dpjp-17"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-17"
+              id="nama-dpjp-utama-17"
+              label="nama-dpjp-utama-17"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-17"
+              id="tgl-mulai-dpjp-utama-17"
+              label="tgl-mulai-dpjp-utama-17"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-17"
+              id="tgl-akhir-dpjp-utama-17"
+              label="tgl-akhir-dpjp-utama-17"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-17"
+              id="keterangan-17"
+              label="keterangan-17"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-18"
+              id="diagnosa-18"
+              label="diagnosa-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-18"
+              id="nama-dpjp-18"
+              label="nama-dpjp-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-18"
+              id="tgl-mulai-dpjp-18"
+              label="tgl-mulai-dpjp-18"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-18"
+              id="tgl-akhir-dpjp-18"
+              label="tgl-akhir-dpjp-18"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-18"
+              id="nama-dpjp-utama-18"
+              label="nama-dpjp-utama-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-18"
+              id="tgl-mulai-dpjp-utama-18"
+              label="tgl-mulai-dpjp-utama-18"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-18"
+              id="tgl-akhir-dpjp-utama-18"
+              label="tgl-akhir-dpjp-utama-18"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-18"
+              id="keterangan-18"
+              label="keterangan-18"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-19"
+              id="diagnosa-19"
+              label="diagnosa-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-19"
+              id="nama-dpjp-19"
+              label="nama-dpjp-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-19"
+              id="tgl-mulai-dpjp-19"
+              label="tgl-mulai-dpjp-19"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-19"
+              id="tgl-akhir-dpjp-19"
+              label="tgl-akhir-dpjp-19"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-19"
+              id="nama-dpjp-utama-19"
+              label="nama-dpjp-utama-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-19"
+              id="tgl-mulai-dpjp-utama-19"
+              label="tgl-mulai-dpjp-utama-19"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-19"
+              id="tgl-akhir-dpjp-utama-19"
+              label="tgl-akhir-dpjp-utama-19"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-19"
+              id="keterangan-19"
+              label="keterangan-19"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-20"
+              id="diagnosa-20"
+              label="diagnosa-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-20"
+              id="nama-dpjp-20"
+              label="nama-dpjp-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-20"
+              id="tgl-mulai-dpjp-20"
+              label="tgl-mulai-dpjp-20"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-20"
+              id="tgl-akhir-dpjp-20"
+              label="tgl-akhir-dpjp-20"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-20"
+              id="nama-dpjp-utama-20"
+              label="nama-dpjp-utama-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-20"
+              id="tgl-mulai-dpjp-utama-20"
+              label="tgl-mulai-dpjp-utama-20"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-20"
+              id="tgl-akhir-dpjp-utama-20"
+              label="tgl-akhir-dpjp-utama-20"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-20"
+              id="keterangan-20"
+              label="keterangan-20"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-21"
+              id="diagnosa-21"
+              label="diagnosa-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-21"
+              id="nama-dpjp-21"
+              label="nama-dpjp-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-21"
+              id="tgl-mulai-dpjp-21"
+              label="tgl-mulai-dpjp-21"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-21"
+              id="tgl-akhir-dpjp-21"
+              label="tgl-akhir-dpjp-21"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-21"
+              id="nama-dpjp-utama-21"
+              label="nama-dpjp-utama-21"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-21"
+              id="tgl-mulai-dpjp-utama-21"
+              label="tgl-mulai-dpjp-utama-21"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-21"
+              id="tgl-akhir-dpjp-utama-21"
+              label="tgl-akhir-dpjp-utama-21"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-21"
+              id="keterangan-21"
+              label="keterangan-21"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa-22"
+              id="diagnosa-22"
+              label="diagnosa-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-22"
+              id="nama-dpjp-22"
+              label="nama-dpjp-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-22"
+              id="tgl-mulai-dpjp-22"
+              label="tgl-mulai-dpjp-22"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-22"
+              id="tgl-akhir-dpjp-22"
+              label="tgl-akhir-dpjp-22"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dpjp-utama-22"
+              id="nama-dpjp-utama-22"
+              label="nama-dpjp-utama-22"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-mulai-dpjp-utama-22"
+              id="tgl-mulai-dpjp-utama-22"
+              label="tgl-mulai-dpjp-utama-22"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-akhir-dpjp-utama-22"
+              id="tgl-akhir-dpjp-utama-22"
+              label="tgl-akhir-dpjp-utama-22"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="keterangan-22"
+              id="keterangan-22"
+              label="keterangan-22"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
