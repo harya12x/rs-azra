@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RENCANA ASUHAN KEPERAWATAN KESIAPAN PERSALINAN RS. AZRA BOGOR</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+        .header {
+            font-weight: bold;
+            text-align: center;
+        }
+        .font-bold {
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 95%;
+        }
+        input[type="checkbox"] {
+            margin: 0;
+            vertical-align: middle;
+        }
+        .signature {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .memburuk { text-align: center; font-weight: bold;}
+        .cukup-memburuk {  text-align: center; font-weight: bold;}
+        .sedang {  text-align: center; font-weight: bold;}
+        .cukup-membaik { text-align: center; font-weight: bold;}
+        .membaik { text-align: center; font-weight: bold;}
+        .kriteria { background-color: white; text-align: center; font-weight: bold;}
+    </style>
+</head>
+
+
+
+
+<body>
+    <h1 class="header">RENCANA ASUHAN KEPERAWATAN KESIAPAN PERSALINAN<br>RS. AZRA BOGOR</h1>
+    <p style="text-align: right;">
+        RI <input type="text" myid="check_cara" id="ri" name="ri" placeholder="..." style="width: 300px; margin-left: auto;">
+      </p>
+      
+    <table border="2">
+        <tr>
+            <td class=""><b>NAMA</b> : <input class ="txt" value="{VNAMA_PASIEN}" myid="check_cara" id="nama" name="nama" type="text" placeholder="..."></td>
+            <td class=""><b>NOMOR REKAM MEDIK</b> <input type="text" value="{NO_RM}" myid="check_cara" id="no_rm" name="no_rm" placeholder="..."></td>
+        </tr>
+        <tr>
+            <td><b>TANGGAL LAHIR</b> : <input name="tgl_lahira1" type="text" id="tgl_lahir" value="{VBIRTH_DATE}" placeholder="dd/mm/yyyy" myid="check_cara" label="tanggal lahir"></td>
+            <td><b>KELAS</b> : <input name="kelasa2" type="text" id="kelas" placeholder="..." myid="check_cara" label="kelas" value="{VNAMAKELAS}"></td>
+        </tr>
+        <tr>
+            <td><b>UMUR</b> : <input type="text" myid="check_cara" value="{VAGE}" id="umur" name="umur" placeholder="..."></td>
+            <td><b>KAMAR</b> : <input type="text" myid="check_cara" id="kamar" name="kamar" value="{VNAMARUANGAN}" placeholder=""></td>
+        </tr>
+        <tr>
+            <td><b>Jenis Kelamin</b> : {VSEX}</td>
+        </tr> 
+    </table>
+
+    <table border="2">
+        <tr>
+            <td colspan="4" class="font-bold">DIAGNOSA KEPERAWATAN KETIBERDAYAAN (D.0070) : <br>BERHUBUNGAN DENGAN :<br><br>
+            
+                <input type="checkbox" name="gaya1" value ="9" myid="check_cara" id="gaya"> Menyatakan keinginan untuk menerapkan gaya hidup yang tepat untuk persalinan dan menerapkan penatalaksanaan<br> gejala ketidaknyamanan selama persalinan, menyatakan rasa percaya diri menjalani persalinan</td><br>
+            
+        </tr>
+       
+       
+        <tr>
+            <td class="header">DATA SUBJEKTIF MAYOR</td>
+            <td class="header">DATA SUBJEKTIF MINOR</td>
+            <td class="header">DATA OBJEKTIF MAYOR</td>
+            <td class="header">DATA OBJEKTIF MINOR</td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" name="hiper_subjek_mayor1" value ="9" myid="check_cara" id="hiper_subjek_mayor1"> Menyatakan keinginnan untuk menerapkan gaya hidup yang tepat untuk persalinan<br><br>
+                <input type="checkbox" name="hiper_subjek_mayor2" value ="9" myid="check_cara" id="hiper_subjek_mayo2"> Menyatakan keinginan untuk menerapkan penatalaksanaan gejala ketidaknyamanan selama persalinan<br><br>
+                <input type="checkbox" name="hiper_subjek_mayor3" value ="9" myid="check_cara" id="hiper_subjek_mayor3"> Menyatakan rasa percaya diri menjalani persalinan<br><br>
+            </td>
+            <td>
+                - Tidak Tersedia
+            </td>
+            <td>
+                - Tidak Tersedia
+            </td>
+            <td>
+                <input type="checkbox" name="hiper_objek_minor4" value ="16" myid="check_cara" id="hiper_objek_minor5"> Menunjukan perilaku proaktif selama persiapan persalinan<br><br>
+            </td>
+        </tr>
+    </table>
+    
+    
+
+    <table class="table" border="2">
+        <tr>
+            <th>TGL</th>
+            <th>KET</th>
+            <th>TUJUAN</th>
+            <th>TINDAKAN KEPERAWATAN</th>
+        </tr>
+        <tr>
+            <td><input name="tgl" type="text" id="tgl" class="datepicker" placeholder="dd/mm/yyyy" myid="check_cara" label="tanggal"></td>
+            <td><textarea type="textarea" myid="check_cara" name="i_rpd" id="i_rpd" class="" placeholder="..."></textarea></td></td>
+            <td >
+                Masing masing opsi berdasarkan kriteria memiliki nilai yaitu :<br>
+                Menurun : 1 <br>
+                Cukup Menurun : 2 <br> 
+                Sedang : 3 <br>
+                Cukup Meningkat : 4 <br> 
+                Meningkat : 5 <br>
+                Setelah dilakukan tindakan keperawatan dalam waktu <input type="text" myid="check_cara" id="waktu" name="waktu" placeholder="..." style="width: 30px;"> X 24 jam<br>
+                Status Antepartum (L.07059) membaik, Harapan (L.09068) Meningkat, Motivasi(L.09080) Meningkat<br><br>
+                KRITERIA HASIL :
+                <table class="rating">
+                    <tr>
+                        <th>Kriteria</th>
+                        <th class="memburuk">Menurun</th>
+                        <th class="cukup-memburuk">Cukup menurun</th>
+                        <th class="sedang">Sedang</th>
+                        <th class="cukup-membaik">Cukup meningkat</th>
+                        <th class="membaik">meningkat</th>
+
+                    </tr>
+                    <tr>
+                        <td class="font-center"></td>
+                        <td class="font-center"> 1</td>
+                        <td class="font-center"> 2</td>
+                        <td class="font-center"> 3</td>
+                        <td class="font-center"> 4</td>
+                        <td class="font-center"> 5</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">Kelekatan emosional dengan janin</td>
+                        <td><input type="radio" name="payudara_ibu" value="1" myid="check_cara" id="payudara_ibu1"></td>
+                        <td><input type="radio" name="payudara_ibu" value="2" myid="check_cara" id="payudara_ibu2"></td>
+                        <td><input type="radio" name="payudara_ibu" value="3" myid="check_cara" id="payudara_ibu3"></td>
+                        <td><input type="radio" name="payudara_ibu" value="4" myid="check_cara" id="payudara_ibu4"></td>
+                        <td><input type="radio" name="payudara_ibu" value="5" myid="check_cara" id="payudara_ibu5"></td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">Koping dengan ketidaknyamanan kehamilan</td>
+                        <td><input type="radio" name="defekasi" value="6" myid="check_cara" id="defekasi1"></td>
+                        <td><input type="radio" name="defekasi" value="7" myid="check_cara" id="defekasi2"></td>
+                        <td><input type="radio" name="defekasi" value="8" myid="check_cara" id="defekasi3"></td>
+                        <td><input type="radio" name="defekasi" value="9" myid="check_cara" id="defekasi4"></td>
+                        <td><input type="radio" name="defekasi" value="10" myid="check_cara" id="defekasi5"></td>
+                    </tr>
+                    <tr>
+                        <td class="">Keterlebitan dalam aktivitas perawatan</td>
+                        <td><input type="radio" name="defekasi_lama" value="6" myid="check_cara" id="defekasi_lama1"></td>
+                        <td><input type="radio" name="defekasi_lama" value="7" myid="check_cara" id="defekasi_lama2"></td>
+                        <td><input type="radio" name="defekasi_lama" value="8" myid="check_cara" id="defekasi_lama3"></td>
+                        <td><input type="radio" name="defekasi_lama" value="9" myid="check_cara" id="defekasi_lama4"></td>
+                        <td><input type="radio" name="defekasi_lama" value="10" myid="check_cara" id="defekasi_lama5"></td>
+                    </tr>
+                    <tr>
+                        <td class="">Minat komunikasi verbal</td>
+                        <td><input type="radio" name="verbal" value="6" myid="check_cara" id="verbal1"></td>
+                        <td><input type="radio" name="verbal" value="7" myid="check_cara" id="verbal2"></td>
+                        <td><input type="radio" name="verbal" value="8" myid="check_cara" id="verbal3"></td>
+                        <td><input type="radio" name="verbal" value="9" myid="check_cara" id="verbal4"></td>
+                        <td><input type="radio" name="verbal" value="10" myid="check_cara" id="verbal5"></td>
+                    </tr>
+                    <tr>
+                        <td class="">Fikiran berfokus pada masa depan</td>
+                        <td><input type="radio" name="fokus_depan" value="6" myid="check_cara" id="fokus_depan1"></td>
+                        <td><input type="radio" name="fokus_depan" value="7" myid="check_cara" id="fokus_depan2"></td>
+                        <td><input type="radio" name="fokus_depan" value="8" myid="check_cara" id="fokus_depan3"></td>
+                        <td><input type="radio" name="fokus_depan" value="9" myid="check_cara" id="fokus_depan4"></td>
+                        <td><input type="radio" name="fokus_depan" value="10" myid="check_cara" id="fokus_depan5"></td>
+                    </tr>
+                    <tr>
+                        <td class="">Upaya menyusun rencana tindakan</td>
+                        <td><input type="radio" name="rencana" value="6" myid="check_cara" id="rencana1"></td>
+                        <td><input type="radio" name="rencana" value="7" myid="check_cara" id="rencana2"></td>
+                        <td><input type="radio" name="rencana" value="8" myid="check_cara" id="rencana3"></td>
+                        <td><input type="radio" name="rencana" value="9" myid="check_cara" id="rencana4"></td>
+                        <td><input type="radio" name="rencana" value="10" myid="check_cara" id="rencana5"></td>
+                    </tr>
+                    <tr>
+                        <td class="">Keyakinan positif</td>
+                        <td><input type="radio" name="keyakinan" value="6" myid="check_cara" id="keyakinan1"></td>
+                        <td><input type="radio" name="keyakinan" value="7" myid="check_cara" id="keyakinan2"></td>
+                        <td><input type="radio" name="keyakinan" value="8" myid="check_cara" id="keyakinan3"></td>
+                        <td><input type="radio" name="keyakinan" value="9" myid="check_cara" id="keyakinan4"></td>
+                        <td><input type="radio" name="keyakinan" value="10" myid="check_cara" id="keyakinan5"></td>
+                    </tr>
+                    <tr>
+                        <td class="">Bertanggung jawab</td>
+                        <td><input type="radio" name="jawab" value="6" myid="check_cara" id="jawab1"></td>
+                        <td><input type="radio" name="jawab" value="7" myid="check_cara" id="jawab2"></td>
+                        <td><input type="radio" name="jawab" value="8" myid="check_cara" id="jawab3"></td>
+                        <td><input type="radio" name="jawab" value="9" myid="check_cara" id="jawab4"></td>
+                        <td><input type="radio" name="jawab" value="10" myid="check_cara" id="jawab5"></td>
+                    </tr>
+                    <tr>
+                        
+                        <th>Kriteria</th>
+                        <th class="memburuk">Menurun</th>
+                        <th class="cukup-memburuk">Cukup menurun</th>
+                        <th class="sedang">Sedang</th>
+                        <th class="cukup-membaik">Cukup meningkat</th>
+                        <th class="membaik">meningkat</th>
+                    </tr>
+                    <tr>
+                        <td class="font-center"></td>
+                        <td class="font-center"> 1</td>
+                        <td class="font-center"> 2</td>
+                        <td class="font-center"> 3</td>
+                        <td class="font-center"> 4</td>
+                        <td class="font-center"> 5</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">Edema</td>
+                        <td><input type="radio" name="feces" value="41" myid="check_cara" id="feces1"></td>
+                        <td><input type="radio" name="feces" value="42" myid="check_cara" id="feces2"></td>
+                        <td><input type="radio" name="feces" value="43" myid="check_cara" id="feces3"></td>
+                        <td><input type="radio" name="feces" value="44" myid="check_cara" id="feces4"></td>
+                        <td><input type="radio" name="feces" value="45" myid="check_cara" id="feces5"></td>
+                    </tr>
+                    <tr>
+                        
+                        <td class="font-bold">Nausea</td>
+                        <td><input type="radio" name="frequensi" value="46" myid="check_cara" id="frequensi1"></td>
+                        <td><input type="radio" name="frequensi" value="47" myid="check_cara" id="frequensi2"></td>
+                        <td><input type="radio" name="frequensi" value="48" myid="check_cara" id="frequensi3"></td>
+                        <td><input type="radio" name="frequensi" value="49" myid="check_cara" id="frequensi4"></td>
+                        <td><input type="radio" name="frequensi" value="50" myid="check_cara" id="frequensi5"></td>
+                    </tr>
+                    <tr>
+                        
+                        <td class="font-bold">Muntah</td>
+                        <td><input type="radio" name="usus" value="46" myid="check_cara" id="usus1"></td>
+                        <td><input type="radio" name="usus" value="47" myid="check_cara" id="usus2"></td>
+                        <td><input type="radio" name="usus" value="48" myid="check_cara" id="usus3"></td>
+                        <td><input type="radio" name="usus" value="49" myid="check_cara" id="usus4"></td>
+                        <td><input type="radio" name="usus" value="50" myid="check_cara" id="usus5"></td>
+                    </tr>
+                    <tr>
+                        
+                        <td class="font-bold">Edema</td>
+                        <td><input type="radio" name="berkeringat" value="46" myid="check_cara" id="berkeringat1"></td>
+                        <td><input type="radio" name="berkeringat" value="47" myid="check_cara" id="berkeringat2"></td>
+                        <td><input type="radio" name="berkeringat" value="48" myid="check_cara" id="berkeringat3"></td>
+                        <td><input type="radio" name="berkeringat" value="49" myid="check_cara" id="berkeringat4"></td>
+                        <td><input type="radio" name="berkeringat" value="50" myid="check_cara" id="berkeringat5"></td>
+                    </tr>
+                    <tr>
+                        
+                        <td class="font-bold">Nyeri epigastrik</td>
+                        <td><input type="radio" name="epigastrik" value="46" myid="check_cara" id="epigastrik1"></td>
+                        <td><input type="radio" name="epigastrik" value="47" myid="check_cara" id="epigastrik2"></td>
+                        <td><input type="radio" name="epigastrik" value="48" myid="check_cara" id="epigastrik3"></td>
+                        <td><input type="radio" name="epigastrik" value="49" myid="check_cara" id="epigastrik4"></td>
+                        <td><input type="radio" name="epigastrik" value="50" myid="check_cara" id="epigastrik5"></td>
+                    </tr>
+                    <tr>
+                        
+                        <td class="font-bold">Kontipasi</td>
+                        <td><input type="radio" name="kontipasi" value="46" myid="check_cara" id="kontipasi1"></td>
+                        <td><input type="radio" name="kontipasi" value="47" myid="check_cara" id="kontipasi2"></td>
+                        <td><input type="radio" name="kontipasi" value="48" myid="check_cara" id="kontipasi3"></td>
+                        <td><input type="radio" name="kontipasi" value="49" myid="check_cara" id="kontipasi4"></td>
+                        <td><input type="radio" name="kontipasi" value="50" myid="check_cara" id="kontipasi5"></td>
+                    </tr>
+                    <tr>
+                        
+                        <td class="">Pendarahan vagina</td>
+                        <td><input type="radio" name="vagina" value="46" myid="check_cara" id="vagina1"></td>
+                        <td><input type="radio" name="vagina" value="47" myid="check_cara" id="vagina2"></td>
+                        <td><input type="radio" name="vagina" value="48" myid="check_cara" id="vagina3"></td>
+                        <td><input type="radio" name="vagina" value="49" myid="check_cara" id="vagina4"></td>
+                        <td><input type="radio" name="vagina" value="50" myid="check_cara" id="vagina5"></td>
+                    </tr>
+                    <tr>
+                        
+                        <td class="">Mood labil</td>
+                        <td><input type="radio" name="mood" value="46" myid="check_cara" id="mood1"></td>
+                        <td><input type="radio" name="mood" value="47" myid="check_cara" id="mood2"></td>
+                        <td><input type="radio" name="mood" value="48" myid="check_cara" id="mood3"></td>
+                        <td><input type="radio" name="mood" value="49" myid="check_cara" id="mood4"></td>
+                        <td><input type="radio" name="mood" value="50" myid="check_cara" id="mood5"></td>
+                    </tr>
+                    <tr>
+                        
+                        <th>Kriteria</th>
+                        <th class="memburuk">Menurun</th>
+                        <th class="cukup-memburuk">Cukup menurun</th>
+                        <th class="sedang">Sedang</th>
+                        <th class="cukup-membaik">Cukup meningkat</th>
+                        <th class="membaik">meningkat</th>
+                    </tr>
+                    <tr>
+                        <td class="font-center"></td>
+                        <td class="font-center"> 1</td>
+                        <td class="font-center"> 2</td>
+                        <td class="font-center"> 3</td>
+                        <td class="font-center"> 4</td>
+                        <td class="font-center"> 5</td>
+                    </tr>
+                    <tr>
+                        
+                        <td class="font-bold">Berat badan</td>
+                        <td><input type="radio" name="berat" value="46" myid="check_cara" id="berat1"></td>
+                        <td><input type="radio" name="berat" value="47" myid="check_cara" id="berat2"></td>
+                        <td><input type="radio" name="berat" value="48" myid="check_cara" id="berat3"></td>
+                        <td><input type="radio" name="berat" value="49" myid="check_cara" id="berat4"></td>
+                        <td><input type="radio" name="berat" value="50" myid="check_cara" id="berat5"></td>
+                    </tr>
+                    <tr>
+                        
+                        <td class="font-bold">Tekanan darah</td>
+                        <td><input type="radio" name="darah" value="46" myid="check_cara" id="darah1"></td>
+                        <td><input type="radio" name="darah" value="47" myid="check_cara" id="darah2"></td>
+                        <td><input type="radio" name="darah" value="48" myid="check_cara" id="darah3"></td>
+                        <td><input type="radio" name="darah" value="49" myid="check_cara" id="darah4"></td>
+                        <td><input type="radio" name="darah" value="50" myid="check_cara" id="darah5"></td>
+                    </tr>
+                    <tr>
+                        
+                        <td class="font-bold">Hemogoblin</td>
+                        <td><input type="radio" name="hemo" value="46" myid="check_cara" id="hemo1"></td>
+                        <td><input type="radio" name="hemo" value="47" myid="check_cara" id="hemo2"></td>
+                        <td><input type="radio" name="hemo" value="48" myid="check_cara" id="hemo3"></td>
+                        <td><input type="radio" name="hemo" value="49" myid="check_cara" id="hemo4"></td>
+                        <td><input type="radio" name="hemo" value="50" myid="check_cara" id="hemo5"></td>
+                    </tr>
+                    <tr>
+                        
+                        <td class="">Status kognitif</td>
+                        <td><input type="radio" name="kognitif" value="46" myid="check_cara" id="kognitif1"></td>
+                        <td><input type="radio" name="kognitif" value="47" myid="check_cara" id="kognitif2"></td>
+                        <td><input type="radio" name="kognitif" value="48" myid="check_cara" id="kognitif3"></td>
+                        <td><input type="radio" name="kognitif" value="49" myid="check_cara" id="kognitif4"></td>
+                        <td><input type="radio" name="kognitif" value="50" myid="check_cara" id="kognitif5"></td>
+                    </tr>
+                    <tr>
+                        
+                        <td class="">Pola tidur</td>
+                        <td><input type="radio" name="pola_tidur" value="46" myid="check_cara" id="pola_tidur1"></td>
+                        <td><input type="radio" name="pola_tidur" value="47" myid="check_cara" id="pola_tidur2"></td>
+                        <td><input type="radio" name="pola_tidur" value="48" myid="check_cara" id="pola_tidur3"></td>
+                        <td><input type="radio" name="pola_tidur" value="49" myid="check_cara" id="pola_tidur4"></td>
+                        <td><input type="radio" name="pola_tidur" value="50" myid="check_cara" id="pola_tidur5"></td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+             
+                EDUKASI PERSALINAN (I.05178), INDUKSI PERSALINAN (I.07212), PERAWATAN PERSALINAN (I.07227)<br></br>
+                <table class="rating">
+                    <tr>
+                        <th>Observasi</th>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="observasi1" value="1" myid="check_cara" id="observasi1"> Identifikasi harapan pasien dan keluarga dalam pencapaian hidup</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="observasi2" value="2" myid="check_cara" id="observasi2">  Identifikasi pemahaman ibu tentang persalinan</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="observasi3" value="3" myid="check_cara" id="observasi3"> Identifikasi kesiapan dan kemampuan menerima informasi</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="observasi4" value="4" myid="check_cara" id="observasi4"> Identifikasi indikasi dilakukan induksi persalinan</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="observasi5" value="5" myid="check_cara" id="observasi5"> Identifikasi riwayan obstetrik (usia kehamilan, lamanya persalinan sebelumnya, kontraindikasi spt plasenta, previa lengkap, riwayat sc, kelainan struktural pelvis)</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="observasi6" value="6" myid="check_cara" id="observasi6"> Identifikasi kondisii proses persalinan</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="observasi7" value="7" myid="check_cara" id="observasi7"> Lakukan pemeriksaan leopold</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="observasi8" value="8" myid="check_cara" id="observasi8"> Monitor kondisi ibu dan janin sebelum induksi</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="observasi9" value="9" myid="check_cara" id="observasi9"> Monitor kemajuan persalinan secara ketat</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="observasi10" value="10" myid="check_cara" id="observasi10"> Montor kontraksi uterus</td>
+                    </tr>
+                    <tr>
+                        <th>Terapeutik</th>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="terapeutik1" value="7" myid="check_cara" id="terapeutik1"> Sediakan materi dan media pendidikan kesehatan</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="terapeutik2" value="8" myid="check_cara" id="terapeutik2"> Jadwalkan pendidikan kesehatan sesuai kesepakatan</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="terapeutik3" value="9" myid="check_cara" id="terapeutik3"> Berikan kesempatan untuk bertanya</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="terapeutik4" value="10" myid="check_cara" id="terapeutik4"> Berikan reinforcement positif terhadap perubahan perilaku ibu</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="terapeutik5" value="11" myid="check_cara" id="terapeutik5"> Berikan kenyamanan selama proses induksi</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="terapeutik6" value="12" myid="check_cara" id="terapeutik6"> Beriikan metode alternatif penghilang rasa sakit (pijat aromterapi, hipnosis)</td>
+                    </tr>
+                    <tr>
+                        <th>Edukasi</th>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="edukasi1" value="10" myid="check_cara" id="edukasi1"> Jelaskan metode persalinan yang ibu inginkan</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="edukasi2" value="11" myid="check_cara" id="edukasi2"> Jelaskan persiapan dan tempat persalinan</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="edukasi3" value="12" myid="check_cara" id="edukasi3"> Anjurkan ibu mengikuti kelas ibu hamil pada usia kehamilan lebih dari 36minggu</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="edukasi4" value="13" myid="check_cara" id="edukasi4"> Anjurkan ibu menggunakan teknik management neri persalinan tiap kala</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="edukasi5" value="14" myid="check_cara" id="edukasi5"> Anjurkan ibu cukup nutrisi</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="edukasi6" value="15" myid="check_cara" id="edukasi6"> Ajarkan teknik relaksasi untuk meredakan kecemasan dan ketidaknyamanan persalinan</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="edukasi7" value="14" myid="check_cara" id="edukasi7"> Ajarkan ibu cara mengenali tanda tanda persalinan</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="edukasi8" value="14" myid="check_cara" id="edukasi8"> Ajarkan ibu mengenali tanda bahaya persalinan</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="edukasi9" value="14" myid="check_cara" id="edukasi9"> Anjurkan ibu mengosongkan kandung kemih</td>
+                    </tr>
+                    <tr>
+                        <th>Kolaborasi</th>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" name="kolaboras1" value="14" myid="check_cara" id="kolaboras1"> Kolaborasi pemberian obat IV (mis: oksitosin) untuk merangsang aktivitas rahim</td>
+                    </tr>
+                </table>
+                <td>
+            </td>
+        </tr>
+    </table>
+
+    <div>
+        Ket:<br>
+        <td><input type="checkbox" name="ket1" value="99" myid="check_cara" id="ket1"> Isi dengan tanda checklist kolom ket berisi prioritas nomor diagnosa</td>
+    </div>
+
+    <table width="100%" class="table" cellpadding="0" border="2">
+        <tbody>
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <div align="center"><strong>Tanda Tangan Pembuat</strong></div>
+                </td>
+
+                <td>
+                    <div align="center"><strong>Tanda Tangan Menyetujui</strong></div>
+                </td>
+
+                <td>&nbsp;</td>
+            </tr>
+           
+            <tr>
+                <td class="text-center bgcolor="#FFFFFF">Nama</td>
+                <td class="text-center bgcolor="#FFFFFF" class="text-center">
+                    <input name="17_nama" type="text" id="17_nama" size="25" myid="check_cara">
+                    <br>
+                    <label class="label text-center" id="def_img_ex_ttd_petugas" style="font-style: italic; width: 100px; height: 100px;">paraf</label>
+                    <label class="label text-center">
+                        <img class="text-center" id="image_paraf_ex_ttd_petugas" src="" style="display: none;"></label>
+                    <input myid="check_cara" type="hidden" name="paraf_ex_ttd_petugas" id="paraf_ex_ttd_petugas" data-name="paraf" data-id="ex_ttd_petugas">
+                        <br>
+                    <label class="label text-center">
+                        <a id="CreateTTD" class="btn btn-default btn-xs pointer text-center" data-id="ex_ttd_petugas" style="text-align: center;">
+                            <i class="fa fa-edit"> </i>
+                            PENTABLET
+                        </a>
+                    </label>
+                </td>
+
+                <td class="text-center bgcolor="#FFFFFF" class="text-center">
+                    <input name="17_nama3" type="text" id="17_nama3" size="25" myid="check_cara">
+                    <br>
+                    <label class="label text-center" id="def_img_ex_ttd_petugas_3" style="font-style: italic; width: 100px; height: 100px;">paraf</label>
+                    <label class="label text-center">
+                        <img class="text-center" id="image_paraf_ex_ttd_petugas_3" src="" style="display: none;"></label>
+                    <input myid="check_cara" type="hidden" name="paraf_ex_ttd_petugas_3" id="paraf_ex_ttd_petugas_3" data-name="paraf" data-id="ex_ttd_petugas_3">
+                        <br>
+                    <label class="label text-center">
+                        <a id="CreateTTD" class="btn btn-default btn-xs pointer text-center" data-id="ex_ttd_petugas_3" style="text-align: center;">
+                            <i class="fa fa-edit"> </i>
+                            PENTABLET
+                        </a>
+                    </label>
+                </td>
+
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+
+<script>
+    $(document).ready(function () {
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: 'dd-mm-yy',
+                autoclose: true,
+                todayHighlight: true,
+            })
+        })
+
+        $('input[type="radio"]').off('change').on('change', function () {
+            let total = 0;
+            let percol = $(this).data('percol');
+            console.log(percol)
+
+            $('[data-hitung' + percol + ']').each(function () {
+                let radioValue = $(this).val() || 0;
+
+                if ($(this).is(':checked')) {
+                    radioValue = parseInt(radioValue)
+                    console.log(radioValue)
+                    total += radioValue;
+                }
+            });
+
+            $(`#totalskor` + percol).val(total);
+        });
+    })
+
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+        PopupCenter('index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=' + id, 'pop', 800, 400);
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+        ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+        console.log('PopupCenter');
+        var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+        var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+        var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+        var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+        var left = ((width / 2) - (w / 2)) + dualScreenLeft + 100;
+        var top = ((height / 2) - (h / 2)) + dualScreenTop + 100;
+
+        var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+
+        if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+        $('input[data-name="paraf"]').each(function () {
+            var id = $(this).attr('data-id'),
+                ttd = $(this).val();
+
+            ImageToText(id, ttd);
+        });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document).off('change', 'select[data-var="set_name_sel"]').on('change', 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr('name'),
+            name_txt = $(this).find('option:selected').text(),
+            name_img = $(this).find('option:selected').attr('data-ttd'),
+            id = $(this).attr('data-id');
+
+        $("#" + name + '_txt').val(name_txt);
+
+        ImageToText(id, name_img);
+    });
+
+    // Untuk Keperluan Create TTD
+    $(document).off('click', '#CreateTTD').on('click', '#CreateTTD', function () {
+        var id = $(this).attr('data-id');
+
+        ttd_paraf(id);
+    });
+
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+        def = 'paraf';
+
+        if (typeof img_val === "undefined" || img_val == '') {
+            $('#def_img_' + img_id).text(def);
+            $('#def_img_' + img_id).css({ "display": "", "font-style": "italic", "width": "100px", "height": "100px" });
+            $("#image_paraf_" + img_id).css("display", "none");
+        }
+        else {
+            $('#def_img_' + img_id).text('');
+            $('#def_img_' + img_id).css('display', 'none');
+            $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+            $('#image_paraf_' + img_id).css({ "display": "", "width": "100px", "height": "100px" });
+            $("#paraf_" + img_id).val(img_val);
+        }
+    }
+</script>
+<script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+        SetTTD();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,1413 @@
+
+
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RINGKASAN PULANG</title>
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 98%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+    if ($.fn.datepicker) {
+      $(".datepicker").each(function () {
+        var $this = $(this),
+          dataDateFormat = $this.attr("data-dateformat") || "dd.mm.yy";
+
+        $this.datepicker({
+          dateFormat: dataDateFormat,
+          prevText: '<i class="fa fa-chevron-left"></i>',
+          nextText: '<i class="fa fa-chevron-right"></i>',
+          todayBtn: "linked",
+        });
+
+        // clear memory reference
+        $this = null;
+      });
+    }
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker2").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
+  
+    <h1 class="title">RINGKASAN PULANG</h1>
+    <table class="" width="100%">
+      <tbody>
+        <tr>
+          <input type="hidden" id="src_ttd_1" name="src_ttd_1" myid="check_cara">
+          <input type="hidden" id="src_ttd_2" name="src_ttd_2" myid="check_cara">
+          <td>Nama Pasien</td>
+          <td>
+            <input name="nama_pasien2" type="text" id="nama_pasien" size="30" myid="check_cara" label="nama pasien" placeholder="..." value="{VNAMA_PASIEN}" fdprocessedid="9yrxja">
+          </td>
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td>
+            <input type="text" name="no-rek-medis" id="no-rek-medis" label="no-rek-medis" myid="check_cara" placeholder="......" value="{NO_RM}" fdprocessedid="4x3bcf">
+          </td>
+        </tr>
+
+        <tr>
+          <td>Tanggal Lahir</td>
+          <td>
+            <input name="tgl_lahira2" type="text" id="tgl_lahir" placeholder="dd-mm-yy" myid="check_cara" label="tanggal lahir" value="{VBIRTH_DATE}" fdprocessedid="kiz81">
+          </td>
+
+          <td>Umur</td>
+          <td>
+            <input type="text" size="5" name="umur-pasien" id="umur-pasien" label="umur-pasien" myid="check_cara" placeholder="......" value="{VAGE}" fdprocessedid="6c4kyc">
+          </td>
+          <td>
+            <label for="kelas"> Kelas </label>
+          </td>
+          <td>
+            <input name="kelasa2" type="text" id="kelas" placeholder="..." myid="check_cara" label="kelas" value="{VNAMAKELAS}" fdprocessedid="7yog6t">
+          </td>
+        </tr>
+        <tr>
+          <td>Tanggal</td>
+          <td>
+            <input class="datepicker hasDatepicker" type="text" name="tgl" id="tgl" label="tgl" myid="check_cara" placeholder="dd-mm-yy" fdprocessedid="ebumop">
+          </td>
+
+          <td>Jam</td>
+          <td>
+            <input type="text" name="jam" id="jam" label="jam" mtype="pukul" myid="check_cara" placeholder="00.00" fdprocessedid="hyh8sz">
+          </td>
+
+          <td>Kamar</td>
+          <td>
+            <input type="text" name="kamar" id="kamar" label="kamar" myid="check_cara" placeholder="......" value="{VNAMARUANGAN}" fdprocessedid="9rhiqe">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="">
+      <tbody>
+        <tr>
+          <td>
+            <section style="display: flex; gap: 20px; padding-left: 10px">
+              <label for="" style="font-weight: bold">Alasan pulang: </label>
+              <div>
+                <input type="radio" name="alasan-pulang" id="alasan-pulang" label="alasan-pulang" myid="check_cara" value="Sembuh">
+                <label for="">Sembuh</label>
+              </div>
+              <div>
+                <input type="radio" name="alasan-pulang" id="alasan-pulang" label="alasan-pulang" myid="check_cara" value="Pindah Rumah Sakit">
+                <label for="">Pindah Rumah Sakit</label>
+              </div>
+              <div>
+                <input type="radio" name="alasan-pulang" id="alasan-pulang" label="alasan-pulang" myid="check_cara" value="Pulang atas permintaan sendiri">
+                <label for="">Pulang atas permintaan sendiri</label>
+              </div>
+              <div>
+                <input type="radio" name="alasan-pulang" id="alasan-pulang" label="alasan-pulang" myid="check_cara" value="Meninggal dunia">
+                <label for="">Meninggal dunia</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <section style="display: flex; gap: 20px; padding-left: 10px">
+              <label for="" style="font-weight: bold">Mobilisasi saat pulang:
+              </label>
+              <div>
+                <input type="radio" name="mobilisasi-pulang" id="mobilisasi-pulang" label="mobilisasi-pulang" myid="check_cara" value="Mandiri">
+                <label for="">Mandiri</label>
+              </div>
+              <div>
+                <input type="radio" name="mobilisasi-pulang" id="mobilisasi-pulang" label="mobilisasi-pulang" myid="check_cara" value="Dibantu sebagian">
+                <label for="">Dibantu sebagian</label>
+              </div>
+              <div>
+                <input type="radio" name="mobilisasi-pulang" id="mobilisasi-pulang" label="mobilisasi-pulang" myid="check_cara" value="Dibantu penuh">
+                <label for="">Dibantu penuh</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <section style="display: flex; gap: 20px; padding-left: 10px">
+              <label for="" style="font-weight: bold">Alat bantu: </label>
+              <div>
+                <input type="radio" name="alat-bantu" id="alat-bantu" label="alat-bantu" myid="check_cara" value="Tongkat">
+                <label for="">Tongkat</label>
+              </div>
+              <div>
+                <input type="radio" name="alat-bantu" id="alat-bantu" label="alat-bantu" myid="check_cara" value="Kursi roda">
+                <label for="">Kursi roda</label>
+              </div>
+              <div>
+                <input type="radio" name="alat-bantu" id="alat-bantu" label="alat-bantu" myid="check_cara" value="Brancard">
+                <label for="">Brancard</label>
+              </div>
+              <div>
+                <input type="radio" name="alat-bantu" id="alat-bantu" label="alat-bantu" myid="check_cara" value="Walker">
+                <label for="">Walker</label>
+              </div>
+              <div>
+                <input type="radio" name="alat-bantu" id="alat-bantu" label="alat-bantu" myid="check_cara" value="Lainnya">
+                <label for="">Lainnya</label>
+                <input size="40" type="text" name="alat-bantu-lainnya" id="alat-bantu-lainnya" label="alat-bantu-lainnya" myid="check_cara" fdprocessedid="yqi9jk">
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <section style="display: flex; gap: 20px; padding-left: 10px">
+              <label for="" style="font-weight: bold">Alat kesehatan yang terpasang:
+              </label>
+              <div>
+                <input type="checkbox" name="iv-catheter" id="iv-catheter" label="iv-catheter" myid="check_cara" value="IV Catheter">
+                <label for="">IV Catheter</label>
+              </div>
+              <div>
+                <input type="checkbox" name="double-lumen" id="double-lumen" label="double-lumen" myid="check_cara" value="Double lumen">
+                <label for="">Double lumen</label>
+              </div>
+              <div>
+                <input type="checkbox" name="tracheoustube" id="tracheoustube" label="tracheoustube" myid="check_cara" value="Tracheostube">
+                <label for="">Tracheostube</label>
+              </div>
+              <div>
+                <input type="checkbox" name="cvp" id="cvp" label="cvp" myid="check_cara" value="CVP">
+                <label for="">CVP</label>
+              </div>
+              <div>
+                <input type="checkbox" name="ngt" id="ngt" label="ngt" myid="check_cara" value="NGT">
+                <label for="">NGT</label>
+              </div>
+              <div>
+                <input type="checkbox" name="catheter-urine" id="catheter-urine" label="catheter-urine" myid="check_cara" value="Catheter Urine">
+                <label for="">Catheter Urine</label>
+              </div>
+              <div>
+                <input type="checkbox" name="oksigen" id="oksigen" label="oksigen" myid="check_cara" value="Oksigen">
+                <label for="">Oksigen</label>
+              </div>
+              <div>
+                <input type="checkbox" name="alat-kesehatan-lainnya" id="alat-kesehatan-lainnya" label="alat-kesehatan-lainnya" myid="check_cara" value="Lainnya">
+                <label for="">Lainnya</label>
+                <input size="40" type="text" name="detail-alat-kesehatan-lainnya" id="detail-alat-kesehatan-lainnya" label="detail-alat-kesehatan-lainnya" myid="check_cara" fdprocessedid="gsmtve">
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <section style="display: flex; gap: 20px; padding-left: 10px">
+              <label for="" style="font-weight: bold">Perawatan khusus di rumah:
+              </label>
+              <div>
+                <input type="radio" name="perawatan-khusus-di-rumah" id="perawatan-khusus-di-rumah" label="perawatan-khusus-di-rumah" myid="check_cara" value="Tidak">
+                <label for="">Tidak</label>
+              </div>
+              <div>
+                <input type="radio" name="perawatan-khusus-di-rumah" id="perawatan-khusus-di-rumah" label="perawatan-khusus-di-rumah" myid="check_cara" value="Ada">
+                <label for="">Ada</label>
+              </div>
+              <div>
+                <input type="checkbox" class="jenis-perawatan-khusus" name="perawatan-khusus-di-rumah-home-visit" id="perawatan-khusus-di-rumah-home-visit" label="perawatan-khusus-di-rumah-home-visit" myid="check_cara" value="Home visit">
+                <label for="">Home visit</label>
+              </div>
+              <div>
+                <input type="checkbox" class="jenis-perawatan-khusus" name="perawatan-khusus-di-rumah-home-care" id="perawatan-khusus-di-rumah-home-care" label="perawatan-khusus-di-rumah-home-care" myid="check_cara" value="Home care">
+                <label for="">Home care</label>
+              </div>
+
+              <div>
+                <input type="checkbox" class="jenis-perawatan-khusus" name="perawatan-khusus-di-rumah-lainnya" id="perawatan-khusus-di-rumah-lainnya" label="perawatan-khusus-di-rumah-lainnya" myid="check_cara" value="Lainnya">
+                <label for="">Lainnya</label>
+                <input size="40" type="text" name="detail-perawatan-khusus-di-rumah-lainnya" id="detail-perawatan-khusus-di-rumah-lainnya" label="detail-perawatan-khusus-di-rumah-lainnya" myid="check_cara" fdprocessedid="jn8g36">
+              </div>
+            </section>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="">
+      <tbody>
+        <tr>
+          <td style="padding-left: 10px"><b>Keadaan pasien saat pulang:</b></td>
+        </tr>
+        <tr>
+          <td>
+            <section style="display: flex; gap: 10px; padding-left: 10px">
+              <div>
+                <label for=""> KU: </label>
+                <input type="text" name="KU" id="KU" label="KU" myid="check_cara" placeholder="..." fdprocessedid="iqdrmwh">,
+              </div>
+              <div>
+                <label for=""> Kesadaran: </label>
+                <input type="text" name="kesadaran" id="kesadaran" label="kesadaran" myid="check_cara" placeholder="..." fdprocessedid="j7rhit">,
+              </div>
+              <div>
+                <label for=""> Tensi: </label>
+                <input size="8" type="text" name="tensi" id="tensi" label="tensi" myid="check_cara" placeholder="..." value="{VTD}" fdprocessedid="95rbvl">
+                <label for="">mmHg,</label>
+              </div>
+              <div>
+                <label for=""> Nadi: </label>
+                <input size="8" type="text" name="nadi" id="nadi" label="nadi" myid="check_cara" value="{VNADI}" placeholder="..." fdprocessedid="yese8">
+                <label for="">x/mnt,</label>
+              </div>
+              <div>
+                <label for=""> Suhu: </label>
+                <input size="8" type="text" name="suhu" id="suhu" label="suhu" myid="check_cara" value="{VSUHU}" placeholder="..." fdprocessedid="6b1wlg">
+                <label for=""> °C,</label>
+              </div>
+              <div>
+                <label for=""> Pernafasan: </label>
+                <input size="8" type="text" name="pernafasan" id="pernafasan" label="pernafasan" myid="check_cara" value="{VNAFAS}" placeholder="..." fdprocessedid="116m3s">
+                <label for=""> x/mnt</label>
+              </div>
+              <div>
+                <label for=""> SPo2: </label>
+                <input size="8" type="text" name="sp02" id="sp02" label="sp02" myid="check_cara" placeholder="..." fdprocessedid="809jpu">
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 10px">
+            <b>Diagnosis keperawatan selama dirawat:</b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div style="display: flex; padding-left: 10px; gap: 10px">
+              <label for=""><b>a.</b></label>
+              <textarea type="textarea" name="diagnosis-keperawatan-1" id="diagnosis-keperawatan-1" label="diagnosis-keperawatan-1" myid="check_cara" rows="2" style="width: 100%"></textarea>
+            </div>
+            <div style="display: flex; padding-left: 10px; gap: 10px">
+              <label for=""><b>b.</b></label>
+              <textarea type="textarea" name="diagnosis-keperawatan-2" id="diagnosis-keperawatan-2" label="diagnosis-keperawatan-2" myid="check_cara" rows="2" style="width: 100%"></textarea>
+            </div>
+            <div style="display: flex; padding-left: 10px; gap: 10px">
+              <label for=""><b>c.</b></label>
+              <textarea type="textarea" name="diagnosis-keperawatan-3" id="diagnosis-keperawatan-3" label="diagnosis-keperawatan-3" myid="check_cara" rows="2" style="width: 100%"></textarea>
+            </div>
+            <div style="display: flex; padding-left: 10px; gap: 10px">
+              <label for=""><b>d.</b></label>
+              <textarea type="textarea" name="diagnosis-keperawatan-4" id="diagnosis-keperawatan-4" label="diagnosis-keperawatan-4" myid="check_cara" rows="2" style="width: 100%"></textarea>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 10px">
+            <b>Tindakan keperawatan selama dirawat:</b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div style="display: flex; padding-left: 10px; gap: 10px">
+              <label for=""><b>a.</b></label>
+              <textarea type="textarea" name="tindakan-keperawatan-1" id="tindakan-keperawatan-1" label="tindakan-keperawatan-1" myid="check_cara" rows="2" style="width: 100%"></textarea>
+            </div>
+            <div style="display: flex; padding-left: 10px; gap: 10px">
+              <label for=""><b>b.</b></label>
+              <textarea type="textarea" name="tindakan-keperawatan-2" id="tindakan-keperawatan-2" label="tindakan-keperawatan-2" myid="check_cara" rows="2" style="width: 100%"></textarea>
+            </div>
+            <div style="display: flex; padding-left: 10px; gap: 10px">
+              <label for=""><b>c.</b></label>
+              <textarea type="textarea" name="tindakan-keperawatan-3" id="tindakan-keperawatan-3" label="tindakan-keperawatan-3" myid="check_cara" rows="2" style="width: 100%"></textarea>
+            </div>
+            <div style="display: flex; padding-left: 10px; gap: 10px">
+              <label for=""><b>d.</b></label>
+              <textarea type="textarea" name="tindakan-keperawatan-4" id="tindakan-keperawatan-4" label="tindakan-keperawatan-4" myid="check_cara" rows="2" style="width: 100%"></textarea>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 10px">
+            <b>Evaluasi:</b>
+            <textarea rows="4" type="textarea" name="evaluasi" id="evaluasi" label="evaluasi" myid="check_cara" style="width: 100%"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 10px"><b>Manajemen nyeri:</b></td>
+        </tr>
+        <tr>
+          <td style="padding-left: 10px">
+            <div style="display: flex; gap: 10px">
+              <input type="checkbox" name="obat-yg-diminum" id="obat-yg-diminum" label="obat-yg-diminum" myid="check_cara" value="Obat yang diminum/anti nyeri">
+              <label for="">Obat yang diminum/anti nyeri:</label>
+              <input style="width: 100%" type="text" name="keterangan-anti-nyeri" id="keterangan-anti-nyeri" label="keterangan-anti-nyeri" myid="check_cara" fdprocessedid="upe08t">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 10px">
+            <div style="display: flex; gap: 10px">
+              <input type="checkbox" name="efek-samping" id="efek-samping" label="efek-samping" myid="check_cara" value="Efek samping yang mungkin timbul">
+              <label for="">Efek samping yang mungkin timbul:</label>
+              <input style="width: 100%" type="text" name="keterangan-efek-samping" id="keterangan-efek-samping" label="keterangan-efek-samping" myid="check_cara" fdprocessedid="wbnw1">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 10px">
+            <div style="display: flex; gap: 10px">
+              <input type="checkbox" name="nyeri-bertambah" id="nyeri-bertambah" label="nyeri-bertambah" myid="check_cara" value="Bila nyeri bertambah berat segera ke RS">
+              <label for="">Bila nyeri bertambah berat segera ke RS:</label>
+              <input style="width: 100%" type="text" name="keterangan-nyeri-bertambah" id="keterangan-nyeri-bertambah" label="keterangan-nyeri-bertambah" myid="check_cara" fdprocessedid="o17jy7">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 10px">
+            <section style="display: flex; gap: 20px">
+              <label for=""><b>Batasan cairan</b></label>
+              <div>
+                <input type="radio" name="batas-cairan" id="batas-cairan" label="batas-cairan" myid="check_cara" value="Tidak">
+                <label for="">Tidak</label>
+              </div>
+              <div>
+                <input type="radio" name="batas-cairan" id="batas-cairan" label="batas-cairan" myid="check_cara" value="Ada">
+                <label for="">Ada</label>
+                <input type="text" name="detail-batas-cairan" id="detail-batas-cairan" label="detail-batas-cairan" myid="check_cara" placeholder="..." fdprocessedid="8btegd">
+                <label for="">cc/Jam</label>
+              </div>
+            </section>
+          </td>
+        </tr>
+        <tr>
+          </tr></tbody></table><table class="jenis-edukasi" width="100%">
+            <thead>
+              <tr>
+                <th rowspan="2">
+                  <b>No</b>
+                </th>
+                <th rowspan="2">
+                  <b>Jenis Edukasi</b>
+                </th>
+                <th colspan="2">
+                  <b>Edukasi</b>
+                </th>
+                <th colspan="2">
+                  <b>Mengerti</b>
+                </th>
+              </tr>
+              <tr>
+                <th>Ya</th>
+                <th>Tidak</th>
+                <th>Ya</th>
+                <th>Tidak</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Penyakit</td>
+                <td>
+                  <input type="radio" name="edukasi-penyakit" id="edukasi-penyakit" label="edukasi-penyakit" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="edukasi-penyakit" id="edukasi-penyakit" label="edukasi-penyakit" myid="check_cara" value="tidak">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-penyakit" id="mengerti-penyakit" label="mengerti-penyakit" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-penyakit" id="mengerti-penyakit" label="mengerti-penyakit" myid="check_cara" value="tidak">
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Tolok ukur pengobatan</td>
+                <td>
+                  <input type="radio" name="edukasi-tolok-ukur-pengobatan" id="edukasi-tolok-ukur-pengobatan" label="edukasi-tolok-ukur-pengobatan" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="edukasi-tolok-ukur-pengobatan" id="edukasi-tolok-ukur-pengobatan" label="edukasi-tolok-ukur-pengobatan" myid="check_cara" value="tidak">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-tolok-ukur-pengobatan" id="mengerti-tolok-ukur-pengobatan" label="mengerti-tolok-ukur-pengobatan" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-tolok-ukur-pengobatan" id="mengerti-tolok-ukur-pengobatan" label="mengerti-tolok-ukur-pengobatan" myid="check_cara" value="tidak">
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Obat &amp; efek samping obat</td>
+                <td>
+                  <input type="radio" name="edukasi-obat-dan-efek-samping-obat" id="edukasi-obat-dan-efek-samping-obat" label="edukasi-obat-dan-efek-samping-obat" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="edukasi-obat-dan-efek-samping-obat" id="edukasi-obat-dan-efek-samping-obat" label="edukasi-obat-dan-efek-samping-obat" myid="check_cara" value="tidak">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-obat-dan-efek-samping-obat" id="mengerti-obat-dan-efek-samping-obat" label="mengerti-obat-dan-efek-samping-obat" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-obat-dan-efek-samping-obat" id="mengerti-obat-dan-efek-samping-obat" label="mengerti-obat-dan-efek-samping-obat" myid="check_cara" value="tidak">
+                </td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Diet</td>
+                <td>
+                  <input type="radio" name="edukasi-diet" id="edukasi-diet" label="edukasi-diet" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="edukasi-diet" id="edukasi-diet" label="edukasi-diet" myid="check_cara" value="tidak">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-diet" id="mengerti-diet" label="mengerti-diet" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-diet" id="mengerti-diet" label="mengerti-diet" myid="check_cara" value="tidak">
+                </td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Perawatan di rumah</td>
+                <td>
+                  <input type="radio" name="edukasi-perawatan-di-rmh" id="edukasi-perawatan-di-rmh" label="edukasi-perawatan-di-rmh" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="edukasi-perawatan-di-rmh" id="edukasi-perawatan-di-rmh" label="edukasi-perawatan-di-rmh" myid="check_cara" value="tidak">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-perawatan-di-rmh" id="mengerti-perawatan-di-rmh" label="mengerti-perawatan-di-rmh" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-perawatan-di-rmh" id="mengerti-perawatan-di-rmh" label="mengerti-perawatan-di-rmh" myid="check_cara" value="tidak">
+                </td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Persiapan lingkungan &amp; fasilitas perawatan di rumah</td>
+                <td>
+                  <input type="radio" name="edukasi-persiapan-lingkungan-fasilitas-perawatan-di-rumah" id="edukasi-persiapan-lingkungan-fasilitas-perawatan-di-rumah" label="edukasi-persiapan-lingkungan-fasilitas-perawatan-di-rumah" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="edukasi-persiapan-lingkungan-fasilitas-perawatan-di-rumah" id="edukasi-persiapan-lingkungan-fasilitas-perawatan-di-rumah" label="edukasi-persiapan-lingkungan-fasilitas-perawatan-di-rumah" myid="check_cara" value="tidak">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-persiapan-lingkungan-fasilitas-perawatan-di-rumah" id="mengerti-persiapan-lingkungan-fasilitas-perawatan-di-rumah" label="mengerti-persiapan-lingkungan-fasilitas-perawatan-di-rumah" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-persiapan-lingkungan-fasilitas-perawatan-di-rumah" id="mengerti-persiapan-lingkungan-fasilitas-perawatan-di-rumah" label="mengerti-persiapan-lingkungan-fasilitas-perawatan-di-rumah" myid="check_cara" value="tidak">
+                </td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>Aktifitas dan istirahat di rumah</td>
+                <td>
+                  <input type="radio" name="edukasi-aktifitas-istirahat-di-rumah" id="edukasi-aktifitas-istirahat-di-rumah" label="edukasi-aktifitas-istirahat-di-rumah" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="edukasi-aktifitas-istirahat-di-rumah" id="edukasi-aktifitas-istirahat-di-rumah" label="edukasi-aktifitas-istirahat-di-rumah" myid="check_cara" value="tidak">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-aktifitas-istirahat-di-rumah" id="mengerti-aktifitas-istirahat-di-rumah" label="mengerti-aktifitas-istirahat-di-rumah" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-aktifitas-istirahat-di-rumah" id="mengerti-aktifitas-istirahat-di-rumah" label="mengerti-aktifitas-istirahat-di-rumah" myid="check_cara" value="tidak">
+                </td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>Perawatan luka di rumah</td>
+                <td>
+                  <input type="radio" name="edukasi-perawatan-luka-di-rmh" id="edukasi-perawatan-luka-di-rmh" label="edukasi-perawatan-luka-di-rmh" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="edukasi-perawatan-luka-di-rmh" id="edukasi-perawatan-luka-di-rmh" label="edukasi-perawatan-luka-di-rmh" myid="check_cara" value="tidak">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-perawatan-luka-di-rmh" id="mengerti-perawatan-luka-di-rmh" label="mengerti-perawatan-luka-di-rmh" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-perawatan-luka-di-rmh" id="mengerti-perawatan-luka-di-rmh" label="mengerti-perawatan-luka-di-rmh" myid="check_cara" value="tidak">
+                </td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>Mencari pertolongan darurat</td>
+                <td>
+                  <input type="radio" name="edukasi-pertolongan-darurat" id="edukasi-pertolongan-darurat" label="edukasi-pertolongan-darurat" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="edukasi-pertolongan-darurat" id="edukasi-pertolongan-darurat" label="edukasi-pertolongan-darurat" myid="check_cara" value="tidak">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-pertolongan-darurat" id="mengerti-pertolongan-darurat" label="mengerti-pertolongan-darurat" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-pertolongan-darurat" id="mengerti-pertolongan-darurat" label="mengerti-pertolongan-darurat" myid="check_cara" value="tidak">
+                </td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>Jadwal kontrol</td>
+                <td>
+                  <input type="radio" name="edukasi-jadwal-kontrol" id="edukasi-jadwal-kontrol" label="edukasi-jadwal-kontrol" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="edukasi-jadwal-kontrol" id="edukasi-jadwal-kontrol" label="edukasi-jadwal-kontrol" myid="check_cara" value="tidak">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-jadwal-kontrol" id="mengerti-jadwal-kontrol" label="mengerti-jadwal-kontrol" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-jadwal-kontrol" id="mengerti-jadwal-kontrol" label="mengerti-jadwal-kontrol" myid="check_cara" value="tidak">
+                </td>
+              </tr>
+              <tr>
+                <td>11</td>
+                <td>Perawatan ibu &amp; bayi</td>
+                <td>
+                  <input type="radio" name="edukasi-ibu-hati" id="edukasi-ibu-hati" label="edukasi-ibu-hati" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="edukasi-ibu-hati" id="edukasi-ibu-hati" label="edukasi-ibu-hati" myid="check_cara" value="tidak">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-ibu-hati" id="mengerti-ibu-hati" label="mengerti-ibu-hati" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-ibu-hati" id="mengerti-ibu-hati" label="mengerti-ibu-hati" myid="check_cara" value="tidak">
+                </td>
+              </tr>
+              <tr>
+                <td>12</td>
+                <td>Nasehat keluarga berencana</td>
+                <td>
+                  <input type="radio" name="edukasi-nasihat-keluarga-berencana" id="edukasi-nasihat-keluarga-berencana" label="edukasi-nasihat-keluarga-berencana" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="edukasi-nasihat-keluarga-berencana" id="edukasi-nasihat-keluarga-berencana" label="edukasi-nasihat-keluarga-berencana" myid="check_cara" value="tidak">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-nasihat-keluarga-berencana" id="mengerti-nasihat-keluarga-berencana" label="mengerti-nasihat-keluarga-berencana" myid="check_cara" value="ya">
+                </td>
+                <td>
+                  <input type="radio" name="mengerti-nasihat-keluarga-berencana" id="mengerti-nasihat-keluarga-berencana" label="mengerti-nasihat-keluarga-berencana" myid="check_cara" value="tidak">
+                </td>
+              </tr>
+              <tr>
+                <td colspan="6">
+                  <div style="display: flex; gap: 20px; background-color: #dfe8f6">
+                    <label style="margin-left: 10px" for=""><b>Leaflet edukasi:</b></label>
+                    <div>
+                      <input type="radio" name="leaflet-edukasi" id="leaflet-edukasi" label="leaflet-edukasi" myid="check_cara" value="Tidak">
+                      <label for="">Tidak</label>
+                    </div>
+                    <div>
+                      <input type="radio" name="leaflet-edukasi" id="leaflet-edukasi" label="leaflet-edukasi" myid="check_cara" value="Ada">
+                      <label for="">Ada</label>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="6">
+                  <section>
+                    <label style="padding-left: 10px" for="">
+                      Informasi obat yang dibawa pulang (nama obat, dosis, jam
+                      pemberian)
+                    </label>
+
+                    <input type="radio" name="informasi-obat-dibawa-plng" id="informasi-obat-dibawa-plng" label="informasi-obat-dibawa-plng" myid="check_cara" value="Tidak">
+                    <label for="">Tidak</label>
+                    <input type="radio" name="informasi-obat-dibawa-plng" id="informasi-obat-dibawa-plng" label="informasi-obat-dibawa-plng" myid="check_cara" value="Ada">
+                    <label for="">Ada</label>
+                  </section>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="6">
+                  <div style="background-color: #dfe8f6">
+                    <label style="padding-left: 10px" for="">
+                      Keterampilan khusus yang diperlukan di rumah
+                    </label>
+                    <input type="checkbox" name="rawat-luka" id="rawat-luka" label="rawat-luka" myid="check_cara" value="Rawat luka">
+                    <label for="">Rawat luka</label>
+                    <input type="checkbox" name="rawat-bayi" id="rawat-bayi" label="rawat-bayi" myid="check_cara" value="Rawat bayi">
+                    <label for="">Rawat bayi</label>
+                    <input type="checkbox" name="injeksi" id="injeksi" label="injeksi" myid="check_cara" value="Injeksi">
+                    <label for="">Injeksi</label>
+                    <input type="checkbox" name="keterampilan-khusus-lainnya" id="keterampilan-khusus-lainnya" label="keterampilan-khusus-lainnya" myid="check_cara" value="Lainnya">
+                    <label for="">Lainnya</label>
+                    <input type="text" name="detail-keterampilan-khusus-lainnya" id="detail-keterampilan-khusus-lainnya" label="detail-keterampilan-khusus-lainnya" myid="check_cara" placeholder="......" fdprocessedid="76361">
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+
+        
+          
+            <b style="padding-left: 10px">Hasil pemeriksaan yang diserahkan pada keluarga:</b>
+          
+        
+        
+          
+            <table width="100%" class="hasil-pemeriksaan">
+              <thead>
+                <tr>
+                  <th><b>No</b></th>
+                  <th><b>Hasil pemeriksaan</b></th>
+                  <th><b>Tanggal pemeriksaan</b></th>
+                  <th><b>Jumlah lembar</b></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align: center">1.</td>
+                  <td>
+                    <label for="">Laboratorium:</label>
+                    <div style="display: flex; gap: 5px">
+                      <label for="">a.</label>
+                      <input style="flex: 1" type="text" name="hasil-pemeriksaan-laboratorium-a" id="hasil-pemeriksaan-laboratorium-a" label="hasil-pemeriksaan-laboratorium-a" myid="check_cara" placeholder="..." fdprocessedid="3n68rv">
+                    </div>
+                    <div style="display: flex; gap: 5px">
+                      <label for="">b.</label>
+                      <input style="flex: 1" type="text" name="hasil-pemeriksaan-laboratorium-b" id="hasil-pemeriksaan-laboratorium-b" label="hasil-pemeriksaan-laboratorium-b" myid="check_cara" placeholder="..." fdprocessedid="jnu895">
+                    </div>
+                  </td>
+                  <td>
+                    <label for="">&nbsp;</label>
+                    <div style="display: flex; gap: 5px">
+                      <input style="flex: 1" type="text" class="datepicker2 hasDatepicker" name="tanggal-pemeriksaan-laboratorium-a" id="tanggal-pemeriksaan-laboratorium-a" label="tanggal-pemeriksaan-laboratorium-a" myid="check_cara" placeholder="dd-mm-yy" fdprocessedid="ewc1q3">
+                    </div>
+                    <div style="display: flex; gap: 5px">
+                      <input style="flex: 1" type="text" class="datepicker2 hasDatepicker" name="tanggal-pemeriksaan-laboratorium-b" id="tanggal-pemeriksaan-laboratorium-b" label="tanggal-pemeriksaan-laboratorium-b" myid="check_cara" placeholder="dd-mm-yy" fdprocessedid="oc4c9v">
+                    </div>
+                  </td>
+                  <td>
+                    <label for="">&nbsp;</label>
+                    <div style="display: flex; gap: 5px">
+                      <input style="flex: 1" type="text" name="jumlah-lmbr-laboratorium-a" id="jumlah-lmbr-laboratorium-a" label="jumlah-lmbr-laboratorium-a" myid="check_cara" placeholder="..." fdprocessedid="ee805i">
+                    </div>
+                    <div style="display: flex; gap: 5px">
+                      <input style="flex: 1" type="text" name="jumlah-lmbr-laboratorium-b" id="jumlah-lmbr-laboratorium-b" label="jumlah-lmbr-laboratorium-b" myid="check_cara" placeholder="..." fdprocessedid="3l38c">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="text-align: center">2.</td>
+                  <td>
+                    <label for="">Radiologi:</label>
+                    <div style="display: flex; gap: 5px">
+                      <label for="">a.</label>
+                      <input style="flex: 1" type="text" name="hasil-pemeriksaan-radiologi-a" id="hasil-pemeriksaan-radiologi-a" label="hasil-pemeriksaan-radiologi-a" myid="check_cara" placeholder="..." fdprocessedid="g92vz8">
+                    </div>
+                    <div style="display: flex; gap: 5px">
+                      <label for="">b.</label>
+                      <input style="flex: 1" type="text" name="hasil-pemeriksaan-radiologi-b" id="hasil-pemeriksaan-radiologi-b" label="hasil-pemeriksaan-radiologi-b" myid="check_cara" placeholder="..." fdprocessedid="87f49m">
+                    </div>
+                  </td>
+                  <td>
+                    <label for="">&nbsp;</label>
+                    <div style="display: flex; gap: 5px">
+                      <input style="flex: 1" type="text" class="datepicker2 hasDatepicker" name="tanggal-pemeriksaan-radiologi-a" id="tanggal-pemeriksaan-radiologi-a" label="tanggal-pemeriksaan-radiologi-a" myid="check_cara" placeholder="dd-mm-yy" fdprocessedid="mx9j0g">
+                    </div>
+                    <div style="display: flex; gap: 5px">
+                      <input style="flex: 1" type="text" class="datepicker2 hasDatepicker" name="tanggal-pemeriksaan-radiologi-b" id="tanggal-pemeriksaan-radiologi-b" label="tanggal-pemeriksaan-radiologi-b" myid="check_cara" placeholder="dd-mm-yy" fdprocessedid="pjs45">
+                    </div>
+                  </td>
+                  <td>
+                    <label for="">&nbsp;</label>
+                    <div style="display: flex; gap: 5px">
+                      <input style="flex: 1" type="text" name="jumlah-lembar-pemeriksaan-radiologi-a" id="jumlah-lembar-pemeriksaan-radiologi-a" label="jumlah-lembar-pemeriksaan-radiologi-a" myid="check_cara" placeholder="..." fdprocessedid="rig9n">
+                    </div>
+                    <div style="display: flex; gap: 5px">
+                      <input style="flex: 1" type="text" name="jumlah-lembar-pemeriksaan-radiologi-b" id="jumlah-lembar-pemeriksaan-radiologi-b" label="jumlah-lembar-pemeriksaan-radiologi-b" myid="check_cara" placeholder="..." fdprocessedid="trnicj">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="text-align: center">3.</td>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <label for="">EKG</label>
+                      <input style="flex: 1" type="text" name="hasil-pemeriksaan-ekg" id="hasil-pemeriksaan-ekg" label="hasil-pemeriksaan-ekg" myid="check_cara" placeholder="..." fdprocessedid="r7fsak">
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <input class="datepicker2 hasDatepicker" style="flex: 1" type="text" name="tanggal-pemeriksaan-ekg" id="tanggal-pemeriksaan-ekg" label="tanggal-pemeriksaan-ekg" myid="check_cara" placeholder="dd-mm-yy" fdprocessedid="x16a0s">
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <input style="flex: 1" type="text" name="jumlah-lembar-pemeriksaan-ekg" id="jumlah-lembar-pemeriksaan-ekg" label="jumlah-lembar-pemeriksaan-ekg" myid="check_cara" placeholder="..." fdprocessedid="lzwzdl">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="text-align: center">4.</td>
+                  <td>
+                    <label for="">Echocardiography</label>
+                    <input style="flex: 1" type="radio" name="hasil-echocardiography-treadmill" id="hasil-echocardiography-treadmill" label="hasil-echocardiography-treadmill" myid="check_cara" value="Echocardiography">
+                    <label for="">Treadmill</label>
+                    <input style="flex: 1" type="radio" name="hasil-echocardiography-treadmill" id="hasil-echocardiography-treadmill" label="hasil-echocardiography-treadmill" myid="check_cara" value="Treadmill">
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <input style="flex: 1" class="datepicker2 hasDatepicker" type="text" name="tgl-pemeriksaan-echocardiography-treadmill" id="tgl-pemeriksaan-echocardiography-treadmill" label="tgl-pemeriksaan-echocardiography-treadmill" myid="check_cara" placeholder="dd-mm-yy" fdprocessedid="cud09j">
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <input style="flex: 1" type="text" name="jumlah-lembar-pemeriksaan-echocardiography-treadmill" id="jumlah-lembar-pemeriksaan-echocardiography-treadmill" label="jumlah-lembar-pemeriksaan-echocardiography-treadmill" myid="check_cara" placeholder="..." fdprocessedid="xsyfe5">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="text-align: center">5.</td>
+                  <td>
+                    <label for="">Gastroscopy</label>
+                    <input style="flex: 1" type="radio" name="hasil-gastroscopy-colonoscopy" id="hasil-gastroscopy-colonoscopy" label="hasil-gastroscopy-colonoscopy" myid="check_cara" value="Gastroscopy">
+                    <label for="">Colonoscopy</label>
+                    <input style="flex: 1" type="radio" name="hasil-gastroscopy-colonoscopy" id="hasil-gastroscopy-colonoscopy" label="hasil-gastroscopy-colonoscopy" myid="check_cara" value="Colonoscopy">
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <input style="flex: 1" type="text" class="datepicker2 hasDatepicker" name="tanggal-pemeriksaan-gastroscopy-colonoscopy" id="tanggal-pemeriksaan-gastroscopy-colonoscopy" label="tanggal-pemeriksaan-gastroscopy-colonoscopy" myid="check_cara" placeholder="dd-mm-yy" fdprocessedid="m6flcd">
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <input style="flex: 1" type="text" name="jumlah-lembar-pemeriksaan-gastroscopy-colonoscopy" id="jumlah-lembar-pemeriksaan-gastroscopy-colonoscopy" label="jumlah-lembar-pemeriksaan-gastroscopy-colonoscopy" myid="check_cara" placeholder="..." fdprocessedid="9qs1nw">
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+        
+          
+            <br>
+
+            <table class="obat-obatan" width="100%">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Obat-obatan</th>
+                  <th>Dosis</th>
+                  <th>Jumlah</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 25px">
+                    <input style="width: 100%; padding: 0" type="text" name="no-obat-1" id="no-obat-1" label="no-obat-1" myid="check_cara" placeholder="......" fdprocessedid="k118af">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="obat-obatan-1" id="obat-obatan-1" label="obat-obatan-1" myid="check_cara" placeholder="......" fdprocessedid="y4w3v">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="dosis-obat-1" id="dosis-obat-1" label="dosis-obat-1" myid="check_cara" placeholder="......" fdprocessedid="pe5tl">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="jumlah-obat-1" id="jumlah-obat-1" label="jumlah-obat-1" myid="check_cara" placeholder="......" fdprocessedid="4gl1mc">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 25px">
+                    <input style="width: 100%; padding: 0" type="text" name="no-obat-2" id="no-obat-2" label="no-obat-2" myid="check_cara" placeholder="......" fdprocessedid="eyvdpr">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="obat-obatan-2" id="obat-obatan-2" label="obat-obatan-2" myid="check_cara" placeholder="......" fdprocessedid="o2dto8">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="dosis-obat-2" id="dosis-obat-2" label="dosis-obat-2" myid="check_cara" placeholder="......" fdprocessedid="ikeyyt">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="jumlah-obat-2" id="jumlah-obat-2" label="jumlah-obat-2" myid="check_cara" placeholder="......" fdprocessedid="ttwgce">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 25px">
+                    <input style="width: 100%; padding: 0" type="text" name="no-obat-3" id="no-obat-3" label="no-obat-3" myid="check_cara" placeholder="......" fdprocessedid="l6i3vvs">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="obat-obatan-3" id="obat-obatan-3" label="obat-obatan-3" myid="check_cara" placeholder="......" fdprocessedid="m22jpd">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="dosis-obat-3" id="dosis-obat-3" label="dosis-obat-3" myid="check_cara" placeholder="......" fdprocessedid="knp37r">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="jumlah-obat-3" id="jumlah-obat-3" label="jumlah-obat-3" myid="check_cara" placeholder="......" fdprocessedid="rl6vz">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 25px">
+                    <input style="width: 100%; padding: 0" type="text" name="no-obat-4" id="no-obat-4" label="no-obat-4" myid="check_cara" placeholder="......" fdprocessedid="cnn363">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="obat-obatan-4" id="obat-obatan-4" label="obat-obatan-4" myid="check_cara" placeholder="......" fdprocessedid="1yg3ck">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="dosis-obat-4" id="dosis-obat-4" label="dosis-obat-4" myid="check_cara" placeholder="......" fdprocessedid="j0cu79">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="jumlah-obat-4" id="jumlah-obat-4" label="jumlah-obat-4" myid="check_cara" placeholder="......" fdprocessedid="fpitmaj">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 25px">
+                    <input style="width: 100%; padding: 0" type="text" name="no-obat-5" id="no-obat-5" label="no-obat-5" myid="check_cara" placeholder="......" fdprocessedid="cdvk1j">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="obat-obatan-5" id="obat-obatan-5" label="obat-obatan-5" myid="check_cara" placeholder="......" fdprocessedid="nel2">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="dosis-obat-5" id="dosis-obat-5" label="dosis-obat-5" myid="check_cara" placeholder="......" fdprocessedid="abn9a">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="jumlah-obat-5" id="jumlah-obat-5" label="jumlah-obat-5" myid="check_cara" placeholder="......" fdprocessedid="428lsf">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 25px">
+                    <input style="width: 100%; padding: 0" type="text" name="no-obat-6" id="no-obat-6" label="no-obat-6" myid="check_cara" placeholder="......" fdprocessedid="bzdf6s">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="obat-obatan-6" id="obat-obatan-6" label="obat-obatan-6" myid="check_cara" placeholder="......" fdprocessedid="11qa0j">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="dosis-obat-6" id="dosis-obat-6" label="dosis-obat-6" myid="check_cara" placeholder="......" fdprocessedid="in06bp">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="jumlah-obat-6" id="jumlah-obat-6" label="jumlah-obat-6" myid="check_cara" placeholder="......" fdprocessedid="0f5okr">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 25px">
+                    <input style="width: 100%; padding: 0" type="text" name="no-obat-7" id="no-obat-7" label="no-obat-7" myid="check_cara" placeholder="......" fdprocessedid="khq19">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="obat-obatan-7" id="obat-obatan-7" label="obat-obatan-7" myid="check_cara" placeholder="......" fdprocessedid="n0dy3g">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="dosis-obat-7" id="dosis-obat-7" label="dosis-obat-7" myid="check_cara" placeholder="......" fdprocessedid="ojn9t">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="jumlah-obat-7" id="jumlah-obat-7" label="jumlah-obat-7" myid="check_cara" placeholder="......" fdprocessedid="a9hima">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 25px">
+                    <input style="width: 100%; padding: 0" type="text" name="no-obat-8" id="no-obat-8" label="no-obat-8" myid="check_cara" placeholder="......" fdprocessedid="9crfcg">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="obat-obatan-8" id="obat-obatan-8" label="obat-obatan-8" myid="check_cara" placeholder="......" fdprocessedid="gafuvj">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="dosis-obat-8" id="dosis-obat-8" label="dosis-obat-8" myid="check_cara" placeholder="......" fdprocessedid="kb9gul">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="jumlah-obat-8" id="jumlah-obat-8" label="jumlah-obat-8" myid="check_cara" placeholder="......" fdprocessedid="vpo5ts">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 25px">
+                    <input style="width: 100%; padding: 0" type="text" name="no-obat-9" id="no-obat-9" label="no-obat-9" myid="check_cara" placeholder="......" fdprocessedid="mbw9xs">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="obat-obatan-9" id="obat-obatan-9" label="obat-obatan-9" myid="check_cara" placeholder="......" fdprocessedid="xx02ow">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="dosis-obat-9" id="dosis-obat-9" label="dosis-obat-9" myid="check_cara" placeholder="......" fdprocessedid="dk82dl">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="jumlah-obat-9" id="jumlah-obat-9" label="jumlah-obat-9" myid="check_cara" placeholder="......" fdprocessedid="7dkgok">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 25px">
+                    <input style="width: 100%; padding: 0" type="text" name="no-obat-10" id="no-obat-10" label="no-obat-10" myid="check_cara" placeholder="......" fdprocessedid="c85wto">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="obat-obatan-10" id="obat-obatan-10" label="obat-obatan-10" myid="check_cara" placeholder="......" fdprocessedid="0enn3o">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="dosis-obat-10" id="dosis-obat-10" label="dosis-obat-10" myid="check_cara" placeholder="......" fdprocessedid="tgqyme">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="jumlah-obat-10" id="jumlah-obat-10" label="jumlah-obat-10" myid="check_cara" placeholder="......" fdprocessedid="kmw6dp">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 25px">
+                    <input style="width: 100%; padding: 0" type="text" name="no-obat-11" id="no-obat-11" label="no-obat-11" myid="check_cara" placeholder="......" fdprocessedid="bq47j">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="obat-obatan-11" id="obat-obatan-11" label="obat-obatan-11" myid="check_cara" placeholder="......" fdprocessedid="8ivugm">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="dosis-obat-11" id="dosis-obat-11" label="dosis-obat-11" myid="check_cara" placeholder="......" fdprocessedid="nglefq">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="jumlah-obat-11" id="jumlah-obat-11" label="jumlah-obat-11" myid="check_cara" placeholder="......" fdprocessedid="b6uwp">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          
+        
+        
+          
+            <br>
+            <table width="100%" class="">
+              <tbody><tr>
+                <td>Surat keterangan rawat:</td>
+                <td>
+                  <input type="radio" name="surat-keterangan-rawat" id="surat-keterangan-rawat" label="surat-keterangan-rawat" myid="check_cara" value="Ada">
+                  <label for="surat-keterangan-rawat">Ada</label>
+                </td>
+                <td>
+                  <input type="radio" name="surat-keterangan-rawat" id="surat-keterangan-rawat" label="surat-keterangan-rawat" myid="check_cara" value="Tidak">
+                  <label for="surat-keterangan-rawat">Tidak</label>
+                </td>
+                <td>Kartu gol. darah bayi:</td>
+                <td>
+                  <input type="radio" name="kartu-gol-darah-bayi" id="kartu-gol-darah-bayi" label="kartu-gol-darah-bayi" myid="check_cara" value="Ada">
+                  <label for="kartu-gol-darah-bayi">Ada</label>
+                </td>
+                <td>
+                  <input type="radio" name="kartu-gol-darah-bayi" id="kartu-gol-darah-bayi" label="kartu-gol-darah-bayi" myid="check_cara" value="Tidak">
+                  <label for="kartu-gol-darah-bayi">Tidak</label>
+                </td>
+              </tr>
+              <tr>
+                <td>Asuransi:</td>
+                <td>
+                  <input type="radio" name="asuransi" id="asuransi" label="asuransi" myid="check_cara" value="Ada">
+                  <label for="">Ada</label>
+                </td>
+                <td>
+                  <input type="radio" name="asuransi" id="asuransi" label="asuransi" myid="check_cara" value="Tidak">
+                  <label for="">Tidak</label>
+                </td>
+                <td>Surat keterangan lahir:</td>
+                <td>
+                  <input type="radio" name="surat-keterangan-lahir" id="surat-keterangan-lahir" label="surat-keterangan-lahir" myid="check_cara" value="Ada">
+                  <label for="surat-keterangan-lahir">Ada</label>
+                </td>
+                <td>
+                  <input type="radio" name="surat-keterangan-lahir" id="surat-keterangan-lahir" label="surat-keterangan-lahir" myid="check_cara" value="Tidak">
+                  <label for="surat-keterangan-lahir">Tidak</label>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Surat kontrol:</td>
+                <td>
+                  <input type="radio" name="surat-kontrol" id="surat-kontrol" label="surat-kontrol" myid="check_cara" value="Ada">
+                  <label for="surat-kontrol">Ada</label>
+                </td>
+                <td>
+                  <input type="radio" name="surat-kontrol" id="surat-kontrol" label="surat-kontrol" myid="check_cara" value="Tidak">
+                  <label for="surat-kontrol">Tidak</label>
+                </td>
+                <td>Kartu KB:</td>
+                <td>
+                  <input type="radio" name="kartu-kb" id="kartu-kb" label="kartu-kb" myid="check_cara" value="Ada">
+                  <label for="">Ada</label>
+                </td>
+                <td>
+                  <input type="radio" name="kartu-kb" id="kartu-kb" label="kartu-kb" myid="check_cara" value="Tidak">
+                  <label for="">Tidak</label>
+                </td>
+              </tr>
+              <tr>
+                <td>Buku bayi:</td>
+                <td>
+                  <input type="radio" name="buku-bayi" id="buku-bayi" label="buku-bayi" myid="check_cara" value="Ada">
+                  <label for="">Ada</label>
+                </td>
+                <td>
+                  <input type="radio" name="buku-bayi" id="buku-bayi" label="buku-bayi" myid="check_cara" value="Tidak">
+                  <label for="">Tidak</label>
+                </td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+            </tbody></table>
+          
+        
+        
+          <b>Rencana Kontrol Selanjutnya:</b>
+        
+        
+          
+            <table class="kontrol-selanjutnya" width="100%">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Hari</th>
+                  <th>Tanggal</th>
+                  <th>Jam</th>
+                  <th>Nama Dokter</th>
+                </tr>
+                <tr>
+                  <td style="text-align: center">1.</td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="hari-kontrol-selanjutnya-1" id="hari-kontrol-selanjutnya-1" label="hari-kontrol-selanjutnya-1" myid="check_cara" placeholder="......" fdprocessedid="dqz5jl">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" class="datepicker2 hasDatepicker" name="tanggal-kontrol-selanjutnya-1" id="tanggal-kontrol-selanjutnya-1" label="tanggal-kontrol-selanjutnya-1" placeholder="dd-mm-yy" myid="check_cara" fdprocessedid="j0n2d">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="jam-kontrol-selanjutnya-1" id="jam-kontrol-selanjutnya-1" label="jam-kontrol-selanjutnya-1" myid="check_cara" placeholder="00.00" fdprocessedid="iiw9y">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="nama-dokter-kontrol-selanjutnya-1" id="nama-dokter-kontrol-selanjutnya-1" label="nama-dokter-kontrol-selanjutnya-1" myid="check_cara" placeholder="......" fdprocessedid="c0lu3d">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="text-align: center">2.</td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="hari-kontrol-selanjutnya-2" id="hari-kontrol-selanjutnya-2" label="hari-kontrol-selanjutnya-2" myid="check_cara" placeholder="......" fdprocessedid="g9g9ho">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" class="datepicker2 hasDatepicker" name="tanggal-kontrol-selanjutnya-2" id="tanggal-kontrol-selanjutnya-2" label="tanggal-kontrol-selanjutnya-2" placeholder="dd-mm-yy" myid="check_cara" fdprocessedid="vlfq4k">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="jam-kontrol-selanjutnya-2" id="jam-kontrol-selanjutnya-2" label="jam-kontrol-selanjutnya-2" myid="check_cara" placeholder="00.00" fdprocessedid="uc4yet">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="nama-dokter-kontrol-selanjutnya-2" id="nama-dokter-kontrol-selanjutnya-2" label="nama-dokter-kontrol-selanjutnya-2" myid="check_cara" placeholder="......" fdprocessedid="2tpoyk">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="text-align: center">3.</td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="hari-kontrol-selanjutnya-3" id="hari-kontrol-selanjutnya-3" label="hari-kontrol-selanjutnya-3" myid="check_cara" placeholder="......" fdprocessedid="tzjhrti">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" class="datepicker2 hasDatepicker" name="tanggal-kontrol-selanjutnya-3" id="tanggal-kontrol-selanjutnya-3" label="tanggal-kontrol-selanjutnya-3" placeholder="dd-mm-yy" myid="check_cara" fdprocessedid="ki4e5i">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="jam-kontrol-selanjutnya-3" id="jam-kontrol-selanjutnya-3" label="jam-kontrol-selanjutnya-3" myid="check_cara" placeholder="00.00" fdprocessedid="jwu13">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="nama-dokter-kontrol-selanjutnya-3" id="nama-dokter-kontrol-selanjutnya-3" label="nama-dokter-kontrol-selanjutnya-3" myid="check_cara" placeholder="......" fdprocessedid="j4vkk">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="text-align: center">4.</td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="hari-kontrol-selanjutnya-4" id="hari-kontrol-selanjutnya-4" label="hari-kontrol-selanjutnya-4" myid="check_cara" placeholder="......" fdprocessedid="n18j0a">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" class="datepicker2 hasDatepicker" name="tanggal-kontrol-selanjutnya-4" id="tanggal-kontrol-selanjutnya-4" label="tanggal-kontrol-selanjutnya-4" placeholder="dd-mm-yy" myid="check_cara" fdprocessedid="7apd5">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="jam-kontrol-selanjutnya-4" id="jam-kontrol-selanjutnya-4" label="jam-kontrol-selanjutnya-4" myid="check_cara" placeholder="00.00" fdprocessedid="xznvd">
+                  </td>
+                  <td>
+                    <input style="width: 100%; padding: 0" type="text" name="nama-dokter-kontrol-selanjutnya-4" id="nama-dokter-kontrol-selanjutnya-4" label="nama-dokter-kontrol-selanjutnya-4" myid="check_cara" placeholder="......" fdprocessedid="ti6z1">
+                  </td>
+                </tr>
+              </thead>
+            </table>
+          
+        
+      
+    
+
+    <table class="" width="100%">
+      <tbody>
+        <tr>
+          <td colspan="2">
+            <div align="center">
+              <strong>Perawat Penanggung Jawab Pasien</strong>
+            </div>
+          </td>
+          <td colspan="2">
+            <div align="center">
+              <strong>Pasien / Keluarga</strong>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
+          <td bgcolor="#FFFFFF">
+            <input name="17_tanggal" type="text" id="17_tanggal" class="datepicker hasDatepicker" placeholder="dd-mm-yy" size="15" myid="check_cara" fdprocessedid="uoy7h7">
+            <br>
+            <input name="17_pukul" type="text" id="17_pukul" mtype="pukul" placeholder="00:00" size="15" myid="check_cara" fdprocessedid="kzaq1e">
+          </td>
+          <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
+          <td bgcolor="#FFFFFF">
+            <input name="18_tanggal" type="text" id="18_tanggal" class="datepicker hasDatepicker" placeholder="dd-mm-yy" size="15" myid="check_cara" fdprocessedid="61nu45">
+            <br>
+            <input name="18_pukul" type="text" id="18_pukul" placeholder="00:00" size="15" mtype="pukul" myid="check_cara" fdprocessedid="m4i1e">
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="#FFFFFF">Nama</td>
+          <td>
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_nama_pemeriksaan"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_nama_pemeriksaan"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_nama_pemeriksaan"
+                id="paraf_ex_ttd_nama_pemeriksaan"
+                data-name="paraf"
+                data-id="ex_ttd_nama_pemeriksaan"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_nama_pemeriksaan"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+              <label for="">
+                (
+                <input
+                  type="text"
+                  style="
+                    flex: 1;
+                    padding: 0;
+                    border: none;
+                    border-bottom: 2px dotted;
+                  "
+                  myid="check_cara"
+                  id="nama-pemeriksaan"
+                  name="nama-pemeriksaan"
+                  label="nama-pemeriksaan"
+                />
+                )
+              </label>
+            </div>
+          </td>
+          <td bgcolor="#FFFFFF">Nama</td>
+          <td>
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_nama_pasien"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_nama_pasien"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_nama_pasien"
+                id="paraf_ex_ttd_nama_pasien"
+                data-name="paraf"
+                data-id="ex_ttd_nama_pasien"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_nama_pasien"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+              <label for="">
+                (
+                <input
+                  type="text"
+                  style="
+                    flex: 1;
+                    padding: 0;
+                    border: none;
+                    border-bottom: 2px dotted;
+                  "
+                  myid="check_cara"
+                  id="nama-pasien"
+                  name="nama-pasien"
+                  label="nama-pasien"
+                />
+                )
+              </label>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+

@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYMPTHON EDMONTON RS. AZRA BOGOR</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+        .header {
+            font-weight: bold;
+            text-align: center;
+        }
+        input[type="text"], input[type="number"], input[type="date"], input[type="time"] {
+            width: 95%;
+        }
+        .chart-container {
+            width: 100%;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        .chart {
+            width: 100%;
+            height: 400px;
+            border: 1px solid black;
+            position: relative;
+        }
+        .tooltip {
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 5px;
+            font-size: 12px;
+            pointer-events: none;
+            display: none;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .grid-line {
+            stroke: #ddd;
+            stroke-width: 1;
+        }
+        .line {
+            stroke-width: 2;
+            fill: none;
+        }
+        .button-container {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        .delete-button {
+            background-color: #ff4444;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .delete-button:hover {
+            background-color: #cc0000;
+        }
+         /* Arsiran Garis-garis Hitam */
+        .striped {
+            background: repeating-linear-gradient(45deg, #000 0, #000 5px, transparent 5px, transparent 10px);
+        }
+
+        /* Arsiran Full Hitam */
+        .solid {
+        background-color: #000;
+        color: white; /* Menjaga teks terlihat pada latar belakang hitam */
+        }
+
+        .highlight {
+        border: 2px solid #000;
+        }
+
+        /* Gaya untuk mengindikasikan tombol yang dipilih */
+        .selected {
+        background-color: #ddd;
+        }
+
+        .separator {
+            height: 20px;
+            border-bottom: 2px solid black;
+            margin-bottom: 10px;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <h1 class="header">GRAFIK PEMERIKSAAN SIMPTOM EDMONTON (AKHIR KEHIDUPAN)<br>RS. AZRA BOGOR</h1>
+    
+    <p style="text-align: right;">
+        RI <input type="text" id="ri" name="ri" placeholder="..." style="width: 300px;">
+    </p>
+      
+    <table border="2" class="table">
+        <tr>
+            <td><b>NAMA</b>: <input type="text" id="nama" name="nama" placeholder="..."></td>
+            <td><b>NOMOR REKAM MEDIK</b>: <input type="text" id="no_rm" name="no_rm" placeholder="..."></td>
+        </tr>
+        <tr>
+            <td><b>TANGGAL LAHIR</b>: <input type="text" id="tgl_lahir" name="tgl_lahir" placeholder="dd/mm/yyyy"></td>
+            <td><b>KELAS</b>: <input type="text" id="kelas" name="kelas" placeholder="..."></td>
+        </tr>
+        <tr>
+            <td><b>UMUR</b>: <input type="text" id="umur" name="umur" placeholder="..."></td>
+            <td><b>KAMAR</b>: <input type="text" id="kamar" name="kamar" placeholder="..."></td>
+        </tr>
+        <tr>
+            <td><b>Jenis Kelamin</b>: <span id="jenis_kelamin">...</span></td>
+        </tr>
+    </table><br>
+
+    <table border="2" class="table">
+        <tr>
+            <td><b>Tanggal Masuk Rumah Sakit </b>: <input type="date" id="tanggals" style="width: 988px;" name="tanggals" placeholder="..."></td>
+            
+        </tr>
+        <tr>
+            <td><b>Waktu Masuk Pemeriksaan</b>: <input type="text" id="waktu_masuk" style="width: 1000px;" name="waktu_masuk" placeholder="..."></td>
+        </tr>
+        <tr>
+            <td><b>Diisi Oleh</b>: <input type="checkbox" id="diisi_oleh" name="diisi_oleh"> Pasien <input type="checkbox" id="diisi_oleh2" name="diisi_oleh2"> Keluarga <input type="checkbox" id="diisi_oleh3" name="diisi_oleh3"> Perawat </td>
+          
+        </tr>
+        <tr>
+            <td><input type="checkbox" id="pks" name="pks"> Pekerja sosial, Tingkat pendidikan : <input type="text" style="width: 950px;" id="pks2" name="pks2"> </td>
+        </tr>
+    </table><br>
+
+    <!-- Input Nafsu Makan -->
+    <table class="table" border="2">
+        <tr>
+            <td>
+                <h3>Input Grafik Nafsu Makan</h3>
+            </td>
+        </tr>
+       
+        <tr>
+            <td><b>Jam : <input type="time" id="inputjam" name="inputjam" placeholder="..."></td>
+        </tr>
+        <tr>
+            <td><b>Tanggal : <input type="date" id="inputtanggal" name="inputtanggal" placeholder="..."></td>
+        </tr>
+        <tr>
+            <td>
+                <div class="button-container">
+                    <button id="btnUp" onclick="dataNaik()">Naik</button>
+                    <button id="btnDown" onclick="dataTurun()">Turun</button>
+                    <button id="btnRandom" onclick="dataResistance()">Resistance</button>
+                </div>                
+            </td>
+            
+        </tr>
+    </table>
+   
+    <!-- Grafik Nafsu Makan -->
+    <div class="chart-container">
+        <h2>GRAFIK NAFSU MAKAN</h2>
+        <div class="labels">
+            <p>
+                <b>Grafik Nafsu Makan: <span style="color: blue;">●</span> (**Symbol lingkaran (●) berwarna biru menandakan data Grafik Nafsu makan**)
+            </p>
+        </div>
+        <div class="chart" id="chart" name="chart" myid="check_cara" >
+            <svg id="chart-svg" style="width: 100%; height: 370px;"></svg>
+        </div>
+        <div class="tooltip" id="tooltip" name="tooltip" myid="check_cara"></div>
+        <div class="labels">
+            <p>Grafik Nafsu Makan : Biru </p>
+        </div>
+    </div>
+
+    <!-- Input Dyspnea -->
+    <table class="table" border="2">
+        <tr>
+            <td>
+                <h3>Input Grafik Dyspnea</h3>
+            </td>
+        </tr>
+       
+        <tr>
+            <td><b>Jam : <input type="time" id="inputjam_dypsnea" name="inputjam_dypsnea" placeholder="..."></td>
+        </tr>
+        <tr>
+            <td><b>Tanggal : <input type="date" id="inputtanggal_dypsnea" name="inputtanggal_dypsnea" placeholder="..."></td>
+        </tr>
+        <tr>
+            <td>
+                <div class="button-container">
+                    <button id="btnUp" onclick="dataNaikDyspnea()">Naik</button>
+                    <button id="btnDown" onclick="dataTurunDyspnea()">Turun</button>
+                    <button id="btnRandom" onclick="dataResistanceDypsnea()">Resistance</button>
+                </div>                
+            </td>
+            
+        </tr>
+    </table>
+   
+    <!-- Grafik Dyspnea -->
+    <div class="chart-container">
+        <h2>GRAFIK DYSPNEA</h2>
+        <div class="labels">
+            <p>
+                <b>Grafik Dyspnea : <span style="color: green;">●</span> (**Symbol lingkaran (●) berwarna hijau menandakan data Grafik Dyspnea**)
+            </p>
+        </div>
+        <div class="chart-dypsnea">
+            <svg id="chart-svg-dypsnea" style="width: 100%; height: 370px;"></svg>
+        </div>
+        <div class="tooltip-dypsnea" id="tooltip-dypsnea"></div>
+        <div class="labels">
+            <p>Grafik Nafsu Makan : Biru </p>
+        </div>
+    </div>
+
+     <!-- Input Mual -->
+     <table class="table" border="2">
+        <tr>
+            <td>
+                <h3>Input Grafik Mual</h3>
+            </td>
+        </tr>
+       
+        <tr>
+            <td><b>Jam : <input type="time" id="inputjam_mual" name="inputjam_mual" placeholder="..."></td>
+        </tr>
+        <tr>
+            <td><b>Tanggal : <input type="date" id="inputtanggal_mual" name="inputtanggal_mual" placeholder="..."></td>
+        </tr>
+        <tr>
+            <td>
+                <div class="button-container">
+                    <button id="btnUp" onclick="dataNaikMual()">Naik</button>
+                    <button id="btnDown" onclick="dataTurunMual()">Turun</button>
+                    <button id="btnRandom" onclick="dataResistanceMual()">Resistance</button>
+                </div>                
+            </td>
+            
+        </tr>
+    </table>
+   
+    <!-- Grafik Mual -->
+    <div class="chart-container">
+        <h2>GRAFIK MUAL</h2>
+        <div class="labels">
+            <p>
+                <b>Grafik Mual : <span style="color: red;">●</span> (**Symbol lingkaran (●) berwarna merah menandakan data Grafik Mual**)
+            </p>
+        </div>
+        <div class="chart-mual">
+            <svg id="chart-svg-mual" style="width: 100%; height: 370px;"></svg>
+        </div>
+        <div class="tooltip-mual" id="tooltip-mual"></div>
+        <div class="labels">
+            <p>Grafik Nafsu Makan : Biru </p>
+        </div>
+    </div>
+    
+     <!-- Input Konstipasi -->
+     <table class="table" border="2">
+        <tr>
+            <td>
+                <h3>Input Grafik Konstipasi</h3>
+            </td>
+        </tr>
+       
+        <tr>
+            <td><b>Jam : <input type="time" id="inputjam_konstipasi" name="inputjam_konstipasi" placeholder="..."></td>
+        </tr>
+        <tr>
+            <td><b>Tanggal : <input type="date" id="inputtanggal_konstipasi" name="inputtanggal_konstipasi" placeholder="..."></td>
+        </tr>
+        <tr>
+            <td>
+                <div class="button-container">
+                    <button id="btnUp" onclick="dataNaikKonstipasi()">Naik</button>
+                    <button id="btnDown" onclick="dataTurunKonstipasi()">Turun</button>
+                    <button id="btnRandom" onclick="dataResistanceKonstipasi()">Resistance</button>
+                </div>                
+            </td>
+            
+        </tr>
+    </table>
+   
+    <!-- Grafik Konstipasi -->
+    <div class="chart-container">
+        <h2>GRAFIK KONSTIPASI</h2>
+        <div class="labels">
+            <p>
+                <b>Grafik Mual : <span style="color: yellow;">●</span> (**Symbol lingkaran (●) berwarna kuning menandakan data Grafik Konstipasi**)
+            </p>
+        </div>
+        <div class="chart-konstipasi">
+            <svg id="chart-svg-konstipasi" style="width: 100%; height: 370px;"></svg>
+        </div>
+        <div class="tooltip-konstipasi" id="tooltip-konstipasi"></div>
+        <div class="labels">
+            <p>Grafik Nafsu Makan : Biru </p>
+        </div>
+    </div>
+
+
+
+<script>
+// Logic Grafik NafsuMakan
+class Chart {
+    constructor(svgId, tooltipId) {
+        this.svg = document.getElementById(svgId);
+        this.tooltip = document.getElementById(tooltipId);
+        this.data = [];
+        this.clickCount = 0;
+        this.lastAction = null;
+        
+        // Get input elements
+        this.timeInput = document.getElementById('inputjam');
+        this.dateInput = document.getElementById('inputtanggal');
+        
+        // Bind methods
+        this.handleResize = this.handleResize.bind(this);
+        
+        // Initialize event listeners
+        window.addEventListener('resize', this.handleResize);
+        
+        // Initial render
+        this.updateChart();
+    }
+    
+    getDimensions() {
+        return {
+            width: this.svg.clientWidth,
+            height: this.svg.clientHeight,
+            padding: 40
+        };
+    }
+    
+    updateChart() {
+        const { width, height, padding } = this.getDimensions();
+        const svgD3 = d3.select(this.svg);
+        svgD3.selectAll('*').remove();
+
+        // Calculate domains
+        const xDomain = d3.extent(this.data, d => d.x) || [0, 100];
+        const yDomain = d3.extent(this.data, d => d.y) || [0, 100];
+        
+        const xPadding = 10;
+        const yPadding = 20;
+
+        const xScale = d3.scaleLinear()
+            .domain([0, Math.max(10, xDomain[1] + xPadding)])
+            .range([padding, width - padding]);
+
+        const yScale = d3.scaleLinear()
+            .domain([Math.min(0, yDomain[0] - yPadding), yDomain[1] + yPadding])
+            .range([height - padding, padding]);
+
+        // Draw axes - sekarang meneruskan width sebagai parameter
+        this.drawAxes(svgD3, xScale, yScale, height, padding, width);
+        
+        // Draw gridlines
+        this.drawGridlines(svgD3, yScale, padding, width);
+        
+        // Draw line
+        this.drawLine(svgD3, xScale, yScale);
+        
+        // Draw points
+        this.drawPoints(svgD3, xScale, yScale);
+    }
+    
+    drawAxes(svgD3, xScale, yScale, height, padding, width) {
+    // Create X axis with separated date/time formatting
+    const xAxis = d3.axisBottom(xScale)
+        .ticks(10)
+        .tickFormat(d => {
+            const dataPoint = this.data.find(point => point.x === d);
+            if (dataPoint) {
+                const date = new Date(dataPoint.date + ' ' + dataPoint.time);
+                
+                // Format time only for upper label
+                const formattedTime = date.toLocaleTimeString('id-ID', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                // Format date only for lower label
+                const formattedDate = date.toLocaleDateString('id-ID', {
+                    day: '2-digit',
+                    month: '2-digit'
+                });
+                
+                return `${formattedTime}\n${formattedDate}`;
+            }
+            return '';  // Return empty string instead of the x value
+        });
+    
+    // Create Y axis without labels
+    const yAxis = d3.axisLeft(yScale)
+        .ticks(0)  // Remove tick labels
+        .tickSize(0);  // Remove tick marks
+    
+    // Add horizontal gridlines
+    const gridlines = d3.axisLeft(yScale)
+        .ticks(5)
+        .tickSize(-width + 2 * padding)
+        .tickFormat('');
+
+    svgD3.append('g')
+        .attr('class', 'grid')
+        .attr('transform', `translate(${padding}, 0)`)
+        .style('opacity', 0.1)
+        .call(gridlines);
+    
+    // Add X axis with improved label placement
+    const xAxisGroup = svgD3.append('g')
+        .attr('class', 'x-axis')
+        .attr('transform', `translate(0, ${height - padding})`)
+        .call(xAxis);
+    
+    // Style X axis labels
+    xAxisGroup.selectAll('text')
+        .style('text-anchor', 'middle')
+        .style('font-size', '11px')
+        .attr('dx', '0')
+        .attr('dy', '1em');
+
+    // Remove domain lines
+    xAxisGroup.select('.domain').remove();
+    
+    // Add Y axis without domain line
+    const yAxisGroup = svgD3.append('g')
+        .attr('class', 'y-axis')
+        .attr('transform', `translate(${padding}, 0)`)
+        .call(yAxis);
+    
+    yAxisGroup.select('.domain').remove();
+    
+    // Add chart border
+    svgD3.append('rect')
+        .attr('x', padding)
+        .attr('y', padding)
+        .attr('width', width - 2 * padding)
+        .attr('height', height - 2 * padding)
+        .attr('fill', 'none')
+        .attr('stroke', '#ccc')
+        .attr('stroke-width', 1);
+}
+
+    
+    drawGridlines(svgD3, yScale, padding, width) {
+        const yTicks = yScale.ticks(5);
+        yTicks.forEach(tick => {
+            svgD3.append('line')
+                .attr('x1', padding)
+                .attr('x2', width - padding)
+                .attr('y1', yScale(tick))
+                .attr('y2', yScale(tick))
+                .attr('stroke', '#ccc')
+                .attr('stroke-width', 1)
+                .attr('stroke-dasharray', '4 2');
+        });
+    }
+    
+    drawLine(svgD3, xScale, yScale) {
+        const line = d3.line()
+            .x(d => xScale(d.x))
+            .y(d => yScale(d.y))
+            .curve(d3.curveMonotoneX); // Smooth line
+
+        svgD3.append('path')
+            .datum(this.data)
+            .attr('fill', 'none')
+            .attr('stroke', 'blue')
+            .attr('stroke-width', 2)
+            .attr('d', line);
+    }
+    
+    drawPoints(svgD3, xScale, yScale) {
+        svgD3.selectAll('circle')
+            .data(this.data)
+            .enter()
+            .append('circle')
+            .attr('cx', d => xScale(d.x))
+            .attr('cy', d => yScale(d.y))
+            .attr('r', 5)
+            .attr('fill', 'blue')
+            .on('mouseover', (event, d) => this.handleMouseOver(event, d))
+            .on('mouseout', () => this.handleMouseOut());
+    }
+    
+    handleMouseOver(event, d) {
+        const time = this.timeInput ? this.timeInput.value : '';
+        const date = this.dateInput ? this.dateInput.value : '';
+
+        // Format tanggal dan waktu agar lebih mudah dibaca
+        const formattedDate = new Date(date + ' ' + time);
+        const formattedDateString = formattedDate.toLocaleString(); // Menggunakan toLocaleString untuk format yang lebih ramah pengguna
+
+        this.tooltip.style.display = 'block';
+        this.tooltip.style.left = event.pageX + 'px';
+        this.tooltip.style.top = event.pageY - 30 + 'px';
+        this.tooltip.innerHTML = `
+            <div>
+                <strong>Waktu:</strong> ${formattedDateString}<br>
+                <strong>Tanggal:</strong> ${date}<br>
+            </div>
+        `;
+    }
+
+    
+    handleMouseOut() {
+        this.tooltip.style.display = 'none';
+    }
+    
+    handleResize() {
+        this.updateChart();
+    }
+    
+    addDataUp() {
+        if (!this.timeInput.value || !this.dateInput.value) {
+            alert('Mohon isi jam dan tanggal terlebih dahulu');
+            return;
+        }
+
+        const lastData = this.data[this.data.length - 1];
+        const nextX = this.data.length > 0 ? lastData.x + 10 : 0;
+
+        // Tetapkan logika naik
+        let nextY;
+        if (this.lastAction === 'turun') {
+            nextY = this.data.length > 0 ? lastData.y + 40 : 40; // Naik jika sebelumnya turun
+        } else {
+            nextY = this.data.length > 0 ? lastData.y : 40; // Tetap di garis yang sama
+        }
+
+        this.data.push({
+            x: nextX,
+            y: nextY,
+            time: this.timeInput.value,
+            date: this.dateInput.value
+        });
+
+        this.lastAction = 'naik';
+        this.updateChart();
+    }
+
+    addDataDown() {
+        if (!this.timeInput.value || !this.dateInput.value) {
+            alert('Mohon isi jam dan tanggal terlebih dahulu');
+            return;
+        }
+
+        const lastData = this.data[this.data.length - 1];
+        const nextX = this.data.length > 0 ? lastData.x + 10 : 0;
+        const nextY = this.data.length > 0 ? lastData.y - 40 : 0;
+
+        this.data.push({
+            x: nextX,
+            y: nextY,
+            time: this.timeInput.value,
+            date: this.dateInput.value
+        });
+
+        this.lastAction = 'turun';
+        this.updateChart();
+    }
+   
+    addRandomData() {
+        if (!this.timeInput.value || !this.dateInput.value) {
+            alert('Mohon isi jam dan tanggal terlebih dahulu');
+            return;
+        }
+        
+        this.clickCount = 0;
+        this.data.push({
+            x: this.data.length * 10,
+            y: Math.random() * 400,
+            time: this.timeInput.value,
+            date: this.dateInput.value
+        });
+        
+        this.updateChart();
+    }
+    
+    clearData() {
+        this.data = [];
+        this.updateChart();
+    }
+}
+
+// Initialize chart and setup event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    const chart = new Chart('chart-svg', 'tooltip');
+    
+    // Global functions for HTML buttons
+    window.dataNaik = function() {
+        chart.addDataUp();
+    }
+    
+    window.dataTurun = function() {
+        chart.addDataDown();
+    }
+    
+    window.dataResistance = function() {
+        chart.addRandomData();
+    }
+});
+
+// Logic Chart Dypsnea
+class ChartDypsnea {
+    constructor(svgId, tooltipId) {
+        this.svg = document.getElementById(svgId);
+        this.tooltip = document.getElementById(tooltipId);
+
+        // Ensure the elements exist before proceeding
+        if (!this.svg) {
+            console.error(`SVG element with id ${svgId} not found.`);
+            return;
+        }
+        if (!this.tooltip) {
+            console.error(`Tooltip element with id ${tooltipId} not found.`);
+            return;
+        }
+
+        this.data = [];
+        this.lastAction = null;
+
+        // Get input elements
+        this.timeInput = document.getElementById('inputjam_dypsnea');
+        this.dateInput = document.getElementById('inputtanggal_dypsnea');
+
+        // Ensure inputs exist
+        if (!this.timeInput || !this.dateInput) {
+            console.error('Time or date input element(s) not found.');
+            return;
+        }
+
+        // Bind methods
+        this.handleResize = this.handleResize.bind(this);
+
+        // Initialize event listeners
+        window.addEventListener('resize', this.handleResize);
+
+        // Initial render
+        this.updateChart();
+    }
+
+    
+    getDimensions() {
+        return {
+            width: this.svg.clientWidth,
+            height: this.svg.clientHeight,
+            padding: 40
+        };
+    }
+    
+    updateChart() {
+        const { width, height, padding } = this.getDimensions();
+        const svgD3 = d3.select(this.svg);
+        svgD3.selectAll('*').remove();
+
+        // Calculate domains
+        const xDomain = d3.extent(this.data, d => d.x) || [0, 100];
+        const yDomain = d3.extent(this.data, d => d.y) || [0, 100];
+        
+        const xPadding = 10;
+        const yPadding = 20;
+
+        const xScale = d3.scaleLinear()
+            .domain([0, Math.max(10, xDomain[1] + xPadding)])
+            .range([padding, width - padding]);
+
+        const yScale = d3.scaleLinear()
+            .domain([Math.min(0, yDomain[0] - yPadding), yDomain[1] + yPadding])
+            .range([height - padding, padding]);
+
+        // Draw axes - now passing width as parameter
+        this.drawAxes(svgD3, xScale, yScale, height, padding, width);
+        
+        // Draw gridlines
+        this.drawGridlines(svgD3, yScale, padding, width);
+        
+        // Draw line
+        this.drawLine(svgD3, xScale, yScale);
+        
+        // Draw points
+        this.drawPoints(svgD3, xScale, yScale);
+    }
+    
+    drawAxes(svgD3, xScale, yScale, height, padding, width) {
+        // Create X axis with separated date/time formatting
+        const xAxis = d3.axisBottom(xScale)
+            .ticks(10)
+            .tickFormat(d => {
+                const dataPoint = this.data.find(point => point.x === d);
+                if (dataPoint) {
+                    const date = new Date(dataPoint.date + ' ' + dataPoint.time);
+                    const formattedTime = date.toLocaleTimeString('id-ID', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    const formattedDate = date.toLocaleDateString('id-ID', {
+                        day: '2-digit',
+                        month: '2-digit'
+                    });
+                    return `${formattedTime}\n${formattedDate}`;
+                }
+                return '';  // Return empty string instead of the x value
+            });
+    
+        // Create Y axis without labels
+        const yAxis = d3.axisLeft(yScale)
+            .ticks(0)  // Remove tick labels
+            .tickSize(0);  // Remove tick marks
+    
+        // Add horizontal gridlines
+        const gridlines = d3.axisLeft(yScale)
+            .ticks(5)
+            .tickSize(-width + 2 * padding)
+            .tickFormat('');
+    
+        svgD3.append('g')
+            .attr('class', 'grid')
+            .attr('transform', `translate(${padding}, 0)`)
+            .style('opacity', 0.1)
+            .call(gridlines);
+    
+        // Add X axis with improved label placement
+        const xAxisGroup = svgD3.append('g')
+            .attr('class', 'x-axis')
+            .attr('transform', `translate(0, ${height - padding})`)
+            .call(xAxis);
+    
+        // Style X axis labels
+        xAxisGroup.selectAll('text')
+            .style('text-anchor', 'middle')
+            .style('font-size', '11px')
+            .attr('dx', '0')
+            .attr('dy', '1em');
+
+        // Remove domain lines
+        xAxisGroup.select('.domain').remove();
+        
+        // Add Y axis without domain line
+        const yAxisGroup = svgD3.append('g')
+            .attr('class', 'y-axis')
+            .attr('transform', `translate(${padding}, 0)`)
+            .call(yAxis);
+        
+        yAxisGroup.select('.domain').remove();
+        
+        // Add chart border
+        svgD3.append('rect')
+            .attr('x', padding)
+            .attr('y', padding)
+            .attr('width', width - 2 * padding)
+            .attr('height', height - 2 * padding)
+            .attr('fill', 'none')
+            .attr('stroke', '#ccc')
+            .attr('stroke-width', 1);
+    }
+    
+    drawGridlines(svgD3, yScale, padding, width) {
+        const yTicks = yScale.ticks(5);
+        yTicks.forEach(tick => {
+            svgD3.append('line')
+                .attr('x1', padding)
+                .attr('x2', width - padding)
+                .attr('y1', yScale(tick))
+                .attr('y2', yScale(tick))
+                .attr('stroke', '#ccc')
+                .attr('stroke-width', 1)
+                .attr('stroke-dasharray', '4 2');
+        });
+    }
+    
+    drawLine(svgD3, xScale, yScale) {
+        const line = d3.line()
+            .x(d => xScale(d.x))
+            .y(d => yScale(d.y))
+            .curve(d3.curveMonotoneX); // Smooth line
+
+        svgD3.append('path')
+            .datum(this.data)
+            .attr('fill', 'none')
+            .attr('stroke', 'green')
+            .attr('stroke-width', 2)
+            .attr('d', line);
+    }
+    
+    drawPoints(svgD3, xScale, yScale) {
+        svgD3.selectAll('circle')
+            .data(this.data)
+            .enter()
+            .append('circle')
+            .attr('cx', d => xScale(d.x))
+            .attr('cy', d => yScale(d.y))
+            .attr('r', 5)
+            .attr('fill', 'green')
+            .on('mouseover', (event, d) => this.handleMouseOver(event, d))
+            .on('mouseout', () => this.handleMouseOut());
+    }
+    
+    handleMouseOver(event, d) {
+        const time = this.timeInput ? this.timeInput.value : '';
+        const date = this.dateInput ? this.dateInput.value : '';
+
+        // Format tanggal dan waktu agar lebih mudah dibaca
+        const formattedDate = new Date(date + ' ' + time);
+        const formattedDateString = formattedDate.toLocaleString(); // Menggunakan toLocaleString untuk format yang lebih ramah pengguna
+
+        this.tooltip.style.display = 'block';
+        this.tooltip.style.left = event.pageX + 'px';
+        this.tooltip.style.top = event.pageY - 30 + 'px';
+        this.tooltip.innerHTML = `
+            <div>
+                <strong>Waktu:</strong> ${formattedDateString}<br>
+                <strong>Tanggal:</strong> ${date}<br>
+            </div>
+        `;
+    }
+
+    handleMouseOut() {
+        this.tooltip.style.display = 'none';
+    }
+    
+    handleResize() {
+        this.updateChart();
+    }
+    
+    addDataUpDyspnea() {
+        if (!this.timeInput.value || !this.dateInput.value) {
+            alert('Mohon isi jam dan tanggal terlebih dahulu');
+            return;
+        }
+
+        const lastData = this.data[this.data.length - 1];
+        const nextX = this.data.length > 0 ? lastData.x + 10 : 0;
+
+        let nextY;
+        if (this.lastAction === 'turun') {
+            nextY = this.data.length > 0 ? lastData.y + 40 : 40;
+        } else {
+            nextY = this.data.length > 0 ? lastData.y : 40;
+        }
+
+        this.data.push({
+            x: nextX,
+            y: nextY,
+            time: this.timeInput.value,
+            date: this.dateInput.value
+        });
+
+        this.lastAction = 'naik';
+        this.updateChart();
+    }
+
+    addDataDownDyspnea() {
+        if (!this.timeInput.value || !this.dateInput.value) {
+            alert('Mohon isi jam dan tanggal terlebih dahulu');
+            return;
+        }
+
+        const lastData = this.data[this.data.length - 1];
+        const nextX = this.data.length > 0 ? lastData.x + 10 : 0;
+        const nextY = this.data.length > 0 ? lastData.y - 40 : 0;
+
+        this.data.push({
+            x: nextX,
+            y: nextY,
+            time: this.timeInput.value,
+            date: this.dateInput.value
+        });
+
+        this.lastAction = 'turun';
+        this.updateChart();
+    }
+
+    addRandomDataDyspnea() {
+        if (!this.timeInput.value || !this.dateInput.value) {
+            alert('Mohon isi jam dan tanggal terlebih dahulu');
+            return;
+        }
+
+        this.data.push({
+            x: this.data.length * 10,
+            y: Math.random() * 400,
+            time: this.timeInput.value,
+            date: this.dateInput.value
+        });
+
+        this.updateChart();
+    }
+    
+    clearData() {
+        this.data = [];
+        this.updateChart();
+    }
+}
+
+// Initialize chart and setup event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    const chartDyspnea = new ChartDypsnea('chart-svg-dypsnea', 'tooltip-dypsnea');
+    
+    // Global functions for HTML buttons
+    window.dataNaikDyspnea = function() {
+        chartDyspnea.addDataUpDyspnea();
+    }
+    
+    window.dataTurunDyspnea = function() {
+        chartDyspnea.addDataDownDyspnea();
+    }
+    
+    window.dataResistanceDypsnea = function() {
+        chartDyspnea.addRandomDataDyspnea();
+    }
+});
+
+// Logic Chart Mual
+class ChartMual {
+    constructor(svgId, tooltipId) {
+        this.svg = document.getElementById(svgId);
+        this.tooltip = document.getElementById(tooltipId);
+
+        // Ensure the elements exist before proceeding
+        if (!this.svg) {
+            console.error(`SVG element with id ${svgId} not found.`);
+            return;
+        }
+        if (!this.tooltip) {
+            console.error(`Tooltip element with id ${tooltipId} not found.`);
+            return;
+        }
+
+        this.data = [];
+        this.lastAction = null;
+
+        // Get input elements
+        this.timeInput = document.getElementById('inputjam_mual');
+        this.dateInput = document.getElementById('inputtanggal_mual');
+
+        // Ensure inputs exist
+        if (!this.timeInput || !this.dateInput) {
+            console.error('Time or date input element(s) not found.');
+            return;
+        }
+
+        // Bind methods
+        this.handleResize = this.handleResize.bind(this);
+
+        // Initialize event listeners
+        window.addEventListener('resize', this.handleResize);
+
+        // Initial render
+        this.updateChart();
+    }
+
+    
+    getDimensions() {
+        return {
+            width: this.svg.clientWidth,
+            height: this.svg.clientHeight,
+            padding: 40
+        };
+    }
+    
+    updateChart() {
+        const { width, height, padding } = this.getDimensions();
+        const svgD3 = d3.select(this.svg);
+        svgD3.selectAll('*').remove();
+
+        // Calculate domains
+        const xDomain = d3.extent(this.data, d => d.x) || [0, 100];
+        const yDomain = d3.extent(this.data, d => d.y) || [0, 100];
+        
+        const xPadding = 10;
+        const yPadding = 20;
+
+        const xScale = d3.scaleLinear()
+            .domain([0, Math.max(10, xDomain[1] + xPadding)])
+            .range([padding, width - padding]);
+
+        const yScale = d3.scaleLinear()
+            .domain([Math.min(0, yDomain[0] - yPadding), yDomain[1] + yPadding])
+            .range([height - padding, padding]);
+
+        // Draw axes - now passing width as parameter
+        this.drawAxes(svgD3, xScale, yScale, height, padding, width);
+        
+        // Draw gridlines
+        this.drawGridlines(svgD3, yScale, padding, width);
+        
+        // Draw line
+        this.drawLine(svgD3, xScale, yScale);
+        
+        // Draw points
+        this.drawPoints(svgD3, xScale, yScale);
+    }
+    
+    drawAxes(svgD3, xScale, yScale, height, padding, width) {
+        // Create X axis with separated date/time formatting
+        const xAxis = d3.axisBottom(xScale)
+            .ticks(10)
+            .tickFormat(d => {
+                const dataPoint = this.data.find(point => point.x === d);
+                if (dataPoint) {
+                    const date = new Date(dataPoint.date + ' ' + dataPoint.time);
+                    const formattedTime = date.toLocaleTimeString('id-ID', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    const formattedDate = date.toLocaleDateString('id-ID', {
+                        day: '2-digit',
+                        month: '2-digit'
+                    });
+                    return `${formattedTime}\n${formattedDate}`;
+                }
+                return '';  // Return empty string instead of the x value
+            });
+    
+        // Create Y axis without labels
+        const yAxis = d3.axisLeft(yScale)
+            .ticks(0)  // Remove tick labels
+            .tickSize(0);  // Remove tick marks
+    
+        // Add horizontal gridlines
+        const gridlines = d3.axisLeft(yScale)
+            .ticks(5)
+            .tickSize(-width + 2 * padding)
+            .tickFormat('');
+    
+        svgD3.append('g')
+            .attr('class', 'grid')
+            .attr('transform', `translate(${padding}, 0)`)
+            .style('opacity', 0.1)
+            .call(gridlines);
+    
+        // Add X axis with improved label placement
+        const xAxisGroup = svgD3.append('g')
+            .attr('class', 'x-axis')
+            .attr('transform', `translate(0, ${height - padding})`)
+            .call(xAxis);
+    
+        // Style X axis labels
+        xAxisGroup.selectAll('text')
+            .style('text-anchor', 'middle')
+            .style('font-size', '11px')
+            .attr('dx', '0')
+            .attr('dy', '1em');
+
+        // Remove domain lines
+        xAxisGroup.select('.domain').remove();
+        
+        // Add Y axis without domain line
+        const yAxisGroup = svgD3.append('g')
+            .attr('class', 'y-axis')
+            .attr('transform', `translate(${padding}, 0)`)
+            .call(yAxis);
+        
+        yAxisGroup.select('.domain').remove();
+        
+        // Add chart border
+        svgD3.append('rect')
+            .attr('x', padding)
+            .attr('y', padding)
+            .attr('width', width - 2 * padding)
+            .attr('height', height - 2 * padding)
+            .attr('fill', 'none')
+            .attr('stroke', '#ccc')
+            .attr('stroke-width', 1);
+    }
+    
+    drawGridlines(svgD3, yScale, padding, width) {
+        const yTicks = yScale.ticks(5);
+        yTicks.forEach(tick => {
+            svgD3.append('line')
+                .attr('x1', padding)
+                .attr('x2', width - padding)
+                .attr('y1', yScale(tick))
+                .attr('y2', yScale(tick))
+                .attr('stroke', '#ccc')
+                .attr('stroke-width', 1)
+                .attr('stroke-dasharray', '4 2');
+        });
+    }
+    
+    drawLine(svgD3, xScale, yScale) {
+        const line = d3.line()
+            .x(d => xScale(d.x))
+            .y(d => yScale(d.y))
+            .curve(d3.curveMonotoneX); // Smooth line
+
+        svgD3.append('path')
+            .datum(this.data)
+            .attr('fill', 'none')
+            .attr('stroke', 'red')
+            .attr('stroke-width', 2)
+            .attr('d', line);
+    }
+    
+    drawPoints(svgD3, xScale, yScale) {
+        svgD3.selectAll('circle')
+            .data(this.data)
+            .enter()
+            .append('circle')
+            .attr('cx', d => xScale(d.x))
+            .attr('cy', d => yScale(d.y))
+            .attr('r', 5)
+            .attr('fill', 'red')
+            .on('mouseover', (event, d) => this.handleMouseOver(event, d))
+            .on('mouseout', () => this.handleMouseOut());
+    }
+    
+    handleMouseOver(event, d) {
+        const time = this.timeInput ? this.timeInput.value : '';
+        const date = this.dateInput ? this.dateInput.value : '';
+
+        // Format tanggal dan waktu agar lebih mudah dibaca
+        const formattedDate = new Date(date + ' ' + time);
+        const formattedDateString = formattedDate.toLocaleString(); // Menggunakan toLocaleString untuk format yang lebih ramah pengguna
+
+        this.tooltip.style.display = 'block';
+        this.tooltip.style.left = event.pageX + 'px';
+        this.tooltip.style.top = event.pageY - 30 + 'px';
+        this.tooltip.innerHTML = `
+            <div>
+                <strong>Waktu:</strong> ${formattedDateString}<br>
+                <strong>Tanggal:</strong> ${date}<br>
+            </div>
+        `;
+    }
+
+    handleMouseOut() {
+        this.tooltip.style.display = 'none';
+    }
+    
+    handleResize() {
+        this.updateChart();
+    }
+    
+    addDataUpMual() {
+        if (!this.timeInput.value || !this.dateInput.value) {
+            alert('Mohon isi jam dan tanggal terlebih dahulu');
+            return;
+        }
+
+        const lastData = this.data[this.data.length - 1];
+        const nextX = this.data.length > 0 ? lastData.x + 10 : 0;
+
+        let nextY;
+        if (this.lastAction === 'turun') {
+            nextY = this.data.length > 0 ? lastData.y + 40 : 40;
+        } else {
+            nextY = this.data.length > 0 ? lastData.y : 40;
+        }
+
+        this.data.push({
+            x: nextX,
+            y: nextY,
+            time: this.timeInput.value,
+            date: this.dateInput.value
+        });
+
+        this.lastAction = 'naik';
+        this.updateChart();
+    }
+
+    addDataDownMual() {
+        if (!this.timeInput.value || !this.dateInput.value) {
+            alert('Mohon isi jam dan tanggal terlebih dahulu');
+            return;
+        }
+
+        const lastData = this.data[this.data.length - 1];
+        const nextX = this.data.length > 0 ? lastData.x + 10 : 0;
+        const nextY = this.data.length > 0 ? lastData.y - 40 : 0;
+
+        this.data.push({
+            x: nextX,
+            y: nextY,
+            time: this.timeInput.value,
+            date: this.dateInput.value
+        });
+
+        this.lastAction = 'turun';
+        this.updateChart();
+    }
+
+    addRandomDataMual() {
+        if (!this.timeInput.value || !this.dateInput.value) {
+            alert('Mohon isi jam dan tanggal terlebih dahulu');
+            return;
+        }
+
+        this.data.push({
+            x: this.data.length * 10,
+            y: Math.random() * 400,
+            time: this.timeInput.value,
+            date: this.dateInput.value
+        });
+
+        this.updateChart();
+    }
+    
+    clearData() {
+        this.data = [];
+        this.updateChart();
+    }
+}
+
+// Initialize chart and setup event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    const chartMual = new ChartMual('chart-svg-mual', 'tooltip-mual');
+    
+    // Global functions for HTML buttons
+    window.dataNaikMual = function() {
+        chartMual.addDataUpMual();
+    }
+    
+    window.dataTurunMual = function() {
+        chartMual.addDataDownMual();
+    }
+    
+    window.dataResistanceDypsnea = function() {
+        chartMual.addRandomDataMual();
+    }
+});
+
+
+//Logic Chart Konstipasi
+class ChartKonstipasi {
+    constructor(svgId, tooltipId) {
+        this.svg = document.getElementById(svgId);
+        this.tooltip = document.getElementById(tooltipId);
+
+        // Ensure the elements exist before proceeding
+        if (!this.svg) {
+            console.error(`SVG element with id ${svgId} not found.`);
+            return;
+        }
+        if (!this.tooltip) {
+            console.error(`Tooltip element with id ${tooltipId} not found.`);
+            return;
+        }
+
+        this.data = [];
+        this.lastAction = null;
+
+        // Get input elements
+        this.timeInput = document.getElementById('inputjam_konstipasi');
+        this.dateInput = document.getElementById('inputtanggal_konstipasi');
+
+        // Ensure inputs exist
+        if (!this.timeInput || !this.dateInput) {
+            console.error('Time or date input element(s) not found.');
+            return;
+        }
+
+        // Bind methods
+        this.handleResize = this.handleResize.bind(this);
+
+        // Initialize event listeners
+        window.addEventListener('resize', this.handleResize);
+
+        // Initial render
+        this.updateChart();
+    }
+
+    
+    getDimensions() {
+        return {
+            width: this.svg.clientWidth,
+            height: this.svg.clientHeight,
+            padding: 40
+        };
+    }
+    
+    updateChart() {
+        const { width, height, padding } = this.getDimensions();
+        const svgD3 = d3.select(this.svg);
+        svgD3.selectAll('*').remove();
+
+        // Calculate domains
+        const xDomain = d3.extent(this.data, d => d.x) || [0, 100];
+        const yDomain = d3.extent(this.data, d => d.y) || [0, 100];
+        
+        const xPadding = 10;
+        const yPadding = 20;
+
+        const xScale = d3.scaleLinear()
+            .domain([0, Math.max(10, xDomain[1] + xPadding)])
+            .range([padding, width - padding]);
+
+        const yScale = d3.scaleLinear()
+            .domain([Math.min(0, yDomain[0] - yPadding), yDomain[1] + yPadding])
+            .range([height - padding, padding]);
+
+        // Draw axes - now passing width as parameter
+        this.drawAxes(svgD3, xScale, yScale, height, padding, width);
+        
+        // Draw gridlines
+        this.drawGridlines(svgD3, yScale, padding, width);
+        
+        // Draw line
+        this.drawLine(svgD3, xScale, yScale);
+        
+        // Draw points
+        this.drawPoints(svgD3, xScale, yScale);
+    }
+    
+    drawAxes(svgD3, xScale, yScale, height, padding, width) {
+        // Create X axis with separated date/time formatting
+        const xAxis = d3.axisBottom(xScale)
+            .ticks(10)
+            .tickFormat(d => {
+                const dataPoint = this.data.find(point => point.x === d);
+                if (dataPoint) {
+                    const date = new Date(dataPoint.date + ' ' + dataPoint.time);
+                    const formattedTime = date.toLocaleTimeString('id-ID', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    const formattedDate = date.toLocaleDateString('id-ID', {
+                        day: '2-digit',
+                        month: '2-digit'
+                    });
+                    return `${formattedTime}\n${formattedDate}`;
+                }
+                return '';  // Return empty string instead of the x value
+            });
+    
+        // Create Y axis without labels
+        const yAxis = d3.axisLeft(yScale)
+            .ticks(0)  // Remove tick labels
+            .tickSize(0);  // Remove tick marks
+    
+        // Add horizontal gridlines
+        const gridlines = d3.axisLeft(yScale)
+            .ticks(5)
+            .tickSize(-width + 2 * padding)
+            .tickFormat('');
+    
+        svgD3.append('g')
+            .attr('class', 'grid')
+            .attr('transform', `translate(${padding}, 0)`)
+            .style('opacity', 0.1)
+            .call(gridlines);
+    
+        // Add X axis with improved label placement
+        const xAxisGroup = svgD3.append('g')
+            .attr('class', 'x-axis')
+            .attr('transform', `translate(0, ${height - padding})`)
+            .call(xAxis);
+    
+        // Style X axis labels
+        xAxisGroup.selectAll('text')
+            .style('text-anchor', 'middle')
+            .style('font-size', '11px')
+            .attr('dx', '0')
+            .attr('dy', '1em');
+
+        // Remove domain lines
+        xAxisGroup.select('.domain').remove();
+        
+        // Add Y axis without domain line
+        const yAxisGroup = svgD3.append('g')
+            .attr('class', 'y-axis')
+            .attr('transform', `translate(${padding}, 0)`)
+            .call(yAxis);
+        
+        yAxisGroup.select('.domain').remove();
+        
+        // Add chart border
+        svgD3.append('rect')
+            .attr('x', padding)
+            .attr('y', padding)
+            .attr('width', width - 2 * padding)
+            .attr('height', height - 2 * padding)
+            .attr('fill', 'none')
+            .attr('stroke', '#ccc')
+            .attr('stroke-width', 1);
+    }
+    
+    drawGridlines(svgD3, yScale, padding, width) {
+        const yTicks = yScale.ticks(5);
+        yTicks.forEach(tick => {
+            svgD3.append('line')
+                .attr('x1', padding)
+                .attr('x2', width - padding)
+                .attr('y1', yScale(tick))
+                .attr('y2', yScale(tick))
+                .attr('stroke', '#ccc')
+                .attr('stroke-width', 1)
+                .attr('stroke-dasharray', '4 2');
+        });
+    }
+    
+    drawLine(svgD3, xScale, yScale) {
+        const line = d3.line()
+            .x(d => xScale(d.x))
+            .y(d => yScale(d.y))
+            .curve(d3.curveMonotoneX); // Smooth line
+
+        svgD3.append('path')
+            .datum(this.data)
+            .attr('fill', 'none')
+            .attr('stroke', 'magenta')
+            .attr('stroke-width', 2)
+            .attr('d', line);
+    }
+    
+    drawPoints(svgD3, xScale, yScale) {
+        svgD3.selectAll('circle')
+            .data(this.data)
+            .enter()
+            .append('circle')
+            .attr('cx', d => xScale(d.x))
+            .attr('cy', d => yScale(d.y))
+            .attr('r', 5)
+            .attr('fill', 'magenta')
+            .on('mouseover', (event, d) => this.handleMouseOver(event, d))
+            .on('mouseout', () => this.handleMouseOut());
+    }
+    
+    handleMouseOver(event, d) {
+        const time = this.timeInput ? this.timeInput.value : '';
+        const date = this.dateInput ? this.dateInput.value : '';
+
+        // Format tanggal dan waktu agar lebih mudah dibaca
+        const formattedDate = new Date(date + ' ' + time);
+        const formattedDateString = formattedDate.toLocaleString(); // Menggunakan toLocaleString untuk format yang lebih ramah pengguna
+
+        this.tooltip.style.display = 'block';
+        this.tooltip.style.left = event.pageX + 'px';
+        this.tooltip.style.top = event.pageY - 30 + 'px';
+        this.tooltip.innerHTML = `
+            <div>
+                <strong>Waktu:</strong> ${formattedDateString}<br>
+                <strong>Tanggal:</strong> ${date}<br>
+            </div>
+        `;
+    }
+
+    handleMouseOut() {
+        this.tooltip.style.display = 'none';
+    }
+    
+    handleResize() {
+        this.updateChart();
+    }
+    
+    addDataUpKonstipasi() {
+        if (!this.timeInput.value || !this.dateInput.value) {
+            alert('Mohon isi jam dan tanggal terlebih dahulu');
+            return;
+        }
+
+        const lastData = this.data[this.data.length - 1];
+        const nextX = this.data.length > 0 ? lastData.x + 10 : 0;
+
+        let nextY;
+        if (this.lastAction === 'turun') {
+            nextY = this.data.length > 0 ? lastData.y + 40 : 40;
+        } else {
+            nextY = this.data.length > 0 ? lastData.y : 40;
+        }
+
+        this.data.push({
+            x: nextX,
+            y: nextY,
+            time: this.timeInput.value,
+            date: this.dateInput.value
+        });
+
+        this.lastAction = 'naik';
+        this.updateChart();
+    }
+
+    addDataDownKonstipasi() {
+        if (!this.timeInput.value || !this.dateInput.value) {
+            alert('Mohon isi jam dan tanggal terlebih dahulu');
+            return;
+        }
+
+        const lastData = this.data[this.data.length - 1];
+        const nextX = this.data.length > 0 ? lastData.x + 10 : 0;
+        const nextY = this.data.length > 0 ? lastData.y - 40 : 0;
+
+        this.data.push({
+            x: nextX,
+            y: nextY,
+            time: this.timeInput.value,
+            date: this.dateInput.value
+        });
+
+        this.lastAction = 'turun';
+        this.updateChart();
+    }
+
+    addRandomDataKonstipasi() {
+        if (!this.timeInput.value || !this.dateInput.value) {
+            alert('Mohon isi jam dan tanggal terlebih dahulu');
+            return;
+        }
+
+        this.data.push({
+            x: this.data.length * 10,
+            y: Math.random() * 400,
+            time: this.timeInput.value,
+            date: this.dateInput.value
+        });
+
+        this.updateChart();
+    }
+    
+    clearData() {
+        this.data = [];
+        this.updateChart();
+    }
+}
+
+// Initialize chart and setup event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    const chartKonstipasi = new ChartKonstipasi('chart-svg-konstipasi', 'tooltip-konstipasi');
+    
+    // Global functions for HTML buttons
+    window.dataNaikKonstipasi = function() {
+        chartKonstipasi.addDataUpKonstipasi();
+    }
+    
+    window.dataTurunKonstipasi = function() {
+        chartKonstipasi.addDataDownKonstipasi();
+    }
+    
+    window.dataResistanceKonstipasi = function() {
+        chartKonstipasi.addRandomDataKonstipasi();
+    }
+});
+
+ </script>
+
+    

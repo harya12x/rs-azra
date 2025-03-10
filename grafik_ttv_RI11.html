@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>GRAFIK TTV RS. AZRA BOGOR</title>
+    <style>
+          body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+        .header {
+            font-weight: bold;
+            text-align: center;
+        }
+        input[type="text"], input[type="number"], input[type="date"], input[type="time"] {
+            width: 95%;
+        }
+        .chart-container {
+            width: 100%;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        .chart {
+            width: 100%;
+            height: 400px;
+            border: 1px solid black;
+            position: relative;
+        }
+        .tooltip {
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 5px;
+            font-size: 12px;
+            pointer-events: none;
+            display: none;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .grid-line {
+            stroke: #ddd;
+            stroke-width: 1;
+        }
+        .line {
+            stroke-width: 2;
+            fill: none;
+        }
+        .button-container {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        .delete-button {
+            background-color: #ff4444;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .delete-button:hover {
+            background-color: #cc0000;
+        }
+         /* Arsiran Garis-garis Hitam */
+        .striped {
+            background: repeating-linear-gradient(45deg, #000 0, #000 5px, transparent 5px, transparent 10px);
+        }
+
+        /* Arsiran Full Hitam */
+        .solid {
+        background-color: #000;
+        color: white; /* Menjaga teks terlihat pada latar belakang hitam */
+        }
+
+        .highlight {
+        border: 2px solid #000;
+        }
+
+        /* Gaya untuk mengindikasikan tombol yang dipilih */
+        .selected {
+        background-color: #ddd;
+        }
+
+        .separator {
+            height: 20px;
+            border-bottom: 2px solid black;
+            margin-bottom: 10px;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <h1 class="header">GRAFIK TTV<br>RS. AZRA BOGOR</h1>
+    
+    <p style="text-align: right;">
+        RI <input type="text" id="ri" name="ri" placeholder="..." style="width: 300px;">
+    </p>
+      
+    <table border="2">
+        <tr>
+            <td><b>NAMA</b>: <input type="text" id="nama" name="nama" placeholder="..."></td>
+            <td><b>NOMOR REKAM MEDIK</b>: <input type="text" id="no_rm" name="no_rm" placeholder="..."></td>
+        </tr>
+        <tr>
+            <td><b>TANGGAL LAHIR</b>: <input type="text" id="tgl_lahir" name="tgl_lahir" placeholder="dd/mm/yyyy"></td>
+            <td><b>KELAS</b>: <input type="text" id="kelas" name="kelas" placeholder="..."></td>
+        </tr>
+        <tr>
+            <td><b>UMUR</b>: <input type="text" id="umur" name="umur" placeholder="..."></td>
+            <td><b>KAMAR</b>: <input type="text" id="kamar" name="kamar" placeholder="..."></td>
+        </tr>
+        <tr>
+            <td><b>Jenis Kelamin</b>: <span id="jenis_kelamin">...</span></td>
+        </tr>
+    </table><br>
+
+
+    
+    <button id="showChartBtn">Show Chart</button><br><br>
+
+    <table id="tablettv" name="tablettv" border="2">
+        <tr>
+            <th rowspan="2">TANGGAL</th>
+            <th rowspan="2">WAKTU</th>
+            <th colspan="2" rowspan="2">NADI/SUHU</th>
+            <th rowspan="2">Keterangan</th>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td>
+                <input type="text" class="datepicker" name="tanggal_ke_1" id="tanggal_ke_1" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="waktu_ke_1" id="waktu_ke_1" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="number" name="nadi_awal_ke_1" placeholder="input nadi" id="nadi_awal_ke_1" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="number" name="suhu_ke_1" placeholder="input suhu" id="suhu_ke_1" myid="check_cara" style="width: 100px;">
+            </td>
+            
+            <td rowspan="16">
+                Keterangan<br>
+                <u>NADI</u><br><br>
+                R = Ireguler<br>
+                K = Kuat<br>
+                L = Lemah<br>
+                T = Tidak Teraba
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" class="datepicker" name="tanggal_ke_2" id="tanggal_ke_2" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="waktu_ke_2" id="waktu_ke_2" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="nadi_awal_ke_2" placeholder="input nadi" id="nadi_awal_ke_2" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="suhu_ke_2" placeholder="input suhu" id="suhu_ke_2" myid="check_cara" style="width: 100px;">
+            </td>
+            
+        </tr>
+        <tr>
+            <td>
+                <input type="text" class="datepicker" name="tanggal_ke_3" id="tanggal_ke_3" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="waktu_ke_3" id="waktu_ke_3" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="nadi_awal_ke_3" placeholder="input nadi" id="nadi_awal_ke_3" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="suhu_ke_3" id="suhu_ke_3" placeholder="input suhu" myid="check_cara" style="width: 100px;">
+            </td>
+            
+        </tr>
+        <tr>
+            <td>
+                <input type="text" class="datepicker" name="tanggal_ke_4" id="tanggal_ke_4" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="waktu_ke_4" id="waktu_ke_4" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="nadi_awal_ke_4" placeholder="input nadi" id="nadi_awal_ke_4" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="suhu_ke_4" placeholder="input suhu" id="suhu_ke_4" myid="check_cara" style="width: 100px;">
+            </td>
+           
+        </tr>
+        <tr>
+            <td>
+                <input type="text" class="datepicker" name="tanggal_ke_5" id="tanggal_ke_5" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="waktu_ke_5" id="waktu_ke_5" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="nadi_awal_ke_5" placeholder="input nadi" id="nadi_awal_ke_5" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="suhu_ke_5" placeholder="input suhu" id="suhu_ke_5" myid="check_cara" style="width: 100px;">
+            </td>
+           
+        </tr>
+        <tr>
+            <td>
+                <input type="text" class="datepicker" name="tanggal_ke_6" id="tanggal_ke_6" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="waktu_ke_6" id="waktu_ke_6" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="nadi_awal_ke_6" placeholder="input nadi" id="nadi_awal_ke_6" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="suhu_ke_6" placeholder="input suhu" id="suhu_ke_6" myid="check_cara" style="width: 100px;">
+            </td>
+           
+        </tr>
+        <tr>
+            <td>
+                <input type="text" class="datepicker" name="tanggal_ke_7" id="tanggal_ke_7" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="waktu_ke_7" id="waktu_ke_7" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="nadi_awal_ke_7" placeholder="input nadi" id="nadi_awal_ke_7" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="suhu_ke_7" placeholder="input suhu" id="suhu_ke_7" myid="check_cara" style="width: 100px;">
+            </td>
+           
+        </tr>
+        <tr>
+            <td>
+                <input type="text" class="datepicker" name="tanggal_ke_8" id="tanggal_ke_8" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="waktu_ke_8" id="waktu_ke_8" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="nadi_awal_ke_8" placeholder="input nadi" id="nadi_awal_ke_8" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="suhu_ke_8" placeholder="input suhu" id="suhu_ke_8" myid="check_cara" style="width: 100px;">
+            </td>
+           
+        </tr>
+        <tr>
+            <td>
+                <input type="text" class="datepicker" name="tanggal_ke_9" id="tanggal_ke_9" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="waktu_ke_9" id="waktu_ke_9" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="nadi_awal_ke_9" placeholder="input nadi" id="nadi_awal_ke_9" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="suhu_ke_9" placeholder="input suhu" id="suhu_ke_9" myid="check_cara" style="width: 100px;">
+            </td>
+           
+        </tr>
+        <tr>
+            <td>
+                <input type="text" class="datepicker" name="tanggal_ke_10" id="tanggal_ke_10" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="waktu_ke_10" id="waktu_ke_10" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="nadi_awal_ke_10" placeholder="input nadi" id="nadi_awal_ke_10" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="suhu_ke_10" placeholder="input suhu" id="suhu_ke_10" myid="check_cara" style="width: 100px;">
+            </td>
+           
+        </tr>
+        <tr>
+            <td>
+                <input type="text" class="datepicker" name="tanggal_ke_11" id="tanggal_ke_11" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="waktu_ke_11" id="waktu_ke_11" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="nadi_awal_ke_11" placeholder="input nadi" id="nadi_awal_ke_11" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="suhu_ke_11" placeholder="input suhu" id="suhu_ke_11" myid="check_cara" style="width: 100px;">
+            </td>
+           
+        </tr>
+        <tr>
+            <td>
+                <input type="text" class="datepicker" name="tanggal_ke_12" id="tanggal_ke_12" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="waktu_ke_12" id="waktu_ke_12" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="nadi_awal_ke_12" placeholder="input nadi" id="nadi_awal_ke_12" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="suhu_ke_12" placeholder="input suhu" id="suhu_ke_12" myid="check_cara" style="width: 100px;">
+            </td>
+           
+        </tr>
+        <tr>
+            <td>
+                <input type="text" class="datepicker" name="tanggal_ke_13" id="tanggal_ke_13" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="waktu_ke_13" id="waktu_ke_13" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="nadi_awal_ke_13" placeholder="input nadi" id="nadi_awal_ke_13" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="suhu_ke_13" placeholder="input suhu" id="suhu_ke_13" myid="check_cara" style="width: 100px;">
+            </td>
+           
+        </tr>
+        <tr>
+            <td>
+                <input type="text" class="datepicker" name="tanggal_ke_14" id="tanggal_ke_14" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="waktu_ke_14" id="waktu_ke_14" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="nadi_awal_ke_14" placeholder="input nadi" id="nadi_awal_ke_14" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="suhu_ke_14" placeholder="input suhu" id="suhu_ke_14" myid="check_cara" style="width: 100px;">
+            </td>
+           
+        </tr>
+        <tr>
+            <td>
+                <input type="text" class="datepicker" name="tanggal_ke_15" id="tanggal_ke_15" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="waktu_ke_15" id="waktu_ke_15" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="nadi_awal_ke_15" placeholder="input nadi" id="nadi_awal_ke_15" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="suhu_ke_15" placeholder="input suhu" id="suhu_ke_15" myid="check_cara" style="width: 100px;">
+            </td>
+           
+        </tr>
+        <tr>
+            <td>
+                <input type="text" class="datepicker" name="tanggal_ke_16" id="tanggal_ke_16" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="waktu_ke_16" id="waktu_ke_16" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="nadi_awal_ke_16" placeholder="input nadi" id="nadi_awal_ke_16" myid="check_cara" style="width: 100px;">
+            </td>
+            <td>
+                <input type="text" name="suhu_ke_16" placeholder="input suhu" id="suhu_ke_16" myid="check_cara" style="width: 100px;">
+            </td>
+           
+        </tr>
+        
+    </table>
+    <div class="chart-container">
+        <h2>GRAFIK TTV</h2>
+        <div class="labels">
+            <p>
+                <b>Nadi : <span style="color: blue;">●</span> (**Symbol lingkaran (●) berwarna biru menandakan data Nadi**)<br>
+                <b>Suhu : <span style="color: red;">●</span> (**Symbol lingkaran (●) berwarna biru menandakan data Nadi**)
+            </p>
+        </div>
+        <div class="chart" id="chart" name="chart" myid="check_cara" >
+            <svg id="chart-svg" style="width: 100%; height: 400px;"></svg>
+        </div>
+        <div class="tooltip" id="tooltip" name="tooltip" myid="check_cara"></div>
+        <div class="labels">
+            <p>Nadi : Biru Suhu : Merah</p>
+        </div>
+    </div>
+
+    <table class="table" border="2">
+        <thead>
+            <tr>
+                <th>PERNAFASAN</th>
+                <th>TEKANAN DARAH</th>
+                <th>NADI</th>
+                <th>NAFAS</th>
+                <th>KET.</th>
+                <th>BB/DIET PASIEN</th>
+                <th>NAMA PERAWAT</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" id="pernafasan_1" name="pernafasan_1" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_2" name="pernafasan_2" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_3" name="pernafasan_3" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_4" name="pernafasan_4" myid="check_cara"></td>
+                <td><textarea input type="textarea" id="pernafasan_5" name="pernafasan_5" myid="check_cara"></textarea></td>
+                <td><input type="text" id="pernafasan_6" name="pernafasan_6" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_7" name="pernafasan_7" myid="check_cara"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="pernafasan_8" name="pernafasan_8" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_9" name="pernafasan_9" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_10" name="pernafasan_10" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_11" name="pernafasan_11" myid="check_cara"></td>
+                <td><textarea input type="textarea" id="pernafasan_12" name="pernafasan_12" myid="check_cara"></textarea></td>
+                <td><input type="text" id="pernafasan_13" name="pernafasan_13" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_14" name="pernafasan_14" myid="check_cara"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="pernafasan_15" name="pernafasan_15" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_16" name="pernafasan_16" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_17" name="pernafasan_17" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_18" name="pernafasan_18" myid="check_cara"></td>
+                <td><textarea input type="textarea" id="pernafasan_19" name="pernafasan_19" myid="check_cara"></textarea></td>
+                <td><input type="text" id="pernafasan_20" name="pernafasan_20" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_21" name="pernafasan_21" myid="check_cara"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="pernafasan_22" name="pernafasan_22" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_23" name="pernafasan_23" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_24" name="pernafasan_24" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_25" name="pernafasan_25" myid="check_cara"></td>
+                <td><textarea input type="textarea" id="pernafasan_26" name="pernafasan_26" myid="check_cara"></textarea></td>
+                <td><input type="text" id="pernafasan_27" name="pernafasan_27" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_28" name="pernafasan_28" myid="check_cara"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="pernafasan_29" name="pernafasan_29" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_30" name="pernafasan_30" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_31" name="pernafasan_31" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_32" name="pernafasan_32" myid="check_cara"></td>
+                <td><textarea input type="textarea" id="pernafasan_33" name="pernafasan_33" myid="check_cara"></textarea></td>
+                <td><input type="text" id="pernafasan_34" name="pernafasan_34" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_35" name="pernafasan_35" myid="check_cara"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="pernafasan_36" name="pernafasan_36" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_37" name="pernafasan_37" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_38" name="pernafasan_38" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_39" name="pernafasan_39" myid="check_cara"></td>
+                <td><textarea input type="textarea" id="pernafasan_40" name="pernafasan_40" myid="check_cara"></textarea></td>
+                <td><input type="text" id="pernafasan_41" name="pernafasan_41" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_42" name="pernafasan_42" myid="check_cara"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="pernafasan_43" name="pernafasan_43" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_44" name="pernafasan_44" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_46" name="pernafasan_46" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_47" name="pernafasan_47" myid="check_cara"></td>
+                <td><textarea input type="textarea" id="pernafasan_48" name="pernafasan_48" myid="check_cara"></textarea></td>
+                <td><input type="text" id="pernafasan_49" name="pernafasan_49" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_50" name="pernafasan_50" myid="check_cara"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="pernafasan_51" name="pernafasan_51" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_52" name="pernafasan_52" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_53" name="pernafasan_53" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_54" name="pernafasan_54" myid="check_cara"></td>
+                <td><textarea input type="textarea" id="pernafasan_55" name="pernafasan_55" myid="check_cara"></textarea></td>
+                <td><input type="text" id="pernafasan_56" name="pernafasan_56" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_57" name="pernafasan_57" myid="check_cara"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="pernafasan_58" name="pernafasan_58" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_59" name="pernafasan_59" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_60" name="pernafasan_60" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_61" name="pernafasan_61" myid="check_cara"></td>
+                <td><textarea input type="textarea" id="pernafasan_62" name="pernafasan_62" myid="check_cara"></textarea></td>
+                <td><input type="text" id="pernafasan_63" name="pernafasan_63" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_14" name="pernafasan_14" myid="check_cara"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="pernafasan_8" name="pernafasan_8" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_9" name="pernafasan_9" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_10" name="pernafasan_10" myid="check_cara"></td>
+                <td><input type="text" id="pernafasan_11" name="pernafasan_11" myid="check_cara"></td>
+                <td><textarea input type="textarea" id="pernafasan_12" name="pernafasan_12" myid="check_cara"></textarea></td>
+                <td><input type="text" id="nafas_13" name="nafas_13" myid="check_cara"></td>
+                <td><input type="text" id="nafas_14" name="nafas_14" myid="check_cara"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="nfss_8" name="nfss_8" myid="check_cara"></td>
+                <td><input type="text" id="nfss_9" name="nfss_9" myid="check_cara"></td>
+                <td><input type="text" id="nfss_10" name="nfss_10" myid="check_cara"></td>
+                <td><input type="text" id="nfss_11" name="nfss_11" myid="check_cara"></td>
+                <td><textarea input type="textarea" id="nfss_12" name="nfss_12" myid="check_cara"></textarea></td>
+                <td><input type="text" id="nfss_13" name="nfss_13" myid="check_cara"></td>
+                <td><input type="text" id="nfss_14" name="nfss_14" myid="check_cara"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="nf_8" name="nf_8" myid="check_cara"></td>
+                <td><input type="text" id="nf_9" name="nf_9" myid="check_cara"></td>
+                <td><input type="text" id="nf_10" name="nf_10" myid="check_cara"></td>
+                <td><input type="text" id="nf_11" name="nf_11" myid="check_cara"></td>
+                <td><textarea input type="textarea" id="nf_12" name="nf_12" myid="check_cara"></textarea></td>
+                <td><input type="text" id="nf_13" name="nf_13" myid="check_cara"></td>
+                <td><input type="text" id="nf_14" name="nf_14" myid="check_cara"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="nps_8" name="nps_8" myid="check_cara"></td>
+                <td><input type="text" id="nps_9" name="nps_9" myid="check_cara"></td>
+                <td><input type="text" id="nps_10" name="nps_10" myid="check_cara"></td>
+                <td><input type="text" id="nps_11" name="nps_11" myid="check_cara"></td>
+                <td><textarea input type="textarea" id="nps_12" name="nps_12" myid="check_cara"></textarea></td>
+                <td><input type="text" id="nps_13" name="nps_13" myid="check_cara"></td>
+                <td><input type="text" id="nps_14" name="nps_14" myid="check_cara"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="nips_8" name="nips_8" myid="check_cara"></td>
+                <td><input type="text" id="nips_9" name="nips_9" myid="check_cara"></td>
+                <td><input type="text" id="nips_10" name="nips_10" myid="check_cara"></td>
+                <td><input type="text" id="nips_11" name="nips_11" myid="check_cara"></td>
+                <td><textarea input type="textarea" id="nips_12" name="nips_12" myid="check_cara"></textarea></td>
+                <td><input type="text" id="nips_13" name="nips_13" myid="check_cara"></td>
+                <td><input type="text" id="nips_14" name="nips_14" myid="check_cara"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="kio_8" name="kio_8" myid="check_cara"></td>
+                <td><input type="text" id="kio_9" name="kio_9" myid="check_cara"></td>
+                <td><input type="text" id="kio_10" name="kio_10" myid="check_cara"></td>
+                <td><input type="text" id="kio_11" name="kio_11" myid="check_cara"></td>
+                <td><textarea input type="textarea" id="kio_12" name="kio_12" myid="check_cara"></textarea></td>
+                <td><input type="text" id="kio_13" name="kio_13" myid="check_cara"></td>
+                <td><input type="text" id="kio_14" name="kio_14" myid="check_cara"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="kita_8" name="kita_8" myid="check_cara"></td>
+                <td><input type="text" id="kita_9" name="kita_9" myid="check_cara"></td>
+                <td><input type="text" id="kita_10" name="kita_10" myid="check_cara"></td>
+                <td><input type="text" id="kita_11" name="kita_11" myid="check_cara"></td>
+                <td><textarea input type="textarea" id="kita_12" name="kita_12" myid="check_cara"></textarea></td>
+                <td><input type="text" id="kita_13" name="kita_13" myid="check_cara"></td>
+                <td><input type="text" id="kita_14" name="kita_14" myid="check_cara"></td>
+            </tr>
+        </tbody>
+    </table>
+    
+</body>
+</html>
+<script>
+// $(document).ready(function () {
+//     $(function () {
+//         $(".datepicker").datepicker({
+//             dateFormat: 'dd-mm-yy',
+//             autoclose: true,
+//             todayHighlight: true,
+//         });
+//     });
+// });
+
+class MedicalChart {
+    constructor() {
+        this.chartSvg = document.getElementById("chart-svg");
+        this.tooltip = document.getElementById("tooltip");
+        this.data = [];
+        this.config = {
+            denyut: { max: 170, min: 35 },
+            suhu: { max: 40, min: 35 },
+            width: this.chartSvg.clientWidth,
+            height: this.chartSvg.clientHeight,
+            padding: 60, // Increased padding for dual scales
+            dataWidth: 30,
+        };
+        this.rangeMinDenyut = this.config.denyut.min;
+        this.rangeMaxDenyut = this.config.denyut.max;
+        this.rangeMinSuhu = this.config.suhu.min;
+        this.rangeMaxSuhu = this.config.suhu.max;
+    }
+
+    createSvgElement(type, attributes = {}) {
+        const element = document.createElementNS("http://www.w3.org/2000/svg", type);
+        Object.entries(attributes).forEach(([key, value]) => {
+            element.setAttribute(key, value);
+        });
+        return element;
+    }
+
+    drawGrid() {
+        const grid = this.createSvgElement("g");
+        const { width, height, padding } = this.config;
+
+        // Draw denyut (heart rate) grid lines and labels (left side)
+        const stepDenyut = 15;
+        for (let value = this.rangeMinDenyut; value <= this.rangeMaxDenyut; value += stepDenyut) {
+            const y = this.getDenyutY(value);
+            const line = this.createSvgElement("line", {
+                x1: padding,
+                x2: width - padding,
+                y1: y,
+                y2: y,
+                stroke: "#ddd",
+                "stroke-width": "1",
+                "stroke-dasharray": "2,2"
+            });
+            const label = this.createSvgElement("text", {
+                x: padding - 10,
+                y: y + 4,
+                "text-anchor": "end",
+                "font-size": "10px",
+                fill: "blue"
+            });
+            label.textContent = value;
+            grid.appendChild(line);
+            grid.appendChild(label);
+        }
+
+        // Draw suhu (temperature) grid lines and labels (right side)
+        const stepSuhu = 0.5;
+        for (let value = this.rangeMinSuhu; value <= this.rangeMaxSuhu; value += stepSuhu) {
+            const y = this.getSuhuY(value);
+            const label = this.createSvgElement("text", {
+                x: width - padding + 10,
+                y: y + 4,
+                "text-anchor": "start",
+                "font-size": "10px",
+                fill: "red"
+            });
+            label.textContent = value.toFixed(1);
+            grid.appendChild(label);
+        }
+
+        // Add axis titles
+        const denyutTitle = this.createSvgElement("text", {
+            x: padding - 50,
+            y: height / 2,
+            transform: `rotate(-90 ${padding - 50} ${height / 2})`,
+            "text-anchor": "middle",
+            fill: "blue",
+            "font-size": "12px"
+        });
+        denyutTitle.textContent = "Denyut Nadi (bpm)";
+        grid.appendChild(denyutTitle);
+
+        const suhuTitle = this.createSvgElement("text", {
+            x: width - padding + 50,
+            y: height / 2,
+            transform: `rotate(90 ${width - padding + 50} ${height / 2})`,
+            "text-anchor": "middle",
+            fill: "red",
+            "font-size": "12px"
+        });
+        suhuTitle.textContent = "Suhu (°C)";
+        grid.appendChild(suhuTitle);
+
+        this.chartSvg.appendChild(grid);
+    }
+
+    getDenyutY(value) {
+        const { height, padding } = this.config;
+        return padding + (1 - (value - this.rangeMinDenyut) / 
+            (this.rangeMaxDenyut - this.rangeMinDenyut)) * (height - 2 * padding);
+    }
+
+    getSuhuY(value) {
+        const { height, padding } = this.config;
+        return padding + (1 - (value - this.rangeMinSuhu) / 
+            (this.rangeMaxSuhu - this.rangeMinSuhu)) * (height - 2 * padding);
+    }
+
+    drawLine() {
+        if (this.data.length === 0) return;
+
+        const lineGroup = this.createSvgElement("g");
+        const { padding, dataWidth } = this.config;
+
+        let pathDataDenyut = "";
+        let pathDataSuhu = "";
+        const fragmentDenyut = document.createDocumentFragment();
+        const fragmentSuhu = document.createDocumentFragment();
+
+        this.data.forEach((entry, index) => {
+            const x = padding + index * dataWidth;
+            const yDenyut = this.getDenyutY(entry.denyut);
+            const ySuhu = this.getSuhuY(entry.suhu);
+
+            // Plot heart rate points and line
+            const circleDenyut = this.createSvgElement("circle", {
+                cx: x,
+                cy: yDenyut,
+                r: 4,
+                fill: "blue"
+            });
+            fragmentDenyut.appendChild(circleDenyut);
+            pathDataDenyut += index === 0 ? `M ${x} ${yDenyut}` : ` L ${x} ${yDenyut}`;
+
+            // Plot temperature points and line
+            const circleSuhu = this.createSvgElement("circle", {
+                cx: x,
+                cy: ySuhu,
+                r: 4,
+                fill: "red"
+            });
+            fragmentSuhu.appendChild(circleSuhu);
+            pathDataSuhu += index === 0 ? `M ${x} ${ySuhu}` : ` L ${x} ${ySuhu}`;
+            
+            // Add data tooltips
+            this.addTooltip(circleDenyut, `Nadi: ${entry.denyut} bpm\nWaktu: ${entry.jam}\nTanggal: ${entry.tanggal}`);
+            this.addTooltip(circleSuhu, `Suhu: ${entry.suhu}°C\nWaktu: ${entry.jam}\nTanggal: ${entry.tanggal}`);
+        });
+
+        // Draw connecting lines if there are multiple points
+        if (this.data.length > 1) {
+            const pathDenyut = this.createSvgElement("path", {
+                d: pathDataDenyut,
+                stroke: "blue",
+                "stroke-width": 2,
+                fill: "none"
+            });
+            const pathSuhu = this.createSvgElement("path", {
+                d: pathDataSuhu,
+                stroke: "red",
+                "stroke-width": 2,
+                fill: "none"
+            });
+
+            lineGroup.appendChild(pathDenyut);
+            lineGroup.appendChild(pathSuhu);
+        }
+
+        lineGroup.appendChild(fragmentDenyut);
+        lineGroup.appendChild(fragmentSuhu);
+        this.chartSvg.appendChild(lineGroup);
+    }
+
+    addTooltip(element, text) {
+        element.addEventListener('mouseover', (e) => {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.textContent = text;
+            tooltip.style.display = 'block';
+            tooltip.style.left = (e.pageX + 10) + 'px';
+            tooltip.style.top = (e.pageY + 10) + 'px';
+        });
+
+        element.addEventListener('mouseout', () => {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.style.display = 'none';
+        });
+    }
+
+    drawChart() {
+        this.chartSvg.innerHTML = "";
+        this.drawGrid();
+        this.drawLine();
+    }
+}
+
+function extractDataFromTable() {
+    const data = [];
+    const table = document.getElementById("tablettv");
+    const rows = table.querySelectorAll("tr");
+
+    rows.forEach((row, index) => {
+        if (index === 0 || row.querySelector("td") === null) return;
+
+        const tanggal = row.querySelector("input[name^='tanggal_ke_']").value;
+        const waktu = row.querySelector("input[name^='waktu_ke_']").value;
+        const nadi = row.querySelector("input[name^='nadi_awal_ke_']").value;
+        const suhu = row.querySelector("input[name^='suhu_ke_']").value;
+
+        if (nadi && suhu) {
+            data.push({
+                denyut: parseFloat(nadi),
+                jam: waktu,
+                tanggal: tanggal,
+                suhu: parseFloat(suhu)
+            });
+        }
+    });
+
+    return data;
+}
+
+const medicalChart = new MedicalChart
+
+function updateChart() {
+    const medicalChart = new MedicalChart();
+    const dataFromTable = extractDataFromTable();
+    medicalChart.data = dataFromTable;
+    medicalChart.drawChart();
+}
+
+const tableObserverse = new MutationObserver(() => {
+    updateChart();
+});
+
+const tablesTarget = document.getElementById("tablettv");
+
+if (tablesTarget) {
+    tableObserverse.observe(tablesTarget, {
+        childList: true,   
+        subtree: true,     
+        attributes: true 
+    });
+}
+
+
+document.querySelectorAll("#tablettv input").forEach(input => {
+    input.addEventListener("input", updateChart);
+});
+
+// Add event listeners to table inputs
+document.querySelectorAll("#tablettv input").forEach(input => {
+    input.addEventListener("input", updateChart);
+});
+
+// Initialize chart
+updateChart();
+
+medicalChart.drawChart();
+
+
+</script>
+  
+</html>
