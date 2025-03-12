@@ -5,43 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PENGKAJIAN LANJUTAN RISIKO JATUH PASIEN GERIATRI</title>
   </head>
-  <script
-    src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-    crossorigin="anonymous"
-  ></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
   </style>
-
-  <script type="text/javascript">
-    $(document).on("ajaxStop", function () {
-      SetTTD();
-    });
-  </script>
   <script>
     $(document).ready(function () {
       $(function () {
@@ -51,7 +35,6 @@
           todayHighlight: true,
         });
       });
-
       $('input[type="radio"]')
         .off("change")
         .on("change", function () {
@@ -131,119 +114,17 @@
             }
           });
 
+          if (total <= 5) {
+            total += ", Risiko rendah";
+          } else if (total >= 6 && total <= 16) {
+            total += ", Risiko sedang";
+          } else if (total >= 17 && total <= 30) {
+            total += ", Risiko tinggi";
+          }
+
           $(`#totalskor` + percol).val(total);
         });
     });
-
-    // Untuk Keperluan TTD
-    function ttd_paraf(id) {
-      PopupCenter(
-        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
-        "pop",
-        800,
-        400
-      );
-    }
-
-    // Untuk Keperluan TTD
-    function tampil_ttd(x, y) {
-      ImageToText(x, y);
-    }
-
-    // Untuk Keperluan TTD
-    function PopupCenter(url, title, w, h) {
-      console.log("PopupCenter");
-      var dualScreenLeft =
-        window.screenLeft != undefined ? window.screenLeft : screen.left;
-      var dualScreenTop =
-        window.screenTop != undefined ? window.screenTop : screen.top;
-      var width = window.innerWidth
-        ? window.innerWidth
-        : document.documentElement.clientWidth
-        ? document.documentElement.clientWidth
-        : screen.width;
-      var height = window.innerHeight
-        ? window.innerHeight
-        : document.documentElement.clientHeight
-        ? document.documentElement.clientHeight
-        : screen.height;
-      var left = width / 2 - w / 2 + dualScreenLeft + 100;
-      var top = height / 2 - h / 2 + dualScreenTop + 100;
-
-      var newWindow = window.open(
-        url,
-        title,
-        "scrollbars=yes, width=" +
-          w +
-          ", height=" +
-          h +
-          ", top=" +
-          top +
-          ", left=" +
-          left
-      );
-
-      if (window.focus) newWindow.focus();
-    }
-
-    // Untuk Keperluan TTD
-    function SetTTD() {
-      $('input[data-name="paraf"]').each(function () {
-        var id = $(this).attr("data-id"),
-          ttd = $(this).val();
-
-        ImageToText(id, ttd);
-      });
-    }
-
-    // Untuk Keperluan Select Option & TTD
-    $(document)
-      .off("change", 'select[data-var="set_name_sel"]')
-      .on("change", 'select[data-var="set_name_sel"]', function () {
-        var name = $(this).attr("name"),
-          name_txt = $(this).find("option:selected").text(),
-          name_img = $(this).find("option:selected").attr("data-ttd"),
-          id = $(this).attr("data-id");
-
-        $("#" + name + "_txt").val(name_txt);
-
-        ImageToText(id, name_img);
-      });
-
-    // Untuk Keperluan Create TTD
-    $(document)
-      .off("click", "#CreateTTD")
-      .on("click", "#CreateTTD", function () {
-        var id = $(this).attr("data-id");
-
-        ttd_paraf(id);
-      });
-
-    // Untuk Keperluan Parsing TTD To Object
-    function ImageToText(img_id, img_val) {
-      def = "paraf";
-
-      if (typeof img_val === "undefined" || img_val == "") {
-        $("#def_img_" + img_id).text(def);
-        $("#def_img_" + img_id).css({
-          display: "",
-          "font-style": "italic",
-          width: "100px",
-          height: "100px",
-        });
-        $("#image_paraf_" + img_id).css("display", "none");
-      } else {
-        $("#def_img_" + img_id).text("");
-        $("#def_img_" + img_id).css("display", "none");
-        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
-        $("#image_paraf_" + img_id).css({
-          display: "",
-          width: "100px",
-          height: "100px",
-        });
-        $("#paraf_" + img_id).val(img_val);
-      }
-    }
   </script>
   <body>
     <h1 class="title">PENGKAJIAN LANJUTAN RISIKO JATUH PASIEN GERIATRI</h1>
@@ -301,7 +182,7 @@
               type="text"
               id="tgl_lahir"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               myid="check_cara"
               label="tanggal lahir"
               value="{VBIRTH_DATE}"
@@ -345,7 +226,6 @@
               myid="check_cara"
               placeholder="..."
               aria-label="kamar"
-              value="{VNAMARUANGAN}"
             />
           </td>
         </tr>
@@ -355,19 +235,149 @@
     <table class="table table-bordered" width="100%">
       <thead>
         <tr>
-          <th><b>No</b></th>
-          <th><b>Parameter</b></th>
-          <th><b>Skrining</b></th>
-          <th><b>Jawaban</b></th>
-          <th><b>Keterangan Nilai</b></th>
-          <th colspan="6"><b>Skor</b></th>
+          <th rowspan="3"><b>No</b></th>
+          <th rowspan="3"><b>Parameter</b></th>
+          <th rowspan="3"><b>Skrining</b></th>
+          <th rowspan="3"><b>Jawaban</b></th>
+          <th rowspan="3"><b>Keterangan Nilai</b></th>
+          <th colspan="6"><b>Skor / Tanggal</b></th>
+        </tr>
+        <tr>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="dd-mm-yy"
+              class="datepicker"
+              myid="check_cara"
+              name="tgl-pengkajian-1"
+              id="tgl-pengkajian-1"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="dd-mm-yy"
+              class="datepicker"
+              myid="check_cara"
+              name="tgl-pengkajian-2"
+              id="tgl-pengkajian-2"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="dd-mm-yy"
+              class="datepicker"
+              myid="check_cara"
+              name="tgl-pengkajian-3"
+              id="tgl-pengkajian-3"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="dd-mm-yy"
+              class="datepicker"
+              myid="check_cara"
+              name="tgl-pengkajian-4"
+              id="tgl-pengkajian-4"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="dd-mm-yy"
+              class="datepicker"
+              myid="check_cara"
+              name="tgl-pengkajian-5"
+              id="tgl-pengkajian-5"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="dd-mm-yy"
+              class="datepicker"
+              myid="check_cara"
+              name="tgl-pengkajian-6"
+              id="tgl-pengkajian-6"
+            />
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="00.00"
+              myid="check_cara"
+              name="pukul-pengkajian-1"
+              id="pukul-pengkajian-1"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="00.00"
+              myid="check_cara"
+              name="pukul-pengkajian-2"
+              id="pukul-pengkajian-2"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="00.00"
+              myid="check_cara"
+              name="pukul-pengkajian-3"
+              id="pukul-pengkajian-3"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="00.00"
+              myid="check_cara"
+              name="pukul-pengkajian-4"
+              id="pukul-pengkajian-4"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="00.00"
+              myid="check_cara"
+              name="pukul-pengkajian-5"
+              id="pukul-pengkajian-5"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="00.00"
+              myid="check_cara"
+              name="pukul-pengkajian-6"
+              id="pukul-pengkajian-6"
+            />
+          </th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td rowspan="2">1</td>
-          <td rowspan="2">Riwayat jatuh</td>
-          <td>Apakah pasien datang ke rumah sakit karena jatuh?</td>
+          <td width="10%" rowspan="2">Riwayat jatuh</td>
+          <td width="15%">Apakah pasien datang ke rumah sakit karena jatuh?</td>
           <td>Ya / Tidak</td>
           <td rowspan="2" style="width: 10%">Salah satu jawaban ya = 6</td>
           <td>
@@ -2406,97 +2416,148 @@
         <tr>
           <td style="text-align: end" colspan="5"><b>TOTAL SKOR</b></td>
           <td>
-            <input
-              type="text"
+            <textarea
+              readonly
+              type="textarea"
               name="totalskor1"
               id="totalskor1"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
-            />
+              style="width: 100%; text-align: center"
+            ></textarea>
           </td>
           <td>
-            <input
-              type="text"
+            <textarea
+              readonly
+              type="textarea"
               name="totalskor2"
               id="totalskor2"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
-            />
+              style="width: 100%; text-align: center"
+            ></textarea>
           </td>
           <td>
-            <input
-              type="text"
+            <textarea
+              readonly
+              type="textarea"
               name="totalskor3"
               id="totalskor3"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
-            />
+              style="width: 100%; text-align: center"
+            ></textarea>
           </td>
           <td>
-            <input
-              type="text"
+            <textarea
+              readonly
+              type="textarea"
               name="totalskor4"
               id="totalskor4"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
-            />
+              style="width: 100%; text-align: center"
+            ></textarea>
           </td>
           <td>
-            <input
-              type="text"
+            <textarea
+              readonly
+              type="textarea"
               name="totalskor5"
               id="totalskor5"
               placeholder="....."
               myid="check_cara"
-              style="width: 100%"
-            />
+              style="width: 100%; text-align: center"
+            ></textarea>
           </td>
           <td>
-            <input
-              type="text"
+            <textarea
+              readonly
+              type="textarea"
               name="totalskor6"
               id="totalskor6"
               placeholder="....."
               myid="check_cara"
+              style="width: 100%; text-align: center"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: end" colspan="5"><b>NAMA PERAWAT</b></td>
+          <td>
+            <textarea
+              type="textarea"
+              name="nama-perawat-1"
+              id="nama-perawat-1"
+              placeholder="....."
+              myid="check_cara"
               style="width: 100%"
-            />
+            ></textarea>
+          </td>
+          <td>
+            <textarea
+              type="textarea"
+              name="nama-perawat-2"
+              id="nama-perawat-2"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            ></textarea>
+          </td>
+          <td>
+            <textarea
+              type="textarea"
+              name="nama-perawat-3"
+              id="nama-perawat-3"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            ></textarea>
+          </td>
+          <td>
+            <textarea
+              type="textarea"
+              name="nama-perawat-4"
+              id="nama-perawat-4"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            ></textarea>
+          </td>
+          <td>
+            <textarea
+              type="textarea"
+              name="nama-perawat-5"
+              id="nama-perawat-5"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            ></textarea>
+          </td>
+          <td>
+            <textarea
+              type="textarea"
+              name="nama-perawat-6"
+              id="nama-perawat-6"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="11">
+            <section style="margin-top: 5px; display: flex; gap: 10px">
+              <p>
+                <b><u>Keterangan:</u></b>
+              </p>
+              <p>Risiko Rendah = 0 - 5</p>
+              <p>Risiko Sedang = 6 - 16</p>
+              <p>Risiko Tinggi = 17 - 30</p>
+            </section>
           </td>
         </tr>
       </tbody>
     </table>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

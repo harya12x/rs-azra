@@ -1,0 +1,2280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CATATAN PERKEMBANGAN PASIEN TERINTEGRASI (CPPT)</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+  </script>
+  <body>
+    <h1 class="title">CATATAN PERKEMBANGAN PASIEN TERINTEGRASI (CPPT)</h1>
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td>Nama Pasien</td>
+          <td>
+            <input
+              name="nama_pasien2"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+              value="{VNAMA_PASIEN}"
+            />
+          </td>
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              myid="check_cara"
+              name="no_rm"
+              id="no_rm"
+              label="nomor rekam medis"
+              value="{NO_RM}"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan="2">Tanggal Lahir</td>
+          <td rowspan="2">
+            <input
+              name="tgl_lahira2"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal lahir"
+              value="{VBIRTH_DATE}"
+            />
+          </td>
+
+          <td rowspan="2">Umur</td>
+          <td rowspan="2">
+            <input
+              type="text"
+              size="20"
+              name="umur-pengkajian"
+              id="umur-pengkajian"
+              myid="check_cara"
+              placeholder="..."
+              value="{VAGEREGIS}"
+            />
+          </td>
+          <td>
+            <label for="kelas"> Poli </label>
+          </td>
+          <td>
+            <input
+              name="poli"
+              type="text"
+              id="poli"
+              placeholder="..."
+              myid="check_cara"
+              label="poli"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="kamar"> Kamar </label>
+          </td>
+          <td>
+            <input
+              name="kamar"
+              type="text"
+              id="kamar"
+              placeholder="..."
+              myid="check_cara"
+              label="kamar"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th style="text-align: center; width: 150px">Tgl / jam</th>
+          <th style="text-align: center">Profesi</th>
+          <th style="text-align: center">
+            Catatan Kemajuan Rencana Tindakan dan Terapi
+          </th>
+          <th style="text-align: center">Verifikasi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-1"
+              type="text"
+              id="tgl_pencatatan-1"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-1"
+              type="text"
+              id="jam_pencatatan-1"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-1"
+              type="text"
+              id="profesi-1"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-1"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-1"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-1"
+              type="text"
+              id="verifikasi-1"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-2"
+              type="text"
+              id="tgl_pencatatan-2"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-2"
+              type="text"
+              id="jam_pencatatan-2"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-2"
+              type="text"
+              id="profesi-2"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-2"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-2"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-2"
+              type="text"
+              id="verifikasi-2"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-3"
+              type="text"
+              id="tgl_pencatatan-3"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-3"
+              type="text"
+              id="jam_pencatatan-3"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-3"
+              type="text"
+              id="profesi-3"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-3"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-3"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-3"
+              type="text"
+              id="verifikasi-3"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-4"
+              type="text"
+              id="tgl_pencatatan-4"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-4"
+              type="text"
+              id="jam_pencatatan-4"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-4"
+              type="text"
+              id="profesi-4"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-4"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-4"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-4"
+              type="text"
+              id="verifikasi-4"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-5"
+              type="text"
+              id="tgl_pencatatan-5"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-5"
+              type="text"
+              id="jam_pencatatan-5"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-5"
+              type="text"
+              id="profesi-5"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-5"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-5"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-5"
+              type="text"
+              id="verifikasi-5"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-6"
+              type="text"
+              id="tgl_pencatatan-6"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-6"
+              type="text"
+              id="jam_pencatatan-6"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-6"
+              type="text"
+              id="profesi-6"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-6"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-6"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-6"
+              type="text"
+              id="verifikasi-6"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-7"
+              type="text"
+              id="tgl_pencatatan-7"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-7"
+              type="text"
+              id="jam_pencatatan-7"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-7"
+              type="text"
+              id="profesi-7"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-7"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-7"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-7"
+              type="text"
+              id="verifikasi-7"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-8"
+              type="text"
+              id="tgl_pencatatan-8"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-8"
+              type="text"
+              id="jam_pencatatan-8"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-8"
+              type="text"
+              id="profesi-8"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-8"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-8"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-8"
+              type="text"
+              id="verifikasi-8"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-9"
+              type="text"
+              id="tgl_pencatatan-9"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-9"
+              type="text"
+              id="jam_pencatatan-9"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-9"
+              type="text"
+              id="profesi-9"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-9"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-9"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-9"
+              type="text"
+              id="verifikasi-9"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-10"
+              type="text"
+              id="tgl_pencatatan-10"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-10"
+              type="text"
+              id="jam_pencatatan-10"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-10"
+              type="text"
+              id="profesi-10"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-10"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-10"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-10"
+              type="text"
+              id="verifikasi-10"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-11"
+              type="text"
+              id="tgl_pencatatan-11"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-11"
+              type="text"
+              id="jam_pencatatan-11"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-11"
+              type="text"
+              id="profesi-11"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-11"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-11"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-11"
+              type="text"
+              id="verifikasi-11"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-12"
+              type="text"
+              id="tgl_pencatatan-12"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-12"
+              type="text"
+              id="jam_pencatatan-12"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-12"
+              type="text"
+              id="profesi-12"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-12"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-12"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-12"
+              type="text"
+              id="verifikasi-12"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-13"
+              type="text"
+              id="tgl_pencatatan-13"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-13"
+              type="text"
+              id="jam_pencatatan-13"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-13"
+              type="text"
+              id="profesi-13"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-13"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-13"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-13"
+              type="text"
+              id="verifikasi-13"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-14"
+              type="text"
+              id="tgl_pencatatan-14"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-14"
+              type="text"
+              id="jam_pencatatan-14"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-14"
+              type="text"
+              id="profesi-14"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-14"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-14"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-14"
+              type="text"
+              id="verifikasi-14"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-15"
+              type="text"
+              id="tgl_pencatatan-15"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-15"
+              type="text"
+              id="jam_pencatatan-15"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-15"
+              type="text"
+              id="profesi-15"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-15"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-15"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-15"
+              type="text"
+              id="verifikasi-15"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-16"
+              type="text"
+              id="tgl_pencatatan-16"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-16"
+              type="text"
+              id="jam_pencatatan-16"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-16"
+              type="text"
+              id="profesi-16"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-16"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-16"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-16"
+              type="text"
+              id="verifikasi-16"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-17"
+              type="text"
+              id="tgl_pencatatan-17"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-17"
+              type="text"
+              id="jam_pencatatan-17"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-17"
+              type="text"
+              id="profesi-17"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-17"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-17"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-17"
+              type="text"
+              id="verifikasi-17"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-18"
+              type="text"
+              id="tgl_pencatatan-18"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-18"
+              type="text"
+              id="jam_pencatatan-18"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-18"
+              type="text"
+              id="profesi-18"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-18"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-18"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-18"
+              type="text"
+              id="verifikasi-18"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-19"
+              type="text"
+              id="tgl_pencatatan-19"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-19"
+              type="text"
+              id="jam_pencatatan-19"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-19"
+              type="text"
+              id="profesi-19"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-19"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-19"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-19"
+              type="text"
+              id="verifikasi-19"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-20"
+              type="text"
+              id="tgl_pencatatan-20"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-20"
+              type="text"
+              id="jam_pencatatan-20"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-20"
+              type="text"
+              id="profesi-20"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-20"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-20"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-20"
+              type="text"
+              id="verifikasi-20"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-21"
+              type="text"
+              id="tgl_pencatatan-21"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-21"
+              type="text"
+              id="jam_pencatatan-21"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-21"
+              type="text"
+              id="profesi-21"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-11"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-11"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-11"
+              type="text"
+              id="verifikasi-11"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-22"
+              type="text"
+              id="tgl_pencatatan-22"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-22"
+              type="text"
+              id="jam_pencatatan-22"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-22"
+              type="text"
+              id="profesi-22"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-12"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-12"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-12"
+              type="text"
+              id="verifikasi-12"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-23"
+              type="text"
+              id="tgl_pencatatan-23"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-23"
+              type="text"
+              id="jam_pencatatan-23"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-23"
+              type="text"
+              id="profesi-23"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-23"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-23"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-23"
+              type="text"
+              id="verifikasi-23"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-24"
+              type="text"
+              id="tgl_pencatatan-24"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-24"
+              type="text"
+              id="jam_pencatatan-24"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-24"
+              type="text"
+              id="profesi-24"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-24"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-24"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-24"
+              type="text"
+              id="verifikasi-24"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-25"
+              type="text"
+              id="tgl_pencatatan-25"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-25"
+              type="text"
+              id="jam_pencatatan-25"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-25"
+              type="text"
+              id="profesi-25"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-25"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-25"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-25"
+              type="text"
+              id="verifikasi-25"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-26"
+              type="text"
+              id="tgl_pencatatan-26"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-26"
+              type="text"
+              id="jam_pencatatan-26"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-26"
+              type="text"
+              id="profesi-26"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-26"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-26"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-26"
+              type="text"
+              id="verifikasi-26"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-27"
+              type="text"
+              id="tgl_pencatatan-27"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-27"
+              type="text"
+              id="jam_pencatatan-27"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-27"
+              type="text"
+              id="profesi-27"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-27"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-27"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-27"
+              type="text"
+              id="verifikasi-27"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-28"
+              type="text"
+              id="tgl_pencatatan-28"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-28"
+              type="text"
+              id="jam_pencatatan-28"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-28"
+              type="text"
+              id="profesi-28"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-28"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-28"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-28"
+              type="text"
+              id="verifikasi-28"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-29"
+              type="text"
+              id="tgl_pencatatan-29"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-29"
+              type="text"
+              id="jam_pencatatan-29"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-29"
+              type="text"
+              id="profesi-29"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-29"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-29"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-29"
+              type="text"
+              id="verifikasi-29"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-30"
+              type="text"
+              id="tgl_pencatatan-30"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-30"
+              type="text"
+              id="jam_pencatatan-30"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-30"
+              type="text"
+              id="profesi-30"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-30"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-30"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-30"
+              type="text"
+              id="verifikasi-30"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-31"
+              type="text"
+              id="tgl_pencatatan-31"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-31"
+              type="text"
+              id="jam_pencatatan-31"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-31"
+              type="text"
+              id="profesi-31"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-31"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-31"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-31"
+              type="text"
+              id="verifikasi-31"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-32"
+              type="text"
+              id="tgl_pencatatan-32"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-32"
+              type="text"
+              id="jam_pencatatan-32"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-32"
+              type="text"
+              id="profesi-32"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-32"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-32"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-32"
+              type="text"
+              id="verifikasi-32"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-33"
+              type="text"
+              id="tgl_pencatatan-33"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-33"
+              type="text"
+              id="jam_pencatatan-33"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-33"
+              type="text"
+              id="profesi-33"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-33"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-33"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-33"
+              type="text"
+              id="verifikasi-33"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-34"
+              type="text"
+              id="tgl_pencatatan-34"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-34"
+              type="text"
+              id="jam_pencatatan-34"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-34"
+              type="text"
+              id="profesi-34"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-34"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-34"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-34"
+              type="text"
+              id="verifikasi-34"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-35"
+              type="text"
+              id="tgl_pencatatan-35"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-35"
+              type="text"
+              id="jam_pencatatan-35"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-35"
+              type="text"
+              id="profesi-35"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-35"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-35"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-35"
+              type="text"
+              id="verifikasi-35"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-36"
+              type="text"
+              id="tgl_pencatatan-36"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-36"
+              type="text"
+              id="jam_pencatatan-36"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-36"
+              type="text"
+              id="profesi-36"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-36"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-36"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-36"
+              type="text"
+              id="verifikasi-36"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-37"
+              type="text"
+              id="tgl_pencatatan-37"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-37"
+              type="text"
+              id="jam_pencatatan-37"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-37"
+              type="text"
+              id="profesi-37"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-37"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-37"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-37"
+              type="text"
+              id="verifikasi-37"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-38"
+              type="text"
+              id="tgl_pencatatan-38"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-38"
+              type="text"
+              id="jam_pencatatan-38"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-38"
+              type="text"
+              id="profesi-38"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-38"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-38"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-38"
+              type="text"
+              id="verifikasi-38"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-39"
+              type="text"
+              id="tgl_pencatatan-39"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-39"
+              type="text"
+              id="jam_pencatatan-39"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-39"
+              type="text"
+              id="profesi-39"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-39"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-39"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-39"
+              type="text"
+              id="verifikasi-39"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 50%; padding: 0"
+              name="tgl_pencatatan-40"
+              type="text"
+              id="tgl_pencatatan-40"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal pencatatan"
+            />
+            <input
+              style="width: 40%; padding: 0"
+              name="jam_pencatatan-40"
+              type="text"
+              id="jam_pencatatan-40"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam pencatatan"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="profesi-40"
+              type="text"
+              id="profesi-40"
+              myid="check_cara"
+              label="profesi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="catatan-kemajuan-rencana-tindakan-terapi-40"
+              type="text"
+              id="catatan-kemajuan-rencana-tindakan-terapi-40"
+              myid="check_cara"
+              label="catatan-kemajuan-rencana-tindakan-terapi"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              name="verifikasi-40"
+              type="text"
+              id="verifikasi-40"
+              myid="check_cara"
+              label="verifikasi"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

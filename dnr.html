@@ -6,27 +6,22 @@
     <title>PERMINTAAN JANGAN DILAKUKAN RESUSITASI (DO NOT RESUSCITATE)</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -160,7 +155,6 @@
   </script>
 
   <body>
-    <h2 class="title">RS. AZRA BOGOR</h2>
     <h2 class="title">
       PERMINTAAN JANGAN DILAKUKAN RESUSITASI <i>(DO NOT RESUSCITATE)</i>
     </h2>
@@ -341,7 +335,7 @@
               name="umur-yg-bersangkutan"
               id="umur-yg-bersangkutan"
               label="umur-yg-bersangkutan"
-              value="{VAGE}"
+              value="{VAGEREGIS}"
               placeholder="......"
               myid="check_cara"
             />
@@ -411,15 +405,17 @@
       <label for="">Bogor, tanggal</label>
       <input
         type="text"
+        class="datepicker"
         name="tgl-permintaan"
         id="tgl-permintaan"
         label="tgl-permintaan"
-        placeholder="dd-mm-yy"
+        placeholder="dd/mm/yyyy"
         myid="check_cara"
       />
       <label for="">, pukul</label>
       <input
         type="text"
+        mtype="pukul"
         name="pukul-permintaan"
         id="pukul-permintaan"
         label="pukul-permintaan"
@@ -429,7 +425,7 @@
     </div>
     <br />
 
-    <table class="table" width="100%">
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
           <td>
@@ -614,35 +610,5 @@
 
     <br />
     <p>*) Pilih salah satu</p>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FORMULIR EDUKASI DAN KONSELING FARMASI</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
+  <body>
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td>Nomor RM :</td>
+          <td>
+            <input
+              type="text"
+              style="
+                border: none;
+                border-bottom: 2px dotted;
+                width: 100%;
+                padding: 0;
+              "
+              name="no_rm"
+              id="no_rm"
+              label="no_rm"
+              value="{NO_RM}"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Nama :</td>
+          <td>
+            <input
+              type="text"
+              style="
+                border: none;
+                border-bottom: 2px dotted;
+                width: 100%;
+                padding: 0;
+              "
+              name="nama-pasien"
+              id="nama-pasien"
+              label="nama-pasien"
+              value="{VNAMA_PASIEN}"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Tanggal Lahir :</td>
+          <td>
+            <input
+              type="text"
+              style="
+                border: none;
+                border-bottom: 2px dotted;
+                width: 100%;
+                padding: 0;
+              "
+              name="tgl-lahir"
+              id="tgl-lahir"
+              label="tgl-lahir"
+              value="{VBIRTH_DATE}"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Jenis Kelamin :</td>
+          <td>
+            <input
+              type="text"
+              style="
+                border: none;
+                border-bottom: 2px dotted;
+                width: 100%;
+                padding: 0;
+              "
+              name="jenis-kelamin"
+              id="jenis-kelamin"
+              label="jenis-kelamin"
+              value="{VSEX}"
+              class="datepicker"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <h1 class="title">FORMULIR EDUKASI DAN KONSELING FARMASI</h1>
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td width="20%">Riwayat Penyakit :</td>
+          <td>
+            <textarea
+              type="textarea"
+              style="width: 100%; padding: 0"
+              name="riwayat-penyakit"
+              id="riwayat-penyakit"
+              label="riwayat-penyakit"
+              rows="5"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Riwayat Alergi :</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="riwayat-alergi"
+              id="riwayat-alergi"
+              label="riwayat-alergi"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Hasil Penunjang Medis :</td>
+          <td>
+            <textarea
+              type="textarea"
+              style="width: 100%; padding: 0"
+              name="hasil-penunjang-medis"
+              id="hasil-penunjang-medis"
+              label="hasil-penunjang-medis"
+              rows="5"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Tanggal</td>
+          <td>Terapi Pengobatan:</td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              name="tgl-terapi-1"
+              id="tgl-terapi-1"
+              label="tgl-terapi-1"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              myid="check_cara"
+              name="riwayat-penyakit-1"
+              id="riwayat-penyakit-1"
+              label="riwayat-penyakit-1"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              name="tgl-terapi-2"
+              id="tgl-terapi-2"
+              label="tgl-terapi-2"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              myid="check_cara"
+              name="riwayat-penyakit-2"
+              id="riwayat-penyakit-2"
+              label="riwayat-penyakit-2"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              name="tgl-terapi-3"
+              id="tgl-terapi-3"
+              label="tgl-terapi-3"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              myid="check_cara"
+              name="riwayat-penyakit-3"
+              id="riwayat-penyakit-3"
+              label="riwayat-penyakit-3"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              name="tgl-terapi-4"
+              id="tgl-terapi-4"
+              label="tgl-terapi-4"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              myid="check_cara"
+              name="riwayat-penyakit-4"
+              id="riwayat-penyakit-4"
+              label="riwayat-penyakit-4"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              name="tgl-terapi-5"
+              id="tgl-terapi-5"
+              label="tgl-terapi-5"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              myid="check_cara"
+              name="riwayat-penyakit-5"
+              id="riwayat-penyakit-5"
+              label="riwayat-penyakit-5"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              name="tgl-terapi-6"
+              id="tgl-terapi-6"
+              label="tgl-terapi-6"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              myid="check_cara"
+              name="riwayat-penyakit-6"
+              id="riwayat-penyakit-6"
+              label="riwayat-penyakit-6"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              name="tgl-terapi-7"
+              id="tgl-terapi-7"
+              label="tgl-terapi-7"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              myid="check_cara"
+              name="riwayat-penyakit-7"
+              id="riwayat-penyakit-7"
+              label="riwayat-penyakit-7"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              name="tgl-terapi-8"
+              id="tgl-terapi-8"
+              label="tgl-terapi-8"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              myid="check_cara"
+              name="riwayat-penyakit-8"
+              id="riwayat-penyakit-8"
+              label="riwayat-penyakit-8"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              name="tgl-terapi-9"
+              id="tgl-terapi-9"
+              label="tgl-terapi-9"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              myid="check_cara"
+              name="riwayat-penyakit-9"
+              id="riwayat-penyakit-9"
+              label="riwayat-penyakit-9"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              name="tgl-terapi-10"
+              id="tgl-terapi-10"
+              label="tgl-terapi-10"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              myid="check_cara"
+              name="riwayat-penyakit-10"
+              id="riwayat-penyakit-10"
+              label="riwayat-penyakit-10"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Assesment :</td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              name="assesment"
+              id="assesment"
+              label="assesment"
+              myid="check_cara"
+              rows="5"
+              type="textarea"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Planning :</td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              name="planning"
+              id="planning"
+              label="planning"
+              myid="check_cara"
+              rows="5"
+              type="textarea"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" style="text-align: center">
+            <b>Materi Edukasi dan Konseling</b>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td width="50%">
+            <input
+              type="checkbox"
+              name="penjelasan-nama-obat"
+              id="penjelasan-nama-obat"
+              label="penjelasan-nama-obat"
+              myid="check_cara"
+              value="Penjelasan Nama Obat"
+            />
+            <label for="">Penjelasan Nama Obat</label>
+          </td>
+          <td>
+            <input
+              type="checkbox"
+              name="penggunaan-obat-khusus"
+              id="penggunaan-obat-khusus"
+              label="penggunaan-obat-khusus"
+              myid="check_cara"
+              value="Penggunaan Obat Khusus"
+            />
+            <label for="">Penggunaan Obat Khusus</label>
+          </td>
+        </tr>
+        <tr>
+          <td width="50%">
+            <input
+              type="checkbox"
+              name="penjelasan-indikasi-obat"
+              id="penjelasan-indikasi-obat"
+              label="penjelasan-indikasi-obat"
+              myid="check_cara"
+              value="Penjelasan Indikasi Obat"
+            />
+            <label for="">Penjelasan Indikasi Obat</label>
+          </td>
+          <td>
+            <div style="margin-left: 20px">
+              <input
+                type="checkbox"
+                name="tetes-atau-salep-mata"
+                id="tetes-atau-salep-mata"
+                label="tetes-atau-salep-mata"
+                myid="check_cara"
+                value="Tetes atau Salep Mata"
+              />
+              <label for="">Tetes atau Salep Mata</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td width="50%">
+            <input
+              type="checkbox"
+              name="penjelasan-aturan-pakai-obat"
+              id="penjelasan-aturan-pakai-obat"
+              label="penjelasan-aturan-pakai-obat"
+              myid="check_cara"
+              value="Penjelasan Aturan Pakai Obat"
+            />
+            <label for="">Penjelasan Aturan Pakai Obat</label>
+          </td>
+          <td>
+            <div style="margin-left: 20px">
+              <input
+                type="checkbox"
+                name="suppositoria-tablet-vagina"
+                id="suppositoria-tablet-vagina"
+                label="suppositoria-tablet-vagina"
+                myid="check_cara"
+                value="Suppositoria, Tablet Vagina"
+              />
+              <label for="">Suppositoria, Tablet Vagina</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td width="50%">
+            <div style="margin-left: 20px">
+              <input
+                type="checkbox"
+                name="dosis-obat-dan-frekuensi"
+                id="dosis-obat-dan-frekuensi"
+                label="dosis-obat-dan-frekuensi"
+                myid="check_cara"
+                value="Dosis Obat dan Frekuensi"
+              />
+              <label for="">Dosis Obat dan Frekuensi</label>
+            </div>
+          </td>
+          <td>
+            <div style="margin-left: 20px">
+              <input
+                type="checkbox"
+                name="inhalasi"
+                id="inhalasi"
+                label="inhalasi"
+                myid="check_cara"
+                value="Inhalasi"
+              />
+              <label for="">Inhalasi</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td width="50%">
+            <div style="margin-left: 20px">
+              <input
+                type="checkbox"
+                name="saat-minum-obat"
+                id="saat-minum-obat"
+                label="saat-minum-obat"
+                myid="check_cara"
+                value="Saat minum obat (Sebelum / bersama / sesudah)"
+              />
+              <label for=""
+                >Saat minum obat (Sebelum / bersama / sesudah)</label
+              >
+            </div>
+          </td>
+          <td>
+            <div style="margin-left: 20px">
+              <input
+                type="checkbox"
+                name="injeksi-subkutan"
+                id="injeksi-subkutan"
+                label="injeksi-subkutan"
+                myid="check_cara"
+                value="Injeksi subkutan (Insulin)"
+              />
+              <label for="">Injeksi subkutan (Insulin)</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td width="50%">
+            <div style="margin-left: 20px">
+              <input
+                type="checkbox"
+                name="rute-oral-sub-lingual-topikal"
+                id="rute-oral-sub-lingual-topikal"
+                label="rute-oral-sub-lingual-topikal"
+                myid="check_cara"
+                value="Rute (oral / sub lingual / topikal)"
+              />
+              <label for="">Rute (oral / sub lingual / topikal)</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="checkbox"
+                name="cara-penyimpanan-obat"
+                id="cara-penyimpanan-obat"
+                label="cara-penyimpanan-obat"
+                myid="check_cara"
+                value="Cara Penyimpanan Obat"
+              />
+              <label for="">Cara Penyimpanan Obat</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td width="50%">
+            <div style="margin-left: 20px">
+              <input
+                type="checkbox"
+                name="lama-pemberian"
+                id="lama-pemberian"
+                label="lama-pemberian"
+                myid="check_cara"
+                value="Lama Pemberian"
+              />
+              <label for="">Lama Pemberian</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="checkbox"
+                name="efek-samping-obat"
+                id="efek-samping-obat"
+                label="efek-samping-obat"
+                myid="check_cara"
+                value="Efek Samping Obat"
+              />
+              <label for="">Efek Samping Obat</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td width="50%">
+            <div style="margin-left: 20px">
+              <input
+                type="checkbox"
+                name="aturan-lain"
+                id="aturan-lain"
+                label="aturan-lain"
+                myid="check_cara"
+                value="Aturan Lain (dikocok dulu, dikunyah, dihisap, diminum saat suapan pertama)"
+              />
+              <label for=""
+                >Aturan Lain (dikocok dulu, dikunyah, dihisap, diminum saat
+                suapan pertama)</label
+              >
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="checkbox"
+                name="informasi-lain"
+                id="informasi-lain"
+                label="informasi-lain"
+                myid="check_cara"
+                value="Informasi Lain"
+              />
+              <label for="">Informasi Lain</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><b>Nama dan Paraf Apoteker</b></p>
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_apoteker"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <br />
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_apoteker"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_apoteker"
+              id="paraf_ex_ttd_apoteker"
+              data-name="paraf"
+              data-id="ex_ttd_apoteker"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_apoteker"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
+            <input
+              type="text"
+              name="nama-apoteker"
+              id="nama-apoteker"
+              label="nama-apoteker"
+              myid="check_cara"
+              style="border: none; border-bottom: 2px dotted"
+            />
+          </td>
+          <td>
+            <p><b>Nama dan Paraf Pasien</b></p>
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <br />
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien"
+              id="paraf_ex_ttd_pasien"
+              data-name="paraf"
+              data-id="ex_ttd_pasien"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
+            <input
+              type="text"
+              name="nama-paraf-pasien"
+              id="nama-paraf-pasien"
+              label="nama-paraf-pasien"
+              myid="check_cara"
+              style="border: none; border-bottom: 2px dotted"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

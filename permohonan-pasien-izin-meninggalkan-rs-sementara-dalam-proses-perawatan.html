@@ -8,27 +8,22 @@
     </title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -160,8 +155,7 @@
     }
   </script>
   <body>
-    <h2 class="title">RS. AZRA BOGOR</h2>
-    <table class="table">
+    <table class="table table-bordered">
       <tbody>
         <tr>
           <td>
@@ -189,7 +183,7 @@
           <td>Nama :</td>
           <td width="90%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               value="{VNAMA_PASIEN}"
               name="nama-pasien"
@@ -204,9 +198,9 @@
           <td>Umur :</td>
           <td width="90%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
-              value="{VAGE}"
+              value="{VAGEREGIS}"
               name="umur-pasien"
               id="umur-pasien"
               label="umur-pasien"
@@ -219,7 +213,7 @@
           <td>Alamat :</td>
           <td width="90%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="alamat-pasien"
               id="alamat-pasien"
@@ -233,7 +227,7 @@
           <td>No. KTP :</td>
           <td width="90%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="no-ktp-pasien"
               id="no-ktp-pasien"
@@ -257,11 +251,10 @@
             </p>
             <textarea
               type="textarea"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               name="alasan-kepentingan-meninggalkan-rs"
               id="alasan-kepentingan-meninggalkan-rs"
               label="alasan-kepentingan-meninggalkan-rs"
-              placeholder="......"
               myid="check_cara"
               rows="5"
             ></textarea>
@@ -278,8 +271,8 @@
                 id="tgl-meninggalkan-rs"
                 label="tgl-meninggalkan-rs"
                 myid="check_cara"
-                placeholder="dd-mm-yy"
-                class="datepicker hasDatePicker"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
               />
             </div>
           </td>
@@ -415,7 +408,7 @@
           <td>Nama :</td>
           <td width="80%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-yg-bertanggung-jwb"
               id="nama-yg-bertanggung-jwb"
@@ -429,7 +422,7 @@
           <td>No. KTP / SIM :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="no-ktp-sim-yg-bertanggung-jwb"
               id="no-ktp-sim-yg-bertanggung-jwb"
@@ -443,7 +436,7 @@
           <td>Hubungan dengan pasien :</td>
           <td width="84%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hubungan-dgn-pasien"
               id="hubungan-dgn-pasien"
@@ -457,7 +450,7 @@
           <td>Alamat :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="alamat-yg-bertanggung-jwb"
               id="alamat-yg-bertanggung-jwb"
@@ -474,11 +467,10 @@
             </p>
             <textarea
               type="textarea"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               name="alamat-luar-rs-azra"
               id="alamat-luar-rs-azra"
               label="alamat-luar-rs-azra"
-              placeholder="......"
               rows="5"
               myid="check_cara"
             ></textarea>
@@ -488,7 +480,7 @@
           <td>No. telepon yang bisa dihubungi :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="alamat-yg-bertanggung-jwb"
               id="alamat-yg-bertanggung-jwb"
@@ -506,7 +498,7 @@
     <label for="">(<sup>*</sup>) Pilih salah satu yang sesuai</label>
     <br />
 
-    <table class="table" width="100%">
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
           <td width="20%"><label for="">Bogor, tanggal / pukul</label></td>
@@ -518,8 +510,8 @@
               id="tgl-permohonan"
               label="tgl-permohonan"
               myid="check_cara"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatePicker"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
             />
             <br />
             <input
@@ -531,7 +523,7 @@
               myid="check_cara"
               mtype="pukul"
               placeholder="00.00"
-              class="datepicker hasDatePicker"
+              class="datepicker"
             />
           </td>
         </tr>
@@ -586,36 +578,5 @@
         </tr>
       </tbody>
     </table>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

@@ -3,32 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      CEK LIST PEMBIAYAAN PASIEN PULANG UNIT PERAWATAN RS. AZRA BOGOR
-    </title>
+    <title>CEK LIST PEMBIAYAAN PASIEN PULANG UNIT PERAWATAN</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -160,9 +153,7 @@
     }
   </script>
   <body>
-    <h1 class="title">
-      CEK LIST PEMBIAYAAN PASIEN PULANG UNIT PERAWATAN RS. AZRA BOGOR
-    </h1>
+    <h1 class="title">CEK LIST PEMBIAYAAN PASIEN PULANG UNIT PERAWATAN</h1>
 
     <table class="table table-bordered" width="100%">
       <tbody>
@@ -1152,7 +1143,7 @@
               label="tgl-ceklist-pembiayaan-plng"
               myid="check_cara"
               placeholder="dd/mm/yyyy"
-              class="datepicker"
+              class="datepicker1"
             />
             <br />
             <input
@@ -1216,35 +1207,5 @@
         </tr>
       </tbody>
     </table>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

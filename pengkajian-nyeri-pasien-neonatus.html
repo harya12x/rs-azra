@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PENGKAJIAN NYERI PASIEN NEONATUS</title>
+  </head>
+  <body>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+      }
+      .title {
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        margin-bottom: 10px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid black;
+        padding: 5px;
+      }
+    </style>
+    <script type="text/javascript">
+      $(document).on("ajaxStop", function () {
+        SetTTD();
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $(function () {
+          $(".datepicker").datepicker({
+            dateFormat: "dd-mm-yy",
+            autoclose: true,
+            todayHighlight: true,
+          });
+        });
+        $('input[type="text"]')
+          .off("input")
+          .on("input", function () {
+            let total = 0;
+            let percol = $(this).data("percol");
+            console.log(percol);
+
+            $("[data-hitung" + percol + "]").each(function () {
+              let value = 0;
+              value = $(this).val() || 0;
+
+              if ($(this).val() !== "") {
+                value = parseInt(value);
+                console.log(value);
+                total += value;
+              }
+            });
+
+            if (total == 0) {
+              total = `${total}, Tidak ada nyeri`;
+            } else if (total <= 2) {
+              total = `${total}, Kurang nyaman`;
+            } else if (total > 2 && total <= 4) {
+              total = `${total}, Nyeri ringan sampai sedang`;
+            } else if (total > 4 && total <= 7) {
+              total = `${total}, Nyeri ringan sampai berat`;
+            }
+
+            $(`#totalskor` + percol).val(total);
+          });
+      });
+
+      // Untuk Keperluan TTD
+      function ttd_paraf(id) {
+        PopupCenter(
+          "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+          "pop",
+          800,
+          400
+        );
+      }
+
+      // Untuk Keperluan TTD
+      function tampil_ttd(x, y) {
+        ImageToText(x, y);
+      }
+
+      // Untuk Keperluan TTD
+      function PopupCenter(url, title, w, h) {
+        console.log("PopupCenter");
+        var dualScreenLeft =
+          window.screenLeft != undefined ? window.screenLeft : screen.left;
+        var dualScreenTop =
+          window.screenTop != undefined ? window.screenTop : screen.top;
+        var width = window.innerWidth
+          ? window.innerWidth
+          : document.documentElement.clientWidth
+          ? document.documentElement.clientWidth
+          : screen.width;
+        var height = window.innerHeight
+          ? window.innerHeight
+          : document.documentElement.clientHeight
+          ? document.documentElement.clientHeight
+          : screen.height;
+        var left = width / 2 - w / 2 + dualScreenLeft + 100;
+        var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+        var newWindow = window.open(
+          url,
+          title,
+          "scrollbars=yes, width=" +
+            w +
+            ", height=" +
+            h +
+            ", top=" +
+            top +
+            ", left=" +
+            left
+        );
+
+        if (window.focus) newWindow.focus();
+      }
+
+      // Untuk Keperluan TTD
+      function SetTTD() {
+        $('input[data-name="paraf"]').each(function () {
+          var id = $(this).attr("data-id"),
+            ttd = $(this).val();
+
+          ImageToText(id, ttd);
+        });
+      }
+
+      // Untuk Keperluan Select Option & TTD
+      $(document)
+        .off("change", 'select[data-var="set_name_sel"]')
+        .on("change", 'select[data-var="set_name_sel"]', function () {
+          var name = $(this).attr("name"),
+            name_txt = $(this).find("option:selected").text(),
+            name_img = $(this).find("option:selected").attr("data-ttd"),
+            id = $(this).attr("data-id");
+
+          $("#" + name + "_txt").val(name_txt);
+
+          ImageToText(id, name_img);
+        });
+
+      // Untuk Keperluan Create TTD
+      $(document)
+        .off("click", "#CreateTTD")
+        .on("click", "#CreateTTD", function () {
+          var id = $(this).attr("data-id");
+
+          ttd_paraf(id);
+        });
+
+      // Untuk Keperluan Parsing TTD To Object
+      function ImageToText(img_id, img_val) {
+        def = "paraf";
+
+        if (typeof img_val === "undefined" || img_val == "") {
+          $("#def_img_" + img_id).text(def);
+          $("#def_img_" + img_id).css({
+            display: "",
+            "font-style": "italic",
+            width: "100px",
+            height: "100px",
+          });
+          $("#image_paraf_" + img_id).css("display", "none");
+        } else {
+          $("#def_img_" + img_id).text("");
+          $("#def_img_" + img_id).css("display", "none");
+          $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+          $("#image_paraf_" + img_id).css({
+            display: "",
+            width: "100px",
+            height: "100px",
+          });
+          $("#paraf_" + img_id).val(img_val);
+        }
+      }
+    </script>
+    <h1 class="title">PENGKAJIAN NYERI PASIEN NEONATUS</h1>
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td>Nama:</td>
+          <td>
+            <input
+              name="nama_pasien"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+              value="{VNAMA_PASIEN}"
+            />
+          </td>
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              myid="check_cara"
+              name="no_rm"
+              id="no_rm"
+              label="nomor rekam medis"
+              value="{NO_RM}"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan="2">Tanggal Lahir</td>
+          <td rowspan="2">
+            <input
+              name="tgl_lahir"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd-mm-yy"
+              value="{VBIRTH_DATE}"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+          <td rowspan="2">Umur</td>
+          <td rowspan="2">
+            <input
+              type="text"
+              size="5"
+              name="umur"
+              id="umur"
+              myid="check_cara"
+              value="{VAGE}"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <label for="kelas"> Kelas </label>
+          </td>
+          <td>
+            <input
+              name="kelas"
+              type="text"
+              id="kelas"
+              placeholder="..."
+              myid="check_cara"
+              label="kelas"
+              value="{VNAMAKELAS}"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Kamar</td>
+          <td>
+            <input
+              type="text"
+              name="kamar"
+              id="kamar"
+              myid="check_cara"
+              placeholder="..."
+              label="kamar"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th rowspan="2" style="text-align: center"><b>KATEGORI</b></th>
+          <th rowspan="2" colspan="2" style="text-align: center">
+            <b>NILAI</b>
+          </th>
+          <th style="text-align: center"><b>TGL</b></th>
+          <th style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-1"
+              id="tgl-1"
+              label="tgl-1"
+              class="datepicker"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+            />
+          </th>
+          <th style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-2"
+              id="tgl-2"
+              label="tgl-2"
+              class="datepicker"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+            />
+          </th>
+          <th style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-3"
+              id="tgl-3"
+              label="tgl-3"
+              class="datepicker"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+            />
+          </th>
+          <th style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-4"
+              id="tgl-4"
+              label="tgl-4"
+              class="datepicker"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+            />
+          </th>
+        </tr>
+        <tr>
+          <th style="min-width: 90px" style="text-align: center"><b>JAM</b></th>
+          <th style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="jam-1"
+              id="jam-1"
+              label="jam-1"
+              myid="check_cara"
+              placeholder="00.00"
+            />
+          </th>
+          <th style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="jam-2"
+              id="jam-2"
+              label="jam-2"
+              myid="check_cara"
+              placeholder="00.00"
+            />
+          </th>
+          <th style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="jam-3"
+              id="jam-3"
+              label="jam-3"
+              myid="check_cara"
+              placeholder="00.00"
+            />
+          </th>
+          <th style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="jam-4"
+              id="jam-4"
+              label="jam-4"
+              myid="check_cara"
+              placeholder="00.00"
+            />
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="2">Ekspresi wajah</td>
+          <td>0 : otot rileks</td>
+          <td>Wajah terang ekspresi netral</td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="wajah-terang-1"
+              id="wajah-terang-1"
+              label="wajah-terang-1"
+              myid="check_cara"
+              data-percol="1"
+              data-hitung1="1"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="wajah-terang-2"
+              id="wajah-terang-2"
+              label="wajah-terang-2"
+              myid="check_cara"
+              data-percol="2"
+              data-hitung2="2"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="wajah-terang-3"
+              id="wajah-terang-3"
+              label="wajah-terang-3"
+              myid="check_cara"
+              data-percol="3"
+              data-hitung3="3"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="wajah-terang-4"
+              id="wajah-terang-4"
+              label="wajah-terang-4"
+              myid="check_cara"
+              data-percol="4"
+              data-hitung4="4"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="wajah-terang-5"
+              id="wajah-terang-5"
+              label="wajah-terang-5"
+              myid="check_cara"
+              data-percol="5"
+              data-hitung5="5"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>1 : menangis</td>
+          <td>
+            Otot wajah tegang, alis berkerut, dagu dan rahang tegang (ekspresi
+            wajah negatif, hidung, mulut alis)
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="wajah-tegang-1"
+              id="wajah-tegang-1"
+              label="wajah-tegang-1"
+              myid="check_cara"
+              data-percol="1"
+              data-hitung1="1"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="wajah-tegang-2"
+              id="wajah-tegang-2"
+              label="wajah-tegang-2"
+              myid="check_cara"
+              data-percol="2"
+              data-hitung2="2"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="wajah-tegang-3"
+              id="wajah-tegang-3"
+              label="wajah-tegang-3"
+              myid="check_cara"
+              data-percol="3"
+              data-hitung3="3"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="wajah-tegang-4"
+              id="wajah-tegang-4"
+              label="wajah-tegang-4"
+              myid="check_cara"
+              data-percol="4"
+              data-hitung4="4"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="wajah-tegang-5"
+              id="wajah-tegang-5"
+              label="wajah-tegang-5"
+              myid="check_cara"
+              data-percol="5"
+              data-hitung5="5"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="3">Ekspresi wajah</td>
+          <td>0 : tidak menangis</td>
+          <td>Tenang, tidak menangis</td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="tidak-menangis-1"
+              id="tidak-menangis-1"
+              label="tidak-menangis-1"
+              myid="check_cara"
+              data-percol="1"
+              data-hitung1="1"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="tidak-menangis-2"
+              id="tidak-menangis-2"
+              label="tidak-menangis-2"
+              myid="check_cara"
+              data-percol="2"
+              data-hitung2="2"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="tidak-menangis-3"
+              id="tidak-menangis-3"
+              label="tidak-menangis-3"
+              myid="check_cara"
+              data-percol="3"
+              data-hitung3="3"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="tidak-menangis-4"
+              id="tidak-menangis-4"
+              label="tidak-menangis-4"
+              myid="check_cara"
+              data-percol="4"
+              data-hitung4="4"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="tidak-menangis-5"
+              id="tidak-menangis-5"
+              label="tidak-menangis-5"
+              myid="check_cara"
+              data-percol="5"
+              data-hitung5="5"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>1 : mengerang</td>
+          <td>Merengek ringan, kadang - kadang</td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="merengek-ringan-1"
+              id="merengek-ringan-1"
+              label="merengek-ringan-1"
+              myid="check_cara"
+              data-percol="1"
+              data-hitung1="1"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="merengek-ringan-2"
+              id="merengek-ringan-2"
+              label="merengek-ringan-2"
+              myid="check_cara"
+              data-percol="2"
+              data-hitung2="2"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="merengek-ringan-3"
+              id="merengek-ringan-3"
+              label="merengek-ringan-3"
+              myid="check_cara"
+              data-percol="3"
+              data-hitung3="3"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="merengek-ringan-4"
+              id="merengek-ringan-4"
+              label="merengek-ringan-4"
+              myid="check_cara"
+              data-percol="4"
+              data-hitung4="4"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="merengek-ringan-5"
+              id="merengek-ringan-5"
+              label="merengek-ringan-5"
+              myid="check_cara"
+              data-percol="5"
+              data-hitung5="5"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>2 : menangis keras</td>
+          <td>
+            Berteriak kencang, menaik, melengking, terus - menerus (menangis
+            lirih mungkin dinilai jika bayi di intubasi yang dibuktikan melalui
+            gerakan mulut dan wajah yang jelas)
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="berteriak-kencang-1"
+              id="berteriak-kencang-1"
+              label="berteriak-kencang-1"
+              myid="check_cara"
+              data-percol="1"
+              data-hitung1="1"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="berteriak-kencang-2"
+              id="berteriak-kencang-2"
+              label="berteriak-kencang-2"
+              myid="check_cara"
+              data-percol="2"
+              data-hitung2="2"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="berteriak-kencang-3"
+              id="berteriak-kencang-3"
+              label="berteriak-kencang-3"
+              myid="check_cara"
+              data-percol="3"
+              data-hitung3="3"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="berteriak-kencang-4"
+              id="berteriak-kencang-4"
+              label="berteriak-kencang-4"
+              myid="check_cara"
+              data-percol="4"
+              data-hitung4="4"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="berteriak-kencang-5"
+              id="berteriak-kencang-5"
+              label="berteriak-kencang-5"
+              myid="check_cara"
+              data-percol="5"
+              data-hitung5="5"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="2">Pola nafas</td>
+          <td>0 : bernafas rileks</td>
+          <td>Pola bernafas bayi yang normal</td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="pola-bernafas-normal-1"
+              id="pola-bernafas-normal-1"
+              label="pola-bernafas-normal-1"
+              myid="check_cara"
+              data-percol="1"
+              data-hitung1="1"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="pola-bernafas-normal-2"
+              id="pola-bernafas-normal-2"
+              label="pola-bernafas-normal-2"
+              myid="check_cara"
+              data-percol="2"
+              data-hitung2="2"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="pola-bernafas-normal-3"
+              id="pola-bernafas-normal-3"
+              label="pola-bernafas-normal-3"
+              myid="check_cara"
+              data-percol="3"
+              data-hitung3="3"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="pola-bernafas-normal-4"
+              id="pola-bernafas-normal-4"
+              label="pola-bernafas-normal-4"
+              myid="check_cara"
+              data-percol="4"
+              data-hitung4="4"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="pola-bernafas-normal-5"
+              id="pola-bernafas-normal-5"
+              label="pola-bernafas-normal-5"
+              myid="check_cara"
+              data-percol="5"
+              data-hitung5="5"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>1 : perubahan pola nafas</td>
+          <td>
+            Tidak teratur, lebih cepat dari biasanya, tersedak, nafas bertahan
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="perubahan-pola-nafas-1"
+              id="perubahan-pola-nafas-1"
+              label="perubahan-pola-nafas-1"
+              myid="check_cara"
+              data-percol="1"
+              data-hitung1="1"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="perubahan-pola-nafas-2"
+              id="perubahan-pola-nafas-2"
+              label="perubahan-pola-nafas-2"
+              myid="check_cara"
+              data-percol="2"
+              data-hitung2="2"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="perubahan-pola-nafas-3"
+              id="perubahan-pola-nafas-3"
+              label="perubahan-pola-nafas-3"
+              myid="check_cara"
+              data-percol="3"
+              data-hitung3="3"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="perubahan-pola-nafas-4"
+              id="perubahan-pola-nafas-4"
+              label="perubahan-pola-nafas-4"
+              myid="check_cara"
+              data-percol="4"
+              data-hitung4="4"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="perubahan-pola-nafas-5"
+              id="perubahan-pola-nafas-5"
+              label="perubahan-pola-nafas-5"
+              myid="check_cara"
+              data-percol="5"
+              data-hitung5="5"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="2">Tangan</td>
+          <td>0 : rilekas / terikat</td>
+          <td>Tidak ada kekuatan otot, gerakan tangan acak sesekali</td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="rilekas-terikat-tangan-1"
+              id="rilekas-terikat-tangan-1"
+              label="rilekas-terikat-tangan-1"
+              myid="check_cara"
+              data-percol="1"
+              data-hitung1="1"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="rilekas-terikat-tangan-2"
+              id="rilekas-terikat-tangan-2"
+              label="rilekas-terikat-tangan-2"
+              myid="check_cara"
+              data-percol="2"
+              data-hitung2="2"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="rilekas-terikat-tangan-3"
+              id="rilekas-terikat-tangan-3"
+              label="rilekas-terikat-tangan-3"
+              myid="check_cara"
+              data-percol="3"
+              data-hitung3="3"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="rilekas-terikat-tangan-4"
+              id="rilekas-terikat-tangan-4"
+              label="rilekas-terikat-tangan-4"
+              myid="check_cara"
+              data-percol="4"
+              data-hitung4="4"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="rilekas-terikat-tangan-5"
+              id="rilekas-terikat-tangan-5"
+              label="rilekas-terikat-tangan-5"
+              myid="check_cara"
+              data-percol="5"
+              data-hitung5="5"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>1 : fleksi/ekstensi</td>
+          <td>
+            Tegang, lengan lurus, kaku, dan/atau ekstensi, cepat ekstensi,
+            fleksi
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="fleksi-ekstensi-tangan-1"
+              id="fleksi-ekstensi-tangan-1"
+              label="fleksi-ekstensi-tangan-1"
+              myid="check_cara"
+              data-percol="1"
+              data-hitung1="1"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="fleksi-ekstensi-tangan-2"
+              id="fleksi-ekstensi-tangan-2"
+              label="fleksi-ekstensi-tangan-2"
+              myid="check_cara"
+              data-percol="2"
+              data-hitung2="2"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="fleksi-ekstensi-tangan-3"
+              id="fleksi-ekstensi-tangan-3"
+              label="fleksi-ekstensi-tangan-3"
+              myid="check_cara"
+              data-percol="3"
+              data-hitung3="3"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="fleksi-ekstensi-tangan-4"
+              id="fleksi-ekstensi-tangan-4"
+              label="fleksi-ekstensi-tangan-4"
+              myid="check_cara"
+              data-percol="4"
+              data-hitung4="4"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="fleksi-ekstensi-tangan-5"
+              id="fleksi-ekstensi-tangan-5"
+              label="fleksi-ekstensi-tangan-5"
+              myid="check_cara"
+              data-percol="5"
+              data-hitung5="5"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="2">Kaki</td>
+          <td>0 : rilekas / terikat</td>
+          <td>Tidak ada kekuatan otot, gerakan kaki acak sesekali</td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="rilekas-terikat-kaki-1"
+              id="rilekas-terikat-kaki-1"
+              label="rilekas-terikat-kaki-1"
+              myid="check_cara"
+              data-percol="1"
+              data-hitung1="1"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="rilekas-terikat-kaki-2"
+              id="rilekas-terikat-kaki-2"
+              label="rilekas-terikat-kaki-2"
+              myid="check_cara"
+              data-percol="2"
+              data-hitung2="2"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="rilekas-terikat-kaki-3"
+              id="rilekas-terikat-kaki-3"
+              label="rilekas-terikat-kaki-3"
+              myid="check_cara"
+              data-percol="3"
+              data-hitung3="3"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="rilekas-terikat-kaki-4"
+              id="rilekas-terikat-kaki-4"
+              label="rilekas-terikat-kaki-4"
+              myid="check_cara"
+              data-percol="4"
+              data-hitung4="4"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="rilekas-terikat-kaki-5"
+              id="rilekas-terikat-kaki-5"
+              label="rilekas-terikat-kaki-5"
+              myid="check_cara"
+              data-percol="5"
+              data-hitung5="5"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>1 : fleksi/ekstensi</td>
+          <td>
+            Tegang, kaki lurus, kaku, dan/atau ekstensi, cepat ekstensi, fleksi
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="fleksi-ekstensi-kaki-1"
+              id="fleksi-ekstensi-kaki-1"
+              label="fleksi-ekstensi-kaki-1"
+              myid="check_cara"
+              data-percol="1"
+              data-hitung1="1"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="fleksi-ekstensi-kaki-2"
+              id="fleksi-ekstensi-kaki-2"
+              label="fleksi-ekstensi-kaki-2"
+              myid="check_cara"
+              data-percol="2"
+              data-hitung2="2"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="fleksi-ekstensi-kaki-3"
+              id="fleksi-ekstensi-kaki-3"
+              label="fleksi-ekstensi-kaki-3"
+              myid="check_cara"
+              data-percol="3"
+              data-hitung3="3"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="fleksi-ekstensi-kaki-4"
+              id="fleksi-ekstensi-kaki-4"
+              label="fleksi-ekstensi-kaki-4"
+              myid="check_cara"
+              data-percol="4"
+              data-hitung4="4"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="fleksi-ekstensi-kaki-5"
+              id="fleksi-ekstensi-kaki-5"
+              label="fleksi-ekstensi-kaki-5"
+              myid="check_cara"
+              data-percol="5"
+              data-hitung5="5"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="2">Kesadaran</td>
+          <td>0 : tidur terjaga</td>
+          <td>Tenang, tidur damai atau gerakan kaki acak yang terjaga</td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="tidur-terjaga-1"
+              id="tidur-terjaga-1"
+              label="tidur-terjaga-1"
+              myid="check_cara"
+              data-percol="1"
+              data-hitung1="1"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="tidur-terjaga-2"
+              id="tidur-terjaga-2"
+              label="tidur-terjaga-2"
+              myid="check_cara"
+              data-percol="2"
+              data-hitung2="2"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="tidur-terjaga-3"
+              id="tidur-terjaga-3"
+              label="tidur-terjaga-3"
+              myid="check_cara"
+              data-percol="3"
+              data-hitung3="3"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="tidur-terjaga-4"
+              id="tidur-terjaga-4"
+              label="tidur-terjaga-4"
+              myid="check_cara"
+              data-percol="4"
+              data-hitung4="4"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="tidur-terjaga-5"
+              id="tidur-terjaga-5"
+              label="tidur-terjaga-5"
+              myid="check_cara"
+              data-percol="5"
+              data-hitung5="5"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>1 : rewel</td>
+          <td>Terjaga, gelisah dan meronta - ronta</td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="rewel-1"
+              id="rewel-1"
+              label="rewel-1"
+              myid="check_cara"
+              data-percol="1"
+              data-hitung1="1"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="rewel-2"
+              id="rewel-2"
+              label="rewel-2"
+              myid="check_cara"
+              data-percol="2"
+              data-hitung2="2"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="rewel-3"
+              id="rewel-3"
+              label="rewel-3"
+              myid="check_cara"
+              data-percol="3"
+              data-hitung3="3"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="rewel-4"
+              id="rewel-4"
+              label="rewel-4"
+              myid="check_cara"
+              data-percol="4"
+              data-hitung4="4"
+            />
+          </td>
+          <td style="min-width: 90px">
+            <input
+              style="width: 100%; padding: 0; text-align: center;"
+              type="text"
+              name="rewel-5"
+              id="rewel-5"
+              label="rewel-5"
+              myid="check_cara"
+              data-percol="5"
+              data-hitung5="5"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">TOTAL NILAI</td>
+          <td style="min-width: 90px">
+            <textarea
+              style="width: 100%; padding: 0; text-align: center"
+              type="textarea"
+              rows="2"
+              name="totalskor1"
+              id="totalskor1"
+              label="totalskor1"
+              myid="check_cara"
+            ></textarea>
+          </td>
+          <td style="min-width: 90px">
+            <textarea
+              style="width: 100%; padding: 0; text-align: center"
+              type="textarea"
+              rows="2"
+              name="totalskor2"
+              id="totalskor2"
+              label="totalskor2"
+              myid="check_cara"
+            ></textarea>
+          </td>
+          <td style="min-width: 90px">
+            <textarea
+              style="width: 100%; padding: 0; text-align: center"
+              type="textarea"
+              rows="2"
+              name="totalskor3"
+              id="totalskor3"
+              label="totalskor3"
+              myid="check_cara"
+            ></textarea>
+          </td>
+          <td style="min-width: 90px">
+            <textarea
+              style="width: 100%; padding: 0; text-align: center"
+              type="textarea"
+              rows="2"
+              name="totalskor4"
+              id="totalskor4"
+              label="totalskor4"
+              myid="check_cara"
+            ></textarea>
+          </td>
+          <td style="min-width: 90px">
+            <textarea
+              style="width: 100%; padding: 0; text-align: center"
+              type="textarea"
+              rows="2"
+              name="totalskor5"
+              id="totalskor5"
+              label="totalskor5"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top" colspan="3">
+            NAMA & TANDA TANGAN PERAWAT
+          </td>
+          <td style="min-width: 90px">
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="nama-ttd-perawat-1"
+                id="nama-ttd-perawat-1"
+                label="nama-ttd-perawat-1"
+                myid="check_cara"
+              />
+              <br />
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_1"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_1"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_1"
+                id="paraf_ex_ttd_perawat_1"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_1"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_1"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+            </div>
+          </td>
+          <td style="min-width: 90px">
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="nama-ttd-perawat-2"
+                id="nama-ttd-perawat-2"
+                label="nama-ttd-perawat-2"
+                myid="check_cara"
+              />
+              <br />
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_2"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_2"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_2"
+                id="paraf_ex_ttd_perawat_2"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_2"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_2"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+            </div>
+          </td>
+          <td style="min-width: 90px">
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="nama-ttd-perawat-3"
+                id="nama-ttd-perawat-3"
+                label="nama-ttd-perawat-3"
+                myid="check_cara"
+              />
+              <br />
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_3"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_3"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_3"
+                id="paraf_ex_ttd_perawat_3"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_3"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_3"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+            </div>
+          </td>
+          <td style="min-width: 90px">
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="nama-ttd-perawat-4"
+                id="nama-ttd-perawat-4"
+                label="nama-ttd-perawat-4"
+                myid="check_cara"
+              />
+              <br />
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_4"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_4"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_4"
+                id="paraf_ex_ttd_perawat_4"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_4"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_4"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+            </div>
+          </td>
+          <td style="min-width: 90px">
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="nama-ttd-perawat-5"
+                id="nama-ttd-perawat-5"
+                label="nama-ttd-perawat-5"
+                myid="check_cara"
+              />
+              <br />
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_5"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_5"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_5"
+                id="paraf_ex_ttd_perawat_5"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_5"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_5"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+
+    <div>
+      <p>Keterangan :</p>
+      <p style="margin-left: 10px">0 : Tidak ada nyeri</p>
+      <p style="margin-left: 10px">&ge; 2 : Kurang nyaman</p>
+      <p style="margin-left: 10px">2 - 4 : Nyeri ringan sampai sedang</p>
+      <p style="margin-left: 10px">4 - 7 : Nyeri sedang sampai berat</p>
+    </div>
+  </body>
+</html>

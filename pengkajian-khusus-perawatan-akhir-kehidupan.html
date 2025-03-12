@@ -5,27 +5,22 @@
     <title>PENGKAJIAN KHUSUS PERAWATAN AKHIR KEHIDUPAN</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -44,6 +39,16 @@
           todayHighlight: true,
         });
       });
+
+      function hitungIMT() {
+        const beratBadan = parseInt($("input[name='berat']").val(), 10) || 0;
+        const tinggiBadan = parseInt($("input[name='tinggi']").val(), 10) || 0;
+
+        const nilaiIMT = beratBadan / (tinggiBadan / 100) ** 2;
+        return nilaiIMT === Infinity ? 0 : nilaiIMT;
+      }
+
+      $("input[name='imt']").val(hitungIMT());
     });
 
     // Untuk Keperluan TTD
@@ -227,7 +232,7 @@
               name="umur"
               id="umur"
               label="umur"
-              value="{VAGE}"
+              value="{VAGEREGIS}"
               myid="check_cara"
               placeholder="..."
             />
@@ -652,12 +657,15 @@
                   </div>
                 </td>
                 <td>
-                  <div style="display: flex; gap: 15px">
-                    <div class="nama-lengkap-keluarga">
-                      <label for="">Nama Lengkap Keluarga :</label>
-                      <div style="display: flex; gap: 10px">
-                        <div>
+                  <table class="table table-bordered">
+                    <tbody>
+                      <tr>
+                        <td style="border: none">
+                          <label for="">Nama Lengkap Keluarga :</label>
+                        </td>
+                        <td style="border: none">
                           <input
+                            style="width: 100%; padding: 0"
                             type="text"
                             name="nama-lengkap-keluarga"
                             id="nama-lengkap-keluarga"
@@ -665,47 +673,54 @@
                             myid="check_cara"
                             placeholder="..."
                           />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="ttd-keluarga">
-                      <label for="">Tanda tangan keluarga :</label>
-                      <br />
-                      <label
-                        class="label text-center"
-                        id="def_img_ex_ttd_keluarga"
-                        style="font-style: italic; width: 100px; height: 100px"
-                        >paraf</label
-                      >
-                      <label class="label text-center">
-                        <img
-                          class="text-center"
-                          id="image_paraf_ex_ttd_keluarga"
-                          src=""
-                          style="display: none"
-                      /></label>
-                      <input
-                        myid="check_cara"
-                        type="hidden"
-                        name="paraf_ex_ttd_keluarga"
-                        id="paraf_ex_ttd_keluarga"
-                        data-name="paraf"
-                        data-id="ex_ttd_keluarga"
-                      />
-                      <br />
-                      <label class="label text-center">
-                        <a
-                          id="CreateTTD"
-                          class="btn btn-default btn-xs pointer text-center"
-                          data-id="ex_ttd_keluarga"
-                          style="text-align: center"
-                        >
-                          <i class="fa fa-edit"> </i>
-                          PENTABLET
-                        </a>
-                      </label>
-                    </div>
-                  </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="border: none">
+                          <label for="">Tanda tangan keluarga :</label>
+                        </td>
+                        <td style="border: none">
+                          <label
+                            class="label text-center"
+                            id="def_img_ex_ttd_keluarga"
+                            style="
+                              font-style: italic;
+                              width: 100px;
+                              height: 100px;
+                            "
+                            >paraf</label
+                          >
+                          <label class="label text-center">
+                            <img
+                              class="text-center"
+                              id="image_paraf_ex_ttd_keluarga"
+                              src=""
+                              style="display: none"
+                          /></label>
+                          <input
+                            myid="check_cara"
+                            type="hidden"
+                            name="paraf_ex_ttd_keluarga"
+                            id="paraf_ex_ttd_keluarga"
+                            data-name="paraf"
+                            data-id="ex_ttd_keluarga"
+                          />
+                          <br />
+                          <label class="label text-center">
+                            <a
+                              id="CreateTTD"
+                              class="btn btn-default btn-xs pointer text-center"
+                              data-id="ex_ttd_keluarga"
+                              style="text-align: center"
+                            >
+                              <i class="fa fa-edit"> </i>
+                              PENTABLET
+                            </a>
+                          </label>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </td>
               </tr>
             </table>
@@ -1162,7 +1177,7 @@
                       id="isu-psikolog"
                       label="isu-psikolog"
                       myid="check_cara"
-                      rows="5"
+                      rows="8"
                     ></textarea>
                   </td>
                 </tr>
@@ -1172,7 +1187,7 @@
         </tr>
       </tbody>
     </table>
-    <table width="100%" class="table" cellpadding="0" border="0">
+    <table width="100%" class="table table-bordered" cellpadding="0" border="0">
       <tbody>
         <tr>
           <td>&nbsp;</td>
@@ -1260,57 +1275,5 @@
         </tr>
       </tbody>
     </table>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var checkboxButtons = document.querySelectorAll(
-          'input[type="checkbox"]'
-        );
-        checkboxButtons.forEach(function (checkbox) {
-          checkbox.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var checkboxes = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              checkboxes.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

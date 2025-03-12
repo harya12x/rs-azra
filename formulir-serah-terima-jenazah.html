@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FORMULIR SERAH TERIMA JENAZAH</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
+  <body>
+    <h1 class="title">FORMULIR SERAH TERIMA JENAZAH</h1>
+
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <td>Identitas Pasien</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="identitas-pasien"
+              id="identitas-pasien"
+              label="identitas-pasien"
+              myid="check_cara"
+              value="{VNAMA_PASIEN}"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>No. RM</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="no-rekam-medis"
+              id="no-rekam-medis"
+              label="no-rekam-medis"
+              myid="check_cara"
+              value="{NO_RM}"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Tanggal Lahir</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-lahir"
+              id="tgl-lahir"
+              label="tgl-lahir"
+              myid="check_cara"
+              value="{VBIRTH_DATE}"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Umur</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="umur"
+              id="umur"
+              label="umur"
+              myid="check_cara"
+              value="{VAGEREGIS}"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>NIK</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nik"
+              id="nik"
+              label="nik"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Agama</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="agama"
+              id="agama"
+              label="agama"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Diagnosa</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="diagnosa"
+              id="diagnosa"
+              label="diagnosa"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>
+            (
+            <input
+              type="radio"
+              name="status-infeksi"
+              id="status-infeksi"
+              label="status-infeksi"
+              myid="check_cara"
+              value="Infeksi"
+            />
+            <label for="">Infeksi / </label>
+            <input
+              type="radio"
+              name="status-infeksi"
+              id="status-infeksi"
+              label="status-infeksi"
+              myid="check_cara"
+              value="Non Infeksi"
+            />
+            <label for="">non infeksi</label>
+            )
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">Tanggal Meninggal</label>
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-meniggal"
+              id="tgl-meniggal"
+              label="tgl-meniggal"
+              myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">Penyebab Kematian</label>
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="penyebab-kematian"
+              id="penyebab-kematian"
+              label="penyebab-kematian"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">Ruang Ruang</label>
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="penyebab-kematian"
+              id="penyebab-kematian"
+              label="penyebab-kematian"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">Yang dibawa pulang</label>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="6"
+              type="textarea"
+              name="yang-dibawa-pulang"
+              id="yang-dibawa-pulang"
+              label="yang-dibawa-pulang"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <td style="text-align: center">Serah</td>
+          <td style="text-align: center">Terima</td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_serah"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_serah"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_serah"
+                id="paraf_ex_ttd_serah"
+                data-name="paraf"
+                data-id="ex_ttd_serah"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_serah"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+              <br />
+              <label>
+                (
+                <input
+                  style="width: 200px; padding: 0"
+                  type="text"
+                  name="ttd-serah"
+                  id="ttd-serah"
+                  label="ttd-serah"
+                  myid="check_cara"
+                />
+                )
+              </label>
+            </div>
+          </td>
+          <td>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_terima"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_terima"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_terima"
+                id="paraf_ex_ttd_terima"
+                data-name="paraf"
+                data-id="ex_ttd_terima"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_terima"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+              <br />
+              <label>
+                (
+                <input
+                  style="width: 200px; padding: 0"
+                  type="text"
+                  name="ttd-terima"
+                  id="ttd-terima"
+                  label="ttd-terima"
+                  myid="check_cara"
+                />
+                )
+              </label>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

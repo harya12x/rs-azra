@@ -3,36 +3,280 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MONITORING PASIEN HEMODIALISA</title>
+    <title>PEMANTAUAN PELAKSANAAN HEMODIALISA</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+    if ($.fn.datepicker) {
+      $(".datepicker").each(function () {
+        var $this = $(this),
+          dataDateFormat = $this.attr("data-dateformat") || "dd.mm.yy";
+
+        $this.datepicker({
+          dateFormat: dataDateFormat,
+          prevText: '<i class="fa fa-chevron-left"></i>',
+          nextText: '<i class="fa fa-chevron-right"></i>',
+          todayBtn: "linked",
+        });
+
+        // clear memory reference
+        $this = null;
+      });
+    }
+  </script>
+  <script>
+    $(document).ready(function () {
+      const cairanMasukMinum = $("input[class='cairan-masuk-minum']");
+      const cairanMasukInfus = $("input[class='cairan-masuk-infus']");
+      const cairanMasukTransfusi = $("input[class='cairan-masuk-transfusi']");
+      const cairanMasukSisaPriming = $(
+        "input[class='cairan-masuk-sisa-priming']"
+      );
+      const cairanMasukWashOut = $("input[class='cairan-masuk-wash-out']");
+      const cairanKeluarUrine = $("input[class='cairan-keluar-urine']");
+      const cairanKeluarPendarahan = $(
+        "input[class='cairan-keluar-pendarahan']"
+      );
+      const cairanKeluarMuntah = $("input[class='cairan-keluar-muntah']");
+      const totalSkorMinum = $("input[name='totalskor-minum']");
+      const totalSkorInfus = $("input[name='totalskor-infus']");
+      const totalSkorTransfusi = $("input[name='totalskor-transfusi']");
+      const totalSkorSisaPriming = $("input[name='totalskor-sisa-priming']");
+      const totalSkorWashOut = $("input[name='totalskor-washout']");
+      const totalSkorUrine = $("input[name='totalskor-urine']");
+      const totalSkorPendarahan = $("input[name='totalskor-pendarahan']");
+      const totalSkorMuntah = $("input[name='totalskor-muntah']");
+      const totalSkor1 = $("input[name='totalskor1']");
+      const totalSkor2 = $("input[name='totalskor2']");
+
+      const totalSkorBalance = $("input[name='totalbalance']");
+
+      cairanMasukMinum.on("change", function () {
+        hitungTotalCairan(cairanMasukMinum, totalSkorMinum);
+      });
+      cairanMasukInfus.on("change", function () {
+        hitungTotalCairan(cairanMasukInfus, totalSkorInfus);
+      });
+      cairanMasukTransfusi.on("change", function () {
+        hitungTotalCairan(cairanMasukTransfusi, totalSkorTransfusi);
+      });
+      cairanMasukSisaPriming.on("change", function () {
+        hitungTotalCairan(cairanMasukSisaPriming, totalSkorSisaPriming);
+      });
+      cairanMasukWashOut.on("change", function () {
+        hitungTotalCairan(cairanMasukWashOut, totalSkorWashOut);
+      });
+      cairanKeluarUrine.on("change", function () {
+        hitungTotalCairan(cairanKeluarUrine, totalSkorUrine);
+      });
+      cairanKeluarPendarahan.on("change", function () {
+        hitungTotalCairan(cairanKeluarPendarahan, totalSkorPendarahan);
+      });
+      cairanKeluarMuntah.on("change", function () {
+        hitungTotalCairan(cairanKeluarMuntah, totalSkorMuntah);
+      });
+
+      function hitungTotalCairan(inputs, totalElement) {
+        let total = 0;
+        inputs.each(function () {
+          total += parseFloat($(this).val()) || 0;
+        });
+        totalElement.val(total);
+        hitungBalance();
+        console.log(totalElement.val());
+      }
+
+      function hitungBalance() {
+        totalSkorBalance.val(
+          (parseFloat(totalSkor1.val()) || 0) -
+            (parseFloat(totalSkor2.val()) || 0)
+        );
+      }
+
+      $('input[type="radio"]')
+        .off("change")
+        .on("change", function () {
+          let total = 0;
+          let percol = $(this).data("percol");
+          console.log(percol);
+
+          $("[data-hitung" + percol + "]").each(function () {
+            let radioValue = 0;
+            radioValue = $(this).val() || 0;
+
+            if ($(this).is(":checked")) {
+              radioValue = parseInt(radioValue);
+              console.log(radioValue);
+              total += radioValue;
+            }
+          });
+
+          $(`#totalskor` + percol).val(total);
+        });
+      $('input[type="text"]')
+        .off("input")
+        .on("input", function () {
+          let total = 0;
+          let percol = $(this).data("percol");
+          console.log(percol);
+
+          $("[data-hitung" + percol + "]").each(function () {
+            let value = 0;
+            value = $(this).val() || 0;
+
+            if (value) {
+              value = parseInt(value);
+              console.log(value);
+              total += value;
+            }
+          });
+          if (percol === 3 && total <= 24) {
+            total = `${total}, (tidak berisiko)`;
+          } else if (percol === 3 && total >= 25 && total <= 50) {
+            total = `${total}, (risiko rendah)`;
+          } else if (percol === 3 && total > 50) {
+            total += `${total}, (risiko tinggi)`;
+          }
+
+          $(`#totalskor` + percol).val(total);
+        });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
-    <h1 class="title">MONITORING PASIEN HEMODIALISA</h1>
+    <h1 class="title">PEMANTAUAN PELAKSANAAN HEMODIALISA</h1>
 
     <table width="100%" class="table table-bordered">
       <tbody>
@@ -44,7 +288,7 @@
               name="tgl-monitoring-hemodialisa"
               id="tgl-monitoring-hemodialisa"
               label="tgl-monitoring-hemodialisa"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="dd/mm/yyyy"
               class="datepicker"
@@ -57,7 +301,7 @@
               name="no-tempat-tidur"
               id="no-tempat-tidur"
               label="no-tempat-tidur"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -71,24 +315,12 @@
               name="jam-monitoring-hemodialisa"
               id="jam-monitoring-hemodialisa"
               label="jam-monitoring-hemodialisa"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="00.00"
-              mtype="pukul"
             />
           </td>
-          <td width="15%">&nbsp;</td>
-          <td width="35%">
-            <input
-              type="text"
-              name="no-tempat-tidur-2"
-              id="no-tempat-tidur-2"
-              label="no-tempat-tidur-2"
-              style="width: 100%"
-              myid="check_cara"
-              placeholder="......"
-            />
-          </td>
+          <td colspan="3">&nbsp;</td>
         </tr>
         <tr>
           <td width="15%">Dokter yang merawat :</td>
@@ -98,7 +330,7 @@
               name="dokter-yg-merawat"
               id="dokter-yg-merawat"
               label="dokter-yg-merawat"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -110,7 +342,7 @@
               name="mulai-hd"
               id="mulai-hd"
               label="mulai-hd"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -124,7 +356,7 @@
               name="diagnosa-medis"
               id="diagnosa-medis"
               label="diagnosa-medis"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -136,7 +368,7 @@
               name="selesai-hd"
               id="selesai-hd"
               label="selesai-hd"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -150,7 +382,7 @@
               name="hd-ke"
               id="hd-ke"
               label="hd-ke"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -176,7 +408,7 @@
                 label="jam-hd"
                 style="flex: 1"
                 myid="check_cara"
-                placeholder="......"
+                placeholder="00.00"
               />
             </div>
           </td>
@@ -189,7 +421,7 @@
               name="status-rawat"
               id="status-rawat"
               label="status-rawat"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -201,7 +433,7 @@
               name="uf-target-uf-goal"
               id="uf-target-uf-goal"
               label="uf-target-uf-goal"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -215,7 +447,7 @@
               name="bb-kering"
               id="bb-kering"
               label="bb-kering"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -227,7 +459,7 @@
               name="volume-priming"
               id="volume-priming"
               label="volume-priming"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -241,7 +473,7 @@
               name="bb-hd-terakhir"
               id="bb-hd-terakhir"
               label="bb-hd-terakhir"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -253,7 +485,7 @@
               name="heparinisasi"
               id="heparinisasi"
               label="heparinisasi"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -267,7 +499,7 @@
               name="mesin-hd"
               id="mesin-hd"
               label="mesin-hd"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -279,7 +511,7 @@
               name="dosis-sirkulasi"
               id="dosis-sirkulasi"
               label="dosis-sirkulasi"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -293,7 +525,7 @@
               name="jenis-dialiser"
               id="jenis-dialiser"
               label="jenis-dialiser"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -305,7 +537,7 @@
               name="dosis-awal"
               id="dosis-awal"
               label="dosis-awal"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -319,7 +551,7 @@
               name="dialiser"
               id="dialiser"
               label="dialiser"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -331,7 +563,7 @@
               name="dosis-maintenance"
               id="dosis-maintenance"
               label="dosis-maintenance"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -366,7 +598,7 @@
               name="penyebab-tanpa-heparine"
               id="penyebab-tanpa-heparine"
               label="penyebab-tanpa-heparine"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -413,7 +645,7 @@
               name="keluhan-utama"
               id="keluhan-utama"
               label="keluhan-utama"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
               placeholder="......"
             />
@@ -478,6 +710,7 @@
                 label="tekanan-darah-mmhg"
                 style="flex: 1"
                 myid="check_cara"
+                value="{VTD}"
                 placeholder="......"
               />
               <label for="">mmhg</label>
@@ -527,6 +760,7 @@
               id="suhu"
               label="suhu"
               myid="check_cara"
+              value="{VSUHU}"
               placeholder="......"
             />
             <label for=""><sup>&deg;</sup>c</label>
@@ -590,18 +824,19 @@
                 label="frekuensi-nadi"
                 myid="check_cara"
                 placeholder="......"
+                value="{VNAFAS}"
               />
               <label for="">x/menit</label>
-              <label style="margin-left: 10px" for="">SPO2</label>
+              <label style="margin-left: 10px" for="">SP02</label>
               <input
                 type="text"
-                name="frekuensi-spo2"
-                id="frekuensi-spo2"
-                label="frekuensi-spo2"
+                name="frekuensi-sp02"
+                id="frekuensi-sp02"
+                label="frekuensi-sp02"
                 myid="check_cara"
                 placeholder="......"
               />
-              <label for="">x/menit</label>
+              <label for="">%</label>
             </div>
           </td>
         </tr>
@@ -622,8 +857,9 @@
           <td>Tidak</td>
           <td>
             <input
-              class="risiko-jatuh"
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="riwayat-jatuh"
               id="riwayat-jatuh"
               label="riwayat-jatuh"
@@ -637,8 +873,9 @@
           <td>Ya</td>
           <td>
             <input
-              class="risiko-jatuh"
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="riwayat-jatuh"
               id="riwayat-jatuh"
               label="riwayat-jatuh"
@@ -653,8 +890,9 @@
           <td>Tidak</td>
           <td>
             <input
-              class="risiko-jatuh"
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="diagnosa-medis-sekunder"
               id="diagnosa-medis-sekunder"
               label="diagnosa-medis-sekunder"
@@ -668,8 +906,9 @@
           <td>Ya</td>
           <td>
             <input
-              class="risiko-jatuh"
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="diagnosa-medis-sekunder"
               id="diagnosa-medis-sekunder"
               label="diagnosa-medis-sekunder"
@@ -684,8 +923,9 @@
           <td>Bedrest (bantuan perawat)</td>
           <td>
             <input
-              class="risiko-jatuh"
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="alat-bantu-jalan"
               id="alat-bantu-jalan"
               label="alat-bantu-jalan"
@@ -699,8 +939,9 @@
           <td>Penopang, Tongkat, Walker, Kruk</td>
           <td>
             <input
-              class="risiko-jatuh"
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="alat-bantu-jalan"
               id="alat-bantu-jalan"
               label="alat-bantu-jalan"
@@ -715,8 +956,9 @@
           <td>Memegang Furniture (Kursi, Lemari)</td>
           <td>
             <input
-              class="risiko-jatuh"
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="memakai-terapi-heparine"
               id="memakai-terapi-heparine"
               label="memakai-terapi-heparine"
@@ -730,8 +972,9 @@
           <td>Tidak</td>
           <td>
             <input
-              class="risiko-jatuh"
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="memakai-terapi-heparine"
               id="memakai-terapi-heparine"
               label="memakai-terapi-heparine"
@@ -745,8 +988,9 @@
           <td>Ya</td>
           <td>
             <input
-              class="risiko-jatuh"
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="memakai-terapi-heparine"
               id="memakai-terapi-heparine"
               label="memakai-terapi-heparine"
@@ -761,8 +1005,9 @@
           <td>Normal / Bedrest / Imobilisasi</td>
           <td>
             <input
-              class="risiko-jatuh"
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="cara-berjalan-berpindah"
               id="cara-berjalan-berpindah"
               label="cara-berjalan-berpindah"
@@ -776,8 +1021,9 @@
           <td>Lemah</td>
           <td>
             <input
-              class="risiko-jatuh"
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="cara-berjalan-berpindah"
               id="cara-berjalan-berpindah"
               label="cara-berjalan-berpindah"
@@ -791,8 +1037,9 @@
           <td>Terganggu</td>
           <td>
             <input
-              class="risiko-jatuh"
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="cara-berjalan-berpindah"
               id="cara-berjalan-berpindah"
               label="cara-berjalan-berpindah"
@@ -807,8 +1054,9 @@
           <td>Orientasi sesuai kemampuan diri sendiri</td>
           <td>
             <input
-              class="risiko-jatuh"
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="status-mental"
               id="status-mental"
               label="status-mental"
@@ -822,8 +1070,9 @@
           <td>Lupa Keterbatasan</td>
           <td>
             <input
-              class="risiko-jatuh"
               type="radio"
+              data-percol="3"
+              data-hitung3="3"
               name="status-mental"
               id="status-mental"
               label="status-mental"
@@ -844,9 +1093,9 @@
             <input
               readonly
               type="text"
-              name="total-risiko-jatuh"
-              id="total-risiko-jatuh"
-              label="total-risiko-jatuh"
+              name="totalskor3"
+              id="totalskor3"
+              label="totalskor3"
               myid="check_cara"
             />
           </td>
@@ -1040,9 +1289,9 @@
             <div style="margin-left: 20px; margin-top: 5px">
               <input
                 type="checkbox"
-                name="monitor-pola-napas"
-                id="monitor-pola-napas"
-                label="monitor-pola-napas"
+                name="monitor-pola-napas-2"
+                id="monitor-pola-napas-2"
+                label="monitor-pola-napas-2"
                 myid="check_cara"
                 value="Monitor pola napas ( bradipnea, takipnea, hiperventilassi, kussmaul, cheyne-stokes, Biot, ataksik)"
               />
@@ -1792,9 +2041,9 @@
             <div style="margin-left: 20px; margin-top: 5px">
               <input
                 type="checkbox"
-                name="beriksan-oksigen-bila-spo2-kurang-94"
-                id="beriksan-oksigen-bila-spo2-kurang-94"
-                label="beriksan-oksigen-bila-spo2-kurang-94"
+                name="beriksan-oksigen-bila-sp02-kurang-94"
+                id="beriksan-oksigen-bila-sp02-kurang-94"
+                label="beriksan-oksigen-bila-sp02-kurang-94"
                 myid="check_cara"
                 value="Berikan oksigen bila SPO2 &lt; 94"
               />
@@ -1918,9 +2167,7 @@
           </td>
           <td>
             <div>
-              <label for=""
-                >Keseimbangan elektrolit meningkat ((L.03021))</label
-              >
+              <label for="">Keseimbangan elektrolit meningkat (L.03021)</label>
             </div>
             <p style="margin-top: 5px">Kriteria hasil :</p>
             <div style="margin-left: 20px; margin-top: 5px">
@@ -1965,9 +2212,9 @@
             <div style="margin-left: 20px; margin-top: 5px">
               <input
                 type="checkbox"
-                name="kemungkinan-penyebab-ketidakseimbangan-elektrolit"
-                id="kemungkinan-penyebab-ketidakseimbangan-elektrolit"
-                label="kemungkinan-penyebab-ketidakseimbangan-elektrolit"
+                name="kemungkinan-penyebab-ketidakseimbangan-elektrolit-2"
+                id="kemungkinan-penyebab-ketidakseimbangan-elektrolit-2"
+                label="kemungkinan-penyebab-ketidakseimbangan-elektrolit-2"
                 myid="check_cara"
                 value="kemungkinan penyebab ketidakseimbangan elektrolit"
               />
@@ -1979,9 +2226,9 @@
             <div style="margin-left: 20px; margin-top: 5px">
               <input
                 type="checkbox"
-                name="kemungkinan-penyebab-ketidakseimbangan-elektrolit"
-                id="kemungkinan-penyebab-ketidakseimbangan-elektrolit"
-                label="kemungkinan-penyebab-ketidakseimbangan-elektrolit"
+                name="monitor-tanda-hiponatremia-hipernatremia"
+                id="monitor-tanda-hiponatremia-hipernatremia"
+                label="monitor-tanda-hiponatremia-hipernatremia"
                 myid="check_cara"
                 value="hiponatremia, hipernatremia, hipokalemia, hiperkalemia"
               />
@@ -2430,11 +2677,11 @@
             <div style="margin-left: 20px; margin-top: 5px">
               <input
                 type="checkbox"
-                name="strategi-meredakan-nyeri"
-                id="strategi-meredakan-nyeri"
-                label="strategi-meredakan-nyeri"
+                name="ajarkan-teknik-non-farmakologi"
+                id="ajarkan-teknik-non-farmakologi"
+                label="ajarkan-teknik-non-farmakologi"
                 myid="check_cara"
-                value="teknik non farmakologi untuk mengurangi nyeri"
+                value="Ajarkan teknik non farmakologi untuk mengurangi nyeri"
               />
               <label for=""
                 >Ajarkan teknik non farmakologi untuk mengurangi rasa
@@ -2469,7 +2716,7 @@
         </tr>
       </tbody>
     </table>
-    <table width="100%" class="table table-bordered inisiasi">
+    <table width="100%" class="table table-bordered">
       <thead>
         <tr>
           <th colspan="2">Inisiasi</th>
@@ -2501,607 +2748,1871 @@
             TD <br />
             mmHg
           </th>
-          <th>Nadi/Suhu</th>
+          <th>Nadi</th>
+          <th>Suhu</th>
           <th>
             P <br />
             x/mnt
           </th>
+          <th>SPO<sub>2</sub></th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>
-            <input style="width: 100%" type="text" name="inisiasi-a-1" id="" />
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-a-1"
+              id="inisiasi-a-1"
+              label="inisiasi-a-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-b-1"
+              id="inisiasi-b-1"
+              label="inisiasi-b-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qb-1"
+              id="qb-1"
+              label="qb-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qd-1"
+              id="qd-1"
+              label="qd-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-arteri-1"
+              id="tek-arteri-1"
+              label="tek-arteri-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-vena-1"
+              id="tek-vena-1"
+              label="tek-vena-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tmp-1"
+              id="tmp-1"
+              label="tmp-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="ufr-1"
+              id="ufr-1"
+              label="ufr-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="td-1"
+              id="td-1"
+              label="td-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nadi-1"
+              id="nadi-1"
+              label="nadi-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="suhu-1"
+              id="suhu-1"
+              label="suhu-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="p-1"
+              id="p-1"
+              label="p-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="spo-1"
+              id="spo-1"
+              label="spo-1"
+              myid="check_cara"
+            />
           </td>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-b-1" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qb-1" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qd-1" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-arteri-1" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-vena-1" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tmp-1" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="ufr-1" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="td-1" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="nadi-suhu-1" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="p-1" id="" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-a-2" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-b-2" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qb-2" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qd-2" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-arteri-2" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-vena-2" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tmp-2" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="ufr-2" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="td-2" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="nadi-suhu-2" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="p-2" id="" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-a-3" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-b-3" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qb-3" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qd-3" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-arteri-3" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-vena-3" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tmp-3" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="ufr-3" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="td-3" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="nadi-suhu-3" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="p-3" id="" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-a-4" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-b-4" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qb-4" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qd-4" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-arteri-4" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-vena-4" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tmp-4" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="ufr-4" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="td-4" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="nadi-suhu-4" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="p-4" id="" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-a-5" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-b-5" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qb-5" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qd-5" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-arteri-5" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-vena-5" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tmp-5" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="ufr-5" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="td-5" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="nadi-suhu-5" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="p-5" id="" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-a-6" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-b-6" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qb-6" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qd-6" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-arteri-6" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-vena-6" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tmp-6" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="ufr-6" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="td-6" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="nadi-suhu-6" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="p-6" id="" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-a-7" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-b-7" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qb-7" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qd-7" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-arteri-7" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-vena-7" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tmp-7" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="ufr-7" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="td-7" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="nadi-suhu-7" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="p-7" id="" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-a-8" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-b-8" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qb-8" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qd-8" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-arteri-8" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-vena-8" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tmp-8" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="ufr-8" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="td-8" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="nadi-suhu-8" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="p-8" id="" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-a-9" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-b-9" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qb-9" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qd-9" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-arteri-9" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-vena-9" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tmp-9" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="ufr-9" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="td-9" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="nadi-suhu-9" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="p-9" id="" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-a-10" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-b-10" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qb-10" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qd-10" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-arteri-10" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-vena-10" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tmp-10" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="ufr-10" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="td-10" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="nadi-suhu-10" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="p-10" id="" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-a-11" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-b-11" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qb-11" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qd-11" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-arteri-11" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-vena-11" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tmp-11" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="ufr-11" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="td-11" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="nadi-suhu-11" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="p-11" id="" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-a-12" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="inisiasi-b-12" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qb-12" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="qd-12" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-arteri-12" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tek-vena-12" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="tmp-12" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="ufr-12" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="td-12" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="nadi-suhu-12" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="p-12" id="" />
-          </td>
-        </tr>
-        <tr>
-          <td colspan="11"><b>Terminasi</b></td>
         </tr>
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-a-2"
+              id="inisiasi-a-2"
+              label="inisiasi-a-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-b-2"
+              id="inisiasi-b-2"
+              label="inisiasi-b-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qb-2"
+              id="qb-2"
+              label="qb-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qd-2"
+              id="qd-2"
+              label="qd-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-arteri-2"
+              id="tek-arteri-2"
+              label="tek-arteri-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-vena-2"
+              id="tek-vena-2"
+              label="tek-vena-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tmp-2"
+              id="tmp-2"
+              label="tmp-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="ufr-2"
+              id="ufr-2"
+              label="ufr-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="td-2"
+              id="td-2"
+              label="td-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nadi-2"
+              id="nadi-2"
+              label="nadi-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="suhu-2"
+              id="suhu-2"
+              label="suhu-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="p-2"
+              id="p-2"
+              label="p-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="spo-2"
+              id="spo-2"
+              label="spo-2"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-a-3"
+              id="inisiasi-a-3"
+              label="inisiasi-a-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-b-3"
+              id="inisiasi-b-3"
+              label="inisiasi-b-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qb-3"
+              id="qb-3"
+              label="qb-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qd-3"
+              id="qd-3"
+              label="qd-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-arteri-3"
+              id="tek-arteri-3"
+              label="tek-arteri-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-vena-3"
+              id="tek-vena-3"
+              label="tek-vena-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tmp-3"
+              id="tmp-3"
+              label="tmp-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="ufr-3"
+              id="ufr-3"
+              label="ufr-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="td-3"
+              id="td-3"
+              label="td-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nadi-3"
+              id="nadi-3"
+              label="nadi-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="suhu-3"
+              id="suhu-3"
+              label="suhu-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="p-3"
+              id="p-3"
+              label="p-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="spo-3"
+              id="spo-3"
+              label="spo-3"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-a-4"
+              id="inisiasi-a-4"
+              label="inisiasi-a-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-b-4"
+              id="inisiasi-b-4"
+              label="inisiasi-b-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qb-4"
+              id="qb-4"
+              label="qb-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qd-4"
+              id="qd-4"
+              label="qd-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-arteri-4"
+              id="tek-arteri-4"
+              label="tek-arteri-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-vena-4"
+              id="tek-vena-4"
+              label="tek-vena-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tmp-4"
+              id="tmp-4"
+              label="tmp-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="ufr-4"
+              id="ufr-4"
+              label="ufr-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="td-4"
+              id="td-4"
+              label="td-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nadi-4"
+              id="nadi-4"
+              label="nadi-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="suhu-4"
+              id="suhu-4"
+              label="suhu-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="p-4"
+              id="p-4"
+              label="p-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="spo-4"
+              id="spo-4"
+              label="spo-4"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-a-5"
+              id="inisiasi-a-5"
+              label="inisiasi-a-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-b-5"
+              id="inisiasi-b-5"
+              label="inisiasi-b-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qb-5"
+              id="qb-5"
+              label="qb-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qd-5"
+              id="qd-5"
+              label="qd-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-arteri-5"
+              id="tek-arteri-5"
+              label="tek-arteri-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-vena-5"
+              id="tek-vena-5"
+              label="tek-vena-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tmp-5"
+              id="tmp-5"
+              label="tmp-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="ufr-5"
+              id="ufr-5"
+              label="ufr-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="td-5"
+              id="td-5"
+              label="td-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nadi-5"
+              id="nadi-5"
+              label="nadi-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="suhu-5"
+              id="suhu-5"
+              label="suhu-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="p-5"
+              id="p-5"
+              label="p-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="spo-5"
+              id="spo-5"
+              label="spo-5"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-a-6"
+              id="inisiasi-a-6"
+              label="inisiasi-a-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-b-6"
+              id="inisiasi-b-6"
+              label="inisiasi-b-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qb-6"
+              id="qb-6"
+              label="qb-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qd-6"
+              id="qd-6"
+              label="qd-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-arteri-6"
+              id="tek-arteri-6"
+              label="tek-arteri-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-vena-6"
+              id="tek-vena-6"
+              label="tek-vena-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tmp-6"
+              id="tmp-6"
+              label="tmp-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="ufr-6"
+              id="ufr-6"
+              label="ufr-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="td-6"
+              id="td-6"
+              label="td-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nadi-6"
+              id="nadi-6"
+              label="nadi-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="suhu-6"
+              id="suhu-6"
+              label="suhu-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="p-6"
+              id="p-6"
+              label="p-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="spo-6"
+              id="spo-6"
+              label="spo-6"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-a-7"
+              id="inisiasi-a-7"
+              label="inisiasi-a-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-b-7"
+              id="inisiasi-b-7"
+              label="inisiasi-b-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qb-7"
+              id="qb-7"
+              label="qb-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qd-7"
+              id="qd-7"
+              label="qd-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-arteri-7"
+              id="tek-arteri-7"
+              label="tek-arteri-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-vena-7"
+              id="tek-vena-7"
+              label="tek-vena-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tmp-7"
+              id="tmp-7"
+              label="tmp-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="ufr-7"
+              id="ufr-7"
+              label="ufr-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="td-7"
+              id="td-7"
+              label="td-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nadi-7"
+              id="nadi-7"
+              label="nadi-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="suhu-7"
+              id="suhu-7"
+              label="suhu-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="p-7"
+              id="p-7"
+              label="p-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="spo-7"
+              id="spo-7"
+              label="spo-7"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-a-8"
+              id="inisiasi-a-8"
+              label="inisiasi-a-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-b-8"
+              id="inisiasi-b-8"
+              label="inisiasi-b-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qb-8"
+              id="qb-8"
+              label="qb-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qd-8"
+              id="qd-8"
+              label="qd-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-arteri-8"
+              id="tek-arteri-8"
+              label="tek-arteri-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-vena-8"
+              id="tek-vena-8"
+              label="tek-vena-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tmp-8"
+              id="tmp-8"
+              label="tmp-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="ufr-8"
+              id="ufr-8"
+              label="ufr-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="td-8"
+              id="td-8"
+              label="td-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nadi-8"
+              id="nadi-8"
+              label="nadi-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="suhu-8"
+              id="suhu-8"
+              label="suhu-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="p-8"
+              id="p-8"
+              label="p-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="spo-8"
+              id="spo-8"
+              label="spo-8"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-a-9"
+              id="inisiasi-a-9"
+              label="inisiasi-a-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-b-9"
+              id="inisiasi-b-9"
+              label="inisiasi-b-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qb-9"
+              id="qb-9"
+              label="qb-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qd-9"
+              id="qd-9"
+              label="qd-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-arteri-9"
+              id="tek-arteri-9"
+              label="tek-arteri-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-vena-9"
+              id="tek-vena-9"
+              label="tek-vena-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tmp-9"
+              id="tmp-9"
+              label="tmp-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="ufr-9"
+              id="ufr-9"
+              label="ufr-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="td-9"
+              id="td-9"
+              label="td-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nadi-9"
+              id="nadi-9"
+              label="nadi-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="suhu-9"
+              id="suhu-9"
+              label="suhu-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="p-9"
+              id="p-9"
+              label="p-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="spo-9"
+              id="spo-9"
+              label="spo-9"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-a-10"
+              id="inisiasi-a-10"
+              label="inisiasi-a-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-b-10"
+              id="inisiasi-b-10"
+              label="inisiasi-b-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qb-10"
+              id="qb-10"
+              label="qb-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qd-10"
+              id="qd-10"
+              label="qd-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-arteri-10"
+              id="tek-arteri-10"
+              label="tek-arteri-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-vena-10"
+              id="tek-vena-10"
+              label="tek-vena-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tmp-10"
+              id="tmp-10"
+              label="tmp-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="ufr-10"
+              id="ufr-10"
+              label="ufr-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="td-10"
+              id="td-10"
+              label="td-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nadi-10"
+              id="nadi-10"
+              label="nadi-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="suhu-10"
+              id="suhu-10"
+              label="suhu-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="p-10"
+              id="p-10"
+              label="p-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="spo-10"
+              id="spo-10"
+              label="spo-10"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-a-11"
+              id="inisiasi-a-11"
+              label="inisiasi-a-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-b-11"
+              id="inisiasi-b-11"
+              label="inisiasi-b-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qb-11"
+              id="qb-11"
+              label="qb-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qd-11"
+              id="qd-11"
+              label="qd-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-arteri-11"
+              id="tek-arteri-11"
+              label="tek-arteri-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-vena-11"
+              id="tek-vena-11"
+              label="tek-vena-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tmp-11"
+              id="tmp-11"
+              label="tmp-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="ufr-11"
+              id="ufr-11"
+              label="ufr-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="td-11"
+              id="td-11"
+              label="td-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nadi-11"
+              id="nadi-11"
+              label="nadi-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="suhu-11"
+              id="suhu-11"
+              label="suhu-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="p-11"
+              id="p-11"
+              label="p-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="spo-11"
+              id="spo-11"
+              label="spo-11"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-a-12"
+              id="inisiasi-a-12"
+              label="inisiasi-a-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="inisiasi-b-12"
+              id="inisiasi-b-12"
+              label="inisiasi-b-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qb-12"
+              id="qb-12"
+              label="qb-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="qd-12"
+              id="qd-12"
+              label="qd-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-arteri-12"
+              id="tek-arteri-12"
+              label="tek-arteri-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tek-vena-12"
+              id="tek-vena-12"
+              label="tek-vena-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tmp-12"
+              id="tmp-12"
+              label="tmp-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="ufr-12"
+              id="ufr-12"
+              label="ufr-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="td-12"
+              id="td-12"
+              label="td-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nadi-12"
+              id="nadi-12"
+              label="nadi-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="suhu-12"
+              id="suhu-12"
+              label="suhu-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="p-12"
+              id="p-12"
+              label="p-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="spo-12"
+              id="spo-12"
+              label="spo-12"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="13"><b>Terminasi</b></td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
               type="text"
               name="terminasi-inisiasi-a-1"
-              id=""
+              id="terminasi-inisiasi-a-1"
+              label="terminasi-inisiasi-a-1"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="terminasi-inisiasi-b-1"
-              id=""
+              id="terminasi-inisiasi-b-1"
+              label="terminasi-inisiasi-b-1"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="terminasi-qb-1"
-              id=""
+              id="terminasi-qb-1"
+              label="terminasi-qb-1"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="terminasi-qd-1"
-              id=""
+              id="terminasi-qd-1"
+              label="terminasi-qd-1"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="terminasi-tek-arteri-1"
-              id=""
+              id="terminasi-tek-arteri-1"
+              label="terminasi-tek-arteri-1"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="terminasi-tek-vena-1"
-              id=""
+              id="terminasi-tek-vena-1"
+              label="terminasi-tek-vena-1"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="terminasi-tmp-1"
-              id=""
+              id="terminasi-tmp-1"
+              label="terminasi-tmp-1"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="terminasi-ufr-1"
-              id=""
+              id="terminasi-ufr-1"
+              label="terminasi-ufr-1"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="terminasi-td-1"
-              id=""
+              id="terminasi-td-1"
+              label="terminasi-td-1"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
-              name="terminasi-nadi-suhu-1"
-              id=""
+              name="terminasi-nadi-1"
+              id="terminasi-nadi-1"
+              label="terminasi-nadi-1"
+              myid="check_cara"
             />
           </td>
           <td>
-            <input style="width: 100%" type="text" name="terminasi-p-1" id="" />
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="terminasi-suhu-1"
+              id="terminasi-suhu-1"
+              label="terminasi-suhu-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="terminasi-p-1"
+              id="terminasi-p-1"
+              label="terminasi-p-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="terminasi-sp02-1"
+              id="terminasi-sp02-1"
+              label="terminasi-sp02-1"
+              myid="check_cara"
+            />
           </td>
         </tr>
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="terminasi-inisiasi-a-2"
-              id=""
+              id="terminasi-inisiasi-a-2"
+              label="terminasi-inisiasi-a-2"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="terminasi-inisiasi-b-2"
-              id=""
+              id="terminasi-inisiasi-b-2"
+              label="terminasi-inisiasi-b-2"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="terminasi-qb-2"
-              id=""
+              id="terminasi-qb-2"
+              label="terminasi-qb-2"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="terminasi-qd-2"
-              id=""
+              id="terminasi-qd-2"
+              label="terminasi-qd-2"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="terminasi-tek-arteri-2"
-              id=""
+              id="terminasi-tek-arteri-2"
+              label="terminasi-tek-arteri-2"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="terminasi-tek-vena-2"
-              id=""
+              id="terminasi-tek-vena-2"
+              label="terminasi-tek-vena-2"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="terminasi-tmp-2"
-              id=""
+              id="terminasi-tmp-2"
+              label="terminasi-tmp-2"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="terminasi-ufr-2"
-              id=""
+              id="terminasi-ufr-2"
+              label="terminasi-ufr-2"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="terminasi-td-2"
-              id=""
+              id="terminasi-td-2"
+              label="terminasi-td-2"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
-              name="terminasi-nadi-suhu-2"
-              id=""
+              name="terminasi-nadi-2"
+              id="terminasi-nadi-2"
+              label="terminasi-nadi-2"
+              myid="check_cara"
             />
           </td>
           <td>
-            <input style="width: 100%" type="text" name="terminasi-p-2" id="" />
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="terminasi-suhu-2"
+              id="terminasi-suhu-2"
+              label="terminasi-suhu-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="terminasi-p-2"
+              id="terminasi-p-2"
+              label="terminasi-p-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="terminasi-sp02-2"
+              id="terminasi-sp02-2"
+              label="terminasi-sp02-2"
+              myid="check_cara"
+            />
           </td>
         </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table table-bordered">
+      <tbody>
         <tr style="text-align: center">
           <td rowspan="2"><b>PKL</b></td>
           <td rowspan="2"><b>Nama</b></td>
@@ -3120,301 +4631,492 @@
         </tr>
         <tr>
           <td>
-            <input style="width: 100%" type="text" name="pkl-1" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="nama-1" id="" />
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="pkl-1"
+              id="pkl-1"
+              label="pkl-1"
+              placeholder="00.00"
+              myid="check_cara"
+            />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              name="nama-1"
+              id="nama-1"
+              label="nama-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-minum-1"
-              id=""
+              id="cairan-masuk-minum-1"
+              class="cairan-masuk-minum"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-infus-1"
-              id=""
+              id="cairan-masuk-infus-1"
+              class="cairan-masuk-infus"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-transfusi-1"
-              id=""
+              id="cairan-masuk-transfusi-1"
+              class="cairan-masuk-transfusi"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-sisa-priming-1"
-              id=""
+              id="cairan-masuk-sisa-priming-1"
+              class="cairan-masuk-sisa-priming"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-wash-out-1"
-              id=""
+              id="cairan-masuk-wash-out-1"
+              class="cairan-masuk-wash-out"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="2"
+              data-hitung2="2"
               name="cairan-keluar-urine-1"
-              id=""
+              id="cairan-keluar-urine-1"
+              class="cairan-keluar-urine"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="2"
+              data-hitung2="2"
               name="cairan-keluar-pendarahan-1"
-              id=""
+              id="cairan-keluar-pendarahan-1"
+              class="cairan-keluar-pendarahan"
+              myid="check_cara"
             />
           </td>
           <td colspan="2">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="2"
+              data-hitung2="2"
               name="cairan-keluar-muntah-1"
-              id=""
+              id="cairan-keluar-muntah-1"
+              class="cairan-keluar-muntah"
+              myid="check_cara"
             />
           </td>
         </tr>
         <tr>
           <td>
-            <input style="width: 100%" type="text" name="pkl-2" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="nama-2" id="" />
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="pkl-2"
+              id="pkl-2"
+              label="pkl-2"
+              placeholder="00.00"
+              myid="check_cara"
+            />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              name="nama-2"
+              id="nama-2"
+              label="nama-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-minum-2"
-              id=""
+              id="cairan-masuk-minum-2"
+              class="cairan-masuk-minum"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-infus-2"
-              id=""
+              id="cairan-masuk-infus-2"
+              class="cairan-masuk-infus"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-transfusi-2"
-              id=""
+              id="cairan-masuk-transfusi-2"
+              class="cairan-masuk-transfusi"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-sisa-priming-2"
-              id=""
+              id="cairan-masuk-sisa-priming-2"
+              class="cairan-masuk-sisa-priming"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-wash-out-2"
-              id=""
+              id="cairan-masuk-wash-out-2"
+              class="cairan-masuk-wash-out"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="2"
+              data-hitung2="2"
               name="cairan-keluar-urine-2"
-              id=""
+              id="cairan-keluar-urine-2"
+              class="cairan-keluar-urine"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="2"
+              data-hitung2="2"
               name="cairan-keluar-pendarahan-2"
-              id=""
+              id="cairan-keluar-pendarahan-2"
+              class="cairan-keluar-pendarahan"
+              myid="check_cara"
             />
           </td>
           <td colspan="2">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="2"
+              data-hitung2="2"
               name="cairan-keluar-muntah-2"
-              id=""
+              id="cairan-keluar-muntah-2"
+              class="cairan-keluar-muntah"
+              myid="check_cara"
             />
           </td>
         </tr>
         <tr>
           <td>
-            <input style="width: 100%" type="text" name="pkl-3" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="nama-3" id="" />
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="pkl-3"
+              id="pkl-3"
+              label="pkl-3"
+              placeholder="00.00"
+              myid="check_cara"
+            />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              name="nama-3"
+              id="nama-3"
+              label="nama-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-minum-3"
-              id=""
+              id="cairan-masuk-minum-3"
+              class="cairan-masuk-minum"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-infus-3"
-              id=""
+              id="cairan-masuk-infus-3"
+              class="cairan-masuk-infus"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-transfusi-3"
-              id=""
+              id="cairan-masuk-transfusi-3"
+              class="cairan-masuk-transfusi"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-sisa-priming-3"
-              id=""
+              id="cairan-masuk-sisa-priming-3"
+              class="cairan-masuk-sisa-priming"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-wash-out-3"
-              id=""
+              id="cairan-masuk-wash-out-3"
+              class="cairan-masuk-wash-out"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="2"
+              data-hitung2="2"
               name="cairan-keluar-urine-3"
-              id=""
+              id="cairan-keluar-urine-3"
+              class="cairan-keluar-urine"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="2"
+              data-hitung2="2"
               name="cairan-keluar-pendarahan-3"
-              id=""
+              id="cairan-keluar-pendarahan-3"
+              class="cairan-keluar-pendarahan"
+              myid="check_cara"
             />
           </td>
           <td colspan="2">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="2"
+              data-hitung2="2"
               name="cairan-keluar-muntah-3"
-              id=""
+              id="cairan-keluar-muntah-3"
+              class="cairan-keluar-muntah"
+              myid="check_cara"
             />
           </td>
         </tr>
         <tr>
           <td>
-            <input style="width: 100%" type="text" name="pkl-4" id="" />
-          </td>
-          <td>
-            <input style="width: 100%" type="text" name="nama-4" id="" />
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="pkl-4"
+              id="pkl-4"
+              label="pkl-4"
+              placeholder="00.00"
+              myid="check_cara"
+            />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              name="nama-4"
+              id="nama-4"
+              label="nama-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-minum-4"
-              id=""
+              id="cairan-masuk-minum-4"
+              class="cairan-masuk-minum"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-infus-4"
-              id=""
+              id="cairan-masuk-infus-4"
+              class="cairan-masuk-infus"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-transfusi-4"
-              id=""
+              id="cairan-masuk-transfusi-4"
+              class="cairan-masuk-transfusi"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-sisa-priming-4"
-              id=""
+              id="cairan-masuk-sisa-priming-4"
+              class="cairan-masuk-sisa-priming"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="1"
+              data-hitung1="1"
               name="cairan-masuk-wash-out-4"
-              id=""
+              id="cairan-masuk-wash-out-4"
+              class="cairan-masuk-wash-out"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="2"
+              data-hitung2="2"
               name="cairan-keluar-urine-4"
-              id=""
+              id="cairan-keluar-urine-4"
+              class="cairan-keluar-urine"
+              myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="2"
+              data-hitung2="2"
               name="cairan-keluar-pendarahan-4"
-              id=""
+              id="cairan-keluar-pendarahan-4"
+              class="cairan-keluar-pendarahan"
+              myid="check_cara"
             />
           </td>
           <td colspan="2">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
+              data-percol="2"
+              data-hitung2="2"
               name="cairan-keluar-muntah-4"
-              id=""
+              id="cairan-keluar-muntah-4"
+              class="cairan-keluar-muntah"
+              myid="check_cara"
             />
           </td>
         </tr>
+
         <tr style="text-align: center">
-          <td colspan="2" rowspan="2"><b>Jumlah</b></td>
+          <td colspan="2" rowspan="3"><b>Jumlah</b></td>
           <td>
             <div style="display: flex; align-items: center; gap: 5px">
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
-                name="jumlah-cairan-masuk-minum"
-                id=""
+                name="totalskor-minum"
+                id="totalskor-minum"
+                label="totalskor-minum"
+                myid="check_cara"
               />
               <label for="">CC</label>
             </div>
@@ -3422,10 +5124,12 @@
           <td>
             <div style="display: flex; align-items: center; gap: 5px">
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
-                name="jumlah-cairan-masuk-infus"
-                id=""
+                name="totalskor-infus"
+                id="totalskor-infus"
+                label="totalskor-infus"
+                myid="check_cara"
               />
               <label for="">CC</label>
             </div>
@@ -3433,10 +5137,12 @@
           <td>
             <div style="display: flex; align-items: center; gap: 5px">
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
-                name="jumlah-cairan-masuk-transfusi"
-                id=""
+                name="totalskor-transfusi"
+                id="totalskor-transfusi"
+                label="totalskor-transfusi"
+                myid="check_cara"
               />
               <label for="">CC</label>
             </div>
@@ -3444,10 +5150,12 @@
           <td>
             <div style="display: flex; align-items: center; gap: 5px">
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
-                name="jumlah-cairan-masuk-sisa-priming"
-                id=""
+                name="totalskor-sisa-priming"
+                id="totalskor-sisa-priming"
+                label="totalskor-sisa-priming"
+                myid="check_cara"
               />
               <label for="">CC</label>
             </div>
@@ -3455,10 +5163,12 @@
           <td>
             <div style="display: flex; align-items: center; gap: 5px">
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
-                name="jumlah-cairan-masuk-wash-out"
-                id=""
+                name="totalskor-washout"
+                id="totalskor-washout"
+                label="totalskor-washout"
+                myid="check_cara"
               />
               <label for="">CC</label>
             </div>
@@ -3466,10 +5176,12 @@
           <td>
             <div style="display: flex; align-items: center; gap: 5px">
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
-                name="jumlah-cairan-keluar-urine"
-                id=""
+                name="totalskor-urine"
+                id="totalskor-urine"
+                label="totalskor-urine"
+                myid="check_cara"
               />
               <label for="">CC</label>
             </div>
@@ -3477,10 +5189,12 @@
           <td>
             <div style="display: flex; align-items: center; gap: 5px">
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
-                name="jumlah-cairan-keluar-pendarahan"
-                id=""
+                name="totalskor-pendarahan"
+                id="totalskor-pendarahan"
+                label="totalskor-pendarahan"
+                myid="check_cara"
               />
               <label for="">CC</label>
             </div>
@@ -3488,10 +5202,12 @@
           <td colspan="2">
             <div style="display: flex; align-items: center; gap: 5px">
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
-                name="jumlah-cairan-keluar-muntah"
-                id=""
+                name="totalskor-muntah"
+                id="totalskor-muntah"
+                label="totalskor-muntah"
+                myid="check_cara"
               />
               <label for="">CC</label>
             </div>
@@ -3501,10 +5217,12 @@
           <td colspan="5">
             <div style="display: flex; align-items: center; gap: 5px">
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
-                name="jumlah-semua-cairan-masuk"
-                id=""
+                name="totalskor1"
+                id="totalskor1"
+                label="totalskor1"
+                myid="check_cara"
               />
               <label for="">CC</label>
             </div>
@@ -3512,10 +5230,28 @@
           <td colspan="4">
             <div style="display: flex; align-items: center; gap: 5px">
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
-                name="jumlah-semua-cairan-keluar"
-                id=""
+                name="totalskor2"
+                id="totalskor2"
+                label="totalskor2"
+                myid="check_cara"
+              />
+              <label for="">CC</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="9">
+            <div style="display: flex; align-items: center; gap: 5px">
+              <label for="">Balance:</label>
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="totalbalance"
+                id="totalbalance"
+                label="totalbalance"
+                myid="check_cara"
               />
               <label for="">CC</label>
             </div>
@@ -3524,33 +5260,42 @@
         <tr style="text-align: center">
           <td><b>PKL</b></td>
           <td><b>Nama</b></td>
-          <td colspan="9"><b>EVALUASI</b></td>
+          <td colspan="9" style="color: #fff" bgcolor="#1C3F80">
+            <b>EVALUASI</b>
+          </td>
         </tr>
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="evaluasi-pkl-1"
-              id=""
+              id="evaluasi-pkl-1"
+              label="evaluasi-pkl-1"
+              myid="check_cara"
+              placeholder="00.00"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="evaluasi-nama-1"
-              id=""
+              id="evaluasi-nama-1"
+              label="evaluasi-nama-1"
+              myid="check_cara"
             />
           </td>
           <td colspan="5">
             <div style="display: flex; align-items: center; gap: 5px">
               <label for="">Subjektif:</label>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="evaluasi-subjektif-1"
-                id=""
+                id="evaluasi-subjektif-1"
+                label="evaluasi-subjektif-1"
+                myid="check_cara"
               />
             </div>
           </td>
@@ -3558,10 +5303,12 @@
             <div style="display: flex; align-items: center; gap: 5px">
               <label for="">Assessment:</label>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="evaluasi-assessment-1"
-                id=""
+                id="evaluasi-assessment-1"
+                label="evaluasi-assessment-1"
+                myid="check_cara"
               />
             </div>
           </td>
@@ -3569,37 +5316,46 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="evaluasi-pkl-2"
-              id=""
+              id="evaluasi-pkl-2"
+              label="evaluasi-pkl-2"
+              myid="check_cara"
+              placeholder="00.00"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="evaluasi-nama-2"
-              id=""
+              id="evaluasi-nama-2"
+              label="evaluasi-nama-2"
+              myid="check_cara"
             />
           </td>
           <td colspan="5">
             <div style="display: flex; align-items: center; gap: 5px">
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="evaluasi-subjektif-2"
-                id=""
+                id="evaluasi-subjektif-2"
+                label="evaluasi-subjektif-2"
+                myid="check_cara"
               />
             </div>
           </td>
           <td colspan="4">
             <div style="display: flex; align-items: center; gap: 5px">
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="evaluasi-assessment-2"
-                id=""
+                id="evaluasi-assessment-2"
+                label="evaluasi-assessment-2"
+                myid="check_cara"
               />
             </div>
           </td>
@@ -3607,37 +5363,46 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="evaluasi-pkl-3"
-              id=""
+              id="evaluasi-pkl-3"
+              label="evaluasi-pkl-3"
+              myid="check_cara"
+              placeholder="00.00"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="evaluasi-nama-3"
-              id=""
+              id="evaluasi-nama-3"
+              label="evaluasi-nama-3"
+              myid="check_cara"
             />
           </td>
           <td colspan="5">
             <div style="display: flex; align-items: center; gap: 5px">
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="evaluasi-subjektif-3"
-                id=""
+                id="evaluasi-subjektif-3"
+                label="evaluasi-subjektif-3"
+                myid="check_cara"
               />
             </div>
           </td>
           <td colspan="4">
             <div style="display: flex; align-items: center; gap: 5px">
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="evaluasi-assessment-3"
-                id=""
+                id="evaluasi-assessment-3"
+                label="evaluasi-assessment-3"
+                myid="check_cara"
               />
             </div>
           </td>
@@ -3645,28 +5410,35 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="evaluasi-pkl-4"
-              id=""
+              id="evaluasi-pkl-4"
+              label="evaluasi-pkl-4"
+              myid="check_cara"
+              placeholder="00.00"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="evaluasi-nama-4"
-              id=""
+              id="evaluasi-nama-4"
+              label="evaluasi-nama-4"
+              myid="check_cara"
             />
           </td>
           <td colspan="5">
             <div style="display: flex; align-items: center; gap: 5px">
               <label for="">Objektif:</label>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="evaluasi-objektif-1"
-                id=""
+                id="evaluasi-objektif-1"
+                label="evaluasi-objektif-1"
+                myid="check_cara"
               />
             </div>
           </td>
@@ -3674,10 +5446,12 @@
             <div style="display: flex; align-items: center; gap: 5px">
               <label for="">Planning:</label>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="evaluasi-planning-1"
-                id=""
+                id="evaluasi-planning-1"
+                label="evaluasi-planning-1"
+                myid="check_cara"
               />
             </div>
           </td>
@@ -3685,37 +5459,46 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="evaluasi-pkl-5"
-              id=""
+              id="evaluasi-pkl-5"
+              label="evaluasi-pkl-5"
+              myid="check_cara"
+              placeholder="00.00"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="evaluasi-nama-5"
-              id=""
+              id="evaluasi-nama-5"
+              label="evaluasi-nama-5"
+              myid="check_cara"
             />
           </td>
           <td colspan="5">
             <div style="display: flex; align-items: center; gap: 5px">
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="evaluasi-objektif-2"
-                id=""
+                id="evaluasi-objektif-2"
+                label="evaluasi-objektif-2"
+                myid="check_cara"
               />
             </div>
           </td>
           <td colspan="4">
             <div style="display: flex; align-items: center; gap: 5px">
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="evaluasi-planning-2"
-                id=""
+                id="evaluasi-planning-2"
+                label="evaluasi-planning-2"
+                myid="check_cara"
               />
             </div>
           </td>
@@ -3723,113 +5506,201 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="evaluasi-pkl-6"
-              id=""
+              id="evaluasi-pkl-6"
+              label="evaluasi-pkl-6"
+              myid="check_cara"
+              placeholder="00.00"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="evaluasi-nama-6"
-              id=""
+              id="evaluasi-nama-6"
+              label="evaluasi-nama-6"
+              myid="check_cara"
             />
           </td>
           <td colspan="5">
             <div style="display: flex; align-items: center; gap: 5px">
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="evaluasi-objektif-3"
-                id=""
+                id="evaluasi-objektif-3"
+                label="evaluasi-objektif-3"
+                myid="check_cara"
               />
             </div>
           </td>
           <td colspan="4">
             <div style="display: flex; align-items: center; gap: 5px">
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="evaluasi-planning-3"
-                id=""
+                id="evaluasi-planning-3"
+                label="evaluasi-planning-3"
+                myid="check_cara"
               />
             </div>
           </td>
         </tr>
         <tr style="text-align: center">
-          <td colspan="12"><b>CATATAN</b></td>
-        </tr>
-        <tr>
-          <td colspan="12">
-            <input style="width: 100%" type="text" name="catatan-1" id="" />
+          <td style="color: #fff" bgcolor="#1C3F80" colspan="12">
+            <b>CATATAN</b>
           </td>
         </tr>
         <tr>
-          <td colspan="12">
-            <input style="width: 100%" type="text" name="catatan-2" id="" />
+          <td colspan="8">
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="catatan-1"
+              id="catatan-1"
+              label="catatan-1"
+              myid="check_cara"
+            />
+          </td>
+          <td colspan="4" rowspan="6">
+            <div
+              style="
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+              "
+            >
+              <div>
+                <label for="">Bogor,</label>
+                <input
+                  style="border: none; border-bottom: 2px black dotted"
+                  type="text"
+                  name="tgl-pengkajian"
+                  id="tgl-pengkajian"
+                  label="tgl-pengkajian"
+                  myid="check_cara"
+                  placeholder="dd/mm/yyyy"
+                  class="datepicker"
+                />
+              </div>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_pengkaji"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_pengkaji"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_pengkaji"
+                id="paraf_ex_paraf_pengkaji"
+                data-name="paraf"
+                data-id="ex_paraf_pengkaji"
+              />
+
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_pengkaji"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+              <div>
+                (<input
+                  style="
+                    border: none;
+                    border-bottom: 2px black dotted;
+                    width: 200px;
+                  "
+                  type="text"
+                  name="nama-pengkaji"
+                  id="nama-pengkaji"
+                  label="nama-pengkaji"
+                  myid="check_cara"
+                />)
+              </div>
+            </div>
           </td>
         </tr>
         <tr>
-          <td colspan="12">
-            <input style="width: 100%" type="text" name="catatan-3" id="" />
+          <td colspan="8">
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="catatan-2"
+              id="catatan-2"
+              label="catatan-2"
+              myid="check_cara"
+            />
           </td>
         </tr>
         <tr>
-          <td colspan="12">
-            <input style="width: 100%" type="text" name="catatan-4" id="" />
+          <td colspan="8">
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="catatan-3"
+              id="catatan-3"
+              label="catatan-3"
+              myid="check_cara"
+            />
           </td>
         </tr>
         <tr>
-          <td colspan="12">
-            <input style="width: 100%" type="text" name="catatan-5" id="" />
+          <td colspan="8">
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="catatan-4"
+              id="catatan-4"
+              label="catatan-4"
+              myid="check_cara"
+            />
           </td>
         </tr>
         <tr>
-          <td colspan="12">
-            <input style="width: 100%" type="text" name="catatan-6" id="" />
+          <td colspan="8">
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="catatan-5"
+              id="catatan-5"
+              label="catatan-5"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="8">
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="catatan-6"
+              id="catatan-6"
+              label="catatan-6"
+              myid="check_cara"
+            />
           </td>
         </tr>
       </tbody>
     </table>
-
-    <br />
-    <hr />
-    <br />
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const risikoJatuh = document.querySelectorAll(".risiko-jatuh");
-        const totalRisikoJatuh = document.querySelector(
-          "input[name='total-risiko-jatuh']"
-        );
-
-        function hitungTotalRisikoJatuh() {
-          let total = 0;
-          let kesimpulan = "";
-
-          risikoJatuh.forEach((input) => {
-            if (input.checked) {
-              total += parseFloat(input.value) || 0;
-            }
-          });
-
-          if (total < 25) {
-            kesimpulan += `${total}, tidak berisiko`;
-          } else if (total >= 25 && total <= 50) {
-            kesimpulan += `${total}, risiko rendah`;
-          } else if (total > 50) {
-            kesimpulan += `${total}, risiko tinggi`;
-          }
-
-          totalRisikoJatuh.value = kesimpulan;
-        }
-
-        risikoJatuh.forEach((input) => {
-          input.addEventListener("input", hitungTotalRisikoJatuh);
-        });
-      });
-    </script>
   </body>
 </html>

@@ -3,30 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PENGKAJIAN PASIEN POPULASI KHUSUS RS. AZRA BOGOR</title>
+    <title>PENGKAJIAN PASIEN POPULASI KHUSUS</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -45,6 +40,43 @@
           todayHighlight: true,
         });
       });
+
+      $('input[name="penyakit_menular_switch"]').on("change", function () {
+        if ($(this).val() === "false") {
+          $("input.penyakit-menular").prop("disabled", true);
+          $(this).val("true");
+          $("input.penyakit-menular").val("").trigger("input");
+          $("input.penyakit-menular").val("").prop("checked", false);
+        } else {
+          $("input.penyakit-menular").prop("disabled", false);
+          $(this).val("false");
+        }
+      });
+
+      $('input[name="penyakit_penurunan_daya_tahan_tubuh_switch"]').on(
+        "change",
+        function () {
+          if ($(this).val() === "false") {
+            $("input.penyakit-penurunan-daya-tahan-tubuh").prop(
+              "disabled",
+              true
+            );
+            $(this).val("true");
+            $("input.penyakit-penurunan-daya-tahan-tubuh")
+              .val("")
+              .trigger("input");
+            $("input.penyakit-penurunan-daya-tahan-tubuh")
+              .val("")
+              .prop("checked", false);
+          } else {
+            $("input.penyakit-penurunan-daya-tahan-tubuh").prop(
+              "disabled",
+              false
+            );
+            $(this).val("false");
+          }
+        }
+      );
     });
 
     // Untuk Keperluan TTD
@@ -158,7 +190,7 @@
     }
   </script>
   <body>
-    <h1 class="title">PENGKAJIAN PASIEN POPULASI KHUSUS RS. AZRA BOGOR</h1>
+    <h1 class="title">PENGKAJIAN PASIEN POPULASI KHUSUS</h1>
     <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
@@ -228,7 +260,7 @@
               name="umur"
               id="umur"
               label="umur"
-              value="{VAGE}"
+              value="{VAGEREGIS}"
               myid="check_cara"
               placeholder="..."
             />
@@ -608,7 +640,22 @@
       <tbody>
         <tr>
           <td style="width: 5%"><b>B.</b></td>
-          <td colspan="2"><b>PENYAKIT MENULAR</b></td>
+          <td colspan="2">
+            <div style="display: flex; gap: 5px; align-items: center">
+              <b>PENYAKIT MENULAR</b>
+              <div>
+                <input
+                  type="checkbox"
+                  name="penyakit_menular_switch"
+                  id="penyakit_menular_switch"
+                  label="penyakit_menular_switch"
+                  myid="check_cara"
+                  value="false"
+                />
+                <label for=""><b>Non</b></label>
+              </div>
+            </div>
+          </td>
         </tr>
         <tr>
           <td style="width: 5%"></td>
@@ -619,6 +666,7 @@
             <div style="display: flex; gap: 5px">
               <input
                 type="radio"
+                class="penyakit-menular"
                 name="pasien-mengetahui-penyakit-menular"
                 id="pasien-mengetahui-penyakit-menular"
                 label="pasien-mengetahui-penyakit-menular"
@@ -628,6 +676,7 @@
               <label for="">Ya</label>
               <input
                 type="radio"
+                class="penyakit-menular"
                 name="pasien-mengetahui-penyakit-menular"
                 id="pasien-mengetahui-penyakit-menular"
                 label="pasien-mengetahui-penyakit-menular"
@@ -649,6 +698,7 @@
             <div style="display: flex; gap: 5px">
               <input
                 type="checkbox"
+                class="penyakit-menular"
                 name="perolehan-informasi-dokter"
                 id="perolehan-informasi-dokter"
                 label="perolehan-informasi-dokter"
@@ -658,6 +708,7 @@
               <label for="">Dokter</label>
               <input
                 type="checkbox"
+                class="penyakit-menular"
                 name="perolehan-informasi-perawat"
                 id="perolehan-informasi-perawat"
                 label="perolehan-informasi-perawat"
@@ -667,6 +718,7 @@
               <label for="">Perawat</label>
               <input
                 type="checkbox"
+                class="penyakit-menular"
                 name="perolehan-informasi-perawat"
                 id="perolehan-informasi-perawat"
                 label="perolehan-informasi-perawat"
@@ -676,6 +728,7 @@
               <label for="">Keluarga</label>
               <input
                 type="checkbox"
+                class="penyakit-menular"
                 name="perolehan-informasi-keluarga"
                 id="perolehan-informasi-keluarga"
                 label="perolehan-informasi-keluarga"
@@ -685,6 +738,7 @@
               <label for="">Lainnya,</label>
               <input
                 type="text"
+                class="penyakit-menular"
                 name="perolehan-informasi-lainnya"
                 id="perolehan-informasi-lainnya"
                 label="perolehan-informasi-lainnya"
@@ -704,6 +758,7 @@
             <div style="display: flex; gap: 5px">
               <input
                 type="radio"
+                class="penyakit-menular"
                 name="informasi-jangka-waktu-pengobatan"
                 id="informasi-jangka-waktu-pengobatan"
                 label="informasi-jangka-waktu-pengobatan"
@@ -713,6 +768,7 @@
               <label for="">Tidak</label>
               <input
                 type="radio"
+                class="penyakit-menular"
                 name="informasi-jangka-waktu-pengobatan"
                 id="informasi-jangka-waktu-pengobatan"
                 label="informasi-jangka-waktu-pengobatan"
@@ -722,6 +778,7 @@
               <label for="">Ya, di</label>
               <input
                 type="text"
+                class="penyakit-menular"
                 name="detail-informasi-jangka-waktu-pengobatan"
                 id="detail-informasi-jangka-waktu-pengobatan"
                 label="detail-informasi-jangka-waktu-pengobatan"
@@ -741,6 +798,7 @@
             <div style="display: flex; gap: 5px">
               <input
                 type="checkbox"
+                class="penyakit-menular"
                 name="cara-penularan-airbone"
                 id="cara-penularan-airbone"
                 label="cara-penularan-airbone"
@@ -750,6 +808,7 @@
               <label for="">Airbone</label>
               <input
                 type="checkbox"
+                class="penyakit-menular"
                 name="cara-penularan-droplet"
                 id="cara-penularan-droplet"
                 label="cara-penularan-droplet"
@@ -759,6 +818,7 @@
               <label for="">Droplet</label>
               <input
                 type="checkbox"
+                class="penyakit-menular"
                 name="cara-penularan-kontak-lgsg"
                 id="cara-penularan-kontak-lgsg"
                 label="cara-penularan-kontak-lgsg"
@@ -768,6 +828,7 @@
               <label for="">Kontak langsung</label>
               <input
                 type="checkbox"
+                class="penyakit-menular"
                 name="cara-penularan-cairan-tbh"
                 id="cara-penularan-cairan-tbh"
                 label="cara-penularan-cairan-tbh"
@@ -787,6 +848,7 @@
             <div style="display: flex; gap: 5px">
               <input
                 type="radio"
+                class="penyakit-menular"
                 name="penyakit-penyerta-menular"
                 id="penyakit-penyerta-menular"
                 label="penyakit-penyerta-menular"
@@ -796,6 +858,7 @@
               <label for="">Tidak</label>
               <input
                 type="radio"
+                class="penyakit-menular"
                 name="penyakit-penyerta-menular"
                 id="penyakit-penyerta-menular"
                 label="penyakit-penyerta-menular"
@@ -805,6 +868,7 @@
               <label for="">Ya,</label>
               <input
                 type="text"
+                class="penyakit-menular"
                 name="detail-penyakit-penyerta-menular"
                 id="detail-penyakit-penyerta-menular"
                 label="detail-penyakit-penyerta-menular"
@@ -822,7 +886,22 @@
       <tbody>
         <tr>
           <td style="width: 5%"><b>C.</b></td>
-          <td colspan="2"><b>PENYAKIT PENURUNAN DAYA TAHAN TUBUH</b></td>
+          <td colspan="2">
+            <div style="display: flex; gap: 5px; align-items: center">
+              <b>PENYAKIT PENURUNAN DAYA TAHAN TUBUH</b>
+              <div>
+                <input
+                  type="checkbox"
+                  name="penyakit_penurunan_daya_tahan_tubuh_switch"
+                  id="penyakit_penurunan_daya_tahan_tubuh_switch"
+                  label="penyakit_penurunan_daya_tahan_tubuh_switch"
+                  myid="check_cara"
+                  value="false"
+                />
+                <label for=""><b>Non</b></label>
+              </div>
+            </div>
+          </td>
         </tr>
         <tr>
           <td style="width: 5%"></td>
@@ -833,6 +912,7 @@
             <div style="display: flex; gap: 5px">
               <input
                 type="radio"
+                class="penyakit-penurunan-daya-tahan-tubuh"
                 name="pasien-mengetahui-penyakit"
                 id="pasien-mengetahui-penyakit"
                 label="pasien-mengetahui-penyakit"
@@ -842,6 +922,7 @@
               <label for="">Ya</label>
               <input
                 type="radio"
+                class="penyakit-penurunan-daya-tahan-tubuh"
                 name="pasien-mengetahui-penyakit"
                 id="pasien-mengetahui-penyakit"
                 label="pasien-mengetahui-penyakit"
@@ -863,6 +944,7 @@
             <div style="display: flex; gap: 5px">
               <input
                 type="checkbox"
+                class="penyakit-penurunan-daya-tahan-tubuh"
                 name="sumber-perolehan-informasi-penyakit-dokter"
                 id="sumber-perolehan-informasi-penyakit-dokter"
                 label="sumber-perolehan-informasi-penyakit-dokter"
@@ -872,6 +954,7 @@
               <label for="">Dokter</label>
               <input
                 type="checkbox"
+                class="penyakit-penurunan-daya-tahan-tubuh"
                 name="sumber-perolehan-informasi-penyakit-perawat"
                 id="sumber-perolehan-informasi-penyakit-perawat"
                 label="sumber-perolehan-informasi-penyakit-perawat"
@@ -881,6 +964,7 @@
               <label for="">Perawat</label>
               <input
                 type="checkbox"
+                class="penyakit-penurunan-daya-tahan-tubuh"
                 name="sumber-perolehan-informasi-penyakit-keluarga"
                 id="sumber-perolehan-informasi-penyakit-keluarga"
                 label="sumber-perolehan-informasi-penyakit-keluarga"
@@ -890,6 +974,7 @@
               <label for="">Keluarga</label>
               <input
                 type="checkbox"
+                class="penyakit-penurunan-daya-tahan-tubuh"
                 name="sumber-perolehan-informasi-penyakit-lainnya"
                 id="sumber-perolehan-informasi-penyakit-lainnya"
                 label="sumber-perolehan-informasi-penyakit-lainnya"
@@ -899,6 +984,7 @@
               <label for="">Lainnya,</label>
               <input
                 type="text"
+                class="penyakit-penurunan-daya-tahan-tubuh"
                 name="detail-sumber-perolehan-informasi-penyakit"
                 id="detail-sumber-perolehan-informasi-penyakit"
                 label="detail-sumber-perolehan-informasi-penyakit"
@@ -918,6 +1004,7 @@
             <div style="display: flex; gap: 5px">
               <input
                 type="radio"
+                class="penyakit-penurunan-daya-tahan-tubuh"
                 name="menerima-informasi-jangka-waktu-pengobatan"
                 id="menerima-informasi-jangka-waktu-pengobatan"
                 label="menerima-informasi-jangka-waktu-pengobatan"
@@ -927,6 +1014,7 @@
               <label for="">Tidak</label>
               <input
                 type="radio"
+                class="penyakit-penurunan-daya-tahan-tubuh"
                 name="menerima-informasi-jangka-waktu-pengobatan"
                 id="menerima-informasi-jangka-waktu-pengobatan"
                 label="menerima-informasi-jangka-waktu-pengobatan"
@@ -936,6 +1024,7 @@
               <label for="">Ya, di</label>
               <input
                 type="text"
+                class="penyakit-penurunan-daya-tahan-tubuh"
                 name="detail-menerima-informasi-jangka-waktu-pengobatan"
                 id="detail-menerima-informasi-jangka-waktu-pengobatan"
                 label="detail-menerima-informasi-jangka-waktu-pengobatan"
@@ -955,6 +1044,7 @@
             <div style="display: flex; gap: 5px">
               <input
                 type="radio"
+                class="penyakit-penurunan-daya-tahan-tubuh"
                 name="penyakit-penyerta-penurunan-daya-tahan-tubuh"
                 id="penyakit-penyerta-penurunan-daya-tahan-tubuh"
                 label="penyakit-penyerta-penurunan-daya-tahan-tubuh"
@@ -964,6 +1054,7 @@
               <label for="">Tidak</label>
               <input
                 type="radio"
+                class="penyakit-penurunan-daya-tahan-tubuh"
                 name="penyakit-penyerta-penurunan-daya-tahan-tubuh"
                 id="penyakit-penyerta-penurunan-daya-tahan-tubuh"
                 label="penyakit-penyerta-penurunan-daya-tahan-tubuh"
@@ -973,6 +1064,7 @@
               <label for="">Ya,</label>
               <input
                 type="text"
+                class="penyakit-penurunan-daya-tahan-tubuh"
                 name="detail-penyakit-penyerta-penurunan-daya-tahan-tubuh"
                 id="detail-penyakit-penyerta-penurunan-daya-tahan-tubuh"
                 label="detail-penyakit-penyerta-penurunan-daya-tahan-tubuh"
@@ -2773,57 +2865,5 @@
         </tr>
       </tbody>
     </table>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var checkboxButtons = document.querySelectorAll(
-          'input[type="checkbox"]'
-        );
-        checkboxButtons.forEach(function (checkbox) {
-          checkbox.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var checkboxes = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              checkboxes.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

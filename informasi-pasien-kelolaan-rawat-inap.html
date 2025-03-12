@@ -3,52 +3,59 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>INFORMASI PASIEN KELOLAAN RAWAT INAP RS AZRA BOGOR</title>
+    <title>INFORMASI PASIEN KELOLAAN RAWAT INAP</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
   </style>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+  </script>
   <body>
-    <h1 class="title">INFORMASI PASIEN KELOLAAN RAWAT INAP RS AZRA BOGOR</h1>
+    <h1 class="title">INFORMASI PASIEN KELOLAAN RAWAT INAP</h1>
 
     <table width="100%">
       <tbody>
         <tr>
-          <td>
+          <td style="border: none">
             <label for=""><b>TANGGAL :</b></label>
             <input
               type="text"
               name="tgl-kelolaan"
               id="tgl-kelolaan"
               label="tgl-kelolaan"
+              class="datepicker"
               placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
-          <td style="text-align: center">
+          <td style="text-align: center; border: none">
             <label for=""><b>POS :</b></label>
             <input
               type="text"
@@ -59,7 +66,7 @@
               myid="check_cara"
             />
           </td>
-          <td style="text-align: end">
+          <td style="text-align: end; border: none">
             <label for=""><b>PERAWAT PRIMER :</b></label>
             <input
               type="text"
@@ -103,7 +110,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kamar-kelolaan-1"
               id="kamar-kelolaan-1"
@@ -114,7 +121,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-lengkap-pasien-1"
               id="nama-lengkap-pasien-1"
@@ -125,7 +132,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hri-rwt-ke-1"
               id="hri-rwt-ke-1"
@@ -136,7 +143,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="dk-1"
               id="dk-1"
@@ -147,7 +154,7 @@
           </td>
           <td width="35%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="mslh-keperawatan-1"
               id="mslh-keperawatan-1"
@@ -158,7 +165,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-pagi-1"
               id="pa-pagi-1"
@@ -169,7 +176,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-sore-1"
               id="pa-sore-1"
@@ -180,7 +187,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-malam-1"
               id="pa-malam-1"
@@ -193,7 +200,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kamar-kelolaan-2"
               id="kamar-kelolaan-2"
@@ -204,7 +211,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-lengkap-pasien-2"
               id="nama-lengkap-pasien-2"
@@ -215,7 +222,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hri-rwt-ke-2"
               id="hri-rwt-ke-2"
@@ -226,7 +233,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="dk-2"
               id="dk-2"
@@ -237,7 +244,7 @@
           </td>
           <td width="35%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="mslh-keperawatan-2"
               id="mslh-keperawatan-2"
@@ -248,7 +255,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-pagi-2"
               id="pa-pagi-2"
@@ -259,7 +266,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-sore-2"
               id="pa-sore-2"
@@ -270,7 +277,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-malam-2"
               id="pa-malam-2"
@@ -283,7 +290,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kamar-kelolaan-3"
               id="kamar-kelolaan-3"
@@ -294,7 +301,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-lengkap-pasien-3"
               id="nama-lengkap-pasien-3"
@@ -305,7 +312,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hri-rwt-ke-3"
               id="hri-rwt-ke-3"
@@ -316,7 +323,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="dk-3"
               id="dk-3"
@@ -327,7 +334,7 @@
           </td>
           <td width="35%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="mslh-keperawatan-3"
               id="mslh-keperawatan-3"
@@ -338,7 +345,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-pagi-3"
               id="pa-pagi-3"
@@ -349,7 +356,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-sore-3"
               id="pa-sore-3"
@@ -360,7 +367,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-malam-3"
               id="pa-malam-3"
@@ -373,7 +380,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kamar-kelolaan-4"
               id="kamar-kelolaan-4"
@@ -384,7 +391,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-lengkap-pasien-4"
               id="nama-lengkap-pasien-4"
@@ -395,7 +402,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hri-rwt-ke-4"
               id="hri-rwt-ke-4"
@@ -406,7 +413,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="dk-4"
               id="dk-4"
@@ -417,7 +424,7 @@
           </td>
           <td width="35%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="mslh-keperawatan-4"
               id="mslh-keperawatan-4"
@@ -428,7 +435,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-pagi-4"
               id="pa-pagi-4"
@@ -439,7 +446,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-sore-4"
               id="pa-sore-4"
@@ -450,7 +457,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-malam-4"
               id="pa-malam-4"
@@ -463,7 +470,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kamar-kelolaan-5"
               id="kamar-kelolaan-5"
@@ -474,7 +481,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-lengkap-pasien-5"
               id="nama-lengkap-pasien-5"
@@ -485,7 +492,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hri-rwt-ke-5"
               id="hri-rwt-ke-5"
@@ -496,7 +503,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="dk-5"
               id="dk-5"
@@ -507,7 +514,7 @@
           </td>
           <td width="35%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="mslh-keperawatan-5"
               id="mslh-keperawatan-5"
@@ -518,7 +525,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-pagi-5"
               id="pa-pagi-5"
@@ -529,7 +536,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-sore-5"
               id="pa-sore-5"
@@ -540,7 +547,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-malam-5"
               id="pa-malam-5"
@@ -553,7 +560,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kamar-kelolaan-6"
               id="kamar-kelolaan-6"
@@ -564,7 +571,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-lengkap-pasien-6"
               id="nama-lengkap-pasien-6"
@@ -575,7 +582,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hri-rwt-ke-6"
               id="hri-rwt-ke-6"
@@ -586,7 +593,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="dk-6"
               id="dk-6"
@@ -597,7 +604,7 @@
           </td>
           <td width="35%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="mslh-keperawatan-6"
               id="mslh-keperawatan-6"
@@ -608,7 +615,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-pagi-6"
               id="pa-pagi-6"
@@ -619,7 +626,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-sore-6"
               id="pa-sore-6"
@@ -630,7 +637,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-malam-6"
               id="pa-malam-6"
@@ -643,7 +650,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kamar-kelolaan-7"
               id="kamar-kelolaan-7"
@@ -654,7 +661,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-lengkap-pasien-7"
               id="nama-lengkap-pasien-7"
@@ -665,7 +672,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hri-rwt-ke-7"
               id="hri-rwt-ke-7"
@@ -676,7 +683,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="dk-7"
               id="dk-7"
@@ -687,7 +694,7 @@
           </td>
           <td width="35%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="mslh-keperawatan-7"
               id="mslh-keperawatan-7"
@@ -698,7 +705,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-pagi-7"
               id="pa-pagi-7"
@@ -709,7 +716,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-sore-7"
               id="pa-sore-7"
@@ -720,7 +727,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-malam-7"
               id="pa-malam-7"
@@ -733,7 +740,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kamar-kelolaan-8"
               id="kamar-kelolaan-8"
@@ -744,7 +751,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-lengkap-pasien-8"
               id="nama-lengkap-pasien-8"
@@ -755,7 +762,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hri-rwt-ke-8"
               id="hri-rwt-ke-8"
@@ -766,7 +773,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="dk-8"
               id="dk-8"
@@ -777,7 +784,7 @@
           </td>
           <td width="35%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="mslh-keperawatan-8"
               id="mslh-keperawatan-8"
@@ -788,7 +795,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-pagi-8"
               id="pa-pagi-8"
@@ -799,7 +806,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-sore-8"
               id="pa-sore-8"
@@ -810,7 +817,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-malam-8"
               id="pa-malam-8"
@@ -823,7 +830,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kamar-kelolaan-9"
               id="kamar-kelolaan-9"
@@ -834,7 +841,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-lengkap-pasien-9"
               id="nama-lengkap-pasien-9"
@@ -845,7 +852,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hri-rwt-ke-9"
               id="hri-rwt-ke-9"
@@ -856,7 +863,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="dk-9"
               id="dk-9"
@@ -867,7 +874,7 @@
           </td>
           <td width="35%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="mslh-keperawatan-9"
               id="mslh-keperawatan-9"
@@ -878,7 +885,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-pagi-9"
               id="pa-pagi-9"
@@ -889,7 +896,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-sore-9"
               id="pa-sore-9"
@@ -900,7 +907,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-malam-9"
               id="pa-malam-9"
@@ -913,7 +920,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kamar-kelolaan-10"
               id="kamar-kelolaan-10"
@@ -924,7 +931,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-lengkap-pasien-10"
               id="nama-lengkap-pasien-10"
@@ -935,7 +942,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hri-rwt-ke-10"
               id="hri-rwt-ke-10"
@@ -946,7 +953,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="dk-10"
               id="dk-10"
@@ -957,7 +964,7 @@
           </td>
           <td width="35%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="mslh-keperawatan-10"
               id="mslh-keperawatan-10"
@@ -968,7 +975,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-pagi-10"
               id="pa-pagi-10"
@@ -979,7 +986,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-sore-10"
               id="pa-sore-10"
@@ -990,7 +997,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-malam-10"
               id="pa-malam-10"
@@ -1003,7 +1010,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kamar-kelolaan-11"
               id="kamar-kelolaan-11"
@@ -1014,7 +1021,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-lengkap-pasien-11"
               id="nama-lengkap-pasien-11"
@@ -1025,7 +1032,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hri-rwt-ke-11"
               id="hri-rwt-ke-11"
@@ -1036,7 +1043,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="dk-11"
               id="dk-11"
@@ -1047,7 +1054,7 @@
           </td>
           <td width="35%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="mslh-keperawatan-11"
               id="mslh-keperawatan-11"
@@ -1058,7 +1065,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-pagi-11"
               id="pa-pagi-11"
@@ -1069,7 +1076,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-sore-11"
               id="pa-sore-11"
@@ -1080,7 +1087,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-malam-11"
               id="pa-malam-11"
@@ -1093,7 +1100,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kamar-kelolaan-12"
               id="kamar-kelolaan-12"
@@ -1104,7 +1111,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-lengkap-pasien-12"
               id="nama-lengkap-pasien-12"
@@ -1115,7 +1122,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hri-rwt-ke-12"
               id="hri-rwt-ke-12"
@@ -1126,7 +1133,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="dk-12"
               id="dk-12"
@@ -1137,7 +1144,7 @@
           </td>
           <td width="35%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="mslh-keperawatan-12"
               id="mslh-keperawatan-12"
@@ -1148,7 +1155,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-pagi-12"
               id="pa-pagi-12"
@@ -1159,7 +1166,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-sore-12"
               id="pa-sore-12"
@@ -1170,7 +1177,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-malam-12"
               id="pa-malam-12"
@@ -1183,7 +1190,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kamar-kelolaan-13"
               id="kamar-kelolaan-13"
@@ -1194,7 +1201,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-lengkap-pasien-13"
               id="nama-lengkap-pasien-13"
@@ -1205,7 +1212,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hri-rwt-ke-13"
               id="hri-rwt-ke-13"
@@ -1216,7 +1223,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="dk-13"
               id="dk-13"
@@ -1227,7 +1234,7 @@
           </td>
           <td width="35%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="mslh-keperawatan-13"
               id="mslh-keperawatan-13"
@@ -1238,7 +1245,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-pagi-13"
               id="pa-pagi-13"
@@ -1249,7 +1256,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-sore-13"
               id="pa-sore-13"
@@ -1260,7 +1267,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-malam-13"
               id="pa-malam-13"
@@ -1273,7 +1280,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kamar-kelolaan-14"
               id="kamar-kelolaan-14"
@@ -1284,7 +1291,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-lengkap-pasien-14"
               id="nama-lengkap-pasien-14"
@@ -1295,7 +1302,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hri-rwt-ke-14"
               id="hri-rwt-ke-14"
@@ -1306,7 +1313,7 @@
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="dk-14"
               id="dk-14"
@@ -1317,7 +1324,7 @@
           </td>
           <td width="35%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="mslh-keperawatan-14"
               id="mslh-keperawatan-14"
@@ -1328,7 +1335,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-pagi-14"
               id="pa-pagi-14"
@@ -1339,7 +1346,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-sore-14"
               id="pa-sore-14"
@@ -1350,7 +1357,7 @@
           </td>
           <td width="8%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="pa-malam-14"
               id="pa-malam-14"
@@ -1362,15 +1369,5 @@
         </tr>
       </tbody>
     </table>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

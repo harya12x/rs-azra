@@ -3,30 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PEMBERIAN INFORMASI RUJUK RS. AZRA BOGOR</title>
+    <title>PEMBERIAN INFORMASI RUJUK</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
-
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -158,7 +152,7 @@
     }
   </script>
   <body>
-    <h1 class="title">PEMBERIAN INFORMASI RUJUK RS. AZRA BOGOR</h1>
+    <h1 class="title">PEMBERIAN INFORMASI RUJUK</h1>
     <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
@@ -211,10 +205,11 @@
               name="tgl_lahir"
               type="text"
               id="tgl_lahir"
-              placeholder="dd-mm-yy"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
               label="tanggal lahir"
               value="{VBIRTH_DATE}"
+              class="datepicker"
             />
           </td>
 
@@ -227,7 +222,7 @@
               id="umur-pengkajian"
               myid="check_cara"
               placeholder="..."
-              value="{VAGE}"
+              value="{VAGEREGIS}"
             />
           </td>
           <td>
@@ -239,7 +234,6 @@
               type="text"
               id="instalasi"
               placeholder="..."
-              value="{VINSTALASI}"
               myid="check_cara"
               label="instalasi"
             />
@@ -331,8 +325,8 @@
           <td width="50%">
             <textarea
               type="textarea"
-              style="width: 100%"
-              rows="4"
+              style="width: 100%; padding: 0"
+              rows="5"
               name="isi-informasi-diagnosa-pasien"
               id="isi-informasi-diagnosa-pasien"
               label="isi-informasi-diagnosa-pasien"
@@ -377,7 +371,7 @@
             <br />
             <br />
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="paraf-penerima-informasi-diagnosa-pasien"
               id="paraf-penerima-informasi-diagnosa-pasien"
@@ -393,8 +387,8 @@
           <td>
             <textarea
               type="textarea"
-              style="width: 100%"
-              rows="4"
+              style="width: 100%; padding: 0"
+              rows="5"
               name="isi-informasi-terapi-tindakan-diperlukan"
               id="isi-informasi-terapi-tindakan-diperlukan"
               label="isi-informasi-terapi-tindakan-diperlukan"
@@ -439,7 +433,7 @@
             <br />
             <br />
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="paraf-penerima-informasi-terapi-tindakan-diperlukan"
               id="paraf-penerima-informasi-terapi-tindakan-diperlukan"
@@ -455,8 +449,8 @@
           <td>
             <textarea
               type="textarea"
-              style="width: 100%"
-              rows="4"
+              style="width: 100%; padding: 0"
+              rows="5"
               name="isi-informasi-alasan-tujuan-rujuk"
               id="isi-informasi-alasan-tujuan-rujuk"
               label="isi-informasi-alasan-tujuan-rujuk"
@@ -501,7 +495,7 @@
             <br />
             <br />
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="paraf-penerima-informasi-alasan-tujuan-rujuk"
               id="paraf-penerima-informasi-alasan-tujuan-rujuk"
@@ -517,8 +511,8 @@
           <td>
             <textarea
               type="textarea"
-              style="width: 100%"
-              rows="4"
+              style="width: 100%; padding: 0"
+              rows="5"
               name="isi-informasi-risiko-apabila-tdk-dilakukan-rujuk"
               id="isi-informasi-risiko-apabila-tdk-dilakukan-rujuk"
               label="isi-informasi-risiko-apabila-tdk-dilakukan-rujuk"
@@ -563,7 +557,7 @@
             <br />
             <br />
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="paraf-penerima-informasi-risiko-apabila-tdk-dilakukan-rujuk"
               id="paraf-penerima-informasi-risiko-apabila-tdk-dilakukan-rujuk"
@@ -579,8 +573,8 @@
           <td>
             <textarea
               type="textarea"
-              style="width: 100%"
-              rows="4"
+              style="width: 100%; padding: 0"
+              rows="5"
               name="isi-informasi-transportasi-pendamping-selama-rujukan"
               id="isi-informasi-transportasi-pendamping-selama-rujukan"
               label="isi-informasi-transportasi-pendamping-selama-rujukan"
@@ -625,7 +619,7 @@
             <br />
             <br />
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="paraf-penerima-informasi-transportasi-pendamping-selama-rujukan"
               id="paraf-penerima-informasi-transportasi-pendamping-selama-rujukan"
@@ -641,8 +635,8 @@
           <td>
             <textarea
               type="textarea"
-              style="width: 100%"
-              rows="4"
+              style="width: 100%; padding: 0"
+              rows="5"
               name="isi-informasi-risiko-yg-dpt-timbul-selama-rujukan"
               id="isi-informasi-risiko-yg-dpt-timbul-selama-rujukan"
               label="isi-informasi-risiko-yg-dpt-timbul-selama-rujukan"
@@ -687,7 +681,7 @@
             <br />
             <br />
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="paraf-penerima-informasi-risiko-yg-dpt-timbul-selama-rujukan"
               id="paraf-penerima-informasi-risiko-yg-dpt-timbul-selama-rujukan"
@@ -716,8 +710,8 @@
           <td>
             <textarea
               type="textarea"
-              style="width: 100%"
-              rows="4"
+              style="width: 100%; padding: 0"
+              rows="5"
               name="isi-informasi-lain-lain"
               id="isi-informasi-lain-lain"
               label="isi-informasi-lain-lain"
@@ -762,7 +756,7 @@
             <br />
             <br />
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="paraf-penerima-informasi-lain-lain"
               id="paraf-penerima-informasi-lain-lain"
@@ -825,7 +819,7 @@
             <br />
             <br />
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="paraf-dokter"
               id="paraf-dokter"
@@ -879,7 +873,7 @@
             <br />
             <br />
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="paraf-keluarga-pasien"
               id="paraf-keluarga-pasien"
@@ -892,35 +886,5 @@
         </tr>
       </tbody>
     </table>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabel dengan Arsiran Interaktif</title>
+  <style>
+    table {
+      width: 50%;
+      border-collapse: collapse;
+      margin: 20px auto;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    /* Arsiran Garis-garis Hitam */
+    .striped {
+      background: repeating-linear-gradient(45deg, #000 0, #000 10px, transparent 10px, transparent 20px);
+    }
+
+    /* Arsiran Kotak-kotak Hitam */
+    .checked {
+      background: url('https://www.transparenttextures.com/patterns/checkered-black-and-white.png');
+    }
+
+    /* Arsiran Full Hitam */
+    .solid {
+      background-color: #000;
+      color: white; /* Menjaga teks terlihat pada latar belakang hitam */
+    }
+
+    .highlight {
+      border: 2px solid #000;
+    }
+
+    /* Gaya untuk mengindikasikan tombol yang dipilih */
+    .selected {
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 style="text-align: center;">Tabel dengan Arsiran Interaktif</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nama</th>
+        <th>Usia</th>
+        <th>Kota</th>
+        <th>Arsir</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Ali</td>
+        <td>25</td>
+        <td>Jakarta</td>
+        <td>
+          <button onclick="setPattern(this, 'striped')">Garis-garis</button>
+          <button onclick="setPattern(this, 'checked')">Kotak-kotak</button>
+          <button onclick="setPattern(this, 'solid')">Full Arsiran</button>
+        </td>
+      </tr>
+      <tr>
+        <td>Siti</td>
+        <td>30</td>
+        <td>Bandung</td>
+        <td>
+          <button onclick="setPattern(this, 'striped')">Garis-garis</button>
+          <button onclick="setPattern(this, 'checked')">Kotak-kotak</button>
+          <button onclick="setPattern(this, 'solid')">Full Arsiran</button>
+        </td>
+      </tr>
+      <tr>
+        <td>Rudi</td>
+        <td>28</td>
+        <td>Surabaya</td>
+        <td>
+          <button onclick="setPattern(this, 'striped')">Garis-garis</button>
+          <button onclick="setPattern(this, 'checked')">Kotak-kotak</button>
+          <button onclick="setPattern(this, 'solid')">Full Arsiran</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    let selectedPattern = '';  // Menyimpan pola arsiran yang dipilih
+
+    // Fungsi untuk mengatur arsiran pada baris yang dipilih
+    function setPattern(button, pattern) {
+      // Ambil semua tombol dan hapus kelas selected
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(btn => btn.classList.remove('selected'));
+
+      // Tandai tombol yang dipilih
+      button.classList.add('selected');
+
+      // Simpan pola arsiran yang dipilih
+      selectedPattern = pattern;
+    }
+
+    // Event listener untuk sel tabel (td) agar bisa dipilih
+    document.querySelectorAll('td').forEach(function(cell) {
+      cell.addEventListener('click', function() {
+        // Hanya beri arsiran jika ada pola yang dipilih
+        if (selectedPattern) {
+          // Hapus kelas arsiran yang ada sebelumnya
+          cell.classList.remove('striped', 'checked', 'solid');
+
+          // Tambahkan arsiran baru sesuai pola yang dipilih
+          cell.classList.add(selectedPattern);
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

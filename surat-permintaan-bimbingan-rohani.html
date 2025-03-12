@@ -6,27 +6,22 @@
     <title>SURAT PERMINTAAN BIMBINGAN ROHANI</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -162,7 +157,7 @@
   <body>
     <h1 class="title"><b>SURAT PERMINTAAN BIMBINGAN ROHANI</b></h1>
 
-    <table width="100%">
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
           <td style="padding-left: 5px">Kepada, Yth.</td>
@@ -217,7 +212,7 @@
                 id="umur-pasien"
                 label="umur-pasien"
                 placeholder="......"
-                value="{VAGE}"
+                value="{VAGEREGIS}"
                 myid="check_cara"
               />
               <label for="">tahun</label>
@@ -312,12 +307,12 @@
           <td>
             <input
               type="text"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               name="tgl-permintaan-bimbingan"
               id="tgl-permintaan-bimbingan"
               label="tgl-permintaan-bimbingan"
               myid="check_cara"
-              placeholder="dd-mm-yy"
+              placeholder="dd/mm/yyyy"
             />
             <br />
             <input
@@ -461,9 +456,9 @@
               name="hasil_bimbingan_rohani"
               id="hasil_bimbingan_rohani"
               label="hasil_bimbingan_rohani"
-              style="width: 100%; margin-top: 5px; padding: 5px"
+              style="width: 100%; margin-top: 5px; padding: 0"
               myid="check_cara"
-              rows="10"
+              rows="20"
             ></textarea>
           </td>
         </tr>
@@ -528,35 +523,5 @@
         </tr>
       </tbody>
     </table>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

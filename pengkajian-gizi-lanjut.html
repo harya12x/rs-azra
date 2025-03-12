@@ -1,0 +1,1984 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PENGKAJIAN GIZI LANJUT</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+
+      let skorSga = { A: 0, B: 0, C: 0 };
+
+      let jawabanTerakhir = {};
+
+      $("input[class='skor-sga']").on("change", function () {
+        const pertanyaan = $(this).data("pertanyaan");
+        const jawaban = $(this).val();
+
+        if (jawabanTerakhir[pertanyaan]) {
+          const jawabanSebelum = jawabanTerakhir[pertanyaan];
+          skorSga[jawabanSebelum]--;
+        }
+
+        jawabanTerakhir[pertanyaan] = jawaban;
+
+        skorSga[jawaban]++;
+
+        if (skorSga.A >= 8) {
+          $("input[name='total-skor-sga']").val("A = Gizi baik / normal");
+        } else if (skorSga.B >= 8) {
+          $("input[name='total-skor-sga']").val("B = Gizi kurang / sedang");
+        } else if (skorSga.C >= 8) {
+          $("input[name='total-skor-sga']").val("C = Gizi buruk");
+        }
+      });
+    });
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
+  <body>
+    <h1 class="title">PENGKAJIAN GIZI LANJUT</h1>
+
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td>Nama Pasien</td>
+          <td>
+            <input
+              name="nama_pasien"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              value="{VNAMA_PASIEN}"
+              placeholder="..."
+            />
+          </td>
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              myid="check_cara"
+              name="no_rm"
+              id="no_rm"
+              value="{NO_RM}"
+              label="nomor rekam medis"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan="2">Tanggal Lahir</td>
+          <td rowspan="2">
+            <input
+              name="tgl_lahir"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              value="{VBIRTH_DATE}"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td rowspan="2">Umur</td>
+          <td rowspan="2">
+            <input
+              type="text"
+              size="20"
+              name="umur-pengkajian"
+              id="umur-pengkajian"
+              myid="check_cara"
+              value="{VAGEREGIS}"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <label for="kelas"> Kelas </label>
+          </td>
+          <td>
+            <input
+              name="kelas"
+              type="text"
+              id="kelas"
+              placeholder="..."
+              myid="check_cara"
+              value="{VNAMAKELAS}"
+              label="kelas"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Kamar</td>
+          <td>
+            <input
+              type="text"
+              name="kamar"
+              id="kamar"
+              myid="check_cara"
+              placeholder="..."
+              label="kamar"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td colspan="7" align="center">
+            <b><i>Form Subjective Global Assesment</i> (SGA) Modifikasi</b>
+          </td>
+        </tr>
+        <tr>
+          <td width="30%" rowspan="2" align="center"><b>Deskripsi</b></td>
+          <td width="55%" rowspan="2" colspan="3" align="center">
+            <b>Jawaban</b>
+          </td>
+          <td colspan="3" align="center"><b>Skor SGA</b></td>
+        </tr>
+        <tr>
+          <td width="5%" align="center"><b>A</b></td>
+          <td width="5%" align="center"><b>B</b></td>
+          <td width="5%" align="center"><b>C</b></td>
+        </tr>
+        <tr>
+          <td colspan="7">
+            <b>RIWAYAT MEDIS</b>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><b>1. Berat Badan (BB)</b></p>
+            <p style="margin-left: 20px">BB biasanya</p>
+            <p style="margin-left: 20px">
+              BB awal masuk RS / saat ini (bila ada kata dikutip, bila tidak ada
+              ditimbang)
+            </p>
+          </td>
+          <td width="20%">
+            <div>
+              <input
+                type="text"
+                name="bb-biasanya"
+                id="bb-biasanya"
+                label="bb-biasanya"
+                myid="check_cara"
+                style="border: none; border-bottom: 2px dotted"
+              />
+              <label for="">kg</label>
+            </div>
+            <div>
+              <input
+                type="text"
+                name="bb-awal-masuk-rs"
+                id="bb-awal-masuk-rs"
+                label="bb-awal-masuk-rs"
+                myid="check_cara"
+                style="border: none; border-bottom: 2px dotted"
+              />
+              <label for="">kg</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <input
+                type="text"
+                name="tdk-tahu-bb-biasanya"
+                id="tdk-tahu-bb-biasanya"
+                label="tdk-tahu-bb-biasanya"
+                myid="check_cara"
+                style="border: none; border-bottom: 2px dotted"
+              />
+              <label for="">tdk tahu</label>
+            </div>
+            <div>
+              <input
+                type="text"
+                name="tdk-tahu-bb-awal-masuk-rs"
+                id="tdk-tahu-bb-awal-masuk-rs"
+                label="tdk-tahu-bb-awal-masuk-rs"
+                myid="check_cara"
+                style="border: none; border-bottom: 2px dotted"
+              />
+              <label for="">tdk tahu</label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <label for="">TB =</label>
+              <input
+                type="text"
+                name="tb"
+                id="tb"
+                label="tb"
+                myid="check_cara"
+                style="border: none; border-bottom: 2px dotted"
+              />
+              <label for="">cm</label>
+            </div>
+            <label for="">(jika tirah baring diukur panjang badan)</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              class="skor-sga"
+              data-pertanyaan="1"
+              name="skor-sga-berat-badan"
+              id="skor-sga-berat-badan"
+              label="skor-sga-berat-badan"
+              value="A"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              class="skor-sga"
+              data-pertanyaan="1"
+              name="skor-sga-berat-badan"
+              id="skor-sga-berat-badan"
+              label="skor-sga-berat-badan"
+              value="B"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              class="skor-sga"
+              data-pertanyaan="1"
+              name="skor-sga-berat-badan"
+              id="skor-sga-berat-badan"
+              label="skor-sga-berat-badan"
+              value="C"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Kehilangan BB selama 6 bulan terakhir</td>
+          <td colspan="3">
+            <div>
+              <label for="">1. Tidak ada</label>
+            </div>
+            <div style="margin-top: 5px">
+              <label for=""
+                >2. Ada perubahan, bertambah atau menurun &lt; 5&percnt;</label
+              >
+            </div>
+            <div style="margin-top: 5px">
+              <label for="">3. Ada penurunan BB 5 - 10&percnt;</label>
+            </div>
+            <div style="margin-top: 5px">
+              <label for="">4. Ada penurunan &gt; 10&percnt;</label>
+            </div>
+            <div style="margin-top: 5px">
+              <label for="">5. Tidak tahu (tidak discore)</label>
+            </div>
+          </td>
+          <td style="text-align: center">
+            <div>
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="2"
+                name="kehilangan-bb-6-bulan"
+                id="kehilangan-bb-6-bulan"
+                label="kehilangan-bb-6-bulan"
+                value="A"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="2"
+                name="kehilangan-bb-6-bulan"
+                id="kehilangan-bb-6-bulan"
+                label="kehilangan-bb-6-bulan"
+                value="A"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+          </td>
+          <td style="text-align: center">
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="2"
+                name="kehilangan-bb-6-bulan"
+                id="kehilangan-bb-6-bulan"
+                label="kehilangan-bb-6-bulan"
+                value="B"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+          </td>
+          <td style="text-align: center">
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="2"
+                name="kehilangan-bb-6-bulan"
+                id="kehilangan-bb-6-bulan"
+                label="kehilangan-bb-6-bulan"
+                value="C"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="2"
+                name="kehilangan-bb-6-bulan"
+                id="kehilangan-bb-6-bulan"
+                label="kehilangan-bb-6-bulan"
+                value="C"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p>Perubahan BB selama 2 minggu terakhir:</p>
+            <p>Bila pasien tidak yakin, tanyakan:</p>
+            <ul style="margin-left: 20px">
+              <li>Perubahan ukuran ikat pinggang</li>
+              <li>Perubahan ukuran pakaian</li>
+              <li>Asumsi teman terlihat 'lebih kurus'</li>
+            </ul>
+          </td>
+          <td colspan="3">
+            <div>
+              <label for="">1. Tidak ada</label>
+            </div>
+            <div style="margin-top: 5px">
+              <label for=""
+                >2. Tidak ada, tapi BB di bawah atau di atas normal</label
+              >
+            </div>
+            <div style="margin-top: 5px">
+              <label for="">3. Ada kenaikan tapi BB belum normal</label>
+            </div>
+            <div style="margin-top: 5px">
+              <label for="">4. BB turun</label>
+            </div>
+            <br />
+            <label for="">(catatan : IMT normal 18,5-25,0)</label>
+          </td>
+          <td style="text-align: center">
+            <div>
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="3"
+                name="perubahan-bb-selama-2-minggu"
+                id="perubahan-bb-selama-2-minggu"
+                label="perubahan-bb-selama-2-minggu"
+                value="A"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+          </td>
+          <td style="text-align: center">
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="3"
+                name="perubahan-bb-selama-2-minggu"
+                id="perubahan-bb-selama-2-minggu"
+                label="perubahan-bb-selama-2-minggu"
+                value="B"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="3"
+                name="perubahan-bb-selama-2-minggu"
+                id="perubahan-bb-selama-2-minggu"
+                label="perubahan-bb-selama-2-minggu"
+                value="B"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">&nbsp;</div>
+          </td>
+          <td style="text-align: center">
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="3"
+                name="perubahan-bb-selama-2-minggu"
+                id="perubahan-bb-selama-2-minggu"
+                label="perubahan-bb-selama-2-minggu"
+                value="C"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><b>2. Asupan Makanan</b></p>
+            <p style="margin-left: 20px">
+              Perubahan dan jumlah asupan akhir - akhir ini dibandingkan dengan
+              kebiasaan :
+            </p>
+          </td>
+          <td colspan="3">
+            <div>
+              <label>
+                1. Asupan cukup dan tidak ada perubahan; kalaupun ada perubahan,
+                hanya sedikit dan atau dalam waktu singkat.
+              </label>
+            </div>
+            <div style="margin-top: 5px">
+              <label>
+                2. Asupan menurun daripada sebelum sakit tapi tahap ringan.
+              </label>
+            </div>
+            <div style="margin-top: 5px">
+              <label> 3. Asupan rendah, tetapi ada peningkatan. </label>
+            </div>
+            <div style="margin-top: 5px">
+              <label>
+                4. Asupan sangat tidak cukup dan menurun tahap berat daripada
+                sebelumnya.
+              </label>
+            </div>
+          </td>
+          <td>
+            <div style="text-align: center">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="4"
+                name="asupan-makanan"
+                id="asupan-makanan"
+                label="asupan-makanan"
+                value="A"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+          </td>
+          <td>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px; text-align: center">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="4"
+                name="asupan-makanan"
+                id="asupan-makanan"
+                label="asupan-makanan"
+                value="B"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px; text-align: center">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="4"
+                name="asupan-makanan"
+                id="asupan-makanan"
+                label="asupan-makanan"
+                value="B"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">&nbsp;</div>
+          </td>
+          <td>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="text-align: center; margin-top: 5px">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="4"
+                name="asupan-makanan"
+                id="asupan-makanan"
+                label="asupan-makanan"
+                value="C"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Lamanya dan derajat perubahan asupan makan</td>
+          <td colspan="3">
+            <div>
+              <label> 1. &lt; 2 minggu, sedikit / tanpa perubahan </label>
+            </div>
+            <div style="margin-top: 5px">
+              <label> 2. &gt; 2 minggu, perubahan ringan-sedang </label>
+            </div>
+            <div style="margin-top: 5px">
+              <label> 3. Tidak bisa makan, perubahan drastis </label>
+            </div>
+          </td>
+          <td>
+            <div style="text-align: center">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="5"
+                name="lama-derajat-perubahan-asupan-makan"
+                id="lama-derajat-perubahan-asupan-makan"
+                label="lama-derajat-perubahan-asupan-makan"
+                value="A"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+          </td>
+          <td>
+            <div>&nbsp;</div>
+            <div style="text-align: center; margin-top: 5px">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="5"
+                name="lama-derajat-perubahan-asupan-makan"
+                id="lama-derajat-perubahan-asupan-makan"
+                label="lama-derajat-perubahan-asupan-makan"
+                value="B"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">&nbsp;</div>
+          </td>
+          <td>
+            <div>&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="text-align: center; margin-top: 5px">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="5"
+                name="lama-derajat-perubahan-asupan-makan"
+                id="lama-derajat-perubahan-asupan-makan"
+                label="lama-derajat-perubahan-asupan-makan"
+                value="C"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><b>3. Gejala Gastrointestinal :</b></p>
+            <p style="margin-left: 20px">1. Anoreksia</p>
+          </td>
+          <td>
+            <div>
+              <label for="">1.</label>
+              (<input
+                type="radio"
+                name="gejala-gastrointestinal-anoreksia"
+                id="gejala-gastrointestinal-anoreksia"
+                label="gejala-gastrointestinal-anoreksia"
+                myid="check_cara"
+                value="Tidak"
+              />)
+              <label for="">Tidak, (jika tidak langsung ke pertanyaan 2)</label>
+            </div>
+            <div>
+              <label for="">2.</label>
+              (<input
+                type="radio"
+                name="gejala-gastrointestinal-anoreksia"
+                id="gejala-gastrointestinal-anoreksia"
+                label="gejala-gastrointestinal-anoreksia"
+                myid="check_cara"
+                value="Ya"
+              />)
+              <label for="">Ya</label>
+            </div>
+          </td>
+          <td>
+            <p>Frekuensi</p>
+            <div>
+              <label for="">1. </label>
+              (<input
+                type="checkbox"
+                name="frekuensi-anoreksia-tdk-pernah"
+                id="frekuensi-anoreksia-tdk-pernah"
+                label="frekuensi-anoreksia-tdk-pernah"
+                myid="check_cara"
+                value="Tidak pernah"
+              />)
+              <label for="">Tidak pernah</label>
+            </div>
+            <div>
+              <label for="">2. </label>
+              (<input
+                type="checkbox"
+                name="frekuensi-anoreksia-tiap-hari"
+                id="frekuensi-anoreksia-tiap-hari"
+                label="frekuensi-anoreksia-tiap-hari"
+                myid="check_cara"
+                value="Tiap hari"
+              />)
+              <label for="">Tiap hari</label>
+            </div>
+            <div>
+              <label for="">3. </label>
+              (<input
+                type="checkbox"
+                name="frekuensi-anoreksia-2-3-mgg"
+                id="frekuensi-anoreksia-2-3-mgg"
+                label="frekuensi-anoreksia-2-3-mgg"
+                myid="check_cara"
+                value="2-3x/mgg"
+              />)
+              <label for="">2-3x/mgg</label>
+            </div>
+            <div>
+              <label for="">4. </label>
+              (<input
+                type="checkbox"
+                name="frekuensi-anoreksia-1-2-mgg"
+                id="frekuensi-anoreksia-1-2-mgg"
+                label="frekuensi-anoreksia-1-2-mgg"
+                myid="check_cara"
+                value="1-2x/mgg"
+              />)
+              <label for="">1-2x/mgg</label>
+            </div>
+          </td>
+          <td>
+            <p>Lamanya</p>
+
+            <div>
+              <label for="">1.</label>
+              (<input
+                type="radio"
+                name="lamanya-anoreksia"
+                id="lamanya-anoreksia"
+                label="lamanya-anoreksia"
+                myid="check_cara"
+                value="> 2 mgg"
+              />)
+              <label for="">&gt; 2 mgg</label>
+            </div>
+            <div>
+              <label for="">2.</label>
+              (<input
+                type="radio"
+                name="lamanya-anoreksia"
+                id="lamanya-anoreksia"
+                label="lamanya-anoreksia"
+                myid="check_cara"
+                value="Ya"
+              />)
+              <label for="">&lt; 2 mgg</label>
+            </div>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              class="skor-sga"
+              data-pertanyaan="6"
+              name="skor-sga-anoreksia"
+              id="skor-sga-anoreksia"
+              label="skor-sga-anoreksia"
+              value="A"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              class="skor-sga"
+              data-pertanyaan="6"
+              name="skor-sga-anoreksia"
+              id="skor-sga-anoreksia"
+              label="skor-sga-anoreksia"
+              value="B"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              class="skor-sga"
+              data-pertanyaan="6"
+              name="skor-sga-anoreksia"
+              id="skor-sga-anoreksia"
+              label="skor-sga-anoreksia"
+              value="C"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p style="margin-left: 20px">2. Mual</p>
+          </td>
+          <td>
+            <div>
+              <label for="">1.</label>
+              (<input
+                type="radio"
+                name="gejala-gastrointestinal-mual"
+                id="gejala-gastrointestinal-mual"
+                label="gejala-gastrointestinal-mual"
+                myid="check_cara"
+                value="Tidak"
+              />)
+              <label for="">Tidak, (jika tidak langsung ke pertanyaan 3)</label>
+            </div>
+            <div>
+              <label for="">2.</label>
+              (<input
+                type="radio"
+                name="gejala-gastrointestinal-mual"
+                id="gejala-gastrointestinal-mual"
+                label="gejala-gastrointestinal-mual"
+                myid="check_cara"
+                value="Ya"
+              />)
+              <label for="">Ya</label>
+            </div>
+          </td>
+          <td>
+            <p>Frekuensi</p>
+            <div>
+              <label for="">1. </label>
+              (<input
+                type="checkbox"
+                name="frekuensi-mual-tdk-pernah"
+                id="frekuensi-mual-tdk-pernah"
+                label="frekuensi-mual-tdk-pernah"
+                myid="check_cara"
+                value="Tidak pernah"
+              />)
+              <label for="">Tidak pernah</label>
+            </div>
+            <div>
+              <label for="">2. </label>
+              (<input
+                type="checkbox"
+                name="frekuensi-mual-tiap-hari"
+                id="frekuensi-mual-tiap-hari"
+                label="frekuensi-mual-tiap-hari"
+                myid="check_cara"
+                value="Tiap hari"
+              />)
+              <label for="">Tiap hari</label>
+            </div>
+            <div>
+              <label for="">3. </label>
+              (<input
+                type="checkbox"
+                name="frekuensi-mual-2-3-mgg"
+                id="frekuensi-mual-2-3-mgg"
+                label="frekuensi-mual-2-3-mgg"
+                myid="check_cara"
+                value="2-3x/mgg"
+              />)
+              <label for="">2-3x/mgg</label>
+            </div>
+            <div>
+              <label for="">4. </label>
+              (<input
+                type="checkbox"
+                name="frekuensi-mual-1-2-mgg"
+                id="frekuensi-mual-1-2-mgg"
+                label="frekuensi-mual-1-2-mgg"
+                myid="check_cara"
+                value="1-2x/mgg"
+              />)
+              <label for="">1-2x/mgg</label>
+            </div>
+          </td>
+          <td>
+            <p>Lamanya</p>
+
+            <div>
+              <label for="">1.</label>
+              (<input
+                type="radio"
+                name="lamanya-mual"
+                id="lamanya-mual"
+                label="lamanya-mual"
+                myid="check_cara"
+                value="> 2 mgg"
+              />)
+              <label for="">&gt; 2 mgg</label>
+            </div>
+            <div>
+              <label for="">2.</label>
+              (<input
+                type="radio"
+                name="lamanya-mual"
+                id="lamanya-mual"
+                label="lamanya-mual"
+                myid="check_cara"
+                value="Ya"
+              />)
+              <label for="">&lt; 2 mgg</label>
+            </div>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              class="skor-sga"
+              data-pertanyaan="7"
+              name="skor-sga-mual"
+              id="skor-sga-mual"
+              label="skor-sga-mual"
+              value="A"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              class="skor-sga"
+              data-pertanyaan="7"
+              name="skor-sga-mual"
+              id="skor-sga-mual"
+              label="skor-sga-mual"
+              value="B"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              class="skor-sga"
+              data-pertanyaan="7"
+              name="skor-sga-mual"
+              id="skor-sga-mual"
+              label="skor-sga-mual"
+              value="C"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p style="margin-left: 20px">3. Muntah</p>
+          </td>
+          <td>
+            <div>
+              <label for="">1.</label>
+              (<input
+                type="radio"
+                name="gejala-gastrointestinal-muntah"
+                id="gejala-gastrointestinal-muntah"
+                label="gejala-gastrointestinal-muntah"
+                myid="check_cara"
+                value="Tidak"
+              />)
+              <label for="">Tidak, (jika tidak langsung ke pertanyaan 4)</label>
+            </div>
+            <div>
+              <label for="">2.</label>
+              (<input
+                type="radio"
+                name="gejala-gastrointestinal-muntah"
+                id="gejala-gastrointestinal-muntah"
+                label="gejala-gastrointestinal-muntah"
+                myid="check_cara"
+                value="Ya"
+              />)
+              <label for="">Ya</label>
+            </div>
+          </td>
+          <td>
+            <p>Frekuensi</p>
+            <div>
+              <label for="">1. </label>
+              (<input
+                type="checkbox"
+                name="frekuensi-muntah-tdk-pernah"
+                id="frekuensi-muntah-tdk-pernah"
+                label="frekuensi-muntah-tdk-pernah"
+                myid="check_cara"
+                value="Tidak pernah"
+              />)
+              <label for="">Tidak pernah</label>
+            </div>
+            <div>
+              <label for="">2. </label>
+              (<input
+                type="checkbox"
+                name="frekuensi-muntah-tiap-hari"
+                id="frekuensi-muntah-tiap-hari"
+                label="frekuensi-muntah-tiap-hari"
+                myid="check_cara"
+                value="Tiap hari"
+              />)
+              <label for="">Tiap hari</label>
+            </div>
+            <div>
+              <label for="">3. </label>
+              (<input
+                type="checkbox"
+                name="frekuensi-muntah-2-3-mgg"
+                id="frekuensi-muntah-2-3-mgg"
+                label="frekuensi-muntah-2-3-mgg"
+                myid="check_cara"
+                value="2-3x/mgg"
+              />)
+              <label for="">2-3x/mgg</label>
+            </div>
+            <div>
+              <label for="">4. </label>
+              (<input
+                type="checkbox"
+                name="frekuensi-muntah-1-2-mgg"
+                id="frekuensi-muntah-1-2-mgg"
+                label="frekuensi-muntah-1-2-mgg"
+                myid="check_cara"
+                value="1-2x/mgg"
+              />)
+              <label for="">1-2x/mgg</label>
+            </div>
+          </td>
+          <td>
+            <p>Lamanya</p>
+
+            <div>
+              <label for="">1.</label>
+              (<input
+                type="radio"
+                name="lamanya-muntah"
+                id="lamanya-muntah"
+                label="lamanya-muntah"
+                myid="check_cara"
+                value="> 2 mgg"
+              />)
+              <label for="">&gt; 2 mgg</label>
+            </div>
+            <div>
+              <label for="">2.</label>
+              (<input
+                type="radio"
+                name="lamanya-muntah"
+                id="lamanya-muntah"
+                label="lamanya-muntah"
+                myid="check_cara"
+                value="Ya"
+              />)
+              <label for="">&lt; 2 mgg</label>
+            </div>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              class="skor-sga"
+              data-pertanyaan="8"
+              name="skor-sga-muntah"
+              id="skor-sga-muntah"
+              label="skor-sga-muntah"
+              value="A"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              class="skor-sga"
+              data-pertanyaan="8"
+              name="skor-sga-muntah"
+              id="skor-sga-muntah"
+              label="skor-sga-muntah"
+              value="B"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              class="skor-sga"
+              data-pertanyaan="8"
+              name="skor-sga-muntah"
+              id="skor-sga-muntah"
+              label="skor-sga-muntah"
+              value="C"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p style="margin-left: 20px">4. Diare</p>
+          </td>
+          <td>
+            <div>
+              <label for="">1.</label>
+              (<input
+                type="radio"
+                name="gejala-gastrointestinal-diare"
+                id="gejala-gastrointestinal-diare"
+                label="gejala-gastrointestinal-diare"
+                myid="check_cara"
+                value="Tidak"
+              />)
+              <label for="">Tidak</label>
+            </div>
+            <div>
+              <label for="">2.</label>
+              (<input
+                type="radio"
+                name="gejala-gastrointestinal-diare"
+                id="gejala-gastrointestinal-diare"
+                label="gejala-gastrointestinal-diare"
+                myid="check_cara"
+                value="Ya"
+              />)
+              <label for="">Ya</label>
+            </div>
+          </td>
+          <td>
+            <p>Frekuensi</p>
+            <div>
+              <label for="">1. </label>
+              (<input
+                type="checkbox"
+                name="frekuensi-diare-tdk-pernah"
+                id="frekuensi-diare-tdk-pernah"
+                label="frekuensi-diare-tdk-pernah"
+                myid="check_cara"
+                value="Tidak pernah"
+              />)
+              <label for="">Tidak pernah</label>
+            </div>
+            <div>
+              <label for="">2. </label>
+              (<input
+                type="checkbox"
+                name="frekuensi-diare-tiap-hari"
+                id="frekuensi-diare-tiap-hari"
+                label="frekuensi-diare-tiap-hari"
+                myid="check_cara"
+                value="Tiap hari"
+              />)
+              <label for="">Tiap hari</label>
+            </div>
+            <div>
+              <label for="">3. </label>
+              (<input
+                type="checkbox"
+                name="frekuensi-diare-2-3-mgg"
+                id="frekuensi-diare-2-3-mgg"
+                label="frekuensi-diare-2-3-mgg"
+                myid="check_cara"
+                value="2-3x/mgg"
+              />)
+              <label for="">2-3x/mgg</label>
+            </div>
+            <div>
+              <label for="">4. </label>
+              (<input
+                type="checkbox"
+                name="frekuensi-diare-1-2-mgg"
+                id="frekuensi-diare-1-2-mgg"
+                label="frekuensi-diare-1-2-mgg"
+                myid="check_cara"
+                value="1-2x/mgg"
+              />)
+              <label for="">1-2x/mgg</label>
+            </div>
+          </td>
+          <td>
+            <p>Lamanya</p>
+
+            <div>
+              <label for="">1.</label>
+              (<input
+                type="radio"
+                name="lamanya-diare"
+                id="lamanya-diare"
+                label="lamanya-diare"
+                myid="check_cara"
+                value="> 2 mgg"
+              />)
+              <label for="">&gt; 2 mgg</label>
+            </div>
+            <div>
+              <label for="">2.</label>
+              (<input
+                type="radio"
+                name="lamanya-diare"
+                id="lamanya-diare"
+                label="lamanya-diare"
+                myid="check_cara"
+                value="Ya"
+              />)
+              <label for="">&lt; 2 mgg</label>
+            </div>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              class="skor-sga"
+              data-pertanyaan="9"
+              name="skor-sga-diare"
+              id="skor-sga-diare"
+              label="skor-sga-diare"
+              value="A"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              class="skor-sga"
+              data-pertanyaan="9"
+              name="skor-sga-diare"
+              id="skor-sga-diare"
+              label="skor-sga-diare"
+              value="B"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              class="skor-sga"
+              data-pertanyaan="9"
+              name="skor-sga-diare"
+              id="skor-sga-diare"
+              label="skor-sga-diare"
+              value="C"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <p>KETERANGAN:</p>
+            <ul style="margin-left: 20px">
+              <li>
+                Jika beberapa gejala atau tidak ada gejala, tidak menetap / &lt;
+                2 minggu
+              </li>
+              <li>Jika ada beberapa gejala > 2 minggu, tidak menetap</li>
+              <li>
+                Jika beberapa / semua gejala setiap hari / menetap &gt; 2 minggu
+              </li>
+            </ul>
+          </td>
+          <td style="text-align: center">
+            <div>
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="10"
+                name="keterangan-gejala"
+                id="keterangan-gejala"
+                label="keterangan-gejala"
+                value="A"
+                myid="check_cara"
+              />
+            </div>
+            <div>&nbsp;</div>
+          </td>
+          <td style="text-align: center">
+            <div>&nbsp;</div>
+            <div>
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="10"
+                name="keterangan-gejala"
+                id="keterangan-gejala"
+                label="keterangan-gejala"
+                value="B"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td style="text-align: center">
+            <div>&nbsp;</div>
+            <div>&nbsp;</div>
+            <div>
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="10"
+                name="keterangan-gejala"
+                id="keterangan-gejala"
+                label="keterangan-gejala"
+                value="C"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><b>4. Kapasitas Fungsional</b></p>
+            <ul style="margin-left: 35px">
+              <li>Deskripsi keadaan fungsi tubuh</li>
+            </ul>
+          </td>
+          <td colspan="3">
+            <div>
+              <label>
+                1. Aktivitas normal, tidak ada kelainan, kekuatan / stamina
+                tetap
+              </label>
+            </div>
+            <div style="margin-top: 5px">
+              <label>
+                2. Aktivitas ringan, mengalami sedikit penurunan (tahap ringan)
+              </label>
+            </div>
+            <div style="margin-top: 5px">
+              <label>
+                3. Tanpa aktivitas / di tempat tidur, penurunan kekuatan /
+                stamina (tahap buruk)
+              </label>
+            </div>
+          </td>
+          <td>
+            <div style="text-align: center">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="11"
+                name="kapasitas-fungsional"
+                id="kapasitas-fungsional"
+                label="kapasitas-fungsional"
+                value="A"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+          </td>
+          <td>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px; text-align: center">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="11"
+                name="kapasitas-fungsional"
+                id="kapasitas-fungsional"
+                label="kapasitas-fungsional"
+                value="B"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">&nbsp;</div>
+          </td>
+          <td>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="text-align: center; margin-top: 5px">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="11"
+                name="kapasitas-fungsional"
+                id="kapasitas-fungsional"
+                label="kapasitas-fungsional"
+                value="C"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><b>5. Penyakit dan Hubungannya dengan Kebutuhan Gizi</b></p>
+            <br />
+            <p>Secara umum, ada gangguan stress metabolik?</p>
+          </td>
+          <td colspan="3">
+            <div>&nbsp;</div>
+            <div>
+              <label for="">1.</label>
+              (<input
+                type="radio"
+                name="gangguan-stres-metabolik"
+                id="gangguan-stres-metabolik"
+                label="gangguan-stres-metabolik"
+                myid="check_cara"
+                value="Tidak"
+              />)
+              <label for="">Tidak</label>
+            </div>
+            <div>
+              <label for="">2.</label>
+              (<input
+                type="radio"
+                name="gangguan-stres-metabolik"
+                id="gangguan-stres-metabolik"
+                label="gangguan-stres-metabolik"
+                myid="check_cara"
+                value="Ya"
+              />)
+              <label for="">Ya</label>
+            </div>
+          </td>
+          <td style="text-align: center">
+            <div>
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="12"
+                name="skor-sga-gangguan-stres-metabolik"
+                id="skor-sga-gangguan-stres-metabolik"
+                label="skor-sga-gangguan-stres-metabolik"
+                value="A"
+                myid="check_cara"
+              />
+            </div>
+            <div></div>
+          </td>
+          <td style="text-align: center">
+            <div>&nbsp;</div>
+            <div>&nbsp;</div>
+            <div>
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="12"
+                name="skor-sga-gangguan-stres-metabolik"
+                id="skor-sga-gangguan-stres-metabolik"
+                label="skor-sga-gangguan-stres-metabolik"
+                value="B"
+                myid="check_cara"
+              />
+            </div>
+            <div></div>
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td><p>Bila ada, kategorinya: (stres metabolik)</p></td>
+          <td colspan="3">
+            <div>
+              <label for=""
+                >1. Rendah (misal: hernia inguinal, infeksi, peny, jantung
+                kongesif)</label
+              >
+            </div>
+            <div>
+              <label for="">2. Sedang (misal: DM + pneumonia)</label>
+            </div>
+            <div>
+              <label for=""
+                >3. Tinggi (misal: <i>ulcerative colitis</i> + diare, kanker,
+                peritonitis berat)</label
+              >
+            </div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align: center">
+            <div>
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="12"
+                name="stres-metabolik"
+                id="stres-metabolik"
+                label="stres-metabolik"
+                value="B"
+                myid="check_cara"
+              />
+            </div>
+            <div>
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="12"
+                name="stres-metabolik"
+                id="stres-metabolik"
+                label="stres-metabolik"
+                value="B"
+                myid="check_cara"
+              />
+            </div>
+            <div>&nbsp;</div>
+          </td>
+          <td style="text-align: center">
+            <div>&nbsp;</div>
+            <div>&nbsp;</div>
+            <div>
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="12"
+                name="stres-metabolik"
+                id="stres-metabolik"
+                label="stres-metabolik"
+                value="C"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="7"><b>PEMERIKSAAN FISIK</b></td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">1. Kehilangan protein subkutan (trisep, bisep)</label>
+          </td>
+          <td colspan="3">
+            <div>
+              <label> 1. Tidak ada </label>
+            </div>
+            <div style="margin-top: 5px">
+              <label> 2. Salah satu tempat </label>
+            </div>
+            <div style="margin-top: 5px">
+              <label> 3. Kedua tempat </label>
+            </div>
+          </td>
+          <td>
+            <div style="text-align: center">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="13"
+                name="kehilangan-protein-subkutan"
+                id="kehilangan-protein-subkutan"
+                label="kehilangan-protein-subkutan"
+                value="A"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+          </td>
+          <td>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px; text-align: center">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="13"
+                name="kehilangan-protein-subkutan"
+                id="kehilangan-protein-subkutan"
+                label="kehilangan-protein-subkutan"
+                value="B"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">&nbsp;</div>
+          </td>
+          <td>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="text-align: center; margin-top: 5px">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="13"
+                name="kehilangan-protein-subkutan"
+                id="kehilangan-protein-subkutan"
+                label="kehilangan-protein-subkutan"
+                value="C"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for=""
+              >2. Kehilangan massa otot (tl. selangka, skapula/tl. belikat, tl.
+              rusuk, betis)</label
+            >
+          </td>
+          <td colspan="3">
+            <div>
+              <label> 1. Tidak ada </label>
+            </div>
+            <div style="margin-top: 5px">
+              <label> 2. Salah satu tempat </label>
+            </div>
+            <div style="margin-top: 5px">
+              <label> 3. Kedua tempat </label>
+            </div>
+          </td>
+          <td>
+            <div style="text-align: center">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="14"
+                name="kehilangan-massa-otot"
+                id="kehilangan-massa-otot"
+                label="kehilangan-massa-otot"
+                value="A"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+          </td>
+          <td>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px; text-align: center">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="14"
+                name="kehilangan-massa-otot"
+                id="kehilangan-massa-otot"
+                label="kehilangan-massa-otot"
+                value="B"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">&nbsp;</div>
+          </td>
+          <td>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="text-align: center; margin-top: 5px">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="14"
+                name="kehilangan-massa-otot"
+                id="kehilangan-massa-otot"
+                label="kehilangan-massa-otot"
+                value="C"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for=""
+              >3. Oedema (bisa ditanyakan ke dokter / perawat)</label
+            >
+          </td>
+          <td colspan="3">
+            <div>
+              <label> 1. Tidak ada / ada sedikit oedema </label>
+            </div>
+            <div style="margin-top: 5px">
+              <label> 2. Oedema sedang (di tungkai) </label>
+            </div>
+            <div style="margin-top: 5px">
+              <label> 3. Oedema berat (anasarka) </label>
+            </div>
+          </td>
+          <td>
+            <div style="text-align: center">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="15"
+                name="oedema"
+                id="oedema"
+                label="oedema"
+                value="A"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+          </td>
+          <td>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px; text-align: center">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="15"
+                name="oedema"
+                id="oedema"
+                label="oedema"
+                value="B"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">&nbsp;</div>
+          </td>
+          <td>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="text-align: center; margin-top: 5px">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="15"
+                name="oedema"
+                id="oedema"
+                label="oedema"
+                value="C"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for=""
+              >4. Ascites (bisa ditanyakan ke dokter / perawat)</label
+            >
+          </td>
+          <td colspan="3">
+            <div>
+              <label> 1. Tidak ada ascites </label>
+            </div>
+            <div style="margin-top: 5px">
+              <label> 2. Ascites sedang </label>
+            </div>
+            <div style="margin-top: 5px">
+              <label> 3. Astices berat </label>
+            </div>
+          </td>
+          <td>
+            <div style="text-align: center">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="16"
+                name="ascites"
+                id="ascites"
+                label="ascites"
+                value="A"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+          </td>
+          <td>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px; text-align: center">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="16"
+                name="ascites"
+                id="ascites"
+                label="ascites"
+                value="B"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-top: 5px">&nbsp;</div>
+          </td>
+          <td>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="margin-top: 5px">&nbsp;</div>
+            <div style="text-align: center; margin-top: 5px">
+              <input
+                type="radio"
+                class="skor-sga"
+                data-pertanyaan="16"
+                name="ascites"
+                id="ascites"
+                label="ascites"
+                value="C"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4"><b>KESELURUHAN SKOR SGA</b></td>
+          <td colspan="3">
+            <input
+              readonly
+              type="text"
+              name="total-skor-sga"
+              id="total-skor-sga"
+              label="total-skor-sga"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="7">
+            <p>
+              A = Gizi baik / normal (skor "A" pada &ge; 50&percnt; kategori
+              atau ada peningkatan atau ada peningkatan signifikan)
+            </p>
+            <p>
+              B = Gizi kurang / sedang (skor "B" pada &ge; 50&percnt; kategori)
+            </p>
+            <p>
+              C = Gizi Buruk (skor "C" pada &ge; 50&percnt; kategori, tanda -
+              tanda fisik signifikan)
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td>Tanggal / pukul</td>
+          <td colspan="6">
+            <input
+              type="text"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              name="tgl-pengkajian"
+              id="tgl-pengkajian"
+              label="tgl-pengkajian"
+              myid="check_cara"
+            />
+            <br />
+            <input
+              type="text"
+              placeholder="00.00"
+              mtype="pukul"
+              name="pukul-pengkajian"
+              id="pukul-pengkajian"
+              label="pukul-pengkajian"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Penilai</td>
+          <td colspan="6">
+            <input
+              type="text"
+              placeholder="....."
+              name="nama-penilai"
+              id="nama-penilai"
+              label="nama-penilai"
+              myid="check_cara"
+            />
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_penilai"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_penilai"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_penilai"
+              id="paraf_ex_ttd_penilai"
+              data-name="paraf"
+              data-id="ex_ttd_penilai"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_penilai"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      FORMULIR KRITERIA/INDIKASI KElUAR RUANG NEONATAL INTENSIVE CARE UNIT
+      (NICU)
+    </title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+    if ($.fn.datepicker) {
+      $(".datepicker").each(function () {
+        var $this = $(this),
+          dataDateFormat = $this.attr("data-dateformat") || "dd.mm.yy";
+
+        $this.datepicker({
+          dateFormat: dataDateFormat,
+          prevText: '<i class="fa fa-chevron-left"></i>',
+          nextText: '<i class="fa fa-chevron-right"></i>',
+          todayBtn: "linked",
+        });
+
+        // clear memory reference
+        $this = null;
+      });
+    }
+  </script>
+  <script>
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
+  <body>
+    <h1 class="title">
+      FORMULIR KRITERIA/INDIKASI KELUAR RUANG NEONATAL INTENSIVE CARE UNIT
+      (PICU)
+    </h1>
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td>Nama Pasien</td>
+          <td>
+            <input
+              name="nama_pasien2"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              value="{VNAMA_PASIEN}"
+              placeholder="..."
+            />
+          </td>
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              name="no-rek-medis"
+              id="no-rek-medis"
+              label="no rek medis"
+              myid="check_cara"
+              value="{NO_RM}"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan="2">Tanggal Lahir</td>
+          <td rowspan="2">
+            <input
+              name="tgl_lahira2"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd-mm-yy"
+              myid="check_cara"
+              value="{VBIRTH_DATE}"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td rowspan="2">Umur</td>
+          <td rowspan="2">
+            <input
+              type="text"
+              size="5"
+              placeholder="..."
+              name="umur"
+              myid="check_cara"
+              id="umur"
+              value="{VAGE}"
+              label="umur"
+            />
+          </td>
+          <td>
+            <label for="poli"> Poli </label>
+          </td>
+          <td>
+            <input
+              name="polia2"
+              type="text"
+              id="poli"
+              placeholder="..."
+              myid="check_cara"
+              label="poli"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="kamar"> Kamar </label>
+          </td>
+          <td>
+            <input
+              name="kamara2"
+              type="text"
+              id="kamar"
+              placeholder="..."
+              myid="check_cara"
+              label="kamar"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table table-bordered">
+      <thead>
+        <tr>
+          <th>NO</th>
+          <th>KRITERIA KELUAR</th>
+          <th>YA</th>
+          <th>TIDAK</th>
+          <th>KETERANGAN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="center">1</td>
+          <td>BBLR yang sudah normal berat badannya : > 1800 gr</td>
+          <td width="4%">
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-keluar-1"
+                id="kriteria-keluar-1"
+                label="kriteria-keluar-1"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td width="4%">
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-keluar-1"
+                id="kriteria-keluar-1"
+                label="kriteria-keluar-1"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td width="50%">
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-keluar-1"
+              id="keterangan-kriteria-keluar-1"
+              label="keterangan-kriteria-keluar-1"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">2</td>
+          <td>Kondisi sudah membaik</td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-keluar-2"
+                id="kriteria-keluar-2"
+                label="kriteria-keluar-2"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-keluar-2"
+                id="kriteria-keluar-2"
+                label="kriteria-keluar-2"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td width="50%">
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-keluar-2"
+              id="keterangan-kriteria-keluar-2"
+              label="keterangan-kriteria-keluar-2"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">3</td>
+          <td>Apgar score 7 - 10</td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-keluar-3"
+                id="kriteria-keluar-3"
+                label="kriteria-keluar-3"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-keluar-3"
+                id="kriteria-keluar-3"
+                label="kriteria-keluar-3"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td width="50%">
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-keluar-3"
+              id="keterangan-kriteria-keluar-3"
+              label="keterangan-kriteria-keluar-3"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">4</td>
+          <td>Kadar bilirubin normal</td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-keluar-4"
+                id="kriteria-keluar-4"
+                label="kriteria-keluar-4"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-keluar-4"
+                id="kriteria-keluar-4"
+                label="kriteria-keluar-4"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td width="50%">
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-keluar-4"
+              id="keterangan-kriteria-keluar-4"
+              label="keterangan-kriteria-keluar-4"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">5</td>
+          <td>Gerakan aktif, reflek hisap kuat</td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-keluar-5"
+                id="kriteria-keluar-5"
+                label="kriteria-keluar-5"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-keluar-5"
+                id="kriteria-keluar-5"
+                label="kriteria-keluar-5"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td width="50%">
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-keluar-5"
+              id="keterangan-kriteria-keluar-5"
+              label="keterangan-kriteria-keluar-5"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">6</td>
+          <td>Kejang teratasi</td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-keluar-6"
+                id="kriteria-keluar-6"
+                label="kriteria-keluar-6"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-keluar-6"
+                id="kriteria-keluar-6"
+                label="kriteria-keluar-6"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td width="50%">
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-keluar-6"
+              id="keterangan-kriteria-keluar-6"
+              label="keterangan-kriteria-keluar-6"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">7</td>
+          <td>Syok teratasi</td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-keluar-7"
+                id="kriteria-keluar-7"
+                label="kriteria-keluar-7"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-keluar-7"
+                id="kriteria-keluar-7"
+                label="kriteria-keluar-7"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td width="50%">
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-keluar-7"
+              id="keterangan-kriteria-keluar-7"
+              label="keterangan-kriteria-keluar-7"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+
+    <p>
+      Berdasarkan kondisi di atas maka pasien tersebut memenuhi kriteria untuk
+      KELUAR NICU
+    </p>
+
+    <br />
+
+    <table width="100%" class="table">
+      <tbody>
+        <tr>
+          <td>Tanggal :</td>
+          <td>
+            <div>
+              <input
+                style="border: none; border-bottom: 2px dotted #b1b1b1"
+                class="datepicker"
+                name="tgl_pengkajian"
+                type="text"
+                id="tgl_pengkajian"
+                placeholder="dd-mm-yy"
+                myid="check_cara"
+                label="tanggal lahir"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Jam :</td>
+          <td>
+            <div>
+              <input
+                style="border: none; border-bottom: 2px dotted #b1b1b1"
+                name="pukul_pengkajian"
+                type="text"
+                id="pukul_pengkajian"
+                placeholder="00.00"
+                mtype="pukul"
+                myid="check_cara"
+                label="tanggal lahir"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 10%">Dokter anak</td>
+          <td>
+            <div
+              style="display: flex; flex-direction: column; align-items: start"
+            >
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_dokter_anak"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <br />
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_dokter_anak"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_dokter_anak"
+                id="paraf_ex_ttd_dokter_anak"
+                data-name="paraf"
+                data-id="ex_ttd_dokter_anak"
+              />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_dokter_anak"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+              <input
+                type="text"
+                name="dokter-anak"
+                myid="check_cara"
+                id="dokter-anak"
+                style="border: none; border-bottom: 2px dotted #b1b1b1"
+              />
+              <font id="ttdnya2"></font>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

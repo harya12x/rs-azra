@@ -5,33 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PENGKAJIAN PRA ANESTESIA / SEDASI</title>
   </head>
-  <script
-    src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-    crossorigin="anonymous"
-  ></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -49,6 +39,23 @@
           autoclose: true,
           todayHighlight: true,
         });
+      });
+
+      $("input[name='jenis-acc-anestesi']").on("change", function () {
+        if ($(this).val() !== "RA") {
+          $("input[name='jenis-acc-anestesi-ra']").prop("disabled", true);
+          $("input[name='jenis-acc-anestesi-ra']").prop("checked", false);
+        } else {
+          $("input[name='jenis-acc-anestesi-ra']").prop("disabled", false);
+        }
+      });
+      $("input[name='diperlukan-perawatan']").on("change", function () {
+        if ($(this).val() == "Tidak") {
+          $("input[name='jenis-perawatan']").prop("disabled", true);
+          $("input[name='jenis-perawatan']").prop("checked", false);
+        } else {
+          $("input[name='jenis-perawatan']").prop("disabled", false);
+        }
       });
     });
 
@@ -180,8 +187,8 @@
             name="src_ttd_2"
             myid="check_cara"
           />
-          <td bgcolor="#DFE8F6">Nama Pasien</td>
-          <td bgcolor="#DFE8F6">
+          <td>Nama Pasien</td>
+          <td>
             <input
               name="nama_pasien2"
               type="text"
@@ -193,12 +200,12 @@
               placeholder="..."
             />
           </td>
-          <td bgcolor="#DFE8F6">Jenis Kelamin</td>
-          <td bgcolor="#DFE8F6">{VSEX}</td>
-          <td bgcolor="#DFE8F6">
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
             <label for="">Nomor Rekam Medis</label>
           </td>
-          <td bgcolor="#DFE8F6">
+          <td>
             <input
               type="text"
               name="no-rek-medis"
@@ -218,8 +225,8 @@
               name="tgl_lahira2"
               type="text"
               id="tgl_lahir"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
               value="{VBIRTH_DATE}"
               label="tanggal lahir"
@@ -264,7 +271,6 @@
               id="kamar"
               placeholder="..."
               myid="check_cara"
-              value="{VNAMARUANGAN}"
               label="kamar"
             />
           </td>
@@ -344,18 +350,18 @@
 
               <input
                 type="radio"
-                name="jenis-anestesi-lokal"
-                id="jenis-anestesi-lokal"
-                label="jenis-anestesi-lokal"
+                name="detail-jenis-anestesi-lokal"
+                id="detail-jenis-anestesi-lokal"
+                label="detail-jenis-anestesi-lokal"
                 myid="check_cara"
                 value="keluhan"
               />
               <label for="">keluhan</label>
               <input
                 type="radio"
-                name="jenis-anestesi-lokal"
-                id="jenis-anestesi-lokal"
-                label="jenis-anestesi-lokal"
+                name="detail-jenis-anestesi-lokal"
+                id="detail-jenis-anestesi-lokal"
+                label="detail-jenis-anestesi-lokal"
                 myid="check_cara"
                 value="reaksi"
               />
@@ -374,18 +380,18 @@
 
               <input
                 type="radio"
-                name="jenis-anestesi-regional"
-                id="jenis-anestesi-regional"
-                label="jenis-anestesi-regional"
+                name="detail-jenis-anestesi-regional"
+                id="detail-jenis-anestesi-regional"
+                label="detail-jenis-anestesi-regional"
                 myid="check_cara"
                 value="keluhan"
               />
               <label for="">keluhan</label>
               <input
                 type="radio"
-                name="jenis-anestesi-regional"
-                id="jenis-anestesi-regional"
-                label="jenis-anestesi-regional"
+                name="detail-jenis-anestesi-regional"
+                id="detail-jenis-anestesi-regional"
+                label="detail-jenis-anestesi-regional"
                 myid="check_cara"
                 value="reaksi"
               />
@@ -741,9 +747,9 @@
           <td>
             <input
               type="radio"
-              name="penyakit-lainnya"
-              id="penyakit-lainnya"
-              label="penyakit-lainnya"
+              name="penyakit-lainnya-yg-sedang-diderita"
+              id="penyakit-lainnya-yg-sedang-diderita"
+              label="penyakit-lainnya-yg-sedang-diderita"
               myid="check_cara"
               value="Tidak"
             />
@@ -754,18 +760,19 @@
             <div style="display: flex; gap: 5px">
               <input
                 type="radio"
-                name="penyakit-lainnya"
-                id="penyakit-lainnya"
-                label="penyakit-lainnya"
+                name="penyakit-lainnya-yg-sedang-diderita"
+                id="penyakit-lainnya-yg-sedang-diderita"
+                label="penyakit-lainnya-yg-sedang-diderita"
                 myid="check_cara"
                 value="Ya"
               />
               <label for="">Ya</label>
               <input
                 type="text"
-                name="detail-penyakit-lainnya"
-                id="detail-penyakit-lainnya"
-                label="detail-penyakit-lainnya"
+                name="detail-penyakit-lainnya-sedang-diderita"
+                id="detail-penyakit-lainnya-sedang-diderita"
+                label="detail-penyakit-lainnya-sedang-diderita"
+                myid="check_cara"
                 placeholder="......"
                 style="flex: 1"
               />
@@ -780,8 +787,9 @@
               name="penjelasan-penyakit"
               id="penjelasan-penyakit"
               label="penjelasan-penyakit"
+              myid="check_cara"
               placeholder="......"
-              style="width: 100%; margin-left: 5px"
+              style="width: 100%; padding: 0; margin-left: 5px"
             />
           </td>
         </tr>
@@ -804,8 +812,8 @@
               id="tahun-mendapat-transfusi"
               label="tahun-mendapat-transfusi"
               myid="check_cara"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker2"
+              placeholder="yyyy"
             />)
           </td>
           <td>
@@ -839,8 +847,8 @@
               id="tahun-pemeriksaan-hiv"
               label="tahun-pemeriksaan-hiv"
               myid="check_cara"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker2"
+              placeholder="yyyy"
             />)
           </td>
           <td>
@@ -1094,7 +1102,7 @@
           <td>Sebutkan jenis obat & reaksinya :</td>
           <td colspan="3">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="jenis-obat-dan-reaksinya"
               id="jenis-obat-dan-reaksinya"
@@ -1124,6 +1132,7 @@
                 label="tinggi-badan"
                 placeholder="......"
                 myid="check_cara"
+                value="{VTB}"
                 style="flex: 1"
               /><label for="">cm</label>
             </div>
@@ -1138,6 +1147,7 @@
                 label="berat-badan"
                 placeholder="......"
                 myid="check_cara"
+                value="{VBB}"
                 style="flex: 1"
               /><label for="">Kg</label>
             </div>
@@ -1153,6 +1163,7 @@
                 id="tekanan-darah"
                 label="tekanan-darah"
                 placeholder="......"
+                value="{VTD}"
                 myid="check_cara"
                 style="flex: 1"
               /><label for="">mmHg</label>
@@ -1168,6 +1179,7 @@
                 label="nadi"
                 placeholder="......"
                 myid="check_cara"
+                value="{VNADI}"
                 style="flex: 1"
               /><label for="">x/mnt</label>
             </div>
@@ -1183,6 +1195,7 @@
                 id="suhu"
                 label="suhu"
                 placeholder="......"
+                value="{VSUHU}"
                 myid="check_cara"
                 style="flex: 1"
               /><label for="">&deg;C</label>
@@ -1197,6 +1210,7 @@
                 id="frekuensi-pernapasan"
                 label="frekuensi-pernapasan"
                 placeholder="......"
+                value="{VNAFAS}"
                 myid="check_cara"
                 style="flex: 1"
               /><label for="">x/mnt</label>
@@ -1575,7 +1589,7 @@
               label="jantung"
               placeholder="......"
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
             />
           </td>
         </tr>
@@ -1589,7 +1603,7 @@
               label="paru-paru"
               placeholder="......"
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
             />
           </td>
         </tr>
@@ -1603,7 +1617,7 @@
               label="abdomen"
               placeholder="......"
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
             />
           </td>
         </tr>
@@ -1617,7 +1631,7 @@
               label="tulang-belakang"
               placeholder="......"
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
             />
           </td>
         </tr>
@@ -1631,7 +1645,7 @@
               label="ekstermitas"
               placeholder="......"
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
             />
           </td>
         </tr>
@@ -1654,7 +1668,7 @@
               id="haemoglobin"
               label="haemoglobin"
               placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
             />
           </td>
@@ -1666,7 +1680,7 @@
               id="bt"
               label="bt"
               placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
             />
           </td>
@@ -1680,7 +1694,7 @@
               id="haematokrit"
               label="haematokrit"
               placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
             />
           </td>
@@ -1692,7 +1706,7 @@
               id="ct"
               label="ct"
               placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
             />
           </td>
@@ -1706,7 +1720,7 @@
               id="leukosit"
               label="leukosit"
               placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
             />
           </td>
@@ -1718,7 +1732,7 @@
               id="pt"
               label="pt"
               placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
             />
           </td>
@@ -1732,7 +1746,7 @@
               id="trombosit"
               label="trombosit"
               placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
             />
           </td>
@@ -1744,7 +1758,7 @@
               id="aPTT"
               label="aPTT"
               placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
             />
           </td>
@@ -1758,7 +1772,7 @@
               id="gds"
               label="gds"
               placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
             />
           </td>
@@ -1770,7 +1784,7 @@
               id="elektrolit"
               label="elektrolit"
               placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
             />
           </td>
@@ -1784,7 +1798,7 @@
               id="sgpt"
               label="sgpt"
               placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
             />
           </td>
@@ -1796,7 +1810,7 @@
               id="ureum"
               label="ureum"
               placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
             />
           </td>
@@ -1810,7 +1824,7 @@
               id="sgot"
               label="sgot"
               placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
             />
           </td>
@@ -1822,7 +1836,7 @@
               id="creatinin"
               label="creatinin"
               placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
             />
           </td>
@@ -1846,7 +1860,7 @@
               id="ekg"
               label="ekg"
               placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
             />
           </td>
@@ -1860,7 +1874,7 @@
               id="rontgen"
               label="rontgen"
               placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
             />
           </td>
@@ -1872,7 +1886,7 @@
               id="lainnya"
               label="lainnya"
               placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
             />
           </td>
@@ -1969,7 +1983,7 @@
               id="rontgen"
               label="rontgen"
               placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
             />
           </td>
@@ -2005,9 +2019,9 @@
           <td>
             <input
               type="radio"
-              name="jenis-anestesi"
-              id="jenis-anestesi"
-              label="jenis-anestesi"
+              name="jenis-acc-anestesi"
+              id="jenis-acc-anestesi"
+              label="jenis-acc-anestesi"
               value="GA"
               myid="check_cara"
             />
@@ -2016,36 +2030,36 @@
           <td>
             <input
               type="radio"
-              name="jenis-anestesi"
-              id="jenis-anestesi"
-              label="jenis-anestesi"
+              name="jenis-acc-anestesi"
+              id="jenis-acc-anestesi"
+              label="jenis-acc-anestesi"
               value="RA"
               myid="check_cara"
             />
             <label for="">RA:</label>
             <input
               type="radio"
-              name="jenis-anestesi-ra"
-              id="jenis-anestesi-ra"
-              label="jenis-anestesi-ra"
+              name="jenis-acc-anestesi-ra"
+              id="jenis-acc-anestesi-ra"
+              label="jenis-acc-anestesi-ra"
               value="Spinal"
               myid="check_cara"
             />
             <label for="">Spinal:</label>
             <input
               type="radio"
-              name="jenis-anestesi-ra"
-              id="jenis-anestesi-ra"
-              label="jenis-anestesi-ra"
+              name="jenis-acc-anestesi-ra"
+              id="jenis-acc-anestesi-ra"
+              label="jenis-acc-anestesi-ra"
               value="Epidural / caudal"
               myid="check_cara"
             />
             <label for="">Epidural / caudal:</label>
             <input
               type="radio"
-              name="jenis-anestesi-ra"
-              id="jenis-anestesi-ra"
-              label="jenis-anestesi-ra"
+              name="jenis-acc-anestesi-ra"
+              id="jenis-acc-anestesi-ra"
+              label="jenis-acc-anestesi-ra"
               value="Blok perifer"
               myid="check_cara"
             />
@@ -2054,9 +2068,9 @@
           <td>
             <input
               type="radio"
-              name="jenis-anestesi"
-              id="jenis-anestesi"
-              label="jenis-anestesi"
+              name="jenis-acc-anestesi"
+              id="jenis-acc-anestesi"
+              label="jenis-acc-anestesi"
               value="Sedasi"
               myid="check_cara"
             />
@@ -2141,7 +2155,7 @@
               label="puasa-mulai-jam"
               placeholder="......"
               mtype="pukul"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               myid="check_cara"
             />
           </td>
@@ -2152,8 +2166,8 @@
               name="puasa-mulai-tanggal"
               id="puasa-mulai-tanggal"
               label="puasa-mulai-tanggal"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
@@ -2168,7 +2182,7 @@
               label="premedikasi"
               placeholder="......"
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
             />
           </td>
         </tr>
@@ -2290,7 +2304,6 @@
               value="Ya"
               myid="check_cara"
             />
-
             <input
               type="radio"
               name="jenis-perawatan"
@@ -2350,13 +2363,13 @@
       </tbody>
     </table>
 
-    <table width="100%" class="table">
+    <table width="100%" class="table table-bordered">
       <tbody>
         <tr>
           <td style="width: 10%">Dokter yang merekomendasi</td>
           <td>
             <div
-              style="display: flex; flex-direction: column; align-items: start"
+              style="display: flex; flex-direction: column; align-items: center"
             >
               <label for=""
                 >Dr.
@@ -2408,35 +2421,5 @@
         </tr>
       </tbody>
     </table>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

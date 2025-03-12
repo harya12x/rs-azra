@@ -3,30 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FORMULIR SURVEILANS INFEKSI NOSOKOMIAL RS. AZRA BOGOR</title>
+    <title>FORMULIR SURVEILANS INFEKSI NOSOKOMIAL</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -158,9 +153,9 @@
     }
   </script>
   <body>
-    <h1 class="title">FORMULIR SURVEILANS INFEKSI NOSOKOMIAL RS. AZRA BOGOR</h1>
+    <h1 class="title">FORMULIR SURVEILANS INFEKSI NOSOKOMIAL</h1>
 
-    <table class="table table-bordered" width="100%">
+    <table class="table table-bordered table-bordered" width="100%">
       <tbody>
         <tr>
           <input
@@ -212,7 +207,7 @@
               type="text"
               id="tgl_lahir"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               myid="check_cara"
               value="{VBIRTH_DATE}"
               label="tanggal lahir"
@@ -274,14 +269,13 @@
               placeholder="..."
               myid="check_cara"
               label="kamar"
-              value="{VNAMARUANGAN}"
             />
           </td>
         </tr>
       </tbody>
     </table>
 
-    <table width="100%" class="table">
+    <table width="100%" class="table table-bordered">
       <tbody>
         <tr>
           <td width="20%">
@@ -296,7 +290,7 @@
                 id="tgl-masuk"
                 label="tgl-masuk"
                 placeholder="dd-mm-yy"
-                class="datepicker hasDatepicker"
+                class="datepicker"
                 myid="check_cara"
               />
               <label for="">/</label>
@@ -344,7 +338,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="diagnosa-waktu-masuk"
               id="diagnosa-waktu-masuk"
@@ -378,7 +372,7 @@
                 id="tgl-pindah-ruangan-1"
                 label="tgl-pindah-ruangan-1"
                 placeholder="dd-mm-yy"
-                class="datepicker hasDatepicker"
+                class="datepicker"
                 myid="check_cara"
               />
             </div>
@@ -406,7 +400,7 @@
                 id="tgl-pindah-ruangan-2"
                 label="tgl-pindah-ruangan-2"
                 placeholder="dd-mm-yy"
-                class="datepicker hasDatepicker"
+                class="datepicker"
                 myid="check_cara"
               />
             </div>
@@ -434,7 +428,7 @@
                 id="tgl-pindah-ruangan-3"
                 label="tgl-pindah-ruangan-3"
                 placeholder="dd-mm-yy"
-                class="datepicker hasDatepicker"
+                class="datepicker"
                 myid="check_cara"
               />
             </div>
@@ -447,20 +441,20 @@
         </tr>
       </tbody>
     </table>
-    <table width="100%" class="table table-bordered">
+    <table width="100%" class="table table-bordered table-bordered">
       <thead>
         <tr>
-          <th rowspan="2">No</th>
-          <th rowspan="2">Jenis Tindakan / Alkes</th>
-          <th rowspan="2">Lokasi</th>
-          <th colspan="2">Tanggal Pemasangan</th>
-          <th rowspan="2">Total Hari</th>
-          <th rowspan="2">Tanggal Infeksi</th>
-          <th rowspan="2">Catatan</th>
+          <th style="text-align: center;" rowspan="2">No</th>
+          <th style="text-align: center;" rowspan="2">Jenis Tindakan / Alkes</th>
+          <th style="text-align: center;" rowspan="2">Lokasi</th>
+          <th style="text-align: center;" colspan="2">Tanggal Pemasangan</th>
+          <th style="text-align: center;" rowspan="2">Total Hari</th>
+          <th style="text-align: center;" rowspan="2">Tanggal Infeksi</th>
+          <th style="text-align: center;" rowspan="2">Catatan</th>
         </tr>
         <tr>
-          <th>Mulai</th>
-          <th>S/d</th>
+          <th style="text-align: center;">Mulai</th>
+          <th style="text-align: center;">S/d</th>
         </tr>
       </thead>
       <tbody>
@@ -516,7 +510,7 @@
           <td>
             <textarea
               type="textarea"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               rows="6"
               name="lokasi-1"
               id="lokasi-1"
@@ -524,57 +518,206 @@
               myid="check_cara"
             ></textarea>
           </td>
-          <td width="10%">
-            <input
-              style="width: 100%"
-              type="text"
-              name="tgl-mulai-1"
-              id="tgl-mulai-1"
-              label="tgl-mulai-1"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
-              myid="check_cara"
-            />
+          <td width="10%" style="vertical-align: bottom">
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-mulai-vena-sentral"
+                id="tgl-mulai-vena-sentral"
+                label="tgl-mulai-vena-sentral"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-mulai-vena-perifer"
+                id="tgl-mulai-vena-perifer"
+                label="tgl-mulai-vena-perifer"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-mulai-vena-arteri"
+                id="tgl-mulai-vena-arteri"
+                label="tgl-mulai-vena-arteri"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
+            <div>
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-mulai-vena-umbilikal"
+                id="tgl-mulai-vena-umbilikal"
+                label="tgl-mulai-vena-umbilikal"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
           </td>
-          <td width="10%">
-            <input
-              style="width: 100%"
-              type="text"
-              name="tgl-s-d-1"
-              id="tgl-s-d-1"
-              label="tgl-s-d-1"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
-              myid="check_cara"
-            />
+          <td width="10%" style="vertical-align: bottom">
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-s-d-vena-sentral"
+                id="tgl-s-d-vena-sentral"
+                label="tgl-s-d-vena-sentral"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-s-d-vena-perifer"
+                id="tgl-s-d-vena-perifer"
+                label="tgl-s-d-vena-perifer"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-s-d-vena-arteri"
+                id="tgl-s-d-vena-arteri"
+                label="tgl-s-d-vena-arteri"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
+            <div>
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-s-d-vena-umbilikal"
+                id="tgl-s-d-vena-umbilikal"
+                label="tgl-s-d-vena-umbilikal"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
           </td>
-          <td width="5%">
-            <input
-              style="width: 100%"
-              type="text"
-              name="total-hari-1"
-              id="total-hari-1"
-              label="total-hari-1"
-              placeholder="......"
-              myid="check_cara"
-            />
+          <td width="5%" style="vertical-align: bottom">
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="total-hari-vena-sentral"
+                id="total-hari-vena-sentral"
+                label="total-hari-vena-sentral"
+                placeholder="....."
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="total-hari-vena-perifer"
+                id="total-hari-vena-perifer"
+                label="total-hari-vena-perifer"
+                placeholder="....."
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="total-hari-vena-arteri"
+                id="total-hari-vena-arteri"
+                label="total-hari-vena-arteri"
+                placeholder="....."
+                myid="check_cara"
+              />
+            </div>
+            <div>
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="total-hari-vena-umbilikal"
+                id="total-hari-vena-umbilikal"
+                label="total-hari-vena-umbilikal"
+                placeholder="....."
+                myid="check_cara"
+              />
+            </div>
           </td>
-          <td width="10%">
-            <input
-              style="width: 100%"
-              type="text"
-              name="tgl-infeksi-1"
-              id="tgl-infeksi-1"
-              label="tgl-infeksi-1"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
-              myid="check_cara"
-            />
+          <td width="10%" style="vertical-align: bottom">
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-infeksi-vena-sentral"
+                id="tgl-infeksi-vena-sentral"
+                label="tgl-infeksi-vena-sentral"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-infeksi-vena-perifer"
+                id="tgl-infeksi-vena-perifer"
+                label="tgl-infeksi-vena-perifer"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-infeksi-vena-arteri"
+                id="tgl-infeksi-vena-arteri"
+                label="tgl-infeksi-vena-arteri"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
+            <div>
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-infeksi-vena-umbilikal"
+                id="tgl-infeksi-vena-umbilikal"
+                label="tgl-infeksi-vena-umbilikal"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
           </td>
           <td>
             <textarea
               type="textarea"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               rows="6"
               name="catatan-1"
               id="catatan-1"
@@ -612,7 +755,7 @@
           <td>
             <textarea
               type="textarea"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               rows="3"
               name="lokasi-2"
               id="lokasi-2"
@@ -621,56 +764,111 @@
             ></textarea>
           </td>
           <td width="10%">
-            <input
-              style="width: 100%"
-              type="text"
-              name="tgl-mulai-2"
-              id="tgl-mulai-2"
-              label="tgl-mulai-2"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
-              myid="check_cara"
-            />
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-mulai-kateter-urine"
+                id="tgl-mulai-kateter-urine"
+                label="tgl-mulai-kateter-urine"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
+            <div>
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-mulai-suprapublik-kateter"
+                id="tgl-mulai-suprapublik-kateter"
+                label="tgl-mulai-suprapublik-kateter"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
           </td>
           <td width="10%">
-            <input
-              style="width: 100%"
-              type="text"
-              name="tgl-s-d-2"
-              id="tgl-s-d-2"
-              label="tgl-s-d-2"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
-              myid="check_cara"
-            />
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-s-d-kateter-urine"
+                id="tgl-s-d-kateter-urine"
+                label="tgl-s-d-kateter-urine"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
+            <div>
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-s-d-suprapublik-kateter"
+                id="tgl-s-d-suprapublik-kateter"
+                label="tgl-s-d-suprapublik-kateter"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
           </td>
           <td width="5%">
-            <input
-              style="width: 100%"
-              type="text"
-              name="total-hari-2"
-              id="total-hari-2"
-              label="total-hari-2"
-              placeholder="......"
-              myid="check_cara"
-            />
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="total-hari-kateter-urine"
+                id="total-hari-kateter-urine"
+                label="total-hari-kateter-urine"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+            <div>
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="total-hari-suprapublik-kateter"
+                id="total-hari-suprapublik-kateter"
+                label="total-hari-suprapublik-kateter"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
           </td>
           <td width="10%">
-            <input
-              style="width: 100%"
-              type="text"
-              name="tgl-infeksi-2"
-              id="tgl-infeksi-2"
-              label="tgl-infeksi-2"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
-              myid="check_cara"
-            />
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-infeksi-kateter-urine"
+                id="tgl-infeksi-kateter-urine"
+                label="tgl-infeksi-kateter-urine"
+                placeholder="dd-mm-yy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
+            <div>
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-infeksi-suprapublik-kateter"
+                id="tgl-infeksi-suprapublik-kateter"
+                label="tgl-infeksi-suprapublik-kateter"
+                placeholder="dd-mm-yy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
           </td>
           <td>
             <textarea
               type="textarea"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               rows="3"
               name="catatan-2"
               id="catatan-2"
@@ -709,7 +907,7 @@
           <td>
             <textarea
               type="textarea"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               rows="4"
               name="lokasi-3"
               id="lokasi-3"
@@ -717,57 +915,112 @@
               myid="check_cara"
             ></textarea>
           </td>
-          <td width="10%">
-            <input
-              style="width: 100%"
-              type="text"
-              name="tgl-mulai-3"
-              id="tgl-mulai-3"
-              label="tgl-mulai-3"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
-              myid="check_cara"
-            />
+          <td width="10%" style="vertical-align: bottom">
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-masuk-ett"
+                id="tgl-masuk-ett"
+                label="tgl-masuk-ett"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-masuk-trakeostomi"
+                id="tgl-masuk-trakeostomi"
+                label="tgl-masuk-trakeostomi"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
           </td>
-          <td width="10%">
-            <input
-              style="width: 100%"
-              type="text"
-              name="tgl-s-d-3"
-              id="tgl-s-d-3"
-              label="tgl-s-d-3"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
-              myid="check_cara"
-            />
+          <td width="10%" style="vertical-align: bottom">
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-sd-ett"
+                id="tgl-sd-ett"
+                label="tgl-sd-ett"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-sd-trakeostomi"
+                id="tgl-sd-trakeostomi"
+                label="tgl-sd-trakeostomi"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
           </td>
-          <td width="5%">
-            <input
-              style="width: 100%"
-              type="text"
-              name="total-hari-3"
-              id="total-hari-3"
-              label="total-hari-3"
-              placeholder="......"
-              myid="check_cara"
-            />
+          <td width="5%" style="vertical-align: bottom">
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="total-hari-ett"
+                id="total-hari-ett"
+                label="total-hari-ett"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="total-hari-trakeostomi"
+                id="total-hari-trakeostomi"
+                label="total-hari-trakeostomi"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
           </td>
-          <td width="10%">
-            <input
-              style="width: 100%"
-              type="text"
-              name="tgl-infeksi-3"
-              id="tgl-infeksi-3"
-              label="tgl-infeksi-3"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
-              myid="check_cara"
-            />
+          <td width="10%" style="vertical-align: bottom">
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-infeksi-ett"
+                id="tgl-infeksi-ett"
+                label="tgl-infeksi-ett"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
+            <div style="margin-bottom: 2px">
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="tgl-infeksi-trakeostomi"
+                id="tgl-infeksi-trakeostomi"
+                label="tgl-infeksi-trakeostomi"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
           </td>
           <td>
             <textarea
               type="textarea"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               rows="4"
               name="catatan-3"
               id="catatan-3"
@@ -795,7 +1048,7 @@
           <td>
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               placeholder="....."
               name="lokasi-4"
               id="lokasi-4"
@@ -805,31 +1058,31 @@
           </td>
           <td width="10%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-mulai-4"
               id="tgl-mulai-4"
               label="tgl-mulai-4"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
           <td width="10%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-s-d-4"
               id="tgl-s-d-4"
               label="tgl-s-d-4"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
           <td width="5%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="total-hari-4"
               id="total-hari-4"
@@ -840,20 +1093,20 @@
           </td>
           <td width="10%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-infeksi-4"
               id="tgl-infeksi-4"
               label="tgl-infeksi-4"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
           <td>
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               placeholder="....."
               name="catatan-4"
               id="catatan-4"
@@ -865,7 +1118,7 @@
       </tbody>
     </table>
 
-    <table width="100%" class="table table-bordered">
+    <table width="100%" class="table table-bordered table-bordered">
       <tbody>
         <tr>
           <td>&nbsp;</td>
@@ -909,7 +1162,7 @@
           <td>
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               placeholder="....."
               name="leukosit"
               id="leukosit"
@@ -954,7 +1207,7 @@
           <td>
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               placeholder="....."
               name="led"
               id="led"
@@ -999,7 +1252,7 @@
           <td>
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               placeholder="....."
               name="gds"
               id="gds"
@@ -1026,9 +1279,9 @@
           <td>
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               name="tgl-hasil-laboratorium"
               id="tgl-hasil-laboratorium"
               label="tgl-hasil-laboratorium"
@@ -1039,7 +1292,7 @@
       </tbody>
     </table>
 
-    <table width="100%" class="table table-bordered">
+    <table width="100%" class="table table-bordered table-bordered">
       <tbody>
         <tr>
           <td width="1%"><b>IV.</b></td>
@@ -1051,7 +1304,7 @@
           <td width="85%" colspan="3">
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               name="tindakan-operasi-diagnosa"
               id="tindakan-operasi-diagnosa"
               label="tindakan-operasi-diagnosa"
@@ -1073,7 +1326,7 @@
                 id="tgl-operasi-1"
                 label="tgl-operasi-1"
                 placeholder="dd-mm-yy"
-                class="datepicker hasDatepicker"
+                class="datepicker"
                 myid="check_cara"
               />
               <label for="">Lama Operasi</label>
@@ -1122,7 +1375,7 @@
                 id="tgl-operasi-2"
                 label="tgl-operasi-2"
                 placeholder="dd-mm-yy"
-                class="datepicker hasDatepicker"
+                class="datepicker"
                 myid="check_cara"
               />
               <label for="">Lama Operasi</label>
@@ -1342,7 +1595,7 @@
           <td style="padding-left: 20px">Hasil Kultur</td>
           <td colspan="2">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hasil-kultur-1"
               id="hasil-kultur-1"
@@ -1392,7 +1645,7 @@
           <td style="padding-left: 20px">Hasil Kultur</td>
           <td colspan="2">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hasil-kultur-2"
               id="hasil-kultur-2"
@@ -1442,7 +1695,7 @@
           <td style="padding-left: 20px">Hasil Kultur</td>
           <td colspan="2">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hasil-kultur-3"
               id="hasil-kultur-3"
@@ -1492,7 +1745,7 @@
           <td style="padding-left: 20px">Hasil Kultur</td>
           <td colspan="2">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hasil-kultur-4"
               id="hasil-kultur-4"
@@ -1542,7 +1795,7 @@
           <td style="padding-left: 20px">Hasil Kultur</td>
           <td colspan="2">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hasil-kultur-5"
               id="hasil-kultur-5"
@@ -1589,7 +1842,7 @@
                 label="mulai-tgl-pemakaian-1"
                 myid="check_cara"
                 placeholder="dd-mm-yy"
-                class="datepicker hasDatepicker"
+                class="datepicker"
               />
               <label for="">s/d</label>
               <input
@@ -1600,7 +1853,7 @@
                 label="selesai-tgl-pemakaian-1"
                 myid="check_cara"
                 placeholder="dd-mm-yy"
-                class="datepicker hasDatepicker"
+                class="datepicker"
               />
             </div>
           </td>
@@ -1638,7 +1891,7 @@
                 label="mulai-tgl-pemakaian-2"
                 myid="check_cara"
                 placeholder="dd-mm-yy"
-                class="datepicker hasDatepicker"
+                class="datepicker"
               />
               <label for="">s/d</label>
               <input
@@ -1649,7 +1902,7 @@
                 label="selesai-tgl-pemakaian-2"
                 myid="check_cara"
                 placeholder="dd-mm-yy"
-                class="datepicker hasDatepicker"
+                class="datepicker"
               />
             </div>
           </td>
@@ -1727,157 +1980,3592 @@
       </tbody>
     </table>
     <br />
-    <table width="100%" class="table">
+    <table width="100%" class="table table-bordered">
       <tbody>
         <tr>
           <td style="text-align: center" width="50%">
-            <p>Perawat Penanggung Jawab / Pengisi Formulir</p>
-            <label
-              class="label text-center"
-              id="def_img_ex_paraf_kepala_ruangan"
-              style="font-style: italic; width: 100px; height: 100px"
-              >paraf</label
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
             >
-            <label class="label text-center">
-              <img
-                class="text-center"
-                id="image_paraf_ex_paraf_kepala_ruangan"
-                src=""
-                style="display: none"
-            /></label>
-            <input
-              myid="check_cara"
-              type="hidden"
-              name="paraf_ex_paraf_kepala_ruangan"
-              id="paraf_ex_paraf_kepala_ruangan"
-              data-name="paraf"
-              data-id="ex_paraf_kepala_ruangan"
-            />
-            <br />
-            <label class="label text-center">
-              <a
-                id="CreateTTD"
-                class="btn btn-default btn-xs pointer text-center"
-                data-id="ex_paraf_kepala_ruangan"
-                style="text-align: center"
+              <p>Perawat Penanggung Jawab / Pengisi Formulir</p>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_kepala_ruangan"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
               >
-                <i class="fa fa-edit"> </i>
-                PENTABLET
-              </a>
-            </label>
-            <br />
-            <label for="">
-              (<input
-                size="40"
-                type="text"
-                name="perawat-penanggung-jawab"
-                id="perawat-penanggung-jawab"
-                label="perawat-penanggung-jawab"
-                placeholder="......"
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_kepala_ruangan"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
                 myid="check_cara"
-              />)
-            </label>
+                type="hidden"
+                name="paraf_ex_paraf_kepala_ruangan"
+                id="paraf_ex_paraf_kepala_ruangan"
+                data-name="paraf"
+                data-id="ex_paraf_kepala_ruangan"
+              />
+
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_kepala_ruangan"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+
+              <label for="">
+                (<input
+                  size="40"
+                  type="text"
+                  name="perawat-penanggung-jawab"
+                  id="perawat-penanggung-jawab"
+                  label="perawat-penanggung-jawab"
+                  placeholder="......"
+                  myid="check_cara"
+                />)
+              </label>
+            </div>
           </td>
           <td style="text-align: center" width="50%">
-            <p>Kepala Ruangan</p>
-            <label
-              class="label text-center"
-              id="def_img_ex_paraf_penanggung_jawab_pengisi_formulir"
-              style="font-style: italic; width: 100px; height: 100px"
-              >paraf</label
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
             >
-            <label class="label text-center">
-              <img
-                class="text-center"
-                id="image_paraf_ex_paraf_penanggung_jawab_pengisi_formulir"
-                src=""
-                style="display: none"
-            /></label>
-            <input
-              myid="check_cara"
-              type="hidden"
-              name="paraf_ex_paraf_penanggung_jawab_pengisi_formulir"
-              id="paraf_ex_paraf_penanggung_jawab_pengisi_formulir"
-              data-name="paraf"
-              data-id="ex_paraf_penanggung_jawab_pengisi_formulir"
-            />
-            <br />
-            <label class="label text-center">
-              <a
-                id="CreateTTD"
-                class="btn btn-default btn-xs pointer text-center"
-                data-id="ex_paraf_penanggung_jawab_pengisi_formulir"
-                style="text-align: center"
+              <p>Kepala Ruangan</p>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_penanggung_jawab_pengisi_formulir"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
               >
-                <i class="fa fa-edit"> </i>
-                PENTABLET
-              </a>
-            </label>
-            <br />
-            <label for="">
-              (<input
-                size="40"
-                type="text"
-                name="kepala-ruangan"
-                id="kepala-ruangan"
-                label="kepala-ruangan"
-                placeholder="......"
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_penanggung_jawab_pengisi_formulir"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
                 myid="check_cara"
-              />)
-            </label>
+                type="hidden"
+                name="paraf_ex_paraf_penanggung_jawab_pengisi_formulir"
+                id="paraf_ex_paraf_penanggung_jawab_pengisi_formulir"
+                data-name="paraf"
+                data-id="ex_paraf_penanggung_jawab_pengisi_formulir"
+              />
+
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_penanggung_jawab_pengisi_formulir"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+
+              <label for="">
+                (<input
+                  size="40"
+                  type="text"
+                  name="kepala-ruangan"
+                  id="kepala-ruangan"
+                  label="kepala-ruangan"
+                  placeholder="......"
+                  myid="check_cara"
+                />)
+              </label>
+            </div>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <h1 class="title">LAPORAN PEMANTAUAN KASUS INFEKSI NOSOKOMIAL</h1>
+
+    <div id="table-container" style="overflow-x: auto; cursor: auto">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th style="text-align: center;"><b>No</b></th>
+            <th style="text-align: center;"><b>Pemantauan</b></th>
+            <th style="text-align: center;"><b>Tanggal Pasang</b></th>
+            <th style="text-align: center;"><b>Tanggal Lepas</b></th>
+            <th style="text-align: center;" colspan="4"><b>Tanda - Tanda Infeksi</b></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="vertical-align: top" rowspan="4" align="center">
+              <b>1.</b>
+            </td>
+            <td style="vertical-align: top" rowspan="4"><b>Infus</b></td>
+            <td rowspan="4">
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-infus-1"
+                  id="tgl-masuk-infus-1"
+                  label="tgl-masuk-infus-1"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-infus-2"
+                  id="tgl-masuk-infus-2"
+                  label="tgl-masuk-infus-2"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-infus-3"
+                  id="tgl-masuk-infus-3"
+                  label="tgl-masuk-infus-3"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-infus-4"
+                  id="tgl-masuk-infus-4"
+                  label="tgl-masuk-infus-4"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+            </td>
+            <td rowspan="4">
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-infus-1"
+                  id="tgl-keluar-infus-1"
+                  label="tgl-keluar-infus-1"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-infus-2"
+                  id="tgl-keluar-infus-2"
+                  label="tgl-keluar-infus-2"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-infus-3"
+                  id="tgl-keluar-infus-3"
+                  label="tgl-keluar-infus-3"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-infus-4"
+                  id="tgl-keluar-infus-4"
+                  label="tgl-keluar-infus-4"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-1-1"
+                  id="tgl-tti-1-1"
+                  label="tgl-tti-1-1"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-1-1"
+                  id="nama-tti-1-1"
+                  label="nama-tti-1-1"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-1-2"
+                  id="tgl-tti-1-2"
+                  label="tgl-tti-1-2"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-1-2"
+                  id="nama-tti-1-2"
+                  label="nama-tti-1-2"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-1-3"
+                  id="tgl-tti-1-3"
+                  label="tgl-tti-1-3"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-1-3"
+                  id="nama-tti-1-3"
+                  label="nama-tti-1-3"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-1-4"
+                  id="tgl-tti-1-4"
+                  label="tgl-tti-1-4"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-1-4"
+                  id="nama-tti-1-4"
+                  label="nama-tti-1-4"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-1-1"
+                  id="tti-panas-1-1"
+                  label="tti-panas-1-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-merah-1-1"
+                  id="tti-merah-1-1"
+                  label="tti-merah-1-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Merah</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-bengkak-1-1"
+                  id="tti-bengkak-1-1"
+                  label="tti-bengkak-1-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Bengkak</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-pus-cairan-1-1"
+                  id="tti-pus-cairan-1-1"
+                  label="tti-pus-cairan-1-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Pus/cairan</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-1-1"
+                  id="tti-nyeri-1-1"
+                  label="tti-nyeri-1-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-1-1"
+                  id="tti-tak-1-1"
+                  label="tti-tak-1-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-1-2"
+                  id="tti-panas-1-2"
+                  label="tti-panas-1-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-merah-1-2"
+                  id="tti-merah-1-2"
+                  label="tti-merah-1-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Merah</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-bengkak-1-2"
+                  id="tti-bengkak-1-2"
+                  label="tti-bengkak-1-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Bengkak</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-pus-cairan-1-2"
+                  id="tti-pus-cairan-1-2"
+                  label="tti-pus-cairan-1-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Pus/cairan</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-1-2"
+                  id="tti-nyeri-1-2"
+                  label="tti-nyeri-1-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-1-2"
+                  id="tti-tak-1-2"
+                  label="tti-tak-1-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-1-3"
+                  id="tti-panas-1-3"
+                  label="tti-panas-1-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-merah-1-3"
+                  id="tti-merah-1-3"
+                  label="tti-merah-1-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Merah</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-bengkak-1-3"
+                  id="tti-bengkak-1-3"
+                  label="tti-bengkak-1-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Bengkak</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-pus-cairan-1-3"
+                  id="tti-pus-cairan-1-3"
+                  label="tti-pus-cairan-1-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Pus/cairan</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-1-3"
+                  id="tti-nyeri-1-3"
+                  label="tti-nyeri-1-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-1-3"
+                  id="tti-tak-1-3"
+                  label="tti-tak-1-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-1-4"
+                  id="tti-panas-1-4"
+                  label="tti-panas-1-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-merah-1-4"
+                  id="tti-merah-1-4"
+                  label="tti-merah-1-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Merah</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-bengkak-1-4"
+                  id="tti-bengkak-1-4"
+                  label="tti-bengkak-1-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Bengkak</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-pus-cairan-1-4"
+                  id="tti-pus-cairan-1-4"
+                  label="tti-pus-cairan-1-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Pus/cairan</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-1-4"
+                  id="tti-nyeri-1-4"
+                  label="tti-nyeri-1-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-1-4"
+                  id="tti-tak-1-4"
+                  label="tti-tak-1-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-1-5"
+                  id="tgl-tti-1-5"
+                  label="tgl-tti-1-5"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-1-5"
+                  id="nama-tti-1-5"
+                  label="nama-tti-1-5"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-1-6"
+                  id="tgl-tti-1-6"
+                  label="tgl-tti-1-6"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-1-6"
+                  id="nama-tti-1-6"
+                  label="nama-tti-1-6"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-1-7"
+                  id="tgl-tti-1-7"
+                  label="tgl-tti-1-7"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-1-7"
+                  id="nama-tti-1-7"
+                  label="nama-tti-1-7"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>Keterangan</td>
+          </tr>
+          <tr>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-1-5"
+                  id="tti-panas-1-5"
+                  label="tti-panas-1-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-merah-1-5"
+                  id="tti-merah-1-5"
+                  label="tti-merah-1-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Merah</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-bengkak-1-5"
+                  id="tti-bengkak-1-5"
+                  label="tti-bengkak-1-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Bengkak</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-pus-cairan-1-5"
+                  id="tti-pus-cairan-1-5"
+                  label="tti-pus-cairan-1-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Pus/cairan</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-1-5"
+                  id="tti-nyeri-1-5"
+                  label="tti-nyeri-1-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-1-5"
+                  id="tti-tak-1-5"
+                  label="tti-tak-1-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-1-6"
+                  id="tti-panas-1-6"
+                  label="tti-panas-1-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-merah-1-6"
+                  id="tti-merah-1-6"
+                  label="tti-merah-1-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Merah</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-bengkak-1-6"
+                  id="tti-bengkak-1-6"
+                  label="tti-bengkak-1-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Bengkak</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-pus-cairan-1-6"
+                  id="tti-pus-cairan-1-6"
+                  label="tti-pus-cairan-1-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Pus/cairan</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-1-6"
+                  id="tti-nyeri-1-6"
+                  label="tti-nyeri-1-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-1-6"
+                  id="tti-tak-1-6"
+                  label="tti-tak-1-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-1-7"
+                  id="tti-panas-1-7"
+                  label="tti-panas-1-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-merah-1-7"
+                  id="tti-merah-1-7"
+                  label="tti-merah-1-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Merah</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-bengkak-1-7"
+                  id="tti-bengkak-1-7"
+                  label="tti-bengkak-1-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Bengkak</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-pus-cairan-1-7"
+                  id="tti-pus-cairan-1-7"
+                  label="tti-pus-cairan-1-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Pus/cairan</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-1-7"
+                  id="tti-nyeri-1-7"
+                  label="tti-nyeri-1-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-1-7"
+                  id="tti-tak-1-7"
+                  label="tti-tak-1-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <textarea
+                style="width: 100%; padding: 0"
+                type="textarea"
+                name="keterangan-1"
+                id="keterangan-1"
+                label="keterangan-1"
+                myid="check_cara"
+                rows="8"
+              ></textarea>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: top" rowspan="4" align="center">
+              <b>2.</b>
+            </td>
+            <td style="vertical-align: top" rowspan="4">
+              <b>Transfusi Darah</b>
+            </td>
+            <td rowspan="4">
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-transfusi-darah-1"
+                  id="tgl-masuk-transfusi-darah-1"
+                  label="tgl-masuk-transfusi-darah-1"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-transfusi-darah-2"
+                  id="tgl-masuk-transfusi-darah-2"
+                  label="tgl-masuk-transfusi-darah-2"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-transfusi-darah-3"
+                  id="tgl-masuk-transfusi-darah-3"
+                  label="tgl-masuk-transfusi-darah-3"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-transfusi-darah-4"
+                  id="tgl-masuk-transfusi-darah-4"
+                  label="tgl-masuk-transfusi-darah-4"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+            </td>
+            <td rowspan="4">
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-transfusi-darah-1"
+                  id="tgl-keluar-transfusi-darah-1"
+                  label="tgl-keluar-transfusi-darah-1"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-transfusi-darah-2"
+                  id="tgl-keluar-transfusi-darah-2"
+                  label="tgl-keluar-transfusi-darah-2"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-transfusi-darah-3"
+                  id="tgl-keluar-transfusi-darah-3"
+                  label="tgl-keluar-transfusi-darah-3"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-transfusi-darah-4"
+                  id="tgl-keluar-transfusi-darah-4"
+                  label="tgl-keluar-transfusi-darah-4"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-2-1"
+                  id="tgl-tti-2-1"
+                  label="tgl-tti-2-1"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-2-1"
+                  id="nama-tti-2-1"
+                  label="nama-tti-2-1"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-2-2"
+                  id="tgl-tti-2-2"
+                  label="tgl-tti-2-2"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-2-2"
+                  id="nama-tti-2-2"
+                  label="nama-tti-2-2"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-2-3"
+                  id="tgl-tti-2-3"
+                  label="tgl-tti-2-3"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-2-3"
+                  id="nama-tti-2-3"
+                  label="nama-tti-2-3"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-2-4"
+                  id="tgl-tti-2-4"
+                  label="tgl-tti-2-4"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-2-4"
+                  id="nama-tti-2-4"
+                  label="nama-tti-2-4"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-2-1"
+                  id="tti-panas-2-1"
+                  label="tti-panas-2-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-2-1"
+                  id="tti-tak-2-1"
+                  label="tti-tak-2-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-2-2"
+                  id="tti-panas-2-2"
+                  label="tti-panas-2-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-2-2"
+                  id="tti-tak-2"
+                  label="tti-tak-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-2-3"
+                  id="tti-panas-2-3"
+                  label="tti-panas-2-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-2-3"
+                  id="tti-tak-2-3"
+                  label="tti-tak-2-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-2-4"
+                  id="tti-panas-2-4"
+                  label="tti-panas-2-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-2-4"
+                  id="tti-tak-4"
+                  label="tti-tak-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-2-5"
+                  id="tgl-tti-2-5"
+                  label="tgl-tti-2-5"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-2-5"
+                  id="nama-tti-2-5"
+                  label="nama-tti-2-5"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-2-6"
+                  id="tgl-tti-2-6"
+                  label="tgl-tti-2-6"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-2-6"
+                  id="nama-tti-2-6"
+                  label="nama-tti-2-6"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-2-7"
+                  id="tgl-tti-2-7"
+                  label="tgl-tti-2-7"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-2-7"
+                  id="nama-tti-2-7"
+                  label="nama-tti-2-7"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>Keterangan</td>
+          </tr>
+          <tr>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-2-5"
+                  id="tti-panas-2-5"
+                  label="tti-panas-2-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-2-5"
+                  id="tti-tak-2-5"
+                  label="tti-tak-2-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-2-6"
+                  id="tti-panas-2-6"
+                  label="tti-panas-2-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-2-6"
+                  id="tti-tak-2-6"
+                  label="tti-tak-2-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-2-7"
+                  id="tti-panas-2-7"
+                  label="tti-panas-2-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-2-7"
+                  id="tti-tak-2-7"
+                  label="tti-tak-2-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <textarea
+                style="width: 100%; padding: 0"
+                type="textarea"
+                name="keterangan-2"
+                id="keterangan-2"
+                label="keterangan-2"
+                myid="check_cara"
+                rows="2"
+              ></textarea>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: top" rowspan="4" align="center">
+              <b>3.</b>
+            </td>
+            <td style="vertical-align: top" rowspan="4">
+              <b>Kateter</b>
+            </td>
+            <td rowspan="4">
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-kateter-1"
+                  id="tgl-masuk-kateter-1"
+                  label="tgl-masuk-kateter-1"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-kateter-2"
+                  id="tgl-masuk-kateter-2"
+                  label="tgl-masuk-kateter-2"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-kateter-3"
+                  id="tgl-masuk-kateter-3"
+                  label="tgl-masuk-kateter-3"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-kateter-4"
+                  id="tgl-masuk-kateter-4"
+                  label="tgl-masuk-kateter-4"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+            </td>
+            <td rowspan="4">
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-kateter-1"
+                  id="tgl-keluar-kateter-1"
+                  label="tgl-keluar-kateter-1"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-kateter-2"
+                  id="tgl-keluar-kateter-2"
+                  label="tgl-keluar-kateter-2"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-kateter-3"
+                  id="tgl-keluar-kateter-3"
+                  label="tgl-keluar-kateter-3"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-kateter-4"
+                  id="tgl-keluar-kateter-4"
+                  label="tgl-keluar-kateter-4"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-3-1"
+                  id="tgl-tti-3-1"
+                  label="tgl-tti-3-1"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-3-1"
+                  id="nama-tti-3-1"
+                  label="nama-tti-3-1"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-3-2"
+                  id="tgl-tti-3-2"
+                  label="tgl-tti-3-2"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-3-2"
+                  id="nama-tti-3-2"
+                  label="nama-tti-3-2"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-3-3"
+                  id="tgl-tti-3-3"
+                  label="tgl-tti-3-3"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-3-3"
+                  id="nama-tti-3-3"
+                  label="nama-tti-3-3"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-3-4"
+                  id="tgl-tti-3-4"
+                  label="tgl-tti-3-4"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-3-4"
+                  id="nama-tti-3-4"
+                  label="nama-tti-3-4"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-3-1"
+                  id="tti-panas-3-1"
+                  label="tti-panas-3-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-3-1"
+                  id="tti-nyeri-3-1"
+                  label="tti-nyeri-3-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-3-1"
+                  id="tti-tak-3-1"
+                  label="tti-tak-3-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-3-2"
+                  id="tti-panas-3-2"
+                  label="tti-panas-3-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-3-2"
+                  id="tti-nyeri-3-2"
+                  label="tti-nyeri-3-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-3-2"
+                  id="tti-tak-3-2"
+                  label="tti-tak-3-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-3-3"
+                  id="tti-panas-3-3"
+                  label="tti-panas-3-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-3-3"
+                  id="tti-nyeri-3-3"
+                  label="tti-nyeri-3-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-3-3"
+                  id="tti-tak-3-3"
+                  label="tti-tak-3-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-3-4"
+                  id="tti-panas-3-4"
+                  label="tti-panas-3-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-3-4"
+                  id="tti-nyeri-3-4"
+                  label="tti-nyeri-3-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-3-4"
+                  id="tti-tak-3-4"
+                  label="tti-tak-3-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-3-5"
+                  id="tgl-tti-3-5"
+                  label="tgl-tti-3-5"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-3-5"
+                  id="nama-tti-3-5"
+                  label="nama-tti-3-5"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-3-6"
+                  id="tgl-tti-3-6"
+                  label="tgl-tti-3-6"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-3-6"
+                  id="nama-tti-3-6"
+                  label="nama-tti-3-6"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-3-7"
+                  id="tgl-tti-3-7"
+                  label="tgl-tti-3-7"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-3-7"
+                  id="nama-tti-3-7"
+                  label="nama-tti-3-7"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>Keterangan</td>
+          </tr>
+          <tr>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-3-5"
+                  id="tti-panas-3-5"
+                  label="tti-panas-3-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-3-5"
+                  id="tti-nyeri-3-5"
+                  label="tti-nyeri-3-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-3-5"
+                  id="tti-tak-3-5"
+                  label="tti-tak-3-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-3-6"
+                  id="tti-panas-3-6"
+                  label="tti-panas-3-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-3-6"
+                  id="tti-nyeri-3-6"
+                  label="tti-nyeri-3-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-3-6"
+                  id="tti-tak-3-6"
+                  label="tti-tak-3-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-3-7"
+                  id="tti-panas-3-7"
+                  label="tti-panas-3-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-3-7"
+                  id="tti-nyeri-3-7"
+                  label="tti-nyeri-3-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-3-7"
+                  id="tti-tak-3-7"
+                  label="tti-tak-3-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <textarea
+                style="width: 100%; padding: 0"
+                type="textarea"
+                name="keterangan-3"
+                id="keterangan-3"
+                label="keterangan-3"
+                myid="check_cara"
+                rows="4"
+              ></textarea>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="vertical-align: top" rowspan="4" align="center">
+              <b>4.</b>
+            </td>
+            <td style="vertical-align: top" rowspan="4">
+              <b>ETT</b>
+            </td>
+            <td rowspan="4">
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-ett-1"
+                  id="tgl-masuk-ett-1"
+                  label="tgl-masuk-ett-1"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-ett-2"
+                  id="tgl-masuk-ett-2"
+                  label="tgl-masuk-ett-2"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-ett-3"
+                  id="tgl-masuk-ett-3"
+                  label="tgl-masuk-ett-3"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-ett-4"
+                  id="tgl-masuk-ett-4"
+                  label="tgl-masuk-ett-4"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+            </td>
+            <td rowspan="4">
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-ett-1"
+                  id="tgl-keluar-ett-1"
+                  label="tgl-keluar-ett-1"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-ett-2"
+                  id="tgl-keluar-ett-2"
+                  label="tgl-keluar-ett-2"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-ett-3"
+                  id="tgl-keluar-ett-3"
+                  label="tgl-keluar-ett-3"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-ett-4"
+                  id="tgl-keluar-ett-4"
+                  label="tgl-keluar-ett-4"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-4-1"
+                  id="tgl-tti-4-1"
+                  label="tgl-tti-4-1"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-4-1"
+                  id="nama-tti-4-1"
+                  label="nama-tti-4-1"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-4-2"
+                  id="tgl-tti-4-2"
+                  label="tgl-tti-4-2"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-4-2"
+                  id="nama-tti-4-2"
+                  label="nama-tti-4-2"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-4-3"
+                  id="tgl-tti-4-3"
+                  label="tgl-tti-4-3"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-4-3"
+                  id="nama-tti-4-3"
+                  label="nama-tti-4-3"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-4-4"
+                  id="tgl-tti-4-4"
+                  label="tgl-tti-4-4"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-4-4"
+                  id="nama-tti-4-4"
+                  label="nama-tti-4-4"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-4-1"
+                  id="tti-panas-4-1"
+                  label="tti-panas-4-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="prod-sekret-4-1"
+                  id="prod-sekret-4-1"
+                  label="prod-sekret-4-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Prod.Sekret</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="laserasi-4-1"
+                  id="laserasi-4-1"
+                  label="laserasi-4-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Laserasi</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-3-1"
+                  id="tti-tak-3-1"
+                  label="tti-tak-3-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-4-2"
+                  id="tti-panas-4-2"
+                  label="tti-panas-4-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="prod-sekret-4-2"
+                  id="prod-sekret-4-2"
+                  label="prod-sekret-4-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Prod.Sekret</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="laserasi-4-2"
+                  id="laserasi-4-2"
+                  label="laserasi-4-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Laserasi</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-3-2"
+                  id="tti-tak-3-2"
+                  label="tti-tak-3-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-4-3"
+                  id="tti-panas-4-3"
+                  label="tti-panas-4-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="prod-sekret-4-3"
+                  id="prod-sekret-4-3"
+                  label="prod-sekret-4-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Prod.Sekret</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="laserasi-4-3"
+                  id="laserasi-4-3"
+                  label="laserasi-4-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Laserasi</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-3-3"
+                  id="tti-tak-3-3"
+                  label="tti-tak-3-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-4-4"
+                  id="tti-panas-4-4"
+                  label="tti-panas-4-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="prod-sekret-4-4"
+                  id="prod-sekret-4-4"
+                  label="prod-sekret-4-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Prod.Sekret</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="laserasi-4-4"
+                  id="laserasi-4-4"
+                  label="laserasi-4-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Laserasi</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-3-4"
+                  id="tti-tak-3-4"
+                  label="tti-tak-3-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-4-5"
+                  id="tgl-tti-4-5"
+                  label="tgl-tti-4-5"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-4-5"
+                  id="nama-tti-4-5"
+                  label="nama-tti-4-5"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-4-6"
+                  id="tgl-tti-4-6"
+                  label="tgl-tti-4-6"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-4-6"
+                  id="nama-tti-4-6"
+                  label="nama-tti-4-6"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-4-7"
+                  id="tgl-tti-4-7"
+                  label="tgl-tti-4-7"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-4-7"
+                  id="nama-tti-4-7"
+                  label="nama-tti-4-7"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>Keterangan</td>
+          </tr>
+          <tr>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-4-5"
+                  id="tti-panas-4-5"
+                  label="tti-panas-4-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="prod-sekret-4-5"
+                  id="prod-sekret-4-5"
+                  label="prod-sekret-4-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Prod.Sekret</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="laserasi-4-5"
+                  id="laserasi-4-5"
+                  label="laserasi-4-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Laserasi</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-3-5"
+                  id="tti-tak-3-5"
+                  label="tti-tak-3-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-4-6"
+                  id="tti-panas-4-6"
+                  label="tti-panas-4-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="prod-sekret-4-6"
+                  id="prod-sekret-4-6"
+                  label="prod-sekret-4-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Prod.Sekret</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="laserasi-4-6"
+                  id="laserasi-4-6"
+                  label="laserasi-4-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Laserasi</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-3-6"
+                  id="tti-tak-3-6"
+                  label="tti-tak-3-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-4-7"
+                  id="tti-panas-4-7"
+                  label="tti-panas-4-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="prod-sekret-4-7"
+                  id="prod-sekret-4-7"
+                  label="prod-sekret-4-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Prod.Sekret</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="laserasi-4-7"
+                  id="laserasi-4-7"
+                  label="laserasi-4-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Laserasi</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-3-7"
+                  id="tti-tak-3-7"
+                  label="tti-tak-3-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <textarea
+                style="width: 100%; padding: 0"
+                type="textarea"
+                name="keterangan-4"
+                id="keterangan-4"
+                label="keterangan-4"
+                myid="check_cara"
+                rows="5"
+              ></textarea>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="vertical-align: top" rowspan="4" align="center">
+              <b>5.</b>
+            </td>
+            <td style="vertical-align: top" rowspan="4">
+              <b>Tirah Baring</b>
+            </td>
+            <td rowspan="4">
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-tirah-baring-1"
+                  id="tgl-masuk-tirah-baring-1"
+                  label="tgl-masuk-tirah-baring-1"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-tirah-baring-2"
+                  id="tgl-masuk-tirah-baring-2"
+                  label="tgl-masuk-tirah-baring-2"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-tirah-baring-3"
+                  id="tgl-masuk-tirah-baring-3"
+                  label="tgl-masuk-tirah-baring-3"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-masuk-tirah-baring-4"
+                  id="tgl-masuk-tirah-baring-4"
+                  label="tgl-masuk-tirah-baring-4"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+            </td>
+            <td rowspan="4">
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-tirah-baring-1"
+                  id="tgl-keluar-tirah-baring-1"
+                  label="tgl-keluar-tirah-baring-1"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-tirah-baring-2"
+                  id="tgl-keluar-tirah-baring-2"
+                  label="tgl-keluar-tirah-baring-2"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-tirah-baring-3"
+                  id="tgl-keluar-tirah-baring-3"
+                  label="tgl-keluar-tirah-baring-3"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="margin-bottom: 10px">
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-keluar-tirah-baring-4"
+                  id="tgl-keluar-tirah-baring-4"
+                  label="tgl-keluar-tirah-baring-4"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-5-1"
+                  id="tgl-tti-5-1"
+                  label="tgl-tti-5-1"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-5-1"
+                  id="nama-tti-5-1"
+                  label="nama-tti-5-1"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-5-2"
+                  id="tgl-tti-5-2"
+                  label="tgl-tti-5-2"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-5-2"
+                  id="nama-tti-5-2"
+                  label="nama-tti-5-2"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-5-3"
+                  id="tgl-tti-5-3"
+                  label="tgl-tti-5-3"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-5-3"
+                  id="nama-tti-5-3"
+                  label="nama-tti-5-3"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-5-4"
+                  id="tgl-tti-5-4"
+                  label="tgl-tti-5-4"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-5-4"
+                  id="nama-tti-5-4"
+                  label="nama-tti-5-4"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-5-1"
+                  id="tti-panas-5-1"
+                  label="tti-panas-5-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-merah-5-1"
+                  id="tti-merah-5-1"
+                  label="tti-merah-5-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Merah</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-bengkak-5-1"
+                  id="tti-bengkak-5-1"
+                  label="tti-bengkak-5-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Bengkak</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-pus-cairan-5-1"
+                  id="tti-pus-cairan-5-1"
+                  label="tti-pus-cairan-5-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Pus/cairan</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-5-1"
+                  id="tti-nyeri-5-1"
+                  label="tti-nyeri-5-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-luka-5-1"
+                  id="tti-luka-5-1"
+                  label="tti-luka-5-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Luka</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-5-1"
+                  id="tti-tak-5-1"
+                  label="tti-tak-5-1"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-5-2"
+                  id="tti-panas-5-2"
+                  label="tti-panas-5-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-merah-5-2"
+                  id="tti-merah-5-2"
+                  label="tti-merah-5-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Merah</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-bengkak-5-2"
+                  id="tti-bengkak-5-2"
+                  label="tti-bengkak-5-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Bengkak</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-pus-cairan-5-2"
+                  id="tti-pus-cairan-5-2"
+                  label="tti-pus-cairan-5-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Pus/cairan</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-5-2"
+                  id="tti-nyeri-5-2"
+                  label="tti-nyeri-5-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-luka-5-2"
+                  id="tti-luka-5-2"
+                  label="tti-luka-5-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Luka</label>
+              </div>
+
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-5-2"
+                  id="tti-tak-5-2"
+                  label="tti-tak-5-2"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-5-3"
+                  id="tti-panas-5-3"
+                  label="tti-panas-5-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-merah-5-3"
+                  id="tti-merah-5-3"
+                  label="tti-merah-5-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Merah</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-bengkak-5-3"
+                  id="tti-bengkak-5-3"
+                  label="tti-bengkak-5-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Bengkak</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-pus-cairan-5-3"
+                  id="tti-pus-cairan-5-3"
+                  label="tti-pus-cairan-5-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Pus/cairan</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-5-3"
+                  id="tti-nyeri-5-3"
+                  label="tti-nyeri-5-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-luka-5-3"
+                  id="tti-luka-5-3"
+                  label="tti-luka-5-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Luka</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-5-3"
+                  id="tti-tak-5-3"
+                  label="tti-tak-5-3"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-5-4"
+                  id="tti-panas-5-4"
+                  label="tti-panas-5-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-merah-5-4"
+                  id="tti-merah-5-4"
+                  label="tti-merah-5-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Merah</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-bengkak-5-4"
+                  id="tti-bengkak-5-4"
+                  label="tti-bengkak-5-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Bengkak</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-pus-cairan-5-4"
+                  id="tti-pus-cairan-5-4"
+                  label="tti-pus-cairan-5-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Pus/cairan</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-5-4"
+                  id="tti-nyeri-5-4"
+                  label="tti-nyeri-5-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-luka-5-4"
+                  id="tti-luka-5-4"
+                  label="tti-luka-5-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Luka</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-5-4"
+                  id="tti-tak-5-4"
+                  label="tti-tak-5-4"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-5-5"
+                  id="tgl-tti-5-5"
+                  label="tgl-tti-5-5"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-5-5"
+                  id="nama-tti-5-5"
+                  label="nama-tti-5-5"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-5-6"
+                  id="tgl-tti-5-6"
+                  label="tgl-tti-5-6"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-5-6"
+                  id="nama-tti-5-6"
+                  label="nama-tti-5-6"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Tgl : </label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="tgl-tti-5-7"
+                  id="tgl-tti-5-7"
+                  label="tgl-tti-5-7"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </div>
+              <div style="display: flex; margin-bottom: 2px">
+                <label for="">Nama</label>
+                <input
+                  style="flex: 1; border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="nama-tti-5-7"
+                  id="nama-tti-5-7"
+                  label="nama-tti-5-7"
+                  myid="check_cara"
+                />
+              </div>
+            </td>
+            <td>Keterangan</td>
+          </tr>
+          <tr>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-5-5"
+                  id="tti-panas-5-5"
+                  label="tti-panas-5-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-merah-5-5"
+                  id="tti-merah-5-5"
+                  label="tti-merah-5-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Merah</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-bengkak-5-5"
+                  id="tti-bengkak-5-5"
+                  label="tti-bengkak-5-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Bengkak</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-pus-cairan-5-5"
+                  id="tti-pus-cairan-5-5"
+                  label="tti-pus-cairan-5-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Pus/cairan</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-5-5"
+                  id="tti-nyeri-5-5"
+                  label="tti-nyeri-5-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-luka-5-5"
+                  id="tti-luka-5-5"
+                  label="tti-luka-5-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Luka</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-5-5"
+                  id="tti-tak-5-5"
+                  label="tti-tak-5-5"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-5-6"
+                  id="tti-panas-5-6"
+                  label="tti-panas-5-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-merah-5-6"
+                  id="tti-merah-5-6"
+                  label="tti-merah-5-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Merah</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-bengkak-5-6"
+                  id="tti-bengkak-5-6"
+                  label="tti-bengkak-5-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Bengkak</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-pus-cairan-5-6"
+                  id="tti-pus-cairan-5-6"
+                  label="tti-pus-cairan-5-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Pus/cairan</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-5-6"
+                  id="tti-nyeri-5-6"
+                  label="tti-nyeri-5-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-luka-5-6"
+                  id="tti-luka-5-6"
+                  label="tti-luka-5-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Luka</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-5-6"
+                  id="tti-tak-5-6"
+                  label="tti-tak-5-6"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-panas-5-7"
+                  id="tti-panas-5-7"
+                  label="tti-panas-5-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Panas</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-merah-5-7"
+                  id="tti-merah-5-7"
+                  label="tti-merah-5-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Merah</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-bengkak-5-7"
+                  id="tti-bengkak-5-7"
+                  label="tti-bengkak-5-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Bengkak</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-pus-cairan-5-7"
+                  id="tti-pus-cairan-5-7"
+                  label="tti-pus-cairan-5-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Pus/cairan</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-nyeri-5-7"
+                  id="tti-nyeri-5-7"
+                  label="tti-nyeri-5-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Nyeri</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-luka-5-7"
+                  id="tti-luka-5-7"
+                  label="tti-luka-5-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Luka</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="tti-tak-5-7"
+                  id="tti-tak-5-7"
+                  label="tti-tak-5-7"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <textarea
+                style="width: 100%; padding: 0"
+                type="textarea"
+                name="keterangan-5"
+                id="keterangan-5"
+                label="keterangan-5"
+                myid="check_cara"
+                rows="8"
+              ></textarea>
+            </td>
+          </tr>
+          <tr>
+            <td style="vertical-align: top" rowspan="2" align="center">
+              <b>6.</b>
+            </td>
+            <td style="vertical-align: top" rowspan="2">
+              <b>Kultur</b>
+            </td>
+            <th align="center">Tanggal Pemeriksaan</th>
+            <th align="center">Jenis Kultur</th>
+            <th align="center">Hasil Pembiakan</th>
+            <th align="center">Sensitif</th>
+            <th align="center">Intermediet</th>
+            <th align="center">Resistent</th>
+          </tr>
+          <tr>
+            <td>
+              <input
+                style="
+                  width: 100%;
+                  padding: 0;
+                  border: none;
+                  border-bottom: 2px dotted;
+                "
+                type="text"
+                name="tgl-pemeriksaan-kultur"
+                id="tgl-pemeriksaan-kultur"
+                label="tgl-pemeriksaan-kultur"
+                myid="check_cara"
+                class="datepicker"
+                placeholder="dd/mm/yyyy"
+              />
+            </td>
+            <td>
+              <div>
+                <input
+                  type="checkbox"
+                  name="jenis-kultur-darah"
+                  id="jenis-kultur-darah"
+                  label="jenis-kultur-darah"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Darah</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="jenis-kultur-sputum"
+                  id="jenis-kultur-sputum"
+                  label="jenis-kultur-sputum"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">Luka</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="jenis-kultur-pus-urine"
+                  id="jenis-kultur-pus-urine"
+                  label="jenis-kultur-pus-urine"
+                  myid="check_cara"
+                  value="true"
+                />
+                <label for="">TAK</label>
+              </div>
+            </td>
+            <td>
+              <textarea
+                type="textarea"
+                style="width: 100%; padding: 0; margin: 0"
+                name="hasil-pembiakan"
+                id="hasil-pembiakan"
+                label="hasil-pembiakan"
+                rows="4"
+                myid="check_cara"
+              >
+              </textarea>
+            </td>
+            <td>
+              <textarea
+                type="textarea"
+                style="width: 100%; padding: 0; margin: 0"
+                name="sensitif"
+                id="sensitif"
+                label="sensitif"
+                rows="4"
+                myid="check_cara"
+              >
+              </textarea>
+            </td>
+            <td>
+              <textarea
+                type="textarea"
+                style="width: 100%; padding: 0; margin: 0"
+                name="intermediet"
+                id="intermediet"
+                label="intermediet"
+                rows="4"
+                myid="check_cara"
+              >
+              </textarea>
+            </td>
+            <td>
+              <textarea
+                type="textarea"
+                style="width: 100%; padding: 0; margin: 0"
+                name="resistent"
+                id="resistent"
+                label="resistent"
+                rows="4"
+                myid="check_cara"
+              >
+              </textarea>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
+      $("document").ready(function () {
+        const tableContainer = document.querySelector("#table-container");
+
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        tableContainer.addEventListener("mousedown", (e) => {
+          isDown = true;
+          tableContainer.style.cursor = "pointer";
+          startX = e.pageX - tableContainer.offsetLeft;
+          scrollLeft = tableContainer.scrollLeft;
         });
 
-        var checkboxButtons = document.querySelectorAll(
-          'input[type="checkbox"]'
-        );
-        checkboxButtons.forEach(function (checkbox) {
-          checkbox.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var checkboxes = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              checkboxes.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
+        tableContainer.addEventListener("mouseleave", () => {
+          isDown = false;
+          tableContainer.style.cursor = "auto";
         });
 
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
+        tableContainer.addEventListener("mouseup", () => {
+          isDown = false;
+          tableContainer.style.cursor = "auto";
+        });
+
+        tableContainer.addEventListener("mousemove", (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          const x = e.pageX - tableContainer.offsetLeft;
+          const walk = (x - startX) * 2;
+
+          tableContainer.scrollLeft = scrollLeft - walk;
         });
       });
     </script>

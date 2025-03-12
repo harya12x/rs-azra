@@ -3,38 +3,177 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PEMANTAUAN PASIEN DALAM AMBULANS RS. AZRA BOGOR</title>
+    <title>PEMANTAUAN PASIEN DALAM AMBULANS</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
-
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
+
+    canvas {
+      border: 1px solid black;
+      display: block;
+      margin: 20px auto;
+    }
+    .hapus-tanda {
+      padding: 10px;
+      background-color: #1c3f80;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .hapus-tanda:active {
+      background-color: #0a204a;
+    }
   </style>
+  <script type="text/javascript">
+    if ($.fn.datepicker) {
+      $(".datepicker").each(function () {
+        var $this = $(this),
+          dataDateFormat = $this.attr("data-dateformat") || "dd.mm.yy";
+
+        $this.datepicker({
+          dateFormat: dataDateFormat,
+          prevText: '<i class="fa fa-chevron-left"></i>',
+          nextText: '<i class="fa fa-chevron-right"></i>',
+          todayBtn: "linked",
+        });
+
+        // clear memory reference
+        $this = null;
+      });
+    }
+  </script>
+  <script>
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h2 class="title">PEMANTAUAN PASIEN DALAM AMBULANS</h2>
-    <h2 class="title">RS. AZRA BOGOR</h2>
-
     <table width="100%" class="table table-bordered">
       <tbody>
         <tr>
@@ -48,13 +187,14 @@
           <td><label for="">No. RM :</label></td>
           <td width="40%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               placeholder="......"
               name="no-rm"
               id="no-rm"
               label="no-rm"
               myid="check_cara"
+              value="{NO_RM}"
             />
           </td>
           <td><label for="">Umur :</label></td>
@@ -68,6 +208,7 @@
                 id="umur"
                 label="umur"
                 myid="check_cara"
+                value="{VAGE}"
               />
               <label for="">(thn</label>
               <input
@@ -102,33 +243,16 @@
                 name="nama"
                 id="nama"
                 label="nama"
+                value="{VNAMA_PASIEN}"
                 myid="check_cara"
               />
-              <label for="">(L</label>
-              <input
-                type="radio"
-                value="L"
-                name="jk"
-                id="jk"
-                label="jk"
-                myid="check_cara"
-              />
-              <label for="">/P</label>
-              <input
-                type="radio"
-                value="P"
-                name="jk"
-                id="jk"
-                label="jk"
-                myid="check_cara"
-              />
-              <label for="">)</label>
+              <label for="">{VSEX}</label>
             </div>
           </td>
           <td><label for="">Diagnosa :</label></td>
           <td width="40%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               placeholder="......"
               name="diagnosa"
@@ -144,7 +268,7 @@
           <td><label for="">Alergi obat :</label></td>
           <td width="40%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               placeholder="......"
               name="alergi-obat"
@@ -181,7 +305,7 @@
           <td>Jemput di :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="jemput-di"
               id="jemput-di"
@@ -207,7 +331,7 @@
           <td>Rujuk ke :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="rujuk-ke"
               id="rujuk-ke"
@@ -236,12 +360,14 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pemantauan"
               id="tgl-pemantauan"
               label="tgl-pemantauan"
               myid="check_cara"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
             />
           </td>
         </tr>
@@ -260,7 +386,7 @@
           <td>Supir :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="supir"
               id="supir"
@@ -271,12 +397,13 @@
           <td>Berangkat jam :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="berangkat-jam"
               id="berangkat-jam"
               label="berangkat-jam"
               myid="check_cara"
+              mtype="pukul"
             />
           </td>
         </tr>
@@ -309,7 +436,7 @@
           <td>Tiba di RS setempat :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tiba-di-rs-setempat"
               id="tiba-di-rs-setempat"
@@ -347,7 +474,7 @@
           <td>Tiba di RS AZRA :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tiba-di-rs-azra"
               id="tiba-di-rs-azra"
@@ -418,7 +545,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="jam-1"
               id="jam-1"
@@ -428,7 +555,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="rx-1"
               id="rx-1"
@@ -438,7 +565,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="td-1"
               id="td-1"
@@ -448,7 +575,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nadi-1"
               id="nadi-1"
@@ -458,7 +585,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="suhu-1"
               id="suhu-1"
@@ -468,7 +595,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="rr-1"
               id="rr-1"
@@ -478,7 +605,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="spo2-1"
               id="spo2-1"
@@ -488,7 +615,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hal-hal-penting-tindakan-1"
               id="hal-hal-penting-tindakan-1"
@@ -498,7 +625,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="enteral-1"
               id="enteral-1"
@@ -508,7 +635,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="parenteral-1"
               id="parenteral-1"
@@ -518,7 +645,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="ngt-1"
               id="ngt-1"
@@ -528,7 +655,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="drain-1"
               id="drain-1"
@@ -538,7 +665,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kateter-1"
               id="kateter-1"
@@ -550,7 +677,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="jam-2"
               id="jam-2"
@@ -560,7 +687,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="rx-2"
               id="rx-2"
@@ -570,7 +697,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="td-2"
               id="td-2"
@@ -580,7 +707,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nadi-2"
               id="nadi-2"
@@ -590,7 +717,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="suhu-2"
               id="suhu-2"
@@ -600,7 +727,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="rr-2"
               id="rr-2"
@@ -610,7 +737,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="spo2-2"
               id="spo2-2"
@@ -620,7 +747,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hal-hal-penting-tindakan-2"
               id="hal-hal-penting-tindakan-2"
@@ -630,7 +757,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="enteral-2"
               id="enteral-2"
@@ -640,7 +767,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="parenteral-2"
               id="parenteral-2"
@@ -650,7 +777,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="ngt-2"
               id="ngt-2"
@@ -660,7 +787,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="drain-2"
               id="drain-2"
@@ -670,7 +797,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kateter-2"
               id="kateter-2"
@@ -682,7 +809,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="jam-3"
               id="jam-3"
@@ -692,7 +819,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="rx-3"
               id="rx-3"
@@ -702,7 +829,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="td-3"
               id="td-3"
@@ -712,7 +839,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nadi-3"
               id="nadi-3"
@@ -722,7 +849,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="suhu-3"
               id="suhu-3"
@@ -732,7 +859,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="rr-3"
               id="rr-3"
@@ -742,7 +869,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="spo2-3"
               id="spo2-3"
@@ -752,7 +879,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hal-hal-penting-tindakan-3"
               id="hal-hal-penting-tindakan-3"
@@ -762,7 +889,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="enteral-3"
               id="enteral-3"
@@ -772,7 +899,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="parenteral-3"
               id="parenteral-3"
@@ -782,7 +909,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="ngt-3"
               id="ngt-3"
@@ -792,7 +919,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="drain-3"
               id="drain-3"
@@ -802,7 +929,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kateter-3"
               id="kateter-3"
@@ -814,7 +941,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="jam-4"
               id="jam-4"
@@ -824,7 +951,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="rx-4"
               id="rx-4"
@@ -834,7 +961,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="td-4"
               id="td-4"
@@ -844,7 +971,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nadi-4"
               id="nadi-4"
@@ -854,7 +981,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="suhu-4"
               id="suhu-4"
@@ -864,7 +991,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="rr-4"
               id="rr-4"
@@ -874,7 +1001,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="spo2-4"
               id="spo2-4"
@@ -884,7 +1011,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hal-hal-penting-tindakan-4"
               id="hal-hal-penting-tindakan-4"
@@ -894,7 +1021,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="enteral-4"
               id="enteral-4"
@@ -904,7 +1031,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="parenteral-4"
               id="parenteral-4"
@@ -914,7 +1041,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="ngt-4"
               id="ngt-4"
@@ -924,7 +1051,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="drain-4"
               id="drain-4"
@@ -934,7 +1061,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kateter-4"
               id="kateter-4"
@@ -946,7 +1073,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="jam-5"
               id="jam-5"
@@ -956,7 +1083,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="rx-5"
               id="rx-5"
@@ -966,7 +1093,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="td-5"
               id="td-5"
@@ -976,7 +1103,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nadi-5"
               id="nadi-5"
@@ -986,7 +1113,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="suhu-5"
               id="suhu-5"
@@ -996,7 +1123,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="rr-5"
               id="rr-5"
@@ -1006,7 +1133,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="spo2-5"
               id="spo2-5"
@@ -1016,7 +1143,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hal-hal-penting-tindakan-5"
               id="hal-hal-penting-tindakan-5"
@@ -1026,7 +1153,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="enteral-5"
               id="enteral-5"
@@ -1036,7 +1163,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="parenteral-5"
               id="parenteral-5"
@@ -1046,7 +1173,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="ngt-5"
               id="ngt-5"
@@ -1056,7 +1183,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="drain-5"
               id="drain-5"
@@ -1066,7 +1193,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kateter-5"
               id="kateter-5"
@@ -1078,7 +1205,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="jam-6"
               id="jam-6"
@@ -1088,7 +1215,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="rx-6"
               id="rx-6"
@@ -1098,7 +1225,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="td-6"
               id="td-6"
@@ -1108,7 +1235,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nadi-6"
               id="nadi-6"
@@ -1118,7 +1245,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="suhu-6"
               id="suhu-6"
@@ -1128,7 +1255,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="rr-6"
               id="rr-6"
@@ -1138,7 +1265,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="spo2-6"
               id="spo2-6"
@@ -1148,7 +1275,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hal-hal-penting-tindakan-6"
               id="hal-hal-penting-tindakan-6"
@@ -1158,7 +1285,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="enteral-6"
               id="enteral-6"
@@ -1168,7 +1295,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="parenteral-6"
               id="parenteral-6"
@@ -1178,7 +1305,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="ngt-6"
               id="ngt-6"
@@ -1188,7 +1315,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="drain-6"
               id="drain-6"
@@ -1198,7 +1325,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kateter-6"
               id="kateter-6"
@@ -1210,7 +1337,7 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="jam-7"
               id="jam-7"
@@ -1220,7 +1347,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="rx-7"
               id="rx-7"
@@ -1230,7 +1357,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="td-7"
               id="td-7"
@@ -1240,7 +1367,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nadi-7"
               id="nadi-7"
@@ -1250,7 +1377,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="suhu-7"
               id="suhu-7"
@@ -1260,7 +1387,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="rr-7"
               id="rr-7"
@@ -1270,7 +1397,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="spo2-7"
               id="spo2-7"
@@ -1280,7 +1407,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="hal-hal-penting-tindakan-7"
               id="hal-hal-penting-tindakan-7"
@@ -1290,7 +1417,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="enteral-7"
               id="enteral-7"
@@ -1300,7 +1427,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="parenteral-7"
               id="parenteral-7"
@@ -1310,7 +1437,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="ngt-7"
               id="ngt-7"
@@ -1320,7 +1447,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="drain-7"
               id="drain-7"
@@ -1330,7 +1457,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kateter-7"
               id="kateter-7"
@@ -1348,10 +1475,21 @@
           <td colspan="4">
             <h4><b>STATUS LOKAL</b></h4>
           </td>
-          <td width="33%" rowspan="9">&nbsp;</td>
+          <td width="33%" rowspan="9">
+            <button id="hapus-tanda-cedera" class="hapus-tanda">
+              Hapus Tanda
+            </button>
+            <canvas
+              class="canvas-maker"
+              id="pengkajian-cedera"
+              style="width: 100%"
+              height="250"
+            ></canvas>
+          </td>
           <td width="33%" rowspan="9">
             <h4><b>PEMERIKSAAN PENUNJANG</b></h4>
             <textarea
+              type="textarea"
               style="width: 100%"
               rows="6"
               name="pemeriksaan-penunjang"
@@ -1362,14 +1500,51 @@
             ></textarea>
             <br />
             <br />
-            <div style="text-align: center">
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
               <p>Perawat yang mengkaji,</p>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_perawat_yg_mengkaji"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_perawat_yg_mengkaji"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_perawat_yg_mengkaji"
+                id="paraf_ex_paraf_perawat_yg_mengkaji"
+                data-name="paraf"
+                data-id="ex_paraf_perawat_yg_mengkaji"
+              />
               <br />
-              <br />
-              <br />
-              <div style="display: flex; gap: 5px">
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_perawat_yg_mengkaji"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+              <div>
                 (<input
-                  style="flex: 1"
+                  style="width: 250px"
                   type="text"
                   name="perawat-yg-mengkaji"
                   id="perawat-yg-mengkaji"
@@ -1498,62 +1673,58 @@
       </tbody>
     </table>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              const name = this.getAttribute("name");
-              const radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
+      const pengkajianCedera = document.getElementById("pengkajian-cedera");
+      const ctxPengkajianCedera = pengkajianCedera.getContext("2d");
+      const imgPengkajianCedera = new Image();
+      imgPengkajianCedera.src = "../Documents/penandaan-lokasi-cedera.jpeg";
 
-        const checkboxButtons = document.querySelectorAll(
-          'input[type="checkbox"]'
+      imgPengkajianCedera.onload = () => {
+        ctxPengkajianCedera.drawImage(
+          imgPengkajianCedera,
+          0,
+          0,
+          pengkajianCedera.width,
+          pengkajianCedera.height
         );
-        checkboxButtons.forEach(function (checkbox) {
-          checkbox.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              const name = this.getAttribute("name");
-              const checkboxes = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              checkboxes.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
+      };
 
-        const textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-        const textareaInputs = document.querySelectorAll("textarea");
-        textareaInputs.forEach(function (textarea) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
+      const markers = [];
+
+      function drawMarker(x, y, ctx) {
+        ctx.beginPath();
+        ctx.arc(x, y, 3, 0, 2 * Math.PI);
+        ctx.fillStyle = "red";
+        ctx.fill();
+        ctx.strokeStyle = "black";
+        ctx.stroke();
+      }
+      function clearPengkajian(ctx, canva, img) {
+        ctx.clearRect(0, 0, canva.width, canva.height);
+        ctx.drawImage(img, 0, 0, canva.width, canva.height);
+      }
+
+      pengkajianCedera.addEventListener("click", (event) => {
+        const rect = pengkajianCedera.getBoundingClientRect();
+        const scaleX = pengkajianCedera.width / rect.width;
+        const scaleY = pengkajianCedera.height / rect.height;
+
+        const x = (event.clientX - rect.left) * scaleX;
+        const y = (event.clientY - rect.top) * scaleY;
+
+        drawMarker(x, y, ctxPengkajianCedera);
       });
+
+      const removePengkajianCedera = document.querySelector(
+        "#hapus-tanda-cedera"
+      );
+
+      removePengkajianCedera.addEventListener("click", () =>
+        clearPengkajian(
+          ctxPengkajianCedera,
+          pengkajianCedera,
+          imgPengkajianCedera
+        )
+      );
     </script>
   </body>
 </html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skrining Preeklampsia Pada Usia Kehamilan &lt; 20 Minggu</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+    .blink-result {
+      animation: blink 1s linear infinite;
+    }
+
+    @keyframes blink {
+      25% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0;
+      }
+      75% {
+        opacity: 1;
+      }
+    }
+  </style>
+  <script>
+    $(document).ready(function () {
+      $('input[type="checkbox"]')
+        .off("change")
+        .on("change", function () {
+          let total = 0;
+          let percol = $(this).data("percol");
+
+          let isRed = false;
+          let isYellow = false;
+
+          $(`[data-hitung${percol}]`).each(function () {
+            if ($(this).is(":checked")) {
+              let value = parseInt($(this).val());
+              total += value;
+              if ($(this).hasClass("yellow")) {
+                isYellow = true;
+              } else if ($(this).hasClass("red")) {
+                isRed = true;
+              }
+            }
+          });
+
+          if (isYellow) {
+            $("input.red").prop("disabled", true);
+            $("input.yellow").prop("disabled", false);
+          } else if (isRed) {
+            $("input.red").prop("disabled", false);
+            $("input.yellow").prop("disabled", true);
+          } else {
+            $("input.red").prop("disabled", false);
+            $("input.yellow").prop("disabled", false);
+          }
+
+          if (isYellow && total >= 2) {
+            $("input#kesimpulan").val("Risiko Sedang");
+          } else if (isRed && total >= 1) {
+            $("input#kesimpulan").val("Risiko Tinggi");
+          } else {
+            $("input#kesimpulan").val("");
+          }
+        });
+    });
+  </script>
+  <body>
+    <h1 class="title">
+      Skrining Preeklampsia Pada Usia Kehamilan &lt; 20 Minggu
+    </h1>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Kriteria</th>
+          <th>Risiko sedang</th>
+          <th>Risiko tinggi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="background-color: rgb(202, 202, 202)">Anamnesis</td>
+          <td style="background-color: rgb(202, 202, 202)">&nbsp;</td>
+          <td style="background-color: rgb(202, 202, 202)">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>Multipara dengan kehamilan oleh pasangan baru</td>
+          <td style="background-color: rgb(218, 194, 11); text-align: center">
+            <input
+              data-percol="1"
+              data-hitung1="1"
+              type="checkbox"
+              name="multipara-dgn-kehamilan-pasangan-baru"
+              id="multipara-dgn-kehamilan-pasangan-baru"
+              class="yellow"
+              label="multipara-dgn-kehamilan-pasangan-baru"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>
+            Kehamilan dengan teknologi reproduksi berbantu bayi tabung, obat
+            induksi ovulasi
+          </td>
+          <td style="background-color: rgb(218, 194, 11); text-align: center">
+            <input
+              data-percol="1"
+              data-hitung1="1"
+              type="checkbox"
+              class="yellow"
+              name="obat-induksi-ovulasi"
+              id="obat-induksi-ovulasi"
+              label="obat-induksi-ovulasi"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>Umur &ge; 35 tahun</td>
+          <td style="background-color: rgb(218, 194, 11); text-align: center">
+            <input
+              data-percol="1"
+              data-hitung1="1"
+              type="checkbox"
+              class="yellow"
+              name="umur-greater-than-35-thn"
+              id="umur-greater-than-35-thn"
+              label="umur-greater-than-35-thn"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>Nulipara</td>
+          <td style="background-color: rgb(218, 194, 11); text-align: center">
+            <input
+              data-percol="1"
+              data-hitung1="1"
+              type="checkbox"
+              class="yellow"
+              name="nulipara"
+              id="nulipara"
+              label="nulipara"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>Multipara yang jarak kehamilan sebelumnya &gt; 10 tahun</td>
+          <td style="background-color: rgb(218, 194, 11); text-align: center">
+            <input
+              data-percol="1"
+              data-hitung1="1"
+              type="checkbox"
+              class="yellow"
+              name="multipara-jarak-kehamilan-lebih-dari-10-thn"
+              id="multipara-jarak-kehamilan-lebih-dari-10-thn"
+              label="multipara-jarak-kehamilan-lebih-dari-10-thn"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>Riwayat preeklampsia pada ibu atau saudara perempuan</td>
+          <td style="background-color: rgb(218, 194, 11); text-align: center">
+            <input
+              data-percol="1"
+              data-hitung1="1"
+              type="checkbox"
+              class="yellow"
+              name="riwayat-preeklampsia-ibu-saudara-perempuan"
+              id="riwayat-preeklampsia-ibu-saudara-perempuan"
+              label="riwayat-preeklampsia-ibu-saudara-perempuan"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>Obesitas sebelum hamil (IMT &gt; 30kg/m<sup>2</sup>)</td>
+          <td style="background-color: rgb(218, 194, 11); text-align: center">
+            <input
+              data-percol="1"
+              data-hitung1="1"
+              type="checkbox"
+              class="yellow"
+              name="riwayat-preeklampsia-ibu-saudara-perempuan"
+              id="riwayat-preeklampsia-ibu-saudara-perempuan"
+              label="riwayat-preeklampsia-ibu-saudara-perempuan"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>Multipara dengan riwayat preeklampsia sebelumnya</td>
+          <td style="text-align: center">&nbsp;</td>
+          <td style="background-color: rgb(218, 11, 11); text-align: center">
+            <input
+              data-percol="1"
+              data-hitung1="1"
+              type="checkbox"
+              class="red"
+              name="multipara-dgn-riwayat-preeklampsia-sebelumnya"
+              id="multipara-dgn-riwayat-preeklampsia-sebelumnya"
+              label="multipara-dgn-riwayat-preeklampsia-sebelumnya"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Kehamilan multiple</td>
+          <td style="text-align: center">&nbsp;</td>
+          <td style="background-color: rgb(218, 11, 11); text-align: center">
+            <input
+              data-percol="1"
+              data-hitung1="1"
+              type="checkbox"
+              class="red"
+              name="kehamilan-multiple"
+              id="kehamilan-multiple"
+              label="kehamilan-multiple"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Diabetes dalam kehamilan</td>
+          <td style="text-align: center">&nbsp;</td>
+          <td style="background-color: rgb(218, 11, 11); text-align: center">
+            <input
+              data-percol="1"
+              data-hitung1="1"
+              type="checkbox"
+              class="red"
+              name="diabetes-dalam-kehamilan"
+              id="diabetes-dalam-kehamilan"
+              label="diabetes-dalam-kehamilan"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Hipertensi kronik</td>
+          <td style="text-align: center">&nbsp;</td>
+          <td style="background-color: rgb(218, 11, 11); text-align: center">
+            <input
+              data-percol="1"
+              data-hitung1="1"
+              type="checkbox"
+              class="red"
+              name="hipertensi-kronik"
+              id="hipertensi-kronik"
+              label="hipertensi-kronik"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Penyakit ginjal</td>
+          <td style="text-align: center">&nbsp;</td>
+          <td style="background-color: rgb(218, 11, 11); text-align: center">
+            <input
+              data-percol="1"
+              data-hitung1="1"
+              type="checkbox"
+              class="red"
+              name="penyakit-ginjal"
+              id="penyakit-ginjal"
+              label="penyakit-ginjal"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Penyakit autoimun, SLE</td>
+          <td style="text-align: center">&nbsp;</td>
+          <td style="background-color: rgb(218, 11, 11); text-align: center">
+            <input
+              data-percol="1"
+              data-hitung1="1"
+              type="checkbox"
+              class="red"
+              name="penyakit-autoimun-sle"
+              id="penyakit-autoimun-sle"
+              label="penyakit-autoimun-sle"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Anti phospholipid syndrome*</td>
+          <td style="text-align: center">&nbsp;</td>
+          <td style="background-color: rgb(218, 11, 11); text-align: center">
+            <input
+              data-percol="1"
+              data-hitung1="1"
+              type="checkbox"
+              class="red"
+              name="penyakit-autoimun-sle"
+              id="penyakit-autoimun-sle"
+              label="penyakit-autoimun-sle"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Pemeriksaan Fisik</td>
+          <td style="background-color: rgb(202, 202, 202)">&nbsp;</td>
+          <td style="background-color: rgb(202, 202, 202)">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>Mean Arterial Pressure &gt; 90 mmHg **</td>
+          <td style="background-color: rgb(218, 194, 11); text-align: center">
+            <input
+              data-percol="1"
+              data-hitung1="1"
+              type="checkbox"
+              class="yellow"
+              name="mean-arterial-pressure"
+              id="mean-arterial-pressure"
+              label="mean-arterial-pressure"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>
+            Proteinuria (urin celup &gt; +1 pada 2 kali pemeriksaan berjarak 6
+            jam atau segera kuantitatif 300 mg/24 jam)
+          </td>
+          <td style="background-color: rgb(218, 194, 11); text-align: center">
+            <input
+              data-percol="1"
+              data-hitung1="1"
+              type="checkbox"
+              class="yellow"
+              name="proteinuria"
+              id="proteinuria"
+              label="proteinuria"
+              value="1"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <p>Keterangan Sistem Skoring</p>
+            <p>Ibu hamil dilakukan rujukan bila ditemukan sedikitnya</p>
+            <ul>
+              <li style="display: flex; gap: 5px; margin-bottom: 5px">
+                2 risiko sedang
+                <div
+                  style="
+                    border: 2px solid rgb(218, 194, 11);
+                    width: 20px;
+                    height: 10px;
+                  "
+                ></div>
+                dan atau,
+              </li>
+              <li style="display: flex; gap: 5px">
+                1 risiko tinggi
+                <div
+                  style="
+                    border: 2px solid rgb(218, 11, 11);
+                    width: 20px;
+                    height: 10px;
+                  "
+                ></div>
+              </li>
+            </ul>
+            <p>
+              <i
+                >* Manifestasi klinis APS antara lain: keguguran berulang, IUFD,
+                kelahiran premature</i
+              >
+            </p>
+            <p><i>** MAP dihitung setiap kali kunjungan ANC</i></p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <i>Pilih salah satu pilihan yang sesuai</i>
+    <div
+      style="display: flex; gap: 5px; align-items: center; margin: 5px 0 5px 0"
+    >
+      <label>Kesimpulan :</label>
+      <input
+        style="flex: 1; border: none; border-bottom: 1px dashed"
+        type="text"
+        name="kesimpulan"
+        id="kesimpulan"
+        label="kesimpulan"
+        myid="check_cara"
+      />
+    </div>
+    <p>
+      <i
+        >Bilamana ibu berisiko preeklamsi maka pemeriksaan kehamilan,
+        persalinan, dan pemeriksaan nifas dilaksanakan di Rumah Sakit.</i
+      >
+    </p>
+    <p>
+      <i
+        >Lakukan rujukan terencana pada ibu hamil dengan kondisi yang disebutkan
+        di atas (tidak perlu menunggu inpartu)</i
+      >
+    </p>
+    <br />
+    <div style="display: flex; justify-content: end">
+      <div style="display: flex; flex-direction: column; align-items: center">
+        <label for="">Dokter Pemeriksa,</label>
+        <label
+          class="label text-center"
+          id="def_img_ex_ttd_dokter_pemeriksa"
+          style="font-style: italic; width: 100px; height: 100px"
+          >paraf</label
+        >
+        <label class="label text-center">
+          <img
+            class="text-center"
+            id="image_paraf_ex_ttd_dokter_pemeriksa"
+            src=""
+            style="display: none"
+        /></label>
+        <input
+          myid="check_cara"
+          type="hidden"
+          name="paraf_ex_ttd_dokter_pemeriksa"
+          id="paraf_ex_ttd_dokter_pemeriksa"
+          data-name="paraf"
+          data-id="ex_ttd_dokter_pemeriksa"
+        />
+        <br />
+        <label class="label text-center">
+          <a
+            id="CreateTTD"
+            class="btn btn-default btn-xs pointer text-center"
+            data-id="ex_ttd_dokter_pemeriksa"
+            style="text-align: center"
+          >
+            <i class="fa fa-edit"> </i>
+            PENTABLET
+          </a>
+        </label>
+        <br />
+        <label for="">
+          (
+          <input
+            style="flex: 1; border: none; border-bottom: 1px dashed"
+            type="text"
+            name="dokter_pemeriksa"
+            id="dokter_pemeriksa"
+            label="dokter_pemeriksa"
+            myid="check_cara"
+          />
+          )
+        </label>
+        <br />
+        <font id="ttd2"></font>
+      </div>
+    </div>
+  </body>
+</html>

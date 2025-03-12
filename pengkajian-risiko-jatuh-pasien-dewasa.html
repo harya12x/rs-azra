@@ -6,41 +6,26 @@
     <title>PENGKAJIAN RISIKO JATUH PASIEN DEWASA</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
   </style>
-  <script
-    src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-    crossorigin="anonymous"
-  ></script>
-  <script type="text/javascript">
-    $(document).on("ajaxStop", function () {
-      SetTTD();
-    });
-  </script>
   <script>
     $(document).ready(function () {
       $(function () {
@@ -56,7 +41,6 @@
         .on("change", function () {
           let total = 0;
           let percol = $(this).data("percol");
-          console.log(percol);
 
           $("[data-hitung" + percol + "]").each(function () {
             let radioValue = 0;
@@ -69,123 +53,20 @@
             }
           });
 
+          if (total >= 0 && total <= 24) {
+            total += `, Risiko Rendah`;
+          } else if (total >= 25 && total <= 44) {
+            total += `, Risiko Sedang`;
+          } else if (total >= 45) {
+            total += `, Risiko Tinggi`;
+          }
           $(`#totalskor` + percol).val(total);
         });
     });
-
-    // Untuk Keperluan TTD
-    function ttd_paraf(id) {
-      PopupCenter(
-        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
-        "pop",
-        800,
-        400
-      );
-    }
-
-    // Untuk Keperluan TTD
-    function tampil_ttd(x, y) {
-      ImageToText(x, y);
-    }
-
-    // Untuk Keperluan TTD
-    function PopupCenter(url, title, w, h) {
-      console.log("PopupCenter");
-      var dualScreenLeft =
-        window.screenLeft != undefined ? window.screenLeft : screen.left;
-      var dualScreenTop =
-        window.screenTop != undefined ? window.screenTop : screen.top;
-      var width = window.innerWidth
-        ? window.innerWidth
-        : document.documentElement.clientWidth
-        ? document.documentElement.clientWidth
-        : screen.width;
-      var height = window.innerHeight
-        ? window.innerHeight
-        : document.documentElement.clientHeight
-        ? document.documentElement.clientHeight
-        : screen.height;
-      var left = width / 2 - w / 2 + dualScreenLeft + 100;
-      var top = height / 2 - h / 2 + dualScreenTop + 100;
-
-      var newWindow = window.open(
-        url,
-        title,
-        "scrollbars=yes, width=" +
-          w +
-          ", height=" +
-          h +
-          ", top=" +
-          top +
-          ", left=" +
-          left
-      );
-
-      if (window.focus) newWindow.focus();
-    }
-
-    // Untuk Keperluan TTD
-    function SetTTD() {
-      $('input[data-name="paraf"]').each(function () {
-        var id = $(this).attr("data-id"),
-          ttd = $(this).val();
-
-        ImageToText(id, ttd);
-      });
-    }
-
-    // Untuk Keperluan Select Option & TTD
-    $(document)
-      .off("change", 'select[data-var="set_name_sel"]')
-      .on("change", 'select[data-var="set_name_sel"]', function () {
-        var name = $(this).attr("name"),
-          name_txt = $(this).find("option:selected").text(),
-          name_img = $(this).find("option:selected").attr("data-ttd"),
-          id = $(this).attr("data-id");
-
-        $("#" + name + "_txt").val(name_txt);
-
-        ImageToText(id, name_img);
-      });
-
-    // Untuk Keperluan Create TTD
-    $(document)
-      .off("click", "#CreateTTD")
-      .on("click", "#CreateTTD", function () {
-        var id = $(this).attr("data-id");
-
-        ttd_paraf(id);
-      });
-
-    // Untuk Keperluan Parsing TTD To Object
-    function ImageToText(img_id, img_val) {
-      def = "paraf";
-
-      if (typeof img_val === "undefined" || img_val == "") {
-        $("#def_img_" + img_id).text(def);
-        $("#def_img_" + img_id).css({
-          display: "",
-          "font-style": "italic",
-          width: "100px",
-          height: "100px",
-        });
-        $("#image_paraf_" + img_id).css("display", "none");
-      } else {
-        $("#def_img_" + img_id).text("");
-        $("#def_img_" + img_id).css("display", "none");
-        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
-        $("#image_paraf_" + img_id).css({
-          display: "",
-          width: "100px",
-          height: "100px",
-        });
-        $("#paraf_" + img_id).val(img_val);
-      }
-    }
   </script>
   <body>
-    <h1 class="title">PENGKAJIAN RISIKO JATUH PASIEN DEWASA RS. AZRA BOGOR</h1>
-    <table class="table-bordered" width="100%">
+    <h1 class="title">PENGKAJIAN RISIKO JATUH PASIEN DEWASA</h1>
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
           <input
@@ -238,7 +119,7 @@
               type="text"
               id="tgl_lahir"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               myid="check_cara"
               value="{VBIRTH_DATE}"
               label="tanggal lahir"
@@ -282,7 +163,6 @@
               myid="check_cara"
               placeholder="..."
               label="kamar"
-              value="{VNAMARUANGAN}"
             />
           </td>
         </tr>
@@ -291,18 +171,18 @@
     <table width="100%" class="table table-bordered">
       <thead>
         <tr>
-          <th rowspan="2">Faktor Risiko</th>
-          <th rowspan="2">Skala</th>
-          <th rowspan="2">Skor</th>
+          <th rowspan="3">Faktor Risiko</th>
+          <th rowspan="3">Skala</th>
+          <th rowspan="3">Skor</th>
           <th colspan="9">Skor Pasien/Tanggal</th>
         </tr>
         <tr>
           <th>
             <input
-              style="width: 100%"
+              style="width: 100%; text-align: center"
               type="text"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               myid="check_cara"
               name="tgl-pengkajian-1"
               id="tgl-pengkajian-1"
@@ -310,10 +190,10 @@
           </th>
           <th>
             <input
-              style="width: 100%"
+              style="width: 100%; text-align: center"
               type="text"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               myid="check_cara"
               name="tgl-pengkajian-2"
               id="tgl-pengkajian-2"
@@ -321,10 +201,10 @@
           </th>
           <th>
             <input
-              style="width: 100%"
+              style="width: 100%; text-align: center"
               type="text"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               myid="check_cara"
               name="tgl-pengkajian-3"
               id="tgl-pengkajian-3"
@@ -332,10 +212,10 @@
           </th>
           <th>
             <input
-              style="width: 100%"
+              style="width: 100%; text-align: center"
               type="text"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               myid="check_cara"
               name="tgl-pengkajian-4"
               id="tgl-pengkajian-4"
@@ -343,10 +223,10 @@
           </th>
           <th>
             <input
-              style="width: 100%"
+              style="width: 100%; text-align: center"
               type="text"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               myid="check_cara"
               name="tgl-pengkajian-5"
               id="tgl-pengkajian-5"
@@ -354,10 +234,10 @@
           </th>
           <th>
             <input
-              style="width: 100%"
+              style="width: 100%; text-align: center"
               type="text"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               myid="check_cara"
               name="tgl-pengkajian-6"
               id="tgl-pengkajian-6"
@@ -365,10 +245,10 @@
           </th>
           <th>
             <input
-              style="width: 100%"
+              style="width: 100%; text-align: center"
               type="text"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               myid="check_cara"
               name="tgl-pengkajian-7"
               id="tgl-pengkajian-7"
@@ -376,10 +256,10 @@
           </th>
           <th>
             <input
-              style="width: 100%"
+              style="width: 100%; text-align: center"
               type="text"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               myid="check_cara"
               name="tgl-pengkajian-8"
               id="tgl-pengkajian-8"
@@ -387,24 +267,119 @@
           </th>
           <th>
             <input
-              style="width: 100%"
+              style="width: 100%; text-align: center"
               type="text"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               myid="check_cara"
               name="tgl-pengkajian-9"
               id="tgl-pengkajian-9"
             />
           </th>
         </tr>
+        <tr>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="00.00"
+              myid="check_cara"
+              name="pukul-pengkajian-1"
+              id="tgl-pengkajian-1"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="00.00"
+              myid="check_cara"
+              name="pukul-pengkajian-2"
+              id="tgl-pengkajian-2"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="00.00"
+              myid="check_cara"
+              name="pukul-pengkajian-3"
+              id="tgl-pengkajian-3"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="00.00"
+              myid="check_cara"
+              name="pukul-pengkajian-4"
+              id="tgl-pengkajian-4"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="00.00"
+              myid="check_cara"
+              name="pukul-pengkajian-5"
+              id="tgl-pengkajian-5"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="00.00"
+              myid="check_cara"
+              name="pukul-pengkajian-6"
+              id="tgl-pengkajian-6"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="00.00"
+              myid="check_cara"
+              name="pukul-pengkajian-7"
+              id="tgl-pengkajian-7"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="00.00"
+              myid="check_cara"
+              name="pukul-pengkajian-8"
+              id="tgl-pengkajian-8"
+            />
+          </th>
+          <th>
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              placeholder="00.00"
+              myid="check_cara"
+              name="pukul-pengkajian-9"
+              id="pukul-pengkajian-9"
+            />
+          </th>
+        </tr>
       </thead>
       <tbody>
         <tr>
-          <td rowspan="2" style="text-align: center"><b>Riwayat jatuh</b></td>
-          <td>Ya</td>
+          <td width="5%" rowspan="2" style="text-align: center">
+            <b>Riwayat jatuh</b>
+          </td>
+          <td width="5%">Ya</td>
           <td>25</td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="1"
               data-hitung1="1"
@@ -416,6 +391,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="2"
               data-hitung2="2"
@@ -427,6 +403,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="3"
               data-hitung3="3"
@@ -438,6 +415,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="4"
               data-hitung4="4"
@@ -449,6 +427,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="5"
               data-hitung5="5"
@@ -460,6 +439,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="6"
               data-hitung6="6"
@@ -471,6 +451,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="7"
               data-hitung7="7"
@@ -482,6 +463,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="8"
               data-hitung8="8"
@@ -493,6 +475,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="9"
               data-hitung9="9"
@@ -508,6 +491,7 @@
           <td>0</td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="1"
               data-hitung1="1"
@@ -519,6 +503,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="2"
               data-hitung2="2"
@@ -530,6 +515,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="3"
               data-hitung3="3"
@@ -541,6 +527,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="4"
               data-hitung4="4"
@@ -552,6 +539,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="5"
               data-hitung5="5"
@@ -563,6 +551,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="6"
               data-hitung6="6"
@@ -574,6 +563,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="7"
               data-hitung7="7"
@@ -585,6 +575,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="8"
               data-hitung8="8"
@@ -596,6 +587,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="9"
               data-hitung9="9"
@@ -614,6 +606,7 @@
           <td>15</td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="1"
               data-hitung1="1"
@@ -625,6 +618,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="2"
               data-hitung2="2"
@@ -636,6 +630,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="3"
               data-hitung3="3"
@@ -647,6 +642,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="4"
               data-hitung4="4"
@@ -658,6 +654,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="5"
               data-hitung5="5"
@@ -669,6 +666,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="6"
               data-hitung6="6"
@@ -680,6 +678,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="7"
               data-hitung7="7"
@@ -691,6 +690,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="8"
               data-hitung8="8"
@@ -702,6 +702,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="9"
               data-hitung9="9"
@@ -717,6 +718,7 @@
           <td>0</td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="1"
               data-hitung1="1"
@@ -728,6 +730,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="2"
               data-hitung2="2"
@@ -739,6 +742,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="3"
               data-hitung3="3"
@@ -750,6 +754,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="4"
               data-hitung4="4"
@@ -761,6 +766,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="5"
               data-hitung5="5"
@@ -772,6 +778,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="6"
               data-hitung6="6"
@@ -783,6 +790,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="7"
               data-hitung7="7"
@@ -794,6 +802,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="8"
               data-hitung8="8"
@@ -805,6 +814,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="9"
               data-hitung9="9"
@@ -823,6 +833,7 @@
           <td>30</td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="1"
               data-hitung1="1"
@@ -834,6 +845,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="2"
               data-hitung2="2"
@@ -845,6 +857,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="3"
               data-hitung3="3"
@@ -856,6 +869,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="4"
               data-hitung4="4"
@@ -867,6 +881,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="5"
               data-hitung5="5"
@@ -878,6 +893,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="6"
               data-hitung6="6"
@@ -889,6 +905,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="7"
               data-hitung7="7"
@@ -900,6 +917,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="8"
               data-hitung8="8"
@@ -911,6 +929,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="9"
               data-hitung9="9"
@@ -926,6 +945,7 @@
           <td>15</td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="1"
               data-hitung1="1"
@@ -937,6 +957,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="2"
               data-hitung2="2"
@@ -948,6 +969,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="3"
               data-hitung3="3"
@@ -959,6 +981,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="4"
               data-hitung4="4"
@@ -970,6 +993,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="5"
               data-hitung5="5"
@@ -981,6 +1005,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="6"
               data-hitung6="6"
@@ -992,6 +1017,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="7"
               data-hitung7="7"
@@ -1003,6 +1029,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="8"
               data-hitung8="8"
@@ -1014,6 +1041,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="9"
               data-hitung9="9"
@@ -1029,6 +1057,7 @@
           <td>0</td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="1"
               data-hitung1="1"
@@ -1040,6 +1069,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="2"
               data-hitung2="2"
@@ -1051,6 +1081,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="3"
               data-hitung3="3"
@@ -1062,6 +1093,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="4"
               data-hitung4="4"
@@ -1073,6 +1105,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="5"
               data-hitung5="5"
@@ -1084,6 +1117,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="6"
               data-hitung6="6"
@@ -1095,6 +1129,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="7"
               data-hitung7="7"
@@ -1106,6 +1141,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="8"
               data-hitung8="8"
@@ -1117,6 +1153,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="9"
               data-hitung9="9"
@@ -1135,6 +1172,7 @@
           <td>20</td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="1"
               data-hitung1="1"
@@ -1146,6 +1184,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="2"
               data-hitung2="2"
@@ -1157,6 +1196,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="3"
               data-hitung3="3"
@@ -1168,6 +1208,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="4"
               data-hitung4="4"
@@ -1179,6 +1220,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="5"
               data-hitung5="5"
@@ -1190,6 +1232,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="6"
               data-hitung6="6"
@@ -1201,6 +1244,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="7"
               data-hitung7="7"
@@ -1212,6 +1256,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="8"
               data-hitung8="8"
@@ -1223,6 +1268,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="9"
               data-hitung9="9"
@@ -1238,6 +1284,7 @@
           <td>0</td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="1"
               data-hitung1="1"
@@ -1249,6 +1296,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="2"
               data-hitung2="2"
@@ -1260,6 +1308,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="3"
               data-hitung3="3"
@@ -1271,6 +1320,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="4"
               data-hitung4="4"
@@ -1282,6 +1332,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="5"
               data-hitung5="5"
@@ -1293,6 +1344,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="6"
               data-hitung6="6"
@@ -1304,6 +1356,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="7"
               data-hitung7="7"
@@ -1315,6 +1368,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="8"
               data-hitung8="8"
@@ -1326,6 +1380,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="9"
               data-hitung9="9"
@@ -1344,6 +1399,7 @@
           <td>20</td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="1"
               data-hitung1="1"
@@ -1355,6 +1411,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="2"
               data-hitung2="2"
@@ -1366,6 +1423,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="3"
               data-hitung3="3"
@@ -1377,6 +1435,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="4"
               data-hitung4="4"
@@ -1388,6 +1447,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="5"
               data-hitung5="5"
@@ -1399,6 +1459,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="6"
               data-hitung6="6"
@@ -1410,6 +1471,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="7"
               data-hitung7="7"
@@ -1421,6 +1483,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="8"
               data-hitung8="8"
@@ -1432,6 +1495,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="9"
               data-hitung9="9"
@@ -1447,6 +1511,7 @@
           <td>10</td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="1"
               data-hitung1="1"
@@ -1458,6 +1523,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="2"
               data-hitung2="2"
@@ -1469,6 +1535,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="3"
               data-hitung3="3"
@@ -1480,6 +1547,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="4"
               data-hitung4="4"
@@ -1491,6 +1559,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               data-percol="5"
               data-hitung5="5"
               type="radio"
@@ -1502,6 +1571,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               data-percol="6"
               data-hitung6="6"
               type="radio"
@@ -1513,6 +1583,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="7"
               data-hitung7="7"
@@ -1524,6 +1595,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="8"
               data-hitung8="8"
@@ -1535,6 +1607,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="9"
               data-hitung9="9"
@@ -1550,6 +1623,7 @@
           <td>0</td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="1"
               data-hitung1="1"
@@ -1561,6 +1635,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="2"
               data-hitung2="2"
@@ -1572,6 +1647,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="3"
               data-hitung3="3"
@@ -1583,6 +1659,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="4"
               data-hitung4="4"
@@ -1594,6 +1671,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="5"
               data-hitung5="5"
@@ -1605,6 +1683,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="6"
               data-hitung6="6"
@@ -1616,6 +1695,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="7"
               data-hitung7="7"
@@ -1627,6 +1707,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="8"
               data-hitung8="8"
@@ -1638,6 +1719,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="9"
               data-hitung9="9"
@@ -1656,6 +1738,7 @@
           <td>15</td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="1"
               data-hitung1="1"
@@ -1667,6 +1750,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="2"
               data-hitung2="2"
@@ -1678,6 +1762,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="3"
               data-hitung3="3"
@@ -1689,6 +1774,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="4"
               data-hitung4="4"
@@ -1700,6 +1786,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="5"
               data-hitung5="5"
@@ -1711,6 +1798,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="6"
               data-hitung6="6"
@@ -1722,6 +1810,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="7"
               data-hitung7="7"
@@ -1733,6 +1822,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="8"
               data-hitung8="8"
@@ -1744,6 +1834,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="9"
               data-hitung9="9"
@@ -1759,6 +1850,7 @@
           <td>0</td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="1"
               data-hitung1="1"
@@ -1770,6 +1862,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="2"
               data-hitung2="2"
@@ -1781,6 +1874,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="3"
               data-hitung3="3"
@@ -1792,6 +1886,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="4"
               data-hitung4="4"
@@ -1803,6 +1898,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="5"
               data-hitung5="5"
@@ -1814,6 +1910,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="6"
               data-hitung6="6"
@@ -1825,6 +1922,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="7"
               data-hitung7="7"
@@ -1836,6 +1934,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="8"
               data-hitung8="8"
@@ -1847,6 +1946,7 @@
           </td>
           <td>
             <input
+              style="width: 100%; text-align: center"
               type="radio"
               data-percol="9"
               data-hitung9="9"
@@ -1862,156 +1962,206 @@
           <td style="text-align: end" colspan="2"><b>Total</b></td>
           <td>&nbsp;</td>
           <td>
-            <input
-              type="text"
+            <textarea
+              type="textarea"
               readonly
               name="totalskor1"
               id="totalskor1"
               placeholder="....."
               myid="check_cara"
               style="width: 100%; text-align: center"
-            />
+            ></textarea>
           </td>
           <td>
-            <input
-              type="text"
+            <textarea
+              type="textarea"
               readonly
               name="totalskor2"
               id="totalskor2"
               placeholder="....."
               myid="check_cara"
               style="width: 100%; text-align: center"
-            />
+            ></textarea>
           </td>
           <td>
-            <input
-              type="text"
+            <textarea
+              type="textarea"
               readonly
               name="totalskor3"
               id="totalskor3"
               placeholder="....."
               myid="check_cara"
               style="width: 100%; text-align: center"
-            />
+            ></textarea>
           </td>
           <td>
-            <input
-              type="text"
+            <textarea
+              type="textarea"
               readonly
               name="totalskor4"
               id="totalskor4"
               placeholder="....."
               myid="check_cara"
               style="width: 100%; text-align: center"
-            />
+            ></textarea>
           </td>
           <td>
-            <input
-              type="text"
+            <textarea
+              type="textarea"
               readonly
               name="totalskor5"
               id="totalskor5"
               placeholder="....."
               myid="check_cara"
               style="width: 100%; text-align: center"
-            />
+            ></textarea>
           </td>
           <td>
-            <input
-              type="text"
+            <textarea
+              type="textarea"
               readonly
               name="totalskor6"
               id="totalskor6"
               placeholder="....."
               myid="check_cara"
               style="width: 100%; text-align: center"
-            />
+            ></textarea>
           </td>
           <td>
-            <input
-              type="text"
+            <textarea
+              type="textarea"
               readonly
               name="totalskor7"
               id="totalskor7"
               placeholder="....."
               myid="check_cara"
               style="width: 100%; text-align: center"
-            />
+            ></textarea>
           </td>
           <td>
-            <input
-              type="text"
+            <textarea
+              type="textarea"
               readonly
               name="totalskor8"
               id="totalskor8"
               placeholder="....."
               myid="check_cara"
               style="width: 100%; text-align: center"
-            />
+            ></textarea>
           </td>
           <td>
-            <input
-              type="text"
+            <textarea
+              type="textarea"
               readonly
               name="totalskor9"
               id="totalskor9"
               placeholder="....."
               myid="check_cara"
               style="width: 100%; text-align: center"
-            />
+            ></textarea>
           </td>
         </tr>
         <tr>
           <td style="text-align: end" colspan="2"><b>Nama Petugas</b></td>
           <td>&nbsp;</td>
-          <td colspan="9">
-            <div
-              style="display: flex; flex-direction: column; align-items: center"
-            >
-              <input
-                type="text"
-                name="nama-petugas"
-                id="nama-petugas"
-                placeholder="....."
-                myid="check_cara"
-                style="width: 100%"
-              />
-
-              <br />
-              <label
-                class="label text-center"
-                id="def_img_ex_ttd_nama_petugas"
-                style="font-style: italic; width: 100px; height: 100px"
-                >paraf</label
-              >
-              <label class="label text-center">
-                <img
-                  class="text-center"
-                  id="image_paraf_ex_ttd_nama_petugas"
-                  src=""
-                  style="display: none"
-              /></label>
-              <input
-                myid="check_cara"
-                type="hidden"
-                name="paraf_ex_ttd_nama_petugas"
-                id="paraf_ex_ttd_nama_petugas"
-                data-name="paraf"
-                data-id="ex_ttd_nama_petugas"
-              />
-              <br />
-              <label class="label text-center">
-                <a
-                  id="CreateTTD"
-                  class="btn btn-default btn-xs pointer text-center"
-                  data-id="ex_ttd_nama_petugas"
-                  style="text-align: center"
-                >
-                  <i class="fa fa-edit"> </i>
-                  PENTABLET
-                </a>
-              </label>
-            </div>
+          <td>
+            <textarea
+              type="textarea"
+              name="nama-petugas-1"
+              id="nama-petugas-1"
+              label="nama-petugas-1"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            ></textarea>
+          </td>
+          <td>
+            <textarea
+              type="textarea"
+              name="nama-petugas-2"
+              id="nama-petugas-2"
+              label="nama-petugas-2"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            ></textarea>
+          </td>
+          <td>
+            <textarea
+              type="textarea"
+              name="nama-petugas-3"
+              id="nama-petugas-3"
+              label="nama-petugas-3"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            ></textarea>
+          </td>
+          <td>
+            <textarea
+              type="textarea"
+              name="nama-petugas-4"
+              id="nama-petugas-4"
+              label="nama-petugas-4"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            ></textarea>
+          </td>
+          <td>
+            <textarea
+              type="textarea"
+              name="nama-petugas-5"
+              id="nama-petugas-5"
+              label="nama-petugas-5"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            ></textarea>
+          </td>
+          <td>
+            <textarea
+              type="textarea"
+              name="nama-petugas-6"
+              id="nama-petugas-6"
+              label="nama-petugas-6"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            ></textarea>
+          </td>
+          <td>
+            <textarea
+              type="textarea"
+              name="nama-petugas-7"
+              id="nama-petugas-7"
+              label="nama-petugas-7"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            ></textarea>
+          </td>
+          <td>
+            <textarea
+              type="textarea"
+              name="nama-petugas-8"
+              id="nama-petugas-8"
+              label="nama-petugas-8"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            ></textarea>
+          </td>
+          <td>
+            <textarea
+              type="textarea"
+              name="nama-petugas-9"
+              id="nama-petugas-9"
+              label="nama-petugas-9"
+              placeholder="....."
+              myid="check_cara"
+              style="width: 100%"
+            ></textarea>
           </td>
         </tr>
         <tr>
@@ -2022,63 +2172,11 @@
               </p>
               <p>Risiko Rendah : 0 - 24</p>
               <p>Risiko Sedang : 25 - 44</p>
-              <p>Risiko Tinggi : &ge; 25</p>
+              <p>Risiko Tinggi : &ge; 45</p>
             </section>
           </td>
         </tr>
       </tbody>
     </table>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var checkboxButtons = document.querySelectorAll(
-          'input[type="checkbox"]'
-        );
-        checkboxButtons.forEach(function (checkbox) {
-          checkbox.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var checkboxes = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              checkboxes.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

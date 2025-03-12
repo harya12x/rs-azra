@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CEK LIST PERSIAPAN OPERASI</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
+  <body>
+    <h1 class="title">CEK LIST PERSIAPAN OPERASI</h1>
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td>Nama Pasien</td>
+          <td>
+            <input
+              name="nama_pasien2"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+              value="{VNAMA_PASIEN}"
+            />
+          </td>
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              myid="check_cara"
+              name="no_rm"
+              id="no_rm"
+              label="nomor rekam medis"
+              value="{NO_RM}"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan="2">Tanggal Lahir</td>
+          <td rowspan="2">
+            <input
+              name="tgl_lahira2"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal lahir"
+              value="{VBIRTH_DATE}"
+            />
+          </td>
+
+          <td rowspan="2">Umur</td>
+          <td rowspan="2">
+            <input
+              type="text"
+              size="20"
+              name="umur-pengkajian"
+              id="umur-pengkajian"
+              myid="check_cara"
+              placeholder="..."
+              value="{VAGEREGIS}"
+            />
+          </td>
+          <td>
+            <label for="kelas"> Poli </label>
+          </td>
+          <td>
+            <input
+              name="poli"
+              type="text"
+              id="poli"
+              placeholder="..."
+              myid="check_cara"
+              label="poli"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="kamar"> Kamar </label>
+          </td>
+          <td>
+            <input
+              name="kamar"
+              type="text"
+              id="kamar"
+              placeholder="..."
+              myid="check_cara"
+              label="kamar"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold">RENCANA OPERASI TANGGAL:</td>
+          <td>
+            <input
+              name="tgl-operasi"
+              type="text"
+              id="tgl-operasi"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tgl-operasi"
+              class="datepicker"
+              fdprocessedid="clw3uk"
+            />
+          </td>
+
+          <td style="font-weight: bold">JAM</td>
+          <td colspan="2">
+            <input
+              name="jam-operasi"
+              type="text"
+              id="jam-operasi"
+              placeholder="00.00"
+              myid="check_cara"
+              label="jam-operasi"
+              mtype="pukul"
+              fdprocessedid="clw3uk"
+            />
+          </td>
+          <td style="padding-left: 5px; font-weight: bold">
+            <input
+              type="radio"
+              value="CITO"
+              name="cito-elektif"
+              class="cito-elektif"
+              id="cito-elektif"
+              myid="check_cara"
+            />
+            <label for="l">1. CITO</label>
+            <input
+              type="radio"
+              value="ELEKTIF"
+              name="cito-elektif"
+              class="cito-elektif"
+              id="cito-elektif"
+              myid="check_cara"
+            />
+            <label for="l">2. ELEKTIF </label>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold">NAMA OPERASI:</td>
+          <td>
+            <input
+              type="text"
+              name="nama-operasi"
+              id="nama-operasi"
+              label="nama-operasi"
+              size="50"
+              placeholder="..."
+              myid="check_cara"
+            />
+          </td>
+
+          <td style="font-weight: bold">JENIS OPERASI</td>
+          <td style="padding-left: 5px; font-weight: bold" colspan="2">
+            <input
+              type="radio"
+              value="Besar"
+              name="jenis-operasi"
+              id="jenis-operasi"
+              label="jenis-operasi"
+              myid="check_cara"
+            />
+            <label for="l">1. Besar</label>
+            <input
+              type="radio"
+              value="Sedang"
+              name="jenis-operasi"
+              id="jenis-operasi"
+              label="jenis-operasi"
+              myid="check_cara"
+            />
+            <label for="l">2. Sedang </label>
+            <input
+              type="radio"
+              value="Kecil"
+              name="jenis-operasi"
+              id="jenis-operasi"
+              label="jenis-operasi"
+              myid="check_cara"
+            />
+            <label for="l">3. Kecil</label>
+            <input
+              type="radio"
+              value="Khusus"
+              name="jenis-operasi"
+              id="jenis-operasi"
+              label="jenis-operasi"
+              myid="check_cara"
+            />
+            <label for="l">4. Khusus </label>
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table table-bordered cek-list-pra-operasi">
+      <thead>
+        <tr>
+          <th><b>No</b></th>
+          <th><b>Kategori</b></th>
+          <th><b>Ya</b></th>
+          <th><b>Tidak</b></th>
+          <th><b>Keterangan</b></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1.</td>
+          <td>Form Informasi tindakan kedokteran</td>
+          <td align="center">
+            <input
+              type="radio"
+              id="informasi-tindakan-kedokteran"
+              name="informasi-tindakan-kedokteran"
+              label="informasi-tindakan-kedokteran"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              id="informasi-tindakan-kedokteran"
+              name="informasi-tindakan-kedokteran"
+              label="informasi-tindakan-kedokteran"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="keterangan-informasi-tindakan-kedokteran"
+              id="keterangan-informasi-tindakan-kedokteran"
+              label="keterangan-informasi-tindakan-kedokteran"
+              style="width: 100%"
+              placeholder="....."
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>2.</td>
+          <td>Form Persetujuan tindakan kedokteran</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="persetujuan-tindakan-kedokteran"
+              id="persetujuan-tindakan-kedokteran"
+              label="persetujuan-tindakan-kedokteran"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="persetujuan-tindakan-kedokteran"
+              id="persetujuan-tindakan-kedokteran"
+              label="persetujuan-tindakan-kedokteran"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="keterangan-persetujuan-tindakan-kedokteran"
+              id="keterangan-persetujuan-tindakan-kedokteran"
+              label="keterangan-persetujuan-tindakan-kedokteran"
+              placeholder="......"
+              style="width: 100%"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>3.</td>
+          <td>Form Pengkajian pra bedah dan penandaan lokasi bedah</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="pengkajian-penandaan-lokasi-bedah"
+              id="pengkajian-penandaan-lokasi-bedah"
+              label="pengkajian-penandaan-lokasi-bedah"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="pengkajian-penandaan-lokasi-bedah"
+              id="pengkajian-penandaan-lokasi-bedah"
+              label="pengkajian-penandaan-lokasi-bedah"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="keterangan-pengkajian-penandaan-lokasi-bedah"
+              id="keterangan-pengkajian-penandaan-lokasi-bedah"
+              label="keterangan-pengkajian-penandaan-lokasi-bedah"
+              style="width: 100%"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>4.</td>
+          <td>Form Informasi tindakan anestesi atau sedasi</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="informasi-tindakan-anestesi-sedasi"
+              id="informasi-tindakan-anestesi-sedasi"
+              label="informasi-tindakan-anestesi-sedasi"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="informasi-tindakan-anestesi-sedasi"
+              id="informasi-tindakan-anestesi-sedasi"
+              label="informasi-tindakan-anestesi-sedasi"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="keterangan-informasi-tindakan-anestesi-sedasi"
+              id="keterangan-informasi-tindakan-anestesi-sedasi"
+              label="keterangan-informasi-tindakan-anestesi-sedasi"
+              placeholder="......"
+              style="width: 100%"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>5.</td>
+          <td>Form Persetujuan tindakan anestesi</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="persetujuan-tindakan-anestesi"
+              id="persetujuan-tindakan-anestesi"
+              label="persetujuan-tindakan-anestesi"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="persetujuan-tindakan-anestesi"
+              id="persetujuan-tindakan-anestesi"
+              label="persetujuan-tindakan-anestesi"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="keterangan-persetujuan-tindakan-anestesi"
+              id="keterangan-persetujuan-tindakan-anestesi"
+              label="keterangan-persetujuan-tindakan-anestesi"
+              style="width: 100%"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>6.</td>
+          <td>Form pengkajian pra anestesi atau sedasi</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="pengkajian-pra-anestesi-sedasi"
+              id="pengkajian-pra-anestesi-sedasi"
+              label="pengkajian-pra-anestesi-sedasi"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="pengkajian-pra-anestesi-sedasi"
+              id="pengkajian-pra-anestesi-sedasi"
+              label="pengkajian-pra-anestesi-sedasi"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="keterangan-pengkajian-pra-anestesi-sedasi"
+              id="keterangan-pengkajian-pra-anestesi-sedasi"
+              label="keterangan-pengkajian-pra-anestesi-sedasi"
+              style="width: 100%"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>7.</td>
+          <td>Form Memo tindakan operasi</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="memo-tindakan-operasi"
+              id="memo-tindakan-operasi"
+              label="memo-tindakan-operasi"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="memo-tindakan-operasi"
+              id="memo-tindakan-operasi"
+              label="memo-tindakan-operasi"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="keterangan-memo-tindakan-operasi"
+              id="keterangan-memo-tindakan-operasi"
+              label="keterangan-memo-tindakan-operasi"
+              style="width: 100%"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td>8.</td>
+          <td>
+            <label for="">Konsul dokter spesialis anak / internis /</label>
+            <input
+              type="text"
+              name="konsul-jenis-dokter-spesialis"
+              id="konsul-jenis-dokter-spesialis"
+              label="konsul-jenis-dokter-spesialis"
+              myid="check_cara"
+              placeholder="..."
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="konsul-dokter-spesialis"
+              id="konsul-dokter-spesialis"
+              label="konsul-dokter-spesialis"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="konsul-dokter-spesialis"
+              id="konsul-dokter-spesialis"
+              label="konsul-dokter-spesialis"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <label for="Dokter">Dokter:</label>
+              <input
+                type="text"
+                name="keterangan-dokter-spesialis"
+                id="keterangan-dokter-spesialis"
+                label="keterangan-dokter-spesialis"
+                style="width: 100%"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>9.</td>
+          <td>Booking ruang operasi</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="booking-ruang-operasi"
+              id="booking-ruang-operasi"
+              label="booking-ruang-operasi"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="booking-ruang-operasi"
+              id="booking-ruang-operasi"
+              label="booking-ruang-operasi"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <label for="tgl">Tgl:</label>
+              <input
+                type="text"
+                name="tgl-booking-ruang-operasi"
+                id="tgl-booking-ruang-operasi"
+                label="tgl-booking-ruang-operasi"
+                myid="check_cara"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+              />
+              <label for="jam">Jam:</label>
+              <input
+                type="text"
+                name="jam-booking-ruang-operasi"
+                id="jam-booking-ruang-operasi"
+                label="jam-booking-ruang-operasi"
+                myid="check_cara"
+                placeholder="00.00"
+              />
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>10.</td>
+          <td>Puasa</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="puasa"
+              id="puasa"
+              label="puasa"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="puasa"
+              id="puasa"
+              label="puasa"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <label for="Dokter">Mulai dari jam:</label>
+              <input
+                type="text"
+                name="mulai-puasa"
+                id="mulai-puasa"
+                label="mulai-puasa"
+                placeholder="00.00"
+                style="width: 100%"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>11.</td>
+          <td>Persediaan darah</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="persediaan-darah"
+              id="persediaan-darah"
+              label="persediaan-darah"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="persediaan-darah"
+              id="persediaan-darah"
+              label="persediaan-darah"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <label for="tgl">Jumlah:</label>
+              <input
+                type="text"
+                name="jumlah-persediaan-darah"
+                id="jumlah-persediaan-darah"
+                label="jumlah-persediaan-darah"
+                myid="check_cara"
+                placeholder="......"
+              />
+              <label for="gol">Gol:</label>
+              <input
+                type="text"
+                name="gol-darah"
+                id="gol-darah"
+                label="gol-darah"
+                myid="check_cara"
+                placeholder="......"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>12.</td>
+          <td>Hasil Laboratorium</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="hasil-laboratorium"
+              id="hasil-laboratorium"
+              label="hasil-laboratorium"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="hasil-laboratorium"
+              id="hasil-laboratorium"
+              label="hasil-laboratorium"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+          <td rowspan="3">
+            <table class="table table-bordered" width="100%">
+              <tbody>
+                <tr>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <label for="gol">Hb:</label>
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="hasil-laboratorium-Hb"
+                        id="hasil-laboratorium-Hb"
+                        label="hasil-laboratorium-Hb"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <label for="gol">L:</label>
+                      <input
+                        type="text"
+                        style="width: 100%"
+                        name="hasil-laboratorium-l"
+                        id="hasil-laboratorium-l"
+                        label="hasil-laboratorium-l"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <label for="gol">Tr:</label>
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="hasil-laboratorium-Tr"
+                        id="hasil-laboratorium-Tr"
+                        label="hasil-laboratorium-Tr"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
+                    </div>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <label for="gol">BT:</label>
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="hasil-laboratorium-BT"
+                        id="hasil-laboratorium-BT"
+                        label="hasil-laboratorium-BT"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <label for="gol">PT:</label>
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="hasil-laboratorium-PT"
+                        id="hasil-laboratorium-PT"
+                        label="hasil-laboratorium-PT"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <label for="gol">CT:</label>
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="hasil-laboratorium-CT"
+                        id="hasil-laboratorium-CT"
+                        label="hasil-laboratorium-CT"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <label for="gol">APTT:</label>
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="hasil-laboratorium-APTT"
+                        id="hasil-laboratorium-APTT"
+                        label="hasil-laboratorium-APTT"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>13.</td>
+          <td>EKG</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="ekg"
+              id="ekg"
+              label="ekg"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="ekg"
+              id="ekg"
+              label="ekg"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>14.</td>
+          <td>Rontgen / CT Scan / MRI</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="rontgen-ctscan-mri"
+              id="rontgen-ctscan-mri"
+              label="rontgen-ctscan-mri"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="rontgen-ctscan-mri"
+              id="rontgen-ctscan-mri"
+              label="rontgen-ctscan-mri"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>15.</td>
+          <td>Tanda - tanda Vital</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="tanda-tanda-vital"
+              id="tanda-tanda-vital"
+              label="tanda-tanda-vital"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="tanda-tanda-vital"
+              id="tanda-tanda-vital"
+              label="tanda-tanda-vital"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+          <td rowspan="4">
+            <table class="table table-bordered" width="100%">
+              <tbody>
+                <tr>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <label for="TD">TD:</label>
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="ttv-TD"
+                        id="ttv-TD"
+                        label="ttv-TD"
+                        myid="check_cara"
+                        value="{VTD}"
+                      />
+                      <label for="ttv-TD">mmhg</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <label for="N">N:</label>
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="ttv-N"
+                        id="ttv-N"
+                        label="ttv-N"
+                        value="{VNADI}"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
+                      <label for="ttv-N">x/mnt</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <label for="S">S:</label>
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="ttv-S"
+                        id="ttv-S"
+                        label="ttv-S"
+                        placeholder="......"
+                        value="{VSUHU}"
+                        myid="check_cara"
+                      />
+                      <label for="ttv-S">x/mnt</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <label for="P">P:</label>
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="hasil-laboratorium-P"
+                        id="hasil-laboratorium-P"
+                        label="hasil-laboratorium-P"
+                        placeholder="......"
+                        value="{VNAFAS}"
+                        myid="check_cara"
+                      />
+                      <label for="hasil-laboratorium-P">x/mnt</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <label for="BB">BB:</label>
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="BB"
+                        id="BB"
+                        label="BB"
+                        value="{VBB}"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
+                      <label for="BB">Kg</label>
+                    </div>
+                  </td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+
+        <tr>
+          <td>16.</td>
+          <td>Gigi palsu / rambut palsu / perhiasan dilepas</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="gigipalsu-rambutpalsu-perhiasan-dilepas"
+              id="gigipalsu-rambutpalsu-perhiasan-dilepas"
+              label="gigipalsu-rambutpalsu-perhiasan-dilepas"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="gigipalsu-rambutpalsu-perhiasan-dilepas"
+              id="gigipalsu-rambutpalsu-perhiasan-dilepas"
+              label="gigipalsu-rambutpalsu-perhiasan-dilepas"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>17.</td>
+          <td>Hearing aid dilepas</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="hearing-aid-dilepas"
+              id="hearing-aid-dilepas"
+              label="hearing-aid-dilepas"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="hearing-aid-dilepas"
+              id="hearing-aid-dilepas"
+              label="hearing-aid-dilepas"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>18.</td>
+          <td>Make up / Kutek dibersihkan / Kuku palsu dilepas</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="make-up-kutek-dibersihkan-kuku-palsu-dilepas"
+              id="make-up-kutek-dibersihkan-kuku-palsu-dilepas"
+              label="make-up-kutek-dibersihkan-kuku-palsu-dilepas"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="make-up-kutek-dibersihkan-kuku-palsu-dilepas"
+              id="make-up-kutek-dibersihkan-kuku-palsu-dilepas"
+              label="make-up-kutek-dibersihkan-kuku-palsu-dilepas"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>19.</td>
+          <td>Obat premedikasi</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="obat-premedikasi"
+              id="obat-premedikasi"
+              label="obat-premedikasi"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="obat-premedikasi"
+              id="obat-premedikasi"
+              label="obat-premedikasi"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+          <td rowspan="2">
+            <table class="table table-bordered" width="100%">
+              <tbody>
+                <tr>
+                  <td colspan="2">
+                    <div style="display: flex; gap: 5px">
+                      <label for="nama-obat">Nama Obat:</label>
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="nama-obat"
+                        id="nama-obat"
+                        label="nama-obat"
+                        myid="check_cara"
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <div style="display: flex; gap: 5px">
+                      <label for="jenis-obat">Jenis Obat:</label>
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="jenis-obat"
+                        id="jenis-obat"
+                        label="jenis-obat"
+                        myid="check_cara"
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <label for="jenis-obat">Dosis Obat:</label>
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="dosis-obat"
+                        id="dosis-obat"
+                        label="dosis-obat"
+                        myid="check_cara"
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <label for="jam-obat">Jam:</label>
+                      <input
+                        style="width: 100%"
+                        type="text"
+                        name="jam-obat"
+                        id="jam-obat"
+                        label="jam-obat"
+                        placeholder="00.00"
+                        myid="check_cara"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>20.</td>
+          <td>Kacamata / kontak lens dilepas</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="kacamata-kontak-lens-dilepas"
+              id="kacamata-kontak-lens-dilepas"
+              label="kacamata-kontak-lens-dilepas"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="kacamata-kontak-lens-dilepas"
+              id="kacamata-kontak-lens-dilepas"
+              label="kacamata-kontak-lens-dilepas"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td>21.</td>
+          <td>Kateter terpasang</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="kateter-terpasang"
+              id="kateter-terpasang"
+              label="kateter-terpasang"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="kateter-terpasang"
+              id="kateter-terpasang"
+              label="kateter-terpasang"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <label for="ukuran-kateter">Ukuran:</label>
+              <input
+                style="width: 100%"
+                type="text"
+                name="ukuran-kateter"
+                id="ukuran-kateter"
+                label="ukuran-kateter"
+                myid="check_cara"
+              />
+              <label for="balon-kateter">Balon:</label>
+              <input
+                style="width: 100%"
+                type="text"
+                name="balon-kateter"
+                id="balon-kateter"
+                label="balon-kateter"
+                myid="check_cara"
+              />
+              <label for="balon-kateter">cc</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>22.</td>
+          <td>NGT terpasang</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="ngt-terpasang"
+              id="ngt-terpasang"
+              label="ngt-terpasang"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="ngt-terpasang"
+              id="ngt-terpasang"
+              label="ngt-terpasang"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <label for="ukuran-ngt">Ukuran:</label>
+              <input
+                style="width: 100%"
+                type="text"
+                name="ukuran-ngt"
+                id="ukuran-ngt"
+                label="ukuran-ngt"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>23.</td>
+          <td>Klisma</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="klisma"
+              id="klisma"
+              label="klisma"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="klisma"
+              id="klisma"
+              label="klisma"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <input
+                style="width: 100%"
+                type="text"
+                name="klisma-x"
+                id="klisma-x"
+                label="klisma-x"
+                myid="check_cara"
+                placeholder="......"
+              />
+              <label for="klisma-x">x,</label>
+              <label for="jam-awal-klisma">Jam:</label>
+              <input
+                style="width: 100%"
+                type="text"
+                name="jam-1-klisma"
+                id="jam-1-klisma"
+                label="jam-1-klisma"
+                myid="check_cara"
+                placeholder="00.00"
+              />
+              <label for="jam-akhir-klisma">Jam: </label>
+              <input
+                style="width: 100%"
+                type="text"
+                name="jam-2-klisma"
+                id="jam-2-klisma"
+                label="jam-2-klisma"
+                myid="check_cara"
+                placeholder="00.00"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>24.</td>
+          <td>Haid</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="haid"
+              id="haid"
+              label="haid"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="haid"
+              id="haid"
+              label="haid"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <label for="haid-hari-ke">Hari ke:</label>
+              <input
+                style="width: 100%"
+                type="text"
+                name="haid-hari-ke"
+                id="haid-hari-ke"
+                label="haid-hari-ke"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>25.</td>
+          <td>Hamil</td>
+          <td align="center">
+            <input
+              type="radio"
+              name="hamil"
+              id="hamil"
+              label="hamil"
+              value="Ya"
+              myid="check_cara"
+            />
+          </td>
+          <td align="center">
+            <input
+              type="radio"
+              name="hamil"
+              id="hamil"
+              label="hamil"
+              value="Tidak"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <label for="hamil-minggu-ke">Minggu ke:</label>
+              <input
+                style="width: 100%"
+                type="text"
+                name="hamil-minggu-ke"
+                id="hamil-minggu-ke"
+                label="hamil-minggu-ke"
+                placeholder="......"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table table-bordered" cellpadding="0" border="0">
+      <tbody>
+        <tr>
+          <td>&nbsp;</td>
+          <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
+          <td bgcolor="#FFFFFF">
+            <input
+              name="17_tgl"
+              type="text"
+              id="17_tgl"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              size="30"
+              myid="check_cara"
+            />
+            <br />
+            <input
+              name="17_pukul"
+              type="text"
+              id="17_pukul"
+              placeholder="00.00"
+              size="30"
+              myid="check_cara"
+              mtype="pukul"
+            />
+          </td>
+
+          <td bgcolor="#FFFFFF" colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+
+          <td colspan="2">
+            <div><strong>Penerima</strong></div>
+          </td>
+          <td colspan="2">
+            <div><strong>Penanggung jawab,</strong></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>&nbsp;</td>
+          <td bgcolor="#FFFFFF">Nama</td>
+
+          <td bgcolor="#FFFFFF">
+            <input
+              name="nama-penerima"
+              type="text"
+              id="nama-penerima"
+              size="25"
+              myid="check_cara"
+            />
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_nama_penerima"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_nama_penerima"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_nama_penerima"
+              id="paraf_ex_paraf_nama_penerima"
+              data-name="paraf"
+              data-id="ex_paraf_nama_penerima"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_nama_penerima"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
+            <font id="ttdnya2"></font>
+          </td>
+          <td colspan="2">
+            <input
+              name="nama-penanggungjawab"
+              type="text"
+              id="nama-penanggungjawab"
+              size="25"
+              myid="check_cara"
+            />
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_paraf_nama_penanggung_jawab"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_paraf_nama_penanggung_jawab"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_paraf_nama_penanggung_jawab"
+              id="paraf_ex_paraf_nama_penanggung_jawab"
+              data-name="paraf"
+              data-id="ex_paraf_nama_penanggung_jawab"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_paraf_nama_penanggung_jawab"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <br />
+            <font id="ttdnya2"></font>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

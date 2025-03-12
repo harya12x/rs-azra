@@ -3,9 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      PENGKAJIAN PRA BEDAH DAN PENANDAAN LOKASI BEDAH RS. AZRA BOGOR
-    </title>
+    <title>PENGKAJIAN PRA BEDAH DAN PENANDAAN LOKASI BEDAH</title>
   </head>
   <style>
     * {
@@ -18,9 +16,6 @@
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
     .table {
       border-collapse: collapse;
@@ -32,11 +27,45 @@
       border: 1px solid black;
       padding: 5px;
     }
+    canvas {
+      border: 1px solid black;
+      display: block;
+      margin: 20px auto;
+    }
+
+    .hapus-tanda {
+      padding: 10px;
+      background-color: #1c3f80;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .hapus-tanda:active {
+      background-color: #0a204a;
+    }
   </style>
   <script type="text/javascript">
     $(document).on("ajaxStop", function () {
       SetTTD();
     });
+    if ($.fn.datepicker) {
+      $(".datepicker").each(function () {
+        var $this = $(this),
+          dataDateFormat = $this.attr("data-dateformat") || "dd.mm.yy";
+
+        $this.datepicker({
+          dateFormat: dataDateFormat,
+          prevText: '<i class="fa fa-chevron-left"></i>',
+          nextText: '<i class="fa fa-chevron-right"></i>',
+          todayBtn: "linked",
+        });
+
+        // clear memory reference
+        $this = null;
+      });
+    }
   </script>
   <script>
     $(document).ready(function () {
@@ -161,7 +190,6 @@
   </script>
   <body>
     <h1 class="title">PENGKAJIAN PRA BEDAH DAN PENANDAAN LOKASI BEDAH</h1>
-    <h1 class="title">RS. AZRA BOGOR</h1>
 
     <table class="table table-bordered" width="100%">
       <tbody>
@@ -216,8 +244,8 @@
               name="tgl_lahira2"
               type="text"
               id="tgl_lahir"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatePicker"
+              placeholder="dd/mm/yyyy"
+              class="datepicker hasDatepicker"
               myid="check_cara"
               value="{VBIRTH_DATE}"
               label="tanggal lahir"
@@ -234,7 +262,7 @@
               myid="check_cara"
               id="umur"
               label="umur"
-              value="{VAGE}"
+              value="{VAGEREGIS}"
             />
           </td>
           <td>
@@ -314,8 +342,8 @@
                 id="tgl-pengkajian"
                 label="tgl-pengkajian"
                 myid="check_cara"
-                placeholder="dd-mm-yy"
-                class="datepicker hasDatePicker"
+                placeholder="dd/mm/yyyy"
+                class="datepicker hasDatepicker"
               />
             </div>
           </td>
@@ -443,52 +471,55 @@
         </tr>
         <tr>
           <td>
-            <img
-              src="../Documents/gambar-pengkajian-bedah-perempuan.jpeg"
-              myid="check_cara"
-              myimage="yes"
-              id="gambar-pengkajian-bedah-perempuan"
-              name="gambar-pengkajian-bedah-perempuan"
-              style="height: 600px"
-            />
+            <button id="hapus-tanda-bedah-badan-perempuan" class="hapus-tanda">
+              Hapus Tanda
+            </button>
+            <canvas
+              class="canvas-maker"
+              id="pengkajian-bedah-badan-perempuan"
+              style="width: 100%"
+              height="250"
+            ></canvas>
           </td>
 
           <td>
-            <img
-              src="../Documents/gambar-pengkajian-bedah-laki-laki.jpeg"
-              myid="check_cara"
-              myimage="yes"
-              id="gambar-pengkajian-bedah-laki-laki"
-              name="gambar-pengkajian-bedah-laki-laki"
-              style="height: 600px"
-            />
+            <button id="hapus-tanda-bedah-badan-laki-laki" class="hapus-tanda">
+              Hapus Tanda
+            </button>
+            <canvas
+              class="canvas-maker"
+              id="pengkajian-bedah-badan-laki-laki"
+              style="width: 100%"
+              height="250"
+            ></canvas>
           </td>
         </tr>
         <tr>
           <td>
-            <div style="display: flex; justify-content: center">
-              <img
-                src="../Documents/gambar-pengkajian-bedah-wajah-kaki.jpeg"
-                myid="check_cara"
-                myimage="yes"
-                id="gambar-pengkajian-bedah-perempuan"
-                name="gambar-pengkajian-bedah-perempuan"
-                style="height: 1000px"
-              />
-            </div>
+            <button id="hapus-tanda-bedah-wajah-kaki" class="hapus-tanda">
+              Hapus Tanda
+            </button>
+            <canvas
+              class="canvas-maker"
+              id="pengkajian-bedah-wajah-kaki"
+              style="width: 100%"
+              height="300"
+            ></canvas>
           </td>
 
           <td>
-            <div style="display: flex; justify-content: center">
-              <img
-                src="../Documents/gambar-pengkajian-bedah-tangan-telapak-kaki.jpeg"
-                myid="check_cara"
-                myimage="yes"
-                id="gambar-pengkajian-bedah-laki-laki"
-                name="gambar-pengkajian-bedah-laki-laki"
-                style="height: 1000px"
-              />
-            </div>
+            <button
+              id="hapus-tanda-bedah-tangan-telapak-kaki"
+              class="hapus-tanda"
+            >
+              Hapus Tanda
+            </button>
+            <canvas
+              class="canvas-maker"
+              id="pengkajian-bedah-tangan-telapak-kaki"
+              style="width: 100%"
+              height="300"
+            ></canvas>
           </td>
         </tr>
         <tr>
@@ -535,40 +566,236 @@
       </tbody>
     </table>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
+      const pengkajianBedahBadanPerempuan = document.getElementById(
+        "pengkajian-bedah-badan-perempuan"
+      );
+      const pengkajianBedahBadanLakilaki = document.getElementById(
+        "pengkajian-bedah-badan-laki-laki"
+      );
+      const pengkajianBedahTanganTelapakKaki = document.getElementById(
+        "pengkajian-bedah-tangan-telapak-kaki"
+      );
+      const pengkajianBedahWajahKaki = document.getElementById(
+        "pengkajian-bedah-wajah-kaki"
+      );
 
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
+      const ctxPengkajianBedahBadanPerempuan =
+        pengkajianBedahBadanPerempuan.getContext("2d");
+      const ctxPengkajianBedahBadanLakilaki =
+        pengkajianBedahBadanLakilaki.getContext("2d");
+      const ctxPengkajianBedahTanganTelapakKaki =
+        pengkajianBedahTanganTelapakKaki.getContext("2d");
+      const ctxPengkajianBedahWajahKaki =
+        pengkajianBedahWajahKaki.getContext("2d");
+
+      const imgPengkajianBedahPerempuan = new Image();
+      const imgPengkajianBedahLakilaki = new Image();
+      const imgPengkajianTanganTelapakKaki = new Image();
+      const imgPengkajianWajahKaki = new Image();
+
+      imgPengkajianBedahPerempuan.src =
+        "../Documents/gambar-pengkajian-bedah-perempuan.jpeg";
+      imgPengkajianBedahLakilaki.src =
+        "../Documents/gambar-pengkajian-bedah-laki-laki.jpeg";
+      imgPengkajianTanganTelapakKaki.src =
+        "../Documents/gambar-pengkajian-bedah-tangan-telapak-kaki.jpeg";
+      imgPengkajianWajahKaki.src =
+        "../Documents/gambar-pengkajian-bedah-wajah-kaki.jpeg";
+
+      imgPengkajianBedahPerempuan.onload = () => {
+        ctxPengkajianBedahBadanPerempuan.drawImage(
+          imgPengkajianBedahPerempuan,
+          0,
+          0,
+          pengkajianBedahBadanPerempuan.width,
+          pengkajianBedahBadanPerempuan.height
+        );
+        loadMarkers(
+          "pengkajian-bedah-badan-perempuan",
+          ctxPengkajianBedahBadanPerempuan
+        );
+      };
+
+      imgPengkajianBedahLakilaki.onload = () => {
+        ctxPengkajianBedahBadanLakilaki.drawImage(
+          imgPengkajianBedahLakilaki,
+          0,
+          0,
+          pengkajianBedahBadanLakilaki.width,
+          pengkajianBedahBadanLakilaki.height
+        );
+        loadMarkers(
+          "pengkajian-bedah-badan-laki-laki",
+          ctxPengkajianBedahBadanLakilaki
+        );
+      };
+
+      imgPengkajianTanganTelapakKaki.onload = () => {
+        ctxPengkajianBedahTanganTelapakKaki.drawImage(
+          imgPengkajianTanganTelapakKaki,
+          0,
+          0,
+          pengkajianBedahTanganTelapakKaki.width,
+          pengkajianBedahTanganTelapakKaki.height
+        );
+        loadMarkers(
+          "pengkajian-bedah-tangan-telapak-kaki",
+          ctxPengkajianBedahTanganTelapakKaki
+        );
+      };
+
+      imgPengkajianWajahKaki.onload = () => {
+        ctxPengkajianBedahWajahKaki.drawImage(
+          imgPengkajianWajahKaki,
+          0,
+          0,
+          pengkajianBedahWajahKaki.width,
+          pengkajianBedahWajahKaki.height
+        );
+        loadMarkers("pengkajian-bedah-wajah-kaki", ctxPengkajianBedahWajahKaki);
+      };
+
+      function loadMarkers(canvasId, ctx) {
+        const markers = [];
+        markers.forEach((marker) => {
+          ctx.beginPath();
+          ctx.arc(marker.x, marker.y, 3, 0, 2 * Math.PI);
+          ctx.fillStyle = "red";
+          ctx.fill();
+          ctx.strokeStyle = "black";
+          ctx.stroke();
         });
-        var textAreas = document.querySelectorAll("textarea");
-        textAreas.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
+      }
+
+      function drawMarker(x, y, ctx, canvasId) {
+        ctx.beginPath();
+        ctx.arc(x, y, 3, 0, 2 * Math.PI);
+        ctx.fillStyle = "red";
+        ctx.fill();
+        ctx.strokeStyle = "black";
+        ctx.stroke();
+      }
+
+      function clearPengkajian(ctx, canva, img, canvasId) {
+        ctx.clearRect(0, 0, canva.width, canva.height);
+        ctx.drawImage(img, 0, 0, canva.width, canva.height);
+        markersStorage[canvasId] = [];
+      }
+
+      pengkajianBedahBadanPerempuan.addEventListener("click", (event) => {
+        const rect = pengkajianBedahBadanPerempuan.getBoundingClientRect();
+        const scaleX = pengkajianBedahBadanPerempuan.width / rect.width; // Perhitungan skala horizontal
+        const scaleY = pengkajianBedahBadanPerempuan.height / rect.height; // Perhitungan skala vertikal
+
+        const x = (event.clientX - rect.left) * scaleX; // Posisi x dalam skala pengkajianBedahBadanPerempuan
+        const y = (event.clientY - rect.top) * scaleY; // Posisi y dalam skala pengkajianBedahBadanPerempuan
+
+        drawMarker(
+          x,
+          y,
+          ctxPengkajianBedahBadanPerempuan,
+          "pengkajian-bedah-badan-perempuan"
+        );
       });
+
+      pengkajianBedahBadanLakilaki.addEventListener("click", (event) => {
+        const rect = pengkajianBedahBadanLakilaki.getBoundingClientRect();
+        const scaleX = pengkajianBedahBadanLakilaki.width / rect.width; // Perhitungan skala horizontal
+        const scaleY = pengkajianBedahBadanLakilaki.height / rect.height; // Perhitungan skala vertikal
+
+        const x = (event.clientX - rect.left) * scaleX; // Posisi x dalam skala pengkajianBedahBadanLakilaki
+        const y = (event.clientY - rect.top) * scaleY; // Posisi y dalam skala pengkajianBedahBadanLakilaki
+
+        drawMarker(
+          x,
+          y,
+          ctxPengkajianBedahBadanLakilaki,
+          "pengkajian-bedah-badan-laki-laki"
+        );
+      });
+
+      pengkajianBedahTanganTelapakKaki.addEventListener("click", (event) => {
+        const rect = pengkajianBedahTanganTelapakKaki.getBoundingClientRect();
+        const scaleX = pengkajianBedahTanganTelapakKaki.width / rect.width; // Perhitungan skala horizontal
+        const scaleY = pengkajianBedahTanganTelapakKaki.height / rect.height; // Perhitungan skala vertikal
+
+        const x = (event.clientX - rect.left) * scaleX; // Posisi x dalam skala pengkajianBedahTanganTelapakKaki
+        const y = (event.clientY - rect.top) * scaleY; // Posisi y dalam skala pengkajianBedahTanganTelapakKaki
+
+        drawMarker(
+          x,
+          y,
+          ctxPengkajianBedahTanganTelapakKaki,
+          "pengkajian-bedah-tangan-telapak-kaki"
+        );
+      });
+      pengkajianBedahWajahKaki.addEventListener("click", (event) => {
+        const rect = pengkajianBedahWajahKaki.getBoundingClientRect();
+        const scaleX = pengkajianBedahWajahKaki.width / rect.width; // Perhitungan skala horizontal
+        const scaleY = pengkajianBedahWajahKaki.height / rect.height; // Perhitungan skala vertikal
+
+        const x = (event.clientX - rect.left) * scaleX; // Posisi x dalam skala pengkajianBedahWajahKaki
+        const y = (event.clientY - rect.top) * scaleY; // Posisi y dalam skala pengkajianBedahWajahKaki
+
+        drawMarker(
+          x,
+          y,
+          ctxPengkajianBedahWajahKaki,
+          "pengkajian-bedah-wajah-kaki"
+        );
+      });
+
+      const removePengkajianBedahBadanPerempuan = document.querySelector(
+        "#hapus-tanda-bedah-badan-perempuan"
+      );
+
+      removePengkajianBedahBadanPerempuan.addEventListener("click", () =>
+        clearPengkajian(
+          ctxPengkajianBedahBadanPerempuan,
+          pengkajianBedahBadanPerempuan,
+          imgPengkajianBedahPerempuan,
+          "pengkajian-bedah-badan-perempuan"
+        )
+      );
+
+      const removePengkajianBedahBadanLakilaki = document.querySelector(
+        "#hapus-tanda-bedah-badan-laki-laki"
+      );
+
+      removePengkajianBedahBadanLakilaki.addEventListener("click", () =>
+        clearPengkajian(
+          ctxPengkajianBedahBadanLakilaki,
+          pengkajianBedahBadanLakilaki,
+          imgPengkajianBedahLakilaki,
+          "pengkajian-bedah-badan-laki-laki"
+        )
+      );
+
+      const removePengkajianTanganTelapakKaki = document.querySelector(
+        "#hapus-tanda-bedah-tangan-telapak-kaki"
+      );
+
+      removePengkajianTanganTelapakKaki.addEventListener("click", () =>
+        clearPengkajian(
+          ctxPengkajianBedahTanganTelapakKaki,
+          pengkajianBedahTanganTelapakKaki,
+          imgPengkajianTanganTelapakKaki,
+          "pengkajian-bedah-tangan-telapak-kaki"
+        )
+      );
+
+      const removePengkajianWajahKaki = document.querySelector(
+        "#hapus-tanda-bedah-wajah-kaki"
+      );
+
+      removePengkajianWajahKaki.addEventListener("click", () =>
+        clearPengkajian(
+          ctxPengkajianBedahWajahKaki,
+          pengkajianBedahWajahKaki,
+          imgPengkajianWajahKaki,
+          "pengkajian-bedah-wajah-kaki"
+        )
+      );
     </script>
   </body>
 </html>

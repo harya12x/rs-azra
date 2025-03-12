@@ -1,0 +1,5205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GRAFIK PENCATATAN SUHU DAN KELEMBABAN</title>
+  </head>
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.slim.js"
+    integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
+    crossorigin="anonymous"
+  ></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+    .header {
+      font-weight: bold;
+      text-align: center;
+    }
+    .chart-container {
+      width: 100%;
+      margin: 20px auto;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    .chart {
+      width: 100%;
+      height: 400px;
+      border: 1px solid black;
+      position: relative;
+    }
+    .tooltip {
+      position: absolute;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 5px;
+      font-size: 12px;
+      pointer-events: none;
+      display: none;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    .grid-line {
+      stroke: #ddd;
+      stroke-width: 1;
+    }
+    .line {
+      stroke-width: 2;
+      fill: none;
+    }
+    .button-container {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+    }
+    .grafik-button {
+      background-color: #1c3f80;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .grafik-button:active {
+      background-color: #0a204a;
+    }
+  </style>
+  <script>
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+    if ($.fn.datepicker) {
+      $(".datepicker").each(function () {
+        var $this = $(this),
+          dataDateFormat = $this.attr("data-dateformat") || "dd.mm.yy";
+
+        $this.datepicker({
+          dateFormat: dataDateFormat,
+          prevText: '<i class="fa fa-chevron-left"></i>',
+          nextText: '<i class="fa fa-chevron-right"></i>',
+          todayBtn: "linked",
+        });
+
+        // clear memory reference
+        $this = null;
+      });
+    }
+  </script>
+  <script>
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
+  <body>
+    <h1 class="title">GRAFIK PENCATATAN SUHU DAN KELEMBABAN</h1>
+    <div style="width: 100%; display: flex; justify-content: space-between">
+      <div>
+        <label for="">LOKASI</label>
+        <input
+          type="text"
+          name="lokasi"
+          id="lokasi"
+          label="lokasi"
+          myid="check_cara"
+          style="border: none; border-bottom: 2px dotted"
+        />
+      </div>
+      <div>
+        <label for="">Bulan-Tahun</label>
+        <input
+          type="text"
+          name="bulan-tahun"
+          id="bulan-tahun"
+          label="bulan-tahun"
+          myid="check_cara"
+          style="border: none; border-bottom: 2px dotted"
+        />
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <h3>Suhu Lemari Es</h3>
+      <br />
+      <div style="overflow-x: auto" id="table-container">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Tgl</th>
+              <th colspan="2">1</th>
+              <th colspan="2">2</th>
+              <th colspan="2">3</th>
+              <th colspan="2">4</th>
+              <th colspan="2">5</th>
+              <th colspan="2">6</th>
+              <th colspan="2">7</th>
+              <th colspan="2">8</th>
+              <th colspan="2">9</th>
+              <th colspan="2">10</th>
+              <th colspan="2">11</th>
+              <th colspan="2">12</th>
+              <th colspan="2">13</th>
+              <th colspan="2">14</th>
+              <th colspan="2">15</th>
+              <th colspan="2">16</th>
+              <th colspan="2">17</th>
+              <th colspan="2">18</th>
+              <th colspan="2">19</th>
+              <th colspan="2">20</th>
+              <th colspan="2">21</th>
+              <th colspan="2">22</th>
+              <th colspan="2">23</th>
+              <th colspan="2">24</th>
+              <th colspan="2">25</th>
+              <th colspan="2">26</th>
+              <th colspan="2">27</th>
+              <th colspan="2">28</th>
+              <th colspan="2">29</th>
+              <th colspan="2">30</th>
+              <th colspan="2">31</th>
+            </tr>
+          </thead>
+          <tbody>
+            <td>&deg;C</td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-1"
+                name="pencatatan-suhu-lemari-es-pagi-1"
+                label="pencatatan-suhu-lemari-es-pagi-1"
+                data-date="1"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-1"
+                name="pencatatan-suhu-lemari-es-sore-1"
+                label="pencatatan-suhu-lemari-es-sore-1"
+                data-date="1"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-2"
+                name="pencatatan-suhu-lemari-es-pagi-2"
+                label="pencatatan-suhu-lemari-es-pagi-2"
+                data-date="2"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-2"
+                name="pencatatan-suhu-lemari-es-sore-2"
+                label="pencatatan-suhu-lemari-es-sore-2"
+                data-date="2"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-3"
+                name="pencatatan-suhu-lemari-es-pagi-3"
+                label="pencatatan-suhu-lemari-es-pagi-3"
+                data-date="3"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-3"
+                name="pencatatan-suhu-lemari-es-sore-3"
+                label="pencatatan-suhu-lemari-es-sore-3"
+                data-date="3"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-4"
+                name="pencatatan-suhu-lemari-es-pagi-4"
+                label="pencatatan-suhu-lemari-es-pagi-4"
+                data-date="4"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-4"
+                name="pencatatan-suhu-lemari-es-sore-4"
+                label="pencatatan-suhu-lemari-es-sore-4"
+                data-date="4"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-5"
+                name="pencatatan-suhu-lemari-es-pagi-5"
+                label="pencatatan-suhu-lemari-es-pagi-5"
+                data-date="5"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-5"
+                name="pencatatan-suhu-lemari-es-sore-5"
+                label="pencatatan-suhu-lemari-es-sore-5"
+                data-date="5"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-6"
+                name="pencatatan-suhu-lemari-es-pagi-6"
+                label="pencatatan-suhu-lemari-es-pagi-6"
+                data-date="6"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-6"
+                name="pencatatan-suhu-lemari-es-sore-6"
+                label="pencatatan-suhu-lemari-es-sore-6"
+                data-date="6"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-7"
+                name="pencatatan-suhu-lemari-es-pagi-7"
+                label="pencatatan-suhu-lemari-es-pagi-7"
+                data-date="7"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-7"
+                name="pencatatan-suhu-lemari-es-sore-7"
+                label="pencatatan-suhu-lemari-es-sore-7"
+                data-date="7"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-8"
+                name="pencatatan-suhu-lemari-es-pagi-8"
+                label="pencatatan-suhu-lemari-es-pagi-8"
+                data-date="8"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-8"
+                name="pencatatan-suhu-lemari-es-sore-8"
+                label="pencatatan-suhu-lemari-es-sore-8"
+                data-date="8"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-9"
+                name="pencatatan-suhu-lemari-es-pagi-9"
+                label="pencatatan-suhu-lemari-es-pagi-9"
+                data-date="9"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-9"
+                name="pencatatan-suhu-lemari-es-sore-9"
+                label="pencatatan-suhu-lemari-es-sore-9"
+                data-date="9"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-10"
+                name="pencatatan-suhu-lemari-es-pagi-10"
+                label="pencatatan-suhu-lemari-es-pagi-10"
+                data-date="10"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-10"
+                name="pencatatan-suhu-lemari-es-sore-10"
+                label="pencatatan-suhu-lemari-es-sore-10"
+                data-date="10"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-11"
+                name="pencatatan-suhu-lemari-es-pagi-11"
+                label="pencatatan-suhu-lemari-es-pagi-11"
+                data-date="11"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-11"
+                name="pencatatan-suhu-lemari-es-sore-11"
+                label="pencatatan-suhu-lemari-es-sore-11"
+                data-date="11"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-12"
+                name="pencatatan-suhu-lemari-es-pagi-12"
+                label="pencatatan-suhu-lemari-es-pagi-12"
+                data-date="12"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-12"
+                name="pencatatan-suhu-lemari-es-sore-12"
+                label="pencatatan-suhu-lemari-es-sore-12"
+                data-date="12"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-13"
+                name="pencatatan-suhu-lemari-es-pagi-13"
+                label="pencatatan-suhu-lemari-es-pagi-13"
+                data-date="13"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-13"
+                name="pencatatan-suhu-lemari-es-sore-13"
+                label="pencatatan-suhu-lemari-es-sore-13"
+                data-date="13"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-14"
+                name="pencatatan-suhu-lemari-es-pagi-14"
+                label="pencatatan-suhu-lemari-es-pagi-14"
+                data-date="14"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-14"
+                name="pencatatan-suhu-lemari-es-sore-14"
+                label="pencatatan-suhu-lemari-es-sore-14"
+                data-date="14"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-15"
+                name="pencatatan-suhu-lemari-es-pagi-15"
+                label="pencatatan-suhu-lemari-es-pagi-15"
+                data-date="15"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-15"
+                name="pencatatan-suhu-lemari-es-sore-15"
+                label="pencatatan-suhu-lemari-es-sore-15"
+                data-date="15"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-16"
+                name="pencatatan-suhu-lemari-es-pagi-16"
+                label="pencatatan-suhu-lemari-es-pagi-16"
+                data-date="16"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-16"
+                name="pencatatan-suhu-lemari-es-sore-16"
+                label="pencatatan-suhu-lemari-es-sore-16"
+                data-date="16"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-17"
+                name="pencatatan-suhu-lemari-es-pagi-17"
+                label="pencatatan-suhu-lemari-es-pagi-17"
+                data-date="17"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-17"
+                name="pencatatan-suhu-lemari-es-sore-17"
+                label="pencatatan-suhu-lemari-es-sore-17"
+                data-date="17"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-18"
+                name="pencatatan-suhu-lemari-es-pagi-18"
+                label="pencatatan-suhu-lemari-es-pagi-18"
+                data-date="18"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-18"
+                name="pencatatan-suhu-lemari-es-sore-18"
+                label="pencatatan-suhu-lemari-es-sore-18"
+                data-date="18"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-19"
+                name="pencatatan-suhu-lemari-es-pagi-19"
+                label="pencatatan-suhu-lemari-es-pagi-19"
+                data-date="19"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-19"
+                name="pencatatan-suhu-lemari-es-sore-19"
+                label="pencatatan-suhu-lemari-es-sore-19"
+                data-date="19"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-20"
+                name="pencatatan-suhu-lemari-es-pagi-20"
+                label="pencatatan-suhu-lemari-es-pagi-20"
+                data-date="20"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-20"
+                name="pencatatan-suhu-lemari-es-sore-20"
+                label="pencatatan-suhu-lemari-es-sore-20"
+                data-date="20"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-21"
+                name="pencatatan-suhu-lemari-es-pagi-21"
+                label="pencatatan-suhu-lemari-es-pagi-21"
+                data-date="21"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-21"
+                name="pencatatan-suhu-lemari-es-sore-21"
+                label="pencatatan-suhu-lemari-es-sore-21"
+                data-date="21"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-22"
+                name="pencatatan-suhu-lemari-es-pagi-22"
+                label="pencatatan-suhu-lemari-es-pagi-22"
+                data-date="22"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-22"
+                name="pencatatan-suhu-lemari-es-sore-22"
+                label="pencatatan-suhu-lemari-es-sore-22"
+                data-date="22"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-23"
+                name="pencatatan-suhu-lemari-es-pagi-23"
+                label="pencatatan-suhu-lemari-es-pagi-23"
+                data-date="23"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-23"
+                name="pencatatan-suhu-lemari-es-sore-23"
+                label="pencatatan-suhu-lemari-es-sore-23"
+                data-date="23"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-24"
+                name="pencatatan-suhu-lemari-es-pagi-24"
+                label="pencatatan-suhu-lemari-es-pagi-24"
+                data-date="24"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-24"
+                name="pencatatan-suhu-lemari-es-sore-24"
+                label="pencatatan-suhu-lemari-es-sore-24"
+                data-date="24"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-25"
+                name="pencatatan-suhu-lemari-es-pagi-25"
+                label="pencatatan-suhu-lemari-es-pagi-25"
+                data-date="25"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-25"
+                name="pencatatan-suhu-lemari-es-sore-25"
+                label="pencatatan-suhu-lemari-es-sore-25"
+                data-date="25"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-26"
+                name="pencatatan-suhu-lemari-es-pagi-26"
+                label="pencatatan-suhu-lemari-es-pagi-26"
+                data-date="26"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-26"
+                name="pencatatan-suhu-lemari-es-sore-26"
+                label="pencatatan-suhu-lemari-es-sore-26"
+                data-date="26"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-27"
+                name="pencatatan-suhu-lemari-es-pagi-27"
+                label="pencatatan-suhu-lemari-es-pagi-27"
+                data-date="27"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-27"
+                name="pencatatan-suhu-lemari-es-sore-27"
+                label="pencatatan-suhu-lemari-es-sore-27"
+                data-date="27"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-28"
+                name="pencatatan-suhu-lemari-es-pagi-28"
+                label="pencatatan-suhu-lemari-es-pagi-28"
+                data-date="28"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-28"
+                name="pencatatan-suhu-lemari-es-sore-28"
+                label="pencatatan-suhu-lemari-es-sore-28"
+                data-date="28"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-29"
+                name="pencatatan-suhu-lemari-es-pagi-29"
+                label="pencatatan-suhu-lemari-es-pagi-29"
+                data-date="29"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-29"
+                name="pencatatan-suhu-lemari-es-sore-29"
+                label="pencatatan-suhu-lemari-es-sore-29"
+                data-date="29"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-30"
+                name="pencatatan-suhu-lemari-es-pagi-30"
+                label="pencatatan-suhu-lemari-es-pagi-30"
+                data-date="30"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-30"
+                name="pencatatan-suhu-lemari-es-sore-30"
+                label="pencatatan-suhu-lemari-es-sore-30"
+                data-date="30"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-pagi-31"
+                name="pencatatan-suhu-lemari-es-pagi-31"
+                label="pencatatan-suhu-lemari-es-pagi-31"
+                data-date="31"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-lemari-es"
+                id="pencatatan-suhu-lemari-es-sore-31"
+                name="pencatatan-suhu-lemari-es-sore-31"
+                label="pencatatan-suhu-lemari-es-sore-31"
+                data-date="31"
+              />
+            </td>
+          </tbody>
+        </table>
+      </div>
+      <br />
+      <div class="button-container">
+        <button id="grafik-suhu-lemari-es" class="grafik-button">
+          Tampilkan Grafik Suhu Lemari Es
+        </button>
+      </div>
+      <br />
+      <div class="chart" id="chart" name="chart" myid="check_cara">
+        <svg
+          id="chart-svg-suhu-lemari-es"
+          style="width: 100%; height: 100%"
+        ></svg>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <h3>Suhu Ruangan</h3>
+      <br />
+      <div style="overflow-x: auto" id="table-container">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Tgl</th>
+              <th colspan="2">1</th>
+              <th colspan="2">2</th>
+              <th colspan="2">3</th>
+              <th colspan="2">4</th>
+              <th colspan="2">5</th>
+              <th colspan="2">6</th>
+              <th colspan="2">7</th>
+              <th colspan="2">8</th>
+              <th colspan="2">9</th>
+              <th colspan="2">10</th>
+              <th colspan="2">11</th>
+              <th colspan="2">12</th>
+              <th colspan="2">13</th>
+              <th colspan="2">14</th>
+              <th colspan="2">15</th>
+              <th colspan="2">16</th>
+              <th colspan="2">17</th>
+              <th colspan="2">18</th>
+              <th colspan="2">19</th>
+              <th colspan="2">20</th>
+              <th colspan="2">21</th>
+              <th colspan="2">22</th>
+              <th colspan="2">23</th>
+              <th colspan="2">24</th>
+              <th colspan="2">25</th>
+              <th colspan="2">26</th>
+              <th colspan="2">27</th>
+              <th colspan="2">28</th>
+              <th colspan="2">29</th>
+              <th colspan="2">30</th>
+              <th colspan="2">31</th>
+            </tr>
+          </thead>
+          <tbody>
+            <td>&deg;C</td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-1"
+                name="pencatatan-suhu-ruangan-pagi-1"
+                label="pencatatan-suhu-ruangan-pagi-1"
+                data-date="1"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-1"
+                name="pencatatan-suhu-ruangan-sore-1"
+                label="pencatatan-suhu-ruangan-sore-1"
+                data-date="1"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-2"
+                name="pencatatan-suhu-ruangan-pagi-2"
+                label="pencatatan-suhu-ruangan-pagi-2"
+                data-date="2"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-2"
+                name="pencatatan-suhu-ruangan-sore-2"
+                label="pencatatan-suhu-ruangan-sore-2"
+                data-date="2"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-3"
+                name="pencatatan-suhu-ruangan-pagi-3"
+                label="pencatatan-suhu-ruangan-pagi-3"
+                data-date="3"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-3"
+                name="pencatatan-suhu-ruangan-sore-3"
+                label="pencatatan-suhu-ruangan-sore-3"
+                data-date="3"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-4"
+                name="pencatatan-suhu-ruangan-pagi-4"
+                label="pencatatan-suhu-ruangan-pagi-4"
+                data-date="4"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-4"
+                name="pencatatan-suhu-ruangan-sore-4"
+                label="pencatatan-suhu-ruangan-sore-4"
+                data-date="4"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-5"
+                name="pencatatan-suhu-ruangan-pagi-5"
+                label="pencatatan-suhu-ruangan-pagi-5"
+                data-date="5"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-5"
+                name="pencatatan-suhu-ruangan-sore-5"
+                label="pencatatan-suhu-ruangan-sore-5"
+                data-date="5"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-6"
+                name="pencatatan-suhu-ruangan-pagi-6"
+                label="pencatatan-suhu-ruangan-pagi-6"
+                data-date="6"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-6"
+                name="pencatatan-suhu-ruangan-sore-6"
+                label="pencatatan-suhu-ruangan-sore-6"
+                data-date="6"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-7"
+                name="pencatatan-suhu-ruangan-pagi-7"
+                label="pencatatan-suhu-ruangan-pagi-7"
+                data-date="7"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-7"
+                name="pencatatan-suhu-ruangan-sore-7"
+                label="pencatatan-suhu-ruangan-sore-7"
+                data-date="7"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-8"
+                name="pencatatan-suhu-ruangan-pagi-8"
+                label="pencatatan-suhu-ruangan-pagi-8"
+                data-date="8"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-8"
+                name="pencatatan-suhu-ruangan-sore-8"
+                label="pencatatan-suhu-ruangan-sore-8"
+                data-date="8"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-9"
+                name="pencatatan-suhu-ruangan-pagi-9"
+                label="pencatatan-suhu-ruangan-pagi-9"
+                data-date="9"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-9"
+                name="pencatatan-suhu-ruangan-sore-9"
+                label="pencatatan-suhu-ruangan-sore-9"
+                data-date="9"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-10"
+                name="pencatatan-suhu-ruangan-pagi-10"
+                label="pencatatan-suhu-ruangan-pagi-10"
+                data-date="10"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-10"
+                name="pencatatan-suhu-ruangan-sore-10"
+                label="pencatatan-suhu-ruangan-sore-10"
+                data-date="10"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-11"
+                name="pencatatan-suhu-ruangan-pagi-11"
+                label="pencatatan-suhu-ruangan-pagi-11"
+                data-date="11"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-11"
+                name="pencatatan-suhu-ruangan-sore-11"
+                label="pencatatan-suhu-ruangan-sore-11"
+                data-date="11"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-12"
+                name="pencatatan-suhu-ruangan-pagi-12"
+                label="pencatatan-suhu-ruangan-pagi-12"
+                data-date="12"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-12"
+                name="pencatatan-suhu-ruangan-sore-12"
+                label="pencatatan-suhu-ruangan-sore-12"
+                data-date="12"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-13"
+                name="pencatatan-suhu-ruangan-pagi-13"
+                label="pencatatan-suhu-ruangan-pagi-13"
+                data-date="13"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-13"
+                name="pencatatan-suhu-ruangan-sore-13"
+                label="pencatatan-suhu-ruangan-sore-13"
+                data-date="13"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-14"
+                name="pencatatan-suhu-ruangan-pagi-14"
+                label="pencatatan-suhu-ruangan-pagi-14"
+                data-date="14"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-14"
+                name="pencatatan-suhu-ruangan-sore-14"
+                label="pencatatan-suhu-ruangan-sore-14"
+                data-date="14"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-15"
+                name="pencatatan-suhu-ruangan-pagi-15"
+                label="pencatatan-suhu-ruangan-pagi-15"
+                data-date="15"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-15"
+                name="pencatatan-suhu-ruangan-sore-15"
+                label="pencatatan-suhu-ruangan-sore-15"
+                data-date="15"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-16"
+                name="pencatatan-suhu-ruangan-pagi-16"
+                label="pencatatan-suhu-ruangan-pagi-16"
+                data-date="16"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-16"
+                name="pencatatan-suhu-ruangan-sore-16"
+                label="pencatatan-suhu-ruangan-sore-16"
+                data-date="16"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-17"
+                name="pencatatan-suhu-ruangan-pagi-17"
+                label="pencatatan-suhu-ruangan-pagi-17"
+                data-date="17"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-17"
+                name="pencatatan-suhu-ruangan-sore-17"
+                label="pencatatan-suhu-ruangan-sore-17"
+                data-date="17"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-18"
+                name="pencatatan-suhu-ruangan-pagi-18"
+                label="pencatatan-suhu-ruangan-pagi-18"
+                data-date="18"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-18"
+                name="pencatatan-suhu-ruangan-sore-18"
+                label="pencatatan-suhu-ruangan-sore-18"
+                data-date="18"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-19"
+                name="pencatatan-suhu-ruangan-pagi-19"
+                label="pencatatan-suhu-ruangan-pagi-19"
+                data-date="19"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-19"
+                name="pencatatan-suhu-ruangan-sore-19"
+                label="pencatatan-suhu-ruangan-sore-19"
+                data-date="19"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-20"
+                name="pencatatan-suhu-ruangan-pagi-20"
+                label="pencatatan-suhu-ruangan-pagi-20"
+                data-date="20"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-20"
+                name="pencatatan-suhu-ruangan-sore-20"
+                label="pencatatan-suhu-ruangan-sore-20"
+                data-date="20"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-21"
+                name="pencatatan-suhu-ruangan-pagi-21"
+                label="pencatatan-suhu-ruangan-pagi-21"
+                data-date="21"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-21"
+                name="pencatatan-suhu-ruangan-sore-21"
+                label="pencatatan-suhu-ruangan-sore-21"
+                data-date="21"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-22"
+                name="pencatatan-suhu-ruangan-pagi-22"
+                label="pencatatan-suhu-ruangan-pagi-22"
+                data-date="22"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-22"
+                name="pencatatan-suhu-ruangan-sore-22"
+                label="pencatatan-suhu-ruangan-sore-22"
+                data-date="22"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-23"
+                name="pencatatan-suhu-ruangan-pagi-23"
+                label="pencatatan-suhu-ruangan-pagi-23"
+                data-date="23"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-23"
+                name="pencatatan-suhu-ruangan-sore-23"
+                label="pencatatan-suhu-ruangan-sore-23"
+                data-date="23"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-24"
+                name="pencatatan-suhu-ruangan-pagi-24"
+                label="pencatatan-suhu-ruangan-pagi-24"
+                data-date="24"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-24"
+                name="pencatatan-suhu-ruangan-sore-24"
+                label="pencatatan-suhu-ruangan-sore-24"
+                data-date="24"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-25"
+                name="pencatatan-suhu-ruangan-pagi-25"
+                label="pencatatan-suhu-ruangan-pagi-25"
+                data-date="25"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-25"
+                name="pencatatan-suhu-ruangan-sore-25"
+                label="pencatatan-suhu-ruangan-sore-25"
+                data-date="25"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-26"
+                name="pencatatan-suhu-ruangan-pagi-26"
+                label="pencatatan-suhu-ruangan-pagi-26"
+                data-date="26"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-26"
+                name="pencatatan-suhu-ruangan-sore-26"
+                label="pencatatan-suhu-ruangan-sore-26"
+                data-date="26"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-27"
+                name="pencatatan-suhu-ruangan-pagi-27"
+                label="pencatatan-suhu-ruangan-pagi-27"
+                data-date="27"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-27"
+                name="pencatatan-suhu-ruangan-sore-27"
+                label="pencatatan-suhu-ruangan-sore-27"
+                data-date="27"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-28"
+                name="pencatatan-suhu-ruangan-pagi-28"
+                label="pencatatan-suhu-ruangan-pagi-28"
+                data-date="28"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-28"
+                name="pencatatan-suhu-ruangan-sore-28"
+                label="pencatatan-suhu-ruangan-sore-28"
+                data-date="28"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-29"
+                name="pencatatan-suhu-ruangan-pagi-29"
+                label="pencatatan-suhu-ruangan-pagi-29"
+                data-date="29"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-29"
+                name="pencatatan-suhu-ruangan-sore-29"
+                label="pencatatan-suhu-ruangan-sore-29"
+                data-date="29"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-30"
+                name="pencatatan-suhu-ruangan-pagi-30"
+                label="pencatatan-suhu-ruangan-pagi-30"
+                data-date="30"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-30"
+                name="pencatatan-suhu-ruangan-sore-30"
+                label="pencatatan-suhu-ruangan-sore-30"
+                data-date="30"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-pagi-31"
+                name="pencatatan-suhu-ruangan-pagi-31"
+                label="pencatatan-suhu-ruangan-pagi-31"
+                data-date="31"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-suhu-ruangan"
+                id="pencatatan-suhu-ruangan-sore-31"
+                name="pencatatan-suhu-ruangan-sore-31"
+                label="pencatatan-suhu-ruangan-sore-31"
+                data-date="31"
+              />
+            </td>
+          </tbody>
+        </table>
+      </div>
+      <br />
+      <div class="button-container">
+        <button id="grafik-suhu-ruangan" class="grafik-button">
+          Tampilkan Grafik Suhu Ruangan
+        </button>
+      </div>
+      <br />
+      <div class="chart" id="chart" name="chart" myid="check_cara">
+        <svg
+          id="chart-svg-suhu-ruangan"
+          style="width: 100%; height: 100%"
+        ></svg>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <h3>Kelembaban</h3>
+      <br />
+      <div style="overflow-x: auto" id="table-container">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Tgl</th>
+              <th colspan="2">1</th>
+              <th colspan="2">2</th>
+              <th colspan="2">3</th>
+              <th colspan="2">4</th>
+              <th colspan="2">5</th>
+              <th colspan="2">6</th>
+              <th colspan="2">7</th>
+              <th colspan="2">8</th>
+              <th colspan="2">9</th>
+              <th colspan="2">10</th>
+              <th colspan="2">11</th>
+              <th colspan="2">12</th>
+              <th colspan="2">13</th>
+              <th colspan="2">14</th>
+              <th colspan="2">15</th>
+              <th colspan="2">16</th>
+              <th colspan="2">17</th>
+              <th colspan="2">18</th>
+              <th colspan="2">19</th>
+              <th colspan="2">20</th>
+              <th colspan="2">21</th>
+              <th colspan="2">22</th>
+              <th colspan="2">23</th>
+              <th colspan="2">24</th>
+              <th colspan="2">25</th>
+              <th colspan="2">26</th>
+              <th colspan="2">27</th>
+              <th colspan="2">28</th>
+              <th colspan="2">29</th>
+              <th colspan="2">30</th>
+              <th colspan="2">31</th>
+            </tr>
+          </thead>
+          <tbody>
+            <td>%</td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-1"
+                name="pencatatan-kelembaban-pagi-1"
+                label="pencatatan-kelembaban-pagi-1"
+                data-date="1"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-1"
+                name="pencatatan-kelembaban-sore-1"
+                label="pencatatan-kelembaban-sore-1"
+                data-date="1"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-2"
+                name="pencatatan-kelembaban-pagi-2"
+                label="pencatatan-kelembaban-pagi-2"
+                data-date="2"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-2"
+                name="pencatatan-kelembaban-sore-2"
+                label="pencatatan-kelembaban-sore-2"
+                data-date="2"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-3"
+                name="pencatatan-kelembaban-pagi-3"
+                label="pencatatan-kelembaban-pagi-3"
+                data-date="3"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-3"
+                name="pencatatan-kelembaban-sore-3"
+                label="pencatatan-kelembaban-sore-3"
+                data-date="3"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-4"
+                name="pencatatan-kelembaban-pagi-4"
+                label="pencatatan-kelembaban-pagi-4"
+                data-date="4"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-4"
+                name="pencatatan-kelembaban-sore-4"
+                label="pencatatan-kelembaban-sore-4"
+                data-date="4"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-5"
+                name="pencatatan-kelembaban-pagi-5"
+                label="pencatatan-kelembaban-pagi-5"
+                data-date="5"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-5"
+                name="pencatatan-kelembaban-sore-5"
+                label="pencatatan-kelembaban-sore-5"
+                data-date="5"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-6"
+                name="pencatatan-kelembaban-pagi-6"
+                label="pencatatan-kelembaban-pagi-6"
+                data-date="6"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-6"
+                name="pencatatan-kelembaban-sore-6"
+                label="pencatatan-kelembaban-sore-6"
+                data-date="6"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-7"
+                name="pencatatan-kelembaban-pagi-7"
+                label="pencatatan-kelembaban-pagi-7"
+                data-date="7"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-7"
+                name="pencatatan-kelembaban-sore-7"
+                label="pencatatan-kelembaban-sore-7"
+                data-date="7"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-8"
+                name="pencatatan-kelembaban-pagi-8"
+                label="pencatatan-kelembaban-pagi-8"
+                data-date="8"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-8"
+                name="pencatatan-kelembaban-sore-8"
+                label="pencatatan-kelembaban-sore-8"
+                data-date="8"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-9"
+                name="pencatatan-kelembaban-pagi-9"
+                label="pencatatan-kelembaban-pagi-9"
+                data-date="9"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-9"
+                name="pencatatan-kelembaban-sore-9"
+                label="pencatatan-kelembaban-sore-9"
+                data-date="9"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-10"
+                name="pencatatan-kelembaban-pagi-10"
+                label="pencatatan-kelembaban-pagi-10"
+                data-date="10"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-10"
+                name="pencatatan-kelembaban-sore-10"
+                label="pencatatan-kelembaban-sore-10"
+                data-date="10"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-11"
+                name="pencatatan-kelembaban-pagi-11"
+                label="pencatatan-kelembaban-pagi-11"
+                data-date="11"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-11"
+                name="pencatatan-kelembaban-sore-11"
+                label="pencatatan-kelembaban-sore-11"
+                data-date="11"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-12"
+                name="pencatatan-kelembaban-pagi-12"
+                label="pencatatan-kelembaban-pagi-12"
+                data-date="12"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-12"
+                name="pencatatan-kelembaban-sore-12"
+                label="pencatatan-kelembaban-sore-12"
+                data-date="12"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-13"
+                name="pencatatan-kelembaban-pagi-13"
+                label="pencatatan-kelembaban-pagi-13"
+                data-date="13"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-13"
+                name="pencatatan-kelembaban-sore-13"
+                label="pencatatan-kelembaban-sore-13"
+                data-date="13"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-14"
+                name="pencatatan-kelembaban-pagi-14"
+                label="pencatatan-kelembaban-pagi-14"
+                data-date="14"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-14"
+                name="pencatatan-kelembaban-sore-14"
+                label="pencatatan-kelembaban-sore-14"
+                data-date="14"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-15"
+                name="pencatatan-kelembaban-pagi-15"
+                label="pencatatan-kelembaban-pagi-15"
+                data-date="15"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-15"
+                name="pencatatan-kelembaban-sore-15"
+                label="pencatatan-kelembaban-sore-15"
+                data-date="15"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-16"
+                name="pencatatan-kelembaban-pagi-16"
+                label="pencatatan-kelembaban-pagi-16"
+                data-date="16"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-16"
+                name="pencatatan-kelembaban-sore-16"
+                label="pencatatan-kelembaban-sore-16"
+                data-date="16"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-17"
+                name="pencatatan-kelembaban-pagi-17"
+                label="pencatatan-kelembaban-pagi-17"
+                data-date="17"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-17"
+                name="pencatatan-kelembaban-sore-17"
+                label="pencatatan-kelembaban-sore-17"
+                data-date="17"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-18"
+                name="pencatatan-kelembaban-pagi-18"
+                label="pencatatan-kelembaban-pagi-18"
+                data-date="18"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-18"
+                name="pencatatan-kelembaban-sore-18"
+                label="pencatatan-kelembaban-sore-18"
+                data-date="18"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-19"
+                name="pencatatan-kelembaban-pagi-19"
+                label="pencatatan-kelembaban-pagi-19"
+                data-date="19"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-19"
+                name="pencatatan-kelembaban-sore-19"
+                label="pencatatan-kelembaban-sore-19"
+                data-date="19"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-20"
+                name="pencatatan-kelembaban-pagi-20"
+                label="pencatatan-kelembaban-pagi-20"
+                data-date="20"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-20"
+                name="pencatatan-kelembaban-sore-20"
+                label="pencatatan-kelembaban-sore-20"
+                data-date="20"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-21"
+                name="pencatatan-kelembaban-pagi-21"
+                label="pencatatan-kelembaban-pagi-21"
+                data-date="21"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-21"
+                name="pencatatan-kelembaban-sore-21"
+                label="pencatatan-kelembaban-sore-21"
+                data-date="21"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-22"
+                name="pencatatan-kelembaban-pagi-22"
+                label="pencatatan-kelembaban-pagi-22"
+                data-date="22"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-22"
+                name="pencatatan-kelembaban-sore-22"
+                label="pencatatan-kelembaban-sore-22"
+                data-date="22"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-23"
+                name="pencatatan-kelembaban-pagi-23"
+                label="pencatatan-kelembaban-pagi-23"
+                data-date="23"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-23"
+                name="pencatatan-kelembaban-sore-23"
+                label="pencatatan-kelembaban-sore-23"
+                data-date="23"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-24"
+                name="pencatatan-kelembaban-pagi-24"
+                label="pencatatan-kelembaban-pagi-24"
+                data-date="24"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-24"
+                name="pencatatan-kelembaban-sore-24"
+                label="pencatatan-kelembaban-sore-24"
+                data-date="24"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-25"
+                name="pencatatan-kelembaban-pagi-25"
+                label="pencatatan-kelembaban-pagi-25"
+                data-date="25"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-25"
+                name="pencatatan-kelembaban-sore-25"
+                label="pencatatan-kelembaban-sore-25"
+                data-date="25"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-26"
+                name="pencatatan-kelembaban-pagi-26"
+                label="pencatatan-kelembaban-pagi-26"
+                data-date="26"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-26"
+                name="pencatatan-kelembaban-sore-26"
+                label="pencatatan-kelembaban-sore-26"
+                data-date="26"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-27"
+                name="pencatatan-kelembaban-pagi-27"
+                label="pencatatan-kelembaban-pagi-27"
+                data-date="27"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-27"
+                name="pencatatan-kelembaban-sore-27"
+                label="pencatatan-kelembaban-sore-27"
+                data-date="27"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-28"
+                name="pencatatan-kelembaban-pagi-28"
+                label="pencatatan-kelembaban-pagi-28"
+                data-date="28"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-28"
+                name="pencatatan-kelembaban-sore-28"
+                label="pencatatan-kelembaban-sore-28"
+                data-date="28"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-29"
+                name="pencatatan-kelembaban-pagi-29"
+                label="pencatatan-kelembaban-pagi-29"
+                data-date="29"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-29"
+                name="pencatatan-kelembaban-sore-29"
+                label="pencatatan-kelembaban-sore-29"
+                data-date="29"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-30"
+                name="pencatatan-kelembaban-pagi-30"
+                label="pencatatan-kelembaban-pagi-30"
+                data-date="30"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-30"
+                name="pencatatan-kelembaban-sore-30"
+                label="pencatatan-kelembaban-sore-30"
+                data-date="30"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-pagi-31"
+                name="pencatatan-kelembaban-pagi-31"
+                label="pencatatan-kelembaban-pagi-31"
+                data-date="31"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                style="width: 30px; padding: 0"
+                myid="check_cara"
+                class="pencatatan-kelembaban"
+                id="pencatatan-kelembaban-sore-31"
+                name="pencatatan-kelembaban-sore-31"
+                label="pencatatan-kelembaban-sore-31"
+                data-date="31"
+              />
+            </td>
+          </tbody>
+        </table>
+      </div>
+      <br />
+      <div class="button-container">
+        <button id="grafik-kelembaban" class="grafik-button">
+          Tampilkan Grafik Kelembaban
+        </button>
+      </div>
+      <br />
+      <div class="chart" id="chart" name="chart" myid="check_cara">
+        <svg id="chart-svg-kelembaban" style="width: 100%; height: 100%"></svg>
+      </div>
+    </div>
+    <br />
+
+    <div style="overflow-x: auto" class="chart-container">
+      <table width="100%" class="table table-bordered">
+        <tbody>
+          <tr>
+            <td>Tgl</td>
+            <td colspan="2">1</td>
+            <td colspan="2">2</td>
+            <td colspan="2">3</td>
+            <td colspan="2">4</td>
+            <td colspan="2">5</td>
+            <td colspan="2">6</td>
+            <td colspan="2">7</td>
+            <td colspan="2">8</td>
+            <td colspan="2">9</td>
+            <td colspan="2">10</td>
+            <td colspan="2">11</td>
+            <td colspan="2">12</td>
+            <td colspan="2">13</td>
+            <td colspan="2">14</td>
+            <td colspan="2">15</td>
+            <td colspan="2">16</td>
+            <td colspan="2">17</td>
+            <td colspan="2">18</td>
+            <td colspan="2">19</td>
+            <td colspan="2">20</td>
+            <td colspan="2">21</td>
+            <td colspan="2">22</td>
+            <td colspan="2">23</td>
+            <td colspan="2">24</td>
+            <td colspan="2">25</td>
+            <td colspan="2">26</td>
+            <td colspan="2">27</td>
+            <td colspan="2">28</td>
+            <td colspan="2">29</td>
+            <td colspan="2">30</td>
+            <td colspan="2">31</td>
+          </tr>
+          <tr>
+            <td>Paraf</td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_1_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_1_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_1_pagi"
+                id="paraf_ex_paraf_grafik_1_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_1_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_1_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_1_"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_1_"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_1_"
+                id="paraf_ex_paraf_grafik_1_"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_1_"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_1_"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_2_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_2_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_2_pagi"
+                id="paraf_ex_paraf_grafik_2_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_2_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_2_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_2_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_2_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_2_sore"
+                id="paraf_ex_paraf_grafik_2_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_2_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_2_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_3_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_3_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_3_pagi"
+                id="paraf_ex_paraf_grafik_3_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_3_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_3_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_3_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_3_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_3_sore"
+                id="paraf_ex_paraf_grafik_3_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_3_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_3_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_4_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_4_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_4_pagi"
+                id="paraf_ex_paraf_grafik_4_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_4_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_4_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_4_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_4_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_4_sore"
+                id="paraf_ex_paraf_grafik_4_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_4_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_4_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_5_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_5_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_5_pagi"
+                id="paraf_ex_paraf_grafik_5_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_5_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_5_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_5_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_5_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_5_sore"
+                id="paraf_ex_paraf_grafik_5_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_5_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_5_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_6_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_6_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_6_pagi"
+                id="paraf_ex_paraf_grafik_6_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_6_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_6_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_6_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_6_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_6_sore"
+                id="paraf_ex_paraf_grafik_6_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_6_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_6_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_7_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_7_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_7_pagi"
+                id="paraf_ex_paraf_grafik_7_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_7_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_7_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_7_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_7_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_7_sore"
+                id="paraf_ex_paraf_grafik_7_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_7_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_7_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_8_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_8_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_8_pagi"
+                id="paraf_ex_paraf_grafik_8_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_8_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_8_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_8_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_8_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_8_sore"
+                id="paraf_ex_paraf_grafik_8_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_8_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_8_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_9_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_9_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_9_pagi"
+                id="paraf_ex_paraf_grafik_9_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_9_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_9_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_9_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_9_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_9_sore"
+                id="paraf_ex_paraf_grafik_9_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_9_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_9_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_10_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_10_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_10_pagi"
+                id="paraf_ex_paraf_grafik_10_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_10_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_10_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_10_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_10_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_10_sore"
+                id="paraf_ex_paraf_grafik_10_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_10_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_10_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_11_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_11_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_11_pagi"
+                id="paraf_ex_paraf_grafik_11_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_11_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_11_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_11_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_11_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_11_sore"
+                id="paraf_ex_paraf_grafik_11_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_11_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_11_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_12_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_12_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_12_pagi"
+                id="paraf_ex_paraf_grafik_12_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_12_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_12_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_12_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_12_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_12_sore"
+                id="paraf_ex_paraf_grafik_12_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_12_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_12_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_13_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_13_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_13_pagi"
+                id="paraf_ex_paraf_grafik_13_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_13_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_13_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_13_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_13_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_13_sore"
+                id="paraf_ex_paraf_grafik_13_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_13_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_13_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_14_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_14_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_14_pagi"
+                id="paraf_ex_paraf_grafik_14_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_14_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_14_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_14_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_14_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_14_sore"
+                id="paraf_ex_paraf_grafik_14_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_14_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_14_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_15_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_15_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_15_pagi"
+                id="paraf_ex_paraf_grafik_15_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_15_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_15_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_15_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_15_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_15_sore"
+                id="paraf_ex_paraf_grafik_15_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_15_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_15_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_16_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_16_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_16_pagi"
+                id="paraf_ex_paraf_grafik_16_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_16_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_16_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_16_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_16_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_16_sore"
+                id="paraf_ex_paraf_grafik_16_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_16_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_16_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_17_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_17_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_17_pagi"
+                id="paraf_ex_paraf_grafik_17_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_17_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_17_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_17_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_17_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_17_sore"
+                id="paraf_ex_paraf_grafik_17_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_17_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_17_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_18_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_18_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_18_pagi"
+                id="paraf_ex_paraf_grafik_18_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_18_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_18_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_18_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_18_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_18_sore"
+                id="paraf_ex_paraf_grafik_18_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_18_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_18_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_19_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_19_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_19_pagi"
+                id="paraf_ex_paraf_grafik_19_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_19_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_19_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_19_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_19_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_19_sore"
+                id="paraf_ex_paraf_grafik_19_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_19_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_19_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_20_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_20_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_20_pagi"
+                id="paraf_ex_paraf_grafik_20_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_20_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_20_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_20_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_20_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_20_sore"
+                id="paraf_ex_paraf_grafik_20_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_20_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_20_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_21_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_21_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_21_pagi"
+                id="paraf_ex_paraf_grafik_21_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_21_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_21_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_21_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_21_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_21_sore"
+                id="paraf_ex_paraf_grafik_21_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_21_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_21_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_22_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_22_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_22_pagi"
+                id="paraf_ex_paraf_grafik_22_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_22_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_22_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_22_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_22_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_22_sore"
+                id="paraf_ex_paraf_grafik_22_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_22_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_22_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_23_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_23_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_23_pagi"
+                id="paraf_ex_paraf_grafik_23_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_23_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_23_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_23_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_23_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_23_sore"
+                id="paraf_ex_paraf_grafik_23_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_23_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_23_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_24_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_24_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_24_pagi"
+                id="paraf_ex_paraf_grafik_24_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_24_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_24_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_24_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_24_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_24_sore"
+                id="paraf_ex_paraf_grafik_24_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_24_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_24_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_25_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_25_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_25_pagi"
+                id="paraf_ex_paraf_grafik_25_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_25_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_25_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_25_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_25_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_25_sore"
+                id="paraf_ex_paraf_grafik_25_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_25_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_25_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_26_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_26_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_26_pagi"
+                id="paraf_ex_paraf_grafik_26_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_26_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_26_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_26_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_26_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_26_sore"
+                id="paraf_ex_paraf_grafik_26_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_26_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_26_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_27_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_27_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_27_pagi"
+                id="paraf_ex_paraf_grafik_27_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_27_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_27_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_27_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_27_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_27_sore"
+                id="paraf_ex_paraf_grafik_27_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_27_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_27_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_28_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_28_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_28_pagi"
+                id="paraf_ex_paraf_grafik_28_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_28_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_28_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_28_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_28_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_28_sore"
+                id="paraf_ex_paraf_grafik_28_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_28_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_28_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_29_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_29_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_29_pagi"
+                id="paraf_ex_paraf_grafik_29_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_29_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_29_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_29_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_29_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_29_sore"
+                id="paraf_ex_paraf_grafik_29_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_29_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_29_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_30_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_30_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_30_pagi"
+                id="paraf_ex_paraf_grafik_30_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_30_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_30_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_30_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_30_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_30_sore"
+                id="paraf_ex_paraf_grafik_30_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_30_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_30_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_31_pagi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_31_pagi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_31_pagi"
+                id="paraf_ex_paraf_grafik_31_pagi"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_31_pagi"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_31_pagi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_grafik_31_sore"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_grafik_31_sore"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_grafik_31_sore"
+                id="paraf_ex_paraf_grafik_31_sore"
+                data-name="paraf"
+                data-id="ex_paraf_grafik_31_sore"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_grafik_31_sore"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"></i>
+                </a>
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
+<script>
+  $(document).ready(() => {
+    class PencatatanSuhuDanKelembaban {
+      constructor(rangeMaxValue, rangeMinValue, chartSvgId) {
+        this.chartSvg = chartSvgId;
+
+        this.suhuKelembaban = [];
+
+        this.config = {
+          width: this.chartSvg.clientWidth,
+          height: this.chartSvg.clientHeight,
+          padding: 40,
+          rangeMax: rangeMaxValue,
+          rangeMin: rangeMinValue,
+        };
+      }
+
+      createSvgElement(type, attributes = {}) {
+        const element = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          type
+        );
+        Object.entries(attributes).forEach(([key, value]) => {
+          element.setAttribute(key, value);
+        });
+        return element;
+      }
+
+      drawGrid(data) {
+        this.suhuKelembaban = data;
+        const grid = this.createSvgElement("g");
+        const { width, height, padding, rangeMax, rangeMin } = this.config;
+
+        for (let i = 0; i <= 10; i++) {
+          const y = padding + (i / 10) * (height - 2 * padding);
+          const value = rangeMax - (i / 10) * (rangeMax - rangeMin);
+
+          const line = this.createSvgElement("line", {
+            x1: padding,
+            x2: width - padding,
+            y1: y,
+            y2: y,
+            class: "grid-line",
+          });
+
+          const label = this.createSvgElement("text", {
+            x: padding - 10,
+            y: y + 4,
+            "text-anchor": "end",
+            "font-size": "10px",
+          });
+          label.textContent = value.toFixed(1);
+
+          grid.appendChild(line);
+          grid.appendChild(label);
+        }
+
+        this.suhuKelembaban.forEach((value, index) => {
+          let x =
+            this.suhuKelembaban.length === 1
+              ? padding + (width - 2 * padding) / 2
+              : padding +
+                (index / (this.suhuKelembaban.length - 1)) *
+                  (width - 2 * padding);
+
+          const line = this.createSvgElement("line", {
+            x1: x,
+            x2: x,
+            y1: padding,
+            y2: height - padding,
+            class: "grid-line",
+          });
+
+          const label = this.createSvgElement("text", {
+            x: x,
+            y: height - padding + 15,
+            "text-anchor": "middle",
+            "font-size": "10px",
+            "font-weight": "bold",
+          });
+
+          const lines = [`Tgl`, value.id.split("-")[0]];
+
+          lines.forEach((line, index) => {
+            const tspan = this.createSvgElement("tspan", {
+              x: x,
+              dy: index === 0 ? 0 : "1.5em", // Atur jarak antar baris
+            });
+            tspan.textContent = line;
+            label.appendChild(tspan);
+          });
+
+          grid.appendChild(line);
+          grid.appendChild(label);
+        });
+
+        this.chartSvg.appendChild(grid);
+      }
+
+      drawLine(data) {
+        const { width, height, padding, rangeMax, rangeMin } = this.config;
+        this.suhuKelembaban = data;
+
+        if (this.suhuKelembaban.length === 0) return;
+
+        const lineGroup = this.createSvgElement("g");
+        const fragment = document.createDocumentFragment();
+
+        let pathData = "";
+
+        this.suhuKelembaban.forEach((value, index) => {
+          let x =
+            this.suhuKelembaban.length === 1
+              ? padding + (width - 2 * padding) / 2
+              : padding +
+                (index / (this.suhuKelembaban.length - 1)) *
+                  (width - 2 * padding);
+          let y =
+            height -
+            padding -
+            ((value.data - rangeMin) / (rangeMax - rangeMin)) *
+              (height - 2 * padding);
+          if (!isNaN(x) && !isNaN(y)) {
+            const circle = this.createSvgElement("circle", {
+              cx: x,
+              cy: y,
+              r: 5,
+              fill: "blue",
+              "data-index": index,
+              "data-value": value.data,
+            });
+
+            fragment.appendChild(circle);
+
+            pathData += index === 0 ? `M ${x} ${y} ` : `L ${x} ${y} `;
+          }
+        });
+
+        if (this.suhuKelembaban.length > 1) {
+          const path = this.createSvgElement("path", {
+            d: pathData,
+            class: "line",
+            stroke: "blue",
+            fill: "none",
+            "stroke-width": "2",
+          });
+          lineGroup.appendChild(path);
+        }
+
+        lineGroup.appendChild(fragment);
+        this.chartSvg.appendChild(lineGroup);
+      }
+
+      addData(formattedDate, input, targetArray) {
+        const exisitingIndex = targetArray.findIndex(
+          (item) => item.id === input.id
+        );
+
+        if (exisitingIndex > -1) {
+          targetArray[exisitingIndex].data = input.data;
+        } else {
+          targetArray.push(input);
+        }
+
+        targetArray.sort((a, b) => {
+          const dateA = parseInt(a.id.split("-")[0]); // Ambil bagian tanggal
+          const dateB = parseInt(b.id.split("-")[0]);
+
+          if (dateA !== dateB) {
+            // Bandingkan tanggal secara numerik (atau sebagai string tanggal ISO)
+            return dateA - dateB;
+          }
+
+          // Jika tanggal sama, prioritaskan "-Pagi" sebelum "-Sore"
+          if (a.id.endsWith("-Pagi") && b.id.endsWith("-Sore")) {
+            return -1;
+          } else if (a.id.endsWith("-Sore") && b.id.endsWith("-Pagi")) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+        this.drawChart();
+      }
+
+      removeData(dataId, targetArray) {
+        const index = targetArray.findIndex((item) => item.id === dataId);
+
+        if (index > -1) {
+          targetArray.splice(index, 1);
+        }
+        this.drawChart();
+      }
+
+      drawChart() {
+        this.chartSvg.innerHTML = "";
+        this.drawGrid();
+        this.drawLine();
+      }
+    }
+
+    class SuhuLemariEs extends PencatatanSuhuDanKelembaban {
+      constructor(rangeMaxValue, rangeMinValue, chartSvgId) {
+        super(rangeMaxValue, rangeMinValue, chartSvgId);
+        this.dataLemariEs = [];
+      }
+
+      addData(formattedDate, input) {
+        super.addData(formattedDate, input, this.dataLemariEs);
+      }
+
+      removeData(dataId) {
+        super.removeData(dataId, this.dataLemariEs);
+      }
+
+      drawGrid() {
+        super.drawGrid(this.dataLemariEs);
+      }
+
+      drawLine() {
+        super.drawLine(this.dataLemariEs);
+      }
+    }
+
+    class SuhuRuangan extends PencatatanSuhuDanKelembaban {
+      constructor(rangeMaxValue, rangeMinValue, chartSvgId) {
+        super(rangeMaxValue, rangeMinValue, chartSvgId);
+        this.dataSuhuRuangan = [];
+      }
+
+      drawGrid() {
+        super.drawGrid(this.dataSuhuRuangan);
+      }
+
+      drawLine() {
+        super.drawLine(this.dataSuhuRuangan);
+      }
+
+      addData(formattedDate, input) {
+        super.addData(formattedDate, input, this.dataSuhuRuangan);
+      }
+
+      removeData(dataId) {
+        super.removeData(dataId, this.dataSuhuRuangan);
+      }
+    }
+    class Kelembaban extends PencatatanSuhuDanKelembaban {
+      constructor(rangeMaxValue, rangeMinValue, chartSvgId) {
+        super(rangeMaxValue, rangeMinValue, chartSvgId);
+        this.dataKelembaban = [];
+      }
+
+      drawGrid() {
+        super.drawGrid(this.dataKelembaban);
+      }
+
+      drawLine() {
+        super.drawLine(this.dataKelembaban);
+      }
+
+      addData(formattedDate, input) {
+        super.addData(formattedDate, input, this.dataKelembaban);
+      }
+
+      removeData(dataId) {
+        super.removeData(dataId, this.dataKelembaban);
+      }
+    }
+
+    function tampilkanGrafikSuhuKelembaban(input, grafik) {
+      input.each(function () {
+        const suhu = $(this).val();
+        if (suhu !== "") {
+          const formattedDate = $(this).data("date");
+          const getId = $(this).attr("id");
+          let id;
+          if (getId.includes("pagi")) {
+            id = `${formattedDate}-Pagi`;
+          } else if (getId.includes("sore")) {
+            id = `${formattedDate}-Sore`;
+          }
+          const data = { id, data: parseFloat(suhu) };
+          grafik.addData(formattedDate, data);
+        }
+      });
+
+      grafik.drawChart();
+    }
+
+    function handleInputSuhuKelembaban(event, grafik) {
+      const $input = $(event.target);
+      const suhu = $input.val();
+      const formattedDate = $input.data("date");
+      const getId = $input.attr("id");
+
+      let id;
+      if (getId.includes("pagi")) {
+        id = `${formattedDate}-Pagi`;
+      } else if (getId.includes("sore")) {
+        id = `${formattedDate}-Sore`;
+      }
+
+      if (suhu.trim() === "") {
+        grafik.removeData(id);
+      } else {
+        const data = { id, data: parseFloat(suhu) };
+        grafik.addData(formattedDate, data);
+      }
+    }
+
+    const suhuLemariEs = new SuhuLemariEs(
+      12,
+      -2,
+      $("#chart-svg-suhu-lemari-es").get(0)
+    );
+    const suhuRuangan = new SuhuRuangan(
+      28,
+      20,
+      $("#chart-svg-suhu-ruangan").get(0)
+    );
+    const kelembaban = new Kelembaban(
+      80,
+      20,
+      $("#chart-svg-kelembaban").get(0)
+    );
+
+    const pencatatanSuhuLemariEs = $(
+      "input[class='pencatatan-suhu-lemari-es']"
+    );
+    pencatatanSuhuLemariEs.each(function () {
+      $(this).on("input", function (event) {
+        handleInputSuhuKelembaban(event, suhuLemariEs);
+      });
+    });
+
+    const pencatatanSuhuRuangan = $("input[class='pencatatan-suhu-ruangan']");
+    pencatatanSuhuRuangan.each(function () {
+      $(this).on("input", function (event) {
+        handleInputSuhuKelembaban(event, suhuRuangan);
+      });
+    });
+
+    const pencatatanKelembaban = $("input[class='pencatatan-kelembaban']");
+    pencatatanKelembaban.each(function () {
+      $(this).on("input", function (event) {
+        handleInputSuhuKelembaban(event, kelembaban);
+      });
+    });
+
+    suhuLemariEs.drawChart();
+    suhuRuangan.drawChart();
+    kelembaban.drawChart();
+
+    $("button[id='grafik-suhu-lemari-es']").on("click", function () {
+      tampilkanGrafikSuhuKelembaban(pencatatanSuhuLemariEs, suhuLemariEs);
+    });
+
+    $("button[id='grafik-suhu-ruangan']").on("click", function () {
+      tampilkanGrafikSuhuKelembaban(pencatatanSuhuRuangan, suhuRuangan);
+    });
+
+    $("button[id='grafik-kelembaban']").on("click", function () {
+      tampilkanGrafikSuhuKelembaban(pencatatanKelembaban, kelembaban);
+    });
+
+    const tableContainer = document.querySelector("#table-container");
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    tableContainer.addEventListener("mousedown", (e) => {
+      isDown = true;
+      tableContainer.style.cursor = "pointer";
+      startX = e.pageX - tableContainer.offsetLeft;
+      scrollLeft = tableContainer.scrollLeft;
+    });
+
+    tableContainer.addEventListener("mouseleave", () => {
+      isDown = false;
+      tableContainer.style.cursor = "auto";
+    });
+
+    tableContainer.addEventListener("mouseup", () => {
+      isDown = false;
+      tableContainer.style.cursor = "auto";
+    });
+
+    tableContainer.addEventListener("mousemove", (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - tableContainer.offsetLeft;
+      const walk = (x - startX) * 2;
+
+      tableContainer.scrollLeft = scrollLeft - walk;
+    });
+  });
+</script>

@@ -3,34 +3,155 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>FORMULIR PERMINTAAN ANTIBIOTIK LINI 3 (GOLONGAN MERAH)</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
     <h1 class="title">
       FORMULIR PERMINTAAN ANTIBIOTIK LINI 3 (GOLONGAN MERAH)
@@ -51,11 +172,12 @@
           <td>
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               name="nama_pasien"
               id="nama_pasien"
               label="nama pasien"
               myid="check_cara"
+              value="{VNAMA_PASIEN}"
               placeholder="......"
             />
           </td>
@@ -69,11 +191,12 @@
           <td>
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               name="no_rekam_medis"
               id="no_rekam_medis"
               label="no_rekam_medis"
               myid="check_cara"
+              value="{NO_RM}"
               placeholder="......"
             />
           </td>
@@ -87,7 +210,7 @@
           <td>
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               name="diagnosa"
               id="diagnosa"
               label="diagnosa"
@@ -105,7 +228,7 @@
           <td>
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               name="jmlh-ews"
               id="jmlh-ews"
               label="jmlh-ews"
@@ -126,7 +249,7 @@
           <td>
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               name="nama_obat"
               id="nama_obat"
               label="nama_obat"
@@ -144,7 +267,7 @@
           <td>
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               name="komposisi"
               id="komposisi"
               label="komposisi"
@@ -162,7 +285,7 @@
           <td>
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               name="bentuk_kekuatan_sediaan"
               id="bentuk_kekuatan_sediaan"
               label="bentuk_kekuatan_sediaan"
@@ -180,7 +303,7 @@
           <td>
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               name="dosis"
               id="dosis"
               label="dosis"
@@ -198,7 +321,7 @@
           <td>
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               name="rencana_lama_pemberian"
               id="rencana_lama_pemberian"
               label="rencana_lama_pemberian"
@@ -216,7 +339,7 @@
           <td>
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               name="rencana_lama_pemberian"
               id="rencana_lama_pemberian"
               label="rencana_lama_pemberian"
@@ -234,11 +357,12 @@
           <td>
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               name="dokter_yg_merawat_pasien"
               id="dokter_yg_merawat_pasien"
               label="dokter_yg_merawat_pasien"
               myid="check_cara"
+              value="{VDPJP}"
               placeholder="......"
             />
           </td>
@@ -248,12 +372,10 @@
 
     <br />
 
-    <table width="100%" class="table" cellpadding="0" border="0">
+    <table width="100%" class="table table-bordered" cellpadding="0" border="0">
       <tbody>
         <tr>
-          <td colspan="2">&nbsp;</td>
-
-          <td width="30%">&nbsp;</td>
+          <td colspan="3">&nbsp;</td>
           <td width="30%">
             <div align="center">
               <strong>Dokter Penulis Resep</strong>
@@ -261,52 +383,83 @@
           </td>
         </tr>
         <tr>
-          <td bgcolor="#FFFFFF" colspan="2">&nbsp;</td>
-          <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
-          <td bgcolor="#FFFFFF">
-            <input
-              name="17_tgl2"
-              type="text"
-              id="17_tgl2"
-              placeholder="dd/mm/yyyy"
-              size="10"
-              myid="check_cara"
-            />
-            <br />
-            <input
-              name="17_pukul"
-              type="text"
-              id="17_pukul"
-              placeholder="00:00"
-              size="10"
-              myid="check_cara"
-            />
+          <td colspan="3">&nbsp;</td>
+          <td>
+            <div
+              style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+              "
+            >
+              <label for="">Bogor,</label>
+              <input
+                type="text"
+                name="17_tgl2"
+                id="17_tgl2"
+                label="17_tgl2"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
           </td>
         </tr>
         <tr>
-          <td bgcolor="#FFFFFF" colspan="2">&nbsp;</td>
-          <td bgcolor="#FFFFFF">Nama</td>
-          <td bgcolor="#FFFFFF">
-            <input
-              name="17_nama"
-              type="text"
-              id="17_nama"
-              size="25"
-              myid="check_cara"
-            />
-            <br />
-            <select
-              type="select"
-              name="dokternya"
-              id="dokternya"
-              myid="check_cara"
-              iscombo="t"
-              onchange="get_ttd2();"
+          <td colspan="3">&nbsp;</td>
+          <td>
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
             >
-              <option></option>
-            </select>
-            <br />
-            <font id="ttdnya1"></font>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_dokter_penulis_rekap"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_dokter_penulis_rekap"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_dokter_penulis_rekap"
+                id="paraf_ex_ttd_dokter_penulis_rekap"
+                data-name="paraf"
+                data-id="ex_ttd_dokter_penulis_rekap"
+              />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_dokter_penulis_rekap"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+              <label for="">
+                (
+                <input
+                  size="25"
+                  name="nama-dokter-penulis-rekap"
+                  id="nama-dokter-penulis-rekap"
+                  label="nama-dokter-penulis-rekap"
+                  type="text"
+                  myid="check_cara"
+                />
+                )</label
+              >
+
+              <font id="ttdnya1"></font>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -320,6 +473,7 @@
         <tr>
           <td>
             <textarea
+              type="textarea"
               style="width: 100%"
               name="rekomendasi-tim-ppra"
               id="rekomendasi-tim-ppra"
@@ -333,12 +487,10 @@
     </table>
     <br />
 
-    <table width="100%" class="table" cellpadding="0" border="0">
+    <table width="100%" class="table table-bordered" cellpadding="0" border="0">
       <tbody>
         <tr>
-          <td colspan="2">&nbsp;</td>
-
-          <td width="30%">&nbsp;</td>
+          <td colspan="3">&nbsp;</td>
           <td width="30%">
             <div align="center">
               <strong>Tim PRA</strong>
@@ -346,72 +498,88 @@
           </td>
         </tr>
         <tr>
-          <td bgcolor="#FFFFFF" colspan="2">&nbsp;</td>
-          <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
-          <td bgcolor="#FFFFFF">
-            <input
-              name="tgl_pra"
-              type="text"
-              id="tgl_pra"
-              placeholder="dd/mm/yyyy"
-              size="10"
-              myid="check_cara"
-            />
-            <br />
-            <input
-              name="pukul_pra"
-              type="text"
-              id="pukul_pra"
-              placeholder="00:00"
-              size="10"
-              myid="check_cara"
-            />
+          <td colspan="3">&nbsp;</td>
+          <td>
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+              "
+            >
+              <label for="">Bogor, </label>
+              <input
+                name="tgl_pra"
+                id="tgl_pra"
+                label="tgl_pra"
+                type="text"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
           </td>
         </tr>
         <tr>
-          <td bgcolor="#FFFFFF" colspan="2">&nbsp;</td>
-          <td bgcolor="#FFFFFF">Nama</td>
-          <td bgcolor="#FFFFFF">
-            <input
-              name="nama_pra"
-              type="text"
-              id="nama_pra"
-              size="25"
-              myid="check_cara"
-            />
-            <br />
-            <select
-              type="select"
-              name="tim_pra"
-              id="tim_pra"
-              myid="check_cara"
-              iscombo="t"
-              onchange="get_ttd2();"
+          <td colspan="3">&nbsp;</td>
+          <td>
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
             >
-              <option></option>
-            </select>
-            <br />
-            <font id="ttdnya1"></font>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_tim_pra"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_tim_pra"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_tim_pra"
+                id="paraf_ex_ttd_tim_pra"
+                data-name="paraf"
+                data-id="ex_ttd_tim_pra"
+              />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_tim_pra"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+
+              <label for=""
+                >(
+                <input
+                  name="nama_tim_pra"
+                  id="nama_tim_pra"
+                  label="nama_tim_pra"
+                  type="text"
+                  size="25"
+                  myid="check_cara"
+                />
+
+                )</label
+              >
+
+              <font id="ttdnya1"></font>
+            </div>
           </td>
         </tr>
       </tbody>
     </table>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-        var textAreas = document.querySelectorAll("textarea");
-        textAreas.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

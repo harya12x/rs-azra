@@ -3,35 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SKRINING MANAJEMEN PELAYANAN PASIEN RS. AZRA BOGOR</title>
+    <title>SKRINING MANAJEMEN PELAYANAN PASIEN</title>
   </head>
-  <script
-    src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-    crossorigin="anonymous"
-  ></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -40,18 +30,26 @@
     $(document).on("ajaxStop", function () {
       SetTTD();
     });
+    if ($.fn.datepicker) {
+      $(".datepicker").each(function () {
+        var $this = $(this),
+          dataDateFormat = $this.attr("data-dateformat") || "dd.mm.yy";
+
+        $this.datepicker({
+          dateFormat: dataDateFormat,
+          prevText: '<i class="fa fa-chevron-left"></i>',
+          nextText: '<i class="fa fa-chevron-right"></i>',
+          todayBtn: "linked",
+        });
+
+        // clear memory reference
+        $this = null;
+      });
+    }
   </script>
   <script>
     $(document).ready(function () {
-      $(function () {
-        $(".datepicker").datepicker({
-          dateFormat: "dd-mm-yy",
-          autoclose: true,
-          todayHighlight: true,
-        });
-      });
-
-      $("input[type='radio']")
+      $("input[type='checkbox']")
         .off("change")
         .on("change", function () {
           let total = 0;
@@ -184,7 +182,7 @@
     }
   </script>
   <body>
-    <h1 class="title">SKRINING MANAJEMEN PELAYANAN PASIEN RS AZRA BOGOR</h1>
+    <h1 class="title">SKRINING MANAJEMEN PELAYANAN PASIEN</h1>
 
     <table width="100%" class="table table-bordered">
       <tbody>
@@ -211,7 +209,7 @@
               placeholder="......"
               myid="check_cara"
               value="{VNAMA_PASIEN}"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
             />
           </td>
         </tr>
@@ -226,7 +224,7 @@
               placeholder="......"
               myid="check_cara"
               value="{NO_RM}"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
             />
           </td>
         </tr>
@@ -239,10 +237,9 @@
               id="tgl-lahir"
               label="tgl-lahir"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
               myid="check_cara"
               value="{VBIRTH_DATE}"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
             />
           </td>
         </tr>
@@ -254,9 +251,10 @@
               name="tgl-masuk-ruangan"
               id="tgl-masuk-ruangan"
               label="tgl-masuk-ruangan"
-              placeholder="......"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
             />
           </td>
         </tr>
@@ -269,8 +267,9 @@
               id="dpjp-utama"
               label="dpjp-utama"
               placeholder="......"
+              value="{VDPJP}"
               myid="check_cara"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
             />
           </td>
         </tr>
@@ -311,10 +310,10 @@
               data-percol="1"
               data-hitung1="1"
               class="awal-skor"
-              type="radio"
-              name="awal-skor-penaggung-jawab-pelayanan-pasien"
-              id="awal-skor-penaggung-jawab-pelayanan-pasien"
-              label="awal-skor-penaggung-jawab-pelayanan-pasien"
+              type="checkbox"
+              name="awal-skor-penaggung-jawab-pelayanan-pasien-10"
+              id="awal-skor-penaggung-jawab-pelayanan-pasien-10"
+              label="awal-skor-penaggung-jawab-pelayanan-pasien-10"
               value="10"
               myid="check_cara"
             />
@@ -325,10 +324,10 @@
               data-percol="2"
               data-hitung2="2"
               class="lanjut-skor"
-              type="radio"
-              name="lanjut-skor-penaggung-jawab-pelayanan-pasien"
-              id="lanjut-skor-penaggung-jawab-pelayanan-pasien"
-              label="lanjut-skor-penaggung-jawab-pelayanan-pasien"
+              type="checkbox"
+              name="lanjut-skor-penaggung-jawab-pelayanan-pasien-10"
+              id="lanjut-skor-penaggung-jawab-pelayanan-pasien-10"
+              label="lanjut-skor-penaggung-jawab-pelayanan-pasien-10"
               value="10"
               myid="check_cara"
             />
@@ -343,10 +342,10 @@
               data-percol="1"
               data-hitung1="1"
               class="awal-skor"
-              type="radio"
-              name="awal-skor-penaggung-jawab-pelayanan-pasien"
-              id="awal-skor-penaggung-jawab-pelayanan-pasien"
-              label="awal-skor-penaggung-jawab-pelayanan-pasien"
+              type="checkbox"
+              name="awal-skor-penaggung-jawab-pelayanan-pasien-1"
+              id="awal-skor-penaggung-jawab-pelayanan-pasien-1"
+              label="awal-skor-penaggung-jawab-pelayanan-pasien-1"
               value="1"
               myid="check_cara"
             />
@@ -357,10 +356,10 @@
               data-percol="2"
               data-hitung2="2"
               class="lanjut-skor"
-              type="radio"
-              name="lanjut-skor-penaggung-jawab-pelayanan-pasien"
-              id="lanjut-skor-penaggung-jawab-pelayanan-pasien"
-              label="lanjut-skor-penaggung-jawab-pelayanan-pasien"
+              type="checkbox"
+              name="lanjut-skor-penaggung-jawab-pelayanan-pasien-1"
+              id="lanjut-skor-penaggung-jawab-pelayanan-pasien-1"
+              label="lanjut-skor-penaggung-jawab-pelayanan-pasien-1"
               value="1"
               myid="check_cara"
             />
@@ -378,10 +377,10 @@
               data-percol="1"
               data-hitung1="1"
               class="awal-skor"
-              type="radio"
-              name="awal-skor-prediksi-lama-hari-rawat"
-              id="awal-skor-prediksi-lama-hari-rawat"
-              label="awal-skor-prediksi-lama-hari-rawat"
+              type="checkbox"
+              name="awal-skor-prediksi-lama-hari-rawat-5"
+              id="awal-skor-prediksi-lama-hari-rawat-5"
+              label="awal-skor-prediksi-lama-hari-rawat-5"
               value="5"
               myid="check_cara"
             />
@@ -392,10 +391,10 @@
               data-percol="2"
               data-hitung2="2"
               class="lanjut-skor"
-              type="radio"
-              name="lanjut-skor-prediksi-lama-hari-rawat"
-              id="lanjut-skor-prediksi-lama-hari-rawat"
-              label="lanjut-skor-prediksi-lama-hari-rawat"
+              type="checkbox"
+              name="lanjut-skor-prediksi-lama-hari-rawat-5"
+              id="lanjut-skor-prediksi-lama-hari-rawat-5"
+              label="lanjut-skor-prediksi-lama-hari-rawat-5"
               value="5"
               myid="check_cara"
             />
@@ -410,10 +409,10 @@
               data-percol="1"
               data-hitung1="1"
               class="awal-skor"
-              type="radio"
-              name="awal-skor-prediksi-lama-hari-rawat"
-              id="awal-skor-prediksi-lama-hari-rawat"
-              label="awal-skor-prediksi-lama-hari-rawat"
+              type="checkbox"
+              name="awal-skor-prediksi-lama-hari-rawat-2"
+              id="awal-skor-prediksi-lama-hari-rawat-2"
+              label="awal-skor-prediksi-lama-hari-rawat-2"
               value="2"
               myid="check_cara"
             />
@@ -424,10 +423,10 @@
               data-percol="2"
               data-hitung2="2"
               class="lanjut-skor"
-              type="radio"
-              name="lanjut-skor-prediksi-lama-hari-rawat"
-              id="lanjut-skor-prediksi-lama-hari-rawat"
-              label="lanjut-skor-prediksi-lama-hari-rawat"
+              type="checkbox"
+              name="lanjut-skor-prediksi-lama-hari-rawat-2"
+              id="lanjut-skor-prediksi-lama-hari-rawat-2"
+              label="lanjut-skor-prediksi-lama-hari-rawat-2"
               value="2"
               myid="check_cara"
             />
@@ -442,10 +441,10 @@
               data-percol="1"
               data-hitung1="1"
               class="awal-skor"
-              type="radio"
-              name="awal-skor-prediksi-lama-hari-rawat"
-              id="awal-skor-prediksi-lama-hari-rawat"
-              label="awal-skor-prediksi-lama-hari-rawat"
+              type="checkbox"
+              name="awal-skor-prediksi-lama-hari-rawat-1"
+              id="awal-skor-prediksi-lama-hari-rawat-1"
+              label="awal-skor-prediksi-lama-hari-rawat-1"
               value="1"
               myid="check_cara"
             />
@@ -456,10 +455,10 @@
               data-percol="2"
               data-hitung2="2"
               class="lanjut-skor"
-              type="radio"
-              name="lanjut-skor-prediksi-lama-hari-rawat"
-              id="lanjut-skor-prediksi-lama-hari-rawat"
-              label="lanjut-skor-prediksi-lama-hari-rawat"
+              type="checkbox"
+              name="lanjut-skor-prediksi-lama-hari-rawat-1"
+              id="lanjut-skor-prediksi-lama-hari-rawat-1"
+              label="lanjut-skor-prediksi-lama-hari-rawat-1"
               value="1"
               myid="check_cara"
             />
@@ -479,10 +478,10 @@
               data-percol="1"
               data-hitung1="1"
               class="awal-skor"
-              type="radio"
-              name="awal-skor-administrasi-dan-sosial"
-              id="awal-skor-administrasi-dan-sosial"
-              label="awal-skor-administrasi-dan-sosial"
+              type="checkbox"
+              name="awal-skor-administrasi-dan-sosial-6"
+              id="awal-skor-administrasi-dan-sosial-6"
+              label="awal-skor-administrasi-dan-sosial-6"
               value="6"
               myid="check_cara"
             />
@@ -493,10 +492,10 @@
               data-percol="2"
               data-hitung2="2"
               class="lanjut-skor"
-              type="radio"
-              name="lanjut-skor-administrasi-dan-sosial"
-              id="lanjut-skor-administrasi-dan-sosial"
-              label="lanjut-skor-administrasi-dan-sosial"
+              type="checkbox"
+              name="lanjut-skor-administrasi-dan-sosial-6"
+              id="lanjut-skor-administrasi-dan-sosial-6"
+              label="lanjut-skor-administrasi-dan-sosial-6"
               value="6"
               myid="check_cara"
             />
@@ -511,10 +510,10 @@
               data-percol="1"
               data-hitung1="1"
               class="awal-skor"
-              type="radio"
-              name="awal-skor-administrasi-dan-sosial"
-              id="awal-skor-administrasi-dan-sosial"
-              label="awal-skor-administrasi-dan-sosial"
+              type="checkbox"
+              name="awal-skor-administrasi-dan-sosial-5"
+              id="awal-skor-administrasi-dan-sosial-5"
+              label="awal-skor-administrasi-dan-sosial-5"
               value="5"
               myid="check_cara"
             />
@@ -525,10 +524,10 @@
               data-percol="2"
               data-hitung2="2"
               class="lanjut-skor"
-              type="radio"
-              name="lanjut-skor-administrasi-dan-sosial"
-              id="lanjut-skor-administrasi-dan-sosial"
-              label="lanjut-skor-administrasi-dan-sosial"
+              type="checkbox"
+              name="lanjut-skor-administrasi-dan-sosial-5"
+              id="lanjut-skor-administrasi-dan-sosial-5"
+              label="lanjut-skor-administrasi-dan-sosial-5"
               value="5"
               myid="check_cara"
             />
@@ -548,10 +547,10 @@
               data-percol="1"
               data-hitung1="1"
               class="awal-skor"
-              type="radio"
-              name="awal-skor-kondisi-klinis-pasien"
-              id="awal-skor-kondisi-klinis-pasien"
-              label="awal-skor-kondisi-klinis-pasien"
+              type="checkbox"
+              name="awal-skor-kondisi-klinis-pasien-6"
+              id="awal-skor-kondisi-klinis-pasien-6"
+              label="awal-skor-kondisi-klinis-pasien-6"
               value="6"
               myid="check_cara"
             />
@@ -562,10 +561,10 @@
               data-percol="2"
               data-hitung2="2"
               class="lanjut-skor"
-              type="radio"
-              name="lanjut-skor-kondisi-klinis-pasien"
-              id="lanjut-skor-kondisi-klinis-pasien"
-              label="lanjut-skor-kondisi-klinis-pasien"
+              type="checkbox"
+              name="lanjut-skor-kondisi-klinis-pasien-6"
+              id="lanjut-skor-kondisi-klinis-pasien-6"
+              label="lanjut-skor-kondisi-klinis-pasien-6"
               value="6"
               myid="check_cara"
             />
@@ -580,10 +579,10 @@
               data-percol="1"
               data-hitung1="1"
               class="awal-skor"
-              type="radio"
-              name="awal-skor-kondisi-klinis-pasien"
-              id="awal-skor-kondisi-klinis-pasien"
-              label="awal-skor-kondisi-klinis-pasien"
+              type="checkbox"
+              name="awal-skor-kondisi-klinis-pasien-2"
+              id="awal-skor-kondisi-klinis-pasien-2"
+              label="awal-skor-kondisi-klinis-pasien-2"
               value="2"
               myid="check_cara"
             />
@@ -594,10 +593,10 @@
               data-percol="2"
               data-hitung2="2"
               class="lanjut-skor"
-              type="radio"
-              name="lanjut-skor-kondisi-klinis-pasien"
-              id="lanjut-skor-kondisi-klinis-pasien"
-              label="lanjut-skor-kondisi-klinis-pasien"
+              type="checkbox"
+              name="lanjut-skor-kondisi-klinis-pasien-2"
+              id="lanjut-skor-kondisi-klinis-pasien-2"
+              label="lanjut-skor-kondisi-klinis-pasien-2"
               value="2"
               myid="check_cara"
             />
@@ -612,10 +611,10 @@
               data-percol="1"
               data-hitung1="1"
               class="awal-skor"
-              type="radio"
-              name="awal-skor-kondisi-klinis-pasien"
-              id="awal-skor-kondisi-klinis-pasien"
-              label="awal-skor-kondisi-klinis-pasien"
+              type="checkbox"
+              name="awal-skor-kondisi-klinis-pasien-2"
+              id="awal-skor-kondisi-klinis-pasien-2"
+              label="awal-skor-kondisi-klinis-pasien-2"
               value="2"
               myid="check_cara"
             />
@@ -626,10 +625,10 @@
               data-percol="2"
               data-hitung2="2"
               class="lanjut-skor"
-              type="radio"
-              name="lanjut-skor-kondisi-klinis-pasien"
-              id="lanjut-skor-kondisi-klinis-pasien"
-              label="lanjut-skor-kondisi-klinis-pasien"
+              type="checkbox"
+              name="lanjut-skor-kondisi-klinis-pasien-2"
+              id="lanjut-skor-kondisi-klinis-pasien-2"
+              label="lanjut-skor-kondisi-klinis-pasien-2"
               value="2"
               myid="check_cara"
             />
@@ -644,10 +643,10 @@
               data-percol="1"
               data-hitung1="1"
               class="awal-skor"
-              type="radio"
-              name="awal-skor-kondisi-klinis-pasien"
-              id="awal-skor-kondisi-klinis-pasien"
-              label="awal-skor-kondisi-klinis-pasien"
+              type="checkbox"
+              name="awal-skor-kondisi-klinis-pasien-2"
+              id="awal-skor-kondisi-klinis-pasien-2"
+              label="awal-skor-kondisi-klinis-pasien-2"
               value="2"
               myid="check_cara"
             />
@@ -658,10 +657,10 @@
               data-percol="2"
               data-hitung2="2"
               class="lanjut-skor"
-              type="radio"
-              name="lanjut-skor-kondisi-klinis-pasien"
-              id="lanjut-skor-kondisi-klinis-pasien"
-              label="lanjut-skor-kondisi-klinis-pasien"
+              type="checkbox"
+              name="lanjut-skor-kondisi-klinis-pasien-2"
+              id="lanjut-skor-kondisi-klinis-pasien-2"
+              label="lanjut-skor-kondisi-klinis-pasien-2"
               value="2"
               myid="check_cara"
             />
@@ -681,10 +680,10 @@
               data-percol="1"
               data-hitung1="1"
               class="awal-skor"
-              type="radio"
-              name="awal-skor-masalah-khusus"
-              id="awal-skor-masalah-khusus"
-              label="awal-skor-masalah-khusus"
+              type="checkbox"
+              name="awal-skor-masalah-khusus-10"
+              id="awal-skor-masalah-khusus-10"
+              label="awal-skor-masalah-khusus-10"
               value="10"
               myid="check_cara"
             />
@@ -695,10 +694,10 @@
               data-percol="2"
               data-hitung2="2"
               class="lanjut-skor"
-              type="radio"
-              name="lanjut-skor-masalah-khusus"
-              id="lanjut-skor-masalah-khusus"
-              label="lanjut-skor-masalah-khusus"
+              type="checkbox"
+              name="lanjut-skor-masalah-khusus-10"
+              id="lanjut-skor-masalah-khusus-10"
+              label="lanjut-skor-masalah-khusus-10"
               value="10"
               myid="check_cara"
             />
@@ -713,10 +712,10 @@
               data-percol="1"
               data-hitung1="1"
               class="awal-skor"
-              type="radio"
-              name="awal-skor-masalah-khusus"
-              id="awal-skor-masalah-khusus"
-              label="awal-skor-masalah-khusus"
+              type="checkbox"
+              name="awal-skor-masalah-khusus-10"
+              id="awal-skor-masalah-khusus-10"
+              label="awal-skor-masalah-khusus-10"
               value="10"
               myid="check_cara"
             />
@@ -727,10 +726,10 @@
               data-percol="2"
               data-hitung2="2"
               class="lanjut-skor"
-              type="radio"
-              name="lanjut-skor-masalah-khusus"
-              id="lanjut-skor-masalah-khusus"
-              label="lanjut-skor-masalah-khusus"
+              type="checkbox"
+              name="lanjut-skor-masalah-khusus-10"
+              id="lanjut-skor-masalah-khusus-10"
+              label="lanjut-skor-masalah-khusus-10"
               value="10"
               myid="check_cara"
             />
@@ -745,10 +744,10 @@
               data-percol="1"
               data-hitung1="1"
               class="awal-skor"
-              type="radio"
-              name="awal-skor-masalah-khusus"
-              id="awal-skor-masalah-khusus"
-              label="awal-skor-masalah-khusus"
+              type="checkbox"
+              name="awal-skor-masalah-khusus-10"
+              id="awal-skor-masalah-khusus-10"
+              label="awal-skor-masalah-khusus-10"
               value="10"
               myid="check_cara"
             />
@@ -759,10 +758,10 @@
               data-percol="2"
               data-hitung2="2"
               class="lanjut-skor"
-              type="radio"
-              name="lanjut-skor-masalah-khusus"
-              id="lanjut-skor-masalah-khusus"
-              label="lanjut-skor-masalah-khusus"
+              type="checkbox"
+              name="lanjut-skor-masalah-khusus-10"
+              id="lanjut-skor-masalah-khusus-10"
+              label="lanjut-skor-masalah-khusus-10"
               value="10"
               myid="check_cara"
             />
@@ -775,7 +774,7 @@
           </td>
           <td style="width: 15%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="totalskor1"
               id="totalskor1"
@@ -785,7 +784,7 @@
           </td>
           <td style="width: 15%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="totalskor2"
               id="totalskor2"
@@ -819,7 +818,7 @@
 
     <br />
 
-    <table width="100%" class="table">
+    <table width="100%" class="table table-bordered">
       <tbody>
         <tr>
           <td>
@@ -828,105 +827,67 @@
             <p><b>Total Skor = 15 atau lebih</b></p>
           </td>
           <td>
-            <div
-              style="display: flex; flex-direction: column; align-items: center"
-            >
-              <div>
-                <label style="text-align: center" for="">Bogor, tanggal</label>
-                <input
-                  name="17_tgl2"
-                  type="text"
-                  id="17_tgl2"
-                  placeholder="dd/mm/yyyy"
-                  class="datepicker hasDatepicker"
-                  myid="check_cara"
-                  fdprocessedid="pu3o7g"
-                />
-              </div>
-              <p style="margin-top: 5px">Perawat Penanggung jawab Pasien</p>
-              <label
-                class="label text-center"
-                id="def_img_ex_ttd_petugas"
-                style="font-style: italic; width: 100px; height: 100px"
-                >paraf</label
+            <div style="display: flex; justify-content: center">
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
               >
-              <label class="label text-center">
-                <img
-                  class="text-center"
-                  id="image_paraf_ex_ttd_petugas"
-                  src=""
-                  style="display: none"
-              /></label>
-              <input
-                myid="check_cara"
-                type="hidden"
-                name="paraf_ex_ttd_petugas"
-                id="paraf_ex_ttd_petugas"
-                data-name="paraf"
-                data-id="ex_ttd_petugas"
-              />
-              <label class="label text-center">
-                <a
-                  id="CreateTTD"
-                  class="btn btn-default btn-xs pointer text-center"
-                  data-id="ex_ttd_petugas"
-                  style="text-align: center"
+                <p style="text-align: center">
+                  Perawat Penanggung Jawab Pasien
+                </p>
+                <label
+                  class="label text-center"
+                  id="def_img_ex_ttd_perawat_penanggung_jawab_pasien"
+                  style="font-style: italic; width: 100px; height: 100px"
+                  >paraf</label
                 >
-                  <i class="fa fa-edit"> </i>
-                  PENTABLET
-                </a>
-              </label>
-              <br />
-              <label for="">
-                (
+                <br />
+                <label class="label text-center">
+                  <img
+                    class="text-center"
+                    id="image_paraf_ex_ttd_perawat_penanggung_jawab_pasien"
+                    src=""
+                    style="display: none"
+                /></label>
                 <input
-                  style="flex: 1"
-                  type="text"
-                  name="perawat-penanggung-jwb-pasien"
-                  id="perawat-penanggung-jwb-pasien"
-                  label="perawat-penanggung-jwb-pasien"
-                  placeholder="......"
                   myid="check_cara"
+                  type="hidden"
+                  name="paraf_ex_ttd_perawat_penanggung_jawab_pasien"
+                  id="paraf_ex_ttd_perawat_penanggung_jawab_pasien"
+                  data-name="paraf"
+                  data-id="ex_ttd_perawat_penanggung_jawab_pasien"
                 />
-                )
-              </label>
-
-              <font id="ttd2"></font>
+                <label class="label text-center">
+                  <a
+                    id="CreateTTD"
+                    class="btn btn-default btn-xs pointer text-center"
+                    data-id="ex_ttd_perawat_penanggung_jawab_pasien"
+                    style="text-align: center"
+                  >
+                    <i class="fa fa-edit"> </i>
+                    PENTABLET
+                  </a>
+                </label>
+                <label for="">
+                  (
+                  <input
+                    type="text"
+                    name="pasien-keluarga"
+                    id="pasien-keluarga"
+                    label="pasien-keluarga"
+                    myid="check_cara"
+                    placeholder="......"
+                  />
+                  )
+                </label>
+              </div>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

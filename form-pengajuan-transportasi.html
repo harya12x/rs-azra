@@ -6,27 +6,22 @@
     <title>FORM PENGAJUAN TRANSPORTASI</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -172,7 +167,7 @@
           <td>Unit Kerja :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="unit-kerja"
               id="unit-kerja"
@@ -188,20 +183,20 @@
           <td>Tanggal :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tanggal"
               id="tanggal"
               label="tanggal"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatePicker"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
             />
           </td>
           <td>Jam berangkat :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="jam-berangkat"
               id="jam-berangkat"
@@ -281,7 +276,7 @@
           <td>No. RM :</td>
           <td width="35%">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="no-rm"
               id="no-rm"
@@ -294,7 +289,7 @@
           <td>Nama Pasien :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-pasien"
               id="nama-pasien"
@@ -309,7 +304,7 @@
           <td width="20%">Alamat Pasien (lengkap)</td>
           <td colspan="3">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="alamat-pasien"
               id="alamat-pasien"
@@ -357,7 +352,7 @@
           <td>No. Polisi :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="no-polisi"
               id="no-polisi"
@@ -369,7 +364,7 @@
           <td>Jam kedatangan :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="jam-kedatangan"
               id="jam-kedatangan"
@@ -384,7 +379,7 @@
           <td>K M Berangkat :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="k-m-berangkat"
               id="k-m-berangkat"
@@ -396,7 +391,7 @@
           <td>K M Tiba :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="k-m-tiba"
               id="k-m-tiba"
@@ -412,227 +407,224 @@
     <table width="100%" class="table">
       <tbody>
         <td style="text-align: center">
-          <label for="">Yang mengajukan</label>
-          <input
-            type="text"
-            name="yang-mengajukan"
-            myid="check_cara"
-            style="width: 100%"
-            id="yang-mengajukan"
-          />
-
-          <br />
-
-          <label
-            class="label text-center"
-            id="def_img_ex_ttd_yg_mengajukan"
-            style="font-style: italic; width: 100px; height: 100px"
-            >paraf</label
+          <div
+            style="display: flex; flex-direction: column; align-items: center"
           >
-          <label class="label text-center">
-            <img
-              class="text-center"
-              id="image_paraf_ex_ttd_yg_mengajukan"
-              src=""
-              style="display: none"
-          /></label>
-          <input
-            myid="check_cara"
-            type="hidden"
-            name="paraf_ex_ttd_yg_mengajukan"
-            id="paraf_ex_ttd_yg_mengajukan"
-            data-name="paraf"
-            data-id="ex_ttd_yg_mengajukan"
-          />
-          <br />
-          <label class="label text-center">
-            <a
-              id="CreateTTD"
-              class="btn btn-default btn-xs pointer text-center"
+            <label for="">Yang mengajukan</label>
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_yg_mengajukan"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_yg_mengajukan"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_yg_mengajukan"
+              id="paraf_ex_ttd_yg_mengajukan"
+              data-name="paraf"
               data-id="ex_ttd_yg_mengajukan"
-              style="text-align: center"
-            >
-              <i class="fa fa-edit"> </i>
-              PENTABLET
-            </a>
-          </label>
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_yg_mengajukan"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <label for="">
+              (
+              <input
+                type="text"
+                name="yang-mengajukan"
+                myid="check_cara"
+                id="yang-mengajukan"
+              />
+              )
+            </label>
 
-          <font id="ttdnya2"></font>
+            <font id="ttdnya2"></font>
+          </div>
         </td>
-        <td style="text-align: center">
-          <label for="">Diketahui Kepala / DO</label>
-          <input
-            type="text"
-            name="kepala-do"
-            myid="check_cara"
-            style="width: 100%"
-            id="kepala-do"
-          />
-
-          <br />
-
-          <label
-            class="label text-center"
-            id="def_img_ex_ttd_diket_kepala_do"
-            style="font-style: italic; width: 100px; height: 100px"
-            >paraf</label
+        <td>
+          <div
+            style="display: flex; flex-direction: column; align-items: center"
           >
-          <label class="label text-center">
-            <img
-              class="text-center"
-              id="image_paraf_ex_ttd_diket_kepala_do"
-              src=""
-              style="display: none"
-          /></label>
-          <input
-            myid="check_cara"
-            type="hidden"
-            name="paraf_ex_ttd_diket_kepala_do"
-            id="paraf_ex_ttd_diket_kepala_do"
-            data-name="paraf"
-            data-id="ex_ttd_diket_kepala_do"
-          />
-          <br />
-          <label class="label text-center">
-            <a
-              id="CreateTTD"
-              class="btn btn-default btn-xs pointer text-center"
+            <label for="">Diketahui Kepala / DO</label>
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_diket_kepala_do"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_diket_kepala_do"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_diket_kepala_do"
+              id="paraf_ex_ttd_diket_kepala_do"
+              data-name="paraf"
               data-id="ex_ttd_diket_kepala_do"
-              style="text-align: center"
-            >
-              <i class="fa fa-edit"> </i>
-              PENTABLET
-            </a>
-          </label>
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_diket_kepala_do"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
 
-          <font id="ttdnya2"></font>
+            <label for="">
+              (
+              <input
+                type="text"
+                name="kepala-do"
+                myid="check_cara"
+                id="kepala-do"
+              />
+              )
+            </label>
+
+            <font id="ttdnya2"></font>
+          </div>
         </td>
-        <td style="text-align: center">
-          <label for="">Pengemudi</label>
-          <input
-            type="text"
-            name="pengemudi"
-            myid="check_cara"
-            style="width: 100%"
-            id="pengemudi"
-          />
-
-          <br />
-
-          <label
-            class="label text-center"
-            id="def_img_ex_ttd_pengemudi"
-            style="font-style: italic; width: 100px; height: 100px"
-            >paraf</label
+        <td>
+          <div
+            style="display: flex; flex-direction: column; align-items: center"
           >
-          <label class="label text-center">
-            <img
-              class="text-center"
-              id="image_paraf_ex_ttd_pengemudi"
-              src=""
-              style="display: none"
-          /></label>
-          <input
-            myid="check_cara"
-            type="hidden"
-            name="paraf_ex_ttd_pengemudi"
-            id="paraf_ex_ttd_pengemudi"
-            data-name="paraf"
-            data-id="ex_ttd_pengemudi"
-          />
-          <br />
-          <label class="label text-center">
-            <a
-              id="CreateTTD"
-              class="btn btn-default btn-xs pointer text-center"
+            <label for="">Pengemudi</label>
+
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pengemudi"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pengemudi"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pengemudi"
+              id="paraf_ex_ttd_pengemudi"
+              data-name="paraf"
               data-id="ex_ttd_pengemudi"
-              style="text-align: center"
-            >
-              <i class="fa fa-edit"> </i>
-              PENTABLET
-            </a>
-          </label>
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pengemudi"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
 
-          <font id="ttdnya2"></font>
+            <label for="">
+              (
+              <input
+                type="text"
+                name="pengemudi"
+                myid="check_cara"
+                id="pengemudi"
+              />
+              )
+            </label>
+            <font id="ttdnya2"></font>
+          </div>
         </td>
-        <td style="text-align: center">
-          <label for="">Diketahui Keamanan RS Azra</label>
-          <input
-            type="text"
-            name="mengetahui"
-            myid="check_cara"
-            style="width: 100%"
-            id="mengetahui"
-          />
-          <br />
-
-          <label
-            class="label text-center"
-            id="def_img_ex_ttd_diket_keamanan_rs_azra"
-            style="font-style: italic; width: 100px; height: 100px"
-            >paraf</label
+        <td>
+          <div
+            style="display: flex; flex-direction: column; align-items: center"
           >
-          <label class="label text-center">
-            <img
-              class="text-center"
-              id="image_paraf_ex_ttd_diket_keamanan_rs_azra"
-              src=""
-              style="display: none"
-          /></label>
-          <input
-            myid="check_cara"
-            type="hidden"
-            name="paraf_ex_ttd_diket_keamanan_rs_azra"
-            id="paraf_ex_ttd_diket_keamanan_rs_azra"
-            data-name="paraf"
-            data-id="ex_ttd_diket_keamanan_rs_azra"
-          />
-          <br />
-          <label class="label text-center">
-            <a
-              id="CreateTTD"
-              class="btn btn-default btn-xs pointer text-center"
-              data-id="ex_ttd_diket_keamanan_rs_azra"
-              style="text-align: center"
-            >
-              <i class="fa fa-edit"> </i>
-              PENTABLET
-            </a>
-          </label>
+            <label for="">Diketahui Keamanan RS Azra</label>
 
-          <font id="ttdnya2"></font>
+            <br />
+
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_diket_keamanan_rs_azra"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_diket_keamanan_rs_azra"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_diket_keamanan_rs_azra"
+              id="paraf_ex_ttd_diket_keamanan_rs_azra"
+              data-name="paraf"
+              data-id="ex_ttd_diket_keamanan_rs_azra"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_diket_keamanan_rs_azra"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <label for="">
+              (
+
+              <input
+                type="text"
+                name="mengetahui"
+                myid="check_cara"
+                id="mengetahui"
+              />
+              )
+            </label>
+            <font id="ttdnya2"></font>
+          </div>
         </td>
       </tbody>
     </table>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

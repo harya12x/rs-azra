@@ -3,30 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PENGKAJIAN PRA INDUKSI RS. AZRA BOGOR</title>
+    <title>PENGKAJIAN PRA INDUKSI</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      padding: 0;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -46,7 +42,6 @@
         });
       });
     });
-
     // Untuk Keperluan TTD
     function ttd_paraf(id) {
       PopupCenter(
@@ -158,7 +153,7 @@
     }
   </script>
   <body>
-    <h1 class="title">PENGKAJIAN PRA INDUKSI RS. AZRA BOGOR</h1>
+    <h1 class="title">PENGKAJIAN PRA INDUKSI</h1>
     <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
@@ -200,7 +195,6 @@
               label="no-rek-medis"
               myid="check_cara"
               value="{NO_RM}"
-              placeholder="......"
             />
           </td>
         </tr>
@@ -212,7 +206,7 @@
               name="tgl_lahira2"
               type="text"
               id="tgl_lahir"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               placeholder="dd-mm-yy"
               myid="check_cara"
               value="{VBIRTH_DATE}"
@@ -258,7 +252,6 @@
               id="kamar"
               placeholder="..."
               myid="check_cara"
-              value="{VNAMARUANGAN}"
               label="kamar"
             />
           </td>
@@ -295,11 +288,20 @@
               <input
                 style="flex: 1"
                 type="text"
-                name="tgl-jam-tindakan"
-                id="tgl-jam-tindakan"
-                label="tgl-jam-tindakan"
-                class="datepicker hasDatepicker"
-                placeholder="dd-mm-yy/00.00"
+                name="tgl-tindakan"
+                id="tgl-tindakan"
+                label="tgl-tindakan"
+                class="datepicker"
+                placeholder="dd-mm-yy"
+                myid="check_cara"
+              />
+              <input
+                style="flex: 1"
+                type="text"
+                name="jam-tindakan"
+                id="jam-tindakan"
+                label="jam-tindakan"
+                placeholder="00.00"
                 myid="check_cara"
               />
             </div>
@@ -360,8 +362,7 @@
               id="masalah-pra-anestesi-riwayat-alergi-obat"
               label="masalah-pra-anestesi-riwayat-alergi-obat"
               myid="check_cara"
-              placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               rows="8"
             ></textarea>
           </td>
@@ -372,8 +373,7 @@
               name="respon-thdp-terapi-tindakan"
               id="respon-thdp-terapi-tindakan"
               label="respon-thdp-terapi-tindakan"
-              placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               rows="8"
               myid="check_cara"
             ></textarea>
@@ -387,8 +387,7 @@
               name="tindakan-yg-sdh-dilakukan"
               id="tindakan-yg-sdh-dilakukan"
               label="tindakan-yg-sdh-dilakukan"
-              placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               rows="8"
               myid="check_cara"
             ></textarea>
@@ -400,8 +399,7 @@
               name="antisipasi-masalah"
               id="antisipasi-masalah"
               label="antisipasi-masalah"
-              placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               rows="8"
               myid="check_cara"
             ></textarea>
@@ -416,7 +414,7 @@
               name="td"
               id="td"
               label="td"
-              placeholder="......"
+              value="{VTD}"
               myid="check_cara"
             />
             <label for="">mmHg</label>
@@ -426,7 +424,7 @@
               name="ttv-N"
               id="ttv-N"
               label="ttv-N"
-              placeholder="......"
+              value="{VNADI}"
               myid="check_cara"
             />
             <label for="">x/mnt</label>
@@ -436,7 +434,7 @@
               name="RR"
               id="RR"
               label="RR"
-              placeholder="......"
+              value="{VNAFAS}"
               myid="check_cara"
             />
             <label for="">x/mnt</label>
@@ -446,10 +444,19 @@
               name="suhu"
               id="suhu"
               label="suhu"
-              placeholder="......"
+              value="{VSUHU}"
               myid="check_cara"
             />
             <label for="">&deg;C</label>
+            <label for="" style="margin-left: 30px">Sp02: </label>
+            <input
+              type="text"
+              name="sp02"
+              id="sp02"
+              label="sp02"
+              myid="check_cara"
+            />
+            %
           </td>
         </tr>
         <tr>
@@ -460,8 +467,7 @@
               name="status-jalan-nafas"
               id="status-jalan-nafas"
               label="status-jalan-nafas"
-              placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               rows="8"
               myid="check_cara"
             ></textarea>
@@ -473,8 +479,7 @@
               name="peralatan-khusus-tatalaksana-jln-nafas"
               id="peralatan-khusus-tatalaksana-jln-nafas"
               label="peralatan-khusus-tatalaksana-jln-nafas"
-              placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               rows="8"
               myid="check_cara"
             ></textarea>
@@ -488,8 +493,7 @@
               name="diagnosa-pre-anestesi"
               id="diagnosa-pre-anestesi"
               label="diagnosa-pre-anestesi"
-              placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               rows="8"
               myid="check_cara"
             ></textarea>
@@ -503,8 +507,7 @@
               name="rencana-anestesi"
               id="rencana-anestesi"
               label="rencana-anestesi"
-              placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               rows="8"
               myid="check_cara"
             ></textarea>
@@ -566,41 +569,5 @@
         </tr>
       </tbody>
     </table>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-        var textAreas = document.querySelectorAll("textarea");
-        textAreas.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

@@ -1,0 +1,3113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FORM PENGECEKAN OBAT HARIAN EMERGENCY KIT</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+    if ($.fn.datepicker) {
+      $(".datepicker").each(function () {
+        var $this = $(this),
+          dataDateFormat = $this.attr("data-dateformat") || "dd.mm.yy";
+
+        $this.datepicker({
+          dateFormat: dataDateFormat,
+          prevText: '<i class="fa fa-chevron-left"></i>',
+          nextText: '<i class="fa fa-chevron-right"></i>',
+          todayBtn: "linked",
+        });
+
+        // clear memory reference
+        $this = null;
+      });
+    }
+  </script>
+  <script>
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
+  <body>
+    <h1 class="title">
+      FORM PENGECEKAN OBAT HARIAN <br />
+      EMERGENCY KIT
+    </h1>
+
+    <p><b>Radiologi</b></p>
+    <div>
+      <label><b>Bulan : </b></label>
+      <input
+        style="border: none; border-bottom: 2px dotted #b1b1b1"
+        type="text"
+        name="bulan-pengecekan"
+        id="bulan-pengecekan"
+        label="bulan-pengecekan"
+        myid="check_cara"
+      />
+    </div>
+
+    <div style="overflow-x: auto">
+      <table width="100%" class="table table-bordered">
+        <thead>
+          <tr>
+            <th colspan="3">Keadaan Kunci Kotak Emergency</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            <th>6</th>
+            <th>7</th>
+            <th>8</th>
+            <th>9</th>
+            <th>10</th>
+            <th>11</th>
+            <th>12</th>
+            <th>13</th>
+            <th>14</th>
+            <th>15</th>
+            <th>16</th>
+            <th>17</th>
+            <th>18</th>
+            <th>19</th>
+            <th>20</th>
+            <th>21</th>
+            <th>22</th>
+            <th>23</th>
+            <th>24</th>
+            <th>25</th>
+            <th>26</th>
+            <th>27</th>
+            <th>28</th>
+            <th>29</th>
+            <th>30</th>
+            <th>31</th>
+          </tr>
+          <tr>
+            <th>No.</th>
+            <th>Obat</th>
+            <th>JML</th>
+            <th>EXP DATE</th>
+            <th>NO. BATCH</th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-1"
+                id="tgl-1"
+                label="tgl-1"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-2"
+                id="tgl-2"
+                label="tgl-2"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-3"
+                id="tgl-3"
+                label="tgl-3"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-4"
+                id="tgl-4"
+                label="tgl-4"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-5"
+                id="tgl-5"
+                label="tgl-5"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-6"
+                id="tgl-6"
+                label="tgl-6"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-7"
+                id="tgl-7"
+                label="tgl-7"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-8"
+                id="tgl-8"
+                label="tgl-8"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-9"
+                id="tgl-9"
+                label="tgl-9"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-10"
+                id="tgl-10"
+                label="tgl-10"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-11"
+                id="tgl-11"
+                label="tgl-11"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-12"
+                id="tgl-12"
+                label="tgl-12"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-13"
+                id="tgl-13"
+                label="tgl-13"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-14"
+                id="tgl-14"
+                label="tgl-14"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-15"
+                id="tgl-15"
+                label="tgl-15"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-16"
+                id="tgl-16"
+                label="tgl-16"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-17"
+                id="tgl-17"
+                label="tgl-17"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-18"
+                id="tgl-18"
+                label="tgl-18"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-19"
+                id="tgl-19"
+                label="tgl-19"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-20"
+                id="tgl-20"
+                label="tgl-20"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-21"
+                id="tgl-21"
+                label="tgl-21"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-22"
+                id="tgl-22"
+                label="tgl-22"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-23"
+                id="tgl-23"
+                label="tgl-23"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-24"
+                id="tgl-24"
+                label="tgl-24"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-25"
+                id="tgl-25"
+                label="tgl-25"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-26"
+                id="tgl-26"
+                label="tgl-26"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-27"
+                id="tgl-27"
+                label="tgl-27"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-28"
+                id="tgl-28"
+                label="tgl-28"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-29"
+                id="tgl-29"
+                label="tgl-29"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-30"
+                id="tgl-30"
+                label="tgl-30"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+            <th>
+              <input
+                type="checkbox"
+                name="tgl-31"
+                id="tgl-31"
+                label="tgl-31"
+                myid="check_cara"
+                value="true"
+              />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td align="center" width="3%">1.</td>
+            <td>Cortidex Inj</td>
+            <td align="center" width="3%">2</td>
+            <td style="text-align: center">11.2025</td>
+            <td style="text-align: center">DK3422</td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-1"
+                id="cortidex-inj-1"
+                label="tgl-1"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-2"
+                id="cortidex-inj-2"
+                label="tgl-2"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-3"
+                id="cortidex-inj-3"
+                label="tgl-3"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-4"
+                id="cortidex-inj-4"
+                label="tgl-4"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-5"
+                id="cortidex-inj-5"
+                label="tgl-5"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-6"
+                id="cortidex-inj-6"
+                label="tgl-6"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-7"
+                id="cortidex-inj-7"
+                label="tgl-7"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-8"
+                id="cortidex-inj-8"
+                label="tgl-8"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-9"
+                id="cortidex-inj-9"
+                label="tgl-9"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-10"
+                id="cortidex-inj-10"
+                label="tgl-10"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-11"
+                id="cortidex-inj-11"
+                label="tgl-11"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-12"
+                id="cortidex-inj-12"
+                label="tgl-12"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-13"
+                id="cortidex-inj-13"
+                label="tgl-13"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-14"
+                id="cortidex-inj-14"
+                label="tgl-14"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-15"
+                id="cortidex-inj-15"
+                label="tgl-15"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-16"
+                id="cortidex-inj-16"
+                label="tgl-16"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-17"
+                id="cortidex-inj-17"
+                label="tgl-17"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-18"
+                id="cortidex-inj-18"
+                label="tgl-18"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-19"
+                id="cortidex-inj-19"
+                label="tgl-19"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-20"
+                id="cortidex-inj-20"
+                label="tgl-20"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-21"
+                id="cortidex-inj-21"
+                label="tgl-21"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-22"
+                id="cortidex-inj-22"
+                label="tgl-22"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-23"
+                id="cortidex-inj-23"
+                label="tgl-23"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-24"
+                id="cortidex-inj-24"
+                label="tgl-24"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-25"
+                id="cortidex-inj-25"
+                label="tgl-25"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-26"
+                id="cortidex-inj-26"
+                label="tgl-26"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-27"
+                id="cortidex-inj-27"
+                label="tgl-27"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-28"
+                id="cortidex-inj-28"
+                label="tgl-28"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-29"
+                id="cortidex-inj-29"
+                label="tgl-29"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-30"
+                id="cortidex-inj-30"
+                label="cortidex-inj-30"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="cortidex-inj-31"
+                id="cortidex-inj-31"
+                label="cortidex-inj-31"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td align="center" width="3%">2.</td>
+            <td>Buscopan Inj</td>
+            <td align="center" width="3%">1</td>
+            <td style="text-align: center">7.2025</td>
+            <td style="text-align: center">C37857</td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-1"
+                id="buscopan-inj-1"
+                label="buscopan-inj-1"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-2"
+                id="buscopan-inj-2"
+                label="buscopan-inj-2"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-3"
+                id="buscopan-inj-3"
+                label="buscopan-inj-3"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-4"
+                id="buscopan-inj-4"
+                label="buscopan-inj-4"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-5"
+                id="buscopan-inj-5"
+                label="buscopan-inj-5"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-6"
+                id="buscopan-inj-6"
+                label="buscopan-inj-6"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-7"
+                id="buscopan-inj-7"
+                label="buscopan-inj-7"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-8"
+                id="buscopan-inj-8"
+                label="buscopan-inj-8"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-9"
+                id="buscopan-inj-9"
+                label="buscopan-inj-9"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-10"
+                id="buscopan-inj-10"
+                label="buscopan-inj-10"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-11"
+                id="buscopan-inj-11"
+                label="buscopan-inj-11"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-12"
+                id="buscopan-inj-12"
+                label="buscopan-inj-12"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-13"
+                id="buscopan-inj-13"
+                label="buscopan-inj-13"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-14"
+                id="buscopan-inj-14"
+                label="buscopan-inj-14"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-15"
+                id="buscopan-inj-15"
+                label="buscopan-inj-15"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-16"
+                id="buscopan-inj-16"
+                label="buscopan-inj-16"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-17"
+                id="buscopan-inj-17"
+                label="buscopan-inj-17"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-18"
+                id="buscopan-inj-18"
+                label="buscopan-inj-18"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-19"
+                id="buscopan-inj-19"
+                label="buscopan-inj-19"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-20"
+                id="buscopan-inj-20"
+                label="buscopan-inj-20"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-21"
+                id="buscopan-inj-21"
+                label="buscopan-inj-21"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-22"
+                id="buscopan-inj-22"
+                label="buscopan-inj-22"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-23"
+                id="buscopan-inj-23"
+                label="buscopan-inj-23"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-24"
+                id="buscopan-inj-24"
+                label="buscopan-inj-24"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-25"
+                id="buscopan-inj-25"
+                label="buscopan-inj-25"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-26"
+                id="buscopan-inj-26"
+                label="buscopan-inj-26"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-27"
+                id="buscopan-inj-27"
+                label="buscopan-inj-27"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-28"
+                id="buscopan-inj-28"
+                label="buscopan-inj-28"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-29"
+                id="buscopan-inj-29"
+                label="buscopan-inj-29"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-30"
+                id="buscopan-inj-30"
+                label="buscopan-inj-30"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="buscopan-inj-31"
+                id="buscopan-inj-31"
+                label="buscopan-inj-31"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td align="center" width="3%">3.</td>
+            <td>Epinephrine Inj</td>
+            <td align="center" width="3%">2</td>
+            <td style="text-align: center">6.2025</td>
+            <td style="text-align: center">E23F0103A</td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-1"
+                id="epinephrine-inj-1"
+                label="epinephrine-inj-1"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-2"
+                id="epinephrine-inj-2"
+                label="epinephrine-inj-2"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-3"
+                id="epinephrine-inj-3"
+                label="epinephrine-inj-3"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-4"
+                id="epinephrine-inj-4"
+                label="epinephrine-inj-4"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-5"
+                id="epinephrine-inj-5"
+                label="epinephrine-inj-5"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-6"
+                id="epinephrine-inj-6"
+                label="epinephrine-inj-6"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-7"
+                id="epinephrine-inj-7"
+                label="epinephrine-inj-7"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-8"
+                id="epinephrine-inj-8"
+                label="epinephrine-inj-8"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-9"
+                id="epinephrine-inj-9"
+                label="epinephrine-inj-9"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-10"
+                id="epinephrine-inj-10"
+                label="epinephrine-inj-10"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-11"
+                id="epinephrine-inj-11"
+                label="epinephrine-inj-11"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-12"
+                id="epinephrine-inj-12"
+                label="epinephrine-inj-12"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-13"
+                id="epinephrine-inj-13"
+                label="epinephrine-inj-13"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-14"
+                id="epinephrine-inj-14"
+                label="epinephrine-inj-14"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-15"
+                id="epinephrine-inj-15"
+                label="epinephrine-inj-15"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-16"
+                id="epinephrine-inj-16"
+                label="epinephrine-inj-16"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-17"
+                id="epinephrine-inj-17"
+                label="epinephrine-inj-17"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-18"
+                id="epinephrine-inj-18"
+                label="epinephrine-inj-18"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-19"
+                id="epinephrine-inj-19"
+                label="epinephrine-inj-19"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-20"
+                id="epinephrine-inj-20"
+                label="epinephrine-inj-20"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-21"
+                id="epinephrine-inj-21"
+                label="epinephrine-inj-21"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-22"
+                id="epinephrine-inj-22"
+                label="epinephrine-inj-22"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-23"
+                id="epinephrine-inj-23"
+                label="epinephrine-inj-23"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-24"
+                id="epinephrine-inj-24"
+                label="epinephrine-inj-24"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-25"
+                id="epinephrine-inj-25"
+                label="epinephrine-inj-25"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-26"
+                id="epinephrine-inj-26"
+                label="epinephrine-inj-26"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-27"
+                id="epinephrine-inj-27"
+                label="epinephrine-inj-27"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-28"
+                id="epinephrine-inj-28"
+                label="epinephrine-inj-28"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-29"
+                id="epinephrine-inj-29"
+                label="epinephrine-inj-29"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-30"
+                id="epinephrine-inj-30"
+                label="epinephrine-inj-30"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="epinephrine-inj-31"
+                id="epinephrine-inj-31"
+                label="epinephrine-inj-31"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" align="center">Petugas</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-1"
+                id="nama-petugas-1"
+                label="nama-petugas-1"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-2"
+                id="nama-petugas-2"
+                label="nama-petugas-2"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-3"
+                id="nama-petugas-3"
+                label="nama-petugas-3"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-4"
+                id="nama-petugas-4"
+                label="nama-petugas-4"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-5"
+                id="nama-petugas-5"
+                label="nama-petugas-5"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-6"
+                id="nama-petugas-6"
+                label="nama-petugas-6"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-7"
+                id="nama-petugas-7"
+                label="nama-petugas-7"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-8"
+                id="nama-petugas-8"
+                label="nama-petugas-8"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-9"
+                id="nama-petugas-9"
+                label="nama-petugas-9"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-10"
+                id="nama-petugas-10"
+                label="nama-petugas-10"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-11"
+                id="nama-petugas-11"
+                label="nama-petugas-11"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-12"
+                id="nama-petugas-12"
+                label="nama-petugas-12"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-13"
+                id="nama-petugas-13"
+                label="nama-petugas-13"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-14"
+                id="nama-petugas-14"
+                label="nama-petugas-14"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-15"
+                id="nama-petugas-15"
+                label="nama-petugas-15"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-16"
+                id="nama-petugas-16"
+                label="nama-petugas-16"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-17"
+                id="nama-petugas-17"
+                label="nama-petugas-17"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-18"
+                id="nama-petugas-18"
+                label="nama-petugas-18"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-19"
+                id="nama-petugas-19"
+                label="nama-petugas-19"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-20"
+                id="nama-petugas-20"
+                label="nama-petugas-20"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-21"
+                id="nama-petugas-21"
+                label="nama-petugas-21"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-22"
+                id="nama-petugas-22"
+                label="nama-petugas-22"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-23"
+                id="nama-petugas-23"
+                label="nama-petugas-23"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-24"
+                id="nama-petugas-24"
+                label="nama-petugas-24"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-25"
+                id="nama-petugas-25"
+                label="nama-petugas-25"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-26"
+                id="nama-petugas-26"
+                label="nama-petugas-26"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-27"
+                id="nama-petugas-27"
+                label="nama-petugas-27"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-28"
+                id="nama-petugas-28"
+                label="nama-petugas-28"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-29"
+                id="nama-petugas-29"
+                label="nama-petugas-29"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-30"
+                id="nama-petugas-30"
+                label="nama-petugas-30"
+                myid="check_cara"
+              />
+            </td>
+            <td style="width: 25px">
+              <input
+                style="width: 100%; padding: 0; text-align: center"
+                type="text"
+                name="nama-petugas-31"
+                id="nama-petugas-31"
+                label="nama-petugas-31"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" align="center">Paraf</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_1"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_1"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_1"
+                id="paraf_ex_ttd_perawat_1"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_1"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_1"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_2"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_2"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_2"
+                id="paraf_ex_ttd_perawat_2"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_2"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_2"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_3"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_3"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_3"
+                id="paraf_ex_ttd_perawat_3"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_3"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_3"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_4"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_4"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_4"
+                id="paraf_ex_ttd_perawat_4"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_4"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_4"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_5"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_5"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_5"
+                id="paraf_ex_ttd_perawat_5"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_5"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_5"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_6"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_6"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_6"
+                id="paraf_ex_ttd_perawat_6"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_6"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_6"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_7"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_7"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_7"
+                id="paraf_ex_ttd_perawat_7"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_7"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_7"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_8"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_8"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_8"
+                id="paraf_ex_ttd_perawat_8"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_8"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_8"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_9"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_9"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_9"
+                id="paraf_ex_ttd_perawat_9"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_9"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_9"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_10"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_10"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_10"
+                id="paraf_ex_ttd_perawat_10"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_10"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_10"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_11"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_11"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_11"
+                id="paraf_ex_ttd_perawat_11"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_11"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_11"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_12"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_12"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_12"
+                id="paraf_ex_ttd_perawat_12"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_12"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_12"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_13"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_13"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_13"
+                id="paraf_ex_ttd_perawat_13"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_13"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_13"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_14"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_14"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_14"
+                id="paraf_ex_ttd_perawat_14"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_14"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_14"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_15"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_15"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_15"
+                id="paraf_ex_ttd_perawat_15"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_15"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_15"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_16"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_16"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_16"
+                id="paraf_ex_ttd_perawat_16"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_16"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_16"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_17"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_17"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_17"
+                id="paraf_ex_ttd_perawat_17"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_17"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_17"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_18"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_18"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_18"
+                id="paraf_ex_ttd_perawat_18"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_18"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_18"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_19"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_19"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_19"
+                id="paraf_ex_ttd_perawat_19"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_19"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_19"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_20"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_20"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_20"
+                id="paraf_ex_ttd_perawat_20"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_20"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_20"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_21"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_21"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_21"
+                id="paraf_ex_ttd_perawat_21"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_21"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_21"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_22"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_22"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_22"
+                id="paraf_ex_ttd_perawat_22"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_22"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_22"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_23"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_23"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_23"
+                id="paraf_ex_ttd_perawat_23"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_23"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_23"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_24"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_24"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_24"
+                id="paraf_ex_ttd_perawat_24"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_24"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_24"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_25"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_25"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_25"
+                id="paraf_ex_ttd_perawat_25"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_25"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_25"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_26"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_26"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_26"
+                id="paraf_ex_ttd_perawat_26"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_26"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_26"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_27"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_27"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_27"
+                id="paraf_ex_ttd_perawat_27"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_27"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_27"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_28"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_28"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_28"
+                id="paraf_ex_ttd_perawat_28"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_28"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_28"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_29"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_29"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_29"
+                id="paraf_ex_ttd_perawat_29"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_29"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_29"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_30"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_30"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_30"
+                id="paraf_ex_ttd_perawat_30"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_30"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_30"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+            <td>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_31"
+                style="
+                  font-style: italic;
+                  width: 100px;
+                  height: 100px;
+                  font-weight: bold;
+                "
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_31"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_31"
+                id="paraf_ex_ttd_perawat_31"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_31"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_31"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                </a>
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td>
+            <div style="display: flex; justify-content: space-between">
+              <div>
+                <p>Keterangan</p>
+                <p style="margin-left: 20px">(&check;) : Terkunci</p>
+                <p style="margin-left: 20px">
+                  Jika tidak ada ceklis, tidak terkunci
+                </p>
+              </div>
+              <div
+                style="
+                  width: 100%;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: end;
+                  justify-content: center;
+                "
+              >
+                <div>
+                  <label for="">Bogor, </label>
+                  <input
+                    type="text"
+                    style="border: none; border-bottom: 2px dotted #b1b1b1"
+                    class="datepicker"
+                    name="tgl-pengkajian"
+                    id="tgl-pengkajian"
+                    label="tgl-pengkajian"
+                    placeholder="dd/mm/yyyy"
+                    myid="check_cara"
+                  />
+                  <br />
+                  <label for="">Petugas Farmasi</label>
+                </div>
+
+                <label
+                  class="label text-center"
+                  id="def_img_ex_ttd_2"
+                  style="
+                    font-style: italic;
+                    width: 100px;
+                    height: 100px;
+                    font-weight: bold;
+                  "
+                  >paraf</label
+                >
+                <label class="label text-center">
+                  <img
+                    class="text-center"
+                    id="image_paraf_ex_ttd_2"
+                    src=""
+                    style="display: none"
+                /></label>
+                <input
+                  myid="check_cara"
+                  type="hidden"
+                  name="paraf_ex_ttd_2"
+                  id="paraf_ex_ttd_2"
+                  data-name="paraf"
+                  data-id="ex_ttd_2"
+                />
+                <label class="label text-center">
+                  <a
+                    id="CreateTTD"
+                    class="btn btn-default btn-xs pointer text-center"
+                    data-id="ex_ttd_2"
+                    style="text-align: center"
+                  >
+                    <i class="fa fa-edit"> </i>
+                    PENTABLET
+                  </a>
+                </label>
+                <div>
+                  (<input
+                    style="border: none; border-bottom: 2px dotted #b1b1b1"
+                    type="text"
+                    name="nama-bidan"
+                    id="nama-bidan"
+                    label="nama-bidan"
+                    myid="check_cara"
+                  />)
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

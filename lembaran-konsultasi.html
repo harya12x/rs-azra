@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LEMBARAN KONSULTASI RS. AZRA BOGOR</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+    .table-bordered tr:nth-child(odd) {
+      background-color: #dfe8f6;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td,
+    .table th {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <h1 class="title">LEMBARAN KONSULTASI RS. AZRA BOGOR</h1>
+    <table class="table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td bgcolor="#DFE8F6">Nama Pasien</td>
+          <td bgcolor="#DFE8F6">
+            <input
+              name="nama_pasien2"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              placeholder="..."
+            />
+          </td>
+          <td bgcolor="#DFE8F6">Jenis Kelamin</td>
+          <td bgcolor="#DFE8F6">
+            <input
+              type="radio"
+              name="jenis-kelamin"
+              id="jenis-kelamin"
+              label="jenis-kelamin"
+              value="L"
+              myid="check_cara"
+            />
+            <label for="l">L</label>
+            <input
+              type="radio"
+              name="jenis-kelamin"
+              id="jenis-kelamin"
+              label="jenis-kelamin"
+              value="P"
+              myid="check_cara"
+            />
+            <label for="l">P</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td bgcolor="#DFE8F6">
+            <input
+              type="text"
+              name="no-rek-medis"
+              id="no-rek-medis"
+              label="no-rek-medis"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td bgcolor="" rowspan="2">Tanggal Lahir</td>
+          <td bgcolor="" rowspan="2">
+            <input
+              name="tgl_lahira2"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td rowspan="2">Umur</td>
+          <td rowspan="2">
+            <input
+              type="text"
+              size="5"
+              placeholder="..."
+              name="umur"
+              myid="check_cara"
+              id="umur"
+              label="umur"
+            />
+          </td>
+          <td>
+            <label for="poli"> Poli </label>
+          </td>
+          <td>
+            <input
+              name="polia2"
+              type="text"
+              id="poli"
+              placeholder="..."
+              myid="check_cara"
+              label="poli"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="kamar"> Kamar </label>
+          </td>
+          <td>
+            <input
+              name="kamara2"
+              type="text"
+              id="kamar"
+              placeholder="..."
+              myid="check_cara"
+              label="kamar"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td>
+            <label for="">Yth. Ts</label>
+            <input
+              size="40"
+              type="text"
+              name="ts-yg-dituju"
+              id="ts-yg-dituju"
+              label="ts-yg-dituju"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: end">
+            <label for="">Bogor,</label>
+            <input
+              type="text"
+              name="tgl-konsultasi"
+              id="tgl-konsultasi"
+              label="tgl-konsultasi"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>
+            <label for="">Mohon konsultasi biasa</label>
+            <input
+              type="radio"
+              name="jenis-pemeriksaan"
+              id="jenis-pemeriksaan"
+              label="jenis-pemeriksaan"
+              value="biasa"
+              myid="check_cara"
+            />
+            <label for="">/ cito</label>
+            <input
+              type="radio"
+              name="jenis-pemeriksaan"
+              id="jenis-pemeriksaan"
+              label="jenis-pemeriksaan"
+              value="cito"
+              myid="check_cara"
+            />
+            <label for="">**) atas nama pasien ini :</label>
+            <input
+              type="text"
+              name="nama-pasien"
+              id="nama-pasien"
+              label="nama-pasien"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <br />
+          </td>
+          <td
+            rowspan="2"
+            style="
+              text-align: end;
+              display: flex;
+              justify-content: end;
+              gap: 5px;
+            "
+          >
+            <label for="">Pukul :</label>
+            <input
+              type="text"
+              name="pukul-konsultasi"
+              id="pukul-konsultasi"
+              label="pukul-konsultasi"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td width="1%">
+            <label for="">WIB</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <ol style="margin-left: 45px" type="1">
+              <li>Penilaian dan saran tindakan medik saat ini</li>
+              <li>Pengambilan alihan pasien</li>
+              <li>Rawat bersama</li>
+              <li>Evaluasi pre operasi</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">Penemuan klinis yang terpenting adalah :</td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <textarea
+              style="width: 100%"
+              rows="25"
+              name="penemuan-klinis-terpenting"
+              id="penemuan-klinis-terpenting"
+              label="penemuan-klinis-terpenting"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td width="50%" style="padding-right: 10px">
+            <label for="">Dugaan :</label>
+            <br />
+            <textarea
+              style="width: 100%"
+              name="dugaan"
+              id="dugaan"
+              label="dugaan"
+              rows="5"
+              myid="check_cara"
+            ></textarea>
+          </td>
+          <td
+            style="
+              padding-left: 10px;
+              display: flex;
+              justify-content: end;
+              align-items: center;
+            "
+          >
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <p for="" style="text-align: center">
+                      Terima kasih atas bantuan Ts,
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <br />
+                    <br />
+                    <div style="display: flex; gap: 5px">
+                      <label for="">Dr,</label>
+                      <input
+                        style="flex: 1"
+                        type="text"
+                        name="dr-ts"
+                        id="dr-ts"
+                        label="dr-ts"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <label for="">Spesialis</label>
+                      <input
+                        style="flex: 1"
+                        type="text"
+                        name="spesialis-ts"
+                        id="spesialis-ts"
+                        label="spesialis-ts"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>**) pilih yang sesuai</p>
+    <br />
+    <p><b>JAWABAN KONSULTASI</b></p>
+
+    <br />
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td>
+            <label for="">Yth. Ts </label>
+            <input
+              size="40"
+              type="text"
+              name="ts-yg-mengajukan"
+              id="ts-yg-mengajukan"
+              label="ts-yg-mengajukan"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: end">
+            <label for="">Bogor,</label>
+            <input
+              type="text"
+              name="tgl-hasil"
+              id="tgl-hasil"
+              label="tgl-hasil"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>Terima kasih atas konsultasi ini.</td>
+          <td style="text-align: end">
+            <label for="">Pukul,</label>
+            <input
+              type="text"
+              name="pukul-hasil"
+              id="pukul-hasil"
+              label="pukul-hasil"
+              placeholder="00.00"
+              myid="check_cara"
+            />
+          </td>
+          <td width="1%">WIB</td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <label for="">Sesuai permohonan konsultasi 1</label>
+            <input
+              type="radio"
+              name="konsultasi"
+              id="konsultasi"
+              label="konsultasi"
+              myid="check_cara"
+              value="1"
+            />
+            <label for="">/ 2</label>
+            <input
+              type="radio"
+              name="konsultasi"
+              id="konsultasi"
+              label="konsultasi"
+              myid="check_cara"
+              value="2"
+            />
+            <label for="">/ 3</label>
+            <input
+              type="radio"
+              name="konsultasi"
+              id="konsultasi"
+              label="konsultasi"
+              myid="check_cara"
+              value="3"
+            />
+            <label for="">/ 4</label>
+            <input
+              type="radio"
+              name="konsultasi"
+              id="konsultasi"
+              label="konsultasi"
+              myid="check_cara"
+              value="4"
+            />
+            <label for="">**) pada pasien ini dijumpai: </label>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <textarea
+              style="width: 100%"
+              rows="10"
+              name="hasil-konsultasi"
+              id="hasil-konsultasi"
+              label="hasil-konsultasi"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td>Kesimpulan :</td>
+          <td width="75%" colspan="2">
+            <input
+              style="width: 100%"
+              type="text"
+              name="kesimpulan"
+              id="kesimpulan"
+              label="kesimpulan"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Saran / tindakan medis / pengobatan :</td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <textarea
+              name="kesimpulan"
+              id="kesimpulan"
+              label="kesimpulan"
+              placeholder="......"
+              myid="check_cara"
+              style="width: 100%"
+              rows="10"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>1. Konsultasi selesai tanggal :</td>
+          <td colspan="2">
+            <input
+              type="text"
+              name="tgl-konsultasi-selesai"
+              id="tgl-konsultasi-selesai"
+              label="tgl-konsultasi-selesai"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>2. Konsultasi ulang tanggal :</td>
+          <td colspan="2">
+            <input
+              type="text"
+              name="tgl-konsultasi-ulang"
+              id="tgl-konsultasi-ulang"
+              label="tgl-konsultasi-ulang"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>3. Setuju rawat bersama tanggal :</td>
+          <td colspan="2">
+            <input
+              type="text"
+              name="tgl-setuju-rawat-bersama"
+              id="tgl-setuju-rawat-bersama"
+              label="tgl-setuju-rawat-bersama"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>4. Setuju pengambilan alihan pasien tanggal :</td>
+          <td colspan="2">
+            <input
+              type="text"
+              name="tgl-setuju-pengambilalihan-pasien"
+              id="tgl-setuju-pengambilalihan-pasien"
+              label="tgl-setuju-pengambilalihan-pasien"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td
+            style="
+              padding-left: 10px;
+              display: flex;
+              justify-content: end;
+              align-items: center;
+            "
+          >
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <p for="" style="text-align: center">
+                      Terima kasih atas bantuan Ts,
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <br />
+                    <br />
+                    <div style="display: flex; gap: 5px">
+                      <label for="">Dr,</label>
+                      <input
+                        style="flex: 1"
+                        type="text"
+                        name="dr-ts"
+                        id="dr-ts"
+                        label="dr-ts"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; gap: 5px">
+                      <label for="">Spesialis</label>
+                      <input
+                        style="flex: 1"
+                        type="text"
+                        name="spesialis-ts"
+                        id="spesialis-ts"
+                        label="spesialis-ts"
+                        placeholder="......"
+                        myid="check_cara"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>**) pilih yang sesuai</p>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(function (radio) {
+          radio.addEventListener("click", function () {
+            if (this.classList.contains("clicked")) {
+              this.checked = false;
+              this.classList.remove("clicked");
+            } else {
+              var name = this.getAttribute("name");
+              var radios = document.querySelectorAll(
+                'input[type="radio"][name="' + name + '"]'
+              );
+              radios.forEach(function (r) {
+                r.classList.remove("clicked");
+              });
+              this.classList.add("clicked");
+            }
+            console.log(this.name + " diubah menjadi: " + this.checked);
+          });
+        });
+
+        var textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+        var textAreas = document.querySelectorAll("textarea");
+        textAreas.forEach(function (input) {
+          input.addEventListener("change", function () {
+            console.log(this.name + " diubah menjadi: " + this.value);
+          });
+        });
+
+        // const penemuanKlinisTerpenting = document.querySelector(
+        //   'textarea[name="penemuan-klinis-terpenting"]'
+        // );
+        // penemuanKlinisTerpenting.addEventListener("change", function () {
+        //   console.log(this.name + " diubah menjadi: " + this.value);
+        // });
+      });
+    </script>
+  </body>
+</html>

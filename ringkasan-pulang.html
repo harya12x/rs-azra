@@ -6,27 +6,22 @@
     <title>RINGKASAN PULANG</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
+    table {
+      width: 98%;
       border-collapse: collapse;
-      width: 100%;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -35,18 +30,33 @@
     $(document).on("ajaxStop", function () {
       SetTTD();
     });
+    if ($.fn.datepicker) {
+      $(".datepicker").each(function () {
+        var $this = $(this),
+          dataDateFormat = $this.attr("data-dateformat") || "dd.mm.yy";
+
+        $this.datepicker({
+          dateFormat: dataDateFormat,
+          prevText: '<i class="fa fa-chevron-left"></i>',
+          nextText: '<i class="fa fa-chevron-right"></i>',
+          todayBtn: "linked",
+        });
+
+        // clear memory reference
+        $this = null;
+      });
+    }
   </script>
   <script>
     $(document).ready(function () {
       $(function () {
-        $(".datepicker").datepicker({
+        $(".datepicker2").datepicker({
           dateFormat: "dd-mm-yy",
           autoclose: true,
           todayHighlight: true,
         });
       });
     });
-
     // Untuk Keperluan TTD
     function ttd_paraf(id) {
       PopupCenter(
@@ -158,11 +168,8 @@
     }
   </script>
   <body>
-    <h1 class="title">
-      RINGKASAN PULANG <br />
-      RS. AZRA BOGOR
-    </h1>
-    <table class="table table-bordered" width="100%">
+    <h1 class="title">RINGKASAN PULANG</h1>
+    <table class="" width="100%">
       <tbody>
         <tr>
           <input
@@ -212,7 +219,6 @@
           <td>Tanggal Lahir</td>
           <td>
             <input
-              class="datepicker hasDatepicker"
               name="tgl_lahira2"
               type="text"
               id="tgl_lahir"
@@ -255,7 +261,7 @@
           <td>Tanggal</td>
           <td>
             <input
-              class="datepicker hasDatepicker"
+              class="datepicker"
               type="text"
               name="tgl"
               id="tgl"
@@ -294,7 +300,7 @@
       </tbody>
     </table>
 
-    <table width="100%" class="table table-bordered">
+    <table width="100%" class="">
       <tbody>
         <tr>
           <td>
@@ -332,6 +338,17 @@
                   value="Pulang atas permintaan sendiri"
                 />
                 <label for="">Pulang atas permintaan sendiri</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="alasan-pulang"
+                  id="alasan-pulang"
+                  label="alasan-pulang"
+                  myid="check_cara"
+                  value="Meninggal dunia"
+                />
+                <label for="">Meninggal dunia</label>
               </div>
             </section>
           </td>
@@ -631,8 +648,8 @@
         </tr>
       </tbody>
     </table>
-    <hr />
-    <table width="100%" class="table table-bordered">
+
+    <table width="100%" class="">
       <tbody>
         <tr>
           <td style="padding-left: 10px"><b>Keadaan pasien saat pulang:</b></td>
@@ -665,6 +682,7 @@
               <div>
                 <label for=""> Tensi: </label>
                 <input
+                  size="8"
                   type="text"
                   name="tensi"
                   id="tensi"
@@ -678,6 +696,7 @@
               <div>
                 <label for=""> Nadi: </label>
                 <input
+                  size="8"
                   type="text"
                   name="nadi"
                   id="nadi"
@@ -691,6 +710,7 @@
               <div>
                 <label for=""> Suhu: </label>
                 <input
+                  size="8"
                   type="text"
                   name="suhu"
                   id="suhu"
@@ -704,6 +724,7 @@
               <div>
                 <label for=""> Pernafasan: </label>
                 <input
+                  size="8"
                   type="text"
                   name="pernafasan"
                   id="pernafasan"
@@ -713,6 +734,18 @@
                   placeholder="..."
                 />
                 <label for=""> x/mnt</label>
+              </div>
+              <div>
+                <label for=""> SPo2: </label>
+                <input
+                  size="8"
+                  type="text"
+                  name="sp02"
+                  id="sp02"
+                  label="sp02"
+                  myid="check_cara"
+                  placeholder="..."
+                />
               </div>
             </section>
           </td>
@@ -956,7 +989,7 @@
           </td>
         </tr>
         <tr>
-          <table class="table table-bordered jenis-edukasi" width="100%">
+          <table class="jenis-edukasi" width="100%">
             <thead>
               <tr>
                 <th rowspan="2">
@@ -1508,125 +1541,125 @@
                   />
                 </td>
               </tr>
+              <tr>
+                <td colspan="6">
+                  <div
+                    style="display: flex; gap: 20px; background-color: #dfe8f6"
+                  >
+                    <label style="margin-left: 10px" for=""
+                      ><b>Leaflet edukasi:</b></label
+                    >
+                    <div>
+                      <input
+                        type="radio"
+                        name="leaflet-edukasi"
+                        id="leaflet-edukasi"
+                        label="leaflet-edukasi"
+                        myid="check_cara"
+                        value="Tidak"
+                      />
+                      <label for="">Tidak</label>
+                    </div>
+                    <div>
+                      <input
+                        type="radio"
+                        name="leaflet-edukasi"
+                        id="leaflet-edukasi"
+                        label="leaflet-edukasi"
+                        myid="check_cara"
+                        value="Ada"
+                      />
+                      <label for="">Ada</label>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="6">
+                  <section>
+                    <label style="padding-left: 10px" for="">
+                      Informasi obat yang dibawa pulang (nama obat, dosis, jam
+                      pemberian)
+                    </label>
+
+                    <input
+                      type="radio"
+                      name="informasi-obat-dibawa-plng"
+                      id="informasi-obat-dibawa-plng"
+                      label="informasi-obat-dibawa-plng"
+                      myid="check_cara"
+                      value="Tidak"
+                    />
+                    <label for="">Tidak</label>
+                    <input
+                      type="radio"
+                      name="informasi-obat-dibawa-plng"
+                      id="informasi-obat-dibawa-plng"
+                      label="informasi-obat-dibawa-plng"
+                      myid="check_cara"
+                      value="Ada"
+                    />
+                    <label for="">Ada</label>
+                  </section>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="6">
+                  <div style="background-color: #dfe8f6">
+                    <label style="padding-left: 10px" for="">
+                      Keterampilan khusus yang diperlukan di rumah
+                    </label>
+                    <input
+                      type="checkbox"
+                      name="rawat-luka"
+                      id="rawat-luka"
+                      label="rawat-luka"
+                      myid="check_cara"
+                      value="Rawat luka"
+                    />
+                    <label for="">Rawat luka</label>
+                    <input
+                      type="checkbox"
+                      name="rawat-bayi"
+                      id="rawat-bayi"
+                      label="rawat-bayi"
+                      myid="check_cara"
+                      value="Rawat bayi"
+                    />
+                    <label for="">Rawat bayi</label>
+                    <input
+                      type="checkbox"
+                      name="injeksi"
+                      id="injeksi"
+                      label="injeksi"
+                      myid="check_cara"
+                      value="Injeksi"
+                    />
+                    <label for="">Injeksi</label>
+                    <input
+                      type="checkbox"
+                      name="keterampilan-khusus-lainnya"
+                      id="keterampilan-khusus-lainnya"
+                      label="keterampilan-khusus-lainnya"
+                      myid="check_cara"
+                      value="Lainnya"
+                    />
+                    <label for="">Lainnya</label>
+                    <input
+                      type="text"
+                      name="detail-keterampilan-khusus-lainnya"
+                      id="detail-keterampilan-khusus-lainnya"
+                      label="detail-keterampilan-khusus-lainnya"
+                      myid="check_cara"
+                      placeholder="......"
+                    />
+                  </div>
+                </td>
+              </tr>
             </tbody>
           </table>
         </tr>
-        <tr>
-          <td>
-            <section
-              style="display: flex; gap: 20px; background-color: #dfe8f6"
-            >
-              <label style="padding-left: 10px" for=""
-                ><b>Leaflet edukasi:</b></label
-              >
-              <div>
-                <input
-                  type="radio"
-                  name="leaflet-edukasi"
-                  id="leaflet-edukasi"
-                  label="leaflet-edukasi"
-                  myid="check_cara"
-                  value="Tidak"
-                />
-                <label for="">Tidak</label>
-              </div>
-              <div>
-                <input
-                  type="radio"
-                  name="leaflet-edukasi"
-                  id="leaflet-edukasi"
-                  label="leaflet-edukasi"
-                  myid="check_cara"
-                  value="Ada"
-                />
-                <label for="">Ada</label>
-              </div>
-            </section>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <section>
-              <label style="padding-left: 10px" for="">
-                Informasi obat yang dibawa pulang (nama obat, dosis, jam
-                pemberian)
-              </label>
 
-              <input
-                type="radio"
-                name="informasi-obat-dibawa-plng"
-                id="informasi-obat-dibawa-plng"
-                label="informasi-obat-dibawa-plng"
-                myid="check_cara"
-                value="Tidak"
-              />
-              <label for="">Tidak</label>
-              <input
-                type="radio"
-                name="informasi-obat-dibawa-plng"
-                id="informasi-obat-dibawa-plng"
-                label="informasi-obat-dibawa-plng"
-                myid="check_cara"
-                value="Ada"
-              />
-              <label for="">Ada</label>
-            </section>
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <section style="background-color: #dfe8f6">
-              <label style="padding-left: 10px" for="">
-                Keterampilan khusus yang diperlukan di rumah
-              </label>
-              <input
-                type="checkbox"
-                name="rawat-luka"
-                id="rawat-luka"
-                label="rawat-luka"
-                myid="check_cara"
-                value="Rawat luka"
-              />
-              <label for="">Rawat luka</label>
-              <input
-                type="checkbox"
-                name="rawat-bayi"
-                id="rawat-bayi"
-                label="rawat-bayi"
-                myid="check_cara"
-                value="Rawat bayi"
-              />
-              <label for="">Rawat bayi</label>
-              <input
-                type="checkbox"
-                name="injeksi"
-                id="injeksi"
-                label="injeksi"
-                myid="check_cara"
-                value="Injeksi"
-              />
-              <label for="">Injeksi</label>
-              <input
-                type="checkbox"
-                name="keterampilan-khusus-lainnya"
-                id="keterampilan-khusus-lainnya"
-                label="keterampilan-khusus-lainnya"
-                myid="check_cara"
-                value="Lainnya"
-              />
-              <label for="">Lainnya</label>
-              <input
-                type="text"
-                name="detail-keterampilan-khusus-lainnya"
-                id="detail-keterampilan-khusus-lainnya"
-                label="detail-keterampilan-khusus-lainnya"
-                myid="check_cara"
-                placeholder="......"
-              />
-            </section>
-          </td>
-        </tr>
         <tr>
           <td>
             <b style="padding-left: 10px"
@@ -1636,7 +1669,7 @@
         </tr>
         <tr>
           <td>
-            <table width="100%" class="table table-bordered hasil-pemeriksaan">
+            <table width="100%" class="hasil-pemeriksaan">
               <thead>
                 <tr>
                   <th><b>No</b></th>
@@ -1681,7 +1714,7 @@
                       <input
                         style="flex: 1"
                         type="text"
-                        class="datepicker hasDatepicker"
+                        class="datepicker2"
                         name="tanggal-pemeriksaan-laboratorium-a"
                         id="tanggal-pemeriksaan-laboratorium-a"
                         label="tanggal-pemeriksaan-laboratorium-a"
@@ -1693,7 +1726,7 @@
                       <input
                         style="flex: 1"
                         type="text"
-                        class="datepicker hasDatepicker"
+                        class="datepicker2"
                         name="tanggal-pemeriksaan-laboratorium-b"
                         id="tanggal-pemeriksaan-laboratorium-b"
                         label="tanggal-pemeriksaan-laboratorium-b"
@@ -1764,7 +1797,7 @@
                       <input
                         style="flex: 1"
                         type="text"
-                        class="datepicker hasDatepicker"
+                        class="datepicker2"
                         name="tanggal-pemeriksaan-radiologi-a"
                         id="tanggal-pemeriksaan-radiologi-a"
                         label="tanggal-pemeriksaan-radiologi-a"
@@ -1776,7 +1809,7 @@
                       <input
                         style="flex: 1"
                         type="text"
-                        class="datepicker hasDatepicker"
+                        class="datepicker2"
                         name="tanggal-pemeriksaan-radiologi-b"
                         id="tanggal-pemeriksaan-radiologi-b"
                         label="tanggal-pemeriksaan-radiologi-b"
@@ -1830,7 +1863,7 @@
                   <td>
                     <div style="display: flex; gap: 5px">
                       <input
-                        class="datepicker hasDatepicker"
+                        class="datepicker2"
                         style="flex: 1"
                         type="text"
                         name="tanggal-pemeriksaan-ekg"
@@ -1883,7 +1916,7 @@
                     <div style="display: flex; gap: 5px">
                       <input
                         style="flex: 1"
-                        class="datepicker hasDatepicker"
+                        class="datepicker2"
                         type="text"
                         name="tgl-pemeriksaan-echocardiography-treadmill"
                         id="tgl-pemeriksaan-echocardiography-treadmill"
@@ -1936,7 +1969,7 @@
                       <input
                         style="flex: 1"
                         type="text"
-                        class="datepicker hasDatepicker"
+                        class="datepicker2"
                         name="tanggal-pemeriksaan-gastroscopy-colonoscopy"
                         id="tanggal-pemeriksaan-gastroscopy-colonoscopy"
                         label="tanggal-pemeriksaan-gastroscopy-colonoscopy"
@@ -1967,7 +2000,7 @@
           <td>
             <br />
 
-            <table class="table table-bordered obat-obatan" width="100%">
+            <table class="obat-obatan" width="100%">
               <thead>
                 <tr>
                   <th>No</th>
@@ -1978,9 +2011,9 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>
+                  <td style="width: 25px">
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="no-obat-1"
                       id="no-obat-1"
@@ -1991,7 +2024,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="obat-obatan-1"
                       id="obat-obatan-1"
@@ -2002,7 +2035,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="dosis-obat-1"
                       id="dosis-obat-1"
@@ -2013,7 +2046,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jumlah-obat-1"
                       id="jumlah-obat-1"
@@ -2024,9 +2057,9 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>
+                  <td style="width: 25px">
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="no-obat-2"
                       id="no-obat-2"
@@ -2037,7 +2070,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="obat-obatan-2"
                       id="obat-obatan-2"
@@ -2048,7 +2081,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="dosis-obat-2"
                       id="dosis-obat-2"
@@ -2059,7 +2092,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jumlah-obat-2"
                       id="jumlah-obat-2"
@@ -2070,9 +2103,9 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>
+                  <td style="width: 25px">
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="no-obat-3"
                       id="no-obat-3"
@@ -2083,7 +2116,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="obat-obatan-3"
                       id="obat-obatan-3"
@@ -2094,7 +2127,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="dosis-obat-3"
                       id="dosis-obat-3"
@@ -2105,7 +2138,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jumlah-obat-3"
                       id="jumlah-obat-3"
@@ -2116,9 +2149,9 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>
+                  <td style="width: 25px">
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="no-obat-4"
                       id="no-obat-4"
@@ -2129,7 +2162,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="obat-obatan-4"
                       id="obat-obatan-4"
@@ -2140,7 +2173,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="dosis-obat-4"
                       id="dosis-obat-4"
@@ -2151,7 +2184,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jumlah-obat-4"
                       id="jumlah-obat-4"
@@ -2162,9 +2195,9 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>
+                  <td style="width: 25px">
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="no-obat-5"
                       id="no-obat-5"
@@ -2175,7 +2208,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="obat-obatan-5"
                       id="obat-obatan-5"
@@ -2186,7 +2219,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="dosis-obat-5"
                       id="dosis-obat-5"
@@ -2197,7 +2230,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jumlah-obat-5"
                       id="jumlah-obat-5"
@@ -2208,9 +2241,9 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>
+                  <td style="width: 25px">
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="no-obat-6"
                       id="no-obat-6"
@@ -2221,7 +2254,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="obat-obatan-6"
                       id="obat-obatan-6"
@@ -2232,7 +2265,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="dosis-obat-6"
                       id="dosis-obat-6"
@@ -2243,7 +2276,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jumlah-obat-6"
                       id="jumlah-obat-6"
@@ -2254,9 +2287,9 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>
+                  <td style="width: 25px">
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="no-obat-7"
                       id="no-obat-7"
@@ -2267,7 +2300,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="obat-obatan-7"
                       id="obat-obatan-7"
@@ -2278,7 +2311,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="dosis-obat-7"
                       id="dosis-obat-7"
@@ -2289,7 +2322,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jumlah-obat-7"
                       id="jumlah-obat-7"
@@ -2300,9 +2333,9 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>
+                  <td style="width: 25px">
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="no-obat-8"
                       id="no-obat-8"
@@ -2313,7 +2346,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="obat-obatan-8"
                       id="obat-obatan-8"
@@ -2324,7 +2357,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="dosis-obat-8"
                       id="dosis-obat-8"
@@ -2335,7 +2368,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jumlah-obat-8"
                       id="jumlah-obat-8"
@@ -2346,9 +2379,9 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>
+                  <td style="width: 25px">
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="no-obat-9"
                       id="no-obat-9"
@@ -2359,7 +2392,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="obat-obatan-9"
                       id="obat-obatan-9"
@@ -2370,7 +2403,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="dosis-obat-9"
                       id="dosis-obat-9"
@@ -2381,7 +2414,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jumlah-obat-9"
                       id="jumlah-obat-9"
@@ -2392,9 +2425,9 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>
+                  <td style="width: 25px">
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="no-obat-10"
                       id="no-obat-10"
@@ -2405,7 +2438,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="obat-obatan-10"
                       id="obat-obatan-10"
@@ -2416,7 +2449,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="dosis-obat-10"
                       id="dosis-obat-10"
@@ -2427,7 +2460,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jumlah-obat-10"
                       id="jumlah-obat-10"
@@ -2438,9 +2471,9 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>
+                  <td style="width: 25px">
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="no-obat-11"
                       id="no-obat-11"
@@ -2451,7 +2484,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="obat-obatan-11"
                       id="obat-obatan-11"
@@ -2462,7 +2495,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="dosis-obat-11"
                       id="dosis-obat-11"
@@ -2473,7 +2506,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jumlah-obat-11"
                       id="jumlah-obat-11"
@@ -2490,7 +2523,7 @@
         <tr>
           <td>
             <br />
-            <table width="100%" class="table table-bordered">
+            <table width="100%" class="">
               <tr>
                 <td>Surat keterangan rawat:</td>
                 <td>
@@ -2672,10 +2705,7 @@
         </tr>
         <tr>
           <td>
-            <table
-              class="table table-bordered kontrol-selanjutnya"
-              width="100%"
-            >
+            <table class="kontrol-selanjutnya" width="100%">
               <thead>
                 <tr>
                   <th>No.</th>
@@ -2688,7 +2718,7 @@
                   <td style="text-align: center">1.</td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="hari-kontrol-selanjutnya-1"
                       id="hari-kontrol-selanjutnya-1"
@@ -2699,9 +2729,9 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
-                      class="datepicker hasDatepicker"
+                      class="datepicker2"
                       name="tanggal-kontrol-selanjutnya-1"
                       id="tanggal-kontrol-selanjutnya-1"
                       label="tanggal-kontrol-selanjutnya-1"
@@ -2711,19 +2741,18 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jam-kontrol-selanjutnya-1"
                       id="jam-kontrol-selanjutnya-1"
                       label="jam-kontrol-selanjutnya-1"
                       myid="check_cara"
-                      mtype="pukul"
                       placeholder="00.00"
                     />
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="nama-dokter-kontrol-selanjutnya-1"
                       id="nama-dokter-kontrol-selanjutnya-1"
@@ -2737,7 +2766,7 @@
                   <td style="text-align: center">2.</td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="hari-kontrol-selanjutnya-2"
                       id="hari-kontrol-selanjutnya-2"
@@ -2748,9 +2777,9 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
-                      class="datepicker hasDatepicker"
+                      style="width: 100%; padding: 0"
                       type="text"
+                      class="datepicker2"
                       name="tanggal-kontrol-selanjutnya-2"
                       id="tanggal-kontrol-selanjutnya-2"
                       label="tanggal-kontrol-selanjutnya-2"
@@ -2760,19 +2789,18 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jam-kontrol-selanjutnya-2"
                       id="jam-kontrol-selanjutnya-2"
                       label="jam-kontrol-selanjutnya-2"
-                      mtype="pukul"
                       myid="check_cara"
                       placeholder="00.00"
                     />
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="nama-dokter-kontrol-selanjutnya-2"
                       id="nama-dokter-kontrol-selanjutnya-2"
@@ -2786,7 +2814,7 @@
                   <td style="text-align: center">3.</td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="hari-kontrol-selanjutnya-3"
                       id="hari-kontrol-selanjutnya-3"
@@ -2797,9 +2825,9 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
-                      class="datepicker hasDatepicker"
+                      class="datepicker2"
                       name="tanggal-kontrol-selanjutnya-3"
                       id="tanggal-kontrol-selanjutnya-3"
                       label="tanggal-kontrol-selanjutnya-3"
@@ -2809,19 +2837,18 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jam-kontrol-selanjutnya-3"
                       id="jam-kontrol-selanjutnya-3"
                       label="jam-kontrol-selanjutnya-3"
-                      mtype="pukul"
                       myid="check_cara"
                       placeholder="00.00"
                     />
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="nama-dokter-kontrol-selanjutnya-3"
                       id="nama-dokter-kontrol-selanjutnya-3"
@@ -2835,7 +2862,7 @@
                   <td style="text-align: center">4.</td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="hari-kontrol-selanjutnya-4"
                       id="hari-kontrol-selanjutnya-4"
@@ -2846,9 +2873,9 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
-                      class="datepicker hasDatepicker"
+                      class="datepicker2"
                       name="tanggal-kontrol-selanjutnya-4"
                       id="tanggal-kontrol-selanjutnya-4"
                       label="tanggal-kontrol-selanjutnya-4"
@@ -2859,19 +2886,18 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jam-kontrol-selanjutnya-4"
                       id="jam-kontrol-selanjutnya-4"
                       label="jam-kontrol-selanjutnya-4"
-                      mtype="pukul"
                       myid="check_cara"
                       placeholder="00.00"
                     />
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="nama-dokter-kontrol-selanjutnya-4"
                       id="nama-dokter-kontrol-selanjutnya-4"
@@ -2887,10 +2913,8 @@
         </tr>
       </tbody>
     </table>
-    <br />
-    <hr />
-    <br />
-    <table class="table table-bordered" width="100%">
+
+    <table class="" width="100%">
       <tbody>
         <tr>
           <td colspan="2">
@@ -2911,7 +2935,7 @@
               name="17_tanggal"
               type="text"
               id="17_tanggal"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               placeholder="dd-mm-yy"
               size="15"
               myid="check_cara"
@@ -2933,7 +2957,7 @@
               name="18_tanggal"
               type="text"
               id="18_tanggal"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               placeholder="dd-mm-yy"
               size="15"
               myid="check_cara"
@@ -3048,55 +3072,5 @@
         </tr>
       </tbody>
     </table>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var checkbox = document.querySelectorAll('input[type="checkbox"]');
-        checkbox.forEach(function (checkbox) {
-          checkbox.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var checkboxs = document.querySelectorAll(
-                'input[type="checkbox"][name="' + name + '"]'
-              );
-              checkboxs.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

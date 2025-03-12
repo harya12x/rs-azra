@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PENOLAKAN TINDAKAN</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+    function get_ttd2() {
+      var arr = [];
+      var url = location.href;
+      url = url.split("/");
+
+      if ($("[iscombo='t']").length) {
+        $("[iscombo='t']").each(function () {
+          //if (!arr.includes(this.value)){
+          arr.push(this.value);
+          //}
+        });
+
+        $.post(
+          "http://" +
+            url[2] +
+            "/index.php?mod=patient_noheader&cmd=ttd_master2&pid=" +
+            arr,
+          { h: 3 },
+          function (data) {
+            var lis = JSON.parse(data);
+            $("[iscombo='t']").each(function () {
+              var index = $(this).data("index"); // Mengambil data-index
+              if (lis[index - 1] == undefined) {
+                lis[index - 1] = "";
+              }
+              if (lis[index - 1] != "") {
+                document.getElementById("ttdnya" + index).innerHTML =
+                  "<img width='200px' height='100px' name='image_ttd_" +
+                  index +
+                  "' id='image_ttd_" +
+                  index +
+                  "' src='" +
+                  lis[index - 1] +
+                  "'></img>";
+              }
+              // Periksa jika elemen src_ttd ada, jika tidak, buat elemen tersebut
+              var srcElement = document.getElementById("src_ttd_" + index);
+              if (!srcElement) {
+                srcElement = document.createElement("input");
+                srcElement.type = "hidden";
+                srcElement.id = "src_ttd_" + index;
+                document.body.appendChild(srcElement);
+              }
+              srcElement.value = lis[index - 1];
+            });
+          }
+        );
+      }
+    }
+
+    $(document).ready(function () {
+      const ttds = [
+        "", // Placeholder untuk indeks 0 agar indeks array sesuai dengan angka (dimulai dari 1)
+        "{src_ttd_1}",
+        "{src_ttd_2}",
+        "{src_ttd_3}",
+      ];
+
+      // Loop untuk men-generate elemen HTML berdasarkan nilai ttd
+      for (let i = 1; i < ttds.length; i++) {
+        const ttd = ttds[i];
+        const element = document.getElementById(`ttdnya${i}`);
+        console.log(`element ttd ${i} `, element);
+        console.log(`value ttd ttd ${i} `, ttd);
+        if (element && ttd !== "") {
+          // Cek jika ttd tidak kosong dan elemen ada
+          element.innerHTML = `
+                        <img width="200px" height="100px" name="image_ttd_${i}" id="image_ttd_${i}" src="../../../../../../${ttd}"></img>
+                        `;
+          console.log(`ttd ${i} masuk ke kondisi ttd tidak kosong`);
+        } else if (element) {
+          element.innerHTML = ""; // Jika tidak ada ttd, hapus konten elemen
+          console.log(
+            `ttd ${i} masuk ke kondisi ttd kosong, harusnya element imagenya ga ada`
+          );
+        }
+      }
+
+      AskepForm.showCombo(
+        $("#perawatnya1, #perawatnya2, #perawatnya3"),
+        "nurse",
+        () => {
+          get_ttd2();
+        }
+      );
+    });
+  </script>
+  <body>
+    <h1 class="title">PENOLAKAN TINDAKAN</h1>
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td>Nama Pasien</td>
+          <td>
+            <input
+              name="nama_pasien2"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              value="{VNAMA_PASIEN}"
+              placeholder="..."
+            />
+          </td>
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              name="no-rek-medis"
+              id="no-rek-medis"
+              label="no-rek-medis"
+              myid="check_cara"
+              value="{NO_RM}"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan="2">Tanggal Lahir</td>
+          <td rowspan="2">
+            <input
+              name="tgl_lahira2"
+              type="text"
+              id="tgl_lahir"
+              class="datepicker"
+              placeholder="dd-mm-yy"
+              myid="check_cara"
+              value="{VBIRTH_DATE}"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td rowspan="2">Umur</td>
+          <td rowspan="2">
+            <input
+              type="text"
+              size="5"
+              placeholder="..."
+              name="umur"
+              myid="check_cara"
+              id="umur"
+              value="{VAGEREGIS}"
+              label="umur"
+            />
+          </td>
+          <td>
+            <label for="poli"> Poli </label>
+          </td>
+          <td>
+            <input
+              name="polia2"
+              type="text"
+              id="poli"
+              placeholder="..."
+              myid="check_cara"
+              label="poli"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="kamar"> Kamar </label>
+          </td>
+          <td>
+            <input
+              name="kamar"
+              type="text"
+              id="kamar"
+              placeholder="..."
+              myid="check_cara"
+              label="kamar"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td colspan="2">Saya yang bertandatangan di bawah ini:</td>
+        </tr>
+        <tr>
+          <td>Nama :</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-ttd"
+              id="nama-ttd"
+              label="nama-ttd"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Umur :</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="umur-ttd"
+              id="umur-ttd"
+              label="umur-ttd"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Alamat :</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="alamat-ttd"
+              id="alamat-ttd"
+              label="alamat-ttd"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>No. KTP :</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="no-ktp-ttd"
+              id="no-ktp-ttd"
+              label="no-ktp-ttd"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      Setelah mendapat penjelasan mengenai tujuan, prosedur dan perlunya
+      tindakan tersebut serta risiko yang dapat ditimbulkannya telah cukup
+      dijelaskan oleh dokter, dan saya telah mengerti sepenuhnya.
+    </p>
+    <p>Dengan ini menyatakan dengan sesungguhnya bahwa saya memberikan</p>
+
+    <h1 class="title" style="text-align: center; font-weight: bold">
+      PENOLAKAN
+    </h1>
+    <div style="margin-bottom: 5px">
+      <label>Untuk dilaksanakan tindakan kedokteran berupa **</label>
+      <input
+        style="width: 50%; padding: 0"
+        type="text"
+        name="nama-tindakan-kedokteran"
+        id="nama-tindakan-kedokteran"
+        label="nama-tindakan-kedokteran"
+        myid="check_cara"
+      />
+    </div>
+
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td colspan="2">
+            <label for="">Terhadap diri saya </label>
+            <input
+              type="radio"
+              name="diri-ttd"
+              id="diri-ttd"
+              label="diri-ttd"
+              myid="check_cara"
+              value="sendiri"
+            />
+            <label for="">sendiri<sup>*</sup>/</label>
+            <input
+              type="radio"
+              name="diri-ttd"
+              id="diri-ttd"
+              label="diri-ttd"
+              myid="check_cara"
+              value="istri"
+            />
+            <label for="">istri<sup>*</sup>/</label>
+            <input
+              type="radio"
+              name="diri-ttd"
+              id="diri-ttd"
+              label="diri-ttd"
+              myid="check_cara"
+              value="suami"
+            />
+            <label for="">suami<sup>*</sup>/</label>
+            <input
+              type="radio"
+              name="diri-ttd"
+              id="diri-ttd"
+              label="diri-ttd"
+              myid="check_cara"
+              value="anak"
+            />
+            <label for="">anak<sup>*</sup>/</label>
+            <input
+              type="radio"
+              name="diri-ttd"
+              id="diri-ttd"
+              label="diri-ttd"
+              myid="check_cara"
+              value="ayah"
+            />
+            <label for="">ayah<sup>*</sup>/</label>
+            <input
+              type="radio"
+              name="diri-ttd"
+              id="diri-ttd"
+              label="diri-ttd"
+              myid="check_cara"
+              value="ibu"
+            />
+            <label for="">ibu<sup>*</sup>/</label>
+            <input
+              type="radio"
+              name="diri-ttd"
+              id="diri-ttd"
+              label="diri-ttd"
+              myid="check_cara"
+              value="lainnya"
+            />
+            <label for="">lainnya<sup>*</sup></label>
+            <input
+              type="text"
+              name="lainnya-ttd"
+              id="lainnya-ttd"
+              label="lainnya-ttd"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Nama :</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-diri-ttd"
+              id="nama-diri-ttd"
+              label="nama-diri-ttd"
+              placeholder="......"
+              value="{VNAMA_PASIEN}"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Umur :</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="umur-ttd"
+              id="umur-ttd"
+              label="umur-ttd"
+              placeholder="......"
+              value="{VAGEREGIS}"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Jenis kelamin :</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="jenis-kelamin"
+              id="jenis-kelamin"
+              label="jenis-kelamin"
+              placeholder="......"
+              value="{VSEX}"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>No. RM :</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="no-rm"
+              id="no-rm"
+              label="no-rm"
+              placeholder="......"
+              value="{NO_RM}"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Ruang / kelas :</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="ruang-kelas"
+              id="ruang-kelas"
+              label="ruang-kelas"
+              placeholder="......"
+              value="{VNAMARUANGAN} / {VNAMAKELAS}"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <p>
+      Saya memahami perlunya dan manfaat tindakan rujukan tersebut sebagaimana
+      telah dijelaskan seperti di atas kepada saya, termasuk risiko dan
+      komplikasi yang mungkin timbul.
+    </p>
+
+    <table width="100%" class="table">
+      <tr>
+        <td colspan="2">
+          <label for="">Bogor, tanggal</label>
+          <input
+            type="text"
+            name="tgl-permintaan"
+            id="tgl-permintaan"
+            label="tgl-permintaan"
+            placeholder="dd/mm/yyyy"
+            class="datepicker"
+            myid="check_cara"
+          />
+          <label for="">, pukul</label>
+          <input
+            type="text"
+            name="pukul-permintaan"
+            id="pukul-permintaan"
+            label="pukul-permintaan"
+            placeholder="00.00"
+            mtype="pukul"
+            myid="check_cara"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div
+            style="display: flex; flex-direction: column; align-items: center"
+          >
+            <p for="" style="text-align: center">DPJP</p>
+
+            <input
+              name="ttd_master"
+              type="hidden"
+              id="diagnosa_pentablet_1"
+              value="{ttd_master}"
+            />
+
+            <div
+              style="display: {DISPTTD1_PEN}; width: 100px; height: 20px;"
+              id="back_img_1"
+            ></div>
+
+            <img
+              width="100px"
+              height="100px"
+              id="image_ttd_1"
+              src="{ttd_master}"
+              style="display:{DISPTTD1}"
+            />
+
+            <input
+              type="hidden"
+              id="id_doctor"
+              value="{doc_id}"
+              myid="check_cara"
+              name="id_doctor"
+            />
+            <br />
+            <input
+              style="width: 100%; text-align: center; margin-top: 7px"
+              type="text"
+              name="dpjp"
+              id="dpjp"
+              label="dpjp"
+              value="{VDPJP}"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </div>
+        </td>
+        <td>
+          <div
+            style="display: flex; flex-direction: column; align-items: center"
+          >
+            <p for="" style="text-align: center">Pasien/Keluarga</p>
+
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_pasien_keluarga"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_pasien_keluarga"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_pasien_keluarga"
+              id="paraf_ex_ttd_pasien_keluarga"
+              data-name="paraf"
+              data-id="ex_ttd_pasien_keluarga"
+            />
+
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_pasien_keluarga"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              name="pasien-keluarga"
+              id="pasien-keluarga"
+              label="pasien-keluarga"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div
+            style="display: flex; flex-direction: column; align-items: center"
+          >
+            <p for="" style="text-align: center">Saksi Rumah Sakit</p>
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_saksi_rumah_sakit"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_saksi_rumah_sakit"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_saksi_rumah_sakit"
+              id="paraf_ex_ttd_saksi_rumah_sakit"
+              data-name="paraf"
+              data-id="ex_ttd_saksi_rumah_sakit"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_saksi_rumah_sakit"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              name="saksi-rumah-sakit"
+              id="saksi-rumah-sakit"
+              label="saksi-rumah-sakit"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <br />
+          </div>
+        </td>
+        <td>
+          <div
+            style="display: flex; flex-direction: column; align-items: center"
+          >
+            <p for="" style="text-align: center">Saksi Keluarga</p>
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_saksi_keluarga"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_saksi_keluarga"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_saksi_keluarga"
+              id="paraf_ex_ttd_saksi_keluarga"
+              data-name="paraf"
+              data-id="ex_ttd_saksi_keluarga"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_saksi_keluarga"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+            <br />
+            <input
+              style="width: 100%; text-align: center"
+              type="text"
+              name="saksi-keluarga"
+              id="saksi-keluarga"
+              label="saksi-keluarga"
+              placeholder="......"
+              myid="check_cara"
+            />
+            <br />
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <input
+      type="hidden"
+      id="src_ttd_3"
+      name="src_ttd_3"
+      myid="check_cara"
+      class="srcTTD"
+    />
+    <font id="ttdnya3"></font><br /><br />
+    <select
+      type="select"
+      name="perawatnya3"
+      data-index="1"
+      id="perawatnya3"
+      myid="check_cara"
+      iscombo="t"
+      onchange="get_ttd2();"
+    >
+      <option></option>
+    </select>
+
+    <br />
+    <p><sup>*</sup> Pilih salah satu</p>
+  </body>
+</html>

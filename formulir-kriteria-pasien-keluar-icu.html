@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KRITERIA PASIEN KELUAR ICU</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD1();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
+  <body>
+    <h1 class="title">KRITERIA PASIEN KELUAR ICU</h1>
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td>Nama Pasien</td>
+          <td>
+            <input
+              name="nama_pasien2"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              value="{VNAMA_PASIEN}"
+              placeholder="..."
+            />
+          </td>
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              name="no-rek-medis"
+              id="no-rek-medis"
+              label="no rek medis"
+              myid="check_cara"
+              value="{NO_RM}"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Tanggal Lahir</td>
+          <td>
+            <input
+              name="tgl_lahira2"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd-mm-yy"
+              myid="check_cara"
+              value="{VBIRTH_DATE}"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td>Umur</td>
+          <td>
+            <input
+              type="text"
+              size="5"
+              placeholder="..."
+              name="umur"
+              myid="check_cara"
+              id="umur"
+              value="{VAGEREGIS}"
+              label="umur"
+            />
+          </td>
+          <td>
+            <label for="poli"> Poli </label>
+          </td>
+          <td>
+            <input
+              name="polia2"
+              type="text"
+              id="poli"
+              placeholder="..."
+              myid="check_cara"
+              label="poli"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Tanggal Keluar</td>
+          <td>
+            <input
+              name="tgl_keluar"
+              type="text"
+              id="tgl_keluar"
+              placeholder="dd-mm-yy"
+              class="datepicker"
+              myid="check_cara"
+              label="tanggal keluar"
+            />
+          </td>
+
+          <td rowspan="2">Jam</td>
+          <td rowspan="2">
+            <input
+              type="text"
+              size="5"
+              placeholder="00:00"
+              name="jam"
+              myid="check_cara"
+              id="jam"
+              label="jam"
+            />
+          </td>
+          <td>
+            <label for="kamar"> Kamar </label>
+          </td>
+          <td>
+            <input
+              name="kamara2"
+              type="text"
+              id="kamar"
+              placeholder="..."
+              myid="check_cara"
+              label="kamar"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th style="text-align: center">NO</th>
+          <th style="text-align: center">INDIKASI</th>
+          <th style="text-align: center">KETERANGAN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="9" style="text-align: center">1</td>
+          <td>
+            a. Pasien dipindahkan karena sudah tidak membutuhkan lagi perawatan
+            intensif
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="prioritas-1-a"
+              id="prioritas-1-a"
+              label="prioritas-1-a"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            b. Terapi mengalami kegagalan sehingga prognosis jangka pendek buruk
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="prioritas-1-b"
+              id="prioritas-1-b"
+              label="prioritas-1-b"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>c. Jalan napas aman dan stabil</td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="prioritas-1-c"
+              id="prioritas-1-c"
+              label="prioritas-1-c"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>d. Pasien tidak lagi memerlukan alat atau obat life support</td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="prioritas-1-d"
+              id="prioritas-1-d"
+              label="prioritas-1-d"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>e. Pasien dapat napas spontan</td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="prioritas-1-e"
+              id="prioritas-1-e"
+              label="prioritas-1-e"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            f. Pasien dapat mengeluarkan sekret sendiri atau dengan bantuan
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="prioritas-1-f"
+              id="prioritas-1-f"
+              label="prioritas-1-f"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>g. Hemodinamik stabil</td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="prioritas-1-g"
+              id="prioritas-1-g"
+              label="prioritas-1-g"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>h. Membutuhkan monitoring yang minimal</td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="prioritas-1-h"
+              id="prioritas-1-h"
+              label="prioritas-1-h"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>i. Dirujuk ke fasilitas yang lebih lengkap</td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="prioritas-1-i"
+              id="prioritas-1-i"
+              label="prioritas-1-i"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Berdasarkan kondisi di atas maka pasien tersebut memenuhi kriteria untuk
+      <b>KELUAR ICU</b>
+    </p>
+
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <td style="text-align: center; width: 50%">
+            <p><b>Mengetahui,</b></p>
+            <p><b>Dokter Kepala ICU</b></p>
+          </td>
+          <td style="text-align: center; width: 50%"><b>DPJP</b></td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_dokter_kepala_icu"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_dokter_kepala_icu"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_dokter_kepala_icu"
+                id="paraf_ex_ttd_dokter_kepala_icu"
+                data-name="paraf"
+                data-id="ex_ttd_dokter_kepala_icu"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_dokter_kepala_icu"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+              <label for="">
+                (
+                <input
+                  type="text"
+                  style="
+                    flex: 1;
+                    padding: 0;
+                    border: none;
+                    border-bottom: 2px dotted;
+                  "
+                  myid="check_cara"
+                  id="dokter-kepala-icu"
+                  name="dokter-kepala-icu"
+                  label="dokter-kepala-icu"
+                />
+                )
+              </label>
+            </div>
+          </td>
+          <td>
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <input
+                name="ttd_master"
+                type="hidden"
+                id="diagnosa_pentablet_1"
+                value="{ttd_master}"
+              />
+              <div
+                style="display: {DISPTTD1_PEN}; width: 100px; height: 20px;"
+                id="back_img_1"
+              ></div>
+              <img
+                width="100px"
+                height="100px"
+                id="image_ttd_1"
+                src="{ttd_master}"
+                style="display:{DISPTTD1}"
+              />
+              <br />
+              <input
+                type="hidden"
+                id="id_doctor"
+                value="{doc_id}"
+                myid="check_cara"
+                name="id_doctor"
+              />
+
+              <label for=""
+                >(
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="dpjp"
+                  id="dpjp"
+                  label="dpjp"
+                  myid="check_cara"
+                  value="{VDPJP}"
+                />
+                )</label
+              >
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      var jk = "{JK}";
+      var img = "{IMG}";
+      var daftar = "{DAFTAR}";
+      if (jk == "f") {
+        $('[name="jk"][value="perempuan"]')
+          .prop("checked", true)
+          .trigger("change");
+      } else {
+        $('[name="jk"][value="laki - laki"]')
+          .prop("checked", true)
+          .trigger("change");
+      }
+
+      if (img != "") {
+        $("#img_mata1").attr("src", img);
+      }
+
+      if (daftar == "t") {
+        var ifirm = "{IFIRM}";
+        $('[name="nama_perusahaan"]').val(ifirm);
+
+        var nopeg = "{NOPEG}";
+        $('[name="no_kartu"]').val(nopeg);
+      }
+
+      AskepForm.showCombo($("select[name=dokter]"), "doctor");
+
+      $(document)
+        .off("change", "#dokter")
+        .on("change", "#dokter", function () {
+          SetDokterName();
+        });
+    });
+
+    function SetDokterName() {
+      var dokter_txt = $("#dokter option:selected").text(),
+        dokter_img = $("#dokter option:selected").attr("data-ttd");
+      $("#paraf_txt_4").val(dokter_txt);
+
+      if (dokter_img != "") {
+        $("#back_img_4").text("");
+        $("#back_img_4").css("display", "none");
+        $("#image_paraf_4").css("display", "");
+        $("#image_paraf_4").attr("src", "" + dokter_img + "");
+        $("#paraf_4").val(dokter_img);
+      }
+    }
+
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    function tampil_ttd_2(x, y) {
+      $("#back_img_" + x).text("");
+      $("#back_img_" + x).css("display", "none");
+      $("#paraf_" + x).val(y);
+      $("#image_paraf_" + x).css("display", "");
+      $("#image_paraf_" + x).attr("src", "" + y + "");
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD1() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id");
+        var ttd = $(this).val();
+        var def = "paraf";
+        if (ttd == "") {
+          $("#back_img_" + id).text(def);
+          $("#back_img_" + id).css({
+            display: "",
+            "font-style": "italic",
+            width: 200,
+            height: 100,
+            "text-align": "center",
+          });
+          $("#image_paraf_" + id).css("display", "none");
+        } else {
+          $("#back_img_" + id).text("");
+          $("#back_img_" + id).css("display", "none");
+          $("#image_paraf_" + id).css("display", "");
+          $("#image_paraf_" + id).attr("src", "" + ttd + "");
+        }
+      });
+    }
+  </script>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Chart</title>
+    <style>
+        #chart-svg {
+            border: 1px solid #ccc;
+        }
+        #observer-table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        #observer-table th, #observer-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        #observer-table th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <input type="text" data-type="tensi" value="120">
+        <input type="text" data-type="tensi" value="140">
+        <input type="text" data-type="nadi" value="80">
+        <input type="text" data-type="respirasi" value="18">
+        <input type="text" data-type="respirasi" value="16">
+        <input type="text" data-type="operasi" value="120">
+        <input type="text" data-type="anestesi" value="130">
+        <input type="text" data-type="intubasi" value="150">
+        <input type="text" data-type="ekstubasi" value="110">
+    </div>
+
+    <svg id="chart-svg" width="600" height="400"></svg>
+    <div id="tooltip" style="display:none; position:absolute;"></div>
+
+    <table id="observer-table">
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>Type</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        class MedicalChart {
+            constructor(svgId) {
+                this.chartSvg = document.getElementById(svgId);
+                this.tooltip = document.getElementById("tooltip");
+                this.data = [];
+                this.config = {
+                    max: 200,
+                    min: 40,
+                    width: this.chartSvg.clientWidth,
+                    height: this.chartSvg.clientHeight,
+                    padding: 40,
+                    dataWidth: 30,
+                    colors: {
+                        tensi: "#4CAF50",
+                        nadi: "#9C27B0",
+                        respirasi: "#FF9800",
+                        operasi: "#795548",
+                        anestesi: "#607D8B",
+                        intubasi: "#3F51B5",
+                        ekstubasi: "#FF5722"
+                    },
+                    gridColors: {
+                        major: "#cccccc",
+                        minor: "#eeeeee",
+                        text: "#666666"
+                    }
+                };
+                this.rangeMin = this.config.min;
+                this.rangeMax = this.config.max;
+                this.setupChart();
+            }
+
+            setupChart() {
+                this.chartSvg.innerHTML = "";
+                this.setupDefs();
+                this.drawGrid();
+            }
+
+            setupDefs() {
+                const defs = this.createSvgElement("defs");
+                this.chartSvg.appendChild(defs);
+            }
+
+            createSvgElement(type, attributes = {}) {
+                const element = document.createElementNS("http://www.w3.org/2000/svg", type);
+                Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
+                return element;
+            }
+
+            calculateY(value) {
+                const { height, padding } = this.config;
+                return padding + (1 - (value - this.rangeMin) / (this.rangeMax - this.rangeMin)) * (height - 2 * padding);
+            }
+
+            calculateX(index) {
+                return this.config.padding + (index * this.config.dataWidth);
+            }
+
+            drawGrid() {
+                const grid = this.createSvgElement("g");
+                const { width, height, padding } = this.config;
+
+                for (let value = this.rangeMin; value <= this.rangeMax; value += 20) {
+                    const y = this.calculateY(value);
+                    grid.appendChild(this.createSvgElement("line", {
+                        x1: padding,
+                        x2: width - padding,
+                        y1: y,
+                        y2: y,
+                        stroke: this.config.gridColors.major,
+                        "stroke-width": "1"
+                    }));
+
+                    const label = this.createSvgElement("text", {
+                        x: padding - 10,
+                        y: y + 4,
+                        "text-anchor": "end",
+                        "font-size": "10px",
+                        fill: this.config.gridColors.text
+                    });
+                    label.textContent = value;
+                    grid.appendChild(label);
+                }
+
+                this.chartSvg.appendChild(grid);
+            }
+
+            drawSymbol(x, y, type, value) {
+                let symbolText = "";
+                const fontSize = 14;
+
+                switch (type) {
+                    case "tensi":
+                        symbolText = value > 130 ? "^" : "v";
+                        break;
+                    case "nadi":
+                        symbolText = "●";
+                        break;
+                    case "respirasi":
+                        symbolText = value > 18 ? "↑" : "↓";
+                        break;
+                    case "operasi":
+                        symbolText = "← 0 →";
+                        break;
+                    case "anestesi":
+                        symbolText = "x → ← x";
+                        break;
+                    case "intubasi":
+                        symbolText = "↑";
+                        break;
+                    case "ekstubasi":
+                        symbolText = "↓";
+                        break;
+                }
+
+                const symbol = this.createSvgElement("text", {
+                    x: x,
+                    y: y + fontSize / 2,
+                    "text-anchor": "middle",
+                    "font-size": fontSize,
+                    fill: this.config.colors[type] || "#000"
+                });
+
+                symbol.textContent = symbolText;
+                return symbol;
+            }
+
+            drawLine(data, inputType) {
+                if (data.length < 1) return;
+                const lineGroup = this.createSvgElement("g");
+                let pathData = "";
+
+                data.forEach((entry, index) => {
+                    const x = this.calculateX(index);
+                    const y = this.calculateY(entry.value);
+                    pathData += index === 0 ? `M ${x} ${y}` : ` L ${x} ${y}`;
+
+                    const symbol = this.drawSymbol(x, y, inputType, entry.value);
+                    lineGroup.appendChild(symbol);
+                });
+
+                if (data.length > 1) {
+                    const color = this.config.colors[inputType] || "#000";
+                    lineGroup.appendChild(this.createSvgElement("path", {
+                        d: pathData,
+                        stroke: color,
+                        "stroke-width": "1.5",
+                        fill: "none"
+                    }));
+                }
+
+                this.chartSvg.appendChild(lineGroup);
+            }
+
+            drawChart() {
+                this.setupChart();
+
+                const dataByType = {
+                    tensi: [],
+                    nadi: [],
+                    respirasi: [],
+                    operasi: [],
+                    anestesi: [],
+                    intubasi: [],
+                    ekstubasi: []
+                };
+
+                this.data.forEach(item => {
+                    if (item.type in dataByType) {
+                        dataByType[item.type].push(item);
+                    }
+                });
+
+                Object.entries(dataByType).forEach(([type, data]) => {
+                    if (data.length > 0) {
+                        this.drawLine(data, type);
+                    }
+                });
+
+                this.updateObserverTable();
+            }
+
+            updateObserverTable() {
+                const tableBody = document.querySelector("#observer-table tbody");
+                tableBody.innerHTML = "";
+
+                this.data.forEach((item, index) => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${item.type}</td>
+                        <td>${item.value}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+        }
+
+        function updateMedicalChart() {
+            const data = extractDataFromTables();
+            console.log("Extracted data:", data);
+            medicalChart.data = data;
+            medicalChart.drawChart();
+        }
+
+        function extractDataFromTables() {
+            const data = [];
+            const inputs = document.querySelectorAll("input[type='text']");
+
+            inputs.forEach((input, index) => {
+                const value = parseFloat(input.value);
+                if (!isNaN(value)) {
+                    const type = input.getAttribute("data-type");
+                    data.push({
+                        value,
+                        type,
+                        index
+                    });
+                }
+            });
+
+            return data;
+        }
+
+        document.addEventListener("input", () => {
+            updateMedicalChart();
+        });
+
+        const medicalChart = new MedicalChart("chart-svg");
+        updateMedicalChart();
+    </script>
+</body>
+</html>

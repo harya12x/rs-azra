@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>National Early Warning System (NEWS)</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+
+    .blink-result {
+      animation: blink 1s linear infinite;
+    }
+
+    @keyframes blink {
+      25% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0;
+      }
+      75% {
+        opacity: 1;
+      }
+    }
+  </style>
+  <script>
+    $(document).ready(function () {
+      $('input[type="radio"]').change(function () {
+        let total = 0;
+        let currRadioVal = parseInt($(this).val(), 10) || 0;
+        $('input[type="radio"]').each(function () {
+          if ($(this).is(":checked")) {
+            const value = parseInt($(this).val(), 10) || 0;
+            total += value;
+          }
+        });
+
+        if (total === 0) {
+          $(".blink-result").html(
+            '<div style="border: 5px solid rgb(69, 137, 69)"></div>'
+          );
+        } else if (total >= 1 && total <= 4 && currRadioVal !== 3) {
+          $(".blink-result").html(
+            '<div style="border: 5px solid yellow"></div>'
+          );
+        } else if (total >= 7) {
+          $(".blink-result").html(
+            '<div style="border: 5px solid rgb(241, 41, 41)"></div>'
+          );
+        } else if (currRadioVal === 3 || (total >= 5 && total <= 6)) {
+          $(".blink-result").html(
+            '<div style="border: 5px solid orange"></div>'
+          );
+        }
+      });
+    });
+  </script>
+  <body>
+    <h1 class="title">National Early Warning System (NEWS)</h1>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th style="text-align: center; font-weight: bold">
+            Parameter Fisiologis
+          </th>
+          <th style="text-align: center; font-weight: bold">3</th>
+          <th style="text-align: center; font-weight: bold">2</th>
+          <th style="text-align: center; font-weight: bold">1</th>
+          <th style="text-align: center; font-weight: bold">0</th>
+          <th style="text-align: center; font-weight: bold">1</th>
+          <th style="text-align: center; font-weight: bold">2</th>
+          <th style="text-align: center; font-weight: bold">3</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center; font-weight: bold">Pernafasan</td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="pernafasan"
+              id="pernafasan"
+              label="pernafasan"
+              myid="check_cara"
+              value="3"
+            />
+            <label for="">&le; 8</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="pernafasan"
+              id="pernafasan"
+              label="pernafasan"
+              myid="check_cara"
+              value="2"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="pernafasan"
+              id="pernafasan"
+              label="pernafasan"
+              myid="check_cara"
+              value="1"
+            />
+            <label for="">9 - 11</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="pernafasan"
+              id="pernafasan"
+              label="pernafasan"
+              myid="check_cara"
+              value="0"
+            />
+            <label for="">12 - 20</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="pernafasan"
+              id="pernafasan"
+              label="pernafasan"
+              myid="check_cara"
+              value="1"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="pernafasan"
+              id="pernafasan"
+              label="pernafasan"
+              myid="check_cara"
+              value="2"
+            />
+            <label for="">21 - 24</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="pernafasan"
+              id="pernafasan"
+              label="pernafasan"
+              myid="check_cara"
+              value="3"
+            />
+            <label for="">&ge; 25</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center; font-weight: bold">
+            Saturasi Oksigen
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="saturasi-oksigen"
+              id="saturasi-oksigen"
+              label="saturasi-oksigen"
+              myid="check_cara"
+              value="3"
+            />
+            <label for="">&le; 91</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="saturasi-oksigen"
+              id="saturasi-oksigen"
+              label="saturasi-oksigen"
+              myid="check_cara"
+              value="2"
+            />
+            <label for="">92 - 93</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="saturasi-oksigen"
+              id="saturasi-oksigen"
+              label="saturasi-oksigen"
+              myid="check_cara"
+              value="1"
+            />
+            <label for="">94 - 95</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="saturasi-oksigen"
+              id="saturasi-oksigen"
+              label="saturasi-oksigen"
+              myid="check_cara"
+              value="0"
+            />
+            <label for="">&ge; 96</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="saturasi-oksigen"
+              id="saturasi-oksigen"
+              label="saturasi-oksigen"
+              myid="check_cara"
+              value="1"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="saturasi-oksigen"
+              id="saturasi-oksigen"
+              label="saturasi-oksigen"
+              myid="check_cara"
+              value="2"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="saturasi-oksigen"
+              id="saturasi-oksigen"
+              label="saturasi-oksigen"
+              myid="check_cara"
+              value="3"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center; font-weight: bold">
+            Pemakaian Oksigen
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="pemakaian-oksigen"
+              id="pemakaian-oksigen"
+              label="pemakaian-oksigen"
+              myid="check_cara"
+              value="3"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="pemakaian-oksigen"
+              id="pemakaian-oksigen"
+              label="pemakaian-oksigen"
+              myid="check_cara"
+              value="2"
+            />
+            <label for="">Ya</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="pemakaian-oksigen"
+              id="pemakaian-oksigen"
+              label="pemakaian-oksigen"
+              myid="check_cara"
+              value="1"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="pemakaian-oksigen"
+              id="pemakaian-oksigen"
+              label="pemakaian-oksigen"
+              myid="check_cara"
+              value="0"
+            />
+            <label for="">Tidak</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="pemakaian-oksigen"
+              id="pemakaian-oksigen"
+              label="pemakaian-oksigen"
+              myid="check_cara"
+              value="1"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="pemakaian-oksigen"
+              id="pemakaian-oksigen"
+              label="pemakaian-oksigen"
+              myid="check_cara"
+              value="2"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="pemakaian-oksigen"
+              id="pemakaian-oksigen"
+              label="pemakaian-oksigen"
+              myid="check_cara"
+              value="3"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center; font-weight: bold">Suhu</td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="suhu"
+              id="suhu"
+              label="suhu"
+              myid="check_cara"
+              value="3"
+            />
+            <label for="">&le;35.0</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="suhu"
+              id="suhu"
+              label="suhu"
+              myid="check_cara"
+              value="2"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="suhu"
+              id="suhu"
+              label="suhu"
+              myid="check_cara"
+              value="1"
+            />
+            <label for="">35.1 - 36.0</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="suhu"
+              id="suhu"
+              label="suhu"
+              myid="check_cara"
+              value="0"
+            />
+            <label for="">36.1 - 38.0</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="suhu"
+              id="suhu"
+              label="suhu"
+              myid="check_cara"
+              value="1"
+            />
+            <label for="">38.1 - 39.0</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="suhu"
+              id="suhu"
+              label="suhu"
+              myid="check_cara"
+              value="2"
+            />
+            <label for="">&ge; 39.1</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="suhu"
+              id="suhu"
+              label="suhu"
+              myid="check_cara"
+              value="3"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center; font-weight: bold">
+            Tekanan Sistolik
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="tekanan-sistolik"
+              id="tekanan-sistolik"
+              label="tekanan-sistolik"
+              myid="check_cara"
+              value="3"
+            />
+            <label for="">&le; 90</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="tekanan-sistolik"
+              id="tekanan-sistolik"
+              label="tekanan-sistolik"
+              myid="check_cara"
+              value="2"
+            />
+            <label for="">91 - 100</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="tekanan-sistolik"
+              id="tekanan-sistolik"
+              label="tekanan-sistolik"
+              myid="check_cara"
+              value="1"
+            />
+            <label for="">101 - 110</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="tekanan-sistolik"
+              id="tekanan-sistolik"
+              label="tekanan-sistolik"
+              myid="check_cara"
+              value="0"
+            />
+            <label for="">111 - 219</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="tekanan-sistolik"
+              id="tekanan-sistolik"
+              label="tekanan-sistolik"
+              myid="check_cara"
+              value="1"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="tekanan-sistolik"
+              id="tekanan-sistolik"
+              label="tekanan-sistolik"
+              myid="check_cara"
+              value="2"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="tekanan-sistolik"
+              id="tekanan-sistolik"
+              label="tekanan-sistolik"
+              myid="check_cara"
+              value="3"
+            />
+            <label for="">&ge; 220</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center; font-weight: bold">Nadi</td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="nadi"
+              id="nadi"
+              label="nadi"
+              myid="check_cara"
+              value="3"
+            />
+            <label for="">&le; 40</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="nadi"
+              id="nadi"
+              label="nadi"
+              myid="check_cara"
+              value="2"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="nadi"
+              id="nadi"
+              label="nadi"
+              myid="check_cara"
+              value="1"
+            />
+            <label for="">41 - 50</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="nadi"
+              id="nadi"
+              label="nadi"
+              myid="check_cara"
+              value="0"
+            />
+            <label for="">51 - 90</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="nadi"
+              id="nadi"
+              label="nadi"
+              myid="check_cara"
+              value="1"
+            />
+            <label for="">91 - 110</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="nadi"
+              id="nadi"
+              label="nadi"
+              myid="check_cara"
+              value="2"
+            />
+            <label for="">111 - 130</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="nadi"
+              id="nadi"
+              label="nadi"
+              myid="check_cara"
+              value="3"
+            />
+            <label for="">&ge; 131</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center; font-weight: bold">
+            Kedasaran (AVPU)
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="kedasaran"
+              id="kedasaran"
+              label="kedasaran"
+              myid="check_cara"
+              value="3"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="kedasaran"
+              id="kedasaran"
+              label="kedasaran"
+              myid="check_cara"
+              value="2"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="kedasaran"
+              id="kedasaran"
+              label="kedasaran"
+              myid="check_cara"
+              value="1"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="kedasaran"
+              id="kedasaran"
+              label="kedasaran"
+              myid="check_cara"
+              value="0"
+            />
+            <label for="">A</label>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="kedasaran"
+              id="kedasaran"
+              label="kedasaran"
+              myid="check_cara"
+              value="1"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="kedasaran"
+              id="kedasaran"
+              label="kedasaran"
+              myid="check_cara"
+              value="2"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="radio"
+              name="kedasaran"
+              id="kedasaran"
+              label="kedasaran"
+              myid="check_cara"
+              value="3"
+            />
+            <label for="">V/P/U</label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <div class="blink-result"></div>
+    <br />
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th style="text-align: center; font-weight: bold">
+            Jumlah Skor NEWS
+          </th>
+          <th style="text-align: center; font-weight: bold">
+            Frekuensi Monitor
+          </th>
+          <th style="text-align: center; font-weight: bold">Respon</th>
+        </tr>
+      </thead>
+      <tr>
+        <td style="text-align: center; background-color: rgb(69, 137, 69)">
+          Skor 0 (Hijau)
+        </td>
+        <td style="text-align: center; background-color: rgb(69, 137, 69)">
+          8 - 12 jam
+        </td>
+        <td style="background-color: rgb(69, 137, 69)">
+          Evaluasi penilaian rutin TTV dan EWS tiap shift oleh perawat pelaksana
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: center; background-color: yellow">
+          Skor 1 - 4 (Kuning)
+        </td>
+        <td style="text-align: center; background-color: yellow">4 - 6 jam</td>
+        <td style="background-color: yellow">
+          Penilaian klinis oleh perawat penanggungjawab apakah dibutuhkan
+          perubahan frekuensi monitoring pasien dan kapan untuk intervensi (atas
+          laporan dari perawat pelaksana)
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: center; background-color: orange">
+          Skor 5 - 6 atau 1 parameter nilai skor 3 (Orange)
+        </td>
+        <td style="text-align: center; background-color: orange">
+          Minimal tiap 1 jam
+        </td>
+        <td style="background-color: orange">
+          Monitoring oleh dokter jaga mengenai perburukan kondisi pasien dan
+          perubahan tatalaksana pasien
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: center; background-color: rgb(241, 41, 41)">
+          Skor &ge; 7 (Merah)
+        </td>
+        <td style="text-align: center; background-color: rgb(241, 41, 41)">
+          Monitor ketat
+        </td>
+        <td style="background-color: rgb(241, 41, 41)">
+          Lapor Dr.Jaga/DPJP untuk segera datang ke ruangan atau Aktivasi Tim
+          Kode Biru, pasien dipersiapkan masuk Ruang Intensif, lapor ke KIC dan
+          DPJP, dan <i>Informed Consent</i> dan Komunikasi Edukasi keluarga
+          pasien
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

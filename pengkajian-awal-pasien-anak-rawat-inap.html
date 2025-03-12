@@ -3,30 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PENGKAJIAN AWAL PASIEN ANAK RAWAT INAP RS. AZRA BOGOR</title>
+    <title>PENGKAJIAN AWAL PASIEN ANAK RAWAT INAP</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -35,17 +30,25 @@
     $(document).on("ajaxStop", function () {
       SetTTD();
     });
+    if ($.fn.datepicker) {
+      $(".datepicker").each(function () {
+        var $this = $(this),
+          dataDateFormat = $this.attr("data-dateformat") || "dd.mm.yy";
+
+        $this.datepicker({
+          dateFormat: dataDateFormat,
+          prevText: '<i class="fa fa-chevron-left"></i>',
+          nextText: '<i class="fa fa-chevron-right"></i>',
+          todayBtn: "linked",
+        });
+
+        // clear memory reference
+        $this = null;
+      });
+    }
   </script>
   <script>
     $(document).ready(function () {
-      $(function () {
-        $(".datepicker").datepicker({
-          dateFormat: "dd-mm-yy",
-          autoclose: true,
-          todayHighlight: true,
-        });
-      });
-
       $('input[type="radio"]')
         .off("change")
         .on("change", function () {
@@ -63,6 +66,15 @@
               total += radioValue;
             }
           });
+
+          if (percol == 1 && total > 2) {
+            total += `, pasien dikonsultasikan kepada ahli gizi`;
+          }
+          if (percol == 2 && total >= 7 && total <= 11) {
+            total += `, Risiko rendah`;
+          } else if (percol == 2 && total >= 12) {
+            total += `, Risiko tinggi`;
+          }
 
           $(`#totalskor` + percol).val(total);
         });
@@ -179,7 +191,7 @@
     }
   </script>
   <body>
-    <h1 class="title">PENGKAJIAN AWAL PASIEN ANAK RAWAT INAP RS. AZRA BOGOR</h1>
+    <h1 class="title">PENGKAJIAN AWAL PASIEN ANAK RAWAT INAP</h1>
     <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
@@ -233,7 +245,6 @@
               type="text"
               id="tgl_lahir"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
               myid="check_cara"
               value="{VBIRTH_DATE}"
               label="tanggal lahir"
@@ -275,7 +286,7 @@
               type="text"
               id="tgl"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               myid="check_cara"
               label="tanggal"
             />
@@ -301,7 +312,6 @@
               myid="check_cara"
               placeholder="..."
               label="kamar"
-              value="{VNAMARUANGAN}"
             />
           </td>
         </tr>
@@ -563,7 +573,7 @@
               id="obat-jenis-lainnya"
               label="obat-jenis-lainnya"
               myid="check_cara"
-              value=""
+              value="true"
             />
             <input
               type="text"
@@ -636,118 +646,115 @@
           <td>&nbsp;</td>
           <td colspan="2" style="padding-left: 20px">
             <input
-              type="radio"
-              name="data-psikologis"
-              id="data-psikologis"
-              label="data-psikologis"
+              type="checkbox"
+              name="data-psikologis-kooperatif"
+              id="data-psikologis-kooperatif"
+              label="data-psikologis-kooperatif"
               myid="check_cara"
               value="Kooperatif"
             />
             <label for="" style="margin: 0 5px 0 0">Kooperatif</label>
             <input
-              type="radio"
-              name="data-psikologis"
-              id="data-psikologis"
-              label="data-psikologis"
+              type="checkbox"
+              name="data-psikologis-depresi"
+              id="data-psikologis-depresi"
+              label="data-psikologis-depresi"
               myid="check_cara"
               value="Depresi"
             />
             <label for="" style="margin: 0 5px 0 0">Depresi</label>
             <input
-              type="radio"
-              name="data-psikologis"
-              id="data-psikologis"
-              label="data-psikologis"
+              type="checkbox"
+              name="data-psikologis-hiperaktif"
+              id="data-psikologis-hiperaktif"
+              label="data-psikologis-hiperaktif"
               myid="check_cara"
               value="Hiperaktif"
             />
             <label for="" style="margin: 0 5px 0 0">Hiperaktif</label>
             <input
-              type="radio"
-              name="data-psikologis"
-              id="data-psikologis"
-              label="data-psikologis"
+              type="checkbox"
+              name="data-psikologis-pemalu"
+              id="data-psikologis-pemalu"
+              label="data-psikologis-pemalu"
               myid="check_cara"
               value="Pemalu"
             />
             <label for="" style="margin: 0 5px 0 0">Pemalu</label>
             <input
-              type="radio"
-              name="data-psikologis"
-              id="data-psikologis"
-              label="data-psikologis"
+              type="checkbox"
+              name="data-psikologis-marah"
+              id="data-psikologis-marah"
+              label="data-psikologis-marah"
               myid="check_cara"
               value="Marah"
             />
             <label for="" style="margin: 0 5px 0 0">Marah</label>
             <input
-              type="radio"
-              name="data-psikologis"
-              id="data-psikologis"
-              label="data-psikologis"
+              type="checkbox"
+              name="data-psikologis-kritis"
+              id="data-psikologis-kritis"
+              label="data-psikologis-kritis"
               myid="check_cara"
               value="Kritis"
             />
             <label for="" style="margin: 0 5px 0 0">Kritis</label>
             <input
-              type="radio"
-              name="data-psikologis"
-              id="data-psikologis"
-              label="data-psikologis"
+              type="checkbox"
+              name="data-psikologis-hipoaktif"
+              id="data-psikologis-hipoaktif"
+              label="data-psikologis-hipoaktif"
               myid="check_cara"
               value="Hipoaktif"
             />
             <label for="" style="margin: 0 5px 0 0">Hipoaktif</label>
             <input
-              type="radio"
-              name="data-psikologis"
-              id="data-psikologis"
-              label="data-psikologis"
+              type="checkbox"
+              name="data-psikologis-lambat-bereaksi"
+              id="data-psikologis-lambat-bereaksi"
+              label="data-psikologis-lambat-bereaksi"
               myid="check_cara"
               value="Lambat bereaksi"
             />
             <label for="" style="margin: 0 5px 0 0">Lambat bereaksi</label>
             <input
-              type="radio"
-              name="data-psikologis"
-              id="data-psikologis"
-              label="data-psikologis"
+              type="checkbox"
+              name="data-psikologis-sangat-ingin-tahu"
+              id="data-psikologis-sangat-ingin-tahu"
+              label="data-psikologis-sangat-ingin-tahu"
               myid="check_cara"
               value="Sangat ingin tahu"
             />
             <label for="" style="margin: 0 5px 0 0">Sangat ingin tahu</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td colspan="2" style="padding-left: 20px">
+            <label for="" style="margin: 0 5px 0 0">Harga diri :</label>
             <input
               type="radio"
-              name="data-psikologis"
-              id="data-psikologis"
-              label="data-psikologis"
-              myid="check_cara"
-              value="Harga diri"
-            />
-            <label for="" style="margin: 0 5px 0 0">Harga diri</label>
-            <input
-              type="radio"
-              name="data-psikologis"
-              id="data-psikologis"
-              label="data-psikologis"
+              name="harga-diri"
+              id="harga-diri"
+              label="harga-diri"
               myid="check_cara"
               value="Terganggu"
             />
             <label for="" style="margin: 0 5px 0 0">Terganggu</label>
             <input
               type="radio"
-              name="data-psikologis"
-              id="data-psikologis"
-              label="data-psikologis"
+              name="harga-diri"
+              id="harga-diri"
+              label="harga-diri"
               myid="check_cara"
               value="Tidak terganggu"
             />
             <label for="" style="margin: 0 5px 0 0">Tidak terganggu</label>
             <input
               type="radio"
-              name="data-psikologis"
-              id="data-psikologis"
-              label="data-psikologis"
+              name="harga-diri"
+              id="harga-diri"
+              label="harga-diri"
               myid="check_cara"
               value="Lainnya"
             />
@@ -960,7 +967,7 @@
               id="penyakit-prenatal-lain"
               label="penyakit-prenatal-lain"
               myid="check_cara"
-              value=""
+              value="true"
             />
             <input
               type="text"
@@ -1073,6 +1080,13 @@
               value="Alat"
             />
             <label for="" style="margin: 0 5px 0 0">Alat</label>
+            <input
+              type="text"
+              name="detail-jenis-persalinan"
+              id="detail-jenis-persalinan"
+              label="detail-jenis-persalinan"
+              myid="check_cara"
+            />
           </td>
         </tr>
         <tr>
@@ -1224,6 +1238,14 @@
               value="Kelainan kongenital"
             />
             <label for="" style="margin: 0 5px 0 0">Kelainan kongenital</label>
+            <input
+              style="width: 500px"
+              type="text"
+              name="keterangan-kesehatan-bayi"
+              id="keterangan-kesehatan-bayi"
+              label="keterangan-kesehatan-bayi"
+              myid="check_cara"
+            />
           </td>
         </tr>
         <tr>
@@ -1328,15 +1350,19 @@
             >
             <input
               type="checkbox"
-              name="2-bulan-setelah-lahir"
-              id="2-bulan-setelah-lahir"
-              label="2-bulan-setelah-lahir"
+              name="setelah-satu-bulan"
+              id="setelah-satu-bulan"
+              label="setelah-satu-bulan"
               myid="check_cara"
-              value="2 bulan setelah lahir"
+              value="true"
             />
-            <label for="" style="margin: 0 5px 0 0"
-              >2 bulan setelah lahir</label
-            >
+            <input
+              type="text"
+              name="detail-setelah-satu-bulan"
+              id="detail-setelah-satu-bulan"
+              label="detail-setelah-satu-bulan"
+              myid="check_cara"
+            />
           </td>
         </tr>
         <tr>
@@ -1850,6 +1876,7 @@
           <td style="color: #fff" bgcolor="#1C3F80">
             <label for="">BAB</label>
             <input
+              style="color: black"
               type="text"
               name="eliminasi-bab"
               id="eliminasi-bab"
@@ -1860,6 +1887,7 @@
             <label for="">kali/24 jam</label>
             <label for="">BAK</label>
             <input
+              style="color: black"
               type="text"
               name="eliminasi-bak"
               id="eliminasi-bak"
@@ -1885,7 +1913,7 @@
               name="tidur-malam-jam"
               id="tidur-malam-jam"
               label="tidur-malam-jam"
-              placeholder="......"
+              placeholder="00.00"
               myid="check_cara"
             />
           </td>
@@ -1896,7 +1924,7 @@
               name="bangun-jam"
               id="bangun-jam"
               label="bangun-jam"
-              placeholder="......"
+              placeholder="00.00"
               myid="check_cara"
             />
           </td>
@@ -2038,17 +2066,18 @@
               value="1 x sehari"
             />
             <label for="" style="padding: 0 5px 0 0">1 x sehari</label>
-            <input
-              type="checkbox"
-              name="pakaian-yg-digunakan-sblm-dieliminasi"
-              id="pakaian-yg-digunakan-sblm-dieliminasi"
-              label="pakaian-yg-digunakan-sblm-dieliminasi"
-              myid="check_cara"
-              value="Pakaian yang digunakan sebelum eliminasi"
-            />
-            <label for="" style="padding: 0 5px 0 0"
-              >Pakaian yang digunakan sebelum eliminasi</label
-            >
+          </td>
+        </tr>
+        <tr>
+          <td style="color: #fff" bgcolor="#1C3F80">&nbsp;</td>
+          <td style="color: #fff" bgcolor="#1C3F80">
+            <b>
+              <label for="" style="padding: 0 5px 0 0"
+                >Pakaian yang digunakan sebelum eliminasi</label
+              >
+            </b>
+          </td>
+          <td style="color: #fff" bgcolor="#1C3F80">
             <input
               type="radio"
               name="pakaian-sblm-eliminasi"
@@ -2085,15 +2114,15 @@
           <td style="color: #fff" bgcolor="#1C3F80" width="20%">
             <b>BERMAIN/AKTIVITAS MULAI JAM :</b>
           </td>
-          <td style="color: #fff" bgcolor="#1C3F80">
+          <td bgcolor="#1C3F80">
             <input
+              style="color: black"
               type="text"
               name="mulai-jam-aktivitas"
               id="mulai-jam-aktivitas"
               label="mulai-jam-aktivitas"
               myid="check_cara"
               placeholder="00.00"
-              mtype="pukul"
             />
           </td>
         </tr>
@@ -2439,7 +2468,7 @@
               id="tanda-vital-bb"
               label="tanda-vital-bb"
               myid="check_cara"
-              size="15"
+              size="10"
               value="{VBB}"
               placeholder="......"
             />
@@ -2450,7 +2479,7 @@
               id="tanda-vital-tb"
               label="tanda-vital-tb"
               myid="check_cara"
-              size="15"
+              size="10"
               value="{VTB}"
               placeholder="......"
             />
@@ -2461,7 +2490,7 @@
               id="tanda-vital-nd"
               label="tanda-vital-nd"
               myid="check_cara"
-              size="15"
+              size="10"
               value="{VNADI}"
               placeholder="......"
             />
@@ -2472,7 +2501,7 @@
               id="tanda-vital-s"
               label="tanda-vital-s"
               myid="check_cara"
-              size="15"
+              size="10"
               value="{VSUHU}"
               placeholder="......"
             />
@@ -2483,7 +2512,7 @@
               id="tanda-vital-rr"
               label="tanda-vital-rr"
               myid="check_cara"
-              size="15"
+              size="10"
               value="{VNAFAS}"
               placeholder="......"
             />
@@ -2494,11 +2523,21 @@
               id="tanda-vital-td"
               label="tanda-vital-td"
               myid="check_cara"
-              size="15"
+              size="10"
               value="{VTD}"
               placeholder="......"
             />
-            <label for="">mmHg</label>
+            <label for="">mmHg, </label>
+            <label for="">Sp02 :</label>
+            <input
+              type="text"
+              name="tanda-vital-sp02"
+              id="tanda-vital-sp02"
+              label="tanda-vital-sp02"
+              myid="check_cara"
+              size="10"
+              placeholder="......"
+            />
           </td>
         </tr>
         <tr>
@@ -2543,7 +2582,14 @@
               value="Tidak simetris"
               myid="check_cara"
             />
-            <label for="">Tidak simetris, Lensa :</label>
+            <label for="">Tidak simetris</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td style="margin-left: 20px">&nbsp;</td>
+          <td>
+            <label for="">Lensa :</label>
             <input
               type="radio"
               name="pemeriksaan-lensa"
@@ -2569,7 +2615,6 @@
           <td style="margin-left: 20px">&nbsp;</td>
           <td>
             <label for="">Konjungtiva :</label>
-
             <input
               type="radio"
               name="pemeriksaan-konjungtiva"
@@ -2587,7 +2632,14 @@
               value="Tidak anemis"
               myid="check_cara"
             />
-            <label for="">Tidak anemis, Sklera :</label>
+            <label for="">Tidak anemis</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td style="margin-left: 20px">&nbsp;</td>
+          <td>
+            <label for="">Sklera :</label>
             <input
               type="radio"
               name="pemeriksaan-sklera"
@@ -2631,7 +2683,14 @@
               value="Tidak edema"
               myid="check_cara"
             />
-            <label for="">Tidak edema, Sekret :</label>
+            <label for="">Tidak edema</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td style="margin-left: 20px">&nbsp;</td>
+          <td>
+            <label for="">Sekret :</label>
             <input
               type="radio"
               name="pemeriksaan-sekret"
@@ -2734,7 +2793,30 @@
               myid="check_cara"
               value="Putih kebiruan/sianosis"
             />
-            <label for="">Putih kebiruan/sianosis, Lidah:</label>
+            <label for="">Putih kebiruan/sianosis</label>
+            <input
+              type="radio"
+              name="mulut-bibir"
+              id="mulut-bibir"
+              label="mulut-bibir"
+              myid="check_cara"
+              value="Lain - lain"
+            />
+            <label for="">Lain - lain</label>
+            <input
+              type="text"
+              name="lain-lain-mulut"
+              id="lain-lain-mulut"
+              label="lain-lain-mulut"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>
+            <label for="">Lidah:</label>
             <input
               type="checkbox"
               name="lidah-bersih"
@@ -2746,9 +2828,9 @@
             <label for="">Bersih</label>
             <input
               type="checkbox"
-              name="lidah-bersih"
-              id="lidah-bersih"
-              label="lidah-bersih"
+              name="lidah-putih-keabuan"
+              id="lidah-putih-keabuan"
+              label="lidah-putih-keabuan"
               myid="check_cara"
               value="Putih keabuan"
             />
@@ -2795,7 +2877,14 @@
               myid="check_cara"
               value="Karies"
             />
-            <label for="">Karies, Kesulitan menelan:</label>
+            <label for="">Karies</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>
+            <label for="">Kesulitan menelan:</label>
             <input
               type="radio"
               name="mulut-kesulitan-menelan"
@@ -2838,7 +2927,14 @@
               myid="check_cara"
               value="Asimetris"
             />
-            <label for="">Asimetris, Lubang:</label>
+            <label for="">Asimetris</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>
+            <label for="">Lubang:</label>
             <input
               type="checkbox"
               name="telinga-lubang-bersih"
@@ -2908,6 +3004,15 @@
               value="Tumor"
             />
             <label for="">Tumor</label>
+            <input
+              type="checkbox"
+              name="leher-normal"
+              id="leher-normal"
+              label="leher-normal"
+              myid="check_cara"
+              value="Normal"
+            />
+            <label for="">Normal</label>
           </td>
         </tr>
         <tr>
@@ -2973,7 +3078,14 @@
               myid="check_cara"
               value="Buncit"
             />
-            <label for="">Buncit, Umbicilus:</label>
+            <label for="">Buncit</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>
+            <label for="">Umbicilus:</label>
             <input
               type="radio"
               name="umbicilus-perut"
@@ -3032,7 +3144,7 @@
               id="warna-kulit-lainnya"
               label="warna-kulit-lainnya"
               myid="check_cara"
-              value=""
+              value="true"
             />
             <input
               type="text"
@@ -3135,15 +3247,13 @@
               myid="check_cara"
             />
             <label for="">Deformitas</label>
-            <input
-              type="checkbox"
-              name="bentuk-ekstremitas-motorik"
-              id="bentuk-ekstremitas-motorik"
-              label="bentuk-ekstremitas-motorik"
-              value="Motorik"
-              myid="check_cara"
-            />
-            <label for="">Motorik</label>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>
+            <label for="">Motorik:</label>
             <input
               type="radio"
               name="motorik"
@@ -3187,6 +3297,15 @@
               myid="check_cara"
             />
             <label for="">Phimosis</label>
+            <input
+              type="checkbox"
+              name="genitalia-laki-laki-lain-lain"
+              id="genitalia-laki-laki-lain-lain"
+              label="genitalia-laki-laki-lain-lain"
+              value="Lain - lain"
+              myid="check_cara"
+            />
+            <label for="">Lain - lain</label>
           </td>
         </tr>
         <tr>
@@ -3417,10 +3536,10 @@
                     </td>
                   </tr>
                   <!-- <tr>
-                                        <td colspan="6">
-                                            <div style="width:100%;border-bottom: 1px solid black;">&nbsp;</div>
-                                        </td>
-                                    </tr> -->
+                                          <td colspan="6">
+                                              <div style="width:100%;border-bottom: 1px solid black;">&nbsp;</div>
+                                          </td>
+                                      </tr> -->
                 </tbody>
               </table>
             </div>
@@ -3650,7 +3769,7 @@
           <td rowspan="4">Umur</td>
           <td>Di bawah 3 tahun</td>
           <td>4</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3666,7 +3785,7 @@
         <tr>
           <td>3 - 7 tahun</td>
           <td>3</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3682,7 +3801,7 @@
         <tr>
           <td>7 - 13 tahun</td>
           <td>2</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3698,7 +3817,7 @@
         <tr>
           <td>&gt; 13 tahun</td>
           <td>1</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3715,7 +3834,7 @@
           <td rowspan="2">Jenis Kelamin</td>
           <td>Laki - laki</td>
           <td>2</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3731,7 +3850,7 @@
         <tr>
           <td>Perempuan</td>
           <td>1</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3748,7 +3867,7 @@
           <td rowspan="4">Diagnosa</td>
           <td>Kelainan neurologi</td>
           <td>4</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3767,7 +3886,7 @@
             anemia, anoreksia, sinkop/sakit kepala, dll)
           </td>
           <td>3</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3784,7 +3903,7 @@
         <tr>
           <td>Kelainan psikis/perilaku</td>
           <td>2</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3800,7 +3919,7 @@
         <tr>
           <td>Diagnosis lain</td>
           <td>1</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3817,7 +3936,7 @@
           <td rowspan="3">Gangguan Kognitif</td>
           <td>Tidak sadar terhadap keterbatasan</td>
           <td>3</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3833,7 +3952,7 @@
         <tr>
           <td>Lupa keterbatasan</td>
           <td>2</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3849,7 +3968,7 @@
         <tr>
           <td>Mengetahui kemampuan diri</td>
           <td>1</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3866,7 +3985,7 @@
           <td rowspan="4">Faktor Lingkungan</td>
           <td>Riwayat jatuh dari tempat tidur saat bayi - anak</td>
           <td>4</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3882,7 +4001,7 @@
         <tr>
           <td>Pasien menggunakan alat bantu atau box atau mebel</td>
           <td>3</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3898,7 +4017,7 @@
         <tr>
           <td>Pasien berada di tempat tidur</td>
           <td>2</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3914,7 +4033,7 @@
         <tr>
           <td>Di luar area pasien</td>
           <td>1</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3933,7 +4052,7 @@
           </td>
           <td>Dalam 24 jam</td>
           <td>3</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3949,7 +4068,7 @@
         <tr>
           <td>Dalam 48 jam</td>
           <td>2</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3965,7 +4084,7 @@
         <tr>
           <td>&gt; 48 jam</td>
           <td>1</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -3986,7 +4105,7 @@
             fenotiazin, antidepresan, laksans/diuretika, narkotik
           </td>
           <td>3</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -4002,7 +4121,7 @@
         <tr>
           <td>Salah satu dari pengobatan di atas</td>
           <td>2</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -4018,7 +4137,7 @@
         <tr>
           <td>Pengobatan lain</td>
           <td>1</td>
-          <td>
+          <td style="text-align: center">
             <input
               type="radio"
               data-percol="2"
@@ -4036,6 +4155,7 @@
           <td>&nbsp;</td>
           <td>
             <input
+              style="text-align: center"
               type="text"
               readonly
               name="totalskor2"
@@ -4429,7 +4549,25 @@
                 myid="check_cara"
                 value="Indonesia"
               />
-              <label for="bahasa-sehari-hari">Indonesia, aktif / pasif</label>
+              <label for="bahasa-indonesia">Indonesia,</label>
+              <input
+                type="radio"
+                name="bahasa-indonesia"
+                id="bahasa-indonesia"
+                label="bahasa-indonesia"
+                myid="check_cara"
+                value="aktif"
+              />
+              <label for=""> aktif / </label>
+              <input
+                type="radio"
+                name="bahasa-indonesia"
+                id="bahasa-indonesia"
+                label="bahasa-indonesia"
+                myid="check_cara"
+                value="pasif"
+              />
+              <label for="">pasif</label>
             </div>
           </td>
           <td colspan="3">
@@ -4466,7 +4604,25 @@
                 myid="check_cara"
                 value="Inggris"
               />
-              <label for="bicara">Inggris, aktif / pasif</label>
+              <label for="bahasa-inggris">Inggris,</label>
+              <input
+                type="radio"
+                name="bahasa-inggris"
+                id="bahasa-inggris"
+                label="bahasa-inggris"
+                myid="check_cara"
+                value="aktif"
+              />
+              <label for=""> aktif / </label>
+              <input
+                type="radio"
+                name="bahasa-inggris"
+                id="bahasa-inggris"
+                label="bahasa-inggris"
+                myid="check_cara"
+                value="pasif"
+              />
+              <label for="">pasif</label>
             </div>
           </td>
           <td colspan="3">
@@ -4688,7 +4844,7 @@
           </td>
         </tr>
         <tr>
-          <td>Pasien bersedia menerima edukasi:</td>
+          <td>Orang tua pasien bersedia menerima edukasi:</td>
           <td colspan="3">
             <div style="display: flex">
               <div style="padding-left: 5px">
@@ -4731,7 +4887,7 @@
         </tr>
         <tr>
           <td width="2%">1.</td>
-          <td style="width: 20%"><label for="">Diagnosa medik :</label></td>
+          <td style="width: 20%"><label for="">Diagnosa medis :</label></td>
           <td>
             <input
               style="width: 100%"
@@ -4862,9 +5018,13 @@
         <tr>
           <td colspan="5">Penilai Awal</td>
         </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table">
+      <tbody>
         <tr>
-          <td><label for="">Bogor, Tanggal / pukul</label></td>
-          <td colspan="4">
+          <td width="20%"><label for="">Bogor, Tanggal / pukul</label></td>
+          <td colspan="2">
             <input
               type="text"
               name="tanggal-pengkajian-penilai-awal"
@@ -4872,7 +5032,7 @@
               label="tanggal-pengkajian-penilai-awal"
               myid="check_cara"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              class="datepicker"
             />
             <br />
             <input
@@ -4885,10 +5045,36 @@
               mtype="pukul"
             />
           </td>
+          <td>
+            <input
+              type="text"
+              name="tanggal-pengkajian-penilai-verifikasi"
+              id="tanggal-pengkajian-penilai-verifikasi"
+              label="tanggal-pengkajian-penilai-verifikasi"
+              myid="check_cara"
+              placeholder="dd-mm-yy"
+              class="datepicker"
+            />
+            <br />
+            <input
+              type="text"
+              name="pukul-pengkajian-penilai-verifikasi"
+              id="pukul-pengkajian-penilai-verifikasi"
+              label="pukul-pengkajian-penilai-verifikasi"
+              myid="check_cara"
+              placeholder="00.00"
+              mtype="pukul"
+            />
+          </td>
         </tr>
         <tr>
-          <td><label for="">Perawat Pengelola,</label></td>
-          <td colspan="4">
+          <td>&nbsp;</td>
+          <td colspan="2">Perawat Pengelola</td>
+          <td colspan="2">Perawat Verifikasi</td>
+        </tr>
+        <tr>
+          <td><label for="">Nama</label></td>
+          <td colspan="2">
             <input
               type="text"
               name="perawat-pengelola"
@@ -4897,7 +5083,21 @@
               myid="check_cara"
               placeholder="......"
             />
-            <br />
+          </td>
+          <td colspan="2">
+            <input
+              type="text"
+              name="perawat-verifikasi"
+              id="perawat-verifikasi"
+              label="perawat-verifikasi"
+              myid="check_cara"
+              placeholder="......"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Tanda tangan</td>
+          <td colspan="2">
             <label
               class="label text-center"
               id="def_img_ex_ttd_perawat_pengelola"
@@ -4932,60 +5132,43 @@
               </a>
             </label>
           </td>
+          <td colspan="2">
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_perawat_verifikasi"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_perawat_verifikasi"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_perawat_verifikasi"
+              id="paraf_ex_ttd_perawat_verifikasi"
+              data-name="paraf"
+              data-id="ex_ttd_perawat_verifikasi"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_perawat_verifikasi"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
         </tr>
       </tbody>
     </table>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var checkboxButtons = document.querySelectorAll(
-          'input[type="checkbox"]'
-        );
-        checkboxButtons.forEach(function (checkbox) {
-          checkbox.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var checkboxes = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              checkboxes.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

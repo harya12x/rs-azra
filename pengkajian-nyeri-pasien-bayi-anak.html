@@ -3,35 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PENGKAJIAN NYERI PASIEN BAYI / ANAK RS. AZRA BOGOR</title>
+    <title>PENGKAJIAN NYERI PASIEN BAYI / ANAK</title>
   </head>
-  <script
-    src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-    crossorigin="anonymous"
-  ></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -70,6 +60,13 @@
             }
           });
 
+          if (total >= 0 && total <= 3) {
+            total += `, Nyeri ringan`;
+          } else if (total >= 4 && total <= 6) {
+            total += `, Nyeri sedang`;
+          } else if (total >= 7 && total <= 10) {
+            total += `, Nyeri berat`;
+          }
           $(`#totalskor` + percol).val(total);
         });
     });
@@ -185,7 +182,7 @@
     }
   </script>
   <body>
-    <h1 class="title">PENGKAJIAN NYERI PASIEN BAYI / ANAK RS. AZRA BOGOR</h1>
+    <h1 class="title">PENGKAJIAN NYERI PASIEN BAYI / ANAK</h1>
 
     <table class="table-bordered" width="100%">
       <tbody>
@@ -239,8 +236,8 @@
               name="tgl_lahir"
               type="text"
               id="tgl_lahir"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              placeholder="dd/mm/yyyy"
+              value="{VBIRTH_DATE}"
               myid="check_cara"
               label="tanggal lahir"
             />
@@ -255,7 +252,7 @@
               id="umur"
               myid="check_cara"
               placeholder="..."
-              value="{VAGE}"
+              value="{VAGEREGIS}"
             />
           </td>
           <td>
@@ -283,2069 +280,2083 @@
               myid="check_cara"
               placeholder="..."
               label="kamar"
-              value="{VNAMARUANGAN}"
             />
           </td>
         </tr>
       </tbody>
     </table>
 
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th rowspan="2" colspan="2">KATEGORI</th>
-          <th>TGL</th>
-          <th>
-            <input
-              style="width: 100%"
-              type="text"
-              name="tgl-pengkajian-1"
-              id="tgl-pengkajian-1"
-              myid="check_cara"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
-            />
-          </th>
-          <th>
-            <input
-              style="width: 100%"
-              type="text"
-              name="tgl-pengkajian-2"
-              id="tgl-pengkajian-2"
-              myid="check_cara"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
-            />
-          </th>
-          <th>
-            <input
-              style="width: 100%"
-              type="text"
-              name="tgl-pengkajian-3"
-              id="tgl-pengkajian-3"
-              myid="check_cara"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
-            />
-          </th>
-          <th>
-            <input
-              style="width: 100%"
-              type="text"
-              name="tgl-pengkajian-4"
-              id="tgl-pengkajian-4"
-              myid="check_cara"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
-            />
-          </th>
-          <th>
-            <input
-              style="width: 100%"
-              type="text"
-              name="tgl-pengkajian-5"
-              id="tgl-pengkajian-5"
-              myid="check_cara"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
-            />
-          </th>
-          <th>
-            <input
-              style="width: 100%"
-              type="text"
-              name="tgl-pengkajian-6"
-              id="tgl-pengkajian-6"
-              myid="check_cara"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
-            />
-          </th>
-          <th>
-            <input
-              style="width: 100%"
-              type="text"
-              name="tgl-pengkajian-7"
-              id="tgl-pengkajian-7"
-              myid="check_cara"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
-            />
-          </th>
-        </tr>
-        <tr>
-          <th>JAM</th>
-          <th>
-            <input
-              style="width: 100%"
-              type="text"
-              name="jam-pengkajian-1"
-              id="jam-pengkajian-1"
-              myid="check_cara"
-              placeholder="00.00"
-              mtype="pukul"
-            />
-          </th>
-          <th>
-            <input
-              style="width: 100%"
-              type="text"
-              name="jam-pengkajian-2"
-              id="jam-pengkajian-2"
-              myid="check_cara"
-              placeholder="00.00"
-              mtype="pukul"
-            />
-          </th>
-          <th>
-            <input
-              style="width: 100%"
-              type="text"
-              name="jam-pengkajian-3"
-              id="jam-pengkajian-3"
-              myid="check_cara"
-              placeholder="00.00"
-              mtype="pukul"
-            />
-          </th>
-          <th>
-            <input
-              style="width: 100%"
-              type="text"
-              name="jam-pengkajian-4"
-              id="jam-pengkajian-4"
-              myid="check_cara"
-              placeholder="00.00"
-              mtype="pukul"
-            />
-          </th>
-          <th>
-            <input
-              style="width: 100%"
-              type="text"
-              name="jam-pengkajian-5"
-              id="jam-pengkajian-5"
-              myid="check_cara"
-              placeholder="00.00"
-              mtype="pukul"
-            />
-          </th>
-          <th>
-            <input
-              style="width: 100%"
-              type="text"
-              name="jam-pengkajian-6"
-              id="jam-pengkajian-6"
-              myid="check_cara"
-              placeholder="00.00"
-              mtype="pukul"
-            />
-          </th>
-          <th>
-            <input
-              style="width: 100%"
-              type="text"
-              name="jam-pengkajian-7"
-              id="jam-pengkajian-7"
-              myid="check_cara"
-              placeholder="00.00"
-              mtype="pukul"
-            />
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="text-align: center" rowspan="3"><b>WAJAH</b></td>
-          <td>Tidak ada ekspresi yang khusus (seperti senyum)</td>
-          <td style="text-align: center">0</td>
-          <td>
-            <input
-              style="width: 100%"
-              class="skor-kategori-1"
-              data-percol="1"
-              data-hitung1="1"
-              type="radio"
-              name="wajah-1"
-              myid="check_cara"
-              value="0"
-              id="wajah-1"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-2"
-              data-percol="2"
-              data-hitung2="2"
-              name="wajah-2"
-              myid="check_cara"
-              value="0"
-              id="wajah-2"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-3"
-              data-percol="3"
-              data-hitung3="3"
-              name="wajah-3"
-              myid="check_cara"
-              id="wajah-3"
-              value="0"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-4"
-              data-percol="4"
-              data-hitung4="4"
-              name="wajah-4"
-              myid="check_cara"
-              id="wajah-4"
-              value="0"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-5"
-              data-percol="5"
-              data-hitung5="5"
-              name="wajah-5"
-              myid="check_cara"
-              value="0"
-              id="wajah-5"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-6"
-              data-percol="6"
-              data-hitung6="6"
-              name="wajah-6"
-              myid="check_cara"
-              value="0"
-              id="wajah-6"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-7"
-              data-percol="7"
-              data-hitung7="7"
-              name="wajah-7"
-              myid="check_cara"
-              value="0"
-              id="wajah-7"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Kadang menangis atau mengerutkan dahi, menarik diri</td>
-          <td style="text-align: center">1</td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-1"
-              data-percol="1"
-              data-hitung1="1"
-              value="1"
-              name="wajah-1"
-              id="wajah-1"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-2"
-              data-percol="2"
-              data-hitung2="2"
-              value="1"
-              name="wajah-2"
-              id="wajah-2"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-3"
-              data-percol="3"
-              data-hitung3="3"
-              value="1"
-              name="wajah-3"
-              myid="check_cara"
-              id="wajah-3"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-4"
-              data-percol="4"
-              data-hitung4="4"
-              value="1"
-              name="wajah-4"
-              myid="check_cara"
-              id="wajah-4"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-5"
-              data-percol="5"
-              data-hitung5="5"
-              value="1"
-              name="wajah-5"
-              myid="check_cara"
-              id="wajah-5"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-6"
-              data-percol="6"
-              data-hitung6="6"
-              value="1"
-              name="wajah-6"
-              myid="check_cara"
-              id="wajah-6"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-7"
-              data-percol="7"
-              data-hitung7="7"
-              value="1"
-              name="wajah-7"
-              myid="check_cara"
-              id="wajah-7"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            Sering / terus - menerus mengerutkan dahi, rahang mengatup dagu
-            bergetar
-          </td>
-          <td style="text-align: center">2</td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-1"
-              data-percol="1"
-              data-hitung1="1"
-              name="wajah-1"
-              myid="check_cara"
-              value="2"
-              id="wajah-1"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-2"
-              data-percol="2"
-              data-hitung2="2"
-              name="wajah-2"
-              myid="check_cara"
-              value="2"
-              id="wajah-2"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-3"
-              data-percol="3"
-              data-hitung3="3"
-              name="wajah-3"
-              myid="check_cara"
-              value="2"
-              id="wajah-3"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-4"
-              data-percol="4"
-              data-hitung4="4"
-              name="wajah-4"
-              myid="check_cara"
-              value="2"
-              id="wajah-4"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-5"
-              data-percol="5"
-              data-hitung5="5"
-              name="wajah-5"
-              myid="check_cara"
-              value="2"
-              id="wajah-5"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-6"
-              data-percol="6"
-              data-hitung6="6"
-              name="wajah-6"
-              myid="check_cara"
-              value="2"
-              id="wajah-6"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-7"
-              data-percol="7"
-              data-hitung7="7"
-              name="wajah-7"
-              myid="check_cara"
-              value="2"
-              id="wajah-7"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td style="text-align: center" rowspan="3"><b>EKSTREMITAS</b></td>
-          <td>Posisi normal / rileks</td>
-          <td style="text-align: center">0</td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-1"
-              data-percol="1"
-              data-hitung1="1"
-              name="ekstremitas-1"
-              myid="check_cara"
-              value="0"
-              id="ekstremitas-1"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-2"
-              data-percol="2"
-              data-hitung2="2"
-              name="ekstremitas-2"
-              myid="check_cara"
-              value="0"
-              id="ekstremitas-2"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-3"
-              data-percol="3"
-              data-hitung3="3"
-              name="ekstremitas-3"
-              myid="check_cara"
-              value="0"
-              id="ekstremitas-3"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-4"
-              data-percol="4"
-              data-hitung4="4"
-              name="ekstremitas-4"
-              myid="check_cara"
-              value="0"
-              id="ekstremitas-4"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-5"
-              data-percol="5"
-              data-hitung5="5"
-              name="ekstremitas-5"
-              myid="check_cara"
-              value="0"
-              id="ekstremitas-5"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-6"
-              data-percol="6"
-              data-hitung6="6"
-              name="ekstremitas-6"
-              myid="check_cara"
-              value="0"
-              id="ekstremitas-6"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-7"
-              data-percol="7"
-              data-hitung7="7"
-              name="ekstremitas-7"
-              myid="check_cara"
-              value="0"
-              id="ekstremitas-7"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Tidak tenang, gelisah, tegang</td>
-          <td style="text-align: center">1</td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-1"
-              data-percol="1"
-              data-hitung1="1"
-              name="ekstremitas-1"
-              myid="check_cara"
-              value="1"
-              id="ekstremitas-1"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-2"
-              data-percol="2"
-              data-hitung2="2"
-              name="ekstremitas-2"
-              myid="check_cara"
-              value="1"
-              id="ekstremitas-2"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-3"
-              data-percol="3"
-              data-hitung3="3"
-              name="ekstremitas-3"
-              myid="check_cara"
-              value="1"
-              id="ekstremitas-3"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-4"
-              data-percol="4"
-              data-hitung4="4"
-              name="ekstremitas-4"
-              myid="check_cara"
-              value="1"
-              id="ekstremitas-4"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-5"
-              data-percol="5"
-              data-hitung5="5"
-              name="ekstremitas-5"
-              myid="check_cara"
-              value="1"
-              id="ekstremitas-5"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-6"
-              data-percol="6"
-              data-hitung6="6"
-              name="ekstremitas-6"
-              myid="check_cara"
-              value="1"
-              id="ekstremitas-6"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-7"
-              data-percol="7"
-              data-hitung7="7"
-              name="ekstremitas-7"
-              myid="check_cara"
-              value="1"
-              id="ekstremitas-7"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Menendang atau menarik diri</td>
-          <td style="text-align: center">2</td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-1"
-              data-percol="1"
-              data-hitung1="1"
-              name="ekstremitas-1"
-              myid="check"
-              value="2"
-              id="ekstremitas-1"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-2"
-              data-percol="2"
-              data-hitung2="2"
-              name="ekstremitas-2"
-              myid="check"
-              value="2"
-              id="ekstremitas-2"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-3"
-              data-percol="3"
-              data-hitung3="3"
-              name="ekstremitas-3"
-              myid="check"
-              value="2"
-              id="ekstremitas-3"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-4"
-              data-percol="4"
-              data-hitung4="4"
-              name="ekstremitas-4"
-              myid="check"
-              value="2"
-              id="ekstremitas-4"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-5"
-              data-percol="5"
-              data-hitung5="5"
-              name="ekstremitas-5"
-              myid="check"
-              value="2"
-              id="ekstremitas-5"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-6"
-              data-percol="6"
-              data-hitung6="6"
-              name="ekstremitas-6"
-              myid="check"
-              value="2"
-              id="ekstremitas-6"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-7"
-              data-percol="7"
-              data-hitung7="7"
-              name="ekstremitas-7"
-              myid="check"
-              value="2"
-              id="ekstremitas-7"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td style="text-align: center" rowspan="3"><b>GERAKAN</b></td>
-          <td>Berbaring tenang, posisi normal, bergerak mudah</td>
-          <td style="text-align: center">0</td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-1"
-              data-percol="1"
-              data-hitung1="1"
-              value="0"
-              name="gerakan-1"
-              id="gerakan-1"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-2"
-              data-percol="2"
-              data-hitung2="2"
-              value="0"
-              name="gerakan-2"
-              id="gerakan-2"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-3"
-              data-percol="3"
-              data-hitung3="3"
-              value="0"
-              name="gerakan-3"
-              id="gerakan-3"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-4"
-              data-percol="4"
-              data-hitung4="4"
-              value="0"
-              name="gerakan-4"
-              id="gerakan-4"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-5"
-              data-percol="5"
-              data-hitung5="5"
-              value="0"
-              name="gerakan-5"
-              id="gerakan-5"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-6"
-              data-percol="6"
-              data-hitung6="6"
-              value="0"
-              name="gerakan-6"
-              id="gerakan-6"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-7"
-              data-percol="7"
-              data-hitung7="7"
-              value="0"
-              name="gerakan-7"
-              id="gerakan-7"
-              myid="check_cara"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Menggeliat - geliat, bolak - balik berpindah, tegang</td>
-          <td style="text-align: center">1</td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-1"
-              data-percol="1"
-              data-hitung1="1"
-              name="gerakan-1"
-              value="1"
-              id="gerakan-1"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-2"
-              data-percol="2"
-              data-hitung2="2"
-              name="gerakan-2"
-              value="1"
-              id="gerakan-2"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-3"
-              data-percol="3"
-              data-hitung3="3"
-              name="gerakan-3"
-              value="1"
-              id="gerakan-3"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-4"
-              data-percol="4"
-              data-hitung4="4"
-              name="gerakan-4"
-              value="1"
-              id="gerakan-4"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-5"
-              data-percol="5"
-              data-hitung5="5"
-              name="gerakan-5"
-              value="1"
-              id="gerakan-5"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-6"
-              data-percol="6"
-              data-hitung6="6"
-              name="gerakan-6"
-              value="1"
-              id="gerakan-6"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-7"
-              data-percol="7"
-              data-hitung7="7"
-              name="gerakan-7"
-              value="1"
-              id="gerakan-7"
-              myid="check_cara"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Posisi tubuh meringkuk, kaku / spasme atau menyentak</td>
-          <td style="text-align: center">2</td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-1"
-              data-percol="1"
-              data-hitung1="1"
-              name="gerakan-1"
-              value="2"
-              id="gerakan-1"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-2"
-              data-percol="2"
-              data-hitung2="2"
-              name="gerakan-2"
-              value="2"
-              id="gerakan-2"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-3"
-              data-percol="3"
-              data-hitung3="3"
-              name="gerakan-3"
-              value="2"
-              id="gerakan-3"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-4"
-              data-percol="4"
-              data-hitung4="4"
-              name="gerakan-4"
-              value="2"
-              id="gerakan-4"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-5"
-              data-percol="5"
-              data-hitung5="5"
-              name="gerakan-5"
-              value="2"
-              id="gerakan-5"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-6"
-              data-percol="6"
-              data-hitung6="6"
-              name="gerakan-6"
-              value="2"
-              id="gerakan-6"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-7"
-              data-percol="7"
-              data-hitung7="7"
-              name="gerakan-7"
-              value="2"
-              id="gerakan-7"
-              myid="check_cara"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td style="text-align: center" rowspan="3"><b>MENANGIS</b></td>
-          <td>Tidak menangis</td>
-          <td style="text-align: center">0</td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-1"
-              data-percol="1"
-              data-hitung1="1"
-              name="menangis-1"
-              id="menangis-1"
-              value="0"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-2"
-              data-percol="2"
-              data-hitung2="2"
-              name="menangis-2"
-              id="menangis-2"
-              value="0"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-3"
-              data-percol="3"
-              data-hitung3="3"
-              name="menangis-3"
-              id="menangis-3"
-              value="0"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-4"
-              data-percol="4"
-              data-hitung4="4"
-              name="menangis-4"
-              id="menangis-4"
-              value="0"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-5"
-              data-percol="5"
-              data-hitung5="5"
-              name="menangis-5"
-              id="menangis-5"
-              value="0"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-6"
-              data-percol="6"
-              data-hitung6="6"
-              name="menangis-6"
-              id="menangis-6"
-              value="0"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-7"
-              data-percol="7"
-              data-hitung7="7"
-              name="menangis-7"
-              id="menangis-7"
-              value="0"
-              myid="check_cara"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Merintih, merengek, kadang mengeluh</td>
-          <td style="text-align: center">1</td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-1"
-              data-percol="1"
-              data-hitung1="1"
-              name="menangis-1"
-              value="1"
-              id="menangis-1"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-2"
-              data-percol="2"
-              data-hitung2="2"
-              name="menangis-2"
-              value="1"
-              id="menangis-2"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-3"
-              data-percol="3"
-              data-hitung3="3"
-              name="menangis-3"
-              value="1"
-              id="menangis-3"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-4"
-              data-percol="4"
-              data-hitung4="4"
-              name="menangis-4"
-              value="1"
-              id="menangis-4"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-5"
-              data-percol="5"
-              data-hitung5="5"
-              name="menangis-5"
-              value="1"
-              id="menangis-5"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-6"
-              data-percol="6"
-              data-hitung6="6"
-              name="menangis-6"
-              value="1"
-              id="menangis-6"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-7"
-              data-percol="7"
-              data-hitung7="7"
-              name="menangis-7"
-              value="1"
-              id="menangis-7"
-              myid="check_cara"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Menangis tersedu - sedu, terisak - isak, menjerit</td>
-          <td style="text-align: center">2</td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-1"
-              data-percol="1"
-              data-hitung1="1"
-              name="menangis-1"
-              value="2"
-              id="menangis-1"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-2"
-              data-percol="2"
-              data-hitung2="2"
-              name="menangis-2"
-              value="2"
-              id="menangis-2"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-3"
-              data-percol="3"
-              data-hitung3="3"
-              name="menangis-3"
-              value="2"
-              id="menangis-3"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-4"
-              data-percol="4"
-              data-hitung4="4"
-              name="menangis-4"
-              value="2"
-              id="menangis-4"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-5"
-              data-percol="5"
-              data-hitung5="5"
-              name="menangis-5"
-              value="2"
-              id="menangis-5"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-6"
-              data-percol="6"
-              data-hitung6="6"
-              name="menangis-6"
-              value="2"
-              id="menangis-6"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-7"
-              data-percol="7"
-              data-hitung7="7"
-              name="menangis-7"
-              value="2"
-              id="menangis-7"
-              myid="check_cara"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td style="text-align: center" rowspan="3">
-            <b>KEMAMPUAN DITENANGKAN</b>
-          </td>
-          <td>Senang, rileks</td>
-          <td style="text-align: center">0</td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-1"
-              data-percol="1"
-              data-hitung1="1"
-              name="kemampuan-ditenangkan-1"
-              id="kemampuan-ditenangkan-1"
-              value="0"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-2"
-              data-percol="2"
-              data-hitung2="2"
-              name="kemampuan-ditenangkan-2"
-              id="kemampuan-ditenangkan-2"
-              value="0"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-3"
-              data-percol="3"
-              data-hitung3="3"
-              name="kemampuan-ditenangkan-3"
-              id="kemampuan-ditenangkan-3"
-              value="0"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-4"
-              data-percol="4"
-              data-hitung4="4"
-              name="kemampuan-ditenangkan-4"
-              id="kemampuan-ditenangkan-4"
-              value="0"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-5"
-              data-percol="5"
-              data-hitung5="5"
-              name="kemampuan-ditenangkan-5"
-              id="kemampuan-ditenangkan-5"
-              value="0"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-6"
-              data-percol="6"
-              data-hitung6="6"
-              name="kemampuan-ditenangkan-6"
-              id="kemampuan-ditenangkan-6"
-              value="0"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-7"
-              data-percol="7"
-              data-hitung7="7"
-              name="kemampuan-ditenangkan-7"
-              id="kemampuan-ditenangkan-7"
-              value="0"
-              myid="check_cara"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            Dapat ditenangkan dengan sentuhan, pelukan, atau berbicara dapat
-            dialihkan
-          </td>
-          <td style="text-align: center">1</td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-1"
-              data-percol="1"
-              data-hitung1="1"
-              name="kemampuan-ditenangkan-1"
-              value="1"
-              id="kemampuan-ditenangkan-1"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-2"
-              data-percol="2"
-              data-hitung2="2"
-              name="kemampuan-ditenangkan-2"
-              value="1"
-              id="kemampuan-ditenangkan-2"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-3"
-              data-percol="3"
-              data-hitung3="3"
-              name="kemampuan-ditenangkan-3"
-              value="1"
-              id="kemampuan-ditenangkan-3"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-4"
-              data-percol="4"
-              data-hitung4="4"
-              name="kemampuan-ditenangkan-4"
-              value="1"
-              id="kemampuan-ditenangkan-4"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-5"
-              data-percol="5"
-              data-hitung5="5"
-              name="kemampuan-ditenangkan-5"
-              value="1"
-              id="kemampuan-ditenangkan-5"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-6"
-              data-percol="6"
-              data-hitung6="6"
-              name="kemampuan-ditenangkan-6"
-              value="1"
-              id="kemampuan-ditenangkan-6"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-7"
-              data-percol="7"
-              data-hitung7="7"
-              name="kemampuan-ditenangkan-7"
-              value="1"
-              id="kemampuan-ditenangkan-7"
-              myid="check_cara"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            Sulit / tidak dapat ditenagkan dengan pelukan, sentuhan, atau
-            distraksi
-          </td>
-          <td style="text-align: center">2</td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-1"
-              data-percol="1"
-              data-hitung1="1"
-              name="kemampuan-ditenangkan-1"
-              value="2"
-              id="kemampuan-ditenangkan-1"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-2"
-              data-percol="2"
-              data-hitung2="2"
-              name="kemampuan-ditenangkan-2"
-              value="2"
-              id="kemampuan-ditenangkan-2"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-3"
-              data-percol="3"
-              data-hitung3="3"
-              name="kemampuan-ditenangkan-3"
-              value="2"
-              id="kemampuan-ditenangkan-3"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-4"
-              data-percol="4"
-              data-hitung4="4"
-              name="kemampuan-ditenangkan-4"
-              value="2"
-              id="kemampuan-ditenangkan-4"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-5"
-              data-percol="5"
-              data-hitung5="5"
-              name="kemampuan-ditenangkan-5"
-              value="2"
-              id="kemampuan-ditenangkan-5"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-6"
-              data-percol="6"
-              data-hitung6="6"
-              name="kemampuan-ditenangkan-6"
-              value="2"
-              id="kemampuan-ditenangkan-6"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              style="width: 100%"
-              type="radio"
-              class="skor-kategori-7"
-              data-percol="7"
-              data-hitung7="7"
-              name="kemampuan-ditenangkan-7"
-              value="2"
-              id="kemampuan-ditenangkan-7"
-              myid="check_cara"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td style="text-align: center" colspan="2">
-            <b>SKOR TOTAL</b>
-          </td>
-          <td>&nbsp;</td>
-          <td>
-            <input
-              readonly
-              type="text"
-              name="totalskor1"
-              style="text-align: center"
-              id="totalskor1"
-              label="totalskor1"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              readonly
-              type="text"
-              name="totalskor2"
-              style="text-align: center"
-              id="totalskor2"
-              label="totalskor2"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              readonly
-              type="text"
-              name="totalskor3"
-              style="text-align: center"
-              id="totalskor3"
-              label="totalskor3"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              readonly
-              type="text"
-              name="totalskor4"
-              style="text-align: center"
-              id="totalskor4"
-              label="totalskor4"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              readonly
-              type="text"
-              name="totalskor5"
-              style="text-align: center"
-              id="totalskor5"
-              label="totalskor5"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              readonly
-              type="text"
-              name="totalskor6"
-              style="text-align: center"
-              id="totalskor6"
-              label="totalskor6"
-              myid="check_cara"
-            />
-          </td>
-          <td>
-            <input
-              readonly
-              type="text"
-              name="totalskor7"
-              style="text-align: center"
-              id="totalskor7"
-              label="totalskor7"
-              myid="check_cara"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td style="text-align: center" colspan="2">
-            <b>NAMA & TANDA TANGAN PERAWAT</b>
-          </td>
-          <td>&nbsp;</td>
-          <td>
-            <div class="ttd-1">
+    <div id="table-container" style="overflow-x: auto">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th rowspan="2" colspan="2">KATEGORI</th>
+            <th>TGL</th>
+            <th>
               <input
+                style="width: 100%; text-align: center; padding: 0"
                 type="text"
-                name="nama-perawat-1"
-                id="nama-perawat-1"
-                label="nama-perawat-1"
+                name="tgl-pengkajian-1"
+                id="tgl-pengkajian-1"
                 myid="check_cara"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
               />
-              <br />
-              <label
-                class="label text-center"
-                id="def_img_ex_ttd_nama_perawat_1"
-                style="font-style: italic; width: 100px; height: 100px"
-                >paraf</label
-              >
-              <label class="label text-center">
-                <img
-                  class="text-center"
-                  id="image_paraf_ex_ttd_nama_perawat_1"
-                  src=""
-                  style="display: none"
-              /></label>
+            </th>
+            <th>
               <input
+                style="width: 100%; text-align: center; padding: 0"
+                type="text"
+                name="tgl-pengkajian-2"
+                id="tgl-pengkajian-2"
                 myid="check_cara"
-                type="hidden"
-                name="paraf_ex_ttd_nama_perawat_1"
-                id="paraf_ex_ttd_nama_perawat_1"
-                data-name="paraf"
-                data-id="ex_ttd_nama_perawat_1"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
               />
-              <br />
-              <label class="label text-center">
-                <a
-                  id="CreateTTD"
-                  class="btn btn-default btn-xs pointer text-center"
+            </th>
+            <th>
+              <input
+                style="width: 100%; text-align: center; padding: 0"
+                type="text"
+                name="tgl-pengkajian-3"
+                id="tgl-pengkajian-3"
+                myid="check_cara"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+              />
+            </th>
+            <th>
+              <input
+                style="width: 100%; text-align: center; padding: 0"
+                type="text"
+                name="tgl-pengkajian-4"
+                id="tgl-pengkajian-4"
+                myid="check_cara"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+              />
+            </th>
+            <th>
+              <input
+                style="width: 100%; text-align: center; padding: 0"
+                type="text"
+                name="tgl-pengkajian-5"
+                id="tgl-pengkajian-5"
+                myid="check_cara"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+              />
+            </th>
+            <th>
+              <input
+                style="width: 100%; text-align: center; padding: 0"
+                type="text"
+                name="tgl-pengkajian-6"
+                id="tgl-pengkajian-6"
+                myid="check_cara"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+              />
+            </th>
+            <th>
+              <input
+                style="width: 100%; text-align: center; padding: 0"
+                type="text"
+                name="tgl-pengkajian-7"
+                id="tgl-pengkajian-7"
+                myid="check_cara"
+                placeholder="dd/mm/yyyy"
+                class="datepicker"
+              />
+            </th>
+          </tr>
+          <tr>
+            <th>JAM</th>
+            <th>
+              <input
+                style="width: 100%; text-align: center; padding: 0"
+                type="text"
+                name="jam-pengkajian-1"
+                id="jam-pengkajian-1"
+                myid="check_cara"
+                placeholder="00.00"
+                mtype="pukul"
+              />
+            </th>
+            <th>
+              <input
+                style="width: 100%; text-align: center; padding: 0"
+                type="text"
+                name="jam-pengkajian-2"
+                id="jam-pengkajian-2"
+                myid="check_cara"
+                placeholder="00.00"
+                mtype="pukul"
+              />
+            </th>
+            <th>
+              <input
+                style="width: 100%; text-align: center; padding: 0"
+                type="text"
+                name="jam-pengkajian-3"
+                id="jam-pengkajian-3"
+                myid="check_cara"
+                placeholder="00.00"
+                mtype="pukul"
+              />
+            </th>
+            <th>
+              <input
+                style="width: 100%; text-align: center; padding: 0"
+                type="text"
+                name="jam-pengkajian-4"
+                id="jam-pengkajian-4"
+                myid="check_cara"
+                placeholder="00.00"
+                mtype="pukul"
+              />
+            </th>
+            <th>
+              <input
+                style="width: 100%; text-align: center; padding: 0"
+                type="text"
+                name="jam-pengkajian-5"
+                id="jam-pengkajian-5"
+                myid="check_cara"
+                placeholder="00.00"
+                mtype="pukul"
+              />
+            </th>
+            <th>
+              <input
+                style="width: 100%; text-align: center; padding: 0"
+                type="text"
+                name="jam-pengkajian-6"
+                id="jam-pengkajian-6"
+                myid="check_cara"
+                placeholder="00.00"
+                mtype="pukul"
+              />
+            </th>
+            <th>
+              <input
+                style="width: 100%; text-align: center; padding: 0"
+                type="text"
+                name="jam-pengkajian-7"
+                id="jam-pengkajian-7"
+                myid="check_cara"
+                placeholder="00.00"
+                mtype="pukul"
+              />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="text-align: center" rowspan="3"><b>WAJAH</b></td>
+            <td>Tidak ada ekspresi yang khusus (seperti senyum)</td>
+            <td style="text-align: center">0</td>
+            <td>
+              <input
+                style="width: 100%"
+                class="skor-kategori-1"
+                data-percol="1"
+                data-hitung1="1"
+                type="radio"
+                name="wajah-1"
+                myid="check_cara"
+                value="0"
+                id="wajah-1"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-2"
+                data-percol="2"
+                data-hitung2="2"
+                name="wajah-2"
+                myid="check_cara"
+                value="0"
+                id="wajah-2"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-3"
+                data-percol="3"
+                data-hitung3="3"
+                name="wajah-3"
+                myid="check_cara"
+                id="wajah-3"
+                value="0"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-4"
+                data-percol="4"
+                data-hitung4="4"
+                name="wajah-4"
+                myid="check_cara"
+                id="wajah-4"
+                value="0"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-5"
+                data-percol="5"
+                data-hitung5="5"
+                name="wajah-5"
+                myid="check_cara"
+                value="0"
+                id="wajah-5"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-6"
+                data-percol="6"
+                data-hitung6="6"
+                name="wajah-6"
+                myid="check_cara"
+                value="0"
+                id="wajah-6"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-7"
+                data-percol="7"
+                data-hitung7="7"
+                name="wajah-7"
+                myid="check_cara"
+                value="0"
+                id="wajah-7"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Kadang menangis atau mengerutkan dahi, menarik diri</td>
+            <td style="text-align: center">1</td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-1"
+                data-percol="1"
+                data-hitung1="1"
+                value="1"
+                name="wajah-1"
+                id="wajah-1"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-2"
+                data-percol="2"
+                data-hitung2="2"
+                value="1"
+                name="wajah-2"
+                id="wajah-2"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-3"
+                data-percol="3"
+                data-hitung3="3"
+                value="1"
+                name="wajah-3"
+                myid="check_cara"
+                id="wajah-3"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-4"
+                data-percol="4"
+                data-hitung4="4"
+                value="1"
+                name="wajah-4"
+                myid="check_cara"
+                id="wajah-4"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-5"
+                data-percol="5"
+                data-hitung5="5"
+                value="1"
+                name="wajah-5"
+                myid="check_cara"
+                id="wajah-5"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-6"
+                data-percol="6"
+                data-hitung6="6"
+                value="1"
+                name="wajah-6"
+                myid="check_cara"
+                id="wajah-6"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-7"
+                data-percol="7"
+                data-hitung7="7"
+                value="1"
+                name="wajah-7"
+                myid="check_cara"
+                id="wajah-7"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Sering / terus - menerus mengerutkan dahi, rahang mengatup dagu
+              bergetar
+            </td>
+            <td style="text-align: center">2</td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-1"
+                data-percol="1"
+                data-hitung1="1"
+                name="wajah-1"
+                myid="check_cara"
+                value="2"
+                id="wajah-1"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-2"
+                data-percol="2"
+                data-hitung2="2"
+                name="wajah-2"
+                myid="check_cara"
+                value="2"
+                id="wajah-2"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-3"
+                data-percol="3"
+                data-hitung3="3"
+                name="wajah-3"
+                myid="check_cara"
+                value="2"
+                id="wajah-3"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-4"
+                data-percol="4"
+                data-hitung4="4"
+                name="wajah-4"
+                myid="check_cara"
+                value="2"
+                id="wajah-4"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-5"
+                data-percol="5"
+                data-hitung5="5"
+                name="wajah-5"
+                myid="check_cara"
+                value="2"
+                id="wajah-5"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-6"
+                data-percol="6"
+                data-hitung6="6"
+                name="wajah-6"
+                myid="check_cara"
+                value="2"
+                id="wajah-6"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-7"
+                data-percol="7"
+                data-hitung7="7"
+                name="wajah-7"
+                myid="check_cara"
+                value="2"
+                id="wajah-7"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center; border-top: 2px solid" rowspan="3">
+              <b>EKSTREMITAS</b>
+            </td>
+            <td style="border-top: 2px solid">Posisi normal / rileks</td>
+            <td style="text-align: center; border-top: 2px solid">0</td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-1"
+                data-percol="1"
+                data-hitung1="1"
+                name="ekstremitas-1"
+                myid="check_cara"
+                value="0"
+                id="ekstremitas-1"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-2"
+                data-percol="2"
+                data-hitung2="2"
+                name="ekstremitas-2"
+                myid="check_cara"
+                value="0"
+                id="ekstremitas-2"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-3"
+                data-percol="3"
+                data-hitung3="3"
+                name="ekstremitas-3"
+                myid="check_cara"
+                value="0"
+                id="ekstremitas-3"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-4"
+                data-percol="4"
+                data-hitung4="4"
+                name="ekstremitas-4"
+                myid="check_cara"
+                value="0"
+                id="ekstremitas-4"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-5"
+                data-percol="5"
+                data-hitung5="5"
+                name="ekstremitas-5"
+                myid="check_cara"
+                value="0"
+                id="ekstremitas-5"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-6"
+                data-percol="6"
+                data-hitung6="6"
+                name="ekstremitas-6"
+                myid="check_cara"
+                value="0"
+                id="ekstremitas-6"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-7"
+                data-percol="7"
+                data-hitung7="7"
+                name="ekstremitas-7"
+                myid="check_cara"
+                value="0"
+                id="ekstremitas-7"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Tidak tenang, gelisah, tegang</td>
+            <td style="text-align: center">1</td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-1"
+                data-percol="1"
+                data-hitung1="1"
+                name="ekstremitas-1"
+                myid="check_cara"
+                value="1"
+                id="ekstremitas-1"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-2"
+                data-percol="2"
+                data-hitung2="2"
+                name="ekstremitas-2"
+                myid="check_cara"
+                value="1"
+                id="ekstremitas-2"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-3"
+                data-percol="3"
+                data-hitung3="3"
+                name="ekstremitas-3"
+                myid="check_cara"
+                value="1"
+                id="ekstremitas-3"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-4"
+                data-percol="4"
+                data-hitung4="4"
+                name="ekstremitas-4"
+                myid="check_cara"
+                value="1"
+                id="ekstremitas-4"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-5"
+                data-percol="5"
+                data-hitung5="5"
+                name="ekstremitas-5"
+                myid="check_cara"
+                value="1"
+                id="ekstremitas-5"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-6"
+                data-percol="6"
+                data-hitung6="6"
+                name="ekstremitas-6"
+                myid="check_cara"
+                value="1"
+                id="ekstremitas-6"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-7"
+                data-percol="7"
+                data-hitung7="7"
+                name="ekstremitas-7"
+                myid="check_cara"
+                value="1"
+                id="ekstremitas-7"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Menendang atau menarik diri</td>
+            <td style="text-align: center">2</td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-1"
+                data-percol="1"
+                data-hitung1="1"
+                name="ekstremitas-1"
+                myid="check_cara"
+                value="2"
+                id="ekstremitas-1"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-2"
+                data-percol="2"
+                data-hitung2="2"
+                name="ekstremitas-2"
+                myid="check_cara"
+                value="2"
+                id="ekstremitas-2"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-3"
+                data-percol="3"
+                data-hitung3="3"
+                name="ekstremitas-3"
+                myid="check_cara"
+                value="2"
+                id="ekstremitas-3"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-4"
+                data-percol="4"
+                data-hitung4="4"
+                name="ekstremitas-4"
+                myid="check_cara"
+                value="2"
+                id="ekstremitas-4"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-5"
+                data-percol="5"
+                data-hitung5="5"
+                name="ekstremitas-5"
+                myid="check_cara"
+                value="2"
+                id="ekstremitas-5"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-6"
+                data-percol="6"
+                data-hitung6="6"
+                name="ekstremitas-6"
+                myid="check_cara"
+                value="2"
+                id="ekstremitas-6"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-7"
+                data-percol="7"
+                data-hitung7="7"
+                name="ekstremitas-7"
+                myid="check_cara"
+                value="2"
+                id="ekstremitas-7"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center; border-top: 2px solid" rowspan="3">
+              <b>GERAKAN</b>
+            </td>
+            <td style="border-top: 2px solid">
+              Berbaring tenang, posisi normal, bergerak mudah
+            </td>
+            <td style="text-align: center; border-top: 2px solid">0</td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-1"
+                data-percol="1"
+                data-hitung1="1"
+                value="0"
+                name="gerakan-1"
+                id="gerakan-1"
+                myid="check_cara"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-2"
+                data-percol="2"
+                data-hitung2="2"
+                value="0"
+                name="gerakan-2"
+                id="gerakan-2"
+                myid="check_cara"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-3"
+                data-percol="3"
+                data-hitung3="3"
+                value="0"
+                name="gerakan-3"
+                id="gerakan-3"
+                myid="check_cara"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-4"
+                data-percol="4"
+                data-hitung4="4"
+                value="0"
+                name="gerakan-4"
+                id="gerakan-4"
+                myid="check_cara"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-5"
+                data-percol="5"
+                data-hitung5="5"
+                value="0"
+                name="gerakan-5"
+                id="gerakan-5"
+                myid="check_cara"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-6"
+                data-percol="6"
+                data-hitung6="6"
+                value="0"
+                name="gerakan-6"
+                id="gerakan-6"
+                myid="check_cara"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-7"
+                data-percol="7"
+                data-hitung7="7"
+                value="0"
+                name="gerakan-7"
+                id="gerakan-7"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Menggeliat - geliat, bolak - balik berpindah, tegang</td>
+            <td style="text-align: center">1</td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-1"
+                data-percol="1"
+                data-hitung1="1"
+                name="gerakan-1"
+                value="1"
+                id="gerakan-1"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-2"
+                data-percol="2"
+                data-hitung2="2"
+                name="gerakan-2"
+                value="1"
+                id="gerakan-2"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-3"
+                data-percol="3"
+                data-hitung3="3"
+                name="gerakan-3"
+                value="1"
+                id="gerakan-3"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-4"
+                data-percol="4"
+                data-hitung4="4"
+                name="gerakan-4"
+                value="1"
+                id="gerakan-4"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-5"
+                data-percol="5"
+                data-hitung5="5"
+                name="gerakan-5"
+                value="1"
+                id="gerakan-5"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-6"
+                data-percol="6"
+                data-hitung6="6"
+                name="gerakan-6"
+                value="1"
+                id="gerakan-6"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-7"
+                data-percol="7"
+                data-hitung7="7"
+                name="gerakan-7"
+                value="1"
+                id="gerakan-7"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Posisi tubuh meringkuk, kaku / spasme atau menyentak</td>
+            <td style="text-align: center">2</td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-1"
+                data-percol="1"
+                data-hitung1="1"
+                name="gerakan-1"
+                value="2"
+                id="gerakan-1"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-2"
+                data-percol="2"
+                data-hitung2="2"
+                name="gerakan-2"
+                value="2"
+                id="gerakan-2"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-3"
+                data-percol="3"
+                data-hitung3="3"
+                name="gerakan-3"
+                value="2"
+                id="gerakan-3"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-4"
+                data-percol="4"
+                data-hitung4="4"
+                name="gerakan-4"
+                value="2"
+                id="gerakan-4"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-5"
+                data-percol="5"
+                data-hitung5="5"
+                name="gerakan-5"
+                value="2"
+                id="gerakan-5"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-6"
+                data-percol="6"
+                data-hitung6="6"
+                name="gerakan-6"
+                value="2"
+                id="gerakan-6"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-7"
+                data-percol="7"
+                data-hitung7="7"
+                name="gerakan-7"
+                value="2"
+                id="gerakan-7"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center; border-top: 2px solid" rowspan="3">
+              <b>MENANGIS</b>
+            </td>
+            <td style="border-top: 2px solid">Tidak menangis</td>
+            <td style="text-align: center; border-top: 2px solid">0</td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-1"
+                data-percol="1"
+                data-hitung1="1"
+                name="menangis-1"
+                id="menangis-1"
+                value="0"
+                myid="check_cara"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-2"
+                data-percol="2"
+                data-hitung2="2"
+                name="menangis-2"
+                id="menangis-2"
+                value="0"
+                myid="check_cara"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-3"
+                data-percol="3"
+                data-hitung3="3"
+                name="menangis-3"
+                id="menangis-3"
+                value="0"
+                myid="check_cara"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-4"
+                data-percol="4"
+                data-hitung4="4"
+                name="menangis-4"
+                id="menangis-4"
+                value="0"
+                myid="check_cara"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-5"
+                data-percol="5"
+                data-hitung5="5"
+                name="menangis-5"
+                id="menangis-5"
+                value="0"
+                myid="check_cara"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-6"
+                data-percol="6"
+                data-hitung6="6"
+                name="menangis-6"
+                id="menangis-6"
+                value="0"
+                myid="check_cara"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-7"
+                data-percol="7"
+                data-hitung7="7"
+                name="menangis-7"
+                id="menangis-7"
+                value="0"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Merintih, merengek, kadang mengeluh</td>
+            <td style="text-align: center">1</td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-1"
+                data-percol="1"
+                data-hitung1="1"
+                name="menangis-1"
+                value="1"
+                id="menangis-1"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-2"
+                data-percol="2"
+                data-hitung2="2"
+                name="menangis-2"
+                value="1"
+                id="menangis-2"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-3"
+                data-percol="3"
+                data-hitung3="3"
+                name="menangis-3"
+                value="1"
+                id="menangis-3"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-4"
+                data-percol="4"
+                data-hitung4="4"
+                name="menangis-4"
+                value="1"
+                id="menangis-4"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-5"
+                data-percol="5"
+                data-hitung5="5"
+                name="menangis-5"
+                value="1"
+                id="menangis-5"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-6"
+                data-percol="6"
+                data-hitung6="6"
+                name="menangis-6"
+                value="1"
+                id="menangis-6"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-7"
+                data-percol="7"
+                data-hitung7="7"
+                name="menangis-7"
+                value="1"
+                id="menangis-7"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Menangis tersedu - sedu, terisak - isak, menjerit</td>
+            <td style="text-align: center">2</td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-1"
+                data-percol="1"
+                data-hitung1="1"
+                name="menangis-1"
+                value="2"
+                id="menangis-1"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-2"
+                data-percol="2"
+                data-hitung2="2"
+                name="menangis-2"
+                value="2"
+                id="menangis-2"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-3"
+                data-percol="3"
+                data-hitung3="3"
+                name="menangis-3"
+                value="2"
+                id="menangis-3"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-4"
+                data-percol="4"
+                data-hitung4="4"
+                name="menangis-4"
+                value="2"
+                id="menangis-4"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-5"
+                data-percol="5"
+                data-hitung5="5"
+                name="menangis-5"
+                value="2"
+                id="menangis-5"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-6"
+                data-percol="6"
+                data-hitung6="6"
+                name="menangis-6"
+                value="2"
+                id="menangis-6"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-7"
+                data-percol="7"
+                data-hitung7="7"
+                name="menangis-7"
+                value="2"
+                id="menangis-7"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center; border-top: 2px solid" rowspan="3">
+              <b>KEMAMPUAN DITENANGKAN</b>
+            </td>
+            <td style="border-top: 2px solid">Senang, rileks</td>
+            <td style="text-align: center; border-top: 2px solid">0</td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-1"
+                data-percol="1"
+                data-hitung1="1"
+                name="kemampuan-ditenangkan-1"
+                id="kemampuan-ditenangkan-1"
+                value="0"
+                myid="check_cara"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-2"
+                data-percol="2"
+                data-hitung2="2"
+                name="kemampuan-ditenangkan-2"
+                id="kemampuan-ditenangkan-2"
+                value="0"
+                myid="check_cara"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-3"
+                data-percol="3"
+                data-hitung3="3"
+                name="kemampuan-ditenangkan-3"
+                id="kemampuan-ditenangkan-3"
+                value="0"
+                myid="check_cara"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-4"
+                data-percol="4"
+                data-hitung4="4"
+                name="kemampuan-ditenangkan-4"
+                id="kemampuan-ditenangkan-4"
+                value="0"
+                myid="check_cara"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-5"
+                data-percol="5"
+                data-hitung5="5"
+                name="kemampuan-ditenangkan-5"
+                id="kemampuan-ditenangkan-5"
+                value="0"
+                myid="check_cara"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-6"
+                data-percol="6"
+                data-hitung6="6"
+                name="kemampuan-ditenangkan-6"
+                id="kemampuan-ditenangkan-6"
+                value="0"
+                myid="check_cara"
+              />
+            </td>
+            <td style="border-top: 2px solid">
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-7"
+                data-percol="7"
+                data-hitung7="7"
+                name="kemampuan-ditenangkan-7"
+                id="kemampuan-ditenangkan-7"
+                value="0"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Dapat ditenangkan dengan sentuhan, pelukan, atau berbicara dapat
+              dialihkan
+            </td>
+            <td style="text-align: center">1</td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-1"
+                data-percol="1"
+                data-hitung1="1"
+                name="kemampuan-ditenangkan-1"
+                value="1"
+                id="kemampuan-ditenangkan-1"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-2"
+                data-percol="2"
+                data-hitung2="2"
+                name="kemampuan-ditenangkan-2"
+                value="1"
+                id="kemampuan-ditenangkan-2"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-3"
+                data-percol="3"
+                data-hitung3="3"
+                name="kemampuan-ditenangkan-3"
+                value="1"
+                id="kemampuan-ditenangkan-3"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-4"
+                data-percol="4"
+                data-hitung4="4"
+                name="kemampuan-ditenangkan-4"
+                value="1"
+                id="kemampuan-ditenangkan-4"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-5"
+                data-percol="5"
+                data-hitung5="5"
+                name="kemampuan-ditenangkan-5"
+                value="1"
+                id="kemampuan-ditenangkan-5"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-6"
+                data-percol="6"
+                data-hitung6="6"
+                name="kemampuan-ditenangkan-6"
+                value="1"
+                id="kemampuan-ditenangkan-6"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-7"
+                data-percol="7"
+                data-hitung7="7"
+                name="kemampuan-ditenangkan-7"
+                value="1"
+                id="kemampuan-ditenangkan-7"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Sulit / tidak dapat ditenagkan dengan pelukan, sentuhan, atau
+              distraksi
+            </td>
+            <td style="text-align: center">2</td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-1"
+                data-percol="1"
+                data-hitung1="1"
+                name="kemampuan-ditenangkan-1"
+                value="2"
+                id="kemampuan-ditenangkan-1"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-2"
+                data-percol="2"
+                data-hitung2="2"
+                name="kemampuan-ditenangkan-2"
+                value="2"
+                id="kemampuan-ditenangkan-2"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-3"
+                data-percol="3"
+                data-hitung3="3"
+                name="kemampuan-ditenangkan-3"
+                value="2"
+                id="kemampuan-ditenangkan-3"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-4"
+                data-percol="4"
+                data-hitung4="4"
+                name="kemampuan-ditenangkan-4"
+                value="2"
+                id="kemampuan-ditenangkan-4"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-5"
+                data-percol="5"
+                data-hitung5="5"
+                name="kemampuan-ditenangkan-5"
+                value="2"
+                id="kemampuan-ditenangkan-5"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-6"
+                data-percol="6"
+                data-hitung6="6"
+                name="kemampuan-ditenangkan-6"
+                value="2"
+                id="kemampuan-ditenangkan-6"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                style="width: 100%"
+                type="radio"
+                class="skor-kategori-7"
+                data-percol="7"
+                data-hitung7="7"
+                name="kemampuan-ditenangkan-7"
+                value="2"
+                id="kemampuan-ditenangkan-7"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center" colspan="2">
+              <b>SKOR TOTAL</b>
+            </td>
+            <td>&nbsp;</td>
+            <td>
+              <input
+                readonly
+                type="text"
+                name="totalskor1"
+                style="text-align: center"
+                id="totalskor1"
+                label="totalskor1"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                readonly
+                type="text"
+                name="totalskor2"
+                style="text-align: center"
+                id="totalskor2"
+                label="totalskor2"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                readonly
+                type="text"
+                name="totalskor3"
+                style="text-align: center"
+                id="totalskor3"
+                label="totalskor3"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                readonly
+                type="text"
+                name="totalskor4"
+                style="text-align: center"
+                id="totalskor4"
+                label="totalskor4"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                readonly
+                type="text"
+                name="totalskor5"
+                style="text-align: center"
+                id="totalskor5"
+                label="totalskor5"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                readonly
+                type="text"
+                name="totalskor6"
+                style="text-align: center"
+                id="totalskor6"
+                label="totalskor6"
+                myid="check_cara"
+              />
+            </td>
+            <td>
+              <input
+                readonly
+                type="text"
+                name="totalskor7"
+                style="text-align: center"
+                id="totalskor7"
+                label="totalskor7"
+                myid="check_cara"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center" colspan="2">
+              <b>NAMA & TANDA TANGAN PERAWAT</b>
+            </td>
+            <td>&nbsp;</td>
+            <td>
+              <div class="ttd-1">
+                <input
+                  type="text"
+                  name="nama-perawat-1"
+                  id="nama-perawat-1"
+                  label="nama-perawat-1"
+                  myid="check_cara"
+                />
+                <br />
+                <label
+                  class="label text-center"
+                  id="def_img_ex_ttd_nama_perawat_1"
+                  style="font-style: italic; width: 100px; height: 100px"
+                  >paraf</label
+                >
+                <label class="label text-center">
+                  <img
+                    class="text-center"
+                    id="image_paraf_ex_ttd_nama_perawat_1"
+                    src=""
+                    style="display: none"
+                /></label>
+                <input
+                  myid="check_cara"
+                  type="hidden"
+                  name="paraf_ex_ttd_nama_perawat_1"
+                  id="paraf_ex_ttd_nama_perawat_1"
+                  data-name="paraf"
                   data-id="ex_ttd_nama_perawat_1"
-                  style="text-align: center"
+                />
+                <br />
+                <label class="label text-center">
+                  <a
+                    id="CreateTTD"
+                    class="btn btn-default btn-xs pointer text-center"
+                    data-id="ex_ttd_nama_perawat_1"
+                    style="text-align: center"
+                  >
+                    <i class="fa fa-edit"> </i>
+                    PENTABLET
+                  </a>
+                </label>
+                <font id="ttdnya2"></font>
+              </div>
+            </td>
+            <td>
+              <div class="ttd-2">
+                <input
+                  type="text"
+                  name="nama-perawat-2"
+                  id="nama-perawat-2"
+                  label="nama-perawat-2"
+                  myid="check_cara"
+                />
+                <br />
+                <label
+                  class="label text-center"
+                  id="def_img_ex_ttd_nama_perawat_2"
+                  style="font-style: italic; width: 100px; height: 100px"
+                  >paraf</label
                 >
-                  <i class="fa fa-edit"> </i>
-                  PENTABLET
-                </a>
-              </label>
-              <font id="ttdnya2"></font>
-            </div>
-          </td>
-          <td>
-            <div class="ttd-2">
-              <input
-                type="text"
-                name="nama-perawat-2"
-                id="nama-perawat-2"
-                label="nama-perawat-2"
-                myid="check_cara"
-              />
-              <br />
-              <label
-                class="label text-center"
-                id="def_img_ex_ttd_nama_perawat_2"
-                style="font-style: italic; width: 100px; height: 100px"
-                >paraf</label
-              >
-              <label class="label text-center">
-                <img
-                  class="text-center"
-                  id="image_paraf_ex_ttd_nama_perawat_2"
-                  src=""
-                  style="display: none"
-              /></label>
-              <input
-                myid="check_cara"
-                type="hidden"
-                name="paraf_ex_ttd_nama_perawat_2"
-                id="paraf_ex_ttd_nama_perawat_2"
-                data-name="paraf"
-                data-id="ex_ttd_nama_perawat_2"
-              />
-              <br />
-              <label class="label text-center">
-                <a
-                  id="CreateTTD"
-                  class="btn btn-default btn-xs pointer text-center"
+                <label class="label text-center">
+                  <img
+                    class="text-center"
+                    id="image_paraf_ex_ttd_nama_perawat_2"
+                    src=""
+                    style="display: none"
+                /></label>
+                <input
+                  myid="check_cara"
+                  type="hidden"
+                  name="paraf_ex_ttd_nama_perawat_2"
+                  id="paraf_ex_ttd_nama_perawat_2"
+                  data-name="paraf"
                   data-id="ex_ttd_nama_perawat_2"
-                  style="text-align: center"
+                />
+                <br />
+                <label class="label text-center">
+                  <a
+                    id="CreateTTD"
+                    class="btn btn-default btn-xs pointer text-center"
+                    data-id="ex_ttd_nama_perawat_2"
+                    style="text-align: center"
+                  >
+                    <i class="fa fa-edit"> </i>
+                    PENTABLET
+                  </a>
+                </label>
+                <font id="ttdnya2"></font>
+              </div>
+            </td>
+            <td>
+              <div class="ttd-3">
+                <input
+                  type="text"
+                  name="nama-perawat-3"
+                  id="nama-perawat-3"
+                  label="nama-perawat-3"
+                  myid="check_cara"
+                />
+                <br />
+                <label
+                  class="label text-center"
+                  id="def_img_ex_ttd_perawat_3"
+                  style="font-style: italic; width: 100px; height: 100px"
+                  >paraf</label
                 >
-                  <i class="fa fa-edit"> </i>
-                  PENTABLET
-                </a>
-              </label>
-              <font id="ttdnya2"></font>
-            </div>
-          </td>
-          <td>
-            <div class="ttd-3">
-              <input
-                type="text"
-                name="nama-perawat-3"
-                id="nama-perawat-3"
-                label="nama-perawat-3"
-                myid="check_cara"
-              />
-              <br />
-              <label
-                class="label text-center"
-                id="def_img_ex_ttd_perawat_3"
-                style="font-style: italic; width: 100px; height: 100px"
-                >paraf</label
-              >
-              <label class="label text-center">
-                <img
-                  class="text-center"
-                  id="image_paraf_ex_ttd_perawat_3"
-                  src=""
-                  style="display: none"
-              /></label>
-              <input
-                myid="check_cara"
-                type="hidden"
-                name="paraf_ex_ttd_perawat_3"
-                id="paraf_ex_ttd_perawat_3"
-                data-name="paraf"
-                data-id="ex_ttd_perawat_3"
-              />
-              <br />
-              <label class="label text-center">
-                <a
-                  id="CreateTTD"
-                  class="btn btn-default btn-xs pointer text-center"
+                <label class="label text-center">
+                  <img
+                    class="text-center"
+                    id="image_paraf_ex_ttd_perawat_3"
+                    src=""
+                    style="display: none"
+                /></label>
+                <input
+                  myid="check_cara"
+                  type="hidden"
+                  name="paraf_ex_ttd_perawat_3"
+                  id="paraf_ex_ttd_perawat_3"
+                  data-name="paraf"
                   data-id="ex_ttd_perawat_3"
-                  style="text-align: center"
+                />
+                <br />
+                <label class="label text-center">
+                  <a
+                    id="CreateTTD"
+                    class="btn btn-default btn-xs pointer text-center"
+                    data-id="ex_ttd_perawat_3"
+                    style="text-align: center"
+                  >
+                    <i class="fa fa-edit"> </i>
+                    PENTABLET
+                  </a>
+                </label>
+                <font id="ttdnya2"></font>
+              </div>
+            </td>
+            <td>
+              <div class="ttd-4">
+                <input
+                  type="text"
+                  name="nama-perawat-4"
+                  id="nama-perawat-4"
+                  label="nama-perawat-4"
+                  myid="check_cara"
+                />
+                <br />
+                <label
+                  class="label text-center"
+                  id="def_img_ex_ttd_perawat-4"
+                  style="font-style: italic; width: 100px; height: 100px"
+                  >paraf</label
                 >
-                  <i class="fa fa-edit"> </i>
-                  PENTABLET
-                </a>
-              </label>
-              <font id="ttdnya2"></font>
-            </div>
-          </td>
-          <td>
-            <div class="ttd-4">
-              <input
-                type="text"
-                name="nama-perawat-4"
-                id="nama-perawat-4"
-                label="nama-perawat-4"
-                myid="check_cara"
-              />
-              <br />
-              <label
-                class="label text-center"
-                id="def_img_ex_ttd_perawat-4"
-                style="font-style: italic; width: 100px; height: 100px"
-                >paraf</label
-              >
-              <label class="label text-center">
-                <img
-                  class="text-center"
-                  id="image_paraf_ex_ttd_perawat-4"
-                  src=""
-                  style="display: none"
-              /></label>
-              <input
-                myid="check_cara"
-                type="hidden"
-                name="paraf_ex_ttd_perawat-4"
-                id="paraf_ex_ttd_perawat-4"
-                data-name="paraf"
-                data-id="ex_ttd_perawat-4"
-              />
-              <br />
-              <label class="label text-center">
-                <a
-                  id="CreateTTD"
-                  class="btn btn-default btn-xs pointer text-center"
+                <label class="label text-center">
+                  <img
+                    class="text-center"
+                    id="image_paraf_ex_ttd_perawat-4"
+                    src=""
+                    style="display: none"
+                /></label>
+                <input
+                  myid="check_cara"
+                  type="hidden"
+                  name="paraf_ex_ttd_perawat-4"
+                  id="paraf_ex_ttd_perawat-4"
+                  data-name="paraf"
                   data-id="ex_ttd_perawat-4"
-                  style="text-align: center"
+                />
+                <br />
+                <label class="label text-center">
+                  <a
+                    id="CreateTTD"
+                    class="btn btn-default btn-xs pointer text-center"
+                    data-id="ex_ttd_perawat-4"
+                    style="text-align: center"
+                  >
+                    <i class="fa fa-edit"> </i>
+                    PENTABLET
+                  </a>
+                </label>
+                <font id="ttdnya2"></font>
+              </div>
+            </td>
+            <td>
+              <div class="ttd-5">
+                <input
+                  type="text"
+                  name="nama-perawat-5"
+                  id="nama-perawat-5"
+                  label="nama-perawat-5"
+                  myid="check_cara"
+                />
+                <br />
+                <label
+                  class="label text-center"
+                  id="def_img_ex_ttd_perawat_5"
+                  style="font-style: italic; width: 100px; height: 100px"
+                  >paraf</label
                 >
-                  <i class="fa fa-edit"> </i>
-                  PENTABLET
-                </a>
-              </label>
-              <font id="ttdnya2"></font>
-            </div>
-          </td>
-          <td>
-            <div class="ttd-5">
-              <input
-                type="text"
-                name="nama-perawat-5"
-                id="nama-perawat-5"
-                label="nama-perawat-5"
-                myid="check_cara"
-              />
-              <br />
-              <label
-                class="label text-center"
-                id="def_img_ex_ttd_perawat_5"
-                style="font-style: italic; width: 100px; height: 100px"
-                >paraf</label
-              >
-              <label class="label text-center">
-                <img
-                  class="text-center"
-                  id="image_paraf_ex_ttd_perawat_5"
-                  src=""
-                  style="display: none"
-              /></label>
-              <input
-                myid="check_cara"
-                type="hidden"
-                name="paraf_ex_ttd_perawat_5"
-                id="paraf_ex_ttd_perawat_5"
-                data-name="paraf"
-                data-id="ex_ttd_perawat_5"
-              />
-              <br />
-              <label class="label text-center">
-                <a
-                  id="CreateTTD"
-                  class="btn btn-default btn-xs pointer text-center"
+                <label class="label text-center">
+                  <img
+                    class="text-center"
+                    id="image_paraf_ex_ttd_perawat_5"
+                    src=""
+                    style="display: none"
+                /></label>
+                <input
+                  myid="check_cara"
+                  type="hidden"
+                  name="paraf_ex_ttd_perawat_5"
+                  id="paraf_ex_ttd_perawat_5"
+                  data-name="paraf"
                   data-id="ex_ttd_perawat_5"
-                  style="text-align: center"
+                />
+                <br />
+                <label class="label text-center">
+                  <a
+                    id="CreateTTD"
+                    class="btn btn-default btn-xs pointer text-center"
+                    data-id="ex_ttd_perawat_5"
+                    style="text-align: center"
+                  >
+                    <i class="fa fa-edit"> </i>
+                    PENTABLET
+                  </a>
+                </label>
+                <font id="ttdnya2"></font>
+              </div>
+            </td>
+            <td>
+              <div class="ttd-6">
+                <input
+                  type="text"
+                  name="nama-perawat-6"
+                  id="nama-perawat-6"
+                  label="nama-perawat-6"
+                  myid="check_cara"
+                />
+                <br />
+                <label
+                  class="label text-center"
+                  id="def_img_ex_ttd_perawat_6"
+                  style="font-style: italic; width: 100px; height: 100px"
+                  >paraf</label
                 >
-                  <i class="fa fa-edit"> </i>
-                  PENTABLET
-                </a>
-              </label>
-              <font id="ttdnya2"></font>
-            </div>
-          </td>
-          <td>
-            <div class="ttd-6">
-              <input
-                type="text"
-                name="nama-perawat-6"
-                id="nama-perawat-6"
-                label="nama-perawat-6"
-                myid="check_cara"
-              />
-              <br />
-              <label
-                class="label text-center"
-                id="def_img_ex_ttd_perawat_6"
-                style="font-style: italic; width: 100px; height: 100px"
-                >paraf</label
-              >
-              <label class="label text-center">
-                <img
-                  class="text-center"
-                  id="image_paraf_ex_ttd_perawat_6"
-                  src=""
-                  style="display: none"
-              /></label>
-              <input
-                myid="check_cara"
-                type="hidden"
-                name="paraf_ex_ttd_perawat_6"
-                id="paraf_ex_ttd_perawat_6"
-                data-name="paraf"
-                data-id="ex_ttd_perawat_6"
-              />
-              <br />
-              <label class="label text-center">
-                <a
-                  id="CreateTTD"
-                  class="btn btn-default btn-xs pointer text-center"
+                <label class="label text-center">
+                  <img
+                    class="text-center"
+                    id="image_paraf_ex_ttd_perawat_6"
+                    src=""
+                    style="display: none"
+                /></label>
+                <input
+                  myid="check_cara"
+                  type="hidden"
+                  name="paraf_ex_ttd_perawat_6"
+                  id="paraf_ex_ttd_perawat_6"
+                  data-name="paraf"
                   data-id="ex_ttd_perawat_6"
-                  style="text-align: center"
+                />
+                <br />
+                <label class="label text-center">
+                  <a
+                    id="CreateTTD"
+                    class="btn btn-default btn-xs pointer text-center"
+                    data-id="ex_ttd_perawat_6"
+                    style="text-align: center"
+                  >
+                    <i class="fa fa-edit"> </i>
+                    PENTABLET
+                  </a>
+                </label>
+                <font id="ttdnya2"></font>
+              </div>
+            </td>
+            <td>
+              <div class="ttd-7">
+                <input
+                  type="text"
+                  name="nama-perawat-7"
+                  id="nama-perawat-7"
+                  label="nama-perawat-7"
+                  myid="check_cara"
+                />
+                <br />
+                <label
+                  class="label text-center"
+                  id="def_img_ex_ttd_perawat_7"
+                  style="font-style: italic; width: 100px; height: 100px"
+                  >paraf</label
                 >
-                  <i class="fa fa-edit"> </i>
-                  PENTABLET
-                </a>
-              </label>
-              <font id="ttdnya2"></font>
-            </div>
-          </td>
-          <td>
-            <div class="ttd-7">
-              <input
-                type="text"
-                name="nama-perawat-7"
-                id="nama-perawat-7"
-                label="nama-perawat-7"
-                myid="check_cara"
-              />
-              <br />
-              <label
-                class="label text-center"
-                id="def_img_ex_ttd_perawat_7"
-                style="font-style: italic; width: 100px; height: 100px"
-                >paraf</label
-              >
-              <label class="label text-center">
-                <img
-                  class="text-center"
-                  id="image_paraf_ex_ttd_perawat_7"
-                  src=""
-                  style="display: none"
-              /></label>
-              <input
-                myid="check_cara"
-                type="hidden"
-                name="paraf_ex_ttd_perawat_7"
-                id="paraf_ex_ttd_perawat_7"
-                data-name="paraf"
-                data-id="ex_ttd_perawat_7"
-              />
-              <br />
-              <label class="label text-center">
-                <a
-                  id="CreateTTD"
-                  class="btn btn-default btn-xs pointer text-center"
+                <label class="label text-center">
+                  <img
+                    class="text-center"
+                    id="image_paraf_ex_ttd_perawat_7"
+                    src=""
+                    style="display: none"
+                /></label>
+                <input
+                  myid="check_cara"
+                  type="hidden"
+                  name="paraf_ex_ttd_perawat_7"
+                  id="paraf_ex_ttd_perawat_7"
+                  data-name="paraf"
                   data-id="ex_ttd_perawat_7"
-                  style="text-align: center"
-                >
-                  <i class="fa fa-edit"> </i>
-                  PENTABLET
-                </a>
-              </label>
-              <font id="ttdnya2"></font>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="10">
-            <div style="display: flex; gap: 20px">
-              <b><u>Keterangan</u> :</b>
-              <p>Skor 0 - 3 : Nyeri ringan</p>
-              <p>Skor 4 - 6 : Nyeri sedang</p>
-              <p>Skor 7 - 10 : Nyeri berat</p>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+                />
+                <br />
+                <label class="label text-center">
+                  <a
+                    id="CreateTTD"
+                    class="btn btn-default btn-xs pointer text-center"
+                    data-id="ex_ttd_perawat_7"
+                    style="text-align: center"
+                  >
+                    <i class="fa fa-edit"> </i>
+                    PENTABLET
+                  </a>
+                </label>
+                <font id="ttdnya2"></font>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="10">
+              <div style="display: flex; gap: 20px">
+                <b><u>Keterangan</u> :</b>
+                <p>Skor 0 - 3 : Nyeri ringan</p>
+                <p>Skor 4 - 6 : Nyeri sedang</p>
+                <p>Skor 7 - 10 : Nyeri berat</p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
+      $("document").ready(function () {
+        const tableContainer = document.querySelector("#table-container");
+
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        tableContainer.addEventListener("mousedown", (e) => {
+          isDown = true;
+          tableContainer.style.cursor = "pointer";
+          startX = e.pageX - tableContainer.offsetLeft;
+          scrollLeft = tableContainer.scrollLeft;
         });
 
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
+        tableContainer.addEventListener("mouseleave", () => {
+          isDown = false;
+          tableContainer.style.cursor = "auto";
+        });
+
+        tableContainer.addEventListener("mouseup", () => {
+          isDown = false;
+          tableContainer.style.cursor = "auto";
+        });
+
+        tableContainer.addEventListener("mousemove", (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          const x = e.pageX - tableContainer.offsetLeft;
+          const walk = (x - startX) * 2;
+
+          tableContainer.scrollLeft = scrollLeft - walk;
         });
       });
     </script>

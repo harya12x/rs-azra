@@ -1,0 +1,692 @@
+<script type="text/javascript">
+  if ($.fn.datepicker) {
+    $(".datepicker").each(function () {
+      var $this = $(this),
+        dataDateFormat = $this.attr("data-dateformat") || "dd.mm.yy";
+
+      $this.datepicker({
+        dateFormat: dataDateFormat,
+        prevText: '<i class="fa fa-chevron-left"></i>',
+        nextText: '<i class="fa fa-chevron-right"></i>',
+        todayBtn: "linked",
+      });
+
+      // clear memory reference
+      $this = null;
+    });
+  }
+</script>
+<style type="text/css">
+  table {
+    width: 100%;
+    margin-bottom: 10px;
+    border-collapse: collapse;
+  }
+
+  .table2 {
+    border: 1px solid;
+  }
+
+  .table2 td {
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-right: 10px;
+    font-size: 11px;
+  }
+
+  .table2 input,
+  .table2 input {
+    border: 0;
+    border-bottom: 1px dotted #333;
+    text-align: left;
+  }
+
+  .kaki {
+    border-left: 1px solid black !important;
+    border-right: 1px solid black !important;
+  }
+
+  .bh {
+    border-bottom: 1px solid black !important;
+  }
+
+  .bt {
+    border-top: 1px solid black !important;
+  }
+
+  .tg {
+    border-left: 1px solid black !important;
+  }
+
+  .tt {
+    border-right: 1px solid black !important;
+  }
+</style>
+<div>
+  <table class="table2" style="margin: 0px" width="100%" border="0">
+    <tbody>
+      <tr>
+        <td style="text-align: center; vertical-align: middle; font-size: 20px">
+          LAPORAN OPERASI
+          <br />RS. AZRA BOGOR
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table2" style="border: 0px" width="100%">
+    <tbody>
+      <tr>
+        <td rowspan="4" class="kaki bh">
+          NAMA :
+          <input
+            myid="check_cara"
+            type="text"
+            name="nama_pasien"
+            value="{VNAMA_PASIEN}"
+            style="border: none; border-bottom: 1px dotted black; width: 70%"
+            fdprocessedid="id0um"
+          />
+          <input
+            myid="check_cara"
+            type="text"
+            name="vsex"
+            value="{VSEX}"
+            fdprocessedid="s8njcr"
+          /><br /><br />
+          Tanggal Lahir :
+          <input
+            myid="check_cara"
+            type="text"
+            name="vbirth_date"
+            value="{VBIRTH_DATE}"
+            fdprocessedid="4imw88"
+          />
+          UMUR :
+          <input
+            myid="check_cara"
+            type="text"
+            name="vage"
+            value="{VAGE}"
+            fdprocessedid="rqtunr"
+          />
+        </td>
+        <td class="kaki bh" align="center">NOMOR REKAM MEDIS</td>
+      </tr>
+      <tr>
+        <td class="kaki bh" align="center">{NO_RM}</td>
+      </tr>
+      <tr>
+        <td class="kaki bh">
+          Poli :
+          <input
+            myid="check_cara"
+            type="text"
+            name="poli"
+            style="border: none; border-bottom: 1px dotted black"
+            fdprocessedid="n6v9lj"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td class="kaki bh">
+          Kamar :
+          <input
+            myid="check_cara"
+            type="text"
+            name="kamar"
+            style="border: none; border-bottom: 1px dotted black"
+            fdprocessedid="96bcir"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table2" style="padding: 3px" width="100%">
+    <tbody>
+      <tr>
+        <td class="tg bh bt">Nama ahli bedah</td>
+        <td class="bh bt" align="right">:</td>
+        <td class="bh bt">
+          <input
+            style="width: 100%"
+            myid="check_cara"
+            type="text"
+            name="ahlibedah"
+            fdprocessedid="kea23j"
+          />
+        </td>
+        <td class="bh bt">Nama ahli anestesi</td>
+        <td class="bh bt" align="right">:</td>
+        <td class="tt bh bt">
+          <input
+            style="width: 100%"
+            myid="check_cara"
+            type="text"
+            name="ahlianestesi"
+            fdprocessedid="xjmyg9"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td class="tg bh">Nama asisten 1</td>
+        <td class="bh" align="right">:</td>
+        <td class="bh">
+          <input
+            style="width: 100%"
+            myid="check_cara"
+            type="text"
+            name="asisten1"
+            fdprocessedid="bkuxxa"
+          />
+        </td>
+        <td class="bh">Nama penata anestesi</td>
+        <td class="bh" align="right">:</td>
+        <td class="tt bh">
+          <input
+            style="width: 100%"
+            myid="check_cara"
+            type="text"
+            name="penataanestesi"
+            fdprocessedid="wjuumb"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td class="tg bh">Nama asisten 2</td>
+        <td class="bh" align="right">:</td>
+        <td class="bh">
+          <input
+            style="width: 100%"
+            myid="check_cara"
+            type="text"
+            name="asisten2"
+            fdprocessedid="409rz"
+          />
+        </td>
+        <td colspan="3" class="tt bh">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="tg bh">Nama insrumentator</td>
+        <td class="bh" align="right">:</td>
+        <td class="tt bh">
+          <input
+            style="width: 100%"
+            myid="check_cara"
+            type="text"
+            name="insrumentator"
+            fdprocessedid="90r2iq"
+          />
+        </td>
+        <td class="">Jenis anestesi</td>
+        <td class="" align="right">:</td>
+        <td class="tt">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="tg bh">Nama sirkuler</td>
+        <td class="bh" align="right">:</td>
+        <td class="tt bh">
+          <input
+            style="width: 100%"
+            myid="check_cara"
+            type="text"
+            name="sirkuler"
+            fdprocessedid="mqddy6"
+          />
+        </td>
+        <td class="tt bh" colspan="3">
+          <input
+            myid="check_cara"
+            type="checkbox"
+            name="jenis_anestesi[]"
+            value="1"
+          /><label> 1. General </label>
+          <input
+            myid="check_cara"
+            type="checkbox"
+            name="jenis_anestesi[]"
+            value="2"
+          /><label> 2. Spinal </label>
+          <input
+            myid="check_cara"
+            type="checkbox"
+            name="jenis_anestesi[]"
+            value="3"
+          /><label> 3. Lokal </label>
+          <input
+            myid="check_cara"
+            type="checkbox"
+            name="jenis_anestesi[]"
+            value="4"
+          /><label> 4. </label
+          ><input
+            myid="check_cara"
+            type="text"
+            name="jenis_anestesi_lain"
+            fdprocessedid="n9qlo"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td class="tg tt bh bt" colspan="6">
+          Diagnosa pre-operatif : <br />
+          <textarea
+            myid="check_cara"
+            type="textarea"
+            name="dianosa_pre_o"
+            id="dianosa_pre_o"
+            rows="3"
+            style="width: 100%"
+          ></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td class="tg tt bh bt" colspan="4">
+          Diagnosa post-operatif : <br />
+          <textarea
+            myid="check_cara"
+            type="textarea"
+            name="dianosa_post_o"
+            id="dianosa_post_o"
+            rows="3"
+            style="width: 100%"
+          ></textarea>
+        </td>
+        <td class="tt bh" colspan="2" valign="top" align="center">
+          Macam Pembedahan : <br />
+        </td>
+      </tr>
+      <tr>
+        <td class="tg tt bh bt" colspan="4">
+          Komplikasi :
+          <input
+            myid="check_cara"
+            type="text"
+            name="komplikasi"
+            style="width: 50%"
+            fdprocessedid="obnt9p"
+          />
+        </td>
+        <td class="tt bh" rowspan="2">
+          <input
+            myid="check_cara"
+            type="checkbox"
+            name="macam_bedah[]"
+            value="1"
+          /><label> 1. Besar </label><br />
+          <input
+            myid="check_cara"
+            type="checkbox"
+            name="macam_bedah[]"
+            value="2"
+          /><label> 2. Sedang </label><br />
+          <input
+            myid="check_cara"
+            type="checkbox"
+            name="macam_bedah[]"
+            value="3"
+          /><label> 3. Kecil </label><br />
+        </td>
+        <td class="tt bh" rowspan="2">
+          <input
+            myid="check_cara"
+            type="checkbox"
+            name="macam_bedah2[]"
+            value="1"
+          /><label> 1. Cito </label><br />
+          <input
+            myid="check_cara"
+            type="checkbox"
+            name="macam_bedah2[]"
+            value="2"
+          /><label> 2. Sedang </label>
+        </td>
+      </tr>
+      <tr>
+        <td class="bh bt">
+          Jumlah Perdarahan :
+          <input
+            myid="check_cara"
+            type="text"
+            name="jml_perdarahan"
+            style="width: 50%"
+            fdprocessedid="1l8kth"
+          />&nbsp;ml
+        </td>
+        <td class="bh bt">
+          Transfusi :
+          <input
+            type="text"
+            myid="check_cara"
+            name="transfusi"
+            style="width: 50%"
+            fdprocessedid="f9a0a"
+          />&nbsp;ml
+        </td>
+        <td class="bh bt">
+          Golongan :
+          <input
+            type="text"
+            myid="check_cara"
+            name="golongan"
+            style="width: 50%"
+            fdprocessedid="6ee62j"
+          />
+        </td>
+        <td class="tt bh bt">
+          Jenis :
+          <input
+            type="text"
+            myid="check_cara"
+            name="jenis"
+            style="width: 50%"
+            fdprocessedid="6zd0sd"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td class="tg tt bh bt" colspan="4">
+          Jaringan yang di-eksisi / insisi :
+          <input
+            myid="check_cara"
+            type="text"
+            name="jaringan_e_i"
+            style="width: 50%"
+            fdprocessedid="m6fuua"
+          />
+        </td>
+        <td class="tt bh" colspan="2">
+          Pemeriksaan PA : <br />
+          <input
+            myid="check_cara"
+            type="radio"
+            name="pemeriksaan_pa[]"
+            value="1"
+          /><label> 1. Ya </label>
+          <input
+            myid="check_cara"
+            type="radio"
+            name="pemeriksaan_pa[]"
+            value="2"
+          /><label> 2. Tidak </label>
+        </td>
+      </tr>
+      <tr>
+        <td class="tg tt bh" colspan="6">
+          Nama Tindakan / Operasi :
+          <input
+            type="text"
+            myid="check_cara"
+            name="tindakan"
+            style="width: 100%"
+            fdprocessedid="ba01s"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td class="tg tt bh" colspan="2" align="center">
+          Tanggal Operasi <br />
+          <input
+            type="text"
+            name="tgl_operasi"
+            myid="check_cara"
+            style="width: 100%"
+            fdprocessedid="bc9kn4"
+          />
+        </td>
+        <td class="tg tt bh" align="center">
+          Jam Operasi Dimulai <br />
+          <input
+            type="text"
+            name="jam_operasi_mulai"
+            myid="check_cara"
+            style="width: 100%"
+            fdprocessedid="7u7e1l"
+          />
+        </td>
+        <td class="tg tt bh" align="center">
+          Jam Operasi Selesai <br />
+          <input
+            type="text"
+            name="jam_operasi_selesai"
+            myid="check_cara"
+            style="width: 100%"
+            fdprocessedid="6wdg3g"
+          />
+        </td>
+        <td class="tg bh tt" colspan="2" align="center">
+          Lama Operasi Berlangsung <br />
+          <input
+            type="text"
+            name="lama_operasi"
+            myid="check_cara"
+            style="width: 100%"
+            fdprocessedid="odhav9"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4" class="tg bh bt" valign="top">
+          Laporan operasi : <br />
+          <textarea
+            myid="check_cara"
+            type="textarea"
+            name="laporan_operasi"
+            id="laporan_operasi"
+            style="width: 100%"
+            rows="20"
+          ></textarea>
+        </td>
+        <td colspan="2" class="tt bh bt" align="center">
+          <br />
+          <br />
+          <br />
+          <br />
+          <br /><br />
+          <br />
+          <br />
+          Ahli bedah,
+          <!-- <br>        
+          <br>        
+          <br>        
+          <br>
+          <br>
+          <br>
+          (<input type="text" myid="check_cara" name="ahlibedah" style="text-align: center;width:95%">)         -->
+          <input
+            name="ttd_master"
+            type="hidden"
+            id="diagnosa_pentablet_1"
+            value="{ttd_master}"
+          />
+          <div
+            style="display: {DISPTTD1_PEN}; width: 100px; height: 20px;"
+            id="back_img_1"
+          ></div>
+          <img
+            width="100px"
+            height="100px"
+            id="image_ttd_1"
+            src="{ttd_master}"
+            style="display:{DISPTTD1}"
+          />
+          <br /><br /><br />
+          <b style="font-size: 14px"
+            ><input
+              myid="check_cara"
+              type="text"
+              name="dpjp"
+              style="width: 95%; text-align: center"
+              value="{VDPJP}"
+              fdprocessedid="6fri8s"
+          /></b>
+          <input
+            type="hidden"
+            id="id_doctor"
+            value="{doc_id}"
+            myid="check_cara"
+            name="id_doctor"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table2" width="100%">
+    <tbody>
+      <tr>
+        <td>
+          Instruksi Pasca Operasi : <br />
+          <textarea
+            myid="check_cara"
+            type="textarea"
+            name="instruksi_pasca_operasi"
+            id="instruksi_pasca_operasi"
+            style="width: 100%"
+            rows="40"
+          ></textarea>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<script type="text/javascript">
+  $(document).ready(function () {
+    var jk = "{JK}";
+    var img = "{IMG}";
+    var daftar = "{DAFTAR}";
+    if (jk == "f") {
+      $('[name="jk"][value="perempuan"]')
+        .prop("checked", true)
+        .trigger("change");
+    } else {
+      $('[name="jk"][value="laki - laki"]')
+        .prop("checked", true)
+        .trigger("change");
+    }
+
+    if (img != "") {
+      $("#img_mata1").attr("src", img);
+    }
+
+    if (daftar == "t") {
+      var ifirm = "{IFIRM}";
+      $('[name="nama_perusahaan"]').val(ifirm);
+
+      var nopeg = "{NOPEG}";
+      $('[name="no_kartu"]').val(nopeg);
+    }
+
+    AskepForm.showCombo($("select[name=dokter]"), "doctor");
+
+    $(document)
+      .off("change", "#dokter")
+      .on("change", "#dokter", function () {
+        SetDokterName();
+      });
+
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+  });
+
+  function SetDokterName() {
+    var dokter_txt = $("#dokter option:selected").text(),
+      dokter_img = $("#dokter option:selected").attr("data-ttd");
+    $("#paraf_txt_4").val(dokter_txt);
+
+    if (dokter_img != "") {
+      $("#back_img_4").text("");
+      $("#back_img_4").css("display", "none");
+      $("#image_paraf_4").css("display", "");
+      $("#image_paraf_4").attr("src", "" + dokter_img + "");
+      $("#paraf_4").val(dokter_img);
+    }
+  }
+
+  function ttd_paraf(id) {
+    var pid = "{PID}";
+    var regpid = "{REGPID}";
+
+    PopupCenter(
+      "index.php?mod=ttd_pentablet_2&cmd=ttd_pentablet_2&jenis=" +
+        id +
+        "&pid=" +
+        pid +
+        "&regpid=" +
+        regpid,
+      "pop",
+      800,
+      400
+    );
+  }
+
+  function tampil_ttd_2(x, y) {
+    $("#back_img_" + x).text("");
+    $("#back_img_" + x).css("display", "none");
+    $("#paraf_" + x).val(y);
+    $("#image_paraf_" + x).css("display", "");
+    $("#image_paraf_" + x).attr("src", "" + y + "");
+  }
+
+  function SetTTD() {
+    $('input[data-name="paraf"]').each(function () {
+      var id = $(this).attr("data-id");
+      var ttd = $(this).val();
+      var def = "paraf";
+      if (ttd == "") {
+        $("#back_img_" + id).text(def);
+        $("#back_img_" + id).css({
+          display: "",
+          "font-style": "italic",
+          width: 200,
+          height: 100,
+          "text-align": "center",
+        });
+        $("#image_paraf_" + id).css("display", "none");
+      } else {
+        $("#back_img_" + id).text("");
+        $("#back_img_" + id).css("display", "none");
+        $("#image_paraf_" + id).css("display", "");
+        $("#image_paraf_" + id).attr("src", "" + ttd + "");
+      }
+    });
+  }
+
+  function PopupCenter(url, title, w, h) {
+    var dualScreenLeft =
+      window.screenLeft != undefined ? window.screenLeft : screen.left;
+    var dualScreenTop =
+      window.screenTop != undefined ? window.screenTop : screen.top;
+    var width = window.innerWidth
+      ? window.innerWidth
+      : document.documentElement.clientWidth
+      ? document.documentElement.clientWidth
+      : screen.width;
+    var height = window.innerHeight
+      ? window.innerHeight
+      : document.documentElement.clientHeight
+      ? document.documentElement.clientHeight
+      : screen.height;
+    var left = width / 2 - w / 2 + dualScreenLeft + 100;
+    var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+    var newWindow = window.open(
+      url,
+      title,
+      "scrollbars=yes, width=" +
+        w +
+        ", height=" +
+        h +
+        ", top=" +
+        top +
+        ", left=" +
+        left
+    );
+
+    if (window.focus) newWindow.focus();
+  }
+</script>

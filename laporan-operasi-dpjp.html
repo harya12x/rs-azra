@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LAPORAN OPERASI</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <body>
+    <table width="100" class="table table-bordered">
+      <thead>
+        <tr>
+          <th colspan="2">
+            <h1 class="title">LAPORAN OPERASI</h1>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="4">
+            <div style="display: flex; gap: 5px">
+              <label for="">NAMA :</label>
+              <input
+                style="border: none; border-bottom: 2px dotted #b1b1b1; flex: 1"
+                type="text"
+                name="nama_pasien"
+                id="nama_pasien"
+                label="nama_pasien"
+                myid="check_cara"
+                value="{VNAMA_PASIEN}"
+              />
+              <input
+                style="border: none; border-bottom: 2px dotted #b1b1b1"
+                type="text"
+                name="jenis_kelamin"
+                id="jenis_kelamin"
+                label="jenis_kelamin"
+                myid="check_cara"
+                value="{VSEX}"
+              />
+            </div>
+            <div style="margin-top: 20px">
+              <label for="">Tanggal Lahir :</label>
+              <input
+                style="border: none; border-bottom: 2px dotted #b1b1b1; flex: 1"
+                type="text"
+                name="tgl_lahir"
+                id="tgl_lahir"
+                label="tgl_lahir"
+                myid="check_cara"
+                value="{VBIRTH_DATE}"
+              />
+              <label for="">UMUR :</label>
+              <input
+                style="border: none; border-bottom: 2px dotted #b1b1b1"
+                type="text"
+                name="umur_pasien"
+                id="umur_pasien"
+                label="umur_pasien"
+                myid="check_cara"
+                value="{VAGE}"
+              />
+            </div>
+          </td>
+          <td width="40%">
+            <p style="text-align: center">NOMOR REKAM MEDIS</p>
+          </td>
+        </tr>
+        <tr>
+          <td><p style="text-align: center">{NO_RM}</p></td>
+        </tr>
+        <tr>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <label for="">Poli :</label>
+              <input
+                style="border: none; flex: 1"
+                type="text"
+                name="poli"
+                id="poli"
+                label="poli"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <label for="">Kamar :</label>
+              <input
+                style="border: none; flex: 1"
+                type="text"
+                name="kamar"
+                id="kamar"
+                label="kamar"
+                value="{VNAMARUANGAN}"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td colspan="3">
+            <div style="display: flex; gap: 5px">
+              <div style="display: flex; gap: 5px; width: 60%">
+                <label for="">Nama ahli bedah :</label>
+                <input
+                  style="
+                    border: none;
+                    border-bottom: 2px dotted #b1b1b1;
+                    flex: 1;
+                  "
+                  type="text"
+                  name="nama_ahli_bedah"
+                  id="nama_ahli_bedah"
+                  label="nama_ahli_bedah"
+                  myid="check_cara"
+                />
+              </div>
+              <div style="display: flex; gap: 5px; width: 40%">
+                <label for="">Nama ahli anestesi :</label>
+                <input
+                  style="
+                    border: none;
+                    border-bottom: 2px dotted #b1b1b1;
+                    flex: 1;
+                  "
+                  type="text"
+                  name="nama_ahli_anestesi"
+                  id="nama_ahli_anestesi"
+                  label="nama_ahli_anestesi"
+                  myid="check_cara"
+                />
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <div style="display: flex; gap: 5px">
+              <div style="display: flex; gap: 5px; width: 60%">
+                <label for="">Nama asisten 1 :</label>
+                <input
+                  style="
+                    border: none;
+                    border-bottom: 2px dotted #b1b1b1;
+                    flex: 1;
+                  "
+                  type="text"
+                  name="nama_asisten_1"
+                  id="nama_asisten_1"
+                  label="nama_asisten_1"
+                  myid="check_cara"
+                />
+              </div>
+              <div style="display: flex; gap: 5px; width: 40%">
+                <label for="">Nama penata anestesi :</label>
+                <input
+                  style="
+                    border: none;
+                    border-bottom: 2px dotted #b1b1b1;
+                    flex: 1;
+                  "
+                  type="text"
+                  name="nama_penata_anestesi"
+                  id="nama_penata_anestesi"
+                  label="nama_penata_anestesi"
+                  myid="check_cara"
+                />
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <div style="display: flex; gap: 5px; width: 60%">
+              <label for="">Nama asisten 2 :</label>
+              <input
+                style="border: none; border-bottom: 2px dotted #b1b1b1; flex: 1"
+                type="text"
+                name="nama_asisten_2"
+                id="nama_asisten_2"
+                label="nama_asisten_2"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td width="70%">
+            <div style="display: flex; gap: 5px">
+              <label for="">Nama instrumentator :</label>
+              <input
+                style="border: none; border-bottom: 2px dotted #b1b1b1; flex: 1"
+                type="text"
+                name="nama_instrumentator"
+                id="nama_instrumentator"
+                label="nama_instrumentator"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td colspan="2" width="30%" rowspan="2">
+            <div style="margin-left: 10px">
+              <p style="margin-bottom: 10px">Jenis anestesi</p>
+
+              <input
+                type="checkbox"
+                name="jenis_anestesi_general"
+                id="jenis_anestesi_general"
+                label="jenis_anestesi_general"
+                myid="check_cara"
+                value="General"
+              />
+              <label for="">1. General</label>
+              <input
+                type="checkbox"
+                name="jenis_anestesi_spinal"
+                id="jenis_anestesi_spinal"
+                label="jenis_anestesi_spinal"
+                myid="check_cara"
+                value="Spinal"
+              />
+              <label for="">2. Spinal</label>
+              <input
+                type="checkbox"
+                name="jenis_anestesi_lokal"
+                id="jenis_anestesi_lokal"
+                label="jenis_anestesi_lokal"
+                myid="check_cara"
+                value="Lokal"
+              />
+              <label for="">3. Lokal</label>
+              <input
+                type="checkbox"
+                name="jenis_anestesi_lainnya"
+                id="jenis_anestesi_lainnya"
+                label="jenis_anestesi_lainnya"
+                myid="check_cara"
+                value="Lainnya"
+              />
+              <label for="">4.</label>
+              <input
+                style="border: none; border-bottom: 2px dotted #b1b1b1"
+                type="text"
+                name="detail_jenis_anestesi_lainnya"
+                id="detail_jenis_anestesi_lainnya"
+                label="detail_jenis_anestesi_lainnya"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div style="display: flex; gap: 5px">
+              <label for="">Nama sirkuler :</label>
+              <input
+                style="border: none; border-bottom: 2px dotted #b1b1b1; flex: 1"
+                type="text"
+                name="nama_sirkuler"
+                id="nama_sirkuler"
+                label="nama_sirkuler"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <p>Diagnosa pre-operatif :</p>
+            <textarea
+              style="width: 100%"
+              name="diagnosa_pre_operatif"
+              id="diagnosa_pre_operatif"
+              label="diagnosa_pre_operatif"
+              myid="check_cara"
+              type="textarea"
+              rows="5"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td width="70%">
+            <p>Diagnosa post-operatif :</p>
+            <textarea
+              style="width: 100%"
+              name="diagnosa_post_operatif"
+              id="diagnosa_post_operatif"
+              label="diagnosa_post_operatif"
+              myid="check_cara"
+              type="textarea"
+              rows="5"
+            ></textarea>
+          </td>
+          <td colspan="2">
+            <p>Macam Pembedahan :</p>
+            <textarea
+              style="width: 100%"
+              name="macam_pembedahan"
+              id="macam_pembedahan"
+              label="macam_pembedahan"
+              myid="check_cara"
+              type="textarea"
+              rows="5"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td width="60%">
+            <div style="display: flex; gap: 5px">
+              <label for="">Komplikasi :</label>
+              <input
+                style="border: none; border-bottom: 2px dotted #b1b1b1; flex: 1"
+                type="text"
+                name="komplikasi"
+                id="komplikasi"
+                label="komplikasi"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td width="20%" rowspan="2">
+            <div>
+              <input
+                type="checkbox"
+                name="komplikasi_besar_khusus"
+                id="komplikasi_besar_khusus"
+                label="komplikasi_besar_khusus"
+                myid="check_cara"
+                value="Besar Khusus"
+              />
+              <label for="">1. Besar Khusus</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="komplikasi_besar"
+                id="komplikasi_besar"
+                label="komplikasi_besar"
+                myid="check_cara"
+                value="Besar"
+              />
+              <label for="">1. Besar</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="komplikasi_sedang"
+                id="komplikasi_sedang"
+                label="komplikasi_sedang"
+                myid="check_cara"
+                value="Sedang"
+              />
+              <label for="">2. Sedang</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="komplikasi_kecil"
+                id="komplikasi_kecil"
+                label="komplikasi_kecil"
+                myid="check_cara"
+                value="Kecil"
+              />
+              <label for="">3. Kecil</label>
+            </div>
+          </td>
+          <td width="20%" rowspan="2">
+            <div>
+              <input
+                type="checkbox"
+                name="cito"
+                id="cito"
+                label="cito"
+                myid="check_cara"
+                value="Cito"
+              />
+              <label for="">1. Cito</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="elektif"
+                id="elektif"
+                label="elektif"
+                myid="check_cara"
+                value="Elektif"
+              />
+              <label for="">2. Elektif</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div style="display: flex; justify-content: space-between">
+              <div>
+                <label for="">Jumlah Pendarahan :</label>
+                <input
+                  style="
+                    border: none;
+                    border-bottom: 2px dotted #b1b1b1;
+                    flex: 1;
+                  "
+                  type="text"
+                  name="jumlah_pendarahan"
+                  id="jumlah_pendarahan"
+                  label="jumlah_pendarahan"
+                  myid="check_cara"
+                />
+                <label for="">ml</label>
+              </div>
+              <div>
+                <label for="">Transfusi :</label>
+                <input
+                  style="
+                    border: none;
+                    border-bottom: 2px dotted #b1b1b1;
+                    flex: 1;
+                  "
+                  type="text"
+                  name="transfusi"
+                  id="transfusi"
+                  label="transfusi"
+                  myid="check_cara"
+                />
+                <label for="">ml</label>
+              </div>
+              <div>
+                <label for="">Golongan :</label>
+                <input
+                  style="
+                    border: none;
+                    border-bottom: 2px dotted #b1b1b1;
+                    flex: 1;
+                  "
+                  type="text"
+                  name="golongan"
+                  id="golongan"
+                  label="golongan"
+                  myid="check_cara"
+                />
+              </div>
+              <div>
+                <label for="">Jenis :</label>
+                <input
+                  style="
+                    border: none;
+                    border-bottom: 2px dotted #b1b1b1;
+                    flex: 1;
+                  "
+                  type="text"
+                  name="jenis"
+                  id="jenis"
+                  label="jenis"
+                  myid="check_cara"
+                />
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div style="display: flex">
+              <label for="">Jaringan yang di-eksisi / insisi :</label>
+              <input
+                style="border: none; border-bottom: 2px dotted #b1b1b1; flex: 1"
+                type="text"
+                name="jaringan_yg_di_eksisi_insisi"
+                id="jaringan_yg_di_eksisi_insisi"
+                label="jaringan_yg_di_eksisi_insisi"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td colspan="2">
+            <div style="margin-left: 10px">
+              <p style="margin-bottom: 10px">Pemeriksaan PA :</p>
+
+              <input
+                type="radio"
+                name="pemeriksaan_pa"
+                id="pemeriksaan_pa"
+                label="pemeriksaan_pa"
+                myid="check_cara"
+                value="Ya"
+              />
+              <label for="">1. Ya</label>
+              <input
+                type="radio"
+                name="pemeriksaan_pa"
+                id="pemeriksaan_pa"
+                label="pemeriksaan_pa"
+                myid="check_cara"
+                value="Tidak"
+              />
+              <label for="">2. Tidak</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <div style="display: flex; gap: 5px">
+              <label>Nama Tindakan / Operasi :</label>
+              <input
+                style="border: none; border-bottom: 2px dotted #b1b1b1; flex: 1"
+                type="text"
+                name="nama_tindakan_operasi"
+                id="nama_tindakan_operasi"
+                label="nama_tindakan_operasi"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td>
+            <div style="display: flex; flex-direction: column">
+              <p style="text-align: center; margin-bottom: 10px">
+                Tanggal Operasi
+              </p>
+
+              <input
+                style="
+                  border: none;
+                  border-bottom: 2px dotted #b1b1b1;
+                  flex: 1;
+                  text-align: center;
+                "
+                type="text"
+                name="tgl_operasi"
+                id="tgl_operasi"
+                label="tgl_operasi"
+                class="datepicker"
+                myid="check_cara"
+                placeholder="dd-mm-yy"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; flex-direction: column">
+              <p style="text-align: center; margin-bottom: 10px">
+                Jam Operasi Dimulai
+              </p>
+
+              <input
+                style="
+                  border: none;
+                  border-bottom: 2px dotted #b1b1b1;
+                  flex: 1;
+                  text-align: center;
+                "
+                type="text"
+                name="jam_operasi_dimulai"
+                id="jam_operasi_dimulai"
+                label="jam_operasi_dimulai"
+                mtype="pukul"
+                myid="check_cara"
+                placeholder="00.00"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; flex-direction: column">
+              <p style="text-align: center; margin-bottom: 10px">
+                Jam Operasi Selesai
+              </p>
+
+              <input
+                style="
+                  border: none;
+                  border-bottom: 2px dotted #b1b1b1;
+                  flex: 1;
+                  text-align: center;
+                "
+                type="text"
+                name="jam_operasi_selesai"
+                id="jam_operasi_selesai"
+                label="jam_operasi_selesai"
+                mtype="pukul"
+                myid="check_cara"
+                placeholder="00.00"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; flex-direction: column">
+              <p style="text-align: center; margin-bottom: 10px">
+                Lama Operasi Berlangsung
+              </p>
+
+              <input
+                style="
+                  border: none;
+                  border-bottom: 2px dotted #b1b1b1;
+                  flex: 1;
+                  text-align: center;
+                "
+                type="text"
+                name="lama_operasi_berlangsung"
+                id="lama_operasi_berlangsung"
+                label="lama_operasi_berlangsung"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <div style="display: flex; align-items: end; gap: 10px">
+              <div style="width: 70%">
+                <p>Laporan operasi :</p>
+                <textarea
+                  type="textarea"
+                  name="laporan_operasi"
+                  id="laporan_operasi"
+                  label="laporan_operasi"
+                  myid="check_cara"
+                  style="width: 100%"
+                  rows="20"
+                ></textarea>
+              </div>
+              <div
+                style="
+                  width: 30%;
+                  display: flex;
+                  align-items: center;
+                  flex-direction: column;
+                "
+              >
+                <p style="text-align: center">Ahli bedah,</p>
+                <input
+                  name="ttd_master"
+                  type="hidden"
+                  id="diagnosa_pentablet_1"
+                  value="{ttd_master}"
+                />
+                <div
+                  style="display: {DISPTTD1_PEN}; width: 100px; height: 20px;"
+                  id="back_img_1"
+                ></div>
+                <img
+                  width="100px"
+                  height="100px"
+                  id="image_ttd_1"
+                  src="{ttd_master}"
+                  style="display:{DISPTTD1}"
+                />
+                <br /><br /><br />
+                <label for="">
+                  (
+                  <b style="font-size: 14px">
+                    <label for=""> {VDPJP} </label>
+                  </b>
+                  )
+                </label>
+                <input
+                  type="hidden"
+                  id="id_doctor"
+                  value="{doc_id}"
+                  myid="check_cara"
+                  name="id_doctor"
+                />
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <p>Instruksi Pasca Operasi:</p>
+            <textarea
+              type="textarea"
+              name="instruksi_pasca_operasi"
+              id="instruksi_pasca_operasi"
+              label="instruksi_pasca_operasi"
+              myid="check_cara"
+              style="width: 100%"
+              rows="40"
+            ></textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        var jk = "{JK}";
+        var img = "{IMG}";
+        var daftar = "{DAFTAR}";
+        if (jk == "f") {
+          $('[name="jk"][value="perempuan"]')
+            .prop("checked", true)
+            .trigger("change");
+        } else {
+          $('[name="jk"][value="laki - laki"]')
+            .prop("checked", true)
+            .trigger("change");
+        }
+
+        if (img != "") {
+          $("#img_mata1").attr("src", img);
+        }
+
+        if (daftar == "t") {
+          var ifirm = "{IFIRM}";
+          $('[name="nama_perusahaan"]').val(ifirm);
+
+          var nopeg = "{NOPEG}";
+          $('[name="no_kartu"]').val(nopeg);
+        }
+
+        AskepForm.showCombo($("select[name=dokter]"), "doctor");
+
+        $(document)
+          .off("change", "#dokter")
+          .on("change", "#dokter", function () {
+            SetDokterName();
+          });
+
+        $(document)
+          .off("click", "#CreateTTD")
+          .on("click", "#CreateTTD", function () {
+            var id = $(this).attr("data-id");
+
+            ttd_paraf(id);
+          });
+      });
+
+      function SetDokterName() {
+        var dokter_txt = $("#dokter option:selected").text(),
+          dokter_img = $("#dokter option:selected").attr("data-ttd");
+        $("#paraf_txt_4").val(dokter_txt);
+
+        if (dokter_img != "") {
+          $("#back_img_4").text("");
+          $("#back_img_4").css("display", "none");
+          $("#image_paraf_4").css("display", "");
+          $("#image_paraf_4").attr("src", "" + dokter_img + "");
+          $("#paraf_4").val(dokter_img);
+        }
+      }
+
+      function ttd_paraf(id) {
+        var pid = "{PID}";
+        var regpid = "{REGPID}";
+
+        PopupCenter(
+          "index.php?mod=ttd_pentablet_2&cmd=ttd_pentablet_2&jenis=" +
+            id +
+            "&pid=" +
+            pid +
+            "&regpid=" +
+            regpid,
+          "pop",
+          800,
+          400
+        );
+      }
+
+      function tampil_ttd_2(x, y) {
+        $("#back_img_" + x).text("");
+        $("#back_img_" + x).css("display", "none");
+        $("#paraf_" + x).val(y);
+        $("#image_paraf_" + x).css("display", "");
+        $("#image_paraf_" + x).attr("src", "" + y + "");
+      }
+
+      function SetTTD() {
+        $('input[data-name="paraf"]').each(function () {
+          var id = $(this).attr("data-id");
+          var ttd = $(this).val();
+          var def = "paraf";
+          if (ttd == "") {
+            $("#back_img_" + id).text(def);
+            $("#back_img_" + id).css({
+              display: "",
+              "font-style": "italic",
+              width: 200,
+              height: 100,
+              "text-align": "center",
+            });
+            $("#image_paraf_" + id).css("display", "none");
+          } else {
+            $("#back_img_" + id).text("");
+            $("#back_img_" + id).css("display", "none");
+            $("#image_paraf_" + id).css("display", "");
+            $("#image_paraf_" + id).attr("src", "" + ttd + "");
+          }
+        });
+      }
+
+      function PopupCenter(url, title, w, h) {
+        var dualScreenLeft =
+          window.screenLeft != undefined ? window.screenLeft : screen.left;
+        var dualScreenTop =
+          window.screenTop != undefined ? window.screenTop : screen.top;
+        var width = window.innerWidth
+          ? window.innerWidth
+          : document.documentElement.clientWidth
+          ? document.documentElement.clientWidth
+          : screen.width;
+        var height = window.innerHeight
+          ? window.innerHeight
+          : document.documentElement.clientHeight
+          ? document.documentElement.clientHeight
+          : screen.height;
+        var left = width / 2 - w / 2 + dualScreenLeft + 100;
+        var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+        var newWindow = window.open(
+          url,
+          title,
+          "scrollbars=yes, width=" +
+            w +
+            ", height=" +
+            h +
+            ", top=" +
+            top +
+            ", left=" +
+            left
+        );
+
+        if (window.focus) newWindow.focus();
+      }
+    </script>
+  </body>
+</html>

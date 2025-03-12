@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ASUHAN GIZI</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+
+      let umur = $("input[name='umur-pengkajian']").val();
+      umur = umur.match(/(?:(\d+)\s+years)?\s*(?:(\d+)\s+mons)?/);
+
+      let tahun = umur[1] ? parseInt(umur[1], 10) : 0;
+      let bulan = umur[2] ? parseInt(umur[2], 10) : 0;
+
+      const tinggiBadan = parseInt($("input[name='tb-a']").val(), 10) || 0;
+      const beratBadan = parseInt($("input[name='bb-a']").val(), 10) || 0;
+
+      function persentaseBBIdeal(beratBadanIdeal) {
+        return `${Math.round((beratBadan / beratBadanIdeal) * 100)}%`;
+      }
+
+      let bbIdeal = 0;
+      if (tahun > 0 && tahun <= 13) {
+        bbIdeal = 2 * tahun + 8;
+        $("input[name='bb-ideal-a']").val(bbIdeal);
+        $("input[name='persentase-bb-ideal']").val(persentaseBBIdeal(bbIdeal));
+      } else if (tahun > 13) {
+        bbIdeal = (tinggiBadan - 100) * 0.9;
+        const nilaiIMT = beratBadan / (tinggiBadan / 100) ** 2;
+        $("input[name='bb-ideal-c']").val(bbIdeal);
+        $("input[name='nilai-imt']").val(
+          nilaiIMT == Infinity ? 0 : nilaiIMT.toFixed(2)
+        );
+        $("input[name='persentase-bb-ideal-c']").val(
+          persentaseBBIdeal(bbIdeal)
+        );
+      } else if (tahun === 0 && bulan >= 1) {
+        bbIdeal = 0.5 * bulan + 4;
+
+        $("input[name='bb-ideal-b']").val(bbIdeal);
+        $("input[name='persentase-bb-ideal']").val(persentaseBBIdeal(bbIdeal));
+      }
+
+      const elements = {
+        groupA: [
+          "bb-a",
+          "tb-a",
+          "bb-ideal-a",
+          "bb-ideal-b",
+          "persentase-bb-ideal",
+          "nilai-z-score",
+        ],
+        groupB: [
+          "bb-b",
+          "tb-b",
+          "lingkar-lengan-atas",
+          "bb-ideal-c",
+          "persentase-bb-ideal-c",
+          "nilai-imt",
+        ],
+      };
+
+      function setColors(group, color) {
+        group.forEach((name) => {
+          $(`input[name='${name}']`).css("color", color);
+          if (name === "bb-ideal-a" && tahun < 1) {
+            $(`input[name='bb-ideal-a']`).prop("readonly", false);
+            $(`input[name='bb-ideal-b']`).prop("readonly", true);
+          } else if (name === "bb-ideal-b" && tahun > 0) {
+            $(`input[name='bb-ideal-b']`).prop("readonly", false);
+            $(`input[name='bb-ideal-a']`).prop("readonly", true);
+          }
+        });
+      }
+
+      $("input[name='usia-pasien']").on("change", function () {
+        const value = $(this).val();
+        if (value === "<= 13") {
+          setColors(elements.groupA, "black");
+          setColors(elements.groupB, "transparent");
+        } else if (value === "> 13") {
+          setColors(elements.groupB, "black");
+          setColors(elements.groupA, "transparent");
+        }
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
+  <body>
+    <h1 class="title">ASUHAN GIZI</h1>
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td>Nama Pasien</td>
+          <td>
+            <input
+              name="nama_pasien"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              value="{VNAMA_PASIEN}"
+              placeholder="..."
+            />
+          </td>
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              myid="check_cara"
+              name="no_rm"
+              id="no_rm"
+              value="{NO_RM}"
+              label="nomor rekam medis"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan="2">Tanggal Lahir</td>
+          <td rowspan="2">
+            <input
+              name="tgl_lahir"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              value="{VBIRTH_DATE}"
+              myid="check_cara"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td rowspan="2">Umur</td>
+          <td rowspan="2">
+            <input
+              type="text"
+              size="20"
+              name="umur-pengkajian"
+              id="umur-pengkajian"
+              myid="check_cara"
+              value="{VAGEREGIS}"
+              placeholder="..."
+            />
+          </td>
+          <td>
+            <label for="kelas"> Kelas </label>
+          </td>
+          <td>
+            <input
+              name="kelas"
+              type="text"
+              id="kelas"
+              placeholder="..."
+              myid="check_cara"
+              value="{VNAMAKELAS}"
+              label="kelas"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Kamar</td>
+          <td>
+            <input
+              type="text"
+              name="kamar"
+              id="kamar"
+              myid="check_cara"
+              placeholder="..."
+              label="kamar"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td width="20%" rowspan="2" style="text-align: center">
+            <b>Antropometri</b>
+          </td>
+          <td width="40%" colspan="2">
+            <div>
+              <input
+                style="margin-right: 5px"
+                type="radio"
+                name="usia-pasien"
+                id="usia-pasien"
+                label="usia-pasien"
+                value="<= 13"
+                myid="check_cara"
+              />
+              <label for="">Pasien usia &le; 13 tahun</label>
+            </div>
+            <div>
+              <label for="">Berat Badan (BB) :</label>
+              <input
+                type="text"
+                name="bb-a"
+                label="bb-a"
+                id="bb-a"
+                myid="check_cara"
+                style="
+                  border: none;
+                  border-bottom: dotted 2px;
+                  color: transparent;
+                "
+                value="{VBB}"
+              />
+              <label for="">kg</label>
+            </div>
+            <div>
+              <label for="">Tinggi / panjang badan :</label>
+              <input
+                type="text"
+                name="tb-a"
+                label="tb-a"
+                id="tb-a"
+                myid="check_cara"
+                style="
+                  border: none;
+                  border-bottom: dotted 2px;
+                  color: transparent;
+                "
+                value="{VTB}"
+              />
+              <label for="">cm</label>
+            </div>
+            <div>
+              <label for=""
+                >BB ideal 0 - 12 bulan (0,5 &times; umur &plus; 4) :</label
+              >
+              <input
+                type="text"
+                name="bb-ideal-a"
+                label="bb-ideal-a"
+                id="bb-ideal-a"
+                myid="check_cara"
+                style="
+                  border: none;
+                  border-bottom: dotted 2px;
+                  color: transparent;
+                "
+              />
+              <label for="">kg</label>
+            </div>
+            <div>
+              <label for=""
+                >BB ideal 1 - 13 tahun (2 &times; umur &plus; 8) :</label
+              >
+              <input
+                type="text"
+                name="bb-ideal-b"
+                label="bb-ideal-b"
+                id="bb-ideal-b"
+                myid="check_cara"
+                style="
+                  border: none;
+                  border-bottom: dotted 2px;
+                  color: transparent;
+                "
+              />
+              <label for="">kg</label>
+            </div>
+            <div>
+              <label for=""
+                >&percnt; BB ideal (BB/BB ideal &times; 100 &percnt;) :</label
+              >
+              <input
+                type="text"
+                name="persentase-bb-ideal"
+                label="persentase-bb-ideal"
+                id="persentase-bb-ideal"
+                myid="check_cara"
+                style="
+                  border: none;
+                  border-bottom: dotted 2px;
+                  color: transparent;
+                "
+              />
+              <label for="">(Normal 90 &percnt; - 110 &percnt;)</label>
+            </div>
+          </td>
+          <td width="40%" colspan="2">
+            <div>
+              <input
+                style="margin-right: 5px"
+                type="radio"
+                name="usia-pasien"
+                id="usia-pasien"
+                label="usia-pasien"
+                value="> 13"
+                myid="check_cara"
+              />
+              <label for="">Pasien usia &gt; 13 tahun</label>
+            </div>
+            <div>
+              <label for="">Berat Badan (BB) :</label>
+              <input
+                type="text"
+                name="bb-b"
+                label="bb-b"
+                id="bb-b"
+                myid="check_cara"
+                style="
+                  border: none;
+                  border-bottom: dotted 2px;
+                  color: transparent;
+                "
+                value="{VBB}"
+              />
+              <label for="">kg</label>
+            </div>
+            <div>
+              <label for="">Tinggi badan :</label>
+              <input
+                type="text"
+                name="tb-b"
+                label="tb-b"
+                id="tb-b"
+                myid="check_cara"
+                style="
+                  border: none;
+                  border-bottom: dotted 2px;
+                  color: transparent;
+                "
+                value="{VTB}"
+              />
+              <label for="">cm <sup>&ast;</sup>&rpar;</label>
+            </div>
+            <div>
+              <label for="">BB ideal (TB - 100) &times; 0,9 :</label>
+              <input
+                type="text"
+                name="bb-ideal-c"
+                label="bb-ideal-c"
+                id="bb-ideal-c"
+                myid="check_cara"
+                style="
+                  border: none;
+                  border-bottom: dotted 2px;
+                  color: transparent;
+                "
+              />
+              <label for="">kg</label>
+            </div>
+            <div>
+              <label for="">Lingkar Lengan atas :</label>
+              <input
+                type="text"
+                name="lingkar-lengan-atas"
+                label="lingkar-lengan-atas"
+                id="lingkar-lengan-atas"
+                myid="check_cara"
+                style="
+                  border: none;
+                  border-bottom: dotted 2px;
+                  color: transparent;
+                "
+              />
+              <label for="">cm</label>
+            </div>
+            <div>
+              <label for=""
+                >&percnt; BB ideal (BB/BB ideal &times; 100 &percnt;) :</label
+              >
+              <input
+                type="text"
+                name="persentase-bb-ideal-c"
+                label="persentase-bb-ideal-c"
+                id="persentase-bb-ideal-c"
+                myid="check_cara"
+                style="
+                  border: none;
+                  border-bottom: dotted 2px;
+                  color: transparent;
+                "
+              />
+              <label for="">(Normal 90 &percnt; - 110 &percnt;)</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <label for="">Penilaian Status Gizi : Nilai Z-Score :</label>
+            <input
+              type="text"
+              name="nilai-z-score"
+              label="nilai-z-score"
+              id="nilai-z-score"
+              myid="check_cara"
+              style="
+                border: none;
+                border-bottom: dotted 2px;
+                color: transparent;
+              "
+            />
+          </td>
+          <td colspan="2">
+            <label for="">Penilaian Status Gizi : IMT :</label>
+            <input
+              type="text"
+              name="nilai-imt"
+              label="nilai-imt"
+              id="nilai-imt"
+              myid="check_cara"
+              style="
+                border: none;
+                border-bottom: dotted 2px;
+                color: transparent;
+              "
+            />
+            <label for="">kg/m<sup>2</sup></label>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center"><b>Biokimia</b></td>
+          <td colspan="4">
+            <textarea
+              style="width: 100%; padding: 0"
+              type="textarea"
+              name="biokimia"
+              id="biokimia"
+              label="biokimia"
+              myid="check_cara"
+              rows="10"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center"><b>Fisik / Klinis</b></td>
+          <td>
+            <input
+              style="margin-left: 5px"
+              type="radio"
+              name="fisik-klinis"
+              id="fisik-klinis"
+              label="fisik-klinis"
+              value="Tidak ada"
+              myid="check_cara"
+            />
+            <label for="">Tidak ada</label>
+          </td>
+          <td>
+            <div>
+              <input
+                style="margin-left: 5px"
+                type="radio"
+                name="fisik-klinis"
+                id="fisik-klinis"
+                label="fisik-klinis"
+                value="Ada"
+                myid="check_cara"
+              />
+              <label for="">Ada :</label>
+            </div>
+            <div>
+              <input
+                style="margin-left: 5px"
+                type="checkbox"
+                name="fisik-klinis-diare"
+                id="fisik-klinis-diare"
+                label="fisik-klinis-diare"
+                value="Diare"
+                myid="check_cara"
+              />
+              <label for="">Diare :</label>
+              <input
+                type="text"
+                name="frekuensi-diare"
+                id="frekuensi-diare"
+                label="frekuensi-diare"
+                myid="check_cara"
+                style="border: none; border-bottom: 2px dotted"
+                size="5"
+              />
+              <label for="">hari/minggu/bulan</label>
+            </div>
+            <div>
+              <input
+                style="margin-left: 5px"
+                type="checkbox"
+                name="fisik-klinis-muntah"
+                id="fisik-klinis-muntah"
+                label="fisik-klinis-muntah"
+                value="Muntah"
+                myid="check_cara"
+              />
+              <label for="">Muntah :</label>
+              <input
+                type="text"
+                name="frekuensi-muntah"
+                id="frekuensi-muntah"
+                label="frekuensi-muntah"
+                myid="check_cara"
+                style="border: none; border-bottom: 2px dotted"
+                size="5"
+              />
+              <label for="">hari/minggu/bulan</label>
+            </div>
+            <div>
+              <input
+                style="margin-left: 5px"
+                type="checkbox"
+                name="fisik-klinis-mual"
+                id="fisik-klinis-mual"
+                label="fisik-klinis-mual"
+                value="Mual"
+                myid="check_cara"
+              />
+              <label for="">Mual :</label>
+              <input
+                type="text"
+                name="frekuensi-mual"
+                id="frekuensi-mual"
+                label="frekuensi-mual"
+                myid="check_cara"
+                style="border: none; border-bottom: 2px dotted"
+                size="5"
+              />
+              <label for="">hari/minggu/bulan</label>
+            </div>
+            <div>
+              <input
+                style="margin-left: 5px"
+                type="checkbox"
+                name="fisik-klinis-tekanan-darah"
+                id="fisik-klinis-tekanan-darah"
+                label="fisik-klinis-tekanan-darah"
+                value="Tekanan darah"
+                myid="check_cara"
+              />
+              <label for="">Tekanan darah :</label>
+              <input
+                type="text"
+                name="tekanan-darah"
+                id="tekanan-darah"
+                label="tekanan-darah"
+                myid="check_cara"
+                value="{VTD}"
+                style="border: none; border-bottom: 2px dotted"
+                size="5"
+              />
+              <br />
+              <label for="" style="margin-left: 25px">hari/minggu/bulan</label>
+            </div>
+          </td>
+          <td colspan="2">
+            <div>
+              <input
+                style="margin-left: 5px"
+                type="checkbox"
+                name="fisik-klinis-gangguan-menelan"
+                id="fisik-klinis-gangguan-menelan"
+                label="fisik-klinis-gangguan-menelan"
+                value="Gangguan menelan"
+                myid="check_cara"
+              />
+              <label for="">Gangguan menelan :</label>
+              <input
+                type="text"
+                name="gangguan-menelan"
+                id="gangguan-menelan"
+                label="gangguan-menelan"
+                myid="check_cara"
+                style="border: none; border-bottom: 2px dotted"
+              />
+              <label for="">hari/minggu/bulan</label>
+            </div>
+            <div>
+              <input
+                style="margin-left: 5px"
+                type="checkbox"
+                name="fisik-klinis-konstipasi"
+                id="fisik-klinis-konstipasi"
+                label="fisik-klinis-konstipasi"
+                value="Konstipasi"
+                myid="check_cara"
+              />
+              <label for="">Konstipasi :</label>
+              <input
+                type="text"
+                name="konstipasi"
+                id="konstipasi"
+                label="konstipasi"
+                myid="check_cara"
+                style="border: none; border-bottom: 2px dotted"
+              />
+              <label for="">hari/minggu/bulan</label>
+            </div>
+            <div>
+              <input
+                style="margin-left: 5px"
+                type="checkbox"
+                name="fisik-klinis-gangguan-mengunyah"
+                id="fisik-klinis-gangguan-mengunyah"
+                label="fisik-klinis-gangguan-mengunyah"
+                value="Gangguan mengunyah"
+                myid="check_cara"
+              />
+              <label for="">Gangguan mengunyah :</label>
+              <input
+                type="text"
+                name="gangguan-mengunyah"
+                id="gangguan-mengunyah"
+                label="gangguan-mengunyah"
+                myid="check_cara"
+                style="border: none; border-bottom: 2px dotted"
+              />
+              <label for="">hari/minggu/bulan</label>
+            </div>
+            <div>
+              <input
+                style="margin-left: 5px"
+                type="checkbox"
+                name="fisik-klinis-lain-lain"
+                id="fisik-klinis-lain-lain"
+                label="fisik-klinis-lain-lain"
+                value="Gangguan mengunyah"
+                myid="check_cara"
+              />
+              <label for="">Lain - lain :</label>
+              <input
+                type="text"
+                name="detail-lain-lain"
+                id="detail-lain-lain"
+                label="detail-lain-lain"
+                myid="check_cara"
+                style="border: none; border-bottom: 2px dotted"
+              />
+              <label for="">hari/minggu/bulan</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center"><b>Kebiasaan Makan</b></td>
+          <td colspan="2">
+            <div>
+              <label for="" style="margin-left: 5px">1.</label>
+              <label for="">Recall makanan pasien SMRS</label>
+              <br />
+
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Waktu</th>
+                    <th>Bahan Makanan</th>
+                    <th>Kalori</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Pagi</td>
+                    <td>
+                      <input
+                        type="text"
+                        style="width: 100%"
+                        name="bahan-makanan-pagi"
+                        id="bahan-makanan-pagi"
+                        label="bahan-makanan-pagi"
+                        myid="check_cara"
+                      />
+                    </td>
+                    <td width="20%">
+                      <input
+                        type="text"
+                        style="width: 100%"
+                        name="kalori-pagi"
+                        id="kalori-pagi"
+                        label="kalori-pagi"
+                        myid="check_cara"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Siang</td>
+                    <td>
+                      <input
+                        type="text"
+                        style="width: 100%"
+                        name="bahan-makanan-siang"
+                        id="bahan-makanan-siang"
+                        label="bahan-makanan-siang"
+                        myid="check_cara"
+                      />
+                    </td>
+                    <td width="20%">
+                      <input
+                        type="text"
+                        style="width: 100%"
+                        name="kalori-siang"
+                        id="kalori-siang"
+                        label="kalori-siang"
+                        myid="check_cara"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Malam</td>
+                    <td>
+                      <input
+                        type="text"
+                        style="width: 100%"
+                        name="bahan-makanan-malam"
+                        id="bahan-makanan-malam"
+                        label="bahan-makanan-malam"
+                        myid="check_cara"
+                      />
+                    </td>
+                    <td width="20%">
+                      <input
+                        type="text"
+                        style="width: 100%"
+                        name="kalori-malam"
+                        id="kalori-malam"
+                        label="kalori-malam"
+                        myid="check_cara"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div
+              style="
+                margin: 0 25px 0 25px;
+                display: flex;
+                justify-content: space-between;
+              "
+            >
+              <div>
+                <label for="">Energi :</label>
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="energi"
+                  id="energi"
+                  label="energi"
+                  myid="check_cara"
+                />
+              </div>
+              <div>
+                <label for="">Karbohidrat :</label>
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="karbohidrat"
+                  id="karbohidrat"
+                  label="karbohidrat"
+                  myid="check_cara"
+                />
+              </div>
+            </div>
+            <div
+              style="
+                margin: 0 25px 0 25px;
+                display: flex;
+                justify-content: space-between;
+              "
+            >
+              <div>
+                <label for="">Protein :</label>
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="protein"
+                  id="protein"
+                  label="protein"
+                  myid="check_cara"
+                />
+              </div>
+              <div>
+                <label for="">Lemak :</label>
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="lemak"
+                  id="lemak"
+                  label="lemak"
+                  myid="check_cara"
+                />
+              </div>
+            </div>
+            <div>
+              <label for="" style="margin-left: 5px">2.</label>
+              <label for="">Cara pemberian :</label>
+              <div>
+                <input
+                  style="margin-left: 25px"
+                  type="radio"
+                  name="cara-pemberian-1"
+                  id="cara-pemberian-1"
+                  label="cara-pemberian-1"
+                  value="Lewat mulut"
+                  myid="check_cara"
+                />
+                <label for="" style="margin-left: 5px">Lewat mulut</label>
+              </div>
+              <div>
+                <input
+                  style="margin-left: 25px"
+                  type="radio"
+                  name="cara-pemberian-1"
+                  id="cara-pemberian-1"
+                  label="cara-pemberian-1"
+                  value="Lewat pipa"
+                  myid="check_cara"
+                />
+                <label for="" style="margin-left: 5px">Lewat pipa</label>
+              </div>
+            </div>
+          </td>
+          <td colspan="2">
+            <div>
+              <label for="" style="margin-left: 5px">3.</label>
+              <label for="">Bentuk makanan :</label>
+              <div style="margin-left: 25px">
+                <input
+                  type="radio"
+                  name="bentuk-makanan"
+                  id="bentuk-makanan"
+                  label="bentuk-makanan"
+                  myid="check_cara"
+                  value="Biasa"
+                />
+                <label for="">Biasa</label>
+              </div>
+              <div style="margin-left: 25px">
+                <input
+                  type="radio"
+                  name="bentuk-makanan"
+                  id="bentuk-makanan"
+                  label="bentuk-makanan"
+                  myid="check_cara"
+                  value="Lunak"
+                />
+                <label for="">Lunak</label>
+              </div>
+              <div style="margin-left: 25px">
+                <input
+                  type="radio"
+                  name="bentuk-makanan"
+                  id="bentuk-makanan"
+                  label="bentuk-makanan"
+                  myid="check_cara"
+                  value="Nasi tim"
+                />
+                <label for="">Nasi tim</label>
+              </div>
+              <div style="margin-left: 25px">
+                <input
+                  type="radio"
+                  name="bentuk-makanan"
+                  id="bentuk-makanan"
+                  label="bentuk-makanan"
+                  myid="check_cara"
+                  value="Saring"
+                />
+                <label for="">Saring</label>
+              </div>
+              <div style="margin-left: 25px">
+                <input
+                  type="radio"
+                  name="bentuk-makanan"
+                  id="bentuk-makanan"
+                  label="bentuk-makanan"
+                  myid="check_cara"
+                  value="Cair"
+                />
+                <label for="">Cair</label>
+              </div>
+              <div style="margin-left: 25px">
+                <input
+                  type="radio"
+                  name="bentuk-makanan"
+                  id="bentuk-makanan"
+                  label="bentuk-makanan"
+                  myid="check_cara"
+                  value="Sonde"
+                />
+                <label for="">Sonde</label>
+              </div>
+            </div>
+            <div>
+              <label for="" style="margin-left: 5px">4.</label>
+              <label for="">Alergi / pantangan makanan :</label>
+              <div style="margin-left: 25px">
+                <label for="">Riwayat penyakit OS :</label>
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="riwayat-penyakit-os"
+                  id="riwayat-penyakit-os"
+                  label="riwayat-penyakit-os"
+                  myid="check_cara"
+                />
+              </div>
+              <div style="margin-left: 25px">
+                <label for="">Riwayat penyakit keluarga :</label>
+                <input
+                  style="border: none; border-bottom: 2px dotted"
+                  type="text"
+                  name="riwayat-penyakit-keluarga"
+                  id="riwayat-penyakit-keluarga"
+                  label="riwayat-penyakit-keluarga"
+                  myid="check_cara"
+                />
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5">
+            <p><b>DIAGNOSA GIZI :</b></p>
+            <textarea
+              type="textarea"
+              name="diagnosa-gizi"
+              id="diagnosa-gizi"
+              label="diagnosa-gizi"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              rows="4"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5">
+            <p><b>INTERVENSI GIZI</b></p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5">
+            <p>Tujuan Intervensi</p>
+            <div style="display: flex; gap: 5px; margin-bottom: 5px">
+              <label for="">1.</label>
+              <input
+                type="text"
+                name="tujuan-intervensi-1"
+                id="tujuan-intervensi-1"
+                label="tujuan-intervensi-1"
+                myid="check_cara"
+                style="flex: 1"
+              />
+            </div>
+            <div style="display: flex; gap: 5px">
+              <label for="">2.</label>
+              <input
+                type="text"
+                name="tujuan-intervensi-2"
+                id="tujuan-intervensi-2"
+                label="tujuan-intervensi-2"
+                myid="check_cara"
+                style="flex: 1"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <p>Intervensi gizi yang diberikan :</p>
+            <textarea
+              style="width: 100%; padding: 0"
+              type="textarea"
+              name="intervensi-gizi-yg-diberikan"
+              id="intervensi-gizi-yg-diberikan"
+              label="intervensi-gizi-yg-diberikan"
+              myid="check_cara"
+              rows="5"
+            ></textarea>
+          </td>
+          <td>
+            <p>Cara Pemberian :</p>
+            <div style="margin-left: 20px">
+              <div>
+                <input
+                  type="radio"
+                  name="pemberian-intervensi-gizi"
+                  id="pemberian-intervensi-gizi"
+                  label="pemberian-intervensi-gizi"
+                  myid="check_cara"
+                  value="Lewat mulut"
+                />
+                <label style="margin-left: 5px" for="">Lewat mulut</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="pemberian-intervensi-gizi"
+                  id="pemberian-intervensi-gizi"
+                  label="pemberian-intervensi-gizi"
+                  myid="check_cara"
+                  value="Lewat pipa"
+                />
+                <label style="margin-left: 5px" for="">Lewat pipa</label>
+              </div>
+            </div>
+          </td>
+          <td colspan="2">
+            <p>Bentuk makanan :</p>
+            <div style="margin-left: 20px">
+              <div>
+                <input
+                  type="radio"
+                  name="bentuk-makanan-intervensi-gizi"
+                  id="bentuk-makanan-intervensi-gizi"
+                  label="bentuk-makanan-intervensi-gizi"
+                  myid="check_cara"
+                  value="Biasa"
+                />
+                <label style="margin-left: 5px" for="">Biasa</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="bentuk-makanan-intervensi-gizi"
+                  id="bentuk-makanan-intervensi-gizi"
+                  label="bentuk-makanan-intervensi-gizi"
+                  myid="check_cara"
+                  value="Lunak"
+                />
+                <label style="margin-left: 5px" for="">Lunak</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="bentuk-makanan-intervensi-gizi"
+                  id="bentuk-makanan-intervensi-gizi"
+                  label="bentuk-makanan-intervensi-gizi"
+                  myid="check_cara"
+                  value="Nasi tim"
+                />
+                <label style="margin-left: 5px" for="">Nasi tim</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="bentuk-makanan-intervensi-gizi"
+                  id="bentuk-makanan-intervensi-gizi"
+                  label="bentuk-makanan-intervensi-gizi"
+                  myid="check_cara"
+                  value="Saring"
+                />
+                <label style="margin-left: 5px" for="">Saring</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="bentuk-makanan-intervensi-gizi"
+                  id="bentuk-makanan-intervensi-gizi"
+                  label="bentuk-makanan-intervensi-gizi"
+                  myid="check_cara"
+                  value="Cair"
+                />
+                <label style="margin-left: 5px" for="">Cair</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="bentuk-makanan-intervensi-gizi"
+                  id="bentuk-makanan-intervensi-gizi"
+                  label="bentuk-makanan-intervensi-gizi"
+                  myid="check_cara"
+                  value="Sonde"
+                />
+                <label style="margin-left: 5px" for="">Sonde</label>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <p style="text-align: end">Tanggal / pukul :</p>
+          </td>
+          <td colspan="3">
+            <input
+              type="text"
+              name="tgl-asuhan-gizi"
+              id="tgl-asuhan-gizi"
+              label="tgl-asuhan-gizi"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
+              myid="check_cara"
+            />
+            <br />
+            <input
+              type="text"
+              name="pukul-asuhan-gizi"
+              id="pukul-asuhan-gizi"
+              label="pukul-asuhan-gizi"
+              placeholder="00.00"
+              mtype="pukul"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <p style="text-align: end">Nama Ahli Gizi:</p>
+          </td>
+          <td colspan="3">
+            <input
+              type="text"
+              name="nama-asuhan-gizi"
+              id="nama-asuhan-gizi"
+              label="nama-asuhan-gizi"
+              placeholder="......"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <p style="text-align: end">Paraf</p>
+          </td>
+          <td colspan="3">
+            <div
+              style="display: flex; flex-direction: column; align-items: start"
+            >
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_ahli_gizi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_ahli_gizi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_ahli_gizi"
+                id="paraf_ex_ttd_ahli_gizi"
+                data-name="paraf"
+                data-id="ex_ttd_ahli_gizi"
+              />
+
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_ahli_gizi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+              <font id="ttdnya2"></font>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

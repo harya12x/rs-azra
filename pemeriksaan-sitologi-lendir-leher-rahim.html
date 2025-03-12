@@ -6,29 +6,23 @@
     <title>PEMERIKSAAN SITOLOGI LENDIR LEHER RAHIM</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-    .table th,
-    .table td {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
-    }
-
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
     }
   </style>
   <script type="text/javascript">
@@ -36,6 +30,7 @@
       SetTTD();
     });
   </script>
+
   <script>
     $(document).ready(function () {
       $(function () {
@@ -44,6 +39,15 @@
           autoclose: true,
           todayHighlight: true,
         });
+      });
+
+      $("input[name='apakah-pernah-keguguran']").on("change", function () {
+        if ($(this).val() === "Tidak") {
+          $("input[name='brp-kali-keguguran']").val("");
+          $("input[name='brp-kali-keguguran']").prop("disabled", true);
+        } else {
+          $("input[name='brp-kali-keguguran']").prop("disabled", false);
+        }
       });
     });
 
@@ -209,8 +213,8 @@
               name="tgl_pemeriksaan2"
               type="text"
               id="tgl_pemeriksaan"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
               label="tanggal lahir"
             />
@@ -222,8 +226,8 @@
               name="diterima_tgl2"
               type="text"
               id="diterima_tgl"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
               label="tanggal lahir"
             />
@@ -264,7 +268,7 @@
                 id="umur"
                 label="umur"
                 myid="check_cara"
-                value="{VAGE}"
+                value="{VAGEREGIS}"
                 placeholder="..."
               />
               <label for="status-psikologis">Tahun</label>
@@ -340,8 +344,7 @@
               id="alamat"
               label="alamat"
               myid="check_cara"
-              placeholder="......"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               cols="2"
             ></textarea>
           </td>
@@ -394,17 +397,19 @@
                 <label for="apakah-pernah-keguguran">Ya</label>
               </div>
             </section>
+            <section>
+              <input
+                type="radio"
+                name="apakah-pernah-keguguran"
+                id="apakah-pernah-keguguran"
+                label="apakah-pernah-keguguran"
+                myid="check_cara"
+                value="Tidak"
+              />
+              <label for="apakah-pernah-keguguran">Tidak</label>
+            </section>
           </td>
           <td>
-            <input
-              type="radio"
-              name="apakah-pernah-keguguran"
-              id="apakah-pernah-keguguran"
-              label="apakah-pernah-keguguran"
-              myid="check_cara"
-              value="Tidak"
-            />
-            <label for="apakah-pernah-keguguran">Tidak</label>
             <label for="brp-kali-keguguran">bila Ya, berapa kali?</label>
             <input
               type="text"
@@ -475,7 +480,7 @@
               id="telah-menggunakan-kb-sejak"
               label="telah-menggunakan-kb-sejak"
               myid="check_cara"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               placeholder="dd-mm-yyyy"
             />
           </td>
@@ -593,7 +598,7 @@
                   name="ada-keluhan"
                   id="ada-keluhan"
                   label="ada-keluhan"
-                  id="check_cara"
+                  myid="check_cara"
                   value="Ada"
                 />
                 <label for="ada-keluhan">Ada</label>
@@ -604,7 +609,7 @@
                   name="ada-keluhan"
                   id="ada-keluhan"
                   label="ada-keluhan"
-                  id="check_cara"
+                  myid="check_cara"
                   value="Tidak ada"
                 />
                 <label for="ada-keluhan">Tidak ada</label>
@@ -679,7 +684,7 @@
               id="keluhan-lain-lain"
               label="keluhan-lain-lain"
               myid="check_cara"
-              style="width: 100%; padding: 5px"
+              style="width: 100%; padding: 0"
               cols="2"
             ></textarea>
           </td>
@@ -694,7 +699,7 @@
           <td colspan="2">
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               name="inspekulo"
               id="inspekulo"
               label="inspekulo"
@@ -708,7 +713,7 @@
           <td colspan="2">
             <input
               type="text"
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               name="IVA"
               id="IVA"
               label="IVA"
@@ -738,7 +743,7 @@
               type="text"
               id="17_tanggal"
               placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              class="datepicker"
               size="10"
               myid="check_cara"
             />
@@ -807,34 +812,4 @@
       </tbody>
     </table>
   </body>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var radioButtons = document.querySelectorAll('input[type="radio"]');
-      radioButtons.forEach(function (radio) {
-        radio.addEventListener("click", function () {
-          if (this.classList.contains("clicked")) {
-            this.checked = false;
-            this.classList.remove("clicked");
-          } else {
-            var name = this.getAttribute("name");
-            var radios = document.querySelectorAll(
-              'input[type="radio"][name="' + name + '"]'
-            );
-            radios.forEach(function (r) {
-              r.classList.remove("clicked");
-            });
-            this.classList.add("clicked");
-          }
-          console.log(this.name + " diubah menjadi: " + this.checked);
-        });
-      });
-
-      var textInputs = document.querySelectorAll('input[type="text"]');
-      textInputs.forEach(function (input) {
-        input.addEventListener("change", function () {
-          console.log(this.name + " diubah menjadi: " + this.value);
-        });
-      });
-    });
-  </script>
 </html>

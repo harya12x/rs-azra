@@ -4,34 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Form ACS</title>
-    <script
-      src="https://code.jquery.com/jquery-3.7.1.slim.js"
-      integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
-      crossorigin="anonymous"
-    ></script>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -63,30 +53,6 @@
         F: $("input[name='totalskor6']"),
         G: $("input[name='totalskor7']"),
       };
-      const totalSatuan = $("input[name='total-satuan']");
-      const totalJumlah = $("input[name='total-jumlah']");
-      const totalHarga = $("input[name='total-harga']");
-      const totalHargaKeseluruhan = $("input[name='total-harga-keseluruhan']");
-
-      satuan.on("input", function () {
-        hitungTotalCairan(satuan, totalSatuan);
-      });
-      jumlah.on("input", function () {
-        hitungTotalCairan(jumlah, totalJumlah);
-      });
-      harga.on("input", function () {
-        hitungTotalCairan(harga, totalHarga);
-      });
-
-      function hitungTotalCairan(inputs, totalElement) {
-        let total = 0;
-        inputs.each(function () {
-          total += parseFloat($(this).val()) || 0;
-        });
-        totalElement.val(total);
-        console.log(total);
-        hitungtotalHargaKeseluruhan();
-      }
 
       function hitungtotalHargaKeseluruhan() {
         totalHargaKeseluruhan.val(
@@ -244,7 +210,7 @@
             <td>Tanggal :</td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="tgl-tambahan"
                 id="tgl-tambahan"
@@ -259,7 +225,7 @@
             <td>Nama Pasien :</td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="nama-pasien"
                 id="nama-pasien"
@@ -274,7 +240,7 @@
             <td>Nomor MR :</td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="nomor-mr"
                 id="nomor-mr"
@@ -288,7 +254,7 @@
             <td>Kamar/Bed :</td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="kamar-bed"
                 id="kamar-bed"
@@ -302,7 +268,7 @@
             <td>Lantai/Kelas :</td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="lantai-kelas"
                 id="lantai-kelas"
@@ -331,7 +297,7 @@
           <tr>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="no-uraian-1"
                 id="no-uraian-1"
@@ -341,7 +307,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="uraian-1"
                 id="uraian-1"
@@ -351,7 +317,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="satuan-1"
                 id="satuan-1"
@@ -362,7 +328,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 data-percol="1"
                 data-hitung1="1"
@@ -375,7 +341,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 data-percol="1"
                 data-hitung1="1"
@@ -388,7 +354,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="totalskor1"
                 id="totalskor1"
@@ -400,7 +366,7 @@
           <tr>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="no-uraian-2"
                 id="no-uraian-2"
@@ -410,7 +376,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="uraian-2"
                 id="uraian-2"
@@ -420,7 +386,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="satuan-2"
                 id="satuan-2"
@@ -431,7 +397,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="jumlah-2"
                 data-percol="2"
@@ -444,7 +410,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="harga-2"
                 data-percol="2"
@@ -457,7 +423,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="totalskor2"
                 id="totalskor2"
@@ -469,7 +435,7 @@
           <tr>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="no-uraian-3"
                 id="no-uraian-3"
@@ -479,7 +445,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="uraian-3"
                 id="uraian-3"
@@ -489,7 +455,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="satuan-3"
                 id="satuan-3"
@@ -500,7 +466,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 data-percol="3"
                 data-hitung3="3"
@@ -513,7 +479,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 data-percol="3"
                 data-hitung3="3"
@@ -526,7 +492,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="totalskor3"
                 id="totalskor3"
@@ -538,7 +504,7 @@
           <tr>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="no-uraian-4"
                 id="no-uraian-4"
@@ -548,7 +514,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="uraian-4"
                 id="uraian-4"
@@ -558,7 +524,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="satuan-4"
                 id="satuan-4"
@@ -569,7 +535,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 data-percol="4"
                 data-hitung4="4"
@@ -582,7 +548,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 data-percol="4"
                 data-hitung4="4"
@@ -595,7 +561,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="totalskor4"
                 id="totalskor4"
@@ -607,7 +573,7 @@
           <tr>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="no-uraian-5"
                 id="no-uraian-5"
@@ -617,7 +583,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="uraian-5"
                 id="uraian-5"
@@ -627,7 +593,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="satuan-5"
                 id="satuan-5"
@@ -638,7 +604,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 data-percol="5"
                 data-hitung5="5"
@@ -651,7 +617,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 data-percol="5"
                 data-hitung5="5"
@@ -664,7 +630,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="totalskor5"
                 id="totalskor5"
@@ -676,7 +642,7 @@
           <tr>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="no-uraian-6"
                 id="no-uraian-6"
@@ -686,7 +652,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="uraian-6"
                 id="uraian-6"
@@ -696,7 +662,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="satuan-6"
                 id="satuan-6"
@@ -707,7 +673,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 data-percol="6"
                 data-hitung6="6"
@@ -720,7 +686,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 data-percol="6"
                 data-hitung6="6"
@@ -733,7 +699,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="totalskor6"
                 id="totalskor6"
@@ -745,7 +711,7 @@
           <tr>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="no-uraian-7"
                 id="no-uraian-7"
@@ -755,7 +721,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="uraian-7"
                 id="uraian-7"
@@ -765,7 +731,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="satuan-7"
                 id="satuan-7"
@@ -776,7 +742,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 data-percol="7"
                 data-hitung7="7"
@@ -789,7 +755,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 data-percol="7"
                 data-hitung7="7"
@@ -802,7 +768,7 @@
             </td>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="totalskor7"
                 id="totalskor7"
@@ -814,7 +780,7 @@
           <tr>
             <td>
               <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="no-uraian-8"
                 id="no-uraian-8"
@@ -822,40 +788,10 @@
                 myid="check_cara"
               />
             </td>
-            <td style="text-align: center">Jumlah</td>
+            <td style="text-align: center" colspan="4">Jumlah</td>
             <td>
               <input
-                style="width: 100%"
-                type="text"
-                name="total-satuan"
-                id="total-satuan"
-                label="total-satuan"
-                myid="check_cara"
-              />
-            </td>
-            <td>
-              <input
-                style="width: 100%"
-                type="text"
-                name="total-jumlah"
-                id="total-jumlah"
-                label="total-jumlah"
-                myid="check_cara"
-              />
-            </td>
-            <td>
-              <input
-                style="width: 100%"
-                type="text"
-                name="total-harga"
-                id="total-harga"
-                label="total-harga"
-                myid="check_cara"
-              />
-            </td>
-            <td>
-              <input
-                style="width: 100%"
+                style="width: 100%; padding: 0"
                 type="text"
                 name="total-harga-keseluruhan"
                 id="total-harga-keseluruhan"
@@ -1123,43 +1059,6 @@
           </tr>
         </tbody>
       </table>
-
-      <h3 style="margin: 5px"><b>Rangkap 2</b></h3>
-      <ol style="margin-left: 25px" type="1">
-        <li>Putih : Ahli Gizi Rumah Sakit</li>
-        <li>Merah : Arsip Pasien</li>
-      </ol>
     </fieldset>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

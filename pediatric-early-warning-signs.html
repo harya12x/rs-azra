@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pediatric Early Warning Signs (PEWS)</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+
+    .lingkaran {
+      width: 100px;
+      height: 100px;
+      border: 2px solid blue;
+    }
+    .lingkaran-hijau {
+      border-radius: 50%;
+      background-color: green;
+    }
+    .lingkaran-kuning {
+      border-radius: 50%;
+      background-color: yellow;
+    }
+    .lingkaran-orange {
+      border-radius: 50%;
+      background-color: orange;
+    }
+    .lingkaran-merah {
+      border-radius: 50%;
+      background-color: red;
+    }
+    .blink-result {
+      animation: blink 1s linear infinite;
+    }
+
+    @keyframes blink {
+      25% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0;
+      }
+      75% {
+        opacity: 1;
+      }
+    }
+  </style>
+  <script>
+    $(document).ready(function () {
+      function PEWSTotalScoreCalculate() {
+        let scoreTotal = 0;
+        let valueGroup = {};
+
+        const checkboxes = $('input[type="checkbox"]:checked');
+
+        checkboxes.each(function () {
+          const classList = $(this).attr("class")
+            ? $(this).attr("class").split(" ")
+            : [];
+          const checkboxClass = classList.find((cls) => cls.includes("-"));
+          if (checkboxClass) {
+            const [category, value] = checkboxClass.split("-");
+            const valueInt = parseInt(value, 10) || 0;
+
+            if (!valueGroup[category] || valueInt > valueGroup[category]) {
+              valueGroup[category] = valueInt;
+            }
+          }
+        });
+
+        for (let key in valueGroup) {
+          scoreTotal += valueGroup[key];
+        }
+
+        if (scoreTotal <= 2) {
+          $(".blink-result").html(
+            '<div style="border: 5px solid green"></div>'
+          );
+        } else if (scoreTotal === 3) {
+          $(".blink-result").html(
+            '<div style="border: 5px solid yellow"></div>'
+          );
+        } else if (scoreTotal === 4) {
+          $(".blink-result").html(
+            '<div style="border: 5px solid orange"></div>'
+          );
+        } else if (scoreTotal >= 5) {
+          $(".blink-result").html('<div style="border: 5px solid red"></div>');
+        }
+
+        return scoreTotal;
+      }
+      $("input[type='checkbox']").on("click", function () {
+        PEWSTotalScoreCalculate();
+      });
+    });
+  </script>
+  <body>
+    <h1 class="title">Pediatric Early Warning Signs (PEWS)</h1>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th style="text-align: center">Parameter</th>
+          <th style="text-align: center">0</th>
+          <th style="text-align: center">1</th>
+          <th style="text-align: center">2</th>
+          <th style="text-align: center">3</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="vertical-align: top">Perilaku</td>
+          <td style="vertical-align: top">
+            <div>
+              <input
+                type="checkbox"
+                class="perilaku-0"
+                name="perilaku-bermain-sesuai"
+                id="perilaku-bermain-sesuai"
+                label="perilaku-bermain-sesuai"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="0"
+              />
+              <label for="">Bermain/sesuai</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="perilaku-0"
+                name="perilaku-sadar"
+                id="perilaku-sadar"
+                label="perilaku-sadar"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="0"
+              />
+              <label for="">Sadar</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="perilaku-0"
+                name="perilaku-kooperatif"
+                id="perilaku-kooperatif"
+                label="perilaku-kooperatif"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="0"
+              />
+              <label for="">Kooperatif</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="perilaku-0"
+                name="perilaku-sesuai-perintah"
+                id="perilaku-sesuai-perintah"
+                label="perilaku-sesuai-perintah"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="0"
+              />
+              <label for="">Sesuai Perintah</label>
+            </div>
+          </td>
+          <td style="vertical-align: top">
+            <div>
+              <input
+                type="checkbox"
+                class="perilaku-1"
+                name="perilaku-cenderung-tidur"
+                id="perilaku-cenderung-tidur"
+                label="perilaku-cenderung-tidur"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="1"
+              />
+              <label for="">Cenderung Tidur</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="perilaku-1"
+                name="perilaku-bicara-tidak-jelas"
+                id="perilaku-bicara-tidak-jelas"
+                label="perilaku-bicara-tidak-jelas"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="1"
+              />
+              <label for="">Bicara tidak jelas</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="perilaku-1"
+                name="perilaku-rewel"
+                id="perilaku-rewel"
+                label="perilaku-rewel"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="1"
+              />
+              <label for="">Rewel</label>
+            </div>
+          </td>
+          <td style="vertical-align: top">
+            <div>
+              <input
+                type="checkbox"
+                class="perilaku-2"
+                name="perilaku-gelisah"
+                id="perilaku-gelisah"
+                label="perilaku-gelisah"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="2"
+              />
+              <label for="">Gelisah</label>
+            </div>
+          </td>
+          <td style="vertical-align: top">
+            <div>
+              <input
+                type="checkbox"
+                class="perilaku-3"
+                name="perilaku-letargik"
+                id="perilaku-letargik"
+                label="perilaku-letargik"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="3"
+              />
+              <label for="">Letargik</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="perilaku-3"
+                name="perilaku-bingung"
+                id="perilaku-bingung"
+                label="perilaku-bingung"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="3"
+              />
+              <label for="">Bingung</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="perilaku-3"
+                name="perilaku-respon-terhadap-nyeri-berkurang"
+                id="perilaku-respon-terhadap-nyeri-berkurang"
+                label="perilaku-respon-terhadap-nyeri-berkurang"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="3"
+              />
+              <label for="">Respon terhadap nyeri berkurang</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top">Kardiovaskular</td>
+          <td style="vertical-align: top">
+            <div>
+              <input
+                type="checkbox"
+                class="kardiovaskular-0"
+                name="kardiovaskular-kulit-merah-jambu"
+                id="kardiovaskular-kulit-merah-jambu"
+                label="kardiovaskular-kulit-merah-jambu"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="0"
+              />
+              <label for="">Kulit merah jambu</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="kardiovaskular-0"
+                name="kardiovaskular-crt-1-2-detik"
+                id="kardiovaskular-crt-1-2-detik"
+                label="kardiovaskular-crt-1-2-detik"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="0"
+              />
+              <label for="">CRT &lt; 1 - 2 detik</label>
+            </div>
+          </td>
+          <td style="vertical-align: top">
+            <div>
+              <input
+                type="checkbox"
+                class="kardiovaskular-1"
+                name="kardiovaskular-pucat"
+                id="kardiovaskular-pucat"
+                label="kardiovaskular-pucat"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="1"
+              />
+              <label for="">Pucat</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="kardiovaskular-1"
+                name="kardiovaskular-crt-3-detik"
+                id="kardiovaskular-crt-3-detik"
+                label="kardiovaskular-crt-3-detik"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="1"
+              />
+              <label for="">CRT tiga detik</label>
+            </div>
+          </td>
+          <td style="vertical-align: top">
+            <div>
+              <input
+                type="checkbox"
+                class="kardiovaskular-2"
+                name="kardiovaskular-pucat-abu-abu"
+                id="kardiovaskular-pucat-abu-abu"
+                label="kardiovaskular-pucat-abu-abu"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="2"
+              />
+              <label for="">Pucat abu - abu</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="kardiovaskular-2"
+                name="kardiovaskular-crt-4-detik"
+                id="kardiovaskular-crt-4-detik"
+                label="kardiovaskular-crt-4-detik"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="2"
+              />
+              <label for="">CRT 4 detik</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="kardiovaskular-3"
+                name="kardiovaskular-takikardi-20-laju-normal"
+                id="kardiovaskular-takikardi-20-laju-normal"
+                label="kardiovaskular-takikardi-20-laju-normal"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="3"
+              />
+              <label for="">Takikardi &gt; 20 laju normal</label>
+            </div>
+          </td>
+          <td style="vertical-align: top">
+            <div>
+              <input
+                type="checkbox"
+                class="kardiovaskular-3"
+                name="kardiovaskular-sangat-pucat"
+                id="kardiovaskular-sangat-pucat"
+                label="kardiovaskular-sangat-pucat"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="3"
+              />
+              <label for="">Sangat Pucat</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="kardiovaskular-3"
+                name="kardiovaskular-kulit-bercak"
+                id="kardiovaskular-kulit-bercak"
+                label="kardiovaskular-kulit-bercak"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="3"
+              />
+              <label for="">Kulit bercak</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="kardiovaskular-3"
+                name="kardiovaskular-crt-5-detik"
+                id="kardiovaskular-crt-5-detik"
+                label="kardiovaskular-crt-5-detik"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="3"
+              />
+              <label for="">CRT &ge; 5 detik</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="kardiovaskular-3"
+                name="kardiovaskular-takikardi-30-laju-normal-atau-bradikardi"
+                id="kardiovaskular-takikardi-30-laju-normal-atau-bradikardi"
+                label="kardiovaskular-takikardi-30-laju-normal-atau-bradikardi"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="3"
+              />
+              <label for=""
+                >Takikardi &gt; 30 laju normal atau Bradikardi</label
+              >
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top">Pernafasan</td>
+          <td style="vertical-align: top">
+            <div>
+              <input
+                type="checkbox"
+                class="pernafasan-0"
+                name="pernafasan-dalam-batas-normal"
+                id="pernafasan-dalam-batas-normal"
+                label="pernafasan-dalam-batas-normal"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="0"
+              />
+              <label for="">Dalam Batas Normal</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="pernafasan-0"
+                name="pernafasan-tidak-ada-retraksi-dada"
+                id="pernafasan-tidak-ada-retraksi-dada"
+                label="pernafasan-tidak-ada-retraksi-dada"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="0"
+              />
+              <label for="">Tidak ada retraksi dada</label>
+            </div>
+          </td>
+          <td style="vertical-align: top">
+            <div>
+              <input
+                type="checkbox"
+                class="pernafasan-1"
+                name="pernafasan-10-diatas-nilai-normal"
+                id="pernafasan-10-diatas-nilai-normal"
+                label="pernafasan-10-diatas-nilai-normal"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="1"
+              />
+              <label for="">&gt;10 di atas nilai normal</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="pernafasan-1"
+                name="pernafasan-penggunaan-otot-bantu-nafas"
+                id="pernafasan-penggunaan-otot-bantu-nafas"
+                label="pernafasan-penggunaan-otot-bantu-nafas"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="1"
+              />
+              <label for="">Penggunaan otot bantu nafas</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="pernafasan-1"
+                name="pernafasan-penggunaan-fi02-30%-02-3lmenit"
+                id="pernafasan-penggunaan-fi02-30%-02-3lmenit"
+                label="pernafasan-penggunaan-fi02-30%-02-3lmenit"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="1"
+              />
+              <label for="">Penggunaan Fi02 30% atau 02 3 L/menit</label>
+            </div>
+          </td>
+          <td style="vertical-align: top">
+            <div>
+              <input
+                type="checkbox"
+                class="pernafasan-2"
+                name="pernafasan-20-diatas-normal-atau-saturasi-o2-5-poin-dibawah-normal"
+                id="pernafasan-20-diatas-normal-atau-saturasi-o2-5-poin-dibawah-normal"
+                label="pernafasan-20-diatas-normal-atau-saturasi-o2-5-poin-dibawah-normal"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="2"
+              />
+              <label for=""
+                >&gt;20 di atas normal atau Saturasi O2 5 poin di bawah
+                normal</label
+              >
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="pernafasan-2"
+                name="pernafasan-penggunaan-otot-bantu-nafas-sedang"
+                id="pernafasan-penggunaan-otot-bantu-nafas-sedang"
+                label="pernafasan-penggunaan-otot-bantu-nafas-sedang"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="2"
+              />
+              <label for="">Penggunaan otot bantu nafas sedang</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="pernafasan-2"
+                name="pernafasan-penggunaan-fi02-40%-atau-02-6-lmenit"
+                id="pernafasan-penggunaan-fi02-40%-atau-02-6-lmenit"
+                label="pernafasan-penggunaan-fi02-40%-atau-02-6-lmenit"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="2"
+              />
+              <label for="">Penggunaan Fi02 40% atau 02 6 L/menit</label>
+            </div>
+          </td>
+          <td style="vertical-align: top">
+            <div>
+              <input
+                type="checkbox"
+                class="pernafasan-3"
+                name="pernafasan-laju-nafas-melambat-dibawah-normal-saturasi-02-5-poin"
+                id="pernafasan-laju-nafas-melambat-dibawah-normal-saturasi-02-5-poin"
+                label="pernafasan-laju-nafas-melambat-dibawah-normal-saturasi-02-5-poin"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="3"
+              />
+              <label for=""
+                >Laju nafas melambat di bawah normal atau saturasi 02 > 5
+                poin</label
+              >
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="pernafasan-3"
+                name="pernafasan-retraksi-dada-berat"
+                id="pernafasan-retraksi-dada-berat"
+                label="pernafasan-retraksi-dada-berat"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="3"
+              />
+              <label for="">Retraksi dada berat</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="pernafasan-3"
+                name="pernafasan-merintih"
+                id="pernafasan-merintih"
+                label="pernafasan-merintih"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="3"
+              />
+              <label for="">Merintih</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                class="pernafasan-3"
+                name="pernafasan-penggunaan-fi02-50%-atau-02-8-lmenit"
+                id="pernafasan-penggunaan-fi02-50%-atau-02-8-lmenit"
+                label="pernafasan-penggunaan-fi02-50%-atau-02-8-lmenit"
+                myid="check_cara"
+                data-percol="1"
+                data-hitung1="1"
+                value="3"
+              />
+              <label for="">Penggunaan Fi02 50% atau 02 8 L/menit</label>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+    <div class="blink-result"></div>
+    <br />
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th style="text-align: center">USIA</th>
+          <th style="text-align: center">FREKUENSI JANTUNG (X/MENIT)</th>
+          <th style="text-align: center">FREKUENSI NAFAS (X/MENIT)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">0 - 1 Bulan (BBL)</td>
+          <td style="text-align: center">100 - 180</td>
+          <td style="text-align: center">40 - 60</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">1 - 12 Bulan (Bayi)</td>
+          <td style="text-align: center">100 - 180</td>
+          <td style="text-align: center">35 - 40</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">1 - 3 Tahun (Toddler)</td>
+          <td style="text-align: center">70 - 110</td>
+          <td style="text-align: center">25 - 30</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">4 - 6 Tahun (Pra Sekolah)</td>
+          <td style="text-align: center">70 - 110</td>
+          <td style="text-align: center">21 - 23</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">7 - 12 Tahun (Sekolah)</td>
+          <td style="text-align: center">70 - 110</td>
+          <td style="text-align: center">19 - 21</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">13 - 19 Tahun (Remaja)</td>
+          <td style="text-align: center">55 - 90</td>
+          <td style="text-align: center">16 - 18</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <td>
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <div class="lingkaran lingkaran-hijau"></div>
+            </div>
+          </td>
+          <td>
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <div class="lingkaran lingkaran-kuning"></div>
+            </div>
+          </td>
+          <td>
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <div class="lingkaran lingkaran-orange"></div>
+            </div>
+          </td>
+          <td>
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <div class="lingkaran lingkaran-merah"></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div style="text-align: center">
+              <p>Hijau</p>
+              <p>Skor 0 - 2</p>
+            </div>
+          </td>
+          <td>
+            <div style="text-align: center">
+              <p>Kuning</p>
+              <p>Skor 3</p>
+            </div>
+          </td>
+          <td>
+            <div style="text-align: center">
+              <p>Orange</p>
+              <p>Skor 4</p>
+            </div>
+          </td>
+          <td>
+            <div style="text-align: center">
+              <p>Merah</p>
+              <p>Skor 5</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div style="text-align: center">
+              <p>Observasi</p>
+              <p>PEWS</p>
+              <p>setiap 4 jam</p>
+            </div>
+          </td>
+          <td>
+            <div style="text-align: center">
+              <p>Lapor Dokter Jaga</p>
+              <p>Observasi PEWS setiap</p>
+              <p>2 jam</p>
+            </div>
+          </td>
+          <td>
+            <div style="text-align: center">
+              <p>Segera review oleh</p>
+              <p>DPJP Observasi PEWS</p>
+              <p>setiap 1/2 - 1 jam</p>
+            </div>
+          </td>
+          <td>
+            <div style="text-align: center">
+              <p>Lapor Dr. jaga/DPJP</p>
+              <p>untuk segara datang</p>
+              <p>ke ruangan atau Aktifkan Kode Biru</p>
+              <p>Segera di review oleh</p>
+              <p>DPJP/Tim Dokter</p>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

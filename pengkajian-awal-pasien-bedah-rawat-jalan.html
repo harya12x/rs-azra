@@ -5,51 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pengkajian Awal Pasien Bedah Rawat Jalan</title>
   </head>
-  <script
-    src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-    crossorigin="anonymous"
-  ></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table {
-      border-collapse: collapse;
-      width: 100%;
-    }
 
-    .table th,
-    .table td {
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
-    }
-
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
     }
   </style>
   <script type="text/javascript">
     $(document).on("ajaxStop", function () {
       SetTTD();
     });
+    if ($.fn.datepicker) {
+      $(".datepicker").each(function () {
+        var $this = $(this),
+          dataDateFormat = $this.attr("data-dateformat") || "dd.mm.yy";
+
+        $this.datepicker({
+          dateFormat: dataDateFormat,
+          prevText: '<i class="fa fa-chevron-left"></i>',
+          nextText: '<i class="fa fa-chevron-right"></i>',
+          todayBtn: "linked",
+        });
+
+        // clear memory reference
+        $this = null;
+      });
+    }
   </script>
   <script>
     $(document).ready(function () {
-      $(function () {
-        $(".datepicker").datepicker({
-          dateFormat: "dd-mm-yy",
-          autoclose: true,
-          todayHighlight: true,
-        });
-      });
+      function hitungIMT() {
+        const beratBadan = parseInt($("input[name='bb']").val(), 10) || 0;
+        const tinggiBadan = parseInt($("input[name='tb']").val(), 10) || 0;
+
+        const nilaiIMT = beratBadan / (tinggiBadan / 100) ** 2;
+        return nilaiIMT === Infinity ? 0 : nilaiIMT;
+      }
+
+      $("input[name='imt']").val(hitungIMT());
 
       $(".risiko-jatuh-dewasa").on("click", function () {
         const nilai = parseFloat($(this).val() || 0);
@@ -314,9 +322,7 @@
     }
   </script>
   <body>
-    <h1 class="title">
-      PENGKAJIAN AWAL PASIEN BEDAH RAWAT JALAN RS AZRA BOGOR
-    </h1>
+    <h1 class="title">PENGKAJIAN AWAL PASIEN BEDAH RAWAT JALAN</h1>
     <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
@@ -370,8 +376,7 @@
               name="tgl_lahira2"
               type="text"
               id="tgl_lahir"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
               value="{VBIRTH_DATE}"
               label="tanggal lahir"
@@ -386,7 +391,7 @@
               name="umur"
               id="umur"
               myid="check_cara"
-              value="{VAGE}"
+              value="{VAGEREGIS}"
               placeholder="..."
             />
           </td>
@@ -411,8 +416,8 @@
               name="tgl"
               type="text"
               id="tgl"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
               myid="check_cara"
               label="tanggal"
             />
@@ -1068,7 +1073,7 @@
           <td style="padding-left: 10px; padding-right: 10px" colspan="3">
             <div class="margin-10v" align="center">
               <img src="images/askep/wongbaker.png" style="width: 100%" />
-              <table style="width: 100%" class="table">
+              <table style="width: 100%" class="table table-bordered">
                 <tbody>
                   <tr>
                     <td width="15%">
@@ -1433,7 +1438,7 @@
         </tr>
       </tbody>
     </table>
-    <table class="table" width="100%">
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr style="margin-top: 5px">
           <td colspan="5" style="color: #fff" bgcolor="#1C3F80">
@@ -1451,7 +1456,7 @@
         </tr>
         <tr>
           <td>
-            <table class="table">
+            <table class="table table-bordered">
               <thead>
                 <tr>
                   <th>
@@ -1772,7 +1777,7 @@
         </tr>
         <tr>
           <td>
-            <table class="table">
+            <table class="table table-bordered">
               <thead>
                 <tr>
                   <th>
@@ -2320,7 +2325,7 @@
         </tr>
         <tr>
           <td>
-            <table class="table">
+            <table class="table table-bordered">
               <thead>
                 <tr>
                   <th>
@@ -3386,7 +3391,7 @@
       </tbody>
     </table>
 
-    <table width="100%" class="table" cellpadding="0" border="0">
+    <table width="100%" class="table table-bordered" cellpadding="0" border="0">
       <tbody>
         <tr>
           <td>&nbsp;</td>
@@ -3404,8 +3409,8 @@
               name="17_tanggal"
               type="text"
               id="17_tanggal"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatepicker"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
               size="10"
               myid="check_cara"
             />
@@ -3476,58 +3481,5 @@
         </tr>
       </tbody>
     </table>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var checkboxButtons = document.querySelectorAll(
-          'input[type="checkbox"]'
-        );
-        checkboxButtons.forEach(function (checkbox) {
-          checkbox.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var checkboxes = document.querySelectorAll(
-                'input[type="checkbox"][name="' + name + '"]'
-              );
-              checkboxes.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

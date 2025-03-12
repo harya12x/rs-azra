@@ -1,0 +1,4886 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CLINICAL PATHWAY ILMU BEDAH APPENDISITIS AKUT</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD1();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
+  <body>
+    <h1 class="title">CLINICAL PATHWAY ILMU BEDAH APPENDISITIS AKUT</h1>
+
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <td>Nama Pasien</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-pasien"
+              id="nama-pasien"
+              label="nama-pasien"
+              myid="check_cara"
+              value="{VNAMA_PASIEN}"
+            />
+          </td>
+          <td>
+            <label for="">No. RM:</label>
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="no-rm"
+              id="no-rm"
+              label="no-rm"
+              myid="check_cara"
+              value="{NO_RM}"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Umur</td>
+          <td>
+            <div
+              style="
+                display: flex;
+                gap: 5px;
+                align-items: center;
+                justify-content: space-between;
+              "
+            >
+              <input
+                style="width: 100%; padding: 0"
+                type="text"
+                name="umur"
+                id="umur"
+                label="umur"
+                myid="check_cara"
+                value="{VAGE}"
+              />
+              {VSEX}
+            </div>
+          </td>
+          <td>Tanggal masuk :</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-masuk"
+              id="tgl-masuk"
+              label="tgl-masuk"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Kelas / kamar</td>
+          <td>
+            <div
+              style="
+                display: flex;
+                gap: 5px;
+                align-items: center;
+                justify-content: space-between;
+              "
+            >
+              <input
+                style="flex: 1; padding: 0"
+                type="text"
+                name="kelas-pasien"
+                id="kelas-pasien"
+                label="kelas-pasien"
+                myid="check_cara"
+                value="{VNAMAKELAS}"
+              />
+              <input
+                style="flex: 1; padding: 0"
+                type="text"
+                name="kamar-pasien"
+                id="kamar-pasien"
+                label="kamar-pasien"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <br />
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th style="text-align: center" rowspan="2"><b>KEGIATAN</b></th>
+          <th style="text-align: center" rowspan="2"><b>URAIAN KEGIATAN</b></th>
+          <th style="text-align: center" colspan="7"><b>HARI KE</b></th>
+          <th style="text-align: center" rowspan="2"><b>KETERANGAN</b></th>
+        </tr>
+        <tr>
+          <th style="text-align: center">
+            <b>1</b>
+          </th>
+          <th style="text-align: center">
+            <b>2</b>
+          </th>
+          <th style="text-align: center">
+            <b>3</b>
+          </th>
+          <th style="text-align: center">
+            <b>4</b>
+          </th>
+          <th style="text-align: center">
+            <b>5</b>
+          </th>
+          <th style="text-align: center">
+            <b>6</b>
+          </th>
+          <th style="text-align: center">
+            <b>7</b>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="2">1. PEMERIKSAAN KLINIS</td>
+          <td>Dokter IGD atau</td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-dokter-igd"
+              id="hari-1-dokter-igd"
+              label="hari-1-dokter-igd"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-dokter-igd"
+              id="hari-2-dokter-igd"
+              label="hari-2-dokter-igd"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-dokter-igd"
+              id="hari-3-dokter-igd"
+              label="hari-3-dokter-igd"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-dokter-igd"
+              id="hari-4-dokter-igd"
+              label="hari-4-dokter-igd"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-dokter-igd"
+              id="hari-5-dokter-igd"
+              label="hari-5-dokter-igd"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-dokter-igd"
+              id="hari-6-dokter-igd"
+              label="hari-6-dokter-igd"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-dokter-igd"
+              id="hari-7-dokter-igd"
+              label="hari-7-dokter-igd"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-dokter-igd"
+              id="keterangan-dokter-igd"
+              label="keterangan-dokter-igd"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Dokter Spesialis</td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-dokter-spesialis"
+              id="hari-1-dokter-spesialis"
+              label="hari-1-dokter-spesialis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-dokter-spesialis"
+              id="hari-2-dokter-spesialis"
+              label="hari-2-dokter-spesialis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-dokter-spesialis"
+              id="hari-3-dokter-spesialis"
+              label="hari-3-dokter-spesialis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-dokter-spesialis"
+              id="hari-4-dokter-spesialis"
+              label="hari-4-dokter-spesialis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-dokter-spesialis"
+              id="hari-5-dokter-spesialis"
+              label="hari-5-dokter-spesialis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-dokter-spesialis"
+              id="hari-6-dokter-spesialis"
+              label="hari-6-dokter-spesialis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-dokter-spesialis"
+              id="hari-7-dokter-spesialis"
+              label="hari-7-dokter-spesialis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-dokter-spesialis"
+              id="keterangan-dokter-spesialis"
+              label="keterangan-dokter-spesialis"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>2. LABORATORIUM</td>
+          <td style="width: 500px">Darah rutin</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-darah-rutin"
+              id="hari-1-darah-rutin"
+              label="hari-1-darah-rutin"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-darah-rutin"
+              id="hari-2-darah-rutin"
+              label="hari-2-darah-rutin"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-darah-rutin"
+              id="hari-3-darah-rutin"
+              label="hari-3-darah-rutin"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-darah-rutin"
+              id="hari-4-darah-rutin"
+              label="hari-4-darah-rutin"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-darah-rutin"
+              id="hari-5-darah-rutin"
+              label="hari-5-darah-rutin"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-darah-rutin"
+              id="hari-6-darah-rutin"
+              label="hari-6-darah-rutin"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-darah-rutin"
+              id="hari-7-darah-rutin"
+              label="hari-7-darah-rutin"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="width: 200px">
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="4"
+              type="textarea"
+              name="keterangan-darah-rutin"
+              id="keterangan-darah-rutin"
+              label="keterangan-darah-rutin"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="2">3. RADIOLOGI / IMAGING ELEKTROMEDIK</td>
+          <td style="width: 500px">
+            Tidak diperlukan karena appendisitis akut
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-1-tdk-diperlukan-appendisitis-akut"
+              id="hari-1-tdk-diperlukan-appendisitis-akut"
+              label="hari-1-tdk-diperlukan-appendisitis-akut"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-tdk-diperlukan-appendisitis-akut"
+              id="hari-2-tdk-diperlukan-appendisitis-akut"
+              label="hari-2-tdk-diperlukan-appendisitis-akut"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-tdk-diperlukan-appendisitis-akut"
+              id="hari-3-tdk-diperlukan-appendisitis-akut"
+              label="hari-3-tdk-diperlukan-appendisitis-akut"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-tdk-diperlukan-appendisitis-akut"
+              id="hari-4-tdk-diperlukan-appendisitis-akut"
+              label="hari-4-tdk-diperlukan-appendisitis-akut"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-tdk-diperlukan-appendisitis-akut"
+              id="hari-5-tdk-diperlukan-appendisitis-akut"
+              label="hari-5-tdk-diperlukan-appendisitis-akut"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-tdk-diperlukan-appendisitis-akut"
+              id="hari-6-tdk-diperlukan-appendisitis-akut"
+              label="hari-6-tdk-diperlukan-appendisitis-akut"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-tdk-diperlukan-appendisitis-akut"
+              id="hari-7-tdk-diperlukan-appendisitis-akut"
+              label="hari-7-tdk-diperlukan-appendisitis-akut"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td rowspan="2" style="width: 200px">
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="4"
+              type="textarea"
+              name="keterangan-radiologi-imaging"
+              id="keterangan-radiologi-imaging"
+              label="keterangan-radiologi-imaging"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 500px">
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="uraian-kegiatan-radiologi-imaging-2"
+              id="uraian-kegiatan-radiologi-imaging-2"
+              label="uraian-kegiatan-radiologi-imaging-2"
+              myid="check_cara"
+            ></textarea>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-1-radiologi-imaging-2"
+              id="hari-1-radiologi-imaging-2"
+              label="hari-1-radiologi-imaging-2"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-radiologi-imaging-2"
+              id="hari-2-radiologi-imaging-2"
+              label="hari-2-radiologi-imaging-2"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-radiologi-imaging-2"
+              id="hari-3-radiologi-imaging-2"
+              label="hari-3-radiologi-imaging-2"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-radiologi-imaging-2"
+              id="hari-4-radiologi-imaging-2"
+              label="hari-4-radiologi-imaging-2"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-radiologi-imaging-2"
+              id="hari-5-radiologi-imaging-2"
+              label="hari-5-radiologi-imaging-2"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-radiologi-imaging-2"
+              id="hari-6-radiologi-imaging-2"
+              label="hari-6-radiologi-imaging-2"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-radiologi-imaging-2"
+              id="hari-7-radiologi-imaging-2"
+              label="hari-7-radiologi-imaging-2"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="2">4. KONSULTASI</td>
+          <td style="width: 500px">
+            Tidak diperlukan karena appendisitis akut
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-1-tdk-diperlukan-karena-appendisitis-akut"
+              id="hari-1-tdk-diperlukan-karena-appendisitis-akut"
+              label="hari-1-tdk-diperlukan-karena-appendisitis-akut"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-tdk-diperlukan-karena-appendisitis-akut"
+              id="hari-2-tdk-diperlukan-karena-appendisitis-akut"
+              label="hari-2-tdk-diperlukan-karena-appendisitis-akut"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-tdk-diperlukan-karena-appendisitis-akut"
+              id="hari-3-tdk-diperlukan-karena-appendisitis-akut"
+              label="hari-3-tdk-diperlukan-karena-appendisitis-akut"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-tdk-diperlukan-karena-appendisitis-akut"
+              id="hari-4-tdk-diperlukan-karena-appendisitis-akut"
+              label="hari-4-tdk-diperlukan-karena-appendisitis-akut"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-tdk-diperlukan-karena-appendisitis-akut"
+              id="hari-5-tdk-diperlukan-karena-appendisitis-akut"
+              label="hari-5-tdk-diperlukan-karena-appendisitis-akut"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-tdk-diperlukan-karena-appendisitis-akut"
+              id="hari-6-tdk-diperlukan-karena-appendisitis-akut"
+              label="hari-6-tdk-diperlukan-karena-appendisitis-akut"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-tdk-diperlukan-karena-appendisitis-akut"
+              id="hari-7-tdk-diperlukan-karena-appendisitis-akut"
+              label="hari-7-tdk-diperlukan-karena-appendisitis-akut"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="width: 200px">
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-tdk-diperlukan-karena-appendisitis-akut"
+              id="keterangan-tdk-diperlukan-karena-appendisitis-akut"
+              label="keterangan-tdk-diperlukan-karena-appendisitis-akut"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 500px">
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="uraian-kegiatan-konsultasi-2"
+              id="uraian-kegiatan-konsultasi-2"
+              label="uraian-kegiatan-konsultasi-2"
+              myid="check_cara"
+            ></textarea>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-1-konsultasi-2"
+              id="hari-1-konsultasi-2"
+              label="hari-1-konsultasi-2"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-konsultasi-2"
+              id="hari-2-konsultasi-2"
+              label="hari-2-konsultasi-2"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-konsultasi-2"
+              id="hari-3-konsultasi-2"
+              label="hari-3-konsultasi-2"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-konsultasi-2"
+              id="hari-4-konsultasi-2"
+              label="hari-4-konsultasi-2"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-konsultasi-2"
+              id="hari-5-konsultasi-2"
+              label="hari-5-konsultasi-2"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-konsultasi-2"
+              id="hari-6-konsultasi-2"
+              label="hari-6-konsultasi-2"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-konsultasi-2"
+              id="hari-7-konsultasi-2"
+              label="hari-7-konsultasi-2"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="width: 200px">
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-konsultasi-2"
+              id="keterangan-konsultasi-2"
+              label="keterangan-konsultasi-2"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="2">5. ASESMEN KLINIS</td>
+          <td>Pemeriksaan DPJP</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-pemeriksaan-dpjp"
+              id="hari-1-pemeriksaan-dpjp"
+              label="hari-1-pemeriksaan-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-pemeriksaan-dpjp"
+              id="hari-2-pemeriksaan-dpjp"
+              label="hari-2-pemeriksaan-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-pemeriksaan-dpjp"
+              id="hari-3-pemeriksaan-dpjp"
+              label="hari-3-pemeriksaan-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-pemeriksaan-dpjp"
+              id="hari-4-pemeriksaan-dpjp"
+              label="hari-4-pemeriksaan-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-pemeriksaan-dpjp"
+              id="hari-5-pemeriksaan-dpjp"
+              label="hari-5-pemeriksaan-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-pemeriksaan-dpjp"
+              id="hari-6-pemeriksaan-dpjp"
+              label="hari-6-pemeriksaan-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-pemeriksaan-dpjp"
+              id="hari-7-pemeriksaan-dpjp"
+              label="hari-7-pemeriksaan-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="width: 200px">Visite</td>
+        </tr>
+        <tr>
+          <td>Pemeriksaan dokter jaga</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-pemeriksaan-dokter-jaga"
+              id="hari-1-pemeriksaan-dokter-jaga"
+              label="hari-1-pemeriksaan-dokter-jaga"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-pemeriksaan-dokter-jaga"
+              id="hari-2-pemeriksaan-dokter-jaga"
+              label="hari-2-pemeriksaan-dokter-jaga"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-pemeriksaan-dokter-jaga"
+              id="hari-3-pemeriksaan-dokter-jaga"
+              label="hari-3-pemeriksaan-dokter-jaga"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-pemeriksaan-dokter-jaga"
+              id="hari-4-pemeriksaan-dokter-jaga"
+              label="hari-4-pemeriksaan-dokter-jaga"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-pemeriksaan-dokter-jaga"
+              id="hari-5-pemeriksaan-dokter-jaga"
+              label="hari-5-pemeriksaan-dokter-jaga"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-pemeriksaan-dokter-jaga"
+              id="hari-6-pemeriksaan-dokter-jaga"
+              label="hari-6-pemeriksaan-dokter-jaga"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-pemeriksaan-dokter-jaga"
+              id="hari-7-pemeriksaan-dokter-jaga"
+              label="hari-7-pemeriksaan-dokter-jaga"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="width: 200px">Atas Indikasi</td>
+        </tr>
+        <tr>
+          <td rowspan="7">6. EDUKASI</td>
+          <td>Penjelasan diagnosis</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-penjelasan-diagnosis"
+              id="hari-1-penjelasan-diagnosis"
+              label="hari-1-penjelasan-diagnosis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-penjelasan-diagnosis"
+              id="hari-2-penjelasan-diagnosis"
+              label="hari-2-penjelasan-diagnosis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-penjelasan-diagnosis"
+              id="hari-3-penjelasan-diagnosis"
+              label="hari-3-penjelasan-diagnosis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-penjelasan-diagnosis"
+              id="hari-4-penjelasan-diagnosis"
+              label="hari-4-penjelasan-diagnosis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-penjelasan-diagnosis"
+              id="hari-5-penjelasan-diagnosis"
+              label="hari-5-penjelasan-diagnosis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-penjelasan-diagnosis"
+              id="hari-6-penjelasan-diagnosis"
+              label="hari-6-penjelasan-diagnosis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-penjelasan-diagnosis"
+              id="hari-7-penjelasan-diagnosis"
+              label="hari-7-penjelasan-diagnosis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-penjelasan-diagnosis"
+              id="keterangan-penjelasan-diagnosis"
+              label="keterangan-penjelasan-diagnosis"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Rencana terapi</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-rencana-terapi"
+              id="hari-1-rencana-terapi"
+              label="hari-1-rencana-terapi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-rencana-terapi"
+              id="hari-2-rencana-terapi"
+              label="hari-2-rencana-terapi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-rencana-terapi"
+              id="hari-3-rencana-terapi"
+              label="hari-3-rencana-terapi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-rencana-terapi"
+              id="hari-4-rencana-terapi"
+              label="hari-4-rencana-terapi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-rencana-terapi"
+              id="hari-5-rencana-terapi"
+              label="hari-5-rencana-terapi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-rencana-terapi"
+              id="hari-6-rencana-terapi"
+              label="hari-6-rencana-terapi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-rencana-terapi"
+              id="hari-7-rencana-terapi"
+              label="hari-7-rencana-terapi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-rencana-terapi"
+              id="keterangan-rencana-terapi"
+              label="keterangan-rencana-terapi"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Rencana Tindakan</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-rencana-tindakan"
+              id="hari-1-rencana-tindakan"
+              label="hari-1-rencana-tindakan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-rencana-tindakan"
+              id="hari-2-rencana-tindakan"
+              label="hari-2-rencana-tindakan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-rencana-tindakan"
+              id="hari-3-rencana-tindakan"
+              label="hari-3-rencana-tindakan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-rencana-tindakan"
+              id="hari-4-rencana-tindakan"
+              label="hari-4-rencana-tindakan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-rencana-tindakan"
+              id="hari-5-rencana-tindakan"
+              label="hari-5-rencana-tindakan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-rencana-tindakan"
+              id="hari-6-rencana-tindakan"
+              label="hari-6-rencana-tindakan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-rencana-tindakan"
+              id="hari-7-rencana-tindakan"
+              label="hari-7-rencana-tindakan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-rencana-tindakan"
+              id="keterangan-rencana-tindakan"
+              label="keterangan-rencana-tindakan"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Tujuan</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-tujuan"
+              id="hari-1-tujuan"
+              label="hari-1-tujuan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-tujuan"
+              id="hari-2-tujuan"
+              label="hari-2-tujuan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-tujuan"
+              id="hari-3-tujuan"
+              label="hari-3-tujuan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-tujuan"
+              id="hari-4-tujuan"
+              label="hari-4-tujuan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-tujuan"
+              id="hari-5-tujuan"
+              label="hari-5-tujuan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-tujuan"
+              id="hari-6-tujuan"
+              label="hari-6-tujuan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-tujuan"
+              id="hari-7-tujuan"
+              label="hari-7-tujuan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-tujuan"
+              id="keterangan-tujuan"
+              label="keterangan-tujuan"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Risiko</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-risiko"
+              id="hari-1-risiko"
+              label="hari-1-risiko"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-risiko"
+              id="hari-2-risiko"
+              label="hari-2-risiko"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-risiko"
+              id="hari-3-risiko"
+              label="hari-3-risiko"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-risiko"
+              id="hari-4-risiko"
+              label="hari-4-risiko"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-risiko"
+              id="hari-5-risiko"
+              label="hari-5-risiko"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-risiko"
+              id="hari-6-risiko"
+              label="hari-6-risiko"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-risiko"
+              id="hari-7-risiko"
+              label="hari-7-risiko"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-risiko"
+              id="keterangan-risiko"
+              label="keterangan-risiko"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Komplikasi</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-komplikasi"
+              id="hari-1-komplikasi"
+              label="hari-1-komplikasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-komplikasi"
+              id="hari-2-komplikasi"
+              label="hari-2-komplikasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-komplikasi"
+              id="hari-3-komplikasi"
+              label="hari-3-komplikasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-komplikasi"
+              id="hari-4-komplikasi"
+              label="hari-4-komplikasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-komplikasi"
+              id="hari-5-komplikasi"
+              label="hari-5-komplikasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-komplikasi"
+              id="hari-6-komplikasi"
+              label="hari-6-komplikasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-komplikasi"
+              id="hari-7-komplikasi"
+              label="hari-7-komplikasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-komplikasi"
+              id="keterangan-komplikasi"
+              label="keterangan-komplikasi"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Prognosa</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-prognosa"
+              id="hari-1-prognosa"
+              label="hari-1-prognosa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-prognosa"
+              id="hari-2-prognosa"
+              label="hari-2-prognosa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-prognosa"
+              id="hari-3-prognosa"
+              label="hari-3-prognosa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-prognosa"
+              id="hari-4-prognosa"
+              label="hari-4-prognosa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-prognosa"
+              id="hari-5-prognosa"
+              label="hari-5-prognosa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-prognosa"
+              id="hari-6-prognosa"
+              label="hari-6-prognosa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-prognosa"
+              id="hari-7-prognosa"
+              label="hari-7-prognosa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-prognosa"
+              id="keterangan-prognosa"
+              label="keterangan-prognosa"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="7">7. PENGISIAN FORM</td>
+          <td>Pengkajian Awal Pasien Anak / Dewasa Rawat Inap</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              id="hari-1-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              label="hari-1-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              id="hari-2-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              label="hari-2-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              id="hari-3-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              label="hari-3-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              id="hari-4-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              label="hari-4-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              id="hari-5-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              label="hari-5-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              id="hari-6-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              label="hari-6-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              id="hari-7-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              label="hari-7-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              id="keterangan-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              label="keterangan-pengkajian-awal-pasien-anak-dewasa-rawat-inap"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Nama DPJP di RS AZRA</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-nama-dpjp-rs-azra"
+              id="hari-1-nama-dpjp-rs-azra"
+              label="hari-1-nama-dpjp-rs-azra"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-nama-dpjp-rs-azra"
+              id="hari-2-nama-dpjp-rs-azra"
+              label="hari-2-nama-dpjp-rs-azra"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-nama-dpjp-rs-azra"
+              id="hari-3-nama-dpjp-rs-azra"
+              label="hari-3-nama-dpjp-rs-azra"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-nama-dpjp-rs-azra"
+              id="hari-4-nama-dpjp-rs-azra"
+              label="hari-4-nama-dpjp-rs-azra"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-nama-dpjp-rs-azra"
+              id="hari-5-nama-dpjp-rs-azra"
+              label="hari-5-nama-dpjp-rs-azra"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-nama-dpjp-rs-azra"
+              id="hari-6-nama-dpjp-rs-azra"
+              label="hari-6-nama-dpjp-rs-azra"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-nama-dpjp-rs-azra"
+              id="hari-7-nama-dpjp-rs-azra"
+              label="hari-7-nama-dpjp-rs-azra"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-nama-dpjp-rs-azra"
+              id="keterangan-nama-dpjp-rs-azra"
+              label="keterangan-nama-dpjp-rs-azra"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Rekonsialisasi Obat</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-rekonsialisasi-obat"
+              id="hari-1-rekonsialisasi-obat"
+              label="hari-1-rekonsialisasi-obat"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-rekonsialisasi-obat"
+              id="hari-2-rekonsialisasi-obat"
+              label="hari-2-rekonsialisasi-obat"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-rekonsialisasi-obat"
+              id="hari-3-rekonsialisasi-obat"
+              label="hari-3-rekonsialisasi-obat"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-rekonsialisasi-obat"
+              id="hari-4-rekonsialisasi-obat"
+              label="hari-4-rekonsialisasi-obat"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-rekonsialisasi-obat"
+              id="hari-5-rekonsialisasi-obat"
+              label="hari-5-rekonsialisasi-obat"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-rekonsialisasi-obat"
+              id="hari-6-rekonsialisasi-obat"
+              label="hari-6-rekonsialisasi-obat"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-rekonsialisasi-obat"
+              id="hari-7-rekonsialisasi-obat"
+              label="hari-7-rekonsialisasi-obat"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-rekonsialisasi-obat"
+              id="keterangan-rekonsialisasi-obat"
+              label="keterangan-rekonsialisasi-obat"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Catatan Perkembangan Pasien Terintegrasi (CPPT)</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-cppt"
+              id="hari-1-cppt"
+              label="hari-1-cppt"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-cppt"
+              id="hari-2-cppt"
+              label="hari-2-cppt"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-cppt"
+              id="hari-3-cppt"
+              label="hari-3-cppt"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-cppt"
+              id="hari-4-cppt"
+              label="hari-4-cppt"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-cppt"
+              id="hari-5-cppt"
+              label="hari-5-cppt"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-cppt"
+              id="hari-6-cppt"
+              label="hari-6-cppt"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-cppt"
+              id="hari-7-cppt"
+              label="hari-7-cppt"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-cppt"
+              id="keterangan-cppt"
+              label="keterangan-cppt"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Pengkajian Risiko Jatuh pada Pasien Anak / Dewasa</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-risiko-jatuh-pasien-anak-dewasa"
+              id="hari-1-risiko-jatuh-pasien-anak-dewasa"
+              label="hari-1-risiko-jatuh-pasien-anak-dewasa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-risiko-jatuh-pasien-anak-dewasa"
+              id="hari-2-risiko-jatuh-pasien-anak-dewasa"
+              label="hari-2-risiko-jatuh-pasien-anak-dewasa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-risiko-jatuh-pasien-anak-dewasa"
+              id="hari-3-risiko-jatuh-pasien-anak-dewasa"
+              label="hari-3-risiko-jatuh-pasien-anak-dewasa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-risiko-jatuh-pasien-anak-dewasa"
+              id="hari-4-risiko-jatuh-pasien-anak-dewasa"
+              label="hari-4-risiko-jatuh-pasien-anak-dewasa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-risiko-jatuh-pasien-anak-dewasa"
+              id="hari-5-risiko-jatuh-pasien-anak-dewasa"
+              label="hari-5-risiko-jatuh-pasien-anak-dewasa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-risiko-jatuh-pasien-anak-dewasa"
+              id="hari-6-risiko-jatuh-pasien-anak-dewasa"
+              label="hari-6-risiko-jatuh-pasien-anak-dewasa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-risiko-jatuh-pasien-anak-dewasa"
+              id="hari-7-risiko-jatuh-pasien-anak-dewasa"
+              label="hari-7-risiko-jatuh-pasien-anak-dewasa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-risiko-jatuh-pasien-anak-dewasa"
+              id="keterangan-risiko-jatuh-pasien-anak-dewasa"
+              label="keterangan-risiko-jatuh-pasien-anak-dewasa"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Pengkajian Nyeri Pasien Anak / Dewasa</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-pengkajian-nyeri-pasien-anak-dewasa"
+              id="hari-1-pengkajian-nyeri-pasien-anak-dewasa"
+              label="hari-1-pengkajian-nyeri-pasien-anak-dewasa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-pengkajian-nyeri-pasien-anak-dewasa"
+              id="hari-2-pengkajian-nyeri-pasien-anak-dewasa"
+              label="hari-2-pengkajian-nyeri-pasien-anak-dewasa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-pengkajian-nyeri-pasien-anak-dewasa"
+              id="hari-3-pengkajian-nyeri-pasien-anak-dewasa"
+              label="hari-3-pengkajian-nyeri-pasien-anak-dewasa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-pengkajian-nyeri-pasien-anak-dewasa"
+              id="hari-4-pengkajian-nyeri-pasien-anak-dewasa"
+              label="hari-4-pengkajian-nyeri-pasien-anak-dewasa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-pengkajian-nyeri-pasien-anak-dewasa"
+              id="hari-5-pengkajian-nyeri-pasien-anak-dewasa"
+              label="hari-5-pengkajian-nyeri-pasien-anak-dewasa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-pengkajian-nyeri-pasien-anak-dewasa"
+              id="hari-6-pengkajian-nyeri-pasien-anak-dewasa"
+              label="hari-6-pengkajian-nyeri-pasien-anak-dewasa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-pengkajian-nyeri-pasien-anak-dewasa"
+              id="hari-7-pengkajian-nyeri-pasien-anak-dewasa"
+              label="hari-7-pengkajian-nyeri-pasien-anak-dewasa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-pengkajian-nyeri-pasien-anak-dewasa"
+              id="keterangan-pengkajian-nyeri-pasien-anak-dewasa"
+              label="keterangan-pengkajian-nyeri-pasien-anak-dewasa"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Lembaran Konsultasi</td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-lembaran-konsultasi"
+              id="hari-1-lembaran-konsultasi"
+              label="hari-1-lembaran-konsultasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-lembaran-konsultasi"
+              id="hari-2-lembaran-konsultasi"
+              label="hari-2-lembaran-konsultasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-lembaran-konsultasi"
+              id="hari-3-lembaran-konsultasi"
+              label="hari-3-lembaran-konsultasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-lembaran-konsultasi"
+              id="hari-4-lembaran-konsultasi"
+              label="hari-4-lembaran-konsultasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-lembaran-konsultasi"
+              id="hari-5-lembaran-konsultasi"
+              label="hari-5-lembaran-konsultasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-lembaran-konsultasi"
+              id="hari-6-lembaran-konsultasi"
+              label="hari-6-lembaran-konsultasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-lembaran-konsultasi"
+              id="hari-7-lembaran-konsultasi"
+              label="hari-7-lembaran-konsultasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-lembaran-konsultasi"
+              id="keterangan-lembaran-konsultasi"
+              label="keterangan-lembaran-konsultasi"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="3">&nbsp;</td>
+          <td>Komunikasi Edukasi</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-komunikasi-edukasi"
+              id="hari-1-komunikasi-edukasi"
+              label="hari-1-komunikasi-edukasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-komunikasi-edukasi"
+              id="hari-2-komunikasi-edukasi"
+              label="hari-2-komunikasi-edukasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-komunikasi-edukasi"
+              id="hari-3-komunikasi-edukasi"
+              label="hari-3-komunikasi-edukasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-komunikasi-edukasi"
+              id="hari-4-komunikasi-edukasi"
+              label="hari-4-komunikasi-edukasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-komunikasi-edukasi"
+              id="hari-5-komunikasi-edukasi"
+              label="hari-5-komunikasi-edukasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-komunikasi-edukasi"
+              id="hari-6-komunikasi-edukasi"
+              label="hari-6-komunikasi-edukasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-komunikasi-edukasi"
+              id="hari-7-komunikasi-edukasi"
+              label="hari-7-komunikasi-edukasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>Di TTD dokter dan pasien / keluarga pasien</td>
+        </tr>
+        <tr>
+          <td>Persetujuan Tindakan Kedokteran</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-persetujuan-tindakan-kedokteran"
+              id="hari-1-persetujuan-tindakan-kedokteran"
+              label="hari-1-persetujuan-tindakan-kedokteran"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-persetujuan-tindakan-kedokteran"
+              id="hari-2-persetujuan-tindakan-kedokteran"
+              label="hari-2-persetujuan-tindakan-kedokteran"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-persetujuan-tindakan-kedokteran"
+              id="hari-3-persetujuan-tindakan-kedokteran"
+              label="hari-3-persetujuan-tindakan-kedokteran"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-persetujuan-tindakan-kedokteran"
+              id="hari-4-persetujuan-tindakan-kedokteran"
+              label="hari-4-persetujuan-tindakan-kedokteran"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-persetujuan-tindakan-kedokteran"
+              id="hari-5-persetujuan-tindakan-kedokteran"
+              label="hari-5-persetujuan-tindakan-kedokteran"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-persetujuan-tindakan-kedokteran"
+              id="hari-6-persetujuan-tindakan-kedokteran"
+              label="hari-6-persetujuan-tindakan-kedokteran"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-persetujuan-tindakan-kedokteran"
+              id="hari-7-persetujuan-tindakan-kedokteran"
+              label="hari-7-persetujuan-tindakan-kedokteran"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>Di TTD dokter dan pasien / keluarga pasien</td>
+        </tr>
+        <tr>
+          <td>Pengkajian Pra Bedah dan Penandaan Lokasi Bedah</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              id="hari-1-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              label="hari-1-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              id="hari-2-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              label="hari-2-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              id="hari-3-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              label="hari-3-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              id="hari-4-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              label="hari-4-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              id="hari-5-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              label="hari-5-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              id="hari-6-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              label="hari-6-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              id="hari-7-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              label="hari-7-pengkajian-pra-bedah-dan-penandaan-lokasi-bedah"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>Di TTD dokter dan pasien / keluarga pasien</td>
+        </tr>
+        <tr>
+          <td>8. PROSEDUR ADMINISTRASI</td>
+          <td>Administrasi keuangan</td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-administrasi-keuangan"
+              id="hari-1-administrasi-keuangan"
+              label="hari-1-administrasi-keuangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-administrasi-keuangan"
+              id="hari-2-administrasi-keuangan"
+              label="hari-2-administrasi-keuangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-administrasi-keuangan"
+              id="hari-3-administrasi-keuangan"
+              label="hari-3-administrasi-keuangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-administrasi-keuangan"
+              id="hari-4-administrasi-keuangan"
+              label="hari-4-administrasi-keuangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-administrasi-keuangan"
+              id="hari-5-administrasi-keuangan"
+              label="hari-5-administrasi-keuangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-administrasi-keuangan"
+              id="hari-6-administrasi-keuangan"
+              label="hari-6-administrasi-keuangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-administrasi-keuangan"
+              id="hari-7-administrasi-keuangan"
+              label="hari-7-administrasi-keuangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-administrasi-keuangan"
+              id="keterangan-administrasi-keuangan"
+              label="keterangan-administrasi-keuangan"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>9. TERAPI/MEDIKAMENTOSA</td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="uraian-kegiatan-terapi-medika-mentosa"
+              id="uraian-kegiatan-terapi-medika-mentosa"
+              label="uraian-kegiatan-terapi-medika-mentosa"
+              myid="check_cara"
+            ></textarea>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-1-terapi-medika-mentosa"
+              id="hari-1-terapi-medika-mentosa"
+              label="hari-1-terapi-medika-mentosa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-terapi-medika-mentosa"
+              id="hari-2-terapi-medika-mentosa"
+              label="hari-2-terapi-medika-mentosa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-terapi-medika-mentosa"
+              id="hari-3-terapi-medika-mentosa"
+              label="hari-3-terapi-medika-mentosa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-terapi-medika-mentosa"
+              id="hari-4-terapi-medika-mentosa"
+              label="hari-4-terapi-medika-mentosa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-terapi-medika-mentosa"
+              id="hari-5-terapi-medika-mentosa"
+              label="hari-5-terapi-medika-mentosa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-terapi-medika-mentosa"
+              id="hari-6-terapi-medika-mentosa"
+              label="hari-6-terapi-medika-mentosa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-terapi-medika-mentosa"
+              id="hari-7-terapi-medika-mentosa"
+              label="hari-7-terapi-medika-mentosa"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-terapi-medika-mentosa"
+              id="keterangan-terapi-medika-mentosa"
+              label="keterangan-terapi-medika-mentosa"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="4">Injeksi</td>
+          <td>Ampicillin / aminoglikosida / sefalosporin</td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-ampicillin-aminoglikosida-sefalosporin"
+              id="hari-1-ampicillin-aminoglikosida-sefalosporin"
+              label="hari-1-ampicillin-aminoglikosida-sefalosporin"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-ampicillin-aminoglikosida-sefalosporin"
+              id="hari-2-ampicillin-aminoglikosida-sefalosporin"
+              label="hari-2-ampicillin-aminoglikosida-sefalosporin"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-ampicillin-aminoglikosida-sefalosporin"
+              id="hari-3-ampicillin-aminoglikosida-sefalosporin"
+              label="hari-3-ampicillin-aminoglikosida-sefalosporin"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-ampicillin-aminoglikosida-sefalosporin"
+              id="hari-4-ampicillin-aminoglikosida-sefalosporin"
+              label="hari-4-ampicillin-aminoglikosida-sefalosporin"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-ampicillin-aminoglikosida-sefalosporin"
+              id="hari-5-ampicillin-aminoglikosida-sefalosporin"
+              label="hari-5-ampicillin-aminoglikosida-sefalosporin"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-ampicillin-aminoglikosida-sefalosporin"
+              id="hari-6-ampicillin-aminoglikosida-sefalosporin"
+              label="hari-6-ampicillin-aminoglikosida-sefalosporin"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-ampicillin-aminoglikosida-sefalosporin"
+              id="hari-7-ampicillin-aminoglikosida-sefalosporin"
+              label="hari-7-ampicillin-aminoglikosida-sefalosporin"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>Bila leukosit meningkat</td>
+        </tr>
+        <tr>
+          <td>Metronidazol</td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-metronidazol"
+              id="hari-1-metronidazol"
+              label="hari-1-metronidazol"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-metronidazol"
+              id="hari-2-metronidazol"
+              label="hari-2-metronidazol"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-metronidazol"
+              id="hari-3-metronidazol"
+              label="hari-3-metronidazol"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-metronidazol"
+              id="hari-4-metronidazol"
+              label="hari-4-metronidazol"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-metronidazol"
+              id="hari-5-metronidazol"
+              label="hari-5-metronidazol"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-metronidazol"
+              id="hari-6-metronidazol"
+              label="hari-6-metronidazol"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-metronidazol"
+              id="hari-7-metronidazol"
+              label="hari-7-metronidazol"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-metronidazol"
+              id="keterangan-metronidazol"
+              label="keterangan-metronidazol"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Analgenik</td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-analgenik"
+              id="hari-1-analgenik"
+              label="hari-1-analgenik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-analgenik"
+              id="hari-2-analgenik"
+              label="hari-2-analgenik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-analgenik"
+              id="hari-3-analgenik"
+              label="hari-3-analgenik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-analgenik"
+              id="hari-4-analgenik"
+              label="hari-4-analgenik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-analgenik"
+              id="hari-5-analgenik"
+              label="hari-5-analgenik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-analgenik"
+              id="hari-6-analgenik"
+              label="hari-6-analgenik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-analgenik"
+              id="hari-7-analgenik"
+              label="hari-7-analgenik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-analgenik"
+              id="keterangan-analgenik"
+              label="keterangan-analgenik"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Proton pump Inhibitor</td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-inhibitor"
+              id="hari-1-inhibitor"
+              label="hari-1-inhibitor"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-inhibitor"
+              id="hari-2-inhibitor"
+              label="hari-2-inhibitor"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-inhibitor"
+              id="hari-3-inhibitor"
+              label="hari-3-inhibitor"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-inhibitor"
+              id="hari-4-inhibitor"
+              label="hari-4-inhibitor"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-inhibitor"
+              id="hari-5-inhibitor"
+              label="hari-5-inhibitor"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-inhibitor"
+              id="hari-6-inhibitor"
+              label="hari-6-inhibitor"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-inhibitor"
+              id="hari-7-inhibitor"
+              label="hari-7-inhibitor"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-inhibitor"
+              id="keterangan-inhibitor"
+              label="keterangan-inhibitor"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Cairan Infus</td>
+          <td>Kristaloid</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-kristaloid"
+              id="hari-1-kristaloid"
+              label="hari-1-kristaloid"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-kristaloid"
+              id="hari-2-kristaloid"
+              label="hari-2-kristaloid"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-kristaloid"
+              id="hari-3-kristaloid"
+              label="hari-3-kristaloid"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-kristaloid"
+              id="hari-4-kristaloid"
+              label="hari-4-kristaloid"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-kristaloid"
+              id="hari-5-kristaloid"
+              label="hari-5-kristaloid"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-kristaloid"
+              id="hari-6-kristaloid"
+              label="hari-6-kristaloid"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-kristaloid"
+              id="hari-7-kristaloid"
+              label="hari-7-kristaloid"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-kristaloid"
+              id="keterangan-kristaloid"
+              label="keterangan-kristaloid"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Oksigen</td>
+          <td>02 Nasal</td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-oksigen"
+              id="hari-1-oksigen"
+              label="hari-1-oksigen"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-oksigen"
+              id="hari-2-oksigen"
+              label="hari-2-oksigen"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-oksigen"
+              id="hari-3-oksigen"
+              label="hari-3-oksigen"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-oksigen"
+              id="hari-4-oksigen"
+              label="hari-4-oksigen"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-oksigen"
+              id="hari-5-oksigen"
+              label="hari-5-oksigen"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-oksigen"
+              id="hari-6-oksigen"
+              label="hari-6-oksigen"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-oksigen"
+              id="hari-7-oksigen"
+              label="hari-7-oksigen"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-oksigen"
+              id="keterangan-oksigen"
+              label="keterangan-oksigen"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>OBAT ORAL</td>
+          <td>Antibiotik</td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-antibiotik"
+              id="hari-1-antibiotik"
+              label="hari-1-antibiotik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-antibiotik"
+              id="hari-2-antibiotik"
+              label="hari-2-antibiotik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-antibiotik"
+              id="hari-3-antibiotik"
+              label="hari-3-antibiotik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-antibiotik"
+              id="hari-4-antibiotik"
+              label="hari-4-antibiotik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-antibiotik"
+              id="hari-5-antibiotik"
+              label="hari-5-antibiotik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-antibiotik"
+              id="hari-6-antibiotik"
+              label="hari-6-antibiotik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-antibiotik"
+              id="hari-7-antibiotik"
+              label="hari-7-antibiotik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-antibiotik"
+              id="keterangan-antibiotik"
+              label="keterangan-antibiotik"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>10. DIET/NUTRISI</td>
+          <td>Tergantung klinis</td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-tergantung-klinis"
+              id="hari-1-tergantung-klinis"
+              label="hari-1-tergantung-klinis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-tergantung-klinis"
+              id="hari-2-tergantung-klinis"
+              label="hari-2-tergantung-klinis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-tergantung-klinis"
+              id="hari-3-tergantung-klinis"
+              label="hari-3-tergantung-klinis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-tergantung-klinis"
+              id="hari-4-tergantung-klinis"
+              label="hari-4-tergantung-klinis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-tergantung-klinis"
+              id="hari-5-tergantung-klinis"
+              label="hari-5-tergantung-klinis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-tergantung-klinis"
+              id="hari-6-tergantung-klinis"
+              label="hari-6-tergantung-klinis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-tergantung-klinis"
+              id="hari-7-tergantung-klinis"
+              label="hari-7-tergantung-klinis"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="keterangan-tergantung-klinis"
+              id="keterangan-tergantung-klinis"
+              label="keterangan-tergantung-klinis"
+              myid="check_cara"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>11. MONITORING</td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="2"
+              type="textarea"
+              name="uraian-kegiatan-monitoring"
+              id="uraian-kegiatan-monitoring"
+              label="uraian-kegiatan-monitoring"
+              myid="check_cara"
+            ></textarea>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-1-monitoring"
+              id="hari-1-monitoring"
+              label="hari-1-monitoring"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-monitoring"
+              id="hari-2-monitoring"
+              label="hari-2-monitoring"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-monitoring"
+              id="hari-3-monitoring"
+              label="hari-3-monitoring"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-monitoring"
+              id="hari-4-monitoring"
+              label="hari-4-monitoring"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-monitoring"
+              id="hari-5-monitoring"
+              label="hari-5-monitoring"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-monitoring"
+              id="hari-6-monitoring"
+              label="hari-6-monitoring"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-monitoring"
+              id="hari-7-monitoring"
+              label="hari-7-monitoring"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              type="textarea"
+              name="keterangan-monitoring"
+              id="keterangan-monitoring"
+              label="keterangan-monitoring"
+              rows="2"
+              myid="check_cara"
+            >
+            </textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>1. Perawat</td>
+          <td>Monitoring tanda vital</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 44)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-monitoring-ttv"
+              id="hari-1-monitoring-ttv"
+              label="hari-1-monitoring-ttv"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 44)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-monitoring-ttv"
+              id="hari-2-monitoring-ttv"
+              label="hari-2-monitoring-ttv"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 44)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-monitoring-ttv"
+              id="hari-3-monitoring-ttv"
+              label="hari-3-monitoring-ttv"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 44)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-monitoring-ttv"
+              id="hari-4-monitoring-ttv"
+              label="hari-4-monitoring-ttv"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 44)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-monitoring-ttv"
+              id="hari-5-monitoring-ttv"
+              label="hari-5-monitoring-ttv"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-monitoring-ttv"
+              id="hari-6-monitoring-ttv"
+              label="hari-6-monitoring-ttv"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-monitoring-ttv"
+              id="hari-7-monitoring-ttv"
+              label="hari-7-monitoring-ttv"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              type="textarea"
+              name="keterangan-monitoring-ttv-perawat"
+              id="keterangan-monitoring-ttv-perawat"
+              label="keterangan-monitoring-ttv-perawat"
+              rows="2"
+              myid="check_cara"
+            >
+            </textarea>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="2">2. Dokter Ruangan</td>
+          <td>Monitoring tanda vital</td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-monitoring-tanda-vital-dokter-ruangan"
+              id="hari-1-monitoring-tanda-vital-dokter-ruangan"
+              label="hari-1-monitoring-tanda-vital-dokter-ruangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-monitoring-tanda-vital-dokter-ruangan"
+              id="hari-2-monitoring-tanda-vital-dokter-ruangan"
+              label="hari-2-monitoring-tanda-vital-dokter-ruangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-monitoring-tanda-vital-dokter-ruangan"
+              id="hari-3-monitoring-tanda-vital-dokter-ruangan"
+              label="hari-3-monitoring-tanda-vital-dokter-ruangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-monitoring-tanda-vital-dokter-ruangan"
+              id="hari-4-monitoring-tanda-vital-dokter-ruangan"
+              label="hari-4-monitoring-tanda-vital-dokter-ruangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-monitoring-tanda-vital-dokter-ruangan"
+              id="hari-5-monitoring-tanda-vital-dokter-ruangan"
+              label="hari-5-monitoring-tanda-vital-dokter-ruangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-monitoring-tanda-vital-dokter-ruangan"
+              id="hari-6-monitoring-tanda-vital-dokter-ruangan"
+              label="hari-6-monitoring-tanda-vital-dokter-ruangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-monitoring-tanda-vital-dokter-ruangan"
+              id="hari-7-monitoring-tanda-vital-dokter-ruangan"
+              label="hari-7-monitoring-tanda-vital-dokter-ruangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              type="textarea"
+              name="keterangan-monitoring-ttv-dokter-ruangan"
+              id="keterangan-monitoring-ttv-dokter-ruangan"
+              label="keterangan-monitoring-ttv-dokter-ruangan"
+              rows="2"
+              myid="check_cara"
+            >
+            </textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Monitoring keluhan pasien</td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-monitoring-keluhan-pasien"
+              id="hari-1-monitoring-keluhan-pasien"
+              label="hari-1-monitoring-keluhan-pasien"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-monitoring-keluhan-pasien"
+              id="hari-2-monitoring-keluhan-pasien"
+              label="hari-2-monitoring-keluhan-pasien"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-monitoring-keluhan-pasien"
+              id="hari-3-monitoring-keluhan-pasien"
+              label="hari-3-monitoring-keluhan-pasien"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-monitoring-keluhan-pasien"
+              id="hari-4-monitoring-keluhan-pasien"
+              label="hari-4-monitoring-keluhan-pasien"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-monitoring-keluhan-pasien"
+              id="hari-5-monitoring-keluhan-pasien"
+              label="hari-5-monitoring-keluhan-pasien"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-monitoring-keluhan-pasien"
+              id="hari-6-monitoring-keluhan-pasien"
+              label="hari-6-monitoring-keluhan-pasien"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-monitoring-keluhan-pasien"
+              id="hari-7-monitoring-keluhan-pasien"
+              label="hari-7-monitoring-keluhan-pasien"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              type="textarea"
+              name="keterangan-monitoring-keluhan-pasien"
+              id="keterangan-monitoring-keluhan-pasien"
+              label="keterangan-monitoring-keluhan-pasien"
+              rows="2"
+              myid="check_cara"
+            >
+            </textarea>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="2">3. Dokter DPJP</td>
+          <td>Monitoring tanda vital</td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-monitoring-tanda-vital-dpjp"
+              id="hari-1-monitoring-tanda-vital-dpjp"
+              label="hari-1-monitoring-tanda-vital-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-monitoring-tanda-vital-dpjp"
+              id="hari-2-monitoring-tanda-vital-dpjp"
+              label="hari-2-monitoring-tanda-vital-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-monitoring-tanda-vital-dpjp"
+              id="hari-3-monitoring-tanda-vital-dpjp"
+              label="hari-3-monitoring-tanda-vital-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-monitoring-tanda-vital-dpjp"
+              id="hari-4-monitoring-tanda-vital-dpjp"
+              label="hari-4-monitoring-tanda-vital-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-monitoring-tanda-vital-dpjp"
+              id="hari-5-monitoring-tanda-vital-dpjp"
+              label="hari-5-monitoring-tanda-vital-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-monitoring-tanda-vital-dpjp"
+              id="hari-6-monitoring-tanda-vital-dpjp"
+              label="hari-6-monitoring-tanda-vital-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-monitoring-tanda-vital-dpjp"
+              id="hari-7-monitoring-tanda-vital-dpjp"
+              label="hari-7-monitoring-tanda-vital-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              type="textarea"
+              name="keterangan-monitoring-tanda-vital-dpjp"
+              id="keterangan-monitoring-tanda-vital-dpjp"
+              label="keterangan-monitoring-tanda-vital-dpjp"
+              rows="2"
+              myid="check_cara"
+            >
+            </textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Monitoring keluhan pasien</td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-monitoring-keluhan-pasien-dpjp"
+              id="hari-1-monitoring-keluhan-pasien-dpjp"
+              label="hari-1-monitoring-keluhan-pasien-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-monitoring-keluhan-pasien-dpjp"
+              id="hari-2-monitoring-keluhan-pasien-dpjp"
+              label="hari-2-monitoring-keluhan-pasien-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-monitoring-keluhan-pasien-dpjp"
+              id="hari-3-monitoring-keluhan-pasien-dpjp"
+              label="hari-3-monitoring-keluhan-pasien-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-monitoring-keluhan-pasien-dpjp"
+              id="hari-4-monitoring-keluhan-pasien-dpjp"
+              label="hari-4-monitoring-keluhan-pasien-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(165, 165, 165)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-monitoring-keluhan-pasien-dpjp"
+              id="hari-5-monitoring-keluhan-pasien-dpjp"
+              label="hari-5-monitoring-keluhan-pasien-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-monitoring-keluhan-pasien-dpjp"
+              id="hari-6-monitoring-keluhan-pasien-dpjp"
+              label="hari-6-monitoring-keluhan-pasien-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-monitoring-keluhan-pasien-dpjp"
+              id="hari-7-monitoring-keluhan-pasien-dpjp"
+              label="hari-7-monitoring-keluhan-pasien-dpjp"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              type="textarea"
+              name="keterangan-monitoring-keluhan-pasien-dpjp"
+              id="keterangan-monitoring-keluhan-pasien-dpjp"
+              label="keterangan-monitoring-keluhan-pasien-dpjp"
+              rows="2"
+              myid="check_cara"
+            >
+            </textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>12. MOBILISASI</td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              type="textarea"
+              name="uraian-kegiatan-mobilisasi"
+              id="uraian-kegiatan-mobilisasi"
+              label="uraian-kegiatan-mobilisasi"
+              rows="2"
+              myid="check_cara"
+            >
+            </textarea>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-1-mobilisasi"
+              id="hari-1-mobilisasi"
+              label="hari-1-mobilisasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-mobilisasi"
+              id="hari-2-mobilisasi"
+              label="hari-2-mobilisasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-mobilisasi"
+              id="hari-3-mobilisasi"
+              label="hari-3-mobilisasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-mobilisasi"
+              id="hari-4-mobilisasi"
+              label="hari-4-mobilisasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-mobilisasi"
+              id="hari-5-mobilisasi"
+              label="hari-5-mobilisasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-mobilisasi"
+              id="hari-6-mobilisasi"
+              label="hari-6-mobilisasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-mobilisasi"
+              id="hari-7-mobilisasi"
+              label="hari-7-mobilisasi"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              type="textarea"
+              name="keterangan-mobilisasi"
+              id="keterangan-mobilisasi"
+              label="keterangan-mobilisasi"
+              rows="2"
+              myid="check_cara"
+            >
+            </textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>13. OUTCOME</td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              type="textarea"
+              name="uraian-kegiatan-outcome"
+              id="uraian-kegiatan-outcome"
+              label="uraian-kegiatan-outcome"
+              rows="2"
+              myid="check_cara"
+            >
+            </textarea>
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-1-outcome"
+              id="hari-1-outcome"
+              label="hari-1-outcome"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-2-outcome"
+              id="hari-2-outcome"
+              label="hari-2-outcome"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-3-outcome"
+              id="hari-3-outcome"
+              label="hari-3-outcome"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-4-outcome"
+              id="hari-4-outcome"
+              label="hari-4-outcome"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-5-outcome"
+              id="hari-5-outcome"
+              label="hari-5-outcome"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-outcome"
+              id="hari-6-outcome"
+              label="hari-6-outcome"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-outcome"
+              id="hari-7-outcome"
+              label="hari-7-outcome"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              type="textarea"
+              name="keterangan-outcome"
+              id="keterangan-outcome"
+              label="keterangan-outcome"
+              rows="2"
+              myid="check_cara"
+            >
+            </textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Keluhan :</td>
+          <td>Keluhan -, mobilisasi baik</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-keluhan-mobilisasi-baik"
+              id="hari-1-keluhan-mobilisasi-baik"
+              label="hari-1-keluhan-mobilisasi-baik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-keluhan-mobilisasi-baik"
+              id="hari-2-keluhan-mobilisasi-baik"
+              label="hari-2-keluhan-mobilisasi-baik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-keluhan-mobilisasi-baik"
+              id="hari-3-keluhan-mobilisasi-baik"
+              label="hari-3-keluhan-mobilisasi-baik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-keluhan-mobilisasi-baik"
+              id="hari-4-keluhan-mobilisasi-baik"
+              label="hari-4-keluhan-mobilisasi-baik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-keluhan-mobilisasi-baik"
+              id="hari-5-keluhan-mobilisasi-baik"
+              label="hari-5-keluhan-mobilisasi-baik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-keluhan-mobilisasi-baik"
+              id="hari-6-keluhan-mobilisasi-baik"
+              label="hari-6-keluhan-mobilisasi-baik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-keluhan-mobilisasi-baik"
+              id="hari-7-keluhan-mobilisasi-baik"
+              label="hari-7-keluhan-mobilisasi-baik"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              type="textarea"
+              name="keterangan-keluhan-mobilisasi-baik"
+              id="keterangan-keluhan-mobilisasi-baik"
+              label="keterangan-keluhan-mobilisasi-baik"
+              rows="2"
+              myid="check_cara"
+            >
+            </textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Pemeriksaan Klinis</td>
+          <td>Tanda infeksi tidak ada, mobilisasi baik</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-tanda-infeksi-tdk-ada"
+              id="hari-1-tanda-infeksi-tdk-ada"
+              label="hari-1-tanda-infeksi-tdk-ada"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-tanda-infeksi-tdk-ada"
+              id="hari-2-tanda-infeksi-tdk-ada"
+              label="hari-2-tanda-infeksi-tdk-ada"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-tanda-infeksi-tdk-ada"
+              id="hari-3-tanda-infeksi-tdk-ada"
+              label="hari-3-tanda-infeksi-tdk-ada"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-tanda-infeksi-tdk-ada"
+              id="hari-4-tanda-infeksi-tdk-ada"
+              label="hari-4-tanda-infeksi-tdk-ada"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-tanda-infeksi-tdk-ada"
+              id="hari-5-tanda-infeksi-tdk-ada"
+              label="hari-5-tanda-infeksi-tdk-ada"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-tanda-infeksi-tdk-ada"
+              id="hari-6-tanda-infeksi-tdk-ada"
+              label="hari-6-tanda-infeksi-tdk-ada"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-tanda-infeksi-tdk-ada"
+              id="hari-7-tanda-infeksi-tdk-ada"
+              label="hari-7-tanda-infeksi-tdk-ada"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              type="textarea"
+              name="keterangan-tanda-infeksi-tdk-ada"
+              id="keterangan-tanda-infeksi-tdk-ada"
+              label="keterangan-tanda-infeksi-tdk-ada"
+              rows="2"
+              myid="check_cara"
+            >
+            </textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Lama Rawat</td>
+          <td>Sesuai PPK</td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-sesuai-ppk"
+              id="hari-1-sesuai-ppk"
+              label="hari-1-sesuai-ppk"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-sesuai-ppk"
+              id="hari-2-sesuai-ppk"
+              label="hari-2-sesuai-ppk"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-sesuai-ppk"
+              id="hari-3-sesuai-ppk"
+              label="hari-3-sesuai-ppk"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-sesuai-ppk"
+              id="hari-4-sesuai-ppk"
+              label="hari-4-sesuai-ppk"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-sesuai-ppk"
+              id="hari-5-sesuai-ppk"
+              label="hari-5-sesuai-ppk"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-sesuai-ppk"
+              id="hari-6-sesuai-ppk"
+              label="hari-6-sesuai-ppk"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-sesuai-ppk"
+              id="hari-7-sesuai-ppk"
+              label="hari-7-sesuai-ppk"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              type="textarea"
+              name="keterangan-sesuai-ppk"
+              id="keterangan-sesuai-ppk"
+              label="keterangan-sesuai-ppk"
+              rows="2"
+              myid="check_cara"
+            >
+            </textarea>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="2">14. KRITERIA PULANG / EDUKASI</td>
+          <td>
+            Penjelasan mengenai perkembangan penyakit berkaitan terapi dan
+            tindakan yang sudah dilakukan
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-penjelasan-mengenai-perkembangan"
+              id="hari-1-penjelasan-mengenai-perkembangan"
+              label="hari-1-penjelasan-mengenai-perkembangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-penjelasan-mengenai-perkembangan"
+              id="hari-2-penjelasan-mengenai-perkembangan"
+              label="hari-2-penjelasan-mengenai-perkembangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-penjelasan-mengenai-perkembangan"
+              id="hari-3-penjelasan-mengenai-perkembangan"
+              label="hari-3-penjelasan-mengenai-perkembangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-penjelasan-mengenai-perkembangan"
+              id="hari-4-penjelasan-mengenai-perkembangan"
+              label="hari-4-penjelasan-mengenai-perkembangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-penjelasan-mengenai-perkembangan"
+              id="hari-5-penjelasan-mengenai-perkembangan"
+              label="hari-5-penjelasan-mengenai-perkembangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-penjelasan-mengenai-perkembangan"
+              id="hari-6-penjelasan-mengenai-perkembangan"
+              label="hari-6-penjelasan-mengenai-perkembangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-penjelasan-mengenai-perkembangan"
+              id="hari-7-penjelasan-mengenai-perkembangan"
+              label="hari-7-penjelasan-mengenai-perkembangan"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              type="textarea"
+              name="keterangan-penjelasan-mengenai-perkembangan"
+              id="keterangan-penjelasan-mengenai-perkembangan"
+              label="keterangan-penjelasan-mengenai-perkembangan"
+              rows="2"
+              myid="check_cara"
+            >
+            </textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Penjelasan mengenai diet yang diberikan sesuai dengan keadaan umum
+            pasien
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-1-penjelasan-mengenai-diet"
+              id="hari-1-penjelasan-mengenai-diet"
+              label="hari-1-penjelasan-mengenai-diet"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-2-penjelasan-mengenai-diet"
+              id="hari-2-penjelasan-mengenai-diet"
+              label="hari-2-penjelasan-mengenai-diet"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-3-penjelasan-mengenai-diet"
+              id="hari-3-penjelasan-mengenai-diet"
+              label="hari-3-penjelasan-mengenai-diet"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-4-penjelasan-mengenai-diet"
+              id="hari-4-penjelasan-mengenai-diet"
+              label="hari-4-penjelasan-mengenai-diet"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center; background-color: rgb(44, 43, 43)">
+            <input
+              disabled
+              type="checkbox"
+              name="hari-5-penjelasan-mengenai-diet"
+              id="hari-5-penjelasan-mengenai-diet"
+              label="hari-5-penjelasan-mengenai-diet"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-6-penjelasan-mengenai-diet"
+              id="hari-6-penjelasan-mengenai-diet"
+              label="hari-6-penjelasan-mengenai-diet"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td style="text-align: center">
+            <input
+              type="checkbox"
+              name="hari-7-penjelasan-mengenai-diet"
+              id="hari-7-penjelasan-mengenai-diet"
+              label="hari-7-penjelasan-mengenai-diet"
+              myid="check_cara"
+              value="true"
+            />
+          </td>
+          <td>
+            <textarea
+              style="width: 100%; padding: 0"
+              type="textarea"
+              name="keterangan-penjelasan-mengenai-diet"
+              id="keterangan-penjelasan-mengenai-diet"
+              label="keterangan-penjelasan-mengenai-diet"
+              rows="2"
+              myid="check_cara"
+            >
+            </textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <td style="border: none">
+            <div style="display: flex; justify-content: center">
+              <input
+                style="border: none; border-bottom: 1px solid"
+                type="text"
+                name="lokasi"
+                id="lokasi"
+                label="lokasi"
+                myid="check_cara"
+              />
+
+              <label for="">,</label>
+              <input
+                style="border: none; border-bottom: 1px solid"
+                type="text"
+                name="tgl-pengkajian"
+                id="tgl-pengkajian"
+                label="tgl-pengkajian"
+                class="datepicker"
+                myid="check_cara"
+              />
+            </div>
+          </td>
+          <td style="border: none">&nbsp;</td>
+          <td style="border: none">&nbsp;</td>
+        </tr>
+        <tr>
+          <td style="border: none; width: 33%">
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <p>Dokter Penanggung Jawab Pelayanan</p>
+
+              <input
+                name="ttd_master"
+                type="hidden"
+                id="diagnosa_pentablet_1"
+                value="{ttd_master}"
+              />
+              <div
+                style="display: {DISPTTD1_PEN}; width: 100px; height: 20px;"
+                id="back_img_1"
+              ></div>
+              <img
+                width="100px"
+                height="100px"
+                id="image_ttd_1"
+                src="{ttd_master}"
+                style="display:{DISPTTD1}"
+              />
+              <br />
+              <input
+                type="hidden"
+                id="id_doctor"
+                value="{doc_id}"
+                myid="check_cara"
+                name="id_doctor"
+              />
+
+              <label for=""
+                >(
+                <input
+                  style="border: none; border-bottom: 1px solid"
+                  type="text"
+                  name="dpjp"
+                  id="dpjp"
+                  label="dpjp"
+                  myid="check_cara"
+                  value="{VDPJP}"
+                />
+                )</label
+              >
+            </div>
+          </td>
+          <td style="border: none; width: 33%">
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <p>Perawat Penanggung Jawab</p>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_penanggung_jawab"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_penanggung_jawab"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_penanggung_jawab"
+                id="paraf_ex_ttd_perawat_penanggung_jawab"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_penanggung_jawab"
+              />
+
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_penanggung_jawab"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+              <label for=""
+                >(
+                <input
+                  style="border: none; border-bottom: 1px solid"
+                  type="text"
+                  name="perawat-penanggung-jawab"
+                  id="perawat-penanggung-jawab"
+                  label="perawat-penanggung-jawab"
+                  myid="check_cara"
+                />
+                )</label
+              >
+            </div>
+          </td>
+          <td style="border: none; width: 33%">
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <p>Pelaksana Verifikasi</p>
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_verifikasi"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_verifikasi"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_verifikasi"
+                id="paraf_ex_ttd_perawat_verifikasi"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_verifikasi"
+              />
+
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_verifikasi"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+              <label for=""
+                >(
+                <input
+                  style="border: none; border-bottom: 1px solid"
+                  type="text"
+                  name="perawat-verifikasi"
+                  id="perawat-verifikasi"
+                  label="perawat-verifikasi"
+                  myid="check_cara"
+                />
+                )</label
+              >
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+    <br />
+
+    <p>Keterangan:</p>
+    <br />
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <td style="background-color: rgb(44, 43, 43)"></td>
+          <td>Yang harus dilakukan</td>
+        </tr>
+        <tr>
+          <td style="background-color: rgb(165, 165, 165)"></td>
+          <td>Bisa atau tidak</td>
+        </tr>
+      </tbody>
+    </table>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        var jk = "{JK}";
+        var img = "{IMG}";
+        var daftar = "{DAFTAR}";
+        if (jk == "f") {
+          $('[name="jk"][value="perempuan"]')
+            .prop("checked", true)
+            .trigger("change");
+        } else {
+          $('[name="jk"][value="laki - laki"]')
+            .prop("checked", true)
+            .trigger("change");
+        }
+
+        if (img != "") {
+          $("#img_mata1").attr("src", img);
+        }
+
+        if (daftar == "t") {
+          var ifirm = "{IFIRM}";
+          $('[name="nama_perusahaan"]').val(ifirm);
+
+          var nopeg = "{NOPEG}";
+          $('[name="no_kartu"]').val(nopeg);
+        }
+
+        AskepForm.showCombo($("select[name=dokter]"), "doctor");
+
+        $(document)
+          .off("change", "#dokter")
+          .on("change", "#dokter", function () {
+            SetDokterName();
+          });
+      });
+
+      function SetDokterName() {
+        var dokter_txt = $("#dokter option:selected").text(),
+          dokter_img = $("#dokter option:selected").attr("data-ttd");
+        $("#paraf_txt_4").val(dokter_txt);
+
+        if (dokter_img != "") {
+          $("#back_img_4").text("");
+          $("#back_img_4").css("display", "none");
+          $("#image_paraf_4").css("display", "");
+          $("#image_paraf_4").attr("src", "" + dokter_img + "");
+          $("#paraf_4").val(dokter_img);
+        }
+      }
+
+      function ttd_paraf(id) {
+        PopupCenter(
+          "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+          "pop",
+          800,
+          400
+        );
+      }
+
+      function tampil_ttd_2(x, y) {
+        $("#back_img_" + x).text("");
+        $("#back_img_" + x).css("display", "none");
+        $("#paraf_" + x).val(y);
+        $("#image_paraf_" + x).css("display", "");
+        $("#image_paraf_" + x).attr("src", "" + y + "");
+      }
+
+      // Untuk Keperluan TTD
+      function SetTTD1() {
+        $('input[data-name="paraf"]').each(function () {
+          var id = $(this).attr("data-id"),
+            ttd = $(this).val();
+
+          ImageToText(id, ttd);
+        });
+      }
+
+      function SetTTD() {
+        $('input[data-name="paraf"]').each(function () {
+          var id = $(this).attr("data-id");
+          var ttd = $(this).val();
+          var def = "paraf";
+          if (ttd == "") {
+            $("#back_img_" + id).text(def);
+            $("#back_img_" + id).css({
+              display: "",
+              "font-style": "italic",
+              width: 200,
+              height: 100,
+              "text-align": "center",
+            });
+            $("#image_paraf_" + id).css("display", "none");
+          } else {
+            $("#back_img_" + id).text("");
+            $("#back_img_" + id).css("display", "none");
+            $("#image_paraf_" + id).css("display", "");
+            $("#image_paraf_" + id).attr("src", "" + ttd + "");
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

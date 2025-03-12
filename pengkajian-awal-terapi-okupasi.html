@@ -6,27 +6,22 @@
     <title>PENGKAJIAN AWAL TERAPI OKUPASI</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -227,11 +222,11 @@
           <td>
             <input
               type="text"
-              size="5"
+              size="20"
               name="umur_pengkajian"
               id="umur_pengkajian"
               label="umur_pengkajian"
-              value="{VAGE}"
+              value="{VAGEREGIS}"
               myid="check_cara"
               placeholder="..."
             />
@@ -265,7 +260,7 @@
           </td>
 
           <td style="font-weight: bold">Jam</td>
-          <td colspan="2">
+          <td colspan="3">
             <input
               type="text"
               name="jam_okupasi"
@@ -276,7 +271,6 @@
               myid="check_cara"
             />
           </td>
-          <td>&nbsp;</td>
         </tr>
       </tbody>
     </table>
@@ -287,7 +281,7 @@
           <td width="18%">DIAGNOSIS MEDIK :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="diagnosis-medik"
               id="diagnosis-medik"
@@ -300,7 +294,7 @@
           <td width="18%">ANAMNESIS :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="anamnesis"
               id="anamnesis"
@@ -427,7 +421,7 @@
       </tbody>
     </table>
 
-    <table width="100%" class="table" cellpadding="0" border="0">
+    <table width="100%" class="table table-bordered" cellpadding="0" border="0">
       <tbody>
         <tr>
           <td>&nbsp;</td>
@@ -511,42 +505,5 @@
         </tr>
       </tbody>
     </table>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-        var textAreas = document.querySelectorAll("textarea");
-        textAreas.forEach(function (textarea) {
-          textarea.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

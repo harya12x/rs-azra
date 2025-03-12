@@ -3,15 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      LAPORAN OPERASI DAN PROSEDUR INVASIF DENGAN ANESTESI LOKAL RS. AZRA BOGOR
-    </title>
+    <title>LAPORAN OPERASI DAN PROSEDUR INVASIF DENGAN ANESTESI LOKAL</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
@@ -19,23 +16,191 @@
       margin-bottom: 10px;
     }
 
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
-    .pre-anestesi {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .pre-anestesi th,
-    .pre-anestesi td {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
+    .chart-container {
+      width: 100%;
+      margin: 20px auto;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    .chart {
+      width: 100%;
+      height: 300px;
+      border: 1px solid black;
+      position: relative;
+    }
+    .grid-line {
+      stroke: #ddd;
+      stroke-width: 1;
+    }
+    .line {
+      stroke-width: 2;
+      fill: none;
+    }
+    .button-container {
+      margin-top: 5px;
+      display: flex;
+      gap: 10px;
+    }
+    .grafik-button {
+      background-color: #1c3f80;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    div.tooltip {
+      position: absolute;
+      padding: 5px;
+      background-color: #333;
+      color: #fff;
+      border-radius: 5px;
+      font-size: 12px;
+      display: none; /* Default: tersembunyi */
+    }
+    .grafik-button:active {
+      background-color: #0a204a;
+    }
   </style>
+  <script>
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $(document).ready(function () {
+        $(function () {
+          $(".datepicker").datepicker({
+            dateFormat: "dd-mm-yy",
+            autoclose: true,
+            todayHighlight: true,
+          });
+        });
+      });
+    });
+  </script>
   <body>
     <h1 class="title">
-      LAPORAN OPERASI DAN PROSEDUR INVASIF DENGAN ANESTESI LOKAL RS. AZRA BOGOR
+      LAPORAN OPERASI DAN PROSEDUR INVASIF DENGAN ANESTESI LOKAL
     </h1>
     <table class="table table-bordered" width="100%">
       <tbody>
@@ -52,8 +217,8 @@
             name="src_ttd_2"
             myid="check_cara"
           />
-          <td bgcolor="#DFE8F6">Nama Pasien</td>
-          <td bgcolor="#DFE8F6">
+          <td>Nama Pasien</td>
+          <td>
             <input
               name="nama_pasien2"
               type="text"
@@ -61,21 +226,24 @@
               size="30"
               myid="check_cara"
               label="nama pasien"
+              value="{VNAMA_PASIEN}"
               placeholder="..."
             />
           </td>
-          <td bgcolor="#DFE8F6">Jenis Kelamin</td>
-          <td bgcolor="#DFE8F6">
-            <input type="checkbox" />
-            <label for="l">L</label>
-            <input type="checkbox" />
-            <label for="l">P</label>
-          </td>
-          <td bgcolor="#DFE8F6">
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
             <label for="">Nomor Rekam Medis</label>
           </td>
-          <td bgcolor="#DFE8F6">
-            <input type="number" />
+          <td>
+            <input
+              type="text"
+              name="no_rm"
+              id="no_rm"
+              label="no_rm"
+              myid="check_cara"
+              value="{NO_RM}"
+            />
           </td>
         </tr>
 
@@ -89,12 +257,20 @@
               placeholder="dd/mm/yyyy"
               myid="check_cara"
               label="tanggal lahir"
+              value="{VBIRTH_DATE}"
             />
           </td>
 
           <td rowspan="2">Umur</td>
           <td rowspan="2">
-            <input type="number" size="5" placeholder="..." />
+            <input
+              type="text"
+              name="umur"
+              id="umur"
+              label="umur"
+              myid="check_cara"
+              value="{VAGEREGIS}"
+            />
           </td>
           <td>
             <label for="poli"> Poli </label>
@@ -111,9 +287,16 @@
           </td>
         </tr>
         <tr>
-          <td bgcolor="#DFE8F6">Kamar</td>
-          <td bgcolor="#DFE8F6">
-            <input type="text" placeholder="..." />
+          <td>Kamar</td>
+          <td>
+            <input
+              name="kamar"
+              type="text"
+              id="kamar"
+              placeholder="..."
+              myid="check_cara"
+              label="kamar"
+            />
           </td>
         </tr>
       </tbody>
@@ -126,28 +309,26 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-ahli-bedah"
-              id=""
+              id="nama-ahli-bedah"
+              label="nama-ahli-bedah"
+              myid="check_cara"
             />
           </td>
 
           <td rowspan="4" colspan="2" style="padding-left: 10px">
             <label for="">Alergi :</label>
-
-            <div style="display: flex; padding-top: 5px; padding-bottom: 5px">
-              <label for="">1.</label
-              ><input type="text" style="flex: 1" name="alergi-1" id="" />
-            </div>
-            <div style="display: flex; padding-bottom: 5px">
-              <label for="">2.</label
-              ><input type="text" style="flex: 1" name="alergi-2" id="" />
-            </div>
-            <div style="display: flex">
-              <label for="">3.</label
-              ><input type="text" style="flex: 1" name="alergi-3" id="" />
-            </div>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="10"
+              type="textarea"
+              name="alergi"
+              id="alergi"
+              label="alergi"
+              myid="check_cara"
+            ></textarea>
           </td>
         </tr>
         <tr>
@@ -155,7 +336,14 @@
             <label for="">Nama asisten :</label>
           </td>
           <td>
-            <input style="width: 100%" type="text" name="nama-asisten" id="" />
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-asisten"
+              id="nama-asisten"
+              label="nama-asisten"
+              myid="check_cara"
+            />
           </td>
         </tr>
         <tr>
@@ -164,10 +352,12 @@
           </td>
           <td>
             <input
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-instrumentator"
-              id=""
-              style="width: 100%"
+              id="nama-instrumentator"
+              label="nama-instrumentator"
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -176,7 +366,14 @@
             <label for="">Nama sirkuler :</label>
           </td>
           <td>
-            <input type="text" style="width: 100%" name="nama-sirkuler" id="" />
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-sirkuler"
+              id="nama-sirkuler"
+              label="nama-sirkuler"
+              myid="check_cara"
+            />
           </td>
         </tr>
         <tr>
@@ -185,19 +382,35 @@
           </td>
           <td>
             <input
+              style="width: 100%; padding: 0"
               type="text"
-              style="width: 100%"
               name="diagnosa-pre-operatif"
-              id=""
+              id="diagnosa-pre-operatif"
+              label="diagnosa-pre-operatif"
+              myid="check_cara"
             />
           </td>
           <td style="padding-left: 10px" rowspan="2" colspan="2">
             <label for="">Sifat tindakan</label>
             <div>
               <label for="">1. Cito</label>
-              <input type="radio" name="sifat-tindakan" value="Cito" id="" />
+              <input
+                type="radio"
+                name="sifat-tindakan"
+                id="sifat-tindakan"
+                label="sifat-tindakan"
+                value="Cito"
+                myid="check_cara"
+              />
               <label for="">2. Efektif</label>
-              <input type="radio" name="sifat-tindakan" value="Efektif" id="" />
+              <input
+                type="radio"
+                name="sifat-tindakan"
+                id="sifat-tindakan"
+                label="sifat-tindakan"
+                value="Efektif"
+                myid="check_cara"
+              />
             </div>
           </td>
         </tr>
@@ -207,44 +420,27 @@
           </td>
           <td>
             <input
+              style="width: 100%; padding: 0"
               type="text"
-              style="width: 100%"
               name="diagnosa-post-operatif"
-              id=""
+              id="diagnosa-post-operatif"
+              label="diagnosa-post-operatif"
+              myid="check_cara"
             />
           </td>
         </tr>
         <tr>
           <td rowspan="2" colspan="2">
             <label for="">Obat yang digunakan :</label>
-
-            <div style="display: flex; padding-top: 5px; padding-bottom: 5px">
-              <label style="margin-right: 5px" for="">1.</label>
-              <input
-                type="text"
-                style="flex: 1"
-                name="obat-yang-digunakan-1"
-                id=""
-              />
-            </div>
-            <div style="display: flex; padding-bottom: 5px">
-              <label style="margin-right: 5px" for="">2.</label>
-              <input
-                type="text"
-                style="flex: 1"
-                name="obat-yang-digunakan-2"
-                id=""
-              />
-            </div>
-            <div style="display: flex">
-              <label style="margin-right: 5px" for="">3.</label>
-              <input
-                type="text"
-                style="flex: 1"
-                name="obat-yang-digunakan-3"
-                id=""
-              />
-            </div>
+            <textarea
+              style="width: 100%; padding: 0"
+              rows="6"
+              type="textarea"
+              name="obat-yg-digunakan"
+              id="obat-yg-digunakan"
+              label="obat-yg-digunakan"
+              myid="check_cara"
+            ></textarea>
           </td>
           <td style="padding-left: 10px" colspan="2">
             <label for="">Pemeriksaan spesimen:</label>
@@ -253,15 +449,19 @@
               <input
                 type="radio"
                 name="pemeriksaan-spesimen"
+                id="pemeriksaan-spesimen"
+                label="pemeriksaan-spesimen"
                 value="Ya"
-                id=""
+                myid="check_cara"
               />
               <label for="">2. Tidak</label>
               <input
                 type="radio"
                 name="pemeriksaan-spesimen"
+                id="pemeriksaan-spesimen"
+                label="pemeriksaan-spesimen"
                 value="Tidak"
-                id=""
+                myid="check_cara"
               />
             </div>
           </td>
@@ -272,24 +472,35 @@
               <label for="">Jenis:</label>
               <div>
                 <div>
-                  <input type="radio" name="jenis" value="Bersih" id="" />
+                  <input
+                    type="radio"
+                    name="jenis-tindakan"
+                    id="jenis-tindakan"
+                    label="jenis-tindakan"
+                    value="Bersih"
+                    myid="check_cara"
+                  />
                   <label for="">Bersih</label>
                 </div>
                 <div>
                   <input
                     type="radio"
-                    name="jenis"
+                    name="jenis-tindakan"
+                    id="jenis-tindakan"
+                    label="jenis-tindakan"
                     value="Bersih Terkontaminasi"
-                    id=""
+                    myid="check_cara"
                   />
                   <label for="">Bersih Terkontaminasi</label>
                 </div>
                 <div>
                   <input
                     type="radio"
-                    name="jenis"
+                    name="jenis-tindakan"
+                    id="jenis-tindakan"
+                    label="jenis-tindakan"
                     value="Terkontaminasi"
-                    id=""
+                    myid="check_cara"
                   />
                   <label for="">Terkontaminasi</label>
                 </div>
@@ -303,22 +514,50 @@
             <div style="display: flex; gap: 10px">
               <div>
                 <label for="">TD:</label>
-                <input type="text" name="TD" placeholder="..." id="" />
+                <input
+                  type="text"
+                  name="ttv-td"
+                  id="ttv-td"
+                  label="ttv-td"
+                  myid="check_cara"
+                  value="{VTD}"
+                />
                 <label for="">mmHg</label>
               </div>
               <div>
                 <label for="">N:</label>
-                <input type="text" name="N" placeholder="..." id="" />
+                <input
+                  type="text"
+                  name="ttv-n"
+                  id="ttv-n"
+                  label="ttv-n"
+                  myid="check_cara"
+                  value="{VNADI}"
+                />
                 <label for="">x/mnt</label>
               </div>
               <div>
                 <label for="">RR:</label>
-                <input type="text" name="RR" placeholder="..." id="" />
+                <input
+                  type="text"
+                  name="ttv-rr"
+                  id="ttv-rr"
+                  label="ttv-rr"
+                  myid="check_cara"
+                  value="{VNAFAS}"
+                />
                 <label for="">x/mnt</label>
               </div>
               <div>
                 <label for="">Suhu:</label>
-                <input type="text" name="Suhu" placeholder="..." id="" />
+                <input
+                  type="text"
+                  name="ttv-suhu"
+                  id="ttv-suhu"
+                  label="ttv-suhu"
+                  myid="check_cara"
+                  value="{VSUHU}"
+                />
                 <label for="">&deg;C</label>
               </div>
             </div>
@@ -328,48 +567,66 @@
           <td colspan="4">
             <div style="display: flex; gap: 10px">
               <label for="">Nama tindakan/operasi:</label>
-              <input type="text" name="nama-operasi" style="flex: 1" id="" />
+              <input
+                style="flex: 1; padding: 0"
+                type="text"
+                name="nama-tindakan-operasi"
+                id="nama-tindakan-operasi"
+                label="nama-tindakan-operasi"
+                myid="check_cara"
+              />
             </div>
           </td>
         </tr>
         <tr>
-          <td style="width: 20%; text-align: center">
+          <td style="width: 25%; text-align: center">
             <label for="">Tanggal operasi:</label>
-
             <input
-              style="width: 100%"
-              type="date"
-              name="tanggal-operasi"
-              id=""
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-operasi"
+              id="tgl-operasi"
+              label="tgl-operasi"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
             />
           </td>
-          <td style="text-align: center">
+          <td style="width: 25%">
             <label style="text-align: center" for=""
               >Jam operasi dimulai:</label
             >
             <input
-              style="width: 100%"
-              type="time"
+              style="width: 100%; padding: 0"
+              type="text"
               name="jam-operasi-dimulai"
-              id=""
+              id="jam-operasi-dimulai"
+              label="jam-operasi-dimulai"
+              placeholder="00.00"
+              myid="check_cara"
             />
           </td>
           <td style="text-align: center">
             <label for="">Jam operasi selesai:</label>
             <input
-              style="width: 100%"
-              type="time"
+              style="width: 100%; padding: 0"
+              type="text"
               name="jam-operasi-selesai"
-              id=""
+              id="jam-operasi-selesai"
+              label="jam-operasi-selesai"
+              placeholder="00.00"
+              myid="check_cara"
             />
           </td>
           <td style="text-align: center">
             <label for="">Lama operasi berlangsung:</label>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lama-operasi-berlangsung"
-              id=""
+              id="lama-operasi-berlangsung"
+              label="lama-operasi-berlangsung"
+              myid="check_cara"
             />
           </td>
         </tr>
@@ -381,8 +638,10 @@
                 <input
                   type="radio"
                   name="posisi-pasien"
+                  id="posisi-pasien"
+                  label="posisi-pasien"
                   value="Terlentang"
-                  id=""
+                  myid="check_cara"
                 />
                 <label for="">Terlentang</label>
               </div>
@@ -390,8 +649,10 @@
                 <input
                   type="radio"
                   name="posisi-pasien"
+                  id="posisi-pasien"
+                  label="posisi-pasien"
                   value="Tengkurap"
-                  id=""
+                  myid="check_cara"
                 />
                 <label for="">Tengkurap</label>
               </div>
@@ -399,17 +660,33 @@
                 <input
                   type="radio"
                   name="posisi-pasien"
+                  id="posisi-pasien"
+                  label="posisi-pasien"
                   value="Litotomi"
-                  id=""
+                  myid="check_cara"
                 />
                 <label for="">Litotomi</label>
               </div>
               <div>
-                <input type="radio" name="posisi-pasien" value="Miring" id="" />
+                <input
+                  type="radio"
+                  name="posisi-pasien"
+                  id="posisi-pasien"
+                  label="posisi-pasien"
+                  value="Miring"
+                  myid="check_cara"
+                />
                 <label for="">Miring</label>
               </div>
               <div>
-                <input type="radio" name="posisi-pasien" value="Duduk" id="" />
+                <input
+                  type="radio"
+                  name="posisi-pasien"
+                  id="posisi-pasien"
+                  label="posisi-pasien"
+                  value="Duduk"
+                  myid="check_cara"
+                />
                 <label for="">Duduk</label>
               </div>
             </div>
@@ -417,53 +694,1205 @@
         </tr>
       </tbody>
     </table>
-    <table class="table table-bordered pre-anestesi" width="100%">
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
-          <td>Jam</td>
-          <td colspan="6">&nbsp;</td>
-          <td colspan="6">&nbsp;</td>
-          <td colspan="6">&nbsp;</td>
-          <td colspan="6">&nbsp;</td>
-          <td rowspan="13">
+          <td style="vertical-align: top">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td>Jam</td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-1"
+                      name="jam-anestesi-1"
+                      class="jam-anestesi"
+                      id="jam-anestesi-1"
+                      label="jam-anestesi-1"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-2"
+                      name="jam-anestesi-2"
+                      class="jam-anestesi"
+                      id="jam-anestesi-2"
+                      label="jam-anestesi-2"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-3"
+                      name="jam-anestesi-3"
+                      class="jam-anestesi"
+                      id="jam-anestesi-3"
+                      label="jam-anestesi-3"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-4"
+                      name="jam-anestesi-4"
+                      class="jam-anestesi"
+                      id="jam-anestesi-4"
+                      label="jam-anestesi-4"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-5"
+                      name="jam-anestesi-5"
+                      class="jam-anestesi"
+                      id="jam-anestesi-5"
+                      label="jam-anestesi-5"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-6"
+                      name="jam-anestesi-6"
+                      class="jam-anestesi"
+                      id="jam-anestesi-6"
+                      label="jam-anestesi-6"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-7"
+                      name="jam-anestesi-7"
+                      class="jam-anestesi"
+                      id="jam-anestesi-7"
+                      label="jam-anestesi-7"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-8"
+                      name="jam-anestesi-8"
+                      class="jam-anestesi"
+                      id="jam-anestesi-8"
+                      label="jam-anestesi-8"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-9"
+                      name="jam-anestesi-9"
+                      class="jam-anestesi"
+                      id="jam-anestesi-9"
+                      label="jam-anestesi-9"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-10"
+                      name="jam-anestesi-10"
+                      class="jam-anestesi"
+                      id="jam-anestesi-10"
+                      label="jam-anestesi-10"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-11"
+                      name="jam-anestesi-11"
+                      class="jam-anestesi"
+                      id="jam-anestesi-11"
+                      label="jam-anestesi-11"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-12"
+                      name="jam-anestesi-12"
+                      class="jam-anestesi"
+                      id="jam-anestesi-12"
+                      label="jam-anestesi-12"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-13"
+                      name="jam-anestesi-13"
+                      class="jam-anestesi"
+                      id="jam-anestesi-13"
+                      label="jam-anestesi-13"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-14"
+                      name="jam-anestesi-14"
+                      class="jam-anestesi"
+                      id="jam-anestesi-14"
+                      label="jam-anestesi-14"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-15"
+                      name="jam-anestesi-15"
+                      class="jam-anestesi"
+                      id="jam-anestesi-15"
+                      label="jam-anestesi-15"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-16"
+                      name="jam-anestesi-16"
+                      class="jam-anestesi"
+                      id="jam-anestesi-16"
+                      label="jam-anestesi-16"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-17"
+                      name="jam-anestesi-17"
+                      class="jam-anestesi"
+                      id="jam-anestesi-17"
+                      label="jam-anestesi-17"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-18"
+                      name="jam-anestesi-18"
+                      class="jam-anestesi"
+                      id="jam-anestesi-18"
+                      label="jam-anestesi-18"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-19"
+                      name="jam-anestesi-19"
+                      class="jam-anestesi"
+                      id="jam-anestesi-19"
+                      label="jam-anestesi-19"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-20"
+                      name="jam-anestesi-20"
+                      class="jam-anestesi"
+                      id="jam-anestesi-20"
+                      label="jam-anestesi-20"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-21"
+                      name="jam-anestesi-21"
+                      class="jam-anestesi"
+                      id="jam-anestesi-21"
+                      label="jam-anestesi-21"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-22"
+                      name="jam-anestesi-22"
+                      class="jam-anestesi"
+                      id="jam-anestesi-22"
+                      label="jam-anestesi-22"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-23"
+                      name="jam-anestesi-23"
+                      class="jam-anestesi"
+                      id="jam-anestesi-23"
+                      label="jam-anestesi-23"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      data-jam="jam-anestesi-24"
+                      name="jam-anestesi-24"
+                      class="jam-anestesi"
+                      id="jam-anestesi-24"
+                      label="jam-anestesi-24"
+                      placeholder="00.00"
+                      myid="check_cara"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Tekanan Darah</td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-1"
+                      name="tekanan-darah-sistol-1"
+                      id="tekanan-darah-sistol-1"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-1"
+                      name="tekanan-darah-diastol-1"
+                      id="tekanan-darah-diastol-1"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-2"
+                      name="tekanan-darah-sistol-2"
+                      id="tekanan-darah-sistol-2"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-2"
+                      name="tekanan-darah-diastol-2"
+                      id="tekanan-darah-diastol-2"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-3"
+                      name="tekanan-darah-sistol-3"
+                      id="tekanan-darah-sistol-3"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-3"
+                      name="tekanan-darah-diastol-3"
+                      id="tekanan-darah-diastol-3"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-4"
+                      name="tekanan-darah-sistol-4"
+                      id="tekanan-darah-sistol-4"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-4"
+                      name="tekanan-darah-diastol-4"
+                      id="tekanan-darah-diastol-4"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-5"
+                      name="tekanan-darah-sistol-5"
+                      id="tekanan-darah-sistol-5"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-5"
+                      name="tekanan-darah-diastol-5"
+                      id="tekanan-darah-diastol-5"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-6"
+                      name="tekanan-darah-sistol-6"
+                      id="tekanan-darah-sistol-6"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-6"
+                      name="tekanan-darah-diastol-6"
+                      id="tekanan-darah-diastol-6"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-7"
+                      name="tekanan-darah-sistol-7"
+                      id="tekanan-darah-sistol-7"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-7"
+                      name="tekanan-darah-diastol-7"
+                      id="tekanan-darah-diastol-7"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-8"
+                      name="tekanan-darah-sistol-8"
+                      id="tekanan-darah-sistol-8"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-8"
+                      name="tekanan-darah-diastol-8"
+                      id="tekanan-darah-diastol-8"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-9"
+                      name="tekanan-darah-sistol-9"
+                      id="tekanan-darah-sistol-9"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-9"
+                      name="tekanan-darah-diastol-9"
+                      id="tekanan-darah-diastol-9"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-10"
+                      name="tekanan-darah-sistol-10"
+                      id="tekanan-darah-sistol-10"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-10"
+                      name="tekanan-darah-diastol-10"
+                      id="tekanan-darah-diastol-10"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-11"
+                      name="tekanan-darah-sistol-11"
+                      id="tekanan-darah-sistol-11"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-11"
+                      name="tekanan-darah-diastol-11"
+                      id="tekanan-darah-diastol-11"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-12"
+                      name="tekanan-darah-sistol-12"
+                      id="tekanan-darah-sistol-12"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-12"
+                      name="tekanan-darah-diastol-12"
+                      id="tekanan-darah-diastol-12"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-13"
+                      name="tekanan-darah-sistol-13"
+                      id="tekanan-darah-sistol-13"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-13"
+                      name="tekanan-darah-diastol-13"
+                      id="tekanan-darah-diastol-13"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-14"
+                      name="tekanan-darah-sistol-14"
+                      id="tekanan-darah-sistol-14"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-14"
+                      name="tekanan-darah-diastol-14"
+                      id="tekanan-darah-diastol-14"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-15"
+                      name="tekanan-darah-sistol-15"
+                      id="tekanan-darah-sistol-15"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-15"
+                      name="tekanan-darah-diastol-15"
+                      id="tekanan-darah-diastol-15"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-16"
+                      name="tekanan-darah-sistol-16"
+                      id="tekanan-darah-sistol-16"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-16"
+                      name="tekanan-darah-diastol-16"
+                      id="tekanan-darah-diastol-16"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-17"
+                      name="tekanan-darah-sistol-17"
+                      id="tekanan-darah-sistol-17"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-17"
+                      name="tekanan-darah-diastol-17"
+                      id="tekanan-darah-diastol-17"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-18"
+                      name="tekanan-darah-sistol-18"
+                      id="tekanan-darah-sistol-18"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-18"
+                      name="tekanan-darah-diastol-18"
+                      id="tekanan-darah-diastol-18"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-19"
+                      name="tekanan-darah-sistol-19"
+                      id="tekanan-darah-sistol-19"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-19"
+                      name="tekanan-darah-diastol-19"
+                      id="tekanan-darah-diastol-19"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-20"
+                      name="tekanan-darah-sistol-20"
+                      id="tekanan-darah-sistol-20"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-20"
+                      name="tekanan-darah-diastol-20"
+                      id="tekanan-darah-diastol-20"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-21"
+                      name="tekanan-darah-sistol-21"
+                      id="tekanan-darah-sistol-21"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-21"
+                      name="tekanan-darah-diastol-21"
+                      id="tekanan-darah-diastol-21"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-22"
+                      name="tekanan-darah-sistol-22"
+                      id="tekanan-darah-sistol-22"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-22"
+                      name="tekanan-darah-diastol-22"
+                      id="tekanan-darah-diastol-22"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-23"
+                      name="tekanan-darah-sistol-23"
+                      id="tekanan-darah-sistol-23"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-23"
+                      name="tekanan-darah-diastol-23"
+                      id="tekanan-darah-diastol-23"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <label for="">Sistol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-sistol"
+                      data-jam="jam-anestesi-24"
+                      name="tekanan-darah-sistol-24"
+                      id="tekanan-darah-sistol-24"
+                      myid="check_cara"
+                    />
+                    <label for="">Diastol</label>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="tekanan-darah-diastol"
+                      data-jam="jam-anestesi-24"
+                      name="tekanan-darah-diastol-24"
+                      id="tekanan-darah-diastol-24"
+                      myid="check_cara"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Denyut Nadi</td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-1"
+                      name="denyut-nadi-1"
+                      id="denyut-nadi-1"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-2"
+                      name="denyut-nadi-2"
+                      id="denyut-nadi-2"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-3"
+                      name="denyut-nadi-3"
+                      id="denyut-nadi-3"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-4"
+                      name="denyut-nadi-4"
+                      id="denyut-nadi-4"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-5"
+                      name="denyut-nadi-5"
+                      id="denyut-nadi-5"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-6"
+                      name="denyut-nadi-6"
+                      id="denyut-nadi-6"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-7"
+                      name="denyut-nadi-7"
+                      id="denyut-nadi-7"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-8"
+                      name="denyut-nadi-8"
+                      id="denyut-nadi-8"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-9"
+                      name="denyut-nadi-9"
+                      id="denyut-nadi-9"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-10"
+                      name="denyut-nadi-10"
+                      id="denyut-nadi-10"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-11"
+                      name="denyut-nadi-11"
+                      id="denyut-nadi-11"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-12"
+                      name="denyut-nadi-12"
+                      id="denyut-nadi-12"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-13"
+                      name="denyut-nadi-13"
+                      id="denyut-nadi-13"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-14"
+                      name="denyut-nadi-14"
+                      id="denyut-nadi-14"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-15"
+                      name="denyut-nadi-15"
+                      id="denyut-nadi-15"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-16"
+                      name="denyut-nadi-16"
+                      id="denyut-nadi-16"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-17"
+                      name="denyut-nadi-17"
+                      id="denyut-nadi-17"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-18"
+                      name="denyut-nadi-18"
+                      id="denyut-nadi-18"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-19"
+                      name="denyut-nadi-19"
+                      id="denyut-nadi-19"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-20"
+                      name="denyut-nadi-20"
+                      id="denyut-nadi-20"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-21"
+                      name="denyut-nadi-21"
+                      id="denyut-nadi-21"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-22"
+                      name="denyut-nadi-22"
+                      id="denyut-nadi-22"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-23"
+                      name="denyut-nadi-23"
+                      id="denyut-nadi-23"
+                      myid="check_cara"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      class="denyut-nadi"
+                      data-jam="jam-anestesi-24"
+                      name="denyut-nadi-24"
+                      id="denyut-nadi-24"
+                      myid="check_cara"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+          <td rowspan="2">
             <label for="">Pemeriksaan Pre Anestesi:</label>
             <div>
               <div>
                 <label for="kesadaran">Kesadaran:</label>
-                <input type="text" name="kesadaran" placeholder="..." id="" />
+                <input
+                  type="text"
+                  name="kesadaran-pra-anestesi"
+                  id="kesadaran-pra-anestesi"
+                  label="kesadaran-pra-anestesi"
+                  myid="check_cara"
+                />
               </div>
               <div>
                 <label for="TD">TD:</label>
-                <input type="text" name="TD" placeholder="..." id="" />
+                <input
+                  type="text"
+                  name="td-pra-anestesi"
+                  id="td-pra-anestesi"
+                  label="td-pra-anestesi"
+                  myid="check_cara"
+                />
                 <label for="">mmHg</label>
               </div>
               <div>
                 <label for="HR">HR:</label>
-                <input type="text" name="HR" placeholder="..." id="" />
+                <input
+                  type="text"
+                  name="hr-pra-anestesi"
+                  id="hr-pra-anestesi"
+                  label="hr-pra-anestesi"
+                  myid="check_cara"
+                />
                 <label for="">x/mnt</label>
               </div>
               <div>
                 <label for="Suhu">Suhu:</label>
-                <input type="text" name="Suhu" placeholder="..." id="" />
+                <input
+                  type="text"
+                  name="suhu-pra-anestesi"
+                  id="suhu-pra-anestesi"
+                  label="suhu-pra-anestesi"
+                  myid="check_cara"
+                />
                 <label for="">&deg;C</label>
               </div>
               <div>
                 <label for="RR">RR:</label>
-                <input type="text" name="RR" placeholder="..." id="" />
+                <input
+                  type="text"
+                  name="rr-pra-anestesi"
+                  id="rr-pra-anestesi"
+                  label="rr-pra-anestesi"
+                  myid="check_cara"
+                />
                 <label for="">x/mnt</label>
               </div>
               <div>
                 <label for="BB">BB:</label>
-                <input type="text" name="BB" placeholder="..." id="" />
+                <input
+                  type="text"
+                  name="bb-pra-anestesi"
+                  id="bb-pra-anestesi"
+                  label="bb-pra-anestesi"
+                  myid="check_cara"
+                />
                 <label for="">kg</label>
               </div>
               <div>
                 <label for="jam-anestesi">Anestesi dimulai jam:</label>
                 <input
                   type="text"
-                  name="jam-anestesi"
-                  placeholder="..."
-                  id=""
+                  name="jam-dimulai-anestesi"
+                  id="jam-dimulai-anestesi"
+                  label="jam-dimulai-anestesi"
+                  placeholder="00.00"
+                  myid="check_cara"
                 />
               </div>
               <div>
@@ -482,328 +1911,24 @@
           </td>
         </tr>
         <tr>
-          <td>220</td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-        </tr>
-        <tr>
-          <td>200</td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-        </tr>
-        <tr>
-          <td>180</td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-        </tr>
-        <tr>
-          <td>160</td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-        </tr>
-        <tr>
-          <td>140</td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-        </tr>
-        <tr>
-          <td>120</td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-        </tr>
-        <tr>
-          <td>100</td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-        </tr>
-        <tr>
-          <td>80</td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-        </tr>
-        <tr>
-          <td>60</td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-        </tr>
-        <tr>
-          <td>40</td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-        </tr>
-        <tr>
-          <td>20</td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
-          <td><input size="1" type="text" name="" id="" /></td>
+          <td>
+            <div class="button-container">
+              <button class="grafik-denyut-nadi-button grafik-button">
+                Tampilkan Grafik Denyut Dan Nadi
+              </button>
+            </div>
+            <div
+              class="chart chart-denyut-nadi-darah"
+              id="chart"
+              name="chart"
+              myid="check_cara"
+            >
+              <svg
+                id="chart-svg-denyut-nadi-darah"
+                style="width: 100%; height: 100%"
+              ></svg>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -824,43 +1949,84 @@
             <div style="display: flex; gap: 10px">
               <div>
                 <label for="">TD:</label>
-                <input type="text" name="TD" placeholder="..." id="" />
+                <input
+                  type="text"
+                  name="TD-post-operasi"
+                  id="TD-post-operasi"
+                  label="TD-post-operasi"
+                  myid="check_cara"
+                />
                 <label for="">mmHg</label>
               </div>
               <div>
                 <label for="">HR:</label>
-                <input type="text" name="HR" placeholder="..." id="" />
+                <input
+                  type="text"
+                  name="HR-post-operasi"
+                  id="HR-post-operasi"
+                  label="HR-post-operasi"
+                  myid="check_cara"
+                />
                 <label for="">x/mnt</label>
               </div>
               <div>
                 <label for="">RR:</label>
-                <input type="text" name="RR" placeholder="..." id="" />
+                <input
+                  type="text"
+                  name="RR-post-operasi"
+                  id="RR-post-operasi"
+                  label="RR-post-operasi"
+                  myid="check_cara"
+                />
                 <label for="">x/mnt</label>
               </div>
               <div>
                 <label for="">Suhu:</label>
-                <input type="text" name="suhu" placeholder="..." id="" />
+                <input
+                  type="text"
+                  name="suhu-post-operasi"
+                  id="suhu-post-operasi"
+                  label="suhu-post-operasi"
+                  myid="check_cara"
+                />
                 <label for="">&deg;C</label>
-              </div>
-              <div>
-                <label for="">Kesadaran:</label>
-                <input type="text" name="kesadaran" placeholder="..." id="" />
-              </div>
-              <div>
-                <label for="">Pendarahan:</label>
-                <input type="text" name="pendarahan" placeholder="..." id="" />
-                <label for="">ml</label>
               </div>
             </div>
           </td>
         </tr>
-
         <tr>
           <td colspan="4">
             <div style="display: flex; gap: 10px">
               <div>
+                <label for="">Kesadaran:</label>
+                <input
+                  type="text"
+                  name="kesadaran-post-operasi"
+                  id="kesadaran-post-operasi"
+                  label="kesadaran-post-operasi"
+                  myid="check_cara"
+                />
+              </div>
+              <div>
+                <label for="">Pendarahan:</label>
+                <input
+                  type="text"
+                  name="pendarahan-post-operasi"
+                  id="pendarahan-post-operasi"
+                  label="pendarahan-post-operasi"
+                  myid="check_cara"
+                />
+                <label for="">ml</label>
+              </div>
+              <div>
                 <label for="">Hb:</label>
-                <input type="text" name="Hb" placeholder="..." id="" />
+                <input
+                  type="text"
+                  name="pendarahan-post-operasi"
+                  id="pendarahan-post-operasi"
+                  label="pendarahan-post-operasi"
+                  myid="check_cara"
+                />
                 <label for="">mg/dl</label>
               </div>
             </div>
@@ -875,10 +2041,33 @@
         <tr>
           <td>
             <label for="">Pemeriksaan PA:</label>
-            <input type="radio" name="pemeriksaan-PA" value="Ya" id="" />
+            <input
+              type="radio"
+              name="pemeriksaan-pa"
+              id="pemeriksaan-pa"
+              label="pemeriksaan-pa"
+              value="Ya"
+              myid="check_cara"
+            />
+
             <label for="">Ya,</label>
-            <input type="date" name="tanggal-pemeriksaan-PA" id="" />
-            <input type="radio" name="pemeriksaan-PA" value="Tidak" id="" />
+            <input
+              type="text"
+              name="tgl-pemeriksaan-pa"
+              id="tgl-pemeriksaan-pa"
+              label="tgl-pemeriksaan-pa"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+            />
+            <input
+              type="radio"
+              name="pemeriksaan-pa"
+              id="pemeriksaan-pa"
+              label="pemeriksaan-pa"
+              value="Tidak"
+              myid="check_cara"
+            />
             <label for="">Tidak</label>
           </td>
         </tr>
@@ -887,35 +2076,40 @@
             <label for="">Jenis jaringan yang dikirim:</label>
             <input
               type="text"
-              placeholder="..."
-              name="jenis-jaringan-yang-dikirim"
-              id=""
+              name="jenis-jaringan-yg-dikirim"
+              id="jenis-jaringan-yg-dikirim"
+              label="jenis-jaringan-yg-dikirim"
+              myid="check_cara"
             />
           </td>
         </tr>
         <tr>
           <td>
             <label for="">Label pasien sudah ditempel:</label>
+
             <input
               type="text"
-              placeholder="..."
               name="label-pasien-sudah-ditempel"
-              id=""
+              id="label-pasien-sudah-ditempel"
+              label="label-pasien-sudah-ditempel"
+              myid="check_cara"
             />
           </td>
         </tr>
       </tbody>
     </table>
     <hr />
-    <table>
+    <table class="table table-bordered">
       <tbody>
         <tr>
           <label for="">Laporan Operasi:</label>
           <textarea
             name="laporan-operasi"
-            style="width: 100%; padding: 5px"
-            rows="10"
-            id=""
+            style="width: 100%; padding: 0"
+            rows="20"
+            id="laporan-operasi"
+            type="textarea"
+            myid="check_cara"
           ></textarea>
         </tr>
       </tbody>
@@ -928,34 +2122,568 @@
             <label for="">Komplikasi/Temuan:</label>
             <br />
             <textarea
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               name="komplikasi-temuan"
-              id=""
-              rows="5"
+              id="komplikasi-temuan"
+              rows="10"
+              type="textarea"
+              myid="check_cara"
             ></textarea>
           </td>
           <td>
             <label for="">PERAWAT:</label>
             <br />
-            <textarea
-              style="width: 100%"
-              name="perawat"
-              id=""
-              rows="5"
-            ></textarea>
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_perawat"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_perawat"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_perawat"
+                id="paraf_ex_paraf_perawat"
+                data-name="paraf"
+                data-id="ex_paraf_perawat"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_perawat"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+            </div>
           </td>
           <td>
             <label for="">OPERATOR:</label>
             <br />
-            <textarea
-              style="width: 100%"
-              name="operator"
-              id=""
-              rows="5"
-            ></textarea>
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <label
+                class="label text-center"
+                id="def_img_ex_paraf_operator"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_paraf_operator"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_paraf_operator"
+                id="paraf_ex_paraf_operator"
+                data-name="paraf"
+                data-id="ex_paraf_operator"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_paraf_operator"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+            </div>
           </td>
         </tr>
       </tbody>
     </table>
   </body>
+  <script>
+    $(document).ready(function () {
+      class GraphNadiDanJantung {
+        constructor(
+          rangeMaxBPSistol,
+          rangeMinBPSistol,
+          rangeMaxBPDiastol,
+          rangeMinBPDiastol,
+          rangeMaxNadi,
+          rangeMinNadi,
+          chartSvgId
+        ) {
+          this.chartSvg = chartSvgId;
+
+          this.tandaVitalBPSistol = [];
+          this.tandaVitalBPDiastol = [];
+          this.tandaVitalNadi = [];
+          this.config = {
+            width: this.chartSvg.clientWidth,
+            height: this.chartSvg.clientHeight,
+            padding: 35,
+            rangeMaxBPSistol: rangeMaxBPDiastol,
+            rangeMinBPSistol: rangeMinBPSistol,
+            rangeMaxBPDiastol: rangeMaxBPDiastol,
+            rangeMinBPDiastol: rangeMinBPDiastol,
+            rangeMaxNadi: rangeMaxNadi,
+            rangeMinNadi: rangeMinNadi,
+          };
+        }
+
+        createSvgElement(type, attributes = {}) {
+          const element = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            type
+          );
+          Object.entries(attributes).forEach(([key, value]) => {
+            element.setAttribute(key, value);
+          });
+          return element;
+        }
+
+        drawGrid() {
+          const { width, height, padding, rangeMaxBPSistol, rangeMinBPSistol } =
+            this.config;
+
+          const grid = this.createSvgElement("g");
+
+          for (let i = 0; i <= 10; i++) {
+            const y = padding + (i / 10) * (height - 2 * padding);
+
+            // Garis grid horizontal
+            const line = this.createSvgElement("line", {
+              x1: padding + 10,
+              x2: width - padding + 10,
+              y1: y,
+              y2: y,
+              class: "grid-line",
+            });
+            const labelBP = this.createSvgElement("text", {
+              x: padding - 25,
+              y: y + 4,
+              "text-anchor": "start",
+              "font-size": "10px",
+              fill: "black",
+            });
+            const valueBP =
+              rangeMaxBPSistol -
+              (i / 10) * (rangeMaxBPSistol - rangeMinBPSistol);
+            labelBP.textContent = valueBP.toFixed(1);
+
+            grid.appendChild(line);
+            grid.appendChild(labelBP);
+          }
+
+          this.chartSvg.appendChild(grid);
+        }
+
+        tooltipCircleHandler(event, value) {
+          const { time, data } = value;
+          const tooltip = document.createElement("div");
+          tooltip.classList.add("tooltip");
+          document.body.appendChild(tooltip);
+
+          event.addEventListener("mouseenter", (e) => {
+            console.log("test");
+            tooltip.textContent = `Jam: ${
+              time === "" ? "00.00" : time
+            }, Value: ${data}`;
+            tooltip.style.display = "block";
+            tooltip.style.left = `${e.pageX + 10}px`;
+            tooltip.style.top = `${e.pageY + 10}px`;
+          });
+
+          // Event untuk menyembunyikan tooltip
+          event.addEventListener("mouseleave", () => {
+            tooltip.style.display = "none";
+          });
+
+          // Event untuk memperbarui posisi tooltip saat mouse bergerak
+          event.addEventListener("mousemove", (e) => {
+            tooltip.style.left = `${e.pageX + 10}px`;
+            tooltip.style.top = `${e.pageY + 10}px`;
+          });
+        }
+
+        drawCircleAndLine(
+          arrayTarget,
+          rangeMin,
+          rangeMax,
+          color,
+          pathData,
+          fragment,
+          lineGroup
+        ) {
+          const { width, height, padding } = this.config;
+          arrayTarget.forEach((value, index) => {
+            const x =
+              arrayTarget.length === 1
+                ? padding + (width - 2 * padding) / 2
+                : padding +
+                  10 +
+                  (index / (arrayTarget.length - 1)) *
+                    (width + 90 - 2 * (padding + 45));
+            const y =
+              height -
+              padding -
+              ((value.data - rangeMin) / (rangeMax - rangeMin)) *
+                (height - 2 * padding);
+
+            let sign;
+            if (value.id.includes("sistol") || value.id.includes("diastol")) {
+              sign = this.createSvgElement("text", {
+                x: x,
+                y: y + 4,
+                "text-anchor": "middle",
+                "font-size": "12px",
+                "font-weight": "bold",
+                fill: color,
+              });
+              sign.textContent = "X";
+            } else {
+              sign = this.createSvgElement("circle", {
+                cx: x,
+                cy: y,
+                r: 5,
+                fill: color,
+              });
+            }
+
+            console.log(value);
+
+            this.tooltipCircleHandler(sign, {
+              time: value.time,
+              data: value.data,
+            });
+
+            pathData += index === 0 ? `M ${x} ${y} ` : `L ${x} ${y} `;
+
+            const path = this.createSvgElement("path", {
+              d: pathData,
+              class: "line",
+              stroke: color,
+              fill: "none",
+              "stroke-width": "2",
+            });
+            fragment.appendChild(sign);
+            fragment.appendChild(path);
+            lineGroup.appendChild(fragment);
+          });
+        }
+
+        addHatchingPattern() {
+          const pattern = this.createSvgElement("pattern", {
+            id: "hatching",
+            width: 10,
+            height: 10,
+            patternUnits: "userSpaceOnUse",
+          });
+
+          const line = this.createSvgElement("line", {
+            x1: 0,
+            y1: 0,
+            x2: 10,
+            y2: 10,
+            stroke: "red",
+            "stroke-width": 2,
+          });
+
+          pattern.appendChild(line);
+
+          const defs = this.createSvgElement("defs");
+          defs.appendChild(pattern);
+
+          this.chartSvg.appendChild(defs);
+        }
+
+        drawShadedArea(bpSistolData, bpDiastolData) {
+          const { width, height, padding } = this.config;
+          // Pastikan kedua array memiliki panjang yang sama
+          if (bpSistolData.length !== bpDiastolData.length) {
+            return;
+          }
+
+          if (bpSistolData.length === 0 || bpDiastolData.length === 0) {
+            return;
+          }
+
+          let pathData = "M ";
+          bpSistolData.forEach((point, index) => {
+            const x =
+              bpSistolData.length === 1
+                ? padding + (width - 2 * padding) / 2
+                : padding +
+                  10 +
+                  (index / (bpSistolData.length - 1)) *
+                    (width + 90 - 2 * (padding + 45));
+            const y =
+              height -
+              padding -
+              ((point.data - this.config.rangeMinBPSistol) /
+                (this.config.rangeMaxBPSistol - this.config.rangeMinBPSistol)) *
+                (height - 2 * padding);
+
+            pathData += `${x} ${y} `;
+          });
+
+          for (let i = bpDiastolData.length - 1; i >= 0; i--) {
+            const point = bpDiastolData[i];
+            const x =
+              bpDiastolData.length === 1
+                ? padding + (width - 2 * padding) / 2
+                : padding +
+                  10 +
+                  (i / (bpSistolData.length - 1)) *
+                    (width + 90 - 2 * (padding + 45));
+            const y =
+              height -
+              padding -
+              ((point.data - this.config.rangeMinBPDiastol) /
+                (this.config.rangeMaxBPDiastol -
+                  this.config.rangeMinBPDiastol)) *
+                (height - 2 * padding);
+
+            pathData += `${x} ${y} `;
+          }
+
+          pathData += "Z"; // Tutup path
+
+          const area = this.createSvgElement("path", {
+            d: pathData,
+            fill: "url(#hatching)",
+            opacity: 0.8,
+          });
+
+          this.chartSvg.appendChild(area);
+        }
+
+        drawGraph() {
+          const {
+            rangeMaxBPSistol,
+            rangeMinBPSistol,
+            rangeMaxBPDiastol,
+            rangeMinBPDiastol,
+            rangeMaxNadi,
+            rangeMinNadi,
+          } = this.config;
+
+          const lineGroup = this.createSvgElement("g");
+          const fragment = document.createDocumentFragment();
+
+          let pathDataBPSistol = "";
+          let pathDataBPDiastol = "";
+          let pathDataNadi = "";
+
+          this.drawCircleAndLine(
+            this.tandaVitalBPSistol,
+            rangeMinBPSistol,
+            rangeMaxBPSistol,
+            "red",
+            pathDataBPSistol,
+            fragment,
+            lineGroup
+          );
+
+          this.drawCircleAndLine(
+            this.tandaVitalBPDiastol,
+            rangeMinBPDiastol,
+            rangeMaxBPDiastol,
+            "red",
+            pathDataBPDiastol,
+            fragment,
+            lineGroup
+          );
+
+          this.drawShadedArea(
+            this.tandaVitalBPSistol,
+            this.tandaVitalBPDiastol
+          );
+
+          this.drawCircleAndLine(
+            this.tandaVitalNadi,
+            rangeMinNadi,
+            rangeMaxNadi,
+            "black",
+            pathDataNadi,
+            fragment,
+            lineGroup
+          );
+
+          this.chartSvg.appendChild(lineGroup);
+        }
+
+        sortData(arrayTarget) {
+          arrayTarget.sort((a, b) => {
+            const idA = a.id.split("-");
+            const idB = b.id.split("-");
+            const idAVal = parseInt(idA[idA.length - 1]);
+            const idBVal = parseInt(idB[idB.length - 1]);
+
+            if (idAVal !== idBVal) {
+              return idAVal - idBVal;
+            }
+          });
+        }
+
+        addData(graphType, input) {
+          if (graphType === "sistol") {
+            const exisitingIndex = this.tandaVitalBPSistol.findIndex(
+              (item) => item.id === input.id
+            );
+            if (exisitingIndex > -1) {
+              this.tandaVitalBPSistol[exisitingIndex].data = input.data;
+            } else {
+              this.tandaVitalBPSistol.push(input);
+            }
+            this.sortData(this.tandaVitalBPSistol);
+          } else if (graphType === "diastol") {
+            const exisitingIndex = this.tandaVitalBPDiastol.findIndex(
+              (item) => item.id === input.id
+            );
+            if (exisitingIndex > -1) {
+              this.tandaVitalBPDiastol[exisitingIndex].data = input.data;
+            } else {
+              this.tandaVitalBPDiastol.push(input);
+            }
+            this.sortData(this.tandaVitalBPDiastol);
+          } else if (graphType === "denyut-nadi") {
+            const exisitingIndex = this.tandaVitalNadi.findIndex(
+              (item) => item.id === input.id
+            );
+            if (exisitingIndex > -1) {
+              this.tandaVitalNadi[exisitingIndex].data = input.data;
+            } else {
+              this.tandaVitalNadi.push(input);
+            }
+            this.sortData(this.tandaVitalNadi);
+          }
+
+          this.drawChart();
+        }
+
+        removeData(graphType, dataId) {
+          let index;
+          if (graphType === "sistol") {
+            index = this.tandaVitalBPSistol.findIndex(
+              (item) => item.id === dataId
+            );
+            if (index > -1) {
+              this.tandaVitalBPSistol.splice(index, 1);
+            }
+          } else if (graphType === "diastol") {
+            index = this.tandaVitalBPDiastol.findIndex(
+              (item) => item.id === dataId
+            );
+            if (index > -1) {
+              this.tandaVitalBPDiastol.splice(index, 1);
+            }
+          } else if (graphType === "denyut-nadi") {
+            index = this.tandaVitalNadi.findIndex((item) => item.id === dataId);
+            if (index > -1) {
+              this.tandaVitalNadi.splice(index, 1);
+            }
+          }
+          this.drawChart();
+        }
+
+        drawChart() {
+          this.chartSvg.innerHTML = "";
+          this.addHatchingPattern();
+          this.drawGrid();
+          this.drawGraph();
+        }
+      }
+      const graphNadiDanJantung = new GraphNadiDanJantung(
+        220,
+        0,
+        220,
+        0,
+        220,
+        0,
+        $("#chart-svg-denyut-nadi-darah").get(0)
+      );
+
+      function tampilkanGrafik(inputData, grafik, typeData) {
+        inputData.each(function () {
+          const $this = $(this);
+          const value = $this.val();
+
+          if (value !== "") {
+            const formattedDate = $this.data("tgl");
+            const id = $this.attr("id");
+
+            const data = { id, data: parseFloat(value) };
+            grafik.addData(typeData, data);
+          }
+        });
+
+        grafik.drawChart();
+      }
+
+      function addDataHandler(grafik, event, typeData) {
+        const $input = $(event.target);
+        const value = $input.val();
+        const id = $input.attr("id");
+        const getDataJam = $(
+          `input.jam-anestesi[data-jam='${$input.data("jam")}']`
+        );
+        let clockData = getDataJam.val() || "";
+
+        getDataJam.on("input", function () {
+          clockData = $(this).val();
+        });
+        if (value.trim() === "") {
+          grafik.removeData(typeData, id);
+        } else {
+          const data = { id, time: clockData, data: parseFloat(value) };
+          grafik.addData(typeData, data);
+        }
+      }
+
+      const tekananDarahSistol = $("input[class='tekanan-darah-sistol']");
+      tekananDarahSistol.each(function () {
+        $(this).on("input", function (event) {
+          addDataHandler(graphNadiDanJantung, event, "sistol");
+        });
+      });
+
+      const tekananDarahDiastol = $("input[class='tekanan-darah-diastol']");
+      tekananDarahDiastol.each(function () {
+        $(this).on("input", function (event) {
+          addDataHandler(graphNadiDanJantung, event, "diastol");
+        });
+      });
+
+      const denyutNadi = $("input[class='denyut-nadi']");
+      denyutNadi.each(function () {
+        $(this).on("input", function (event) {
+          addDataHandler(graphNadiDanJantung, event, "denyut-nadi");
+        });
+      });
+
+      $("button[class='grafik-denyut-nadi-button']").on("click", function () {
+        tampilkanGrafik(graphNadiDanJantung, tekananDarahSistol);
+        tampilkanGrafik(graphNadiDanJantung, tekananDarahDiastol);
+        tampilkanGrafik(graphNadiDanJantung, denyutNadi);
+      });
+
+      graphNadiDanJantung.drawChart();
+    });
+  </script>
 </html>

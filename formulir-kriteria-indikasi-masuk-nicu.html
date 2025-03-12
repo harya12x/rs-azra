@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      FORMULIR KRITERIA/INDIKASI MASUK RUANG NEONATAL INTENSIVE CARE UNIT (NICU)
+    </title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+
+    if ($.fn.datepicker) {
+      $(".datepicker").each(function () {
+        var $this = $(this),
+          dataDateFormat = $this.attr("data-dateformat") || "dd.mm.yy";
+
+        $this.datepicker({
+          dateFormat: dataDateFormat,
+          prevText: '<i class="fa fa-chevron-left"></i>',
+          nextText: '<i class="fa fa-chevron-right"></i>',
+          todayBtn: "linked",
+        });
+
+        // clear memory reference
+        $this = null;
+      });
+    }
+  </script>
+  <script>
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
+  <body>
+    <h1 class="title">
+      FORMULIR KRITERIA/INDIKASI MASUK RUANG NEONATAL INTENSIVE CARE UNIT (NICU)
+    </h1>
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td>Nama Pasien</td>
+          <td>
+            <input
+              name="nama_pasien2"
+              type="text"
+              id="nama_pasien"
+              size="30"
+              myid="check_cara"
+              label="nama pasien"
+              value="{VNAMA_PASIEN}"
+              placeholder="..."
+            />
+          </td>
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
+            <label for="">Nomor Rekam Medis</label>
+          </td>
+          <td>
+            <input
+              type="text"
+              name="no-rek-medis"
+              id="no-rek-medis"
+              label="no rek medis"
+              myid="check_cara"
+              value="{NO_RM}"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td bgcolor="" rowspan="2">Tanggal Lahir</td>
+          <td bgcolor="" rowspan="2">
+            <input
+              name="tgl_lahira2"
+              type="text"
+              id="tgl_lahir"
+              placeholder="dd-mm-yy"
+              myid="check_cara"
+              value="{VBIRTH_DATE}"
+              label="tanggal lahir"
+            />
+          </td>
+
+          <td rowspan="2">Umur</td>
+          <td rowspan="2">
+            <input
+              type="text"
+              size="5"
+              placeholder="..."
+              name="umur"
+              myid="check_cara"
+              id="umur"
+              value="{VAGE}"
+              label="umur"
+            />
+          </td>
+          <td>
+            <label for="poli"> Poli </label>
+          </td>
+          <td>
+            <input
+              name="polia2"
+              type="text"
+              id="poli"
+              placeholder="..."
+              myid="check_cara"
+              label="poli"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="kamar"> Kamar </label>
+          </td>
+          <td>
+            <input
+              name="kamara2"
+              type="text"
+              id="kamar"
+              placeholder="..."
+              myid="check_cara"
+              label="kamar"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table width="100%" class="table table-bordered">
+      <thead>
+        <tr>
+          <th>NO</th>
+          <th>KRITERIA MASUK</th>
+          <th>YA</th>
+          <th>TIDAK</th>
+          <th>KETERANGAN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">1</td>
+          <td>BBLR (1000 - 1500 gram dengan komplikasi respirasi syndrome)</td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-1"
+                id="kriteria-masuk-1"
+                label="kriteria-masuk-1"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-1"
+                id="kriteria-masuk-1"
+                label="kriteria-masuk-1"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td width="50%">
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-1"
+              id="keterangan-kriteria-masuk-1"
+              label="keterangan-kriteria-masuk-1"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">2</td>
+          <td>
+            Masa gestasi kurang dari 28 minggu dengan komplikasi respirasi
+            distress syndrome RDS
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-2"
+                id="kriteria-masuk-2"
+                label="kriteria-masuk-2"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-2"
+                id="kriteria-masuk-2"
+                label="kriteria-masuk-2"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-2"
+              id="keterangan-kriteria-masuk-2"
+              label="keterangan-kriteria-masuk-2"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">3</td>
+          <td>
+            Post Date: dengan tanda - tanda Sepsis, masa kehamilan 42 minggu
+            dengan RDS
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-3"
+                id="kriteria-masuk-3"
+                label="kriteria-masuk-3"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-3"
+                id="kriteria-masuk-3"
+                label="kriteria-masuk-3"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-3"
+              id="keterangan-kriteria-masuk-3"
+              label="keterangan-kriteria-masuk-3"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="5" style="text-align: center">4</td>
+          <td>Bayi dengan kelainan kongenital</td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-4"
+                id="kriteria-masuk-4"
+                label="kriteria-masuk-4"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-4"
+                id="kriteria-masuk-4"
+                label="kriteria-masuk-4"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-4"
+              id="keterangan-kriteria-masuk-4"
+              label="keterangan-kriteria-masuk-4"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px">
+            <ul>
+              <li>Bibir sumbing</li>
+            </ul>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-4-a"
+                id="kriteria-masuk-4-a"
+                label="kriteria-masuk-4-a"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-4-a"
+                id="kriteria-masuk-4-a"
+                label="kriteria-masuk-4-a"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-4-a"
+              id="keterangan-kriteria-masuk-4-a"
+              label="keterangan-kriteria-masuk-4-a"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px">
+            <ul>
+              <li>Atresia ani</li>
+            </ul>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-4-b"
+                id="kriteria-masuk-4-b"
+                label="kriteria-masuk-4-b"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-4-b"
+                id="kriteria-masuk-4-b"
+                label="kriteria-masuk-4-b"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-4-b"
+              id="keterangan-kriteria-masuk-4-b"
+              label="keterangan-kriteria-masuk-4-b"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px">
+            <ul>
+              <li>An achepali</li>
+            </ul>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-4-c"
+                id="kriteria-masuk-4-c"
+                label="kriteria-masuk-4-c"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-4-c"
+                id="kriteria-masuk-4-c"
+                label="kriteria-masuk-4-c"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-4-c"
+              id="keterangan-kriteria-masuk-4-c"
+              label="keterangan-kriteria-masuk-4-c"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px">
+            <ul>
+              <li>Polidactily</li>
+            </ul>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-4-d"
+                id="kriteria-masuk-4-d"
+                label="kriteria-masuk-4-d"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-4-d"
+                id="kriteria-masuk-4-d"
+                label="kriteria-masuk-4-d"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-4-d"
+              id="keterangan-kriteria-masuk-4-d"
+              label="keterangan-kriteria-masuk-4-d"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="7" style="text-align: center">5</td>
+          <td>Asfiksia berat:</td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-5"
+                id="kriteria-masuk-5"
+                label="kriteria-masuk-5"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-5"
+                id="kriteria-masuk-5"
+                label="kriteria-masuk-5"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-5"
+              id="keterangan-kriteria-masuk-5"
+              label="keterangan-kriteria-masuk-5"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px">
+            <ul>
+              <li>RR > 70 x/menit</li>
+            </ul>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-5-a"
+                id="kriteria-masuk-5-a"
+                label="kriteria-masuk-5-a"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-5-a"
+                id="kriteria-masuk-5-a"
+                label="kriteria-masuk-5-a"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-5-a"
+              id="keterangan-kriteria-masuk-5-a"
+              label="keterangan-kriteria-masuk-5-a"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px">
+            <ul>
+              <li>Takipnoe</li>
+            </ul>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-5-b"
+                id="kriteria-masuk-5-b"
+                label="kriteria-masuk-5-b"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-5-b"
+                id="kriteria-masuk-5-b"
+                label="kriteria-masuk-5-b"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-5-b"
+              id="keterangan-kriteria-masuk-5-b"
+              label="keterangan-kriteria-masuk-5-b"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px">
+            <ul>
+              <li>Apgar score: 0 - 3</li>
+            </ul>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-5-c"
+                id="kriteria-masuk-5-c"
+                label="kriteria-masuk-5-c"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-5-c"
+                id="kriteria-masuk-5-c"
+                label="kriteria-masuk-5-c"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-5-c"
+              id="keterangan-kriteria-masuk-5-c"
+              label="keterangan-kriteria-masuk-5-c"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px">
+            <ul>
+              <li>Retraksi dinding dada</li>
+            </ul>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-5-d"
+                id="kriteria-masuk-5-d"
+                label="kriteria-masuk-5-d"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-5-d"
+                id="kriteria-masuk-5-d"
+                label="kriteria-masuk-5-d"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-5-d"
+              id="keterangan-kriteria-masuk-5-d"
+              label="keterangan-kriteria-masuk-5-d"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px">
+            <ul>
+              <li>Sianosis</li>
+            </ul>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-5-e"
+                id="kriteria-masuk-5-e"
+                label="kriteria-masuk-5-e"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-5-e"
+                id="kriteria-masuk-5-e"
+                label="kriteria-masuk-5-e"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-5-e"
+              id="keterangan-kriteria-masuk-5-e"
+              label="keterangan-kriteria-masuk-5-e"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px">
+            <ul>
+              <li>Merintih</li>
+            </ul>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-5-f"
+                id="kriteria-masuk-5-f"
+                label="kriteria-masuk-5-f"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-5-f"
+                id="kriteria-masuk-5-f"
+                label="kriteria-masuk-5-f"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-5-f"
+              id="keterangan-kriteria-masuk-5-f"
+              label="keterangan-kriteria-masuk-5-f"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="8" style="text-align: center">6</td>
+          <td>Sepsis neonatorum :</td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-6"
+                id="kriteria-masuk-6"
+                label="kriteria-masuk-6"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-6"
+                id="kriteria-masuk-6"
+                label="kriteria-masuk-6"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-6"
+              id="keterangan-kriteria-masuk-6"
+              label="keterangan-kriteria-masuk-6"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px">
+            <ul>
+              <li>Leucocyte > 20.000</li>
+            </ul>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-6-a"
+                id="kriteria-masuk-6-a"
+                label="kriteria-masuk-6-a"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-6-a"
+                id="kriteria-masuk-6-a"
+                label="kriteria-masuk-6-a"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-6-a"
+              id="keterangan-kriteria-masuk-6-a"
+              label="keterangan-kriteria-masuk-6-a"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px">
+            <ul>
+              <li>RR 70</li>
+            </ul>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-6-b"
+                id="kriteria-masuk-6-b"
+                label="kriteria-masuk-6-b"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-6-b"
+                id="kriteria-masuk-6-b"
+                label="kriteria-masuk-6-b"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-6-b"
+              id="keterangan-kriteria-masuk-6-b"
+              label="keterangan-kriteria-masuk-6-b"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px">
+            <ul>
+              <li>
+                Suhu &gt; 38<sup>&deg;</sup> C / &lt; 36<sup>&deg;</sup> C
+              </li>
+            </ul>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-6-c"
+                id="kriteria-masuk-6-c"
+                label="kriteria-masuk-6-c"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-6-c"
+                id="kriteria-masuk-6-c"
+                label="kriteria-masuk-6-c"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-6-c"
+              id="keterangan-kriteria-masuk-6-c"
+              label="keterangan-kriteria-masuk-6-c"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px">
+            <ul>
+              <li>HR &gt; 160x/m atau &lt; 100x/m</li>
+            </ul>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-6-d"
+                id="kriteria-masuk-6-d"
+                label="kriteria-masuk-6-d"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-6-d"
+                id="kriteria-masuk-6-d"
+                label="kriteria-masuk-6-d"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-6-d"
+              id="keterangan-kriteria-masuk-6-d"
+              label="keterangan-kriteria-masuk-6-d"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px">
+            <ul>
+              <li>Tetanus neonatorum</li>
+            </ul>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-6-e"
+                id="kriteria-masuk-6-e"
+                label="kriteria-masuk-6-e"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-6-e"
+                id="kriteria-masuk-6-e"
+                label="kriteria-masuk-6-e"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-6-e"
+              id="keterangan-kriteria-masuk-6-e"
+              label="keterangan-kriteria-masuk-6-e"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px">
+            <ul>
+              <li>Kejang pada bayi/neonatal seizure</li>
+            </ul>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-6-f"
+                id="kriteria-masuk-6-f"
+                label="kriteria-masuk-6-f"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-6-f"
+                id="kriteria-masuk-6-f"
+                label="kriteria-masuk-6-f"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-6-f"
+              id="keterangan-kriteria-masuk-6-f"
+              label="keterangan-kriteria-masuk-6-f"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px">
+            <ul>
+              <li>Bayi diare</li>
+            </ul>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-6-g"
+                id="kriteria-masuk-6-g"
+                label="kriteria-masuk-6-g"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-6-g"
+                id="kriteria-masuk-6-g"
+                label="kriteria-masuk-6-g"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-6-g"
+              id="keterangan-kriteria-masuk-6-g"
+              label="keterangan-kriteria-masuk-6-g"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="3" style="text-align: center">7</td>
+          <td>Kejang berulang :</td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-7"
+                id="kriteria-masuk-7"
+                label="kriteria-masuk-7"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-7"
+                id="kriteria-masuk-7"
+                label="kriteria-masuk-7"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-7"
+              id="keterangan-kriteria-masuk-7"
+              label="keterangan-kriteria-masuk-7"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px">
+            <ul>
+              <li>Kejang berulang</li>
+            </ul>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-7-a"
+                id="kriteria-masuk-7-a"
+                label="kriteria-masuk-7-a"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-7-a"
+                id="kriteria-masuk-7-a"
+                label="kriteria-masuk-7-a"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-7-a"
+              id="keterangan-kriteria-masuk-7-a"
+              label="keterangan-kriteria-masuk-7-a"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-left: 20px">
+            <ul>
+              <li>Kejang dengan komplikasi</li>
+            </ul>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-7-b"
+                id="kriteria-masuk-7-b"
+                label="kriteria-masuk-7-b"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-7-b"
+                id="kriteria-masuk-7-b"
+                label="kriteria-masuk-7-b"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-7-b"
+              id="keterangan-kriteria-masuk-7-b"
+              label="keterangan-kriteria-masuk-7-b"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">8</td>
+          <td>Syok pada neonatus</td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-8"
+                id="kriteria-masuk-8"
+                label="kriteria-masuk-8"
+                myid="check_cara"
+                value="Ya"
+              />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <input
+                type="radio"
+                name="kriteria-masuk-8"
+                id="kriteria-masuk-8"
+                label="kriteria-masuk-8"
+                myid="check_cara"
+                value="Tidak"
+              />
+            </div>
+          </td>
+          <td>
+            <textarea
+              style="width: 100%"
+              rows="3"
+              type="textarea"
+              name="keterangan-kriteria-masuk-8"
+              id="keterangan-kriteria-masuk-8"
+              label="keterangan-kriteria-masuk-8"
+              myid="check_cara"
+              placeholder="......"
+            ></textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <p>
+      Berdasarkan kondisi di atas maka pasien tersebut memenuhi kriteria untuk
+      <b>MASUK NICU</b>
+    </p>
+    <br />
+
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td style="width: 10%">Tanggal:</td>
+          <td>
+            <input
+              style="border: none; border-bottom: 2px dotted #b1b1b1"
+              class="datepicker"
+              type="text"
+              name="tanggal"
+              id="tanggal"
+              label="tanggal"
+              myid="check_cara"
+              placeholder="dd-mm-yy"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 10%">Jam:</td>
+          <td>
+            <input
+              style="border: none; border-bottom: 2px dotted #b1b1b1"
+              type="text"
+              name="jam"
+              id="jam"
+              label="jam"
+              mtype="pukul"
+              myid="check_cara"
+              placeholder="00.00"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 10%">Dokter anak</td>
+          <td>
+            <div
+              style="display: flex; flex-direction: column; align-items: start"
+            >
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_dokter_anak"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <br />
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_dokter_anak"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_dokter_anak"
+                id="paraf_ex_ttd_dokter_anak"
+                data-name="paraf"
+                data-id="ex_ttd_dokter_anak"
+              />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_dokter_anak"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+              <input
+                style="border: none; border-bottom: 2px dotted #b1b1b1"
+                type="text"
+                name="dokter-anak"
+                myid="check_cara"
+                id="dokter-anak"
+              />
+              <font id="ttdnya2"></font>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

@@ -6,27 +6,22 @@
     <title>PENGKAJIAN SKALA IDENTIFIKASI GEJALA (AKHIR KEHIDUPAN)</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -159,7 +154,7 @@
   </script>
   <body>
     <h1 class="title">
-      PENGKAJIAN SKALA IDENTIFIKASI GEJALA (AKHIR KEHIDUPAN) RS. AZRA BOGOR
+      PENGKAJIAN SKALA IDENTIFIKASI GEJALA (AKHIR KEHIDUPAN)
     </h1>
 
     <table class="table table-bordered" width="100%">
@@ -230,7 +225,7 @@
               name="umur-pengkajian"
               id="umur-pengkajian"
               myid="check_cara"
-              value="{VAGE}"
+              value="{VAGEREGIS}"
               placeholder="..."
             />
           </td>
@@ -1301,7 +1296,6 @@
               name="tindakan"
               id="tindakan"
               label="tindakan"
-              placeholder="......"
               myid="check_cara"
             ></textarea>
           </td>
@@ -1309,7 +1303,7 @@
       </tbody>
     </table>
 
-    <table width="100%" class="table">
+    <table width="100%" class="table table-bordered">
       <tbody>
         <tr>
           <td>
@@ -1446,41 +1440,5 @@
         </tr>
       </tbody>
     </table>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textAreas = document.querySelectorAll("textarea");
-        textAreas.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

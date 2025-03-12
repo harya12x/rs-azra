@@ -9,27 +9,22 @@
     </title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -39,18 +34,25 @@
     $(document).on("ajaxStop", function () {
       SetTTD();
     });
+
+    if ($.fn.datepicker) {
+      $(".datepicker").each(function () {
+        var $this = $(this),
+          dataDateFormat = $this.attr("data-dateformat") || "dd.mm.yy";
+
+        $this.datepicker({
+          dateFormat: dataDateFormat,
+          prevText: '<i class="fa fa-chevron-left"></i>',
+          nextText: '<i class="fa fa-chevron-right"></i>',
+          todayBtn: "linked",
+        });
+
+        // clear memory reference
+        $this = null;
+      });
+    }
   </script>
   <script>
-    $(document).ready(function () {
-      $(function () {
-        $(".datepicker").datepicker({
-          dateFormat: "dd-mm-yy",
-          autoclose: true,
-          todayHighlight: true,
-        });
-      });
-    });
-
     // Untuk Keperluan TTD
     function ttd_paraf(id) {
       PopupCenter(
@@ -164,7 +166,7 @@
   <body>
     <h1 class="title">
       FORMULIR KRITERIA/INDIKASI MASUK RUANG PEDIATRIC INTENSIVE CARE UNIT
-      (PICU) RS. AZRA BOGOR
+      (PICU)
     </h1>
     <table class="table table-bordered" width="100%">
       <tbody>
@@ -181,8 +183,8 @@
             name="src_ttd_2"
             myid="check_cara"
           />
-          <td bgcolor="#DFE8F6">Nama Pasien</td>
-          <td bgcolor="#DFE8F6">
+          <td>Nama Pasien</td>
+          <td>
             <input
               name="nama_pasien2"
               type="text"
@@ -194,12 +196,12 @@
               placeholder="..."
             />
           </td>
-          <td bgcolor="#DFE8F6">Jenis Kelamin</td>
-          <td bgcolor="#DFE8F6">{VSEX}</td>
-          <td bgcolor="#DFE8F6">
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
             <label for="">Nomor Rekam Medis</label>
           </td>
-          <td bgcolor="#DFE8F6">
+          <td>
             <input
               type="text"
               name="no-rek-medis"
@@ -263,7 +265,6 @@
               id="kamar"
               placeholder="..."
               myid="check_cara"
-              value="{VNAMARUANGAN}"
               label="kamar"
             />
           </td>
@@ -310,15 +311,16 @@
             </div>
           </td>
           <td width="50%">
-            <input
+            <textarea
               style="width: 100%"
-              type="text"
+              rows="3"
+              type="textarea"
               name="keterangan-kriteria-masuk-1"
               id="keterangan-kriteria-masuk-1"
               label="keterangan-kriteria-masuk-1"
               myid="check_cara"
               placeholder="......"
-            />
+            ></textarea>
           </td>
         </tr>
         <tr>
@@ -352,15 +354,16 @@
             </div>
           </td>
           <td>
-            <input
+            <textarea
               style="width: 100%"
-              type="text"
+              rows="3"
+              type="textarea"
               name="keterangan-kriteria-masuk-2"
               id="keterangan-kriteria-masuk-2"
               label="keterangan-kriteria-masuk-2"
               myid="check_cara"
               placeholder="......"
-            />
+            ></textarea>
           </td>
         </tr>
         <tr>
@@ -391,15 +394,16 @@
             </div>
           </td>
           <td>
-            <input
+            <textarea
               style="width: 100%"
-              type="text"
+              rows="3"
+              type="textarea"
               name="keterangan-kriteria-masuk-3"
               id="keterangan-kriteria-masuk-3"
               label="keterangan-kriteria-masuk-3"
               myid="check_cara"
               placeholder="......"
-            />
+            ></textarea>
           </td>
         </tr>
         <tr>
@@ -433,15 +437,16 @@
             </div>
           </td>
           <td>
-            <input
+            <textarea
               style="width: 100%"
-              type="text"
+              rows="3"
+              type="textarea"
               name="keterangan-kriteria-masuk-4"
               id="keterangan-kriteria-masuk-4"
               label="keterangan-kriteria-masuk-4"
               myid="check_cara"
               placeholder="......"
-            />
+            ></textarea>
           </td>
         </tr>
         <tr>
@@ -475,15 +480,16 @@
             </div>
           </td>
           <td>
-            <input
+            <textarea
               style="width: 100%"
-              type="text"
+              rows="3"
+              type="textarea"
               name="keterangan-kriteria-masuk-5"
               id="keterangan-kriteria-masuk-5"
               label="keterangan-kriteria-masuk-5"
               myid="check_cara"
               placeholder="......"
-            />
+            ></textarea>
           </td>
         </tr>
         <tr>
@@ -517,15 +523,16 @@
             </div>
           </td>
           <td>
-            <input
+            <textarea
               style="width: 100%"
-              type="text"
+              rows="3"
+              type="textarea"
               name="keterangan-kriteria-masuk-6"
               id="keterangan-kriteria-masuk-6"
               label="keterangan-kriteria-masuk-6"
               myid="check_cara"
               placeholder="......"
-            />
+            ></textarea>
           </td>
         </tr>
         <tr>
@@ -559,15 +566,16 @@
             </div>
           </td>
           <td>
-            <input
+            <textarea
               style="width: 100%"
-              type="text"
+              rows="3"
+              type="textarea"
               name="keterangan-kriteria-masuk-7"
               id="keterangan-kriteria-masuk-7"
               label="keterangan-kriteria-masuk-7"
               myid="check_cara"
               placeholder="......"
-            />
+            ></textarea>
           </td>
         </tr>
         <tr>
@@ -598,15 +606,16 @@
             </div>
           </td>
           <td>
-            <input
+            <textarea
               style="width: 100%"
-              type="text"
+              rows="3"
+              type="textarea"
               name="keterangan-kriteria-masuk-8"
               id="keterangan-kriteria-masuk-8"
               label="keterangan-kriteria-masuk-8"
               myid="check_cara"
               placeholder="......"
-            />
+            ></textarea>
           </td>
         </tr>
         <tr>
@@ -640,15 +649,16 @@
             </div>
           </td>
           <td>
-            <input
+            <textarea
               style="width: 100%"
-              type="text"
+              rows="3"
+              type="textarea"
               name="keterangan-kriteria-masuk-9"
               id="keterangan-kriteria-masuk-9"
               label="keterangan-kriteria-masuk-9"
               myid="check_cara"
               placeholder="......"
-            />
+            ></textarea>
           </td>
         </tr>
         <tr>
@@ -679,15 +689,16 @@
             </div>
           </td>
           <td>
-            <input
+            <textarea
               style="width: 100%"
-              type="text"
+              rows="3"
+              type="textarea"
               name="keterangan-kriteria-masuk-10"
               id="keterangan-kriteria-masuk-10"
               label="keterangan-kriteria-masuk-10"
               myid="check_cara"
               placeholder="......"
-            />
+            ></textarea>
           </td>
         </tr>
         <tr>
@@ -718,15 +729,16 @@
             </div>
           </td>
           <td>
-            <input
+            <textarea
               style="width: 100%"
-              type="text"
+              rows="3"
+              type="textarea"
               name="keterangan-kriteria-masuk-11"
               id="keterangan-kriteria-masuk-11"
               label="keterangan-kriteria-masuk-11"
               myid="check_cara"
               placeholder="......"
-            />
+            ></textarea>
           </td>
         </tr>
         <tr>
@@ -757,15 +769,16 @@
             </div>
           </td>
           <td>
-            <input
+            <textarea
               style="width: 100%"
-              type="text"
+              rows="3"
+              type="textarea"
               name="keterangan-kriteria-masuk-12"
               id="keterangan-kriteria-masuk-12"
               label="keterangan-kriteria-masuk-12"
               myid="check_cara"
               placeholder="......"
-            />
+            ></textarea>
           </td>
         </tr>
       </tbody>
@@ -777,12 +790,14 @@
     </p>
     <br />
 
-    <table width="100%" class="table">
+    <table width="100%" class="table table-bordered">
       <tbody>
         <tr>
           <td style="width: 10%">Tanggal:</td>
           <td>
             <input
+              style="border: none; border-bottom: 2px dotted #b1b1b1"
+              class="datepicker"
               type="text"
               name="tanggal"
               id="tanggal"
@@ -796,6 +811,7 @@
           <td style="width: 10%">Jam:</td>
           <td>
             <input
+              style="border: none; border-bottom: 2px dotted #b1b1b1"
               type="text"
               name="jam"
               id="jam"
@@ -812,10 +828,9 @@
             <div
               style="display: flex; flex-direction: column; align-items: start"
             >
-              <p style="text-align: center">Pasien/Keluarga</p>
               <label
                 class="label text-center"
-                id="def_img_ex_ttd_pasien_keluarga"
+                id="def_img_ex_ttd_dokter_anak"
                 style="font-style: italic; width: 100px; height: 100px"
                 >paraf</label
               >
@@ -823,23 +838,23 @@
               <label class="label text-center">
                 <img
                   class="text-center"
-                  id="image_paraf_ex_ttd_pasien_keluarga"
+                  id="image_paraf_ex_ttd_dokter_anak"
                   src=""
                   style="display: none"
               /></label>
               <input
                 myid="check_cara"
                 type="hidden"
-                name="paraf_ex_ttd_pasien_keluarga"
-                id="paraf_ex_ttd_pasien_keluarga"
+                name="paraf_ex_ttd_dokter_anak"
+                id="paraf_ex_ttd_dokter_anak"
                 data-name="paraf"
-                data-id="ex_ttd_pasien_keluarga"
+                data-id="ex_ttd_dokter_anak"
               />
               <label class="label text-center">
                 <a
                   id="CreateTTD"
                   class="btn btn-default btn-xs pointer text-center"
-                  data-id="ex_ttd_pasien_keluarga"
+                  data-id="ex_ttd_dokter_anak"
                   style="text-align: center"
                 >
                   <i class="fa fa-edit"> </i>
@@ -847,6 +862,7 @@
                 </a>
               </label>
               <input
+                style="border: none; border-bottom: 2px dotted #b1b1b1"
                 type="text"
                 name="dokter-anak"
                 myid="check_cara"
@@ -858,36 +874,5 @@
         </tr>
       </tbody>
     </table>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

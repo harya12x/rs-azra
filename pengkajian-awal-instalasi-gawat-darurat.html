@@ -4,16 +4,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PENGKAJIAN AWAL INSTALASI GAWAT DARURAT</title>
   </head>
-  <script
-    src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-    crossorigin="anonymous"
-  ></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
@@ -21,35 +15,39 @@
       margin-bottom: 10px;
     }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-    .table th,
-    .table td {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
-
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
   </style>
   <script type="text/javascript">
+    if ($.fn.datepicker) {
+      $(".datepicker").each(function () {
+        var $this = $(this),
+          dataDateFormat = $this.attr("data-dateformat") || "dd.mm.yy";
+
+        $this.datepicker({
+          dateFormat: dataDateFormat,
+          prevText: '<i class="fa fa-chevron-left"></i>',
+          nextText: '<i class="fa fa-chevron-right"></i>',
+          todayBtn: "linked",
+        });
+
+        // clear memory reference
+        $this = null;
+      });
+    }
     $(document).on("ajaxStop", function () {
       SetTTD();
     });
   </script>
   <script>
     $(document).ready(function () {
-      $(function () {
-        $(".datepicker").datepicker({
-          dateFormat: "dd-mm-yy",
-          autoclose: true,
-          todayHighlight: true,
-        });
-      });
-
       $('input[type="radio"]')
         .off("change")
         .on("change", function () {
@@ -60,7 +58,6 @@
             let radioValue = parseFloat($(this).val() || 0);
 
             if ($(this).is(":checked")) {
-              console.log(radioValue);
               total += radioValue;
             }
           });
@@ -203,9 +200,7 @@
     }
   </script>
   <body>
-    <h1 class="title">
-      PENGKAJIAN AWAL INSTALASI GAWAT DARURAT RS. AZRA BOGOR
-    </h1>
+    <h1 class="title">PENGKAJIAN AWAL INSTALASI GAWAT DARURAT</h1>
     <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
@@ -260,7 +255,6 @@
               type="text"
               id="tgl_lahir"
               placeholder="dd/mm/yyyy"
-              class="datepicker"
               myid="check_cara"
               value="{VBIRTH_DATE}"
               label="tanggal lahir"
@@ -275,7 +269,7 @@
               name="umur-pengkajian"
               id="umur-pengkajian"
               myid="check_cara"
-              value="{VAGE}"
+              value="{VAGEREGIS}"
               placeholder="..."
             />
           </td>
@@ -315,7 +309,6 @@
               name="jam"
               id="jam"
               label="jam"
-              mtype="pukul"
               myid="check_cara"
               placeholder="00.00"
             />
@@ -363,7 +356,7 @@
       </tbody>
     </table>
 
-    <table width="100%" class="table">
+    <table width="100%" class="table table-bordered">
       <tbody>
         <tr>
           <td style="padding-left: 10px">
@@ -383,7 +376,7 @@
         </tr>
         <tr>
           <td>
-            <table width="100%" class="table">
+            <table width="100%" class="table table-bordered">
               <tbody>
                 <tr>
                   <td><p>Keluhan Utama</p></td>
@@ -405,7 +398,7 @@
         </tr>
         <tr>
           <td>
-            <table width="100%" class="table">
+            <table width="100%" class="table table-bordered">
               <thead>
                 <tr>
                   <th colspan="7">AUSTRALIAN TRIAGE SCALE (ATS)</th>
@@ -1028,7 +1021,16 @@
             <table width="100%" class="table table-bordered">
               <thead>
                 <tr>
-                  <th><input type="radio" name="" id="" label="" /></th>
+                  <th>
+                    <input
+                      type="radio"
+                      name="kategori"
+                      id="kategori"
+                      label="kategori"
+                      myid="check_cara"
+                      value="true"
+                    />
+                  </th>
                   <th>Kategori ATS</th>
                   <th>Maksimum Waktu Tunggu</th>
                   <th>Keterangan</th>
@@ -1037,9 +1039,9 @@
                   <td style="text-align: center">
                     <input
                       type="radio"
-                      name="kategori-1"
-                      id="kategori-1"
-                      label="kategori-1"
+                      name="kategori"
+                      id="kategori"
+                      label="kategori"
                       myid="check_cara"
                       value="Kategori 1"
                     />
@@ -1052,9 +1054,9 @@
                   <td style="text-align: center">
                     <input
                       type="radio"
-                      name="kategori-2"
-                      id="kategori-2"
-                      label="kategori-2"
+                      name="kategori"
+                      id="kategori"
+                      label="kategori"
                       myid="check_cara"
                       value="Kategori 2"
                     />
@@ -1067,9 +1069,9 @@
                   <td style="text-align: center">
                     <input
                       type="radio"
-                      name="kategori-3"
-                      id="kategori-3"
-                      label="kategori-3"
+                      name="kategori"
+                      id="kategori"
+                      label="kategori"
                       myid="check_cara"
                       value="Kategori 3"
                     />
@@ -1082,9 +1084,9 @@
                   <td style="text-align: center">
                     <input
                       type="radio"
-                      name="kategori-4"
-                      id="kategori-4"
-                      label="kategori-4"
+                      name="kategori"
+                      id="kategori"
+                      label="kategori"
                       myid="check_cara"
                       value="Kategori 4"
                     />
@@ -1097,9 +1099,9 @@
                   <td style="text-align: center">
                     <input
                       type="radio"
-                      name="kategori-5"
-                      id="kategori-5"
-                      label="kategori-5"
+                      name="kategori"
+                      id="kategori"
+                      label="kategori"
                       myid="check_cara"
                       value="Kategori 5"
                     />
@@ -1387,7 +1389,7 @@
                         src="images/askep/wongbaker.png"
                         style="width: 100%"
                       />
-                      <table style="width: 100%" class="table">
+                      <table style="width: 100%" class="table table-bordered">
                         <tbody>
                           <tr>
                             <td width="15%">
@@ -1931,7 +1933,6 @@
                 <label for="jam-diberitahukan-ke-dokter">Jam</label>
                 <input
                   type="text"
-                  mtype="pukul"
                   placeholder="00.00"
                   name="jam-diberitahukan-ke-dokter"
                   id="jam-diberitahukan-ke-dokter"
@@ -2489,7 +2490,6 @@
                       type="text"
                       name="pukul-1"
                       id="pukul-1"
-                      mtype="pukul"
                       label="pukul-1"
                       placeholder="00.00"
                       myid="check_cara"
@@ -2553,7 +2553,6 @@
                       type="text"
                       name="pukul-2"
                       id="pukul-2"
-                      mtype="pukul"
                       label="pukul-2"
                       placeholder="00.00"
                       myid="check_cara"
@@ -2617,7 +2616,6 @@
                       type="text"
                       name="pukul-3"
                       id="pukul-3"
-                      mtype="pukul"
                       label="pukul-3"
                       placeholder="00.00"
                       myid="check_cara"
@@ -2681,7 +2679,6 @@
                       type="text"
                       name="pukul-4"
                       id="pukul-4"
-                      mtype="pukul"
                       label="pukul-4"
                       placeholder="00.00"
                       myid="check_cara"
@@ -2745,7 +2742,6 @@
                       type="text"
                       name="pukul-5"
                       id="pukul-5"
-                      mtype="pukul"
                       label="pukul-5"
                       placeholder="00.00"
                       myid="check_cara"
@@ -2834,7 +2830,6 @@
                       type="text"
                       name="pukul-tindakan-1"
                       id="pukul-tindakan-1"
-                      mtype="pukul"
                       label="pukul-tindakan-1"
                       placeholder="00.00"
                       myid="check_cara"
@@ -2859,13 +2854,6 @@
                         align-items: center;
                       "
                     >
-                      <input
-                        type="text"
-                        name="nama-tanda-tangan-1"
-                        id="nama-tanda-tangan-1"
-                        label="nama-tanda-tangan-1"
-                        myid="check_cara"
-                      />
                       <label
                         class="label text-center"
                         id="def_img_ex_ttd_1"
@@ -2900,6 +2888,13 @@
                         </a>
                       </label>
                       <br />
+                      <input
+                        type="text"
+                        name="nama-tanda-tangan-1"
+                        id="nama-tanda-tangan-1"
+                        label="nama-tanda-tangan-1"
+                        myid="check_cara"
+                      />
                       <font id="ttdnya2"></font>
                     </div>
                   </td>
@@ -2911,7 +2906,6 @@
                       type="text"
                       name="pukul-tindakan-2"
                       id="pukul-tindakan-2"
-                      mtype="pukul"
                       label="pukul-tindakan-2"
                       placeholder="00.00"
                       myid="check_cara"
@@ -2936,13 +2930,6 @@
                         align-items: center;
                       "
                     >
-                      <input
-                        type="text"
-                        name="nama-tanda-tangan-2"
-                        id="nama-tanda-tangan-2"
-                        label="nama-tanda-tangan-2"
-                        myid="check_cara"
-                      />
                       <label
                         class="label text-center"
                         id="def_img_ex_ttd_2"
@@ -2977,6 +2964,13 @@
                         </a>
                       </label>
                       <br />
+                      <input
+                        type="text"
+                        name="nama-tanda-tangan-2"
+                        id="nama-tanda-tangan-2"
+                        label="nama-tanda-tangan-2"
+                        myid="check_cara"
+                      />
                       <font id="ttdnya2"></font>
                     </div>
                   </td>
@@ -2988,7 +2982,6 @@
                       type="text"
                       name="pukul-tindakan-3"
                       id="pukul-tindakan-3"
-                      mtype="pukul"
                       label="pukul-tindakan-3"
                       placeholder="00.00"
                       myid="check_cara"
@@ -3013,13 +3006,6 @@
                         align-items: center;
                       "
                     >
-                      <input
-                        type="text"
-                        name="nama-tanda-tangan-3"
-                        id="nama-tanda-tangan-3"
-                        label="nama-tanda-tangan-3"
-                        myid="check_cara"
-                      />
                       <label
                         class="label text-center"
                         id="def_img_ex_ttd_3"
@@ -3054,6 +3040,13 @@
                         </a>
                       </label>
                       <br />
+                      <input
+                        type="text"
+                        name="nama-tanda-tangan-3"
+                        id="nama-tanda-tangan-3"
+                        label="nama-tanda-tangan-3"
+                        myid="check_cara"
+                      />
                       <font id="ttdnya2"></font>
                     </div>
                   </td>
@@ -3065,7 +3058,6 @@
                       type="text"
                       name="pukul-tindakan-4"
                       id="pukul-tindakan-4"
-                      mtype="pukul"
                       label="pukul-tindakan-4"
                       placeholder="00.00"
                       myid="check_cara"
@@ -3090,13 +3082,6 @@
                         align-items: center;
                       "
                     >
-                      <input
-                        type="text"
-                        name="nama-tanda-tangan-4"
-                        id="nama-tanda-tangan-4"
-                        label="nama-tanda-tangan-4"
-                        myid="check_cara"
-                      />
                       <label
                         class="label text-center"
                         id="def_img_ex_ttd_4"
@@ -3131,6 +3116,13 @@
                         </a>
                       </label>
                       <br />
+                      <input
+                        type="text"
+                        name="nama-tanda-tangan-4"
+                        id="nama-tanda-tangan-4"
+                        label="nama-tanda-tangan-4"
+                        myid="check_cara"
+                      />
                       <font id="ttdnya2"></font>
                     </div>
                   </td>
@@ -3284,8 +3276,7 @@
                       name="waktu-1"
                       id="waktu-1"
                       label="waktu-1"
-                      mtype="pukul"
-                      placeholder="......"
+                      placeholder="00.00"
                       myid="check_cara"
                     />
                   </td>
@@ -3353,8 +3344,7 @@
                       name="waktu-2"
                       id="waktu-2"
                       label="waktu-2"
-                      mtype="pukul"
-                      placeholder="......"
+                      placeholder="00.00"
                       myid="check_cara"
                     />
                   </td>
@@ -3422,8 +3412,7 @@
                       name="waktu-3"
                       id="waktu-3"
                       label="waktu-3"
-                      mtype="pukul"
-                      placeholder="......"
+                      placeholder="00.00"
                       myid="check_cara"
                     />
                   </td>
@@ -3491,8 +3480,7 @@
                       name="waktu-4"
                       id="waktu-4"
                       label="waktu-4"
-                      mtype="pukul"
-                      placeholder="......"
+                      placeholder="00.00"
                       myid="check_cara"
                     />
                   </td>
@@ -3560,8 +3548,7 @@
                       name="waktu-5"
                       id="waktu-5"
                       label="waktu-5"
-                      mtype="pukul"
-                      placeholder="......"
+                      placeholder="00.00"
                       myid="check_cara"
                     />
                   </td>
@@ -3629,8 +3616,7 @@
                       name="waktu-6"
                       id="waktu-6"
                       label="waktu-6"
-                      mtype="pukul"
-                      placeholder="......"
+                      placeholder="00.00"
                       myid="check_cara"
                     />
                   </td>
@@ -3698,8 +3684,7 @@
                       name="waktu-7"
                       id="waktu-7"
                       label="waktu-7"
-                      mtype="pukul"
-                      placeholder="......"
+                      placeholder="00.00"
                       myid="check_cara"
                     />
                   </td>
@@ -3767,8 +3752,7 @@
                       name="waktu-8"
                       id="waktu-8"
                       label="waktu-8"
-                      mtype="pukul"
-                      placeholder="......"
+                      placeholder="00.00"
                       myid="check_cara"
                     />
                   </td>
@@ -3836,8 +3820,7 @@
                       name="waktu-9"
                       id="waktu-9"
                       label="waktu-9"
-                      mtype="pukul"
-                      placeholder="......"
+                      placeholder="00.00"
                       myid="check_cara"
                     />
                   </td>
@@ -3905,8 +3888,7 @@
                       name="waktu-10"
                       id="waktu-10"
                       label="waktu-10"
-                      mtype="pukul"
-                      placeholder="......"
+                      placeholder="00.00"
                       myid="check_cara"
                     />
                   </td>
@@ -3975,145 +3957,65 @@
     <br />
     <hr />
     <br />
-    <table width="100%" class="table" cellpadding="0" border="0">
+    <table width="100%" class="table table-bordered" cellpadding="0" border="0">
       <tbody>
         <tr>
-          <td colspan="3">
-            <div align="center"><strong>Perawat Yang Mengkaji</strong></div>
+          <td>
+            <div align="right"><strong>Perawat Yang Mengkaji</strong></div>
           </td>
         </tr>
         <tr>
-          <td bgcolor="#FFFFFF">Tanggal / Pukul</td>
           <td bgcolor="#FFFFFF">
-            <input
-              name="17_tanggal"
-              type="text"
-              id="17_tanggal"
-              placeholder="dd/mm/yyyy"
-              class="datepicker"
-              size="10"
-              myid="check_cara"
-            />
-            <br />
-            <br />
-            <input
-              name="17_pukul"
-              type="text"
-              id="17_pukul"
-              mtype="pukul"
-              placeholder="00:00"
-              size="10"
-              myid="check_cara"
-            />
-          </td>
-
-          <td bgcolor="#FFFFFF">&nbsp;</td>
-        </tr>
-        <tr>
-          <td bgcolor="#FFFFFF">Nama</td>
-
-          <td bgcolor="#FFFFFF">
-            <input
-              name="17_nama3"
-              type="text"
-              id="17_nama3"
-              size="25"
-              myid="check_cara"
-              value="{VDPJP}"
-            />
-            <br />
-            <br />
-            <label
-              class="label text-center"
-              id="def_img_ex_ttd_perawat_yang_mengkaji"
-              style="font-style: italic; width: 100px; height: 100px"
-              >paraf</label
+            <div
+              style="display: flex; flex-direction: column; align-items: end"
             >
-            <label class="label text-center">
-              <img
-                class="text-center"
-                id="image_paraf_ex_ttd_perawat_yang_mengkaji"
-                src=""
-                style="display: none"
-            /></label>
-            <input
-              myid="check_cara"
-              type="hidden"
-              name="paraf_ex_ttd_perawat_yang_mengkaji"
-              id="paraf_ex_ttd_perawat_yang_mengkaji"
-              data-name="paraf"
-              data-id="ex_ttd_perawat_yang_mengkaji"
-            />
-            <br />
-            <label class="label text-center">
-              <a
-                id="CreateTTD"
-                class="btn btn-default btn-xs pointer text-center"
-                data-id="ex_ttd_perawat_yang_mengkaji"
-                style="text-align: center"
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_perawat_yang_mengkaji"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
               >
-                <i class="fa fa-edit"> </i>
-                PENTABLET
-              </a>
-            </label>
-            <br />
-            <font id="ttdnya2"></font>
-          </td>
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_perawat_yang_mengkaji"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_perawat_yang_mengkaji"
+                id="paraf_ex_ttd_perawat_yang_mengkaji"
+                data-name="paraf"
+                data-id="ex_ttd_perawat_yang_mengkaji"
+              />
 
-          <td bgcolor="#FFFFFF">&nbsp;</td>
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_perawat_yang_mengkaji"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+              <input
+                name="17_nama3"
+                type="text"
+                id="17_nama3"
+                size="25"
+                myid="check_cara"
+                value=""
+              />
+
+              <font id="ttdnya2"></font>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
   </body>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var radioButtons = document.querySelectorAll('input[type="radio"]');
-      radioButtons.forEach(function (radio) {
-        radio.addEventListener("click", function () {
-          if (this.classList.contains("clicked")) {
-            this.checked = false;
-            this.classList.remove("clicked");
-          } else {
-            var name = this.getAttribute("name");
-            var radios = document.querySelectorAll(
-              'input[type="radio"][name="' + name + '"]'
-            );
-            radios.forEach(function (r) {
-              r.classList.remove("clicked");
-            });
-            this.classList.add("clicked");
-          }
-          console.log(this.name + " diubah menjadi: " + this.checked);
-        });
-      });
-
-      var checkboxButtons = document.querySelectorAll('input[type="checkbox"]');
-      checkboxButtons.forEach(function (checkbox) {
-        checkbox.addEventListener("click", function () {
-          if (this.classList.contains("clicked")) {
-            this.checked = false;
-            this.classList.remove("clicked");
-          } else {
-            var name = this.getAttribute("name");
-            var checkboxes = document.querySelectorAll(
-              'input[type="radio"][name="' + name + '"]'
-            );
-            checkboxes.forEach(function (r) {
-              r.classList.remove("clicked");
-            });
-            this.classList.add("clicked");
-          }
-          console.log(this.name + " diubah menjadi: " + this.checked);
-        });
-      });
-
-      var textInputs = document.querySelectorAll('input[type="text"]');
-      textInputs.forEach(function (input) {
-        input.addEventListener("change", function () {
-          console.log(this.name + " diubah menjadi: " + this.value);
-        });
-      });
-    });
-  </script>
 </html>

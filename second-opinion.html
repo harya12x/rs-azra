@@ -6,27 +6,22 @@
     <title>PERSETUJUAN PERMINTAAN PENDAPAT LAIN (SECOND OPINION)</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -35,18 +30,24 @@
     $(document).on("ajaxStop", function () {
       SetTTD();
     });
+    if ($.fn.datepicker) {
+      $(".datepicker").each(function () {
+        var $this = $(this),
+          dataDateFormat = $this.attr("data-dateformat") || "dd.mm.yy";
+
+        $this.datepicker({
+          dateFormat: dataDateFormat,
+          prevText: '<i class="fa fa-chevron-left"></i>',
+          nextText: '<i class="fa fa-chevron-right"></i>',
+          todayBtn: "linked",
+        });
+
+        // clear memory reference
+        $this = null;
+      });
+    }
   </script>
   <script>
-    $(document).ready(function () {
-      $(function () {
-        $(".datepicker").datepicker({
-          dateFormat: "dd-mm-yy",
-          autoclose: true,
-          todayHighlight: true,
-        });
-      });
-    });
-
     // Untuk Keperluan TTD
     function ttd_paraf(id) {
       PopupCenter(
@@ -158,8 +159,6 @@
     }
   </script>
   <body>
-    <h1 class="title">RS. AZRA BOGOR</h1>
-    <hr />
     <h1 class="title">
       PERSETUJUAN PERMINTAAN PENDAPAT LAIN (<i>SECOND OPINION</i>)
     </h1>
@@ -321,6 +320,7 @@
               name="nama-diri-ttd"
               id="nama-diri-ttd"
               label="nama-diri-ttd"
+              value="{VNAMA_PASIEN}"
               placeholder="......"
               myid="check_cara"
             />
@@ -335,6 +335,7 @@
               name="umur-ttd"
               id="umur-ttd"
               label="umur-ttd"
+              value="{VAGEREGIS}"
               placeholder="......"
               myid="check_cara"
             />
@@ -349,6 +350,7 @@
               name="jenis-kelamin"
               id="jenis-kelamin"
               label="jenis-kelamin"
+              value="{VSEX}"
               placeholder="......"
               myid="check_cara"
             />
@@ -363,6 +365,7 @@
               name="no-rm"
               id="no-rm"
               label="no-rm"
+              value="{NO_RM}"
               placeholder="......"
               myid="check_cara"
             />
@@ -377,6 +380,7 @@
               name="ruang-kelas"
               id="ruang-kelas"
               label="ruang-kelas"
+              value="{VNAMARUANGAN} / {VNAMAKELAS}"
               placeholder="......"
               myid="check_cara"
             />
@@ -403,7 +407,7 @@
       saya
     </p>
     <br />
-    <table width="100%" class="table">
+    <table width="100%" class="table table-bordered">
       <tr>
         <td colspan="3">
           <label for="">Bogor, tanggal</label>
@@ -412,8 +416,8 @@
             name="tgl-permintaan"
             id="tgl-permintaan"
             label="tgl-permintaan"
-            placeholder="dd-mm-yy"
-            class="datepicker hasDatepicker"
+            placeholder="dd/mm/yyyy"
+            class="datepicker"
             myid="check_cara"
           />
           <label for="">, pukul</label>
@@ -436,7 +440,7 @@
             <p>Saksi Rumah Sakit</p>
             <label
               class="label text-center"
-              id="def_img_ex_ttd_dokter_yang_mengkaji"
+              id="def_img_ex_ttd_saksi_rumah_sakit"
               style="font-style: italic; width: 100px; height: 100px"
               >paraf</label
             >
@@ -593,35 +597,5 @@
         </td>
       </tr>
     </table>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

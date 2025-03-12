@@ -1,0 +1,4108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DAFTAR REKONSILIASI OBAT PASIEN (MEDICATION RECONCILIATION)</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD1();
+    });
+    if ($.fn.datepicker) {
+      $(".datepicker").each(function () {
+        var $this = $(this),
+          dataDateFormat = $this.attr("data-dateformat") || "dd.mm.yy";
+
+        $this.datepicker({
+          dateFormat: dataDateFormat,
+          prevText: '<i class="fa fa-chevron-left"></i>',
+          nextText: '<i class="fa fa-chevron-right"></i>',
+          todayBtn: "linked",
+        });
+
+        // clear memory reference
+        $this = null;
+      });
+    }
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(document).ready(function () {
+        $(function () {
+          $(".datepicker2").datepicker({
+            dateFormat: "dd-mm-yy",
+            autoclose: true,
+            todayHighlight: true,
+          });
+        });
+      });
+    });
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
+  <body>
+    <table class="table table-bordered" width="100%">
+      <tbody>
+        <tr>
+          <input
+            type="hidden"
+            id="src_ttd_1"
+            name="src_ttd_1"
+            myid="check_cara"
+          />
+          <input
+            type="hidden"
+            id="src_ttd_2"
+            name="src_ttd_2"
+            myid="check_cara"
+          />
+          <td width="20%">NOMOR RM :</td>
+          <td>
+            <input
+              style="border: none; border-bottom: 2px dotted"
+              type="text"
+              name="no-rm"
+              id="no-rm"
+              label="no-rm"
+              myid="check_cara"
+              value="{NO_RM}"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td width="20%">NAMA :</td>
+          <td>
+            <input
+              style="border: none; border-bottom: 2px dotted"
+              type="text"
+              name="nama-pasien"
+              id="nama-pasien"
+              label="nama-pasien"
+              myid="check_cara"
+              value="{VNAMA_PASIEN}"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td width="20%">TANGGAL LAHIR :</td>
+          <td>
+            <input
+              style="border: none; border-bottom: 2px dotted"
+              type="text"
+              name="tgl-lahir"
+              id="tgl-lahir"
+              label="tgl-lahir"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+              value="{VBIRTH_DATE}"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td width="20%">JENIS KELAMIN :</td>
+          <td>
+            <input
+              style="border: none; border-bottom: 2px dotted"
+              type="text"
+              name="jenis-kelamin"
+              id="jenis-kelamin"
+              label="jenis-kelamin"
+              myid="check_cara"
+              value="{VSEX}"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h1 class="title">
+      DAFTAR REKONSILIASI OBAT PASIEN <br />
+      (MEDICATION RECONCILIATION)
+    </h1>
+    <table width="100%" class="table table-bordered">
+      <tr>
+        <td colspan="3">
+          <label><b>ALERGI OBAT :</b></label>
+          <input
+            size="50"
+            style="border: none; border-bottom: 2px dotted"
+            type="text"
+            name="alergi-obat"
+            id="alergi-obat"
+            label="alergi-obat"
+            myid="check_cara"
+          />
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="3">
+          <h2 class="title">
+            CATATAN SEMUA OBAT PASIEN SEBELUM MASUK RUMAH SAKIT
+          </h2>
+          <h3 class="title">
+            TERMASUK OBAT NON RESEP, HERBAL, OBAT BARU ATAU PERUBAHAN OBAT
+            SELAMA DI RUMAH SAKIT
+          </h3>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <p>SISTEM INFORMASI OBAT (beri tanda &check; / centang)</p>
+        </td>
+        <td>RIWAYAT OBAT DICATAT / DIVERIFIKASI OLEH</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">
+          <input
+            type="checkbox"
+            name="sumber-informasi-daftar-obat-pasien"
+            id="sumber-informasi-daftar-obat-pasien"
+            label="sumber-informasi-daftar-obat-pasien"
+            myid="check_cara"
+            value="DAFTAR OBAT PASIEN (THERAPY LIST)"
+          />
+        </td>
+        <td><label for="">DAFTAR OBAT PASIEN (THERAPY LIST)</label></td>
+        <td>
+          <label for="">TANGGAL PENCATATAN</label>
+          <input
+            type="text"
+            name="tgl-pencatatan"
+            id="tgl-pencatatan"
+            label="tgl-pencatatan"
+            style="border: none; border-bottom: 2px dotted"
+            placeholder="dd/mm/yyyy"
+            class="datepicker"
+            myid="check_cara"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: center">
+          <input
+            type="checkbox"
+            name="sumber-informasi-pasien-keluarga"
+            id="sumber-informasi-pasien-keluarga"
+            label="sumber-informasi-pasien-keluarga"
+            myid="check_cara"
+            value="PASIEN/KELUARGA"
+          />
+        </td>
+        <td><label for="">PASIEN/KELUARGA</label></td>
+        <td rowspan="4"></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">
+          <input
+            type="checkbox"
+            name="sumber-informasi-farmasi"
+            id="sumber-informasi-farmasi"
+            label="sumber-informasi-farmasi"
+            myid="check_cara"
+            value="FARMASI"
+          />
+        </td>
+        <td><label for="">FARMASI</label></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">
+          <input
+            type="checkbox"
+            name="sumber-informasi-catatan-obat-dari-dokter-lain"
+            id="sumber-informasi-catatan-obat-dari-dokter-lain"
+            label="sumber-informasi-catatan-obat-dari-dokter-lain"
+            myid="check_cara"
+            value="CATATAN OBAT DARI DOKTER LAIN"
+          />
+        </td>
+        <td><label for="">CATATAN OBAT DARI DOKTER LAIN</label></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">
+          <input
+            type="checkbox"
+            name="sumber-informasi-catatan-lain-lain"
+            id="sumber-informasi-catatan-lain-lain"
+            label="sumber-informasi-catatan-lain-lain"
+            myid="check_cara"
+            value="LAIN-LAIN"
+          />
+        </td>
+        <td><label for="">LAIN-LAIN</label></td>
+      </tr>
+    </table>
+    <table width="100%" class="table table-bordered">
+      <thead>
+        <tr>
+          <th style="text-align: center" rowspan="3">ASAL PEMAKAIAN OBAT</th>
+          <th style="text-align: center" rowspan="3">NO</th>
+          <th style="text-align: center" rowspan="3">NAMA OBAT</th>
+          <th style="text-align: center; width: 80px" rowspan="3">DOSIS</th>
+          <th style="text-align: center; width: 80px" rowspan="3">RUTE</th>
+          <th style="text-align: center" rowspan="3">FREKUENSI</th>
+          <th style="text-align: center; width: 90px" rowspan="3">
+            DOSIS TERAKHIR (TANGGAL)
+          </th>
+          <th style="text-align: center" colspan="6">INSTRUKSI DOKTER</th>
+          <th style="text-align: center" rowspan="3">NAMA DOKTER</th>
+          <th style="text-align: center" rowspan="3">PARAF</th>
+        </tr>
+        <tr>
+          <th colspan="6">(LINGKARI L BOLA LANJUT S BILA STOP)</th>
+        </tr>
+        <tr>
+          <th width="5%" colspan="2">SAAT MRS</th>
+          <th width="5%" colspan="2">TRANSFER PINDAH</th>
+          <th width="5%" colspan="2">SAAT KRS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-1"
+              id="asal-pemakaian-obat-1"
+              label="asal-pemakaian-obat-1"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">1</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-1"
+              id="nama-obat-1"
+              label="nama-obat-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-1"
+              id="dosis-1"
+              label="dosis-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-1"
+              id="rute-1"
+              label="rute-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-1"
+              id="frekuensi-1"
+              label="frekuensi-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-1"
+              id="tgl-dosis-terakhir-1"
+              label="tgl-dosis-terakhir-1"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-1"
+              id="saat-mrs-1"
+              label="saat-mrs-1"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-1"
+              id="saat-mrs-1"
+              label="saat-mrs-1"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-1"
+              id="transfer-pindah-1"
+              label="transfer-pindah-1"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-1"
+              id="transfer-pindah-1"
+              label="transfer-pindah-1"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-1"
+              id="saat-krs-1"
+              label="saat-krs-1"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-1"
+              id="saat-krs-1"
+              label="saat-krs-1"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-1"
+              id="nama-dokter-1"
+              label="nama-dokter-1"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_1"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_1"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_1"
+              id="paraf_ex_ttd_nama_dokter_1"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_1"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_1"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-2"
+              id="asal-pemakaian-obat-2"
+              label="asal-pemakaian-obat-2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">2</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-2"
+              id="nama-obat-2"
+              label="nama-obat-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-2"
+              id="dosis-2"
+              label="dosis-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-2"
+              id="rute-2"
+              label="rute-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-2"
+              id="frekuensi-2"
+              label="frekuensi-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-2"
+              id="tgl-dosis-terakhir-2"
+              label="tgl-dosis-terakhir-2"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-2"
+              id="saat-mrs-2"
+              label="saat-mrs-2"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-2"
+              id="saat-mrs-2"
+              label="saat-mrs-2"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-2"
+              id="transfer-pindah-2"
+              label="transfer-pindah-2"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-2"
+              id="transfer-pindah-2"
+              label="transfer-pindah-2"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-2"
+              id="saat-krs-2"
+              label="saat-krs-2"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-2"
+              id="saat-krs-2"
+              label="saat-krs-2"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-2"
+              id="nama-dokter-2"
+              label="nama-dokter-2"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_2"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_2"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_2"
+              id="paraf_ex_ttd_nama_dokter_2"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_2"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_2"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-3"
+              id="asal-pemakaian-obat-3"
+              label="asal-pemakaian-obat-3"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">3</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-3"
+              id="nama-obat-3"
+              label="nama-obat-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-3"
+              id="dosis-3"
+              label="dosis-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-3"
+              id="rute-3"
+              label="rute-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-3"
+              id="frekuensi-3"
+              label="frekuensi-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-3"
+              id="tgl-dosis-terakhir-3"
+              label="tgl-dosis-terakhir-3"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-3"
+              id="saat-mrs-3"
+              label="saat-mrs-3"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-3"
+              id="saat-mrs-3"
+              label="saat-mrs-3"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-3"
+              id="transfer-pindah-3"
+              label="transfer-pindah-3"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-3"
+              id="transfer-pindah-3"
+              label="transfer-pindah-3"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-3"
+              id="saat-krs-3"
+              label="saat-krs-3"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-3"
+              id="saat-krs-3"
+              label="saat-krs-3"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-3"
+              id="nama-dokter-3"
+              label="nama-dokter-3"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_3"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_3"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_3"
+              id="paraf_ex_ttd_nama_dokter_3"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_3"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_3"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-4"
+              id="asal-pemakaian-obat-4"
+              label="asal-pemakaian-obat-4"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">4</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-4"
+              id="nama-obat-4"
+              label="nama-obat-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-4"
+              id="dosis-4"
+              label="dosis-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-4"
+              id="rute-4"
+              label="rute-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-4"
+              id="frekuensi-4"
+              label="frekuensi-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-4"
+              id="tgl-dosis-terakhir-4"
+              label="tgl-dosis-terakhir-4"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-4"
+              id="saat-mrs-4"
+              label="saat-mrs-4"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-4"
+              id="saat-mrs-4"
+              label="saat-mrs-4"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-4"
+              id="transfer-pindah-4"
+              label="transfer-pindah-4"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-4"
+              id="transfer-pindah-4"
+              label="transfer-pindah-4"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-4"
+              id="saat-krs-4"
+              label="saat-krs-4"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-4"
+              id="saat-krs-4"
+              label="saat-krs-4"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-4"
+              id="nama-dokter-4"
+              label="nama-dokter-4"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_4"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_4"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_4"
+              id="paraf_ex_ttd_nama_dokter_4"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_4"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_4"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-5"
+              id="asal-pemakaian-obat-5"
+              label="asal-pemakaian-obat-5"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">5</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-5"
+              id="nama-obat-5"
+              label="nama-obat-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-5"
+              id="dosis-5"
+              label="dosis-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-5"
+              id="rute-5"
+              label="rute-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-5"
+              id="frekuensi-5"
+              label="frekuensi-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-5"
+              id="tgl-dosis-terakhir-5"
+              label="tgl-dosis-terakhir-5"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-5"
+              id="saat-mrs-5"
+              label="saat-mrs-5"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-5"
+              id="saat-mrs-5"
+              label="saat-mrs-5"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-5"
+              id="transfer-pindah-5"
+              label="transfer-pindah-5"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-5"
+              id="transfer-pindah-5"
+              label="transfer-pindah-5"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-5"
+              id="saat-krs-5"
+              label="saat-krs-5"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-5"
+              id="saat-krs-5"
+              label="saat-krs-5"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-5"
+              id="nama-dokter-5"
+              label="nama-dokter-5"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_5"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_5"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_5"
+              id="paraf_ex_ttd_nama_dokter_5"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_5"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_5"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-6"
+              id="asal-pemakaian-obat-6"
+              label="asal-pemakaian-obat-6"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">6</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-6"
+              id="nama-obat-6"
+              label="nama-obat-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-6"
+              id="dosis-6"
+              label="dosis-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-6"
+              id="rute-6"
+              label="rute-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-6"
+              id="frekuensi-6"
+              label="frekuensi-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-6"
+              id="tgl-dosis-terakhir-6"
+              label="tgl-dosis-terakhir-6"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-6"
+              id="saat-mrs-6"
+              label="saat-mrs-6"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-6"
+              id="saat-mrs-6"
+              label="saat-mrs-6"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-6"
+              id="transfer-pindah-6"
+              label="transfer-pindah-6"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-6"
+              id="transfer-pindah-6"
+              label="transfer-pindah-6"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-6"
+              id="saat-krs-6"
+              label="saat-krs-6"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-6"
+              id="saat-krs-6"
+              label="saat-krs-6"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-6"
+              id="nama-dokter-6"
+              label="nama-dokter-6"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_6"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_6"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_6"
+              id="paraf_ex_ttd_nama_dokter_6"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_6"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_6"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-7"
+              id="asal-pemakaian-obat-7"
+              label="asal-pemakaian-obat-7"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">7</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-7"
+              id="nama-obat-7"
+              label="nama-obat-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-7"
+              id="dosis-7"
+              label="dosis-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-7"
+              id="rute-7"
+              label="rute-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-7"
+              id="frekuensi-7"
+              label="frekuensi-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-7"
+              id="tgl-dosis-terakhir-7"
+              label="tgl-dosis-terakhir-7"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-7"
+              id="saat-mrs-7"
+              label="saat-mrs-7"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-7"
+              id="saat-mrs-7"
+              label="saat-mrs-7"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-7"
+              id="transfer-pindah-7"
+              label="transfer-pindah-7"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-7"
+              id="transfer-pindah-7"
+              label="transfer-pindah-7"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-7"
+              id="saat-krs-7"
+              label="saat-krs-7"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-7"
+              id="saat-krs-7"
+              label="saat-krs-7"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-7"
+              id="nama-dokter-7"
+              label="nama-dokter-7"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_7"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_7"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_7"
+              id="paraf_ex_ttd_nama_dokter_7"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_7"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_7"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-8"
+              id="asal-pemakaian-obat-8"
+              label="asal-pemakaian-obat-8"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">8</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-8"
+              id="nama-obat-8"
+              label="nama-obat-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-8"
+              id="dosis-8"
+              label="dosis-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-8"
+              id="rute-8"
+              label="rute-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-8"
+              id="frekuensi-8"
+              label="frekuensi-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-8"
+              id="tgl-dosis-terakhir-8"
+              label="tgl-dosis-terakhir-8"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-8"
+              id="saat-mrs-8"
+              label="saat-mrs-8"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-8"
+              id="saat-mrs-8"
+              label="saat-mrs-8"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-8"
+              id="transfer-pindah-8"
+              label="transfer-pindah-8"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-8"
+              id="transfer-pindah-8"
+              label="transfer-pindah-8"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-8"
+              id="saat-krs-8"
+              label="saat-krs-8"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-8"
+              id="saat-krs-8"
+              label="saat-krs-8"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-8"
+              id="nama-dokter-8"
+              label="nama-dokter-8"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_8"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_8"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_8"
+              id="paraf_ex_ttd_nama_dokter_8"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_8"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_8"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-9"
+              id="asal-pemakaian-obat-9"
+              label="asal-pemakaian-obat-9"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">9</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-9"
+              id="nama-obat-9"
+              label="nama-obat-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-9"
+              id="dosis-9"
+              label="dosis-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-9"
+              id="rute-9"
+              label="rute-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-9"
+              id="frekuensi-9"
+              label="frekuensi-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-9"
+              id="tgl-dosis-terakhir-9"
+              label="tgl-dosis-terakhir-9"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-9"
+              id="saat-mrs-9"
+              label="saat-mrs-9"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-9"
+              id="saat-mrs-9"
+              label="saat-mrs-9"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-9"
+              id="transfer-pindah-9"
+              label="transfer-pindah-9"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-9"
+              id="transfer-pindah-9"
+              label="transfer-pindah-9"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-9"
+              id="saat-krs-9"
+              label="saat-krs-9"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-9"
+              id="saat-krs-9"
+              label="saat-krs-9"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-9"
+              id="nama-dokter-9"
+              label="nama-dokter-9"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_9"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_9"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_9"
+              id="paraf_ex_ttd_nama_dokter_9"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_9"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_9"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-10"
+              id="asal-pemakaian-obat-10"
+              label="asal-pemakaian-obat-10"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">10</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-10"
+              id="nama-obat-10"
+              label="nama-obat-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-10"
+              id="dosis-10"
+              label="dosis-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-10"
+              id="rute-10"
+              label="rute-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-10"
+              id="frekuensi-10"
+              label="frekuensi-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-10"
+              id="tgl-dosis-terakhir-10"
+              label="tgl-dosis-terakhir-10"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-10"
+              id="saat-mrs-10"
+              label="saat-mrs-10"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-10"
+              id="saat-mrs-10"
+              label="saat-mrs-10"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-10"
+              id="transfer-pindah-10"
+              label="transfer-pindah-10"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-10"
+              id="transfer-pindah-10"
+              label="transfer-pindah-10"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-10"
+              id="saat-krs-10"
+              label="saat-krs-10"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-10"
+              id="saat-krs-10"
+              label="saat-krs-10"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-10"
+              id="nama-dokter-10"
+              label="nama-dokter-10"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_10"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_10"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_10"
+              id="paraf_ex_ttd_nama_dokter_10"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_10"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_10"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-11"
+              id="asal-pemakaian-obat-11"
+              label="asal-pemakaian-obat-11"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">11</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-11"
+              id="nama-obat-11"
+              label="nama-obat-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-11"
+              id="dosis-11"
+              label="dosis-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-11"
+              id="rute-11"
+              label="rute-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-11"
+              id="frekuensi-11"
+              label="frekuensi-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-11"
+              id="tgl-dosis-terakhir-11"
+              label="tgl-dosis-terakhir-11"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-11"
+              id="saat-mrs-11"
+              label="saat-mrs-11"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-11"
+              id="saat-mrs-11"
+              label="saat-mrs-11"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-11"
+              id="transfer-pindah-11"
+              label="transfer-pindah-11"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-11"
+              id="transfer-pindah-11"
+              label="transfer-pindah-11"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-11"
+              id="saat-krs-11"
+              label="saat-krs-11"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-11"
+              id="saat-krs-11"
+              label="saat-krs-11"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-11"
+              id="nama-dokter-11"
+              label="nama-dokter-11"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_11"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_11"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_11"
+              id="paraf_ex_ttd_nama_dokter_11"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_11"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_11"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-12"
+              id="asal-pemakaian-obat-12"
+              label="asal-pemakaian-obat-12"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">12</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-12"
+              id="nama-obat-12"
+              label="nama-obat-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-12"
+              id="dosis-12"
+              label="dosis-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-12"
+              id="rute-12"
+              label="rute-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-12"
+              id="frekuensi-12"
+              label="frekuensi-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-12"
+              id="tgl-dosis-terakhir-12"
+              label="tgl-dosis-terakhir-12"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-12"
+              id="saat-mrs-12"
+              label="saat-mrs-12"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-12"
+              id="saat-mrs-12"
+              label="saat-mrs-12"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-12"
+              id="transfer-pindah-12"
+              label="transfer-pindah-12"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-12"
+              id="transfer-pindah-12"
+              label="transfer-pindah-12"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-12"
+              id="saat-krs-12"
+              label="saat-krs-12"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-12"
+              id="saat-krs-12"
+              label="saat-krs-12"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-12"
+              id="nama-dokter-12"
+              label="nama-dokter-12"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_12"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_12"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_12"
+              id="paraf_ex_ttd_nama_dokter_12"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_12"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_12"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-13"
+              id="asal-pemakaian-obat-13"
+              label="asal-pemakaian-obat-13"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">13</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-13"
+              id="nama-obat-13"
+              label="nama-obat-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-13"
+              id="dosis-13"
+              label="dosis-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-13"
+              id="rute-13"
+              label="rute-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-13"
+              id="frekuensi-13"
+              label="frekuensi-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-13"
+              id="tgl-dosis-terakhir-13"
+              label="tgl-dosis-terakhir-13"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-13"
+              id="saat-mrs-13"
+              label="saat-mrs-13"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-13"
+              id="saat-mrs-13"
+              label="saat-mrs-13"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-13"
+              id="transfer-pindah-13"
+              label="transfer-pindah-13"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-13"
+              id="transfer-pindah-13"
+              label="transfer-pindah-13"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-13"
+              id="saat-krs-13"
+              label="saat-krs-13"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-13"
+              id="saat-krs-13"
+              label="saat-krs-13"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-13"
+              id="nama-dokter-13"
+              label="nama-dokter-13"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_13"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_13"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_13"
+              id="paraf_ex_ttd_nama_dokter_13"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_13"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_13"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-14"
+              id="asal-pemakaian-obat-14"
+              label="asal-pemakaian-obat-14"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">14</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-14"
+              id="nama-obat-14"
+              label="nama-obat-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-14"
+              id="dosis-14"
+              label="dosis-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-14"
+              id="rute-14"
+              label="rute-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-14"
+              id="frekuensi-14"
+              label="frekuensi-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-14"
+              id="tgl-dosis-terakhir-14"
+              label="tgl-dosis-terakhir-14"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-14"
+              id="saat-mrs-14"
+              label="saat-mrs-14"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-14"
+              id="saat-mrs-14"
+              label="saat-mrs-14"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-14"
+              id="transfer-pindah-14"
+              label="transfer-pindah-14"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-14"
+              id="transfer-pindah-14"
+              label="transfer-pindah-14"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-14"
+              id="saat-krs-14"
+              label="saat-krs-14"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-14"
+              id="saat-krs-14"
+              label="saat-krs-14"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-14"
+              id="nama-dokter-14"
+              label="nama-dokter-14"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_14"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_14"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_14"
+              id="paraf_ex_ttd_nama_dokter_14"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_14"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_14"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-15"
+              id="asal-pemakaian-obat-15"
+              label="asal-pemakaian-obat-15"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">15</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-15"
+              id="nama-obat-15"
+              label="nama-obat-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-15"
+              id="dosis-15"
+              label="dosis-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-15"
+              id="rute-15"
+              label="rute-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-15"
+              id="frekuensi-15"
+              label="frekuensi-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-15"
+              id="tgl-dosis-terakhir-15"
+              label="tgl-dosis-terakhir-15"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-15"
+              id="saat-mrs-15"
+              label="saat-mrs-15"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-15"
+              id="saat-mrs-15"
+              label="saat-mrs-15"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-15"
+              id="transfer-pindah-15"
+              label="transfer-pindah-15"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-15"
+              id="transfer-pindah-15"
+              label="transfer-pindah-15"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-15"
+              id="saat-krs-15"
+              label="saat-krs-15"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-15"
+              id="saat-krs-15"
+              label="saat-krs-15"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-15"
+              id="nama-dokter-15"
+              label="nama-dokter-15"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_15"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_15"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_15"
+              id="paraf_ex_ttd_nama_dokter_15"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_15"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_15"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-16"
+              id="asal-pemakaian-obat-16"
+              label="asal-pemakaian-obat-16"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">16</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-16"
+              id="nama-obat-16"
+              label="nama-obat-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-16"
+              id="dosis-16"
+              label="dosis-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-16"
+              id="rute-16"
+              label="rute-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-16"
+              id="frekuensi-16"
+              label="frekuensi-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-16"
+              id="tgl-dosis-terakhir-16"
+              label="tgl-dosis-terakhir-16"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-16"
+              id="saat-mrs-16"
+              label="saat-mrs-16"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-16"
+              id="saat-mrs-16"
+              label="saat-mrs-16"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-16"
+              id="transfer-pindah-16"
+              label="transfer-pindah-16"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-16"
+              id="transfer-pindah-16"
+              label="transfer-pindah-16"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-16"
+              id="saat-krs-16"
+              label="saat-krs-16"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-16"
+              id="saat-krs-16"
+              label="saat-krs-16"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-16"
+              id="nama-dokter-16"
+              label="nama-dokter-16"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_16"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_16"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_16"
+              id="paraf_ex_ttd_nama_dokter_16"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_16"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_16"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-17"
+              id="asal-pemakaian-obat-17"
+              label="asal-pemakaian-obat-17"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">17</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-17"
+              id="nama-obat-17"
+              label="nama-obat-17"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-17"
+              id="dosis-17"
+              label="dosis-17"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-17"
+              id="rute-17"
+              label="rute-17"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-17"
+              id="frekuensi-17"
+              label="frekuensi-17"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-17"
+              id="tgl-dosis-terakhir-17"
+              label="tgl-dosis-terakhir-17"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-17"
+              id="saat-mrs-17"
+              label="saat-mrs-17"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-17"
+              id="saat-mrs-17"
+              label="saat-mrs-17"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-17"
+              id="transfer-pindah-17"
+              label="transfer-pindah-17"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-17"
+              id="transfer-pindah-17"
+              label="transfer-pindah-17"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-17"
+              id="saat-krs-17"
+              label="saat-krs-17"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-17"
+              id="saat-krs-17"
+              label="saat-krs-17"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-17"
+              id="nama-dokter-17"
+              label="nama-dokter-17"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_17"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_17"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_17"
+              id="paraf_ex_ttd_nama_dokter_17"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_17"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_17"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-18"
+              id="asal-pemakaian-obat-18"
+              label="asal-pemakaian-obat-18"
+              myid="check_cara"
+            />
+          </td>
+
+          <td style="text-align: center">18</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-18"
+              id="nama-obat-18"
+              label="nama-obat-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-18"
+              id="dosis-18"
+              label="dosis-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-18"
+              id="rute-18"
+              label="rute-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-18"
+              id="frekuensi-18"
+              label="frekuensi-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-18"
+              id="tgl-dosis-terakhir-18"
+              label="tgl-dosis-terakhir-18"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-18"
+              id="saat-mrs-18"
+              label="saat-mrs-18"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-18"
+              id="saat-mrs-18"
+              label="saat-mrs-18"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-18"
+              id="transfer-pindah-18"
+              label="transfer-pindah-18"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-18"
+              id="transfer-pindah-18"
+              label="transfer-pindah-18"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-18"
+              id="saat-krs-18"
+              label="saat-krs-18"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-18"
+              id="saat-krs-18"
+              label="saat-krs-18"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-18"
+              id="nama-dokter-18"
+              label="nama-dokter-18"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_18"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_18"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_18"
+              id="paraf_ex_ttd_nama_dokter_18"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_18"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_18"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-19"
+              id="asal-pemakaian-obat-19"
+              label="asal-pemakaian-obat-19"
+              myid="check_cara"
+            />
+          </td>
+
+          <td style="text-align: center">19</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-19"
+              id="nama-obat-19"
+              label="nama-obat-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-19"
+              id="dosis-19"
+              label="dosis-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-19"
+              id="rute-19"
+              label="rute-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-19"
+              id="frekuensi-19"
+              label="frekuensi-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-19"
+              id="tgl-dosis-terakhir-19"
+              label="tgl-dosis-terakhir-19"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-19"
+              id="saat-mrs-19"
+              label="saat-mrs-19"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-19"
+              id="saat-mrs-19"
+              label="saat-mrs-19"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-19"
+              id="transfer-pindah-19"
+              label="transfer-pindah-19"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-19"
+              id="transfer-pindah-19"
+              label="transfer-pindah-19"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-19"
+              id="saat-krs-19"
+              label="saat-krs-19"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-19"
+              id="saat-krs-19"
+              label="saat-krs-19"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-19"
+              id="nama-dokter-19"
+              label="nama-dokter-19"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_19"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_19"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_19"
+              id="paraf_ex_ttd_nama_dokter_19"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_19"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_19"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="asal-pemakaian-obat-20"
+              id="asal-pemakaian-obat-20"
+              label="asal-pemakaian-obat-20"
+              myid="check_cara"
+            />
+          </td>
+
+          <td style="text-align: center">20</td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-obat-20"
+              id="nama-obat-20"
+              label="nama-obat-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="dosis-20"
+              id="dosis-20"
+              label="dosis-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="rute-20"
+              id="rute-20"
+              label="rute-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="frekuensi-20"
+              id="frekuensi-20"
+              label="frekuensi-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="tgl-dosis-terakhir-20"
+              id="tgl-dosis-terakhir-20"
+              label="tgl-dosis-terakhir-20"
+              placeholder="dd/mm/yyyy"
+              class="datepicker2"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-mrs-20"
+              id="saat-mrs-20"
+              label="saat-mrs-20"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-mrs-20"
+              id="saat-mrs-20"
+              label="saat-mrs-20"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="transfer-pindah-20"
+              id="transfer-pindah-20"
+              label="transfer-pindah-20"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="transfer-pindah-20"
+              id="transfer-pindah-20"
+              label="transfer-pindah-20"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>L</p>
+            <input
+              type="radio"
+              name="saat-krs-20"
+              id="saat-krs-20"
+              label="saat-krs-20"
+              value="L"
+              myid="check_cara"
+            />
+          </td>
+          <td style="text-align: center">
+            <p>S</p>
+            <input
+              type="radio"
+              name="saat-krs-20"
+              id="saat-krs-20"
+              label="saat-krs-20"
+              value="S"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <input
+              style="width: 100%; padding: 0"
+              type="text"
+              name="nama-dokter-20"
+              id="nama-dokter-20"
+              label="nama-dokter-20"
+              myid="check_cara"
+            />
+          </td>
+          <td>
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_nama_dokter_20"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_nama_dokter_20"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_nama_dokter_20"
+              id="paraf_ex_ttd_nama_dokter_20"
+              data-name="paraf"
+              data-id="ex_ttd_nama_dokter_20"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_nama_dokter_20"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table width="100%" class="table table-bordered">
+      <tbody>
+        <tr>
+          <td width="50%">
+            <p>TANDA TANGAN DPJP</p>
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <input
+                name="ttd_master"
+                type="hidden"
+                id="diagnosa_pentablet_1"
+                value="{ttd_master}"
+              />
+              <div
+                style="display: {DISPTTD1_PEN}; width: 100px; height: 20px;"
+                id="back_img_1"
+              ></div>
+              <img
+                width="100px"
+                height="100px"
+                id="image_ttd_1"
+                src="{ttd_master}"
+                style="display:{DISPTTD1}"
+              />
+              <br />
+              <input
+                type="hidden"
+                id="id_doctor"
+                value="{doc_id}"
+                myid="check_cara"
+                name="id_doctor"
+              />
+            </div>
+          </td>
+          <td style="vertical-align: top">
+            <label>PETUGAS PEREVIEW</label>
+            <input
+              type="text"
+              name="petugas-pereview"
+              id="petugas-pereview"
+              label="petugas-pereview"
+              myid="check_cara"
+              style="border: none; border-bottom: 2px dotted"
+            />
+            <div
+              style="display: flex; flex-direction: column; align-items: center"
+            >
+              <label
+                class="label text-center"
+                id="def_img_ex_ttd_petugas_pereview"
+                style="font-style: italic; width: 100px; height: 100px"
+                >paraf</label
+              >
+              <label class="label text-center">
+                <img
+                  class="text-center"
+                  id="image_paraf_ex_ttd_petugas_pereview"
+                  src=""
+                  style="display: none"
+              /></label>
+              <input
+                myid="check_cara"
+                type="hidden"
+                name="paraf_ex_ttd_petugas_pereview"
+                id="paraf_ex_ttd_petugas_pereview"
+                data-name="paraf"
+                data-id="ex_ttd_petugas_pereview"
+              />
+              <br />
+              <label class="label text-center">
+                <a
+                  id="CreateTTD"
+                  class="btn btn-default btn-xs pointer text-center"
+                  data-id="ex_ttd_petugas_pereview"
+                  style="text-align: center"
+                >
+                  <i class="fa fa-edit"> </i>
+                  PENTABLET
+                </a>
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td width="50%">
+            <label>NAMA DPJP</label>
+            <input
+              type="text"
+              name="nama-dpjp"
+              id="nama-dpjp"
+              label="nama-dpjp"
+              myid="check_cara"
+              value="{VDPJP}"
+              style="border: none; border-bottom: 2px dotted"
+            />
+          </td>
+          <td>
+            <label>NAMA APOTEKER</label>
+            <input
+              type="text"
+              name="nama-apoteker"
+              id="nama-apoteker"
+              label="nama-apoteker"
+              myid="check_cara"
+              style="border: none; border-bottom: 2px dotted"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        var jk = "{JK}";
+        var img = "{IMG}";
+        var daftar = "{DAFTAR}";
+        if (jk == "f") {
+          $('[name="jk"][value="perempuan"]')
+            .prop("checked", true)
+            .trigger("change");
+        } else {
+          $('[name="jk"][value="laki - laki"]')
+            .prop("checked", true)
+            .trigger("change");
+        }
+
+        if (img != "") {
+          $("#img_mata1").attr("src", img);
+        }
+
+        if (daftar == "t") {
+          var ifirm = "{IFIRM}";
+          $('[name="nama_perusahaan"]').val(ifirm);
+
+          var nopeg = "{NOPEG}";
+          $('[name="no_kartu"]').val(nopeg);
+        }
+
+        AskepForm.showCombo($("select[name=dokter]"), "doctor");
+
+        $(document)
+          .off("change", "#dokter")
+          .on("change", "#dokter", function () {
+            SetDokterName();
+          });
+      });
+
+      function SetDokterName() {
+        var dokter_txt = $("#dokter option:selected").text(),
+          dokter_img = $("#dokter option:selected").attr("data-ttd");
+        $("#paraf_txt_4").val(dokter_txt);
+
+        if (dokter_img != "") {
+          $("#back_img_4").text("");
+          $("#back_img_4").css("display", "none");
+          $("#image_paraf_4").css("display", "");
+          $("#image_paraf_4").attr("src", "" + dokter_img + "");
+          $("#paraf_4").val(dokter_img);
+        }
+      }
+
+      function ttd_paraf(id) {
+        PopupCenter(
+          "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+          "pop",
+          800,
+          400
+        );
+      }
+
+      function tampil_ttd_2(x, y) {
+        $("#back_img_" + x).text("");
+        $("#back_img_" + x).css("display", "none");
+        $("#paraf_" + x).val(y);
+        $("#image_paraf_" + x).css("display", "");
+        $("#image_paraf_" + x).attr("src", "" + y + "");
+      }
+
+      // Untuk Keperluan TTD
+      function SetTTD1() {
+        $('input[data-name="paraf"]').each(function () {
+          var id = $(this).attr("data-id"),
+            ttd = $(this).val();
+
+          ImageToText(id, ttd);
+        });
+      }
+
+      function SetTTD() {
+        $('input[data-name="paraf"]').each(function () {
+          var id = $(this).attr("data-id");
+          var ttd = $(this).val();
+          var def = "paraf";
+          if (ttd == "") {
+            $("#back_img_" + id).text(def);
+            $("#back_img_" + id).css({
+              display: "",
+              "font-style": "italic",
+              width: 200,
+              height: 100,
+              "text-align": "center",
+            });
+            $("#image_paraf_" + id).css("display", "none");
+          } else {
+            $("#back_img_" + id).text("");
+            $("#back_img_" + id).css("display", "none");
+            $("#image_paraf_" + id).css("display", "");
+            $("#image_paraf_" + id).attr("src", "" + ttd + "");
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

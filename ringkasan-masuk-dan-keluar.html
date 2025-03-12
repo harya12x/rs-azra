@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RINGKASAN MASUK DAN KELUAR</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    .title {
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD1();
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
+  <body>
+    <h1 class="title">RINGKASAN MASUK DAN KELUAR</h1>
+
+    <table class="table">
+      <tr>
+        <td>
+          <table class="table">
+            <tr>
+              <td colspan="4"><p>NAMA LENGKAP</p></td>
+            </tr>
+            <tr>
+              <td colspan="4"><h1>{VNAMA_PASIEN}</h1></td>
+            </tr>
+            <tr>
+              <td style="width: 200px">NOREG</td>
+              <td>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="noreg"
+                  id="noreg"
+                  label="noreg"
+                  myid="check_cara"
+                />
+              </td>
+              <td style="width: 200px">NORM</td>
+              <td style="width: 600px">
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="no_rm"
+                  id="no_rm"
+                  label="no_rm"
+                  value="{NO_RM}"
+                  myid="check_cara"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 200px">TANGGAL LAHIR</td>
+              <td>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="tanggal-lahir"
+                  id="tanggal-lahir"
+                  class="datepicker"
+                  label="tanggal-lahir"
+                  value="{VBIRTH_DATE}"
+                  myid="check_cara"
+                />
+              </td>
+              <td style="width: 200px">UMUR</td>
+              <td>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="umur"
+                  id="umur"
+                  label="umur"
+                  value="{VAGEREGIS}"
+                  myid="check_cara"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 200px">DIRAWAT YG KE</td>
+              <td>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="dirawat-yg-ke"
+                  id="dirawat-yg-ke"
+                  label="dirawat-yg-ke"
+                  myid="check_cara"
+                />
+              </td>
+              <td style="width: 200px">STATUS</td>
+              <td>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="status-pernikahan"
+                  id="status-pernikahan"
+                  label="status-pernikahan"
+                  myid="check_cara"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 200px">SUKU</td>
+              <td>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="suku"
+                  id="suku"
+                  label="suku"
+                  myid="check_cara"
+                />
+              </td>
+              <td style="width: 200px">AGAMA</td>
+              <td>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="agama"
+                  id="agama"
+                  label="agama"
+                  myid="check_cara"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 200px">PENDIDIKAN</td>
+              <td>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="pendidikan"
+                  id="pendidikan"
+                  label="pendidikan"
+                  myid="check_cara"
+                />
+              </td>
+              <td style="width: 200px">PEKERJAAN</td>
+              <td>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="pekerjaan"
+                  id="pekerjaan"
+                  label="pekerjaan"
+                  myid="check_cara"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 200px">JENIS KELAMIN</td>
+              <td>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="jenis-kelamin"
+                  id="jenis-kelamin"
+                  label="jenis-kelamin"
+                  value="{VSEX}"
+                  myid="check_cara"
+                />
+              </td>
+              <td style="width: 200px">TELP</td>
+              <td>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="telepon"
+                  id="telepon"
+                  label="telepon"
+                  myid="check_cara"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>ALAMAT</td>
+              <td>
+                <textarea
+                  style="width: 100%; padding: 0"
+                  rows="3"
+                  type="textarea"
+                  name="alamat"
+                  id="alamat"
+                  label="alamat"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+              <td style="width: 200px">KELUARGA TERDEKAT / ALAMAT</td>
+              <td>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="keluarga-terdekat"
+                  id="keluarga-terdekat"
+                  label="keluarga-terdekat"
+                  myid="check_cara"
+                />
+                <textarea
+                  style="width: 100%; padding: 0; margin-top: 2px"
+                  rows="2"
+                  type="textarea"
+                  name="alamat-keluarga-terdekat"
+                  id="alamat-keluarga-terdekat"
+                  label="alamat-keluarga-terdekat"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>Golongan Darah</td>
+              <td>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="golongan-darah"
+                  id="golongan-darah"
+                  label="golongan-darah"
+                  myid="check_cara"
+                />
+              </td>
+              <td style="width: 200px">Kelompok Pasien</td>
+              <td>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="kelompok-pasien"
+                  id="kelompok-pasien"
+                  label="kelompok-pasien"
+                  myid="check_cara"
+                />
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table class="table">
+            <tr>
+              <td style="width: 200px">NAMA AYAH / SUAMI</td>
+              <td>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="nama-ayah-suami"
+                  id="nama-ayah-suami"
+                  label="nama-ayah-suami"
+                  myid="check_cara"
+                />
+              </td>
+              <td style="width: 200px">NAMA IBU / ISTRI</td>
+              <td style="width: 600px">
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="nama-ibu-istri"
+                  id="nama-ibu-istri"
+                  label="nama-ibu-istri"
+                  myid="check_cara"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 200px">PEKERJAAN AYAH</td>
+              <td>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="pekerjaan-ayah"
+                  id="pekerjaan-ayah"
+                  label="pekerjaan-ayah"
+                  myid="check_cara"
+                />
+              </td>
+              <td style="width: 200px">PEKERJAAN IBU</td>
+              <td style="width: 600px">
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="pekerjaan-ibu"
+                  id="pekerjaan-ibu"
+                  label="pekerjaan-ibu"
+                  myid="check_cara"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 200px">DIKIRIM OLEH</td>
+              <td>
+                <textarea
+                  style="width: 100%; padding: 0"
+                  rows="3"
+                  type="textarea"
+                  name="dikirim-oleh"
+                  id="dikirim-oleh"
+                  label="dikirim-oleh"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+              <td style="width: 200px">DIAGNOSA KERJA / BANDING</td>
+              <td style="width: 600px">
+                <textarea
+                  style="width: 100%; padding: 0"
+                  rows="3"
+                  type="textarea"
+                  name="diagnosa-kerja"
+                  id="diagnosa-kerja"
+                  label="diagnosa-kerja"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table class="table">
+            <thead>
+              <tr>
+                <th colspan="4" style="text-align: center">
+                  <b>MASUK & KELUAR</b>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Masuk Tanggal</td>
+                <td>
+                  <input
+                    type="text"
+                    name="masuk-tanggal"
+                    id="masuk-tanggal"
+                    label="masuk-tanggal"
+                    class="datepicker"
+                    myid="check_cara"
+                    placeholder="dd/mm/yyyy"
+                  />
+                  , Pukul
+                  <input
+                    type="text"
+                    name="jam-masuk"
+                    id="jam-masuk"
+                    label="jam-masuk"
+                    mtype="pukul"
+                    placeholder="00:00"
+                    myid="check_cara"
+                  />
+                </td>
+                <td>Keluar Tanggal</td>
+                <td>
+                  <input
+                    type="text"
+                    name="keluar-tanggal"
+                    id="keluar-tanggal"
+                    label="keluar-tanggal"
+                    class="datepicker"
+                    myid="check_cara"
+                    placeholder="dd/mm/yyyy"
+                  />
+                  , Pukul
+                  <input
+                    type="text"
+                    name="jam-keluar"
+                    id="jam-keluar"
+                    label="jam-keluar"
+                    mtype="pukul"
+                    placeholder="00:00"
+                    myid="check_cara"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>LAMA RAWAT</td>
+                <td>
+                  <input
+                    style="width: 100%; padding: 0"
+                    type="text"
+                    name="lama-rawat"
+                    id="lama-rawat"
+                    label="lama-rawat"
+                    myid="check_cara"
+                  />
+                </td>
+                <td>SEBAB DIRAWAT</td>
+                <td>
+                  <input
+                    style="width: 100%; padding: 0"
+                    type="text"
+                    name="sebab-dirawat"
+                    id="sebab-dirawat"
+                    label="sebab-dirawat"
+                    myid="check_cara"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>KEADAAN KELUAR</td>
+                <td>
+                  <input
+                    style="width: 100%; padding: 0"
+                    type="text"
+                    name="keadaan-keluar"
+                    id="keadaan-keluar"
+                    label="keadaan-keluar"
+                    myid="check_cara"
+                  />
+                </td>
+                <td>CARA KELUAR</td>
+                <td>
+                  <input
+                    style="width: 100%; padding: 0"
+                    type="text"
+                    name="cara-keluar"
+                    id="cara-keluar"
+                    label="cara-keluar"
+                    myid="check_cara"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>SEBAB KEMATIAN</td>
+                <td>
+                  <input
+                    style="width: 100%; padding: 0"
+                    type="text"
+                    name="sebab-kematian"
+                    id="sebab-kematian"
+                    label="sebab-kematian"
+                    myid="check_cara"
+                  />
+                </td>
+                <td>PENYEBAB LUAR CIDERA</td>
+                <td>
+                  <input
+                    style="width: 100%; padding: 0"
+                    type="text"
+                    name="penyebab-luar-cidera"
+                    id="penyebab-luar-cidera"
+                    label="penyebab-luar-cidera"
+                    myid="check_cara"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>RUANG</td>
+                <td>
+                  <input
+                    type="radio"
+                    name="tempat-ruang"
+                    id="tempat-ruang"
+                    label="tempat-ruang"
+                    value="Laki-laki"
+                    myid="check_cara"
+                  />
+                  <label for="">Laki - laki /</label>
+                  <input
+                    type="radio"
+                    name="tempat-ruang"
+                    id="tempat-ruang"
+                    label="tempat-ruang"
+                    value="Perempuan"
+                    myid="check_cara"
+                  />
+                  <label for="">Perempuan</label>
+                </td>
+                <td>KELAS</td>
+                <td>
+                  <input
+                    style="width: 100%; padding: 0"
+                    type="text"
+                    name="kelas"
+                    id="kelas"
+                    label="kelas"
+                    myid="check_cara"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>BAGIAN PELAYANAN RIWAYAT INAP</td>
+                <td>
+                  <input
+                    style="width: 100%; padding: 0"
+                    type="text"
+                    name="bagian-pelayanan-rawat-inap"
+                    id="bagian-pelayanan-rawat-inap"
+                    label="bagian-pelayanan-rawat-inap"
+                    myid="check_cara"
+                  />
+                </td>
+                <td colspan="2">
+                  <input
+                    style="width: 100%; padding: 0"
+                    type="text"
+                    name="bagian-pelayanan-rawat-inap-2"
+                    id="bagian-pelayanan-rawat-inap-2"
+                    label="bagian-pelayanan-rawat-inap-2"
+                    myid="check_cara"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table class="table">
+            <tr>
+              <td style="text-align: center" rowspan="2">DIAGNOSA</td>
+              <td>
+                <label for="">A. PENYAKIT/DIAGNOSA UTAMA :</label>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="penyakit-diagnosa-utama"
+                  id="penyakit-diagnosa-utama"
+                  label="penyakit-diagnosa-utama"
+                  myid="check_cara"
+                />
+              </td>
+              <td>
+                <label for="">C. KODE ICD-10/ DIAGNOSA UTAMA :</label>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="kode-icd-10-diagnosa-utama"
+                  id="kode-icd-10-diagnosa-utama"
+                  label="kode-icd-10-diagnosa-utama"
+                  myid="check_cara"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="">B. KOMPLIKASI/DIAGNOSA SEKUNDER :</label>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="komplikasi-diagnosa-sekunder"
+                  id="komplikasi-diagnosa-sekunder"
+                  label="komplikasi-diagnosa-sekunder"
+                  myid="check_cara"
+                />
+              </td>
+              <td>
+                <label for="">D. KODE ICD-10/ DIAGNOSA SEKUNDER :</label>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="kode-icd-10-diagnosa-sekunder"
+                  id="kode-icd-10-diagnosa-sekunder"
+                  label="kode-icd-10-diagnosa-sekunder"
+                  myid="check_cara"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align: center" rowspan="3">OPERASI / TINDAKAN</td>
+              <td>
+                <label for="">OPERASI/TINDAKAN I :</label>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="operasi-tindakan-i"
+                  id="operasi-tindakan-i"
+                  label="operasi-tindakan-i"
+                  myid="check_cara"
+                />
+              </td>
+              <td>
+                <label for="">E: Kode ICO/PIM :</label>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="e-kode-ico-pim"
+                  id="e-kode-ico-pim"
+                  label="e-kode-ico-pim"
+                  myid="check_cara"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="">OPERASI/TINDAKAN II :</label>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="operasi-tindakan-ii"
+                  id="operasi-tindakan-ii"
+                  label="operasi-tindakan-ii"
+                  myid="check_cara"
+                />
+              </td>
+              <td>
+                <label for="">F: Kode ICO/PIM :</label>
+                <input
+                  style="width: 100%; padding: 0"
+                  type="text"
+                  name="f-kode-ico-pim"
+                  id="f-kode-ico-pim"
+                  label="f-kode-ico-pim"
+                  myid="check_cara"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="">TANGGAL OPERASI:</label>
+                <input
+                  type="text"
+                  name="tgl-operasi"
+                  id="tgl-operasi"
+                  label="tgl-operasi"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="tgl-operasi-2"
+                  id="tgl-operasi-2"
+                  label="tgl-operasi-2"
+                  myid="check_cara"
+                  class="datepicker"
+                  placeholder="dd/mm/yyyy"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label>KODE REFERAL :</label>
+                <input
+                  type="text"
+                  name="kode-referal"
+                  id="kode-referal"
+                  label="kode-referal"
+                  myid="check_cara"
+                />
+              </td>
+              <td>
+                <label for="">DAERAH :</label>
+                <input
+                  type="text"
+                  name="daerah"
+                  id="daerah"
+                  label="daerah"
+                  myid="check_cara"
+                />
+              </td>
+              <td>
+                <label for="">BTL :</label>
+                <input
+                  type="text"
+                  name="btl"
+                  id="btl"
+                  label="btl"
+                  myid="check_cara"
+                />
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="text-align: center">TANDA TANGAN DAN NAMA DOKTER</th>
+                <th style="text-align: center">TANDA TANGAN DAN NAMA PASIEN</th>
+                <th style="text-align: center">NAMA PETUGAS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                    "
+                  >
+                    <input
+                      name="ttd_master"
+                      type="hidden"
+                      id="diagnosa_pentablet_1"
+                      value="{ttd_master}"
+                    />
+                    <div
+                      style="display: {DISPTTD1_PEN}; width: 100px; height: 20px;"
+                      id="back_img_1"
+                    ></div>
+                    <img
+                      width="100px"
+                      height="100px"
+                      id="image_ttd_1"
+                      src="{ttd_master}"
+                      style="display:{DISPTTD1}"
+                    />
+                    <br />
+                    <input
+                      type="hidden"
+                      id="id_doctor"
+                      value="{doc_id}"
+                      myid="check_cara"
+                      name="id_doctor"
+                    />
+
+                    <label for=""
+                      >(
+                      <input
+                        style="border: none; border-bottom: 1px solid"
+                        type="text"
+                        name="dpjp"
+                        id="dpjp"
+                        label="dpjp"
+                        myid="check_cara"
+                        value="{VDPJP}"
+                      />
+                      )</label
+                    >
+                  </div>
+                </td>
+                <td>
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      justify-content: end;
+                      height: 150px;
+                    "
+                  >
+                    <label style="border-bottom: 1px dotted" for="">
+                      {VNAMA_PASIEN}
+                    </label>
+                  </div>
+                </td>
+                <td>
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                    "
+                  >
+                    <label
+                      class="label text-center"
+                      id="def_img_ex_ttd_petugas"
+                      style="font-style: italic; width: 100px; height: 100px"
+                      >paraf</label
+                    >
+                    <label class="label text-center">
+                      <img
+                        class="text-center"
+                        id="image_paraf_ex_ttd_petugas"
+                        src=""
+                        style="display: none"
+                    /></label>
+                    <input
+                      myid="check_cara"
+                      type="hidden"
+                      name="paraf_ex_ttd_petugas"
+                      id="paraf_ex_ttd_petugas"
+                      data-name="paraf"
+                      data-id="ex_ttd_petugas"
+                    />
+
+                    <label class="label text-center">
+                      <a
+                        id="CreateTTD"
+                        class="btn btn-default btn-xs pointer text-center"
+                        data-id="ex_ttd_petugas"
+                        style="text-align: center"
+                      >
+                        <i class="fa fa-edit"> </i>
+                        PENTABLET
+                      </a>
+                    </label>
+                    <label for=""
+                      >(
+                      <input
+                        style="border: none; border-bottom: 1px solid"
+                        type="text"
+                        name="ttd-nama-petugas"
+                        id="ttd-nama-petugas"
+                        label="ttd-nama-petugas"
+                        myid="check_cara"
+                      />
+                      )</label
+                    >
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        var jk = "{JK}";
+        var img = "{IMG}";
+        var daftar = "{DAFTAR}";
+        if (jk == "f") {
+          $('[name="jk"][value="perempuan"]')
+            .prop("checked", true)
+            .trigger("change");
+        } else {
+          $('[name="jk"][value="laki - laki"]')
+            .prop("checked", true)
+            .trigger("change");
+        }
+
+        if (img != "") {
+          $("#img_mata1").attr("src", img);
+        }
+
+        if (daftar == "t") {
+          var ifirm = "{IFIRM}";
+          $('[name="nama_perusahaan"]').val(ifirm);
+
+          var nopeg = "{NOPEG}";
+          $('[name="no_kartu"]').val(nopeg);
+        }
+
+        AskepForm.showCombo($("select[name=dokter]"), "doctor");
+
+        $(document)
+          .off("change", "#dokter")
+          .on("change", "#dokter", function () {
+            SetDokterName();
+          });
+      });
+
+      function SetDokterName() {
+        var dokter_txt = $("#dokter option:selected").text(),
+          dokter_img = $("#dokter option:selected").attr("data-ttd");
+        $("#paraf_txt_4").val(dokter_txt);
+
+        if (dokter_img != "") {
+          $("#back_img_4").text("");
+          $("#back_img_4").css("display", "none");
+          $("#image_paraf_4").css("display", "");
+          $("#image_paraf_4").attr("src", "" + dokter_img + "");
+          $("#paraf_4").val(dokter_img);
+        }
+      }
+
+      function ttd_paraf(id) {
+        PopupCenter(
+          "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+          "pop",
+          800,
+          400
+        );
+      }
+
+      function tampil_ttd_2(x, y) {
+        $("#back_img_" + x).text("");
+        $("#back_img_" + x).css("display", "none");
+        $("#paraf_" + x).val(y);
+        $("#image_paraf_" + x).css("display", "");
+        $("#image_paraf_" + x).attr("src", "" + y + "");
+      }
+
+      // Untuk Keperluan TTD
+      function SetTTD1() {
+        $('input[data-name="paraf"]').each(function () {
+          var id = $(this).attr("data-id"),
+            ttd = $(this).val();
+
+          ImageToText(id, ttd);
+        });
+      }
+
+      function SetTTD() {
+        $('input[data-name="paraf"]').each(function () {
+          var id = $(this).attr("data-id");
+          var ttd = $(this).val();
+          var def = "paraf";
+          if (ttd == "") {
+            $("#back_img_" + id).text(def);
+            $("#back_img_" + id).css({
+              display: "",
+              "font-style": "italic",
+              width: 200,
+              height: 100,
+              "text-align": "center",
+            });
+            $("#image_paraf_" + id).css("display", "none");
+          } else {
+            $("#back_img_" + id).text("");
+            $("#back_img_" + id).css("display", "none");
+            $("#image_paraf_" + id).css("display", "");
+            $("#image_paraf_" + id).attr("src", "" + ttd + "");
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

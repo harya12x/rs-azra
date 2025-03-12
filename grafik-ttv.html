@@ -1,0 +1,2404 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GRAFIK TTV</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+    .header {
+      font-weight: bold;
+      text-align: center;
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    input[type="time"] {
+      width: 95%;
+    }
+    .chart-container {
+      width: 100%;
+      margin: 20px auto;
+
+      border: 1px solid #ccc;
+    }
+    .chart {
+      width: 100%;
+      height: 400px;
+
+      padding: 0;
+      border: 1px solid black;
+      position: relative;
+    }
+    .tooltip {
+      position: absolute;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 5px;
+      font-size: 12px;
+      pointer-events: none;
+      display: none;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    .grid-line {
+      stroke: #ddd;
+      stroke-width: 1;
+    }
+    .line {
+      stroke-width: 2;
+      fill: none;
+    }
+    .button-container {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+    }
+    .delete-button {
+      background-color: #ff4444;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .delete-button:hover {
+      background-color: #cc0000;
+    }
+    /* Arsiran Garis-garis Hitam */
+    .striped {
+      background: repeating-linear-gradient(
+        45deg,
+        #000 0,
+        #000 5px,
+        transparent 5px,
+        transparent 10px
+      );
+    }
+
+    /* Arsiran Full Hitam */
+    .solid {
+      background-color: #000;
+      color: white; /* Menjaga teks terlihat pada latar belakang hitam */
+    }
+
+    .highlight {
+      border: 2px solid #000;
+    }
+
+    /* Gaya untuk mengindikasikan tombol yang dipilih */
+    .selected {
+      background-color: #ddd;
+    }
+
+    .separator {
+      height: 20px;
+      border-bottom: 2px solid black;
+      margin-bottom: 10px;
+    }
+  </style>
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        $(".datepicker").datepicker({
+          dateFormat: "dd-mm-yy",
+          autoclose: true,
+          todayHighlight: true,
+        });
+      });
+    });
+  </script>
+  <body>
+    <h1 class="header">GRAFIK TTV<br /></h1>
+
+    <p style="text-align: right">
+      RI
+      <input
+        type="text"
+        id="ri"
+        name="ri"
+        myid="check_cara"
+        placeholder="..."
+        style="width: 300px"
+        fdprocessedid="wfdcf"
+      />
+    </p>
+
+    <table class="table table-bordered" border="2">
+      <tbody>
+        <tr>
+          <td>
+            <b>NAMA</b>:
+            <input
+              type="text"
+              id="nama"
+              name="nama"
+              myid="check_cara"
+              placeholder="..."
+              value="{VNAMA_PASIEN}"
+              fdprocessedid="qbrwo6"
+            />
+          </td>
+          <td>
+            <b>NOMOR REKAM MEDIK</b>:
+            <input
+              type="text"
+              id="no_rm"
+              name="no_rm"
+              myid="check_cara"
+              value="{NO_RM}"
+              placeholder="..."
+              fdprocessedid="856vqs"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>TANGGAL LAHIR</b>:
+            <input
+              type="text"
+              id="tgl_lahir"
+              name="tgl_lahir"
+              myid="check_cara"
+              placeholder="dd/mm/yyyy"
+              value="{VBIRTH_DATE}"
+              fdprocessedid="bewwwl"
+            />
+          </td>
+          <td>
+            <b>KELAS</b>:
+            <input
+              type="text"
+              id="kelas"
+              name="kelas"
+              myid="check_cara"
+              placeholder="..."
+              value="{VNAMAKELAS}"
+              fdprocessedid="xbpgc"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <b>UMUR</b>:
+            <input
+              type="text"
+              id="umur"
+              name="umur"
+              myid="check_cara"
+              placeholder="..."
+              value="{VAGEREGIS}"
+              fdprocessedid="2gdg0m"
+            />
+          </td>
+          <td>
+            <b>KAMAR</b>:
+            <input
+              type="text"
+              id="kamar"
+              name="kamar"
+              myid="check_cara"
+              placeholder="..."
+              fdprocessedid="i6uylv"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td><b>Jenis Kelamin</b>: {VSEX}</td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+
+    <button id="showChartBtn" fdprocessedid="5czcc">Show Chart</button
+    ><br /><br />
+
+    <table
+      class="table table-bordered"
+      id="tablettv"
+      name="tablettv"
+      border="2"
+    >
+      <tbody>
+        <tr>
+          <th rowspan="2">TANGGAL</th>
+          <th rowspan="2">WAKTU</th>
+          <th colspan="2" rowspan="2">NADI/SUHU</th>
+          <th rowspan="2">Keterangan</th>
+        </tr>
+        <tr></tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              class="datepicker"
+              name="tanggal_ke_1"
+              id="tanggal_ke_1"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="hgep8c"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="waktu_ke_1"
+              id="waktu_ke_1"
+              placeholder="00:00"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="eedw4"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="nadi_awal_ke_1"
+              placeholder="input nadi"
+              id="nadi_awal_ke_1"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="73ynqe"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="suhu_ke_1"
+              placeholder="input suhu"
+              id="suhu_ke_1"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="pm97p8"
+            />
+          </td>
+
+          <td rowspan="16">
+            Keterangan<br />
+            <u>NADI</u><br /><br />
+            R = Ireguler<br />
+            K = Kuat<br />
+            L = Lemah<br />
+            T = Tidak Teraba
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              class="datepicker"
+              name="tanggal_ke_2"
+              id="tanggal_ke_2"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="8q5jo8"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="waktu_ke_2"
+              id="waktu_ke_2"
+              placeholder="00:00"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="6d6nkr"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="nadi_awal_ke_2"
+              placeholder="input nadi"
+              id="nadi_awal_ke_2"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="ql3d3d"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="suhu_ke_2"
+              placeholder="input suhu"
+              id="suhu_ke_2"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="tj07a9"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              class="datepicker"
+              name="tanggal_ke_3"
+              id="tanggal_ke_3"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="ufu4ad"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="waktu_ke_3"
+              id="waktu_ke_3"
+              placeholder="00:00"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="aezvxa"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="nadi_awal_ke_3"
+              placeholder="input nadi"
+              id="nadi_awal_ke_3"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="vqc2r"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="suhu_ke_3"
+              id="suhu_ke_3"
+              placeholder="input suhu"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="qn2oma"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              class="datepicker"
+              name="tanggal_ke_4"
+              id="tanggal_ke_4"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="tc3di"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="waktu_ke_4"
+              id="waktu_ke_4"
+              placeholder="00:00"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="11bszm"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="nadi_awal_ke_4"
+              placeholder="input nadi"
+              id="nadi_awal_ke_4"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="etb3uc"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="suhu_ke_4"
+              placeholder="input suhu"
+              id="suhu_ke_4"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="wt2vx"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              class="datepicker"
+              name="tanggal_ke_5"
+              id="tanggal_ke_5"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="hzmnz"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="waktu_ke_5"
+              id="waktu_ke_5"
+              placeholder="00:00"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="g3upms"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="nadi_awal_ke_5"
+              placeholder="input nadi"
+              id="nadi_awal_ke_5"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="ya1rzk"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="suhu_ke_5"
+              placeholder="input suhu"
+              id="suhu_ke_5"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="uy9og"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              class="datepicker"
+              name="tanggal_ke_6"
+              id="tanggal_ke_6"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="utby3x"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="waktu_ke_6"
+              id="waktu_ke_6"
+              placeholder="00:00"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="kidd"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="nadi_awal_ke_6"
+              placeholder="input nadi"
+              id="nadi_awal_ke_6"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="xfiit"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="suhu_ke_6"
+              placeholder="input suhu"
+              id="suhu_ke_6"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="myod5s"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              class="datepicker"
+              name="tanggal_ke_7"
+              id="tanggal_ke_7"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="oxep2i"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="waktu_ke_7"
+              id="waktu_ke_7"
+              placeholder="00:00"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="egzeq8"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="nadi_awal_ke_7"
+              placeholder="input nadi"
+              id="nadi_awal_ke_7"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="3kzuml"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="suhu_ke_7"
+              placeholder="input suhu"
+              id="suhu_ke_7"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="ucxbil"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              class="datepicker"
+              name="tanggal_ke_8"
+              id="tanggal_ke_8"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="f7j1gt"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="waktu_ke_8"
+              id="waktu_ke_8"
+              placeholder="00:00"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="wqnzs"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="nadi_awal_ke_8"
+              placeholder="input nadi"
+              id="nadi_awal_ke_8"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="art0q"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="suhu_ke_8"
+              placeholder="input suhu"
+              id="suhu_ke_8"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="xdqdyaz"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              class="datepicker"
+              name="tanggal_ke_9"
+              id="tanggal_ke_9"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="pubo9h"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="waktu_ke_9"
+              id="waktu_ke_9"
+              placeholder="00:00"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="fb2d9u"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="nadi_awal_ke_9"
+              placeholder="input nadi"
+              id="nadi_awal_ke_9"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="vt1p2a"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="suhu_ke_9"
+              placeholder="input suhu"
+              id="suhu_ke_9"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="zvdla"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              class="datepicker"
+              name="tanggal_ke_10"
+              id="tanggal_ke_10"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="ttt4lv"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="waktu_ke_10"
+              id="waktu_ke_10"
+              placeholder="00:00"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="o3vqwq"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="nadi_awal_ke_10"
+              placeholder="input nadi"
+              id="nadi_awal_ke_10"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="dm7ln"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="suhu_ke_10"
+              placeholder="input suhu"
+              id="suhu_ke_10"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="jtgmlp"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              class="datepicker"
+              name="tanggal_ke_11"
+              id="tanggal_ke_11"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="8p1cf"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="waktu_ke_11"
+              id="waktu_ke_11"
+              placeholder="00:00"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="5azh4d"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="nadi_awal_ke_11"
+              placeholder="input nadi"
+              id="nadi_awal_ke_11"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="adnldb"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="suhu_ke_11"
+              placeholder="input suhu"
+              id="suhu_ke_11"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="f2v0hn"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              class="datepicker"
+              name="tanggal_ke_12"
+              id="tanggal_ke_12"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="9ws7ju"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="waktu_ke_12"
+              id="waktu_ke_12"
+              placeholder="00:00"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="x5uo"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="nadi_awal_ke_12"
+              placeholder="input nadi"
+              id="nadi_awal_ke_12"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="qmvarg"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="suhu_ke_12"
+              placeholder="input suhu"
+              id="suhu_ke_12"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="t768lv"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              class="datepicker"
+              name="tanggal_ke_13"
+              id="tanggal_ke_13"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="590zr4"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="waktu_ke_13"
+              id="waktu_ke_13"
+              placeholder="00:00"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="fapq3o"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="nadi_awal_ke_13"
+              placeholder="input nadi"
+              id="nadi_awal_ke_13"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="mj8wan"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="suhu_ke_13"
+              placeholder="input suhu"
+              id="suhu_ke_13"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="ny679g"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              class="datepicker"
+              name="tanggal_ke_14"
+              id="tanggal_ke_14"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="hhsz2i"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="waktu_ke_14"
+              id="waktu_ke_14"
+              placeholder="00:00"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="4jbqlak"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="nadi_awal_ke_14"
+              placeholder="input nadi"
+              id="nadi_awal_ke_14"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="jmyg68"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="suhu_ke_14"
+              placeholder="input suhu"
+              id="suhu_ke_14"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="u56wek"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              class="datepicker"
+              name="tanggal_ke_15"
+              id="tanggal_ke_15"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="676j8"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="waktu_ke_15"
+              id="waktu_ke_15"
+              placeholder="00:00"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="r4l73"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="nadi_awal_ke_15"
+              placeholder="input nadi"
+              id="nadi_awal_ke_15"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="sm4lfh"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="suhu_ke_15"
+              placeholder="input suhu"
+              id="suhu_ke_15"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="prhxt"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input
+              type="text"
+              class="datepicker"
+              name="tanggal_ke_16"
+              id="tanggal_ke_16"
+              placeholder="dd/mm/yyyy"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="ds4zrf"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="waktu_ke_16"
+              id="waktu_ke_16"
+              placeholder="00:00"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="oz4of5"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="nadi_awal_ke_16"
+              placeholder="input nadi"
+              id="nadi_awal_ke_16"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="srhr9o"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="suhu_ke_16"
+              placeholder="input suhu"
+              id="suhu_ke_16"
+              myid="check_cara"
+              style="width: 100%; padding: 0"
+              fdprocessedid="6ftrfw"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="chart-container">
+      <h2>GRAFIK TTV</h2>
+      <div class="labels">
+        <p>
+          <b
+            >Nadi : <span style="color: red">●</span> (**Symbol lingkaran (●)
+            berwarna merah menandakan data Nadi**)<br />
+            <b
+              >Suhu : <span style="color: blue">●</span> (**Symbol lingkaran (●)
+              berwarna biru menandakan data Suhu**)
+            </b></b
+          >
+        </p>
+        <b><b> </b></b>
+      </div>
+      <b
+        ><b>
+          <div class="chart" id="chart" name="chart" myid="check_cara">
+            <svg id="chart-svg" style="width: 100%; height: 400px"></svg>
+          </div>
+          <div
+            class="tooltip"
+            id="tooltip"
+            name="tooltip"
+            myid="check_cara"
+          ></div>
+          <div class="labels">
+            <p>Nadi : Merah Suhu : Biru</p>
+          </div>
+        </b></b
+      >
+    </div>
+    <b
+      ><b>
+        <table class="table table-bordered" border="2">
+          <thead>
+            <tr>
+              <th>PERNAFASAN</th>
+              <th>TEKANAN DARAH</th>
+              <th>NADI</th>
+              <th>NAFAS</th>
+              <th>KET.</th>
+              <th>BB/DIET PASIEN</th>
+              <th>NAMA PERAWAT</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_1"
+                  name="pernafasan_1"
+                  myid="check_cara"
+                  fdprocessedid="qm50x8"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_2"
+                  name="pernafasan_2"
+                  myid="check_cara"
+                  fdprocessedid="c8prjl"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_3"
+                  name="pernafasan_3"
+                  myid="check_cara"
+                  fdprocessedid="jj9x53"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_4"
+                  name="pernafasan_4"
+                  myid="check_cara"
+                  fdprocessedid="v2n9cc"
+                />
+              </td>
+              <td>
+                <textarea
+                  style="width: 100%; padding: 0"
+                  rows="3"
+                  type="textarea"
+                  id="pernafasan_5"
+                  name="pernafasan_5"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_6"
+                  name="pernafasan_6"
+                  myid="check_cara"
+                  fdprocessedid="a6sks"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_7"
+                  name="pernafasan_7"
+                  myid="check_cara"
+                  fdprocessedid="r8hojk"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_8"
+                  name="pernafasan_8"
+                  myid="check_cara"
+                  fdprocessedid="u0vt0p"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_9"
+                  name="pernafasan_9"
+                  myid="check_cara"
+                  fdprocessedid="gdjg7b"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_10"
+                  name="pernafasan_10"
+                  myid="check_cara"
+                  fdprocessedid="q6mytq"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_11"
+                  name="pernafasan_11"
+                  myid="check_cara"
+                  fdprocessedid="es0uk"
+                />
+              </td>
+              <td>
+                <textarea
+                  style="width: 100%; padding: 0"
+                  rows="3"
+                  type="textarea"
+                  id="pernafasan_12"
+                  name="pernafasan_12"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_13"
+                  name="pernafasan_13"
+                  myid="check_cara"
+                  fdprocessedid="x5vbwl"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_14"
+                  name="pernafasan_14"
+                  myid="check_cara"
+                  fdprocessedid="i380mx7"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_15"
+                  name="pernafasan_15"
+                  myid="check_cara"
+                  fdprocessedid="6cdirg"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_16"
+                  name="pernafasan_16"
+                  myid="check_cara"
+                  fdprocessedid="qf0hygk"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_17"
+                  name="pernafasan_17"
+                  myid="check_cara"
+                  fdprocessedid="jnebwf"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_18"
+                  name="pernafasan_18"
+                  myid="check_cara"
+                  fdprocessedid="ed90sa"
+                />
+              </td>
+              <td>
+                <textarea
+                  style="width: 100%; padding: 0"
+                  rows="3"
+                  type="textarea"
+                  id="pernafasan_19"
+                  name="pernafasan_19"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_20"
+                  name="pernafasan_20"
+                  myid="check_cara"
+                  fdprocessedid="0qybva"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_21"
+                  name="pernafasan_21"
+                  myid="check_cara"
+                  fdprocessedid="c467w"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_22"
+                  name="pernafasan_22"
+                  myid="check_cara"
+                  fdprocessedid="qi8hcq"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_23"
+                  name="pernafasan_23"
+                  myid="check_cara"
+                  fdprocessedid="2zt6k"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_24"
+                  name="pernafasan_24"
+                  myid="check_cara"
+                  fdprocessedid="lblsoe"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_25"
+                  name="pernafasan_25"
+                  myid="check_cara"
+                  fdprocessedid="i7xiid"
+                />
+              </td>
+              <td>
+                <textarea
+                  style="width: 100%; padding: 0"
+                  rows="3"
+                  type="textarea"
+                  id="pernafasan_26"
+                  name="pernafasan_26"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_27"
+                  name="pernafasan_27"
+                  myid="check_cara"
+                  fdprocessedid="29hevx"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_28"
+                  name="pernafasan_28"
+                  myid="check_cara"
+                  fdprocessedid="60rq4q"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_29"
+                  name="pernafasan_29"
+                  myid="check_cara"
+                  fdprocessedid="pbwloo"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_30"
+                  name="pernafasan_30"
+                  myid="check_cara"
+                  fdprocessedid="my2q3"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_31"
+                  name="pernafasan_31"
+                  myid="check_cara"
+                  fdprocessedid="w5v8c"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_32"
+                  name="pernafasan_32"
+                  myid="check_cara"
+                  fdprocessedid="tc8tr"
+                />
+              </td>
+              <td>
+                <textarea
+                  style="width: 100%; padding: 0"
+                  rows="3"
+                  type="textarea"
+                  id="pernafasan_33"
+                  name="pernafasan_33"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_34"
+                  name="pernafasan_34"
+                  myid="check_cara"
+                  fdprocessedid="6vvk7"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_35"
+                  name="pernafasan_35"
+                  myid="check_cara"
+                  fdprocessedid="r3wrdg"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_36"
+                  name="pernafasan_36"
+                  myid="check_cara"
+                  fdprocessedid="ifs4o"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_37"
+                  name="pernafasan_37"
+                  myid="check_cara"
+                  fdprocessedid="k5ey06"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_38"
+                  name="pernafasan_38"
+                  myid="check_cara"
+                  fdprocessedid="q31i5"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_39"
+                  name="pernafasan_39"
+                  myid="check_cara"
+                  fdprocessedid="7tpy7"
+                />
+              </td>
+              <td>
+                <textarea
+                  style="width: 100%; padding: 0"
+                  rows="3"
+                  type="textarea"
+                  id="pernafasan_40"
+                  name="pernafasan_40"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_41"
+                  name="pernafasan_41"
+                  myid="check_cara"
+                  fdprocessedid="6i4v1f"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_42"
+                  name="pernafasan_42"
+                  myid="check_cara"
+                  fdprocessedid="7dfoih"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_43"
+                  name="pernafasan_43"
+                  myid="check_cara"
+                  fdprocessedid="y5lnpn"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_44"
+                  name="pernafasan_44"
+                  myid="check_cara"
+                  fdprocessedid="jpay1g"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_46"
+                  name="pernafasan_46"
+                  myid="check_cara"
+                  fdprocessedid="s2dc04"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_47"
+                  name="pernafasan_47"
+                  myid="check_cara"
+                  fdprocessedid="f98ie"
+                />
+              </td>
+              <td>
+                <textarea
+                  style="width: 100%; padding: 0"
+                  rows="3"
+                  type="textarea"
+                  id="pernafasan_48"
+                  name="pernafasan_48"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_49"
+                  name="pernafasan_49"
+                  myid="check_cara"
+                  fdprocessedid="hphhoc"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_50"
+                  name="pernafasan_50"
+                  myid="check_cara"
+                  fdprocessedid="5u2l8a"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_51"
+                  name="pernafasan_51"
+                  myid="check_cara"
+                  fdprocessedid="uoimst"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_52"
+                  name="pernafasan_52"
+                  myid="check_cara"
+                  fdprocessedid="8y96ww"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_53"
+                  name="pernafasan_53"
+                  myid="check_cara"
+                  fdprocessedid="qvjnwr"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_54"
+                  name="pernafasan_54"
+                  myid="check_cara"
+                  fdprocessedid="669fx6"
+                />
+              </td>
+              <td>
+                <textarea
+                  style="width: 100%; padding: 0"
+                  rows="3"
+                  type="textarea"
+                  id="pernafasan_55"
+                  name="pernafasan_55"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_56"
+                  name="pernafasan_56"
+                  myid="check_cara"
+                  fdprocessedid="jgd4oi"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_57"
+                  name="pernafasan_57"
+                  myid="check_cara"
+                  fdprocessedid="qnqzs9"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_58"
+                  name="pernafasan_58"
+                  myid="check_cara"
+                  fdprocessedid="rjzp5d"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_59"
+                  name="pernafasan_59"
+                  myid="check_cara"
+                  fdprocessedid="1t8x3"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_60"
+                  name="pernafasan_60"
+                  myid="check_cara"
+                  fdprocessedid="jepil"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_61"
+                  name="pernafasan_61"
+                  myid="check_cara"
+                  fdprocessedid="hzp9jhc"
+                />
+              </td>
+              <td>
+                <textarea
+                  style="width: 100%; padding: 0"
+                  rows="3"
+                  type="textarea"
+                  id="pernafasan_62"
+                  name="pernafasan_62"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_63"
+                  name="pernafasan_63"
+                  myid="check_cara"
+                  fdprocessedid="zkmt2v"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan_14"
+                  name="pernafasan_14"
+                  myid="check_cara"
+                  fdprocessedid="4yov3"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="pernafasan"
+                  name="pernafasan"
+                  myid="check_cara"
+                  fdprocessedid="d311fb"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="tekanan_darah"
+                  name="tekanan_darah"
+                  myid="check_cara"
+                  fdprocessedid="6rtgvj"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nadi"
+                  name="nadi"
+                  myid="check_cara"
+                  fdprocessedid="knl7lr"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nafas"
+                  name="nafas"
+                  myid="check_cara"
+                  fdprocessedid="1g0ysf"
+                />
+              </td>
+              <td>
+                <textarea
+                  style="width: 100%; padding: 0"
+                  rows="3"
+                  type="textarea"
+                  id="ket-1"
+                  name="ket-1"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nafas_13"
+                  name="nafas_13"
+                  myid="check_cara"
+                  fdprocessedid="udv4i7"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nafas_14"
+                  name="nafas_14"
+                  myid="check_cara"
+                  fdprocessedid="g8ormi"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="nfss_8"
+                  name="nfss_8"
+                  myid="check_cara"
+                  fdprocessedid="ejin9"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nfss_9"
+                  name="nfss_9"
+                  myid="check_cara"
+                  fdprocessedid="ht5hzn"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nfss_10"
+                  name="nfss_10"
+                  myid="check_cara"
+                  fdprocessedid="7h90z7"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nfss_11"
+                  name="nfss_11"
+                  myid="check_cara"
+                  fdprocessedid="8oy8w"
+                />
+              </td>
+              <td>
+                <textarea
+                  style="width: 100%; padding: 0"
+                  rows="3"
+                  type="textarea"
+                  id="nfss_12"
+                  name="nfss_12"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nfss_13"
+                  name="nfss_13"
+                  myid="check_cara"
+                  fdprocessedid="n3ita"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nfss_14"
+                  name="nfss_14"
+                  myid="check_cara"
+                  fdprocessedid="f7bbo"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="nf_8"
+                  name="nf_8"
+                  myid="check_cara"
+                  fdprocessedid="4ojgr"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nf_9"
+                  name="nf_9"
+                  myid="check_cara"
+                  fdprocessedid="ltp1bmb"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nf_10"
+                  name="nf_10"
+                  myid="check_cara"
+                  fdprocessedid="aq4095"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nf_11"
+                  name="nf_11"
+                  myid="check_cara"
+                  fdprocessedid="lxme"
+                />
+              </td>
+              <td>
+                <textarea
+                  style="width: 100%; padding: 0"
+                  rows="3"
+                  type="textarea"
+                  id="nf_12"
+                  name="nf_12"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nf_13"
+                  name="nf_13"
+                  myid="check_cara"
+                  fdprocessedid="buqkad"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nf_14"
+                  name="nf_14"
+                  myid="check_cara"
+                  fdprocessedid="ljywck6"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="nps_8"
+                  name="nps_8"
+                  myid="check_cara"
+                  fdprocessedid="fjdpbs"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nps_9"
+                  name="nps_9"
+                  myid="check_cara"
+                  fdprocessedid="z9z3m5"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nps_10"
+                  name="nps_10"
+                  myid="check_cara"
+                  fdprocessedid="1mgnqb"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nps_11"
+                  name="nps_11"
+                  myid="check_cara"
+                  fdprocessedid="kib988"
+                />
+              </td>
+              <td>
+                <textarea
+                  style="width: 100%; padding: 0"
+                  rows="3"
+                  type="textarea"
+                  id="nps_12"
+                  name="nps_12"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nps_13"
+                  name="nps_13"
+                  myid="check_cara"
+                  fdprocessedid="g1fnbr"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nps_14"
+                  name="nps_14"
+                  myid="check_cara"
+                  fdprocessedid="4bsy0p"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="nips_8"
+                  name="nips_8"
+                  myid="check_cara"
+                  fdprocessedid="ob5j3p"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nips_9"
+                  name="nips_9"
+                  myid="check_cara"
+                  fdprocessedid="6mafz9"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nips_10"
+                  name="nips_10"
+                  myid="check_cara"
+                  fdprocessedid="8h3jlg"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nips_11"
+                  name="nips_11"
+                  myid="check_cara"
+                  fdprocessedid="7aekxl"
+                />
+              </td>
+              <td>
+                <textarea
+                  style="width: 100%; padding: 0"
+                  rows="3"
+                  type="textarea"
+                  id="nips_12"
+                  name="nips_12"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nips_13"
+                  name="nips_13"
+                  myid="check_cara"
+                  fdprocessedid="nttm8"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="nips_14"
+                  name="nips_14"
+                  myid="check_cara"
+                  fdprocessedid="r8ft6m"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="kio_8"
+                  name="kio_8"
+                  myid="check_cara"
+                  fdprocessedid="idcg0a"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="kio_9"
+                  name="kio_9"
+                  myid="check_cara"
+                  fdprocessedid="xu7zcl"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="kio_10"
+                  name="kio_10"
+                  myid="check_cara"
+                  fdprocessedid="s23b17"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="kio_11"
+                  name="kio_11"
+                  myid="check_cara"
+                  fdprocessedid="mvmx4b"
+                />
+              </td>
+              <td>
+                <textarea
+                  style="width: 100%; padding: 0"
+                  rows="3"
+                  type="textarea"
+                  id="kio_12"
+                  name="kio_12"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="kio_13"
+                  name="kio_13"
+                  myid="check_cara"
+                  fdprocessedid="b1lqik"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="kio_14"
+                  name="kio_14"
+                  myid="check_cara"
+                  fdprocessedid="etqzv2"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  id="kita_8"
+                  name="kita_8"
+                  myid="check_cara"
+                  fdprocessedid="f630f9"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="kita_9"
+                  name="kita_9"
+                  myid="check_cara"
+                  fdprocessedid="rxz2s"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="kita_10"
+                  name="kita_10"
+                  myid="check_cara"
+                  fdprocessedid="oo8yk"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="kita_11"
+                  name="kita_11"
+                  myid="check_cara"
+                  fdprocessedid="g3xkxt"
+                />
+              </td>
+              <td>
+                <textarea
+                  style="width: 100%; padding: 0"
+                  rows="3"
+                  type="textarea"
+                  id="kita_12"
+                  name="kita_12"
+                  myid="check_cara"
+                ></textarea>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="kita_13"
+                  name="kita_13"
+                  myid="check_cara"
+                  fdprocessedid="xfiqpq"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  id="kita_14"
+                  name="kita_14"
+                  myid="check_cara"
+                  fdprocessedid="zkd4ak"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <script>
+          $(document).ready(function () {
+            class MedicalChart {
+              constructor() {
+                this.chartSvg = document.getElementById("chart-svg");
+                this.tooltip = document.getElementById("tooltip");
+                this.data = []; // Data untuk denyut jantung dan suhu
+                this.config = {
+                  denyut: { max: 170, min: 40 }, // Rentang denyut jantung
+                  suhu: { max: 40, min: 35 }, // Rentang suhu
+                  width: this.chartSvg.clientWidth,
+                  height: this.chartSvg.clientHeight,
+                  padding: 40,
+                  dataWidth: 30,
+                };
+                this.rangeMinDenyut = this.config.denyut.min;
+                this.rangeMaxDenyut = this.config.denyut.max;
+                this.rangeMinSuhu = this.config.suhu.min;
+                this.rangeMaxSuhu = this.config.suhu.max;
+                this.drawGrid(); // Gambar grid saat instance dibuat
+              }
+
+              createSvgElement(type, attributes = {}) {
+                const element = document.createElementNS(
+                  "http://www.w3.org/2000/svg",
+                  type
+                );
+                Object.entries(attributes).forEach(([key, value]) => {
+                  element.setAttribute(key, value);
+                });
+                return element;
+              }
+
+              drawGrid() {
+                const grid = this.createSvgElement("g");
+                const { width, height, padding } = this.config;
+                const step = 10; // Langkah grid (contoh: 20, 30, ..., 200)
+
+                for (let i = 0; i <= 10; i++) {
+                  const y = padding + (i / 10) * (height - 2 * padding);
+                  const line = this.createSvgElement("line", {
+                    x1: padding + 25,
+                    x2: width - padding,
+                    y1: y,
+                    y2: y,
+                    class: "grid-line",
+                  });
+                  const labelNadi = this.createSvgElement("text", {
+                    x: padding - 10,
+                    y: y + 4,
+                    "text-anchor": "end",
+                    "font-size": "10px",
+                    fill: "red",
+                  });
+                  const labelSuhu = this.createSvgElement("text", {
+                    x: padding,
+                    y: y + 4,
+                    "text-anchor": "start",
+                    "font-size": "10px",
+                    fill: "blue",
+                  });
+                  const valueNadi =
+                    this.rangeMaxDenyut -
+                    (i / 10) * (this.rangeMaxDenyut - this.rangeMinDenyut);
+                  labelNadi.textContent = valueNadi.toFixed(1);
+
+                  const valueSuhu =
+                    this.rangeMaxSuhu -
+                    (i / 10) * (this.rangeMaxSuhu - this.rangeMinSuhu);
+                  labelSuhu.textContent = valueSuhu.toFixed(1);
+                  grid.appendChild(line);
+                  grid.appendChild(labelNadi);
+                  grid.appendChild(labelSuhu);
+                }
+                this.chartSvg.appendChild(grid);
+              }
+
+              drawLine() {
+                if (this.data.length === 0) return;
+
+                const lineGroup = this.createSvgElement("g");
+                const { width, height, padding, dataWidth } = this.config;
+
+                // For heart rate chart (blue)
+                let pathDataDenyut = "";
+                const fragmentDenyut = document.createDocumentFragment();
+
+                // For temperature chart (red)
+                let pathDataSuhu = "";
+                const fragmentSuhu = document.createDocumentFragment();
+                let previousTanggal = null;
+
+                this.data.forEach((entry, index) => {
+                  const x =
+                    this.data.length === 1
+                      ? padding + (width - 2 * padding) / 2
+                      : padding +
+                        30 +
+                        (index / (this.data.length - 1)) *
+                          (width + 90 - 2 * (padding + 60));
+
+                  // Calculate Y for heart rate
+                  const yDenyut =
+                    padding +
+                    (1 -
+                      (entry.denyut - this.rangeMinDenyut) /
+                        (this.rangeMaxDenyut - this.rangeMinDenyut)) *
+                      (height - 2 * padding);
+
+                  // Calculate Y for temperature
+                  const ySuhu =
+                    padding +
+                    (1 -
+                      (entry.suhu - this.rangeMinSuhu) /
+                        (this.rangeMaxSuhu - this.rangeMinSuhu)) *
+                      (height - 2 * padding);
+
+                  if (
+                    previousTanggal !== null &&
+                    entry.tanggal !== previousTanggal
+                  ) {
+                    const separator = this.createSvgElement("line", {
+                      x1: x,
+                      x2: x,
+                      y1: padding,
+                      y2: height - padding,
+                      stroke: "black",
+                      "stroke-dasharray": "4,4",
+                      "stroke-width": 2,
+                    });
+                    lineGroup.appendChild(separator);
+                  }
+                  previousTanggal = entry.tanggal;
+
+                  // Create circles for heart rate
+                  const circleDenyut = this.createSvgElement("circle", {
+                    cx: x,
+                    cy: yDenyut,
+                    r: 5,
+                    fill: "red",
+                  });
+                  circleDenyut.dataset.value = entry.denyut;
+                  circleDenyut.textContent = entry.jam;
+
+                  const textDenyut = this.createSvgElement("text", {
+                    x: x,
+                    y: yDenyut + 15,
+                    "text-anchor": "middle",
+                    "font-size": "8px",
+                    "font-weight": "bold",
+                    fill: "red",
+                  });
+                  textDenyut.textContent = entry.jam;
+
+                  // Tooltip with heart rate and temperature info
+                  circleDenyut.addEventListener("mouseover", (event) => {
+                    this.tooltip.style.display = "block";
+                    this.tooltip.innerHTML = `Denyut: ${entry.denyut} bpm<br>Suhu: ${entry.suhu}°C<br>Jam: ${entry.jam}<br>Tanggal: ${entry.tanggal}`;
+                    this.tooltip.style.left = `${event.pageX + 10}px`;
+                    this.tooltip.style.top = `${event.pageY + 10}px`;
+                  });
+                  circleDenyut.addEventListener("mouseout", () => {
+                    this.tooltip.style.display = "none";
+                  });
+
+                  pathDataDenyut +=
+                    index === 0 ? `M ${x} ${yDenyut} ` : `L ${x} ${yDenyut} `;
+                  fragmentDenyut.appendChild(circleDenyut);
+                  fragmentDenyut.appendChild(textDenyut);
+
+                  const label = this.createSvgElement("text", {
+                    x: x,
+                    y: height - padding + 25,
+                    "text-anchor": "middle",
+                    "font-size": "10px",
+                    "font-weight": "bold",
+                  });
+                  label.textContent = `Tgl: ${entry.tanggal}`;
+
+                  const circleSuhu = this.createSvgElement("circle", {
+                    cx: x,
+                    cy: ySuhu,
+                    r: 5,
+                    fill: "blue",
+                  });
+                  circleSuhu.dataset.value = entry.suhu;
+
+                  const textSuhu = this.createSvgElement("text", {
+                    x: x,
+                    y: ySuhu + 15,
+                    "text-anchor": "middle",
+                    "font-size": "8px",
+                    "font-weight": "bold",
+                    fill: "blue",
+                  });
+                  textSuhu.textContent = entry.jam;
+
+                  // Tooltip with heart rate and temperature info
+                  circleSuhu.addEventListener("mouseover", (event) => {
+                    this.tooltip.style.display = "block";
+                    this.tooltip.innerHTML = `Denyut: ${entry.denyut} bpm<br>Suhu: ${entry.suhu}°C<br>Jam: ${entry.jam}<br>Tanggal: ${entry.tanggal}`;
+                    this.tooltip.style.left = `${event.pageX + 10}px`;
+                    this.tooltip.style.top = `${event.pageY + 10}px`;
+                  });
+                  circleSuhu.addEventListener("mouseout", () => {
+                    this.tooltip.style.display = "none";
+                  });
+
+                  pathDataSuhu +=
+                    index === 0 ? `M ${x} ${ySuhu} ` : `L ${x} ${ySuhu} `;
+                  fragmentSuhu.appendChild(circleSuhu);
+                  fragmentSuhu.appendChild(textSuhu);
+                  lineGroup.appendChild(label);
+                });
+
+                if (this.data.length > 1) {
+                  const pathDenyut = this.createSvgElement("path", {
+                    d: pathDataDenyut,
+                    class: "line",
+                    stroke: "red",
+                    "stroke-width": 2,
+                    fill: "none",
+                  });
+                  const pathSuhu = this.createSvgElement("path", {
+                    d: pathDataSuhu,
+                    class: "line",
+                    stroke: "blue",
+                    "stroke-width": 2,
+                    fill: "none",
+                  });
+                  lineGroup.appendChild(pathDenyut);
+
+                  lineGroup.appendChild(pathSuhu);
+                }
+
+                lineGroup.appendChild(fragmentDenyut);
+                lineGroup.appendChild(fragmentSuhu);
+                this.chartSvg.appendChild(lineGroup);
+              }
+
+              drawChart() {
+                this.chartSvg.innerHTML = "";
+                this.drawGrid();
+                this.drawLine();
+              }
+            }
+
+            function extractDataFromTable() {
+              const data = [];
+              const table = document.getElementById("tablettv");
+              const rows = table.querySelectorAll("tr");
+
+              rows.forEach((row, index) => {
+                if (index === 0 || row.querySelector("td") === null) return;
+
+                const tanggal = row.querySelector(
+                  "input[name^='tanggal_ke_']"
+                ).value;
+                const waktu = row.querySelector(
+                  "input[name^='waktu_ke_']"
+                ).value;
+                const nadi = row.querySelector(
+                  "input[name^='nadi_awal_ke_']"
+                ).value;
+                const suhu = row.querySelector("input[name^='suhu_ke_']").value;
+
+                if (nadi && suhu) {
+                  data.push({
+                    denyut: parseFloat(nadi),
+                    jam: waktu,
+                    tanggal: tanggal,
+                    suhu: parseFloat(suhu),
+                  });
+                }
+              });
+
+              return data;
+            }
+
+            function updateChart() {
+              const medicalChart = new MedicalChart();
+              const dataFromTable = extractDataFromTable();
+              medicalChart.data = dataFromTable;
+              medicalChart.drawChart();
+            }
+
+            document
+              .getElementById("showChartBtn")
+              .addEventListener("click", updateChart);
+          });
+        </script>
+      </b></b
+    >
+  </body>
+</html>

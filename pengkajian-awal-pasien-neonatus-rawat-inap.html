@@ -3,39 +3,209 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PENGKAJIAN AWAL PASIEN NEONATUS RAWAT INAP RS. AZRA BOGOR</title>
+    <title>PENGKAJIAN AWAL PASIEN NEONATUS RAWAT INAP</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
   </style>
+  <script type="text/javascript">
+    $(document).on("ajaxStop", function () {
+      SetTTD();
+    });
+    if ($.fn.datepicker) {
+      $(".datepicker").each(function () {
+        var $this = $(this),
+          dataDateFormat = $this.attr("data-dateformat") || "dd.mm.yy";
+
+        $this.datepicker({
+          dateFormat: dataDateFormat,
+          prevText: '<i class="fa fa-chevron-left"></i>',
+          nextText: '<i class="fa fa-chevron-right"></i>',
+          todayBtn: "linked",
+        });
+
+        // clear memory reference
+        $this = null;
+      });
+    }
+  </script>
+  <script>
+    $(document).ready(function () {
+      $('input[type="radio"]')
+        .off("change")
+        .on("change", function () {
+          let total = 0;
+          let percol = $(this).data("percol");
+          console.log(percol);
+
+          $("[data-hitung" + percol + "]").each(function () {
+            let radioValue = 0;
+            radioValue = $(this).val() || 0;
+
+            if ($(this).is(":checked")) {
+              radioValue = parseInt(radioValue);
+              console.log(radioValue);
+              total += radioValue;
+            }
+          });
+
+          if (percol === 1 && total < 3) {
+            total = `${total}, Tidak ada gawat nafas`;
+          } else if (percol === 1 && total >= 3 && total <= 6) {
+            total = `${total}, Gawat nafas`;
+          } else if (percol === 1 && total > 6) {
+            total = `${total}, Ancaman gagal nafas`;
+          }
+
+          if (percol === 2 && total < 5) {
+            total = `${total}, Nursing Comforce Measure (NCM)`;
+          } else if (percol === 2 && total >= 5 && total <= 10) {
+            total = `${total}, NCM dan Paracetamol`;
+          } else if (percol === 2 && total > 10) {
+            total = `${total}, NCM, Paracetamol / Narkotik`;
+          }
+
+          if (percol === 3 && total >= 7 && total <= 11) {
+            total = `${total}, Risiko Rendah`;
+          } else if (percol === 3 && total >= 12) {
+            total = `${total}, Risiko Tinggi`;
+          }
+
+          $(`#totalskor` + percol).val(total);
+        });
+    });
+
+    // Untuk Keperluan TTD
+    function ttd_paraf(id) {
+      PopupCenter(
+        "index.php?mod=ttd_pentablet&cmd=ttd_pentablet&jenis=" + id,
+        "pop",
+        800,
+        400
+      );
+    }
+
+    // Untuk Keperluan TTD
+    function tampil_ttd(x, y) {
+      ImageToText(x, y);
+    }
+
+    // Untuk Keperluan TTD
+    function PopupCenter(url, title, w, h) {
+      console.log("PopupCenter");
+      var dualScreenLeft =
+        window.screenLeft != undefined ? window.screenLeft : screen.left;
+      var dualScreenTop =
+        window.screenTop != undefined ? window.screenTop : screen.top;
+      var width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      var height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+      var left = width / 2 - w / 2 + dualScreenLeft + 100;
+      var top = height / 2 - h / 2 + dualScreenTop + 100;
+
+      var newWindow = window.open(
+        url,
+        title,
+        "scrollbars=yes, width=" +
+          w +
+          ", height=" +
+          h +
+          ", top=" +
+          top +
+          ", left=" +
+          left
+      );
+
+      if (window.focus) newWindow.focus();
+    }
+
+    // Untuk Keperluan TTD
+    function SetTTD() {
+      $('input[data-name="paraf"]').each(function () {
+        var id = $(this).attr("data-id"),
+          ttd = $(this).val();
+
+        ImageToText(id, ttd);
+      });
+    }
+
+    // Untuk Keperluan Select Option & TTD
+    $(document)
+      .off("change", 'select[data-var="set_name_sel"]')
+      .on("change", 'select[data-var="set_name_sel"]', function () {
+        var name = $(this).attr("name"),
+          name_txt = $(this).find("option:selected").text(),
+          name_img = $(this).find("option:selected").attr("data-ttd"),
+          id = $(this).attr("data-id");
+
+        $("#" + name + "_txt").val(name_txt);
+
+        ImageToText(id, name_img);
+      });
+
+    // Untuk Keperluan Create TTD
+    $(document)
+      .off("click", "#CreateTTD")
+      .on("click", "#CreateTTD", function () {
+        var id = $(this).attr("data-id");
+
+        ttd_paraf(id);
+      });
+
+    // Untuk Keperluan Parsing TTD To Object
+    function ImageToText(img_id, img_val) {
+      def = "paraf";
+
+      if (typeof img_val === "undefined" || img_val == "") {
+        $("#def_img_" + img_id).text(def);
+        $("#def_img_" + img_id).css({
+          display: "",
+          "font-style": "italic",
+          width: "100px",
+          height: "100px",
+        });
+        $("#image_paraf_" + img_id).css("display", "none");
+      } else {
+        $("#def_img_" + img_id).text("");
+        $("#def_img_" + img_id).css("display", "none");
+        $("#image_paraf_" + img_id).attr("src", "" + img_val + "");
+        $("#image_paraf_" + img_id).css({
+          display: "",
+          width: "100px",
+          height: "100px",
+        });
+        $("#paraf_" + img_id).val(img_val);
+      }
+    }
+  </script>
   <body>
-    <h1 class="title">
-      PENGKAJIAN AWAL PASIEN NEONATUS RAWAT INAP RS. AZRA BOGOR
-    </h1>
-    <table class="table-bordered" width="100%">
+    <h1 class="title">PENGKAJIAN AWAL PASIEN NEONATUS RAWAT INAP</h1>
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
           <input
@@ -50,8 +220,8 @@
             name="src_ttd_2"
             myid="check_cara"
           />
-          <td bgcolor="#DFE8F6">Nama:</td>
-          <td bgcolor="#DFE8F6">
+          <td>Nama:</td>
+          <td>
             <input
               name="nama_pasien"
               type="text"
@@ -60,39 +230,22 @@
               myid="check_cara"
               label="nama pasien"
               placeholder="..."
+              value="{VNAMA_PASIEN}"
             />
           </td>
-          <td bgcolor="#DFE8F6">Jenis Kelamin</td>
-          <td bgcolor="#DFE8F6">
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="laki-laki"
-              myid="check_cara"
-              value="L"
-              label="jenis kelamin"
-            />
-            <label for="l">L</label>
-            <input
-              type="radio"
-              name="jenis-kelamin"
-              id="perempuan"
-              myid="check_cara"
-              value="P"
-              label="jenis kelamin"
-            />
-            <label for="l">P</label>
-          </td>
-          <td bgcolor="#DFE8F6">
+          <td>Jenis Kelamin</td>
+          <td>{VSEX}</td>
+          <td>
             <label for="">Nomor Rekam Medis</label>
           </td>
-          <td bgcolor="#DFE8F6">
+          <td>
             <input
               type="text"
               myid="check_cara"
               name="no_rm"
               id="no_rm"
               label="nomor rekam medis"
+              value="{NO_RM}"
             />
           </td>
         </tr>
@@ -104,7 +257,8 @@
               name="tgl_lahir"
               type="text"
               id="tgl_lahir"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              value="{VBIRTH_DATE}"
               myid="check_cara"
               label="tanggal lahir"
             />
@@ -113,11 +267,12 @@
           <td>Umur</td>
           <td>
             <input
-              type="number"
+              type="text"
               size="5"
               name="umur"
               id="umur"
               myid="check_cara"
+              value="{VAGE}"
               placeholder="..."
             />
           </td>
@@ -132,6 +287,7 @@
               placeholder="..."
               myid="check_cara"
               label="kelas"
+              value="{VNAMAKELAS}"
             />
           </td>
         </tr>
@@ -142,7 +298,8 @@
               name="tgl"
               type="text"
               id="tgl"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker"
               myid="check_cara"
               label="tanggal"
             />
@@ -156,19 +313,20 @@
               name="jam"
               id="jam"
               label="jam"
+              mtype="pukul"
               myid="check_cara"
-              placeholder="..."
+              placeholder="00.00"
             />
           </td>
-          <td bgcolor="#DFE8F6">Kamar</td>
-          <td bgcolor="#DFE8F6">
+          <td>Kamar</td>
+          <td>
             <input
               type="text"
               name="kamar"
               id="kamar"
               myid="check_cara"
               placeholder="..."
-              aria-label="kamar"
+              label="kamar"
             />
           </td>
         </tr>
@@ -222,6 +380,7 @@
               id="no-rekam-medis"
               label="no-rekam-medis"
               myid="check_cara"
+              value="{NO_RM}"
               placeholder="......"
             />
           </td>
@@ -314,9 +473,9 @@
             <input
               style="width: 100%"
               type="text"
-              name="agama"
-              id="agama"
-              label="agama"
+              name="agama_bayi"
+              id="agama_bayi"
+              label="agama_bayi"
               myid="check_cara"
               placeholder="......"
             />
@@ -810,7 +969,11 @@
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td colspan="2">
-            <table width="100%" class="table">
+            <table
+              width="100%"
+              class="table table-bordered"
+              id="riwayat-persalinan"
+            >
               <thead>
                 <tr>
                   <th>No</th>
@@ -826,7 +989,7 @@
                 <tr>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="no-riwayat-persalinan-1"
                       id="no-riwayat-persalinan-1"
@@ -837,7 +1000,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="bb-lahir-1"
                       id="bb-lahir-1"
@@ -848,7 +1011,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jenis-kelamin-1"
                       id="jenis-kelamin-1"
@@ -859,7 +1022,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jenis-persalinan-1"
                       id="jenis-persalinan-1"
@@ -870,7 +1033,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="komplikasi-persalinan-1"
                       id="komplikasi-persalinan-1"
@@ -881,7 +1044,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="kondisi-persalinan-1"
                       id="kondisi-persalinan-1"
@@ -892,7 +1055,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="riwayat-imunisasi-1"
                       id="riwayat-imunisasi-1"
@@ -905,7 +1068,7 @@
                 <tr>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="no-riwayat-persalinan-2"
                       id="no-riwayat-persalinan-2"
@@ -916,7 +1079,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="bb-lahir-2"
                       id="bb-lahir-2"
@@ -927,7 +1090,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jenis-kelamin-2"
                       id="jenis-kelamin-2"
@@ -938,7 +1101,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jenis-persalinan-2"
                       id="jenis-persalinan-2"
@@ -949,7 +1112,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="komplikasi-persalinan-2"
                       id="komplikasi-persalinan-2"
@@ -960,7 +1123,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="kondisi-persalinan-2"
                       id="kondisi-persalinan-2"
@@ -971,7 +1134,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="riwayat-imunisasi-2"
                       id="riwayat-imunisasi-2"
@@ -984,7 +1147,7 @@
                 <tr>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="no-riwayat-persalinan-3"
                       id="no-riwayat-persalinan-3"
@@ -995,7 +1158,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="bb-lahir-3"
                       id="bb-lahir-3"
@@ -1006,7 +1169,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jenis-kelamin-3"
                       id="jenis-kelamin-3"
@@ -1017,7 +1180,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jenis-persalinan-3"
                       id="jenis-persalinan-3"
@@ -1028,7 +1191,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="komplikasi-persalinan-3"
                       id="komplikasi-persalinan-3"
@@ -1039,7 +1202,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="kondisi-persalinan-3"
                       id="kondisi-persalinan-3"
@@ -1050,7 +1213,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="riwayat-imunisasi-3"
                       id="riwayat-imunisasi-3"
@@ -1063,7 +1226,7 @@
                 <tr>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="no-riwayat-persalinan-4"
                       id="no-riwayat-persalinan-4"
@@ -1074,7 +1237,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="bb-lahir-4"
                       id="bb-lahir-4"
@@ -1085,7 +1248,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jenis-kelamin-4"
                       id="jenis-kelamin-4"
@@ -1096,7 +1259,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jenis-persalinan-4"
                       id="jenis-persalinan-4"
@@ -1107,7 +1270,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="komplikasi-persalinan-4"
                       id="komplikasi-persalinan-4"
@@ -1118,7 +1281,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="kondisi-persalinan-4"
                       id="kondisi-persalinan-4"
@@ -1129,7 +1292,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="riwayat-imunisasi-4"
                       id="riwayat-imunisasi-4"
@@ -1142,7 +1305,7 @@
                 <tr>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="no-riwayat-persalinan-5"
                       id="no-riwayat-persalinan-5"
@@ -1153,7 +1316,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="bb-lahir-5"
                       id="bb-lahir-5"
@@ -1164,7 +1327,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jenis-kelamin-5"
                       id="jenis-kelamin-5"
@@ -1175,7 +1338,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="jenis-persalinan-5"
                       id="jenis-persalinan-5"
@@ -1186,7 +1349,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="komplikasi-persalinan-5"
                       id="komplikasi-persalinan-5"
@@ -1197,7 +1360,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="kondisi-persalinan-5"
                       id="kondisi-persalinan-5"
@@ -1208,7 +1371,7 @@
                   </td>
                   <td>
                     <input
-                      style="width: 100%"
+                      style="width: 100%; padding: 0"
                       type="text"
                       name="riwayat-imunisasi-5"
                       id="riwayat-imunisasi-5"
@@ -1220,6 +1383,7 @@
                 </tr>
               </tbody>
             </table>
+
             <br />
             <p>Keterangan :</p>
             <p>
@@ -1593,14 +1757,30 @@
           <td>&nbsp;</td>
           <td>e. <i>Caput succedaneum</i></td>
           <td>
-            <input
-              type="checkbox"
-              name="caput-succedaneum"
-              id="caput-succedaneum"
-              label="caput-succedaneum"
-              value="true"
-              myid="check_cara"
-            />
+            <section style="display: flex; gap: 5px">
+              <div>
+                <input
+                  type="radio"
+                  name="caput-succedaneum"
+                  id="caput-succedaneum"
+                  label="caput-succedaneum"
+                  value="Iya"
+                  myid="check_cara"
+                />
+                <label for="">Iya</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="caput-succedaneum"
+                  id="caput-succedaneum"
+                  label="caput-succedaneum"
+                  value="Tidak"
+                  myid="check_cara"
+                />
+                <label for="">Tidak</label>
+              </div>
+            </section>
           </td>
         </tr>
         <tr>
@@ -1608,14 +1788,30 @@
           <td>&nbsp;</td>
           <td>f. <i>Cephal hematona</i></td>
           <td>
-            <input
-              type="checkbox"
-              name="cephal-hematona"
-              id="cephal-hematona"
-              label="cephal-hematona"
-              value="true"
-              myid="check_cara"
-            />
+            <section style="display: flex; gap: 5px">
+              <div>
+                <input
+                  type="radio"
+                  name="cephal-hematona"
+                  id="cephal-hematona"
+                  label="cephal-hematona"
+                  value="Iya"
+                  myid="check_cara"
+                />
+                <label for="">Iya</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="cephal-hematona"
+                  id="cephal-hematona"
+                  label="cephal-hematona"
+                  value="Tidak"
+                  myid="check_cara"
+                />
+                <label for="">Tidak</label>
+              </div>
+            </section>
           </td>
         </tr>
         <tr>
@@ -1833,7 +2029,7 @@
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td colspan="2">
-            <table width="100%" class="table">
+            <table width="100%" class="table table-bordered">
               <thead>
                 <tr>
                   <th>Nilai</th>
@@ -1849,6 +2045,8 @@
                     <input
                       type="radio"
                       class="down-score"
+                      data-percol="1"
+                      data-hitung1="1"
                       name="frekuensi-nafas"
                       id="frekuensi-nafas"
                       label="frekuensi-nafas"
@@ -1861,6 +2059,8 @@
                     <input
                       type="radio"
                       class="down-score"
+                      data-percol="1"
+                      data-hitung1="1"
                       name="frekuensi-nafas"
                       id="frekuensi-nafas"
                       label="frekuensi-nafas"
@@ -1873,6 +2073,8 @@
                     <input
                       type="radio"
                       class="down-score"
+                      data-percol="1"
+                      data-hitung1="1"
                       name="frekuensi-nafas"
                       id="frekuensi-nafas"
                       label="frekuensi-nafas"
@@ -1888,6 +2090,8 @@
                     <input
                       type="radio"
                       class="down-score"
+                      data-percol="1"
+                      data-hitung1="1"
                       name="retraksi"
                       id="retraksi"
                       label="retraksi"
@@ -1900,6 +2104,8 @@
                     <input
                       type="radio"
                       class="down-score"
+                      data-percol="1"
+                      data-hitung1="1"
                       name="retraksi"
                       id="retraksi"
                       label="retraksi"
@@ -1912,6 +2118,8 @@
                     <input
                       type="radio"
                       class="down-score"
+                      data-percol="1"
+                      data-hitung1="1"
                       name="retraksi"
                       id="retraksi"
                       label="retraksi"
@@ -1927,6 +2135,8 @@
                     <input
                       type="radio"
                       class="down-score"
+                      data-percol="1"
+                      data-hitung1="1"
                       name="sianosis"
                       id="sianosis"
                       label="sianosis"
@@ -1939,6 +2149,8 @@
                     <input
                       type="radio"
                       class="down-score"
+                      data-percol="1"
+                      data-hitung1="1"
                       name="sianosis"
                       id="sianosis"
                       label="sianosis"
@@ -1951,6 +2163,8 @@
                     <input
                       type="radio"
                       class="down-score"
+                      data-percol="1"
+                      data-hitung1="1"
                       name="sianosis"
                       id="sianosis"
                       label="sianosis"
@@ -1966,6 +2180,8 @@
                     <input
                       type="radio"
                       class="down-score"
+                      data-percol="1"
+                      data-hitung1="1"
                       name="air-entry"
                       id="air-entry"
                       label="air-entry"
@@ -1978,6 +2194,8 @@
                     <input
                       type="radio"
                       class="down-score"
+                      data-percol="1"
+                      data-hitung1="1"
                       name="air-entry"
                       id="air-entry"
                       label="air-entry"
@@ -1990,6 +2208,8 @@
                     <input
                       type="radio"
                       class="down-score"
+                      data-percol="1"
+                      data-hitung1="1"
                       name="air-entry"
                       id="air-entry"
                       label="air-entry"
@@ -2005,6 +2225,8 @@
                     <input
                       type="radio"
                       class="down-score"
+                      data-percol="1"
+                      data-hitung1="1"
                       name="merintih"
                       id="merintih"
                       label="merintih"
@@ -2017,6 +2239,8 @@
                     <input
                       type="radio"
                       class="down-score"
+                      data-percol="1"
+                      data-hitung1="1"
                       name="merintih"
                       id="merintih"
                       label="merintih"
@@ -2029,6 +2253,8 @@
                     <input
                       type="radio"
                       class="down-score"
+                      data-percol="1"
+                      data-hitung1="1"
                       name="merintih"
                       id="merintih"
                       label="merintih"
@@ -2045,9 +2271,9 @@
                       readonly
                       style="width: 99%"
                       type="text"
-                      name="total-skor-down-score"
-                      id="total-skor-down-score"
-                      label="total-skor-down-score"
+                      name="totalskor1"
+                      id="totalskor1"
+                      label="totalskor1"
                       placeholder="......"
                       myid="check_cara"
                     />
@@ -2676,51 +2902,96 @@
               myid="check_cara"
             />
             <label for="">Moro</label>
-            <input
-              type="checkbox"
-              name="reflek-menggemgam"
-              id="reflek-menggemgam"
-              label="reflek-menggemgam"
-              value="Menggemgam (kuat / lemah)"
-              myid="check_cara"
-            />
-            <label for="">Menggemgam (kuat / lemah)</label>
-            <input
-              type="checkbox"
-              name="reflek-menghisap"
-              id="reflek-menghisap"
-              label="reflek-menghisap"
-              value="Menghisap (kuat / lemah)"
-              myid="check_cara"
-            />
-            <label for="">Menghisap (kuat / lemah)</label>
-            <input
-              type="checkbox"
-              name="reflek-rooting"
-              id="reflek-rooting"
-              label="reflek-rooting"
-              value="Rooting (kuat / lemah)"
-              myid="check_cara"
-            />
-            <label for="">Rooting (kuat / lemah)</label>
-            <input
-              type="checkbox"
-              name="reflek-babinski"
-              id="reflek-babinski"
-              label="reflek-babinski"
-              value="Babinski"
-              myid="check_cara"
-            />
-            <label for="">Babinski</label>
-            <input
-              type="checkbox"
-              name="reflek-tonic-neck"
-              id="reflek-tonic-neck"
-              label="reflek-tonic-neck"
-              value="Tonic neck"
-              myid="check_cara"
-            />
-            <label for="">Tonic neck</label>
+            <div>
+              <label for="">Menggenggam :</label>
+              <br />
+              <input
+                type="checkbox"
+                name="reflek-menggenggam-kuat"
+                id="reflek-menggenggam-kuat"
+                label="reflek-menggenggam-kuat"
+                value="Kuat"
+                myid="check_cara"
+              />
+              <label for="">kuat</label>
+              <input
+                type="checkbox"
+                name="reflek-menggenggam-lemah"
+                id="reflek-menggenggam-lemah"
+                label="reflek-menggenggam-lemah"
+                value="Lemah"
+                myid="check_cara"
+              />
+              <label for="">lemah</label>
+            </div>
+            <div>
+              <label for="">Menghisap :</label>
+              <br />
+              <input
+                type="checkbox"
+                name="reflek-menghisap-kuat"
+                id="reflek-menghisap-kuat"
+                label="reflek-menghisap-kuat"
+                value="Kuat"
+                myid="check_cara"
+              />
+
+              <label for="">Kuat</label>
+              <input
+                type="checkbox"
+                name="reflek-menghisap-lemah"
+                id="reflek-menghisap-lemah"
+                label="reflek-menghisap-lemah"
+                value="Lemah"
+                myid="check_cara"
+              />
+              <label for="">lemah</label>
+            </div>
+            <div>
+              <label for="">Rooting :</label>
+              <br />
+
+              <input
+                type="checkbox"
+                name="reflek-rooting-kuat"
+                id="reflek-rooting-kuat"
+                label="reflek-rooting-kuat"
+                value="Kuat"
+                myid="check_cara"
+              />
+              <label for="">Kuat</label>
+              <input
+                type="checkbox"
+                name="reflek-rooting-lemah"
+                id="reflek-rooting-lemah"
+                label="reflek-rooting-lemah"
+                value="Lemah"
+                myid="check_cara"
+              />
+              <label for="">Lemah</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="reflek-babinski"
+                id="reflek-babinski"
+                label="reflek-babinski"
+                value="Babinski"
+                myid="check_cara"
+              />
+              <label for="">Babinski</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="reflek-tonic-neck"
+                id="reflek-tonic-neck"
+                label="reflek-tonic-neck"
+                value="Tonic neck"
+                myid="check_cara"
+              />
+              <label for="">Tonic neck</label>
+            </div>
           </td>
         </tr>
         <tr>
@@ -2864,7 +3135,7 @@
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td colspan="2">
-            <table width="100%" class="table">
+            <table width="100%" class="table table-bordered">
               <thead>
                 <tr>
                   <th colspan="4">FISIK</th>
@@ -2878,6 +3149,8 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="postur-tonus"
                       id="postur-tonus"
                       label="postur-tonus"
@@ -2895,6 +3168,8 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="postur-tonus"
                       id="postur-tonus"
                       label="postur-tonus"
@@ -2913,6 +3188,8 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="pola-tidur"
                       id="pola-tidur"
                       label="pola-tidur"
@@ -2930,6 +3207,8 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="pola-tidur"
                       id="pola-tidur"
                       label="pola-tidur"
@@ -2948,6 +3227,8 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="ekspresi"
                       id="ekspresi"
                       label="ekspresi"
@@ -2965,6 +3246,8 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="ekspresi"
                       id="ekspresi"
                       label="ekspresi"
@@ -2983,6 +3266,8 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="menangis"
                       id="menangis"
                       label="menangis"
@@ -3000,6 +3285,8 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="menangis"
                       id="menangis"
                       label="menangis"
@@ -3018,9 +3305,11 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
-                      name="menangis"
-                      id="menangis"
-                      label="menangis"
+                      data-percol="2"
+                      data-hitung2="2"
+                      name="warna-kulit"
+                      id="warna-kulit"
+                      label="warna-kulit"
                       myid="check_cara"
                       value="2"
                     />
@@ -3035,9 +3324,11 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
-                      name="ekspresi"
-                      id="ekspresi"
-                      label="ekspresi"
+                      data-percol="2"
+                      data-hitung2="2"
+                      name="warna-kulit"
+                      id="warna-kulit"
+                      label="warna-kulit"
                       myid="check_cara"
                       value="0"
                     />
@@ -3057,6 +3348,8 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="respirasi"
                       id="respirasi"
                       label="respirasi"
@@ -3074,6 +3367,8 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="respirasi"
                       id="respirasi"
                       label="respirasi"
@@ -3092,6 +3387,8 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="denyut-jantung"
                       id="denyut-jantung"
                       label="denyut-jantung"
@@ -3109,6 +3406,8 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="denyut-jantung"
                       id="denyut-jantung"
                       label="denyut-jantung"
@@ -3127,6 +3426,8 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="saturasi"
                       id="saturasi"
                       label="saturasi"
@@ -3144,6 +3445,8 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="saturasi"
                       id="saturasi"
                       label="saturasi"
@@ -3162,6 +3465,8 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="tekanan-darah"
                       id="tekanan-darah"
                       label="tekanan-darah"
@@ -3179,6 +3484,8 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="tekanan-darah"
                       id="tekanan-darah"
                       label="tekanan-darah"
@@ -3200,6 +3507,8 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="persepsi-perawat"
                       id="persepsi-perawat"
                       label="persepsi-perawat"
@@ -3217,6 +3526,8 @@
                     <input
                       type="radio"
                       class="pengkajian-nyeri"
+                      data-percol="2"
+                      data-hitung2="2"
                       name="persepsi-perawat"
                       id="persepsi-perawat"
                       label="persepsi-perawat"
@@ -3235,9 +3546,9 @@
                       style="width: 100%"
                       readonly
                       type="text"
-                      name="total-skor-pengkajian-nyeri"
-                      id="total-skor-pengkajian-nyeri"
-                      label="total-skor-pengkajian-nyeri"
+                      name="totalskor2"
+                      id="totalskor2"
+                      label="totalskor2"
                       myid="check_cara"
                       placeholder="0"
                     />
@@ -3274,6 +3585,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="umur-skrining"
                       id="umur-skrining"
                       value="4"
@@ -3288,6 +3601,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="umur-skrining"
                       id="umur-skrining"
                       value="3"
@@ -3302,6 +3617,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="umur-skrining"
                       id="umur-skrining"
                       value="2"
@@ -3316,6 +3633,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="umur-skrining"
                       id="umur-skrining"
                       value="1"
@@ -3331,6 +3650,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="jenis-kelamin"
                       id="jenis-kelamin"
                       value="2"
@@ -3345,6 +3666,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="jenis-kelamin"
                       id="jenis-kelamin"
                       value="1"
@@ -3360,6 +3683,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="diagnosa"
                       id="diagnosa"
                       value="4"
@@ -3377,6 +3702,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="diagnosa"
                       id="diagnosa"
                       value="3"
@@ -3392,6 +3719,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="diagnosa"
                       id="diagnosa"
                       value="2"
@@ -3406,6 +3735,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="diagnosa"
                       id="diagnosa"
                       value="1"
@@ -3421,6 +3752,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="gangguan-kognitif"
                       id="gangguan-kognitif"
                       value="3"
@@ -3435,6 +3768,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="gangguan-kognitif"
                       id="gangguan-kognitif"
                       value="2"
@@ -3449,6 +3784,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="gangguan-kognitif"
                       id="gangguan-kognitif"
                       value="1"
@@ -3464,6 +3801,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="faktor-lingkungan"
                       id="faktor-lingkungan"
                       value="4"
@@ -3478,6 +3817,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="faktor-lingkungan"
                       id="faktor-lingkungan"
                       value="3"
@@ -3492,6 +3833,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="faktor-lingkungan"
                       id="faktor-lingkungan"
                       value="2"
@@ -3506,6 +3849,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="faktor-lingkungan"
                       id="faktor-lingkungan"
                       value="1"
@@ -3523,6 +3868,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="respon-terhadap-operasi-obat-penenang-efek-anestesi"
                       id="respon-terhadap-operasi-obat-penenang-efek-anestesi"
                       value="3"
@@ -3537,6 +3884,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="respon-terhadap-operasi-obat-penenang-efek-anestesi"
                       id="respon-terhadap-operasi-obat-penenang-efek-anestesi"
                       value="2"
@@ -3551,6 +3900,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="respon-terhadap-operasi-obat-penenang-efek-anestesi"
                       id="respon-terhadap-operasi-obat-penenang-efek-anestesi"
                       value="1"
@@ -3571,6 +3922,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="penggunaan-obat"
                       id="penggunaan-obat"
                       value="3"
@@ -3585,6 +3938,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="penggunaan-obat"
                       id="penggunaan-obat"
                       value="2"
@@ -3599,6 +3954,8 @@
                     <input
                       type="radio"
                       class="risiko-jatuh"
+                      data-percol="3"
+                      data-hitung3="3"
                       name="penggunaan-obat"
                       id="penggunaan-obat"
                       value="1"
@@ -3613,8 +3970,8 @@
                     <input
                       readonly
                       type="text"
-                      name="total-skor-risiko-jatuh"
-                      id="total-skor-risiko-jatuh"
+                      name="totalskor3"
+                      id="totalskor3"
                       placeholder="....."
                       myid="check_cara"
                       style="width: 100%"
@@ -3824,7 +4181,7 @@
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td colspan="2">
-            <table class="table" width="100%">
+            <table class="table table-bordered" width="100%">
               <tbody>
                 <tr style="margin-top: 5px"></tr>
                 <tr>
@@ -3862,7 +4219,6 @@
                         id="bicara"
                         label="bicara"
                         myid="check_cara"
-                        id=""
                       />
                     </div>
                   </td>
@@ -3879,9 +4235,25 @@
                         myid="check_cara"
                         value="Indonesia"
                       />
-                      <label for="bahasa-sehari-hari"
-                        >Indonesia, aktif / pasif</label
-                      >
+                      <label for="bahasa-sehari-hari">Indonesia,</label>
+                      <input
+                        type="radio"
+                        name="bahasa-indonesia"
+                        id="bahasa-indonesia"
+                        label="bahasa-indonesia"
+                        myid="check_cara"
+                        value="aktif"
+                      />
+                      <label for=""> aktif / </label>
+                      <input
+                        type="radio"
+                        name="bahasa-indonesia"
+                        id="bahasa-indonesia"
+                        label="bahasa-indonesia"
+                        myid="check_cara"
+                        value="pasif"
+                      />
+                      <label for="">pasif</label>
                     </div>
                   </td>
                   <td colspan="3">
@@ -3918,7 +4290,25 @@
                         myid="check_cara"
                         value="Inggris"
                       />
-                      <label for="bicara">Inggris, aktif / pasif</label>
+                      <label for="bahasa-inggris">Inggris,</label>
+                      <input
+                        type="radio"
+                        name="bahasa-inggris"
+                        id="bahasa-inggris"
+                        label="bahasa-inggris"
+                        myid="check_cara"
+                        value="aktif"
+                      />
+                      <label for=""> aktif / </label>
+                      <input
+                        type="radio"
+                        name="bahasa-inggris"
+                        id="bahasa-inggris"
+                        label="bahasa-inggris"
+                        myid="check_cara"
+                        value="pasif"
+                      />
+                      <label for="">pasif</label>
                     </div>
                   </td>
                   <td colspan="3">
@@ -3969,7 +4359,14 @@
                         value="Ya"
                       />
                       <label for="perlu-penterjemah">Ya, bahasa</label>
-                      <input type="text" name="bahasa-penterjemah" id="" />
+                      <input
+                        type="text"
+                        name="bahasa-penterjemah"
+                        id="bahasa-penterjemah"
+                        label="bahasa-penterjemah"
+                        myid="check_cara"
+                        placeholder="......"
+                      />
                     </div>
                   </td>
                 </tr>
@@ -4306,27 +4703,61 @@
     <br />
     <!-- <br /> -->
 
-    <table width="100%" class="table">
+    <table width="100%" class="table table-bordered">
       <tbody>
         <tr>
-          <td>Penilai Awal</td>
+          <td colspan="2">Penilai Awal</td>
+          <td colspan="2">Penilai Verikator</td>
         </tr>
         <tr>
-          <td colspan="5">
-            <label for="">Bogor,</label>
+          <td width="20%"><label for="">Bogor, tanggal / pukul</label></td>
+          <td>
             <input
               type="text"
               name="tanggal-pengkajian-penilai-awal"
               id="tanggal-pengkajian-penilai-awal"
               label="tanggal-pengkajian-penilai-awal"
               myid="check_cara"
-              placeholder="dd/mm/yyyy"
+              placeholder="dd-mm-yy"
+              class="datepicker"
+            />
+            <br />
+            <input
+              type="text"
+              name="pukul-pengkajian-penilai-awal"
+              id="pukul-pengkajian-penilai-awal"
+              label="pukul-pengkajian-penilai-awal"
+              myid="check_cara"
+              placeholder="00.00"
+              mtype="pukul"
+            />
+          </td>
+          <td width="20%"><label for="">Bogor, tanggal / pukul</label></td>
+          <td>
+            <input
+              type="text"
+              name="tanggal-pengkajian-penilai-verifikator"
+              id="tanggal-pengkajian-penilai-verifikator"
+              label="tanggal-pengkajian-penilai-verifikator"
+              myid="check_cara"
+              placeholder="dd-mm-yy"
+              class="datepicker"
+            />
+            <br />
+            <input
+              type="text"
+              name="pukul-pengkajian-penilai-verifikator"
+              id="pukul-pengkajian-penilai-verifikator"
+              label="pukul-pengkajian-penilai-verifikator"
+              myid="check_cara"
+              placeholder="00.00"
+              mtype="pukul"
             />
           </td>
         </tr>
         <tr>
-          <td colspan="">
-            <label for="">Perawat Pengelola,</label>
+          <td><label for="">Perawat Pengelola,</label></td>
+          <td>
             <input
               type="text"
               name="perawat-pengelola"
@@ -4335,149 +4766,90 @@
               myid="check_cara"
               placeholder="......"
             />
+
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_perawat_pengelola"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_perawat_pengelola"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_perawat_pengelola"
+              id="paraf_ex_ttd_perawat_pengelola"
+              data-name="paraf"
+              data-id="ex_ttd_perawat_pengelola"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_perawat_pengelola"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
+          </td>
+          <td><label for="">Perawat Verifikator,</label></td>
+          <td>
+            <input
+              type="text"
+              name="perawat-verifikator"
+              id="perawat-verifikator"
+              label="perawat-verifikator"
+              myid="check_cara"
+              placeholder="......"
+            />
+
+            <br />
+            <label
+              class="label text-center"
+              id="def_img_ex_ttd_perawat_verifikator"
+              style="font-style: italic; width: 100px; height: 100px"
+              >paraf</label
+            >
+            <label class="label text-center">
+              <img
+                class="text-center"
+                id="image_paraf_ex_ttd_perawat_verifikator"
+                src=""
+                style="display: none"
+            /></label>
+            <input
+              myid="check_cara"
+              type="hidden"
+              name="paraf_ex_ttd_perawat_verifikator"
+              id="paraf_ex_ttd_perawat_verifikator"
+              data-name="paraf"
+              data-id="ex_ttd_perawat_verifikator"
+            />
+            <br />
+            <label class="label text-center">
+              <a
+                id="CreateTTD"
+                class="btn btn-default btn-xs pointer text-center"
+                data-id="ex_ttd_perawat_verifikator"
+                style="text-align: center"
+              >
+                <i class="fa fa-edit"> </i>
+                PENTABLET
+              </a>
+            </label>
           </td>
         </tr>
       </tbody>
     </table>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const downScore = document.querySelectorAll(".down-score");
-        const pengkajianNyeri = document.querySelectorAll(".pengkajian-nyeri");
-        const risikoJatuh = document.querySelectorAll(".risiko-jatuh");
-        const totalSkorDownScore = document.querySelector(
-          "#total-skor-down-score"
-        );
-        const totalSkorPengkajianNyeri = document.querySelector(
-          "#total-skor-pengkajian-nyeri"
-        );
-        const totalSkorRisikoJatuh = document.querySelector(
-          "#total-skor-risiko-jatuh"
-        );
-        function hitungTotalDownScore() {
-          let total = 0;
-          let keterangan = "";
-          // Loop melalui setiap input biaya perawatan
-          downScore.forEach((input) => {
-            if (input.checked) {
-              total += parseFloat(input.value);
-            }
-          });
-
-          // Tampilkan hasil penjumlahan
-          if (total < 3) {
-            keterangan = "Tidak ada gawat nafas";
-          } else if (total >= 3 && total <= 6) {
-            keterangan = "Gawat nafas";
-          } else {
-            keterangan = "Ancaman gagal nafas";
-          }
-          totalSkorDownScore.value = `${total}, ${keterangan}`;
-        }
-
-        function hitungTotalPengkajianNyeri() {
-          let total = 0;
-          let keterangan = "";
-          // Loop melalui setiap input biaya perawatan
-          pengkajianNyeri.forEach((input) => {
-            if (input.checked) {
-              total += parseFloat(input.value);
-            }
-          });
-
-          // Tampilkan hasil penjumlahan
-          if (total < 5) {
-            keterangan = "Nursing Comforce Measure (NCM)";
-          } else if (total >= 5 && total <= 10) {
-            keterangan = "NCM dan Paracetamol";
-          } else {
-            keterangan = "NCM, Paracetamol / Narkotik";
-          }
-          totalSkorPengkajianNyeri.value = `${total}, ${keterangan}`;
-        }
-
-        function hitungTotalRisikoJatuh() {
-          let total = 0;
-          let keterangan = "";
-          // Loop melalui setiap input biaya perawatan
-          risikoJatuh.forEach((input) => {
-            if (input.checked) {
-              total += parseFloat(input.value);
-            }
-          });
-
-          // Tampilkan hasil penjumlahan
-          if (total >= 7 && total <= 11) {
-            keterangan = ", Risiko Rendah";
-          } else if (total >= 12) {
-            keterangan = ", Risiko Tinggi";
-          }
-
-          totalSkorRisikoJatuh.value = `${total}${keterangan}`;
-        }
-
-        // Tambahkan event listener untuk setiap input biaya perawatan
-        downScore.forEach((input) => {
-          input.addEventListener("change", hitungTotalDownScore);
-        });
-
-        pengkajianNyeri.forEach((input) => {
-          input.addEventListener("change", hitungTotalPengkajianNyeri);
-        });
-
-        risikoJatuh.forEach((input) => {
-          input.addEventListener("change", hitungTotalRisikoJatuh);
-        });
-
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var checkboxButtons = document.querySelectorAll(
-          'input[type="checkbox"]'
-        );
-        checkboxButtons.forEach(function (checkbox) {
-          checkbox.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var checkboxes = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              checkboxes.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

@@ -6,27 +6,22 @@
     <title>SURAT RUJUKAN</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
 
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -158,7 +153,7 @@
     }
   </script>
   <body>
-    <table width="100%" class="table">
+    <table width="100%" class="table table-bordered">
       <tbody>
         <tr>
           <td>
@@ -170,466 +165,476 @@
 
     <br />
 
-    <table class="table" width="100%">
+    <table class="table table-bordered">
       <tbody>
         <tr>
-          <td>Nama Pasien :</td>
           <td>
-            <input
-              style="width: 99%"
-              type="text"
-              name="nama-pasien"
-              id="nama-pasien"
-              label="nama-pasien"
-              myid="check_cara"
-              value="{VNAMA_PASIEN}"
-              placeholder="......"
-            />
-          </td>
-          <td>Jenis Kelamin :</td>
-          <td>{VSEX}</td>
-          <td>No. Rekam Medis :</td>
-          <td>
-            <input
-              style="width: 100%"
-              type="text"
-              name="no-rek-medis"
-              id="no-rek-medis"
-              label="no-rek-medis"
-              myid="check_cara"
-              value="{NO_RM}"
-              placeholder="......"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Tanggal Lahir :</td>
-          <td>
-            <input
-              style="width: 99%"
-              type="text"
-              name="tgl-lahir"
-              id="tgl-lahir"
-              label="tgl-lahir"
-              myid="check_cara"
-              placeholder="dd-mm-yy"
-              value="{VBIRTH_DATE}"
-              class="datepicker hasDatePicker"
-            />
-          </td>
-          <td>Tanggal Masuk :</td>
-          <td colspan="3">
-            <input
-              style="width: 99%"
-              type="text"
-              name="tgl-masuk"
-              id="tgl-masuk"
-              label="tgl-masuk"
-              myid="check_cara"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatePicker"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Rumah Sakit yang dituju :</td>
-          <td>
-            <input
-              style="width: 99%"
-              type="text"
-              name="rmh-sakit-yg-dituju"
-              id="rmh-sakit-yg-dituju"
-              label="rmh-sakit-yg-dituju"
-              myid="check_cara"
-              placeholder="......"
-            />
-          </td>
-          <td>Staf yang setuju menerima :</td>
-          <td colspan="3">
-            <input
-              style="width: 99%"
-              type="text"
-              name="staf-setuju-menerima"
-              id="staf-setuju-menerima"
-              label="staf-setuju-menerima"
-              myid="check_cara"
-              placeholder="......"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Waktu transfer :</td>
-          <td>
-            <input
-              style="width: 99%"
-              type="text"
-              name="waktu-transfer"
-              id="waktu-transfer"
-              label="waktu-transfer"
-              myid="check_cara"
-              mtype="pukul"
-              placeholder="00.00"
-            />
-          </td>
-          <td>Waktu tiba :</td>
-          <td colspan="3">
-            <input
-              style="width: 99%"
-              type="text"
-              name="waktu-tiba"
-              id="waktu-tiba"
-              label="waktu-tiba"
-              myid="check_cara"
-              mtype="pukul"
-              placeholder="00.00"
-            />
+            <table class="table table-bordered" width="100%">
+              <tbody>
+                <tr>
+                  <td>Nama Pasien :</td>
+                  <td>
+                    <input
+                      style="width: 99%"
+                      type="text"
+                      name="nama-pasien"
+                      id="nama-pasien"
+                      label="nama-pasien"
+                      myid="check_cara"
+                      value="{VNAMA_PASIEN}"
+                      placeholder="......"
+                    />
+                  </td>
+                  <td>Jenis Kelamin :</td>
+                  <td>{VSEX}</td>
+                  <td>No. Rekam Medis :</td>
+                  <td>
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      name="no-rek-medis"
+                      id="no-rek-medis"
+                      label="no-rek-medis"
+                      myid="check_cara"
+                      value="{NO_RM}"
+                      placeholder="......"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Tanggal Lahir :</td>
+                  <td>
+                    <input
+                      style="width: 99%"
+                      type="text"
+                      name="tgl-lahir"
+                      id="tgl-lahir"
+                      label="tgl-lahir"
+                      myid="check_cara"
+                      placeholder="dd/mm/yyyy"
+                      value="{VBIRTH_DATE}"
+                      class="datepicker"
+                    />
+                  </td>
+                  <td>Tanggal Masuk :</td>
+                  <td colspan="3">
+                    <input
+                      style="width: 99%"
+                      type="text"
+                      name="tgl-masuk"
+                      id="tgl-masuk"
+                      label="tgl-masuk"
+                      myid="check_cara"
+                      placeholder="dd/mm/yyyy"
+                      class="datepicker"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Rumah Sakit yang dituju :</td>
+                  <td>
+                    <input
+                      style="width: 99%"
+                      type="text"
+                      name="rmh-sakit-yg-dituju"
+                      id="rmh-sakit-yg-dituju"
+                      label="rmh-sakit-yg-dituju"
+                      myid="check_cara"
+                      placeholder="......"
+                    />
+                  </td>
+                  <td>Staf yang setuju menerima :</td>
+                  <td colspan="3">
+                    <input
+                      style="width: 99%"
+                      type="text"
+                      name="staf-setuju-menerima"
+                      id="staf-setuju-menerima"
+                      label="staf-setuju-menerima"
+                      myid="check_cara"
+                      placeholder="......"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Waktu transfer :</td>
+                  <td>
+                    <input
+                      style="width: 99%"
+                      type="text"
+                      name="waktu-transfer"
+                      id="waktu-transfer"
+                      label="waktu-transfer"
+                      myid="check_cara"
+                      mtype="pukul"
+                      placeholder="00.00"
+                    />
+                  </td>
+                  <td>Waktu tiba :</td>
+                  <td colspan="3">
+                    <input
+                      style="width: 99%"
+                      type="text"
+                      name="waktu-tiba"
+                      id="waktu-tiba"
+                      label="waktu-tiba"
+                      myid="check_cara"
+                      mtype="pukul"
+                      placeholder="00.00"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p><b>I. RINGKASAN RIWAYAT PASIEN</b></p>
+
+            <table class="table table-bordered" width="100%">
+              <tbody>
+                <tr>
+                  <td colspan="2" style="padding-left: 10px">Anamnesis</td>
+                </tr>
+                <tr>
+                  <td style="padding-left: 10px">
+                    <input
+                      type="checkbox"
+                      name="anamnesis-keluhan-utama"
+                      id="anamnesis-keluhan-utama"
+                      label="anamnesis-keluhan-utama"
+                      value="Keluhan Utama"
+                      myid="check_cara"
+                    />
+                    <label for="">Keluhan Utama :</label>
+                  </td>
+                  <td width="85%">
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      name="detail-keluhan-utama"
+                      id="detail-keluhan-utama"
+                      label="detail-keluhan-utama"
+                      myid="check_cara"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="padding-left: 5px; gap: 5px">
+                      <input
+                        type="checkbox"
+                        name="anamnesis-riwayat-penyakit"
+                        id="anamnesis-riwayat-penyakit"
+                        label="anamnesis-riwayat-penyakit"
+                        value="Riwayat Penyakit"
+                        myid="check_cara"
+                      />
+                      <label for="">Riwayat Penyakit :</label>
+                    </div>
+                  </td>
+                  <td width="85%">
+                    <textarea
+                      rows="4"
+                      style="width: 100%; padding: 0"
+                      type="textarea"
+                      type="text"
+                      name="detail-riwayat-penyakit"
+                      id="detail-riwayat-penyakit"
+                      label="detail-riwayat-penyakit"
+                      myid="check_cara"
+                    ></textarea>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding-left: 10px">
+                    <input
+                      type="checkbox"
+                      name="anamnesis-riwayat-alergi"
+                      id="anamnesis-riwayat-alergi"
+                      label="anamnesis-riwayat-alergi"
+                      value="Riwayat Alergi"
+                      myid="check_cara"
+                    />
+                    <label for="">Riwayat Alergi :</label>
+                  </td>
+                  <td width="85%">
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      name="detail-riwayat-alergi"
+                      id="detail-riwayat-alergi"
+                      label="detail-riwayat-alergi"
+                      myid="check_cara"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding-left: 10px">
+                    <input
+                      type="checkbox"
+                      name="anamnesis-keadaan-umum"
+                      id="anamnesis-keadaan-umum"
+                      label="anamnesis-keadaan-umum"
+                      value="Keadaan umum"
+                      myid="check_cara"
+                    />
+                    <label for="">Keadaan umum :</label>
+                  </td>
+                  <td width="85%">
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      name="detail-keadaan-umum"
+                      id="detail-keadaan-umum"
+                      label="detail-keadaan-umum"
+                      myid="check_cara"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="padding-left: 10px">
+                    <input
+                      type="checkbox"
+                      name="pemeriksaan-tanda-tanda-vital"
+                      id="pemeriksaan-tanda-tanda-vital"
+                      label="pemeriksaan-tanda-tanda-vital"
+                      value="Pemeriksaan tanda - tanda vital"
+                      myid="check_cara"
+                    />
+                    <label for="">Pemeriksaan tanda - tanda vital :</label>
+
+                    <label for="">Tensi :</label>
+                    <input
+                      size="9"
+                      placeholder="......"
+                      type="text"
+                      name="tensi"
+                      id="tensi"
+                      label="tensi"
+                      myid="check_cara"
+                      value="{VTD}"
+                    />
+                    <label for="">mmHg</label>
+
+                    <label for="">Suhu :</label>
+                    <input
+                      size="9"
+                      placeholder="......"
+                      type="text"
+                      name="suhu"
+                      id="suhu"
+                      label="suhu"
+                      value="{VSUHU}"
+                      myid="check_cara"
+                    />
+                    <label for="">&deg;c</label>
+
+                    <label for="">Nadi :</label>
+                    <input
+                      size="9"
+                      placeholder="......"
+                      type="text"
+                      name="nadi"
+                      id="nadi"
+                      label="nadi"
+                      value="{VNADI}"
+                      myid="check_cara"
+                    />
+                    <label for="">x/mnt</label>
+
+                    <label for="">SpO2 :</label>
+                    <input
+                      size="9"
+                      placeholder="......"
+                      type="text"
+                      name="sp02"
+                      id="sp02"
+                      label="sp02"
+                      myid="check_cara"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="padding-left: 5px; gap: 5px">
+                      <input
+                        type="checkbox"
+                        name="anamnesis-pemeriksaan-fisik"
+                        id="anamnesis-pemeriksaan-fisik"
+                        label="anamnesis-pemeriksaan-fisik"
+                        value="Pemeriksaan Fisik"
+                        myid="check_cara"
+                      />
+                      <label for="">Pemeriksaan Fisik :</label>
+                    </div>
+                  </td>
+                  <td width="85%">
+                    <textarea
+                      rows="4"
+                      style="width: 100%; padding: 0"
+                      type="textarea"
+                      name="detail-pemeriksaan-fisik"
+                      id="detail-pemeriksaan-fisik"
+                      label="detail-pemeriksaan-fisik"
+                      myid="check_cara"
+                    ></textarea>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding-left: 10px">
+                    <input
+                      type="checkbox"
+                      name="anamnesis-alasan-dirujuk"
+                      id="anamnesis-alasan-dirujuk"
+                      label="anamnesis-alasan-dirujuk"
+                      value="Alasan dirujuk"
+                      myid="check_cara"
+                    />
+                    <label for="">Alasan dirujuk :</label>
+                  </td>
+                  <td width="85%">
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      name="detail-alasan-dirujuk"
+                      id="detail-alasan-dirujuk"
+                      label="detail-alasan-dirujuk"
+                      myid="check_cara"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding-left: 10px">
+                    <input
+                      type="checkbox"
+                      name="anamnesis-kebutuhan-pelayanan"
+                      id="anamnesis-kebutuhan-pelayanan"
+                      label="anamnesis-kebutuhan-pelayanan"
+                      value="Kebutuhan pelayanan"
+                      myid="check_cara"
+                    />
+                    <label for="">Kebutuhan pelayanan :</label>
+                  </td>
+                  <td width="85%">
+                    <input
+                      style="width: 100%; padding: 0"
+                      type="text"
+                      name="detail-kebutuhan-pelayanan"
+                      id="detail-kebutuhan-pelayanan"
+                      label="detail-kebutuhan-pelayanan"
+                      myid="check_cara"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p><b>II. PEMERIKSAAN PENUNJANG YANG SUDAH DILAKUKAN</b></p>
+
+            <table class="table table-bordered" width="100%">
+              <tbody>
+                <tr>
+                  <td>
+                    <textarea
+                      rows="4"
+                      style="width: 100%; padding: 0"
+                      type="textarea"
+                      name="pemeriksaan-penunjang-yg-sdh-dilakukan"
+                      id="pemeriksaan-penunjang-yg-sdh-dilakukan"
+                      label="pemeriksaan-penunjang-yg-sdh-dilakukan"
+                      myid="check_cara"
+                    ></textarea>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p><b>III. DIAGNOSIS KERJA</b></p>
+
+            <table class="table table-bordered" width="100%">
+              <tbody>
+                <tr>
+                  <td>
+                    <textarea
+                      rows="4"
+                      style="width: 100%; padding: 0"
+                      type="textarea"
+                      name="diagnosis-kerja"
+                      id="diagnosis-kerja"
+                      label="diagnosis-kerja"
+                      myid="check_cara"
+                    ></textarea>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p><b>IV. TINDAKAN MEDIS YANG SUDAH DILAKUKAN</b></p>
+
+            <table class="table table-bordered" width="100%">
+              <tbody>
+                <tr>
+                  <td>
+                    <textarea
+                      rows="4"
+                      style="width: 100%; padding: 0"
+                      type="textarea"
+                      name="tindakan-medis-yg-sdh-dilakukan"
+                      id="tindakan-medis-yg-sdh-dilakukan"
+                      label="tindakan-medis-yg-sdh-dilakukan"
+                      myid="check_cara"
+                    ></textarea>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p><b>V. PEMBERIAN TERAPI</b></p>
+
+            <table class="table table-bordered" width="100%">
+              <tbody>
+                <tr>
+                  <td>
+                    <textarea
+                      rows="7"
+                      style="width: 100%; padding: 0"
+                      type="textarea"
+                      name="tindakan-medis-yg-sdh-dilakukan"
+                      id="tindakan-medis-yg-sdh-dilakukan"
+                      label="tindakan-medis-yg-sdh-dilakukan"
+                      myid="check_cara"
+                    ></textarea>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p><b>VI. LAIN-LAIN</b></p>
+
+            <table class="table table-bordered" width="100%">
+              <tbody>
+                <tr>
+                  <td>
+                    <textarea
+                      rows="5"
+                      style="width: 100%; padding: 0"
+                      type="textarea"
+                      name="lain-lain"
+                      id="lain-lain"
+                      label="lain-lain"
+                      myid="check_cara"
+                    ></textarea>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <p><b>I. RINGKASAN RIWAYAT PASIEN</b></p>
+    <br />
 
-    <table class="table" width="100%">
-      <tbody>
-        <tr>
-          <td colspan="2" style="padding-left: 10px">Anamnesis</td>
-        </tr>
-        <tr>
-          <td style="padding-left: 10px">
-            <input
-              type="checkbox"
-              name="anamnesis-keluhan-utama"
-              id="anamnesis-keluhan-utama"
-              label="anamnesis-keluhan-utama"
-              value="Keluhan Utama"
-              myid="check_cara"
-            />
-            <label for="">Keluhan Utama :</label>
-          </td>
-          <td width="85%">
-            <input
-              style="width: 100%"
-              type="text"
-              name="detail-keluhan-utama"
-              id="detail-keluhan-utama"
-              label="detail-keluhan-utama"
-              myid="check_cara"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div style="padding-left: 5px; gap: 5px">
-              <input
-                type="checkbox"
-                name="anamnesis-riwayat-penyakit"
-                id="anamnesis-riwayat-penyakit"
-                label="anamnesis-riwayat-penyakit"
-                value="Riwayat Penyakit"
-                myid="check_cara"
-              />
-              <label for="">Riwayat Penyakit :</label>
-            </div>
-          </td>
-          <td width="85%">
-            <textarea
-              type="textarea"
-              rows="4"
-              style="width: 100%"
-              type="text"
-              name="detail-riwayat-penyakit"
-              id="detail-riwayat-penyakit"
-              label="detail-riwayat-penyakit"
-              myid="check_cara"
-            ></textarea>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding-left: 10px">
-            <input
-              type="checkbox"
-              name="anamnesis-riwayat-alergi"
-              id="anamnesis-riwayat-alergi"
-              label="anamnesis-riwayat-alergi"
-              value="Riwayat Alergi"
-              myid="check_cara"
-            />
-            <label for="">Riwayat Alergi :</label>
-          </td>
-          <td width="85%">
-            <input
-              style="width: 100%"
-              type="text"
-              name="detail-riwayat-alergi"
-              id="detail-riwayat-alergi"
-              label="detail-riwayat-alergi"
-              myid="check_cara"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td style="padding-left: 10px">
-            <input
-              type="checkbox"
-              name="anamnesis-keadaan-umum"
-              id="anamnesis-keadaan-umum"
-              label="anamnesis-keadaan-umum"
-              value="Keadaan umum"
-              myid="check_cara"
-            />
-            <label for="">Keadaan umum :</label>
-          </td>
-          <td width="85%">
-            <input
-              style="width: 100%"
-              type="text"
-              name="detail-keadaan-umum"
-              id="detail-keadaan-umum"
-              label="detail-keadaan-umum"
-              myid="check_cara"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" style="padding-left: 10px">
-            <input
-              type="checkbox"
-              name="pemeriksaan-tanda-tanda-vital"
-              id="pemeriksaan-tanda-tanda-vital"
-              label="pemeriksaan-tanda-tanda-vital"
-              value="Pemeriksaan tanda - tanda vital"
-              myid="check_cara"
-            />
-            <label for="">Pemeriksaan tanda - tanda vital :</label>
-
-            <label for="">Tensi :</label>
-            <input
-              size="9"
-              placeholder="......"
-              type="text"
-              name="tensi"
-              id="tensi"
-              label="tensi"
-              myid="check_cara"
-              value="{VTD}"
-            />
-            <label for="">mmHg</label>
-
-            <label for="">Suhu :</label>
-            <input
-              size="9"
-              placeholder="......"
-              type="text"
-              name="suhu"
-              id="suhu"
-              label="suhu"
-              value="{VSUHU}"
-              myid="check_cara"
-            />
-            <label for="">&deg;c</label>
-
-            <label for="">Nadi :</label>
-            <input
-              size="9"
-              placeholder="......"
-              type="text"
-              name="nadi"
-              id="nadi"
-              label="nadi"
-              value="{VNADI}"
-              myid="check_cara"
-            />
-            <label for="">x/mnt</label>
-
-            <label for="">SpO2 :</label>
-            <input
-              size="9"
-              placeholder="......"
-              type="text"
-              name="sp02"
-              id="sp02"
-              label="sp02"
-              myid="check_cara"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div style="padding-left: 5px; gap: 5px">
-              <input
-                type="checkbox"
-                name="anamnesis-pemeriksaan-fisik"
-                id="anamnesis-pemeriksaan-fisik"
-                label="anamnesis-pemeriksaan-fisik"
-                value="Pemeriksaan Fisik"
-                myid="check_cara"
-              />
-              <label for="">Pemeriksaan Fisik :</label>
-            </div>
-          </td>
-          <td width="85%">
-            <textarea
-              rows="4"
-              style="width: 100%"
-              type="textarea"
-              name="detail-pemeriksaan-fisik"
-              id="detail-pemeriksaan-fisik"
-              label="detail-pemeriksaan-fisik"
-              myid="check_cara"
-            ></textarea>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding-left: 10px">
-            <input
-              type="checkbox"
-              name="anamnesis-alasan-dirujuk"
-              id="anamnesis-alasan-dirujuk"
-              label="anamnesis-alasan-dirujuk"
-              value="Alasan dirujuk"
-              myid="check_cara"
-            />
-            <label for="">Alasan dirujuk :</label>
-          </td>
-          <td width="85%">
-            <input
-              style="width: 100%"
-              type="text"
-              name="detail-alasan-dirujuk"
-              id="detail-alasan-dirujuk"
-              label="detail-alasan-dirujuk"
-              myid="check_cara"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td style="padding-left: 10px">
-            <input
-              type="checkbox"
-              name="anamnesis-kebutuhan-pelayanan"
-              id="anamnesis-kebutuhan-pelayanan"
-              label="anamnesis-kebutuhan-pelayanan"
-              value="Kebutuhan pelayanan"
-              myid="check_cara"
-            />
-            <label for="">Kebutuhan pelayanan :</label>
-          </td>
-          <td width="85%">
-            <input
-              style="width: 100%"
-              type="text"
-              name="detail-kebutuhan-pelayanan"
-              id="detail-kebutuhan-pelayanan"
-              label="detail-kebutuhan-pelayanan"
-              myid="check_cara"
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <p><b>II. PEMERIKSAAN PENUNJANG YANG SUDAH DILAKUKAN</b></p>
-
-    <table width="100%">
-      <tbody>
-        <tr>
-          <td>
-            <textarea
-              rows="4"
-              style="width: 100%"
-              type="textarea"
-              name="pemeriksaan-penunjang-yg-sdh-dilakukan"
-              id="pemeriksaan-penunjang-yg-sdh-dilakukan"
-              label="pemeriksaan-penunjang-yg-sdh-dilakukan"
-              myid="check_cara"
-            ></textarea>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <p><b>III. DIAGNOSIS KERJA</b></p>
-
-    <table width="100%">
-      <tbody>
-        <tr>
-          <td>
-            <textarea
-              rows="4"
-              style="width: 100%"
-              type="textarea"
-              name="diagnosis-kerja"
-              id="diagnosis-kerja"
-              label="diagnosis-kerja"
-              myid="check_cara"
-            ></textarea>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <p><b>IV. TINDAKAN MEDIS YANG SUDAH DILAKUKAN</b></p>
-
-    <table width="100%">
-      <tbody>
-        <tr>
-          <td>
-            <textarea
-              rows="4"
-              style="width: 100%"
-              type="textarea"
-              name="tindakan-medis-yg-sdh-dilakukan"
-              id="tindakan-medis-yg-sdh-dilakukan"
-              label="tindakan-medis-yg-sdh-dilakukan"
-              myid="check_cara"
-            ></textarea>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <p><b>V. PEMBERIAN TERAPI</b></p>
-
-    <table width="100%">
-      <tbody>
-        <tr>
-          <td>
-            <textarea
-              rows="7"
-              style="width: 100%"
-              type="textarea"
-              name="tindakan-medis-yg-sdh-dilakukan"
-              id="tindakan-medis-yg-sdh-dilakukan"
-              label="tindakan-medis-yg-sdh-dilakukan"
-              myid="check_cara"
-            ></textarea>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <p><b>VI. LAIN-LAIN</b></p>
-
-    <table width="100%">
-      <tbody>
-        <tr>
-          <td>
-            <textarea
-              rows="5"
-              style="width: 100%"
-              type="textarea"
-              name="lain-lain"
-              id="lain-lain"
-              label="lain-lain"
-              myid="check_cara"
-            ></textarea>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <table class="table" width="100%">
+    <table class="table table-bordered" width="100%">
       <tbody>
         <tr>
           <td>Tanggal / Pukul</td>
@@ -640,8 +645,8 @@
               id="tgl-rujukan"
               label="tgl-rujukan"
               myid="check_cara"
-              placeholder="dd-mm-yy"
-              class="datepicker hasDatePicker"
+              placeholder="dd/mm/yyyy"
+              class="datepicker"
             />
             <br />
             <input
@@ -708,56 +713,5 @@
         </tr>
       </tbody>
     </table>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var checkbox = document.querySelectorAll('input[type="checkbox"]');
-        checkbox.forEach(function (checkbox) {
-          checkbox.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              var name = this.getAttribute("name");
-              var checkboxes = document.querySelectorAll(
-                'input[type="checkbox"][name="' + name + '"]'
-              );
-              checkboxes.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        var textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>

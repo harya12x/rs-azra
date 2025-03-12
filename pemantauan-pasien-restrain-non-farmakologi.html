@@ -6,27 +6,21 @@
     <title>PEMANTAUAN PASIEN RESTRAIN NON FARMAKOLOGI RS. AZRA BOGOR</title>
   </head>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
     }
     .title {
       text-align: center;
       font-family: Arial, Helvetica, sans-serif;
       margin-bottom: 10px;
     }
-    .table-bordered tr:nth-child(odd) {
-      background-color: #dfe8f6;
-    }
-
-    .table {
-      border-collapse: collapse;
+    table {
       width: 100%;
+      border-collapse: collapse;
     }
-
-    .table td,
-    .table th {
+    th,
+    td {
       border: 1px solid black;
       padding: 5px;
     }
@@ -158,16 +152,14 @@
     }
   </script>
   <body>
-    <h1 class="title">
-      PEMANTAUAN PASIEN RESTRAIN NON FARMAKOLOGI RS. AZRA BOGOR
-    </h1>
-    <table width="100%" class="table">
+    <h1 class="title">PEMANTAUAN PASIEN RESTRAIN NON FARMAKOLOGI</h1>
+    <table width="100%" class="table table-bordered">
       <tbody>
         <tr>
           <td>NAMA :</td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-pasien"
               id="nama-pasien"
@@ -194,7 +186,7 @@
           </td>
           <td rowspan="2">
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="no-rek-medis"
               id="no-rek-medis"
@@ -218,7 +210,7 @@
                 label="kelas-kamar"
                 placeholder="......"
                 myid="check_cara"
-                value="{VNAMAKELAS} / {VNAMARUANGAN}"
+                value="{VNAMAKELAS} /"
               />
             </div>
           </td>
@@ -226,7 +218,7 @@
       </tbody>
     </table>
 
-    <table width="100%" class="table-bordered">
+    <table width="100%" class="table table-bordered">
       <tbody>
         <tr>
           <td style="width: 2%"><b>A.</b></td>
@@ -238,10 +230,10 @@
           <td>&nbsp;</td>
           <td>
             <input
-              type="radio"
-              name="observasi-restrain"
-              id="observasi-restrain"
-              label="observasi-restrain"
+              type="checkbox"
+              name="observasi-restrain-30-menit"
+              id="observasi-restrain-30-menit"
+              label="observasi-restrain-30-menit"
               value="Observasi 30 menit ke 1 dan ke 2 setelah tindakan restrain"
               myid="check_cara"
             />
@@ -255,10 +247,10 @@
           <td>&nbsp;</td>
           <td>
             <input
-              type="radio"
-              name="observasi-restrain"
-              id="observasi-restrain"
-              label="observasi-restrain"
+              type="checkbox"
+              name="observasi-restrain-2-jam"
+              id="observasi-restrain-2-jam"
+              label="observasi-restrain-2-jam"
               value="Selanjutnya 2 jam"
               myid="check_cara"
             />
@@ -274,11 +266,10 @@
           <td>
             <textarea
               type="textarea"
-              style="width: 100%; padding: 5px"
+              style="width: 100%; padding: 0"
               name="kondisi-kooperatif-atau-tdk-kooperatif"
               id="kondisi-kooperatif-atau-tdk-kooperatif"
               label="kondisi-kooperatif-atau-tdk-kooperatif"
-              placeholder="......"
               myid="check_cara"
               rows="6"
             ></textarea>
@@ -386,19 +377,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-1"
               id="tgl-pukul-pemantauan-1"
               label="tgl-pukul-pemantauan-1"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-1"
               id="lokasi-pemasangan-restrain-1"
@@ -409,7 +400,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-1"
               id="nama-perawat-bidan-a-1"
@@ -455,13 +446,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-1"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-1"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-1"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -527,7 +518,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-1"
               id="kondisi-1"
@@ -538,7 +529,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-1"
               id="nama-perawat-bidan-b-1"
@@ -586,19 +577,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-2"
               id="tgl-pukul-pemantauan-2"
               label="tgl-pukul-pemantauan-2"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-2"
               id="lokasi-pemasangan-restrain-2"
@@ -609,7 +600,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-2"
               id="nama-perawat-bidan-a-2"
@@ -655,13 +646,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-2"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-2"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-2"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -727,7 +718,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-2"
               id="kondisi-2"
@@ -738,7 +729,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-2"
               id="nama-perawat-bidan-b-2"
@@ -786,19 +777,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-3"
               id="tgl-pukul-pemantauan-3"
               label="tgl-pukul-pemantauan-3"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-3"
               id="lokasi-pemasangan-restrain-3"
@@ -809,7 +800,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-3"
               id="nama-perawat-bidan-a-3"
@@ -855,13 +846,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-3"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-3"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-3"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -927,7 +918,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-3"
               id="kondisi-3"
@@ -938,7 +929,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-3"
               id="nama-perawat-bidan-b-3"
@@ -986,19 +977,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-4"
               id="tgl-pukul-pemantauan-4"
               label="tgl-pukul-pemantauan-4"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-4"
               id="lokasi-pemasangan-restrain-4"
@@ -1009,7 +1000,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-4"
               id="nama-perawat-bidan-a-4"
@@ -1055,13 +1046,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-4"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-4"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-4"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -1127,7 +1118,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-4"
               id="kondisi-4"
@@ -1138,7 +1129,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-4"
               id="nama-perawat-bidan-b-4"
@@ -1186,19 +1177,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-5"
               id="tgl-pukul-pemantauan-5"
               label="tgl-pukul-pemantauan-5"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-5"
               id="lokasi-pemasangan-restrain-5"
@@ -1209,7 +1200,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-5"
               id="nama-perawat-bidan-a-5"
@@ -1255,13 +1246,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-5"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-5"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-5"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -1327,7 +1318,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-5"
               id="kondisi-5"
@@ -1338,7 +1329,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-5"
               id="nama-perawat-bidan-b-5"
@@ -1386,19 +1377,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-6"
               id="tgl-pukul-pemantauan-6"
               label="tgl-pukul-pemantauan-6"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-6"
               id="lokasi-pemasangan-restrain-6"
@@ -1409,7 +1400,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-6"
               id="nama-perawat-bidan-a-6"
@@ -1455,13 +1446,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-6"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-6"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-6"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -1527,7 +1518,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-6"
               id="kondisi-6"
@@ -1538,7 +1529,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-6"
               id="nama-perawat-bidan-b-6"
@@ -1586,19 +1577,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-7"
               id="tgl-pukul-pemantauan-7"
               label="tgl-pukul-pemantauan-7"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-7"
               id="lokasi-pemasangan-restrain-7"
@@ -1609,7 +1600,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-7"
               id="nama-perawat-bidan-a-7"
@@ -1655,13 +1646,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-7"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-7"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-7"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -1727,7 +1718,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-7"
               id="kondisi-7"
@@ -1738,7 +1729,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-7"
               id="nama-perawat-bidan-b-7"
@@ -1786,19 +1777,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-8"
               id="tgl-pukul-pemantauan-8"
               label="tgl-pukul-pemantauan-8"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-8"
               id="lokasi-pemasangan-restrain-8"
@@ -1809,7 +1800,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-8"
               id="nama-perawat-bidan-a-8"
@@ -1855,13 +1846,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-8"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-8"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-8"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -1927,7 +1918,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-8"
               id="kondisi-8"
@@ -1938,7 +1929,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-8"
               id="nama-perawat-bidan-b-8"
@@ -1986,19 +1977,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-9"
               id="tgl-pukul-pemantauan-9"
               label="tgl-pukul-pemantauan-9"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-9"
               id="lokasi-pemasangan-restrain-9"
@@ -2009,7 +2000,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-9"
               id="nama-perawat-bidan-a-9"
@@ -2055,13 +2046,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-9"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-9"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-9"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -2127,7 +2118,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-9"
               id="kondisi-9"
@@ -2138,7 +2129,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-9"
               id="nama-perawat-bidan-b-9"
@@ -2186,19 +2177,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-10"
               id="tgl-pukul-pemantauan-10"
               label="tgl-pukul-pemantauan-10"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-10"
               id="lokasi-pemasangan-restrain-10"
@@ -2209,7 +2200,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-10"
               id="nama-perawat-bidan-a-10"
@@ -2255,13 +2246,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-10"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-10"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-10"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -2327,7 +2318,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-10"
               id="kondisi-10"
@@ -2338,7 +2329,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-10"
               id="nama-perawat-bidan-b-10"
@@ -2386,19 +2377,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-11"
               id="tgl-pukul-pemantauan-11"
               label="tgl-pukul-pemantauan-11"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-11"
               id="lokasi-pemasangan-restrain-11"
@@ -2409,7 +2400,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-11"
               id="nama-perawat-bidan-a-11"
@@ -2455,13 +2446,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-11"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-11"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-11"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -2527,7 +2518,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-11"
               id="kondisi-11"
@@ -2538,7 +2529,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-11"
               id="nama-perawat-bidan-b-11"
@@ -2586,19 +2577,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-12"
               id="tgl-pukul-pemantauan-12"
               label="tgl-pukul-pemantauan-12"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-12"
               id="lokasi-pemasangan-restrain-12"
@@ -2609,7 +2600,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-12"
               id="nama-perawat-bidan-a-12"
@@ -2655,13 +2646,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-12"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-12"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-12"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -2727,7 +2718,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-12"
               id="kondisi-12"
@@ -2738,7 +2729,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-12"
               id="nama-perawat-bidan-b-12"
@@ -2786,19 +2777,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-13"
               id="tgl-pukul-pemantauan-13"
               label="tgl-pukul-pemantauan-13"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-13"
               id="lokasi-pemasangan-restrain-13"
@@ -2809,7 +2800,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-13"
               id="nama-perawat-bidan-a-13"
@@ -2855,13 +2846,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-13"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-13"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-13"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -2927,7 +2918,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-13"
               id="kondisi-13"
@@ -2938,7 +2929,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-13"
               id="nama-perawat-bidan-b-13"
@@ -2986,19 +2977,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-14"
               id="tgl-pukul-pemantauan-14"
               label="tgl-pukul-pemantauan-14"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-14"
               id="lokasi-pemasangan-restrain-14"
@@ -3009,7 +3000,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-14"
               id="nama-perawat-bidan-a-14"
@@ -3055,13 +3046,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-14"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-14"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-14"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -3127,7 +3118,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-14"
               id="kondisi-14"
@@ -3138,7 +3129,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-14"
               id="nama-perawat-bidan-b-14"
@@ -3186,19 +3177,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-15"
               id="tgl-pukul-pemantauan-15"
               label="tgl-pukul-pemantauan-15"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-15"
               id="lokasi-pemasangan-restrain-15"
@@ -3209,7 +3200,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-15"
               id="nama-perawat-bidan-a-15"
@@ -3255,13 +3246,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-15"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-15"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-15"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -3327,7 +3318,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-15"
               id="kondisi-15"
@@ -3338,7 +3329,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-15"
               id="nama-perawat-bidan-b-15"
@@ -3386,19 +3377,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-16"
               id="tgl-pukul-pemantauan-16"
               label="tgl-pukul-pemantauan-16"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-16"
               id="lokasi-pemasangan-restrain-16"
@@ -3409,7 +3400,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-16"
               id="nama-perawat-bidan-a-16"
@@ -3455,13 +3446,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-16"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-16"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-16"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -3527,7 +3518,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-16"
               id="kondisi-16"
@@ -3538,7 +3529,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-16"
               id="nama-perawat-bidan-b-16"
@@ -3586,19 +3577,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-17"
               id="tgl-pukul-pemantauan-17"
               label="tgl-pukul-pemantauan-17"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-17"
               id="lokasi-pemasangan-restrain-17"
@@ -3609,7 +3600,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-17"
               id="nama-perawat-bidan-a-17"
@@ -3655,13 +3646,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-17"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-17"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-17"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -3727,7 +3718,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-17"
               id="kondisi-17"
@@ -3738,7 +3729,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-17"
               id="nama-perawat-bidan-b-17"
@@ -3786,19 +3777,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-18"
               id="tgl-pukul-pemantauan-18"
               label="tgl-pukul-pemantauan-18"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-18"
               id="lokasi-pemasangan-restrain-18"
@@ -3809,7 +3800,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-18"
               id="nama-perawat-bidan-a-18"
@@ -3855,13 +3846,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-18"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-18"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-18"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -3927,7 +3918,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-18"
               id="kondisi-18"
@@ -3938,7 +3929,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-18"
               id="nama-perawat-bidan-b-18"
@@ -3986,19 +3977,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-19"
               id="tgl-pukul-pemantauan-19"
               label="tgl-pukul-pemantauan-19"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-19"
               id="lokasi-pemasangan-restrain-19"
@@ -4009,7 +4000,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-19"
               id="nama-perawat-bidan-a-19"
@@ -4055,13 +4046,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-19"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-19"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-19"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -4127,7 +4118,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-19"
               id="kondisi-19"
@@ -4138,7 +4129,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-19"
               id="nama-perawat-bidan-b-19"
@@ -4186,19 +4177,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-20"
               id="tgl-pukul-pemantauan-20"
               label="tgl-pukul-pemantauan-20"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-20"
               id="lokasi-pemasangan-restrain-20"
@@ -4209,7 +4200,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-20"
               id="nama-perawat-bidan-a-20"
@@ -4255,13 +4246,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-20"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-20"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-20"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -4327,7 +4318,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-20"
               id="kondisi-20"
@@ -4338,7 +4329,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-20"
               id="nama-perawat-bidan-b-20"
@@ -4386,19 +4377,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-21"
               id="tgl-pukul-pemantauan-21"
               label="tgl-pukul-pemantauan-21"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-21"
               id="lokasi-pemasangan-restrain-21"
@@ -4409,7 +4400,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-21"
               id="nama-perawat-bidan-a-21"
@@ -4455,13 +4446,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-21"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-21"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-21"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -4527,7 +4518,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-21"
               id="kondisi-21"
@@ -4538,7 +4529,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-21"
               id="nama-perawat-bidan-b-21"
@@ -4586,19 +4577,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-22"
               id="tgl-pukul-pemantauan-22"
               label="tgl-pukul-pemantauan-22"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-22"
               id="lokasi-pemasangan-restrain-22"
@@ -4609,7 +4600,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-22"
               id="nama-perawat-bidan-a-22"
@@ -4655,13 +4646,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-22"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-22"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-22"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -4727,7 +4718,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-22"
               id="kondisi-22"
@@ -4738,7 +4729,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-22"
               id="nama-perawat-bidan-b-22"
@@ -4786,19 +4777,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-23"
               id="tgl-pukul-pemantauan-23"
               label="tgl-pukul-pemantauan-23"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-23"
               id="lokasi-pemasangan-restrain-23"
@@ -4809,7 +4800,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-23"
               id="nama-perawat-bidan-a-23"
@@ -4855,13 +4846,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-23"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-23"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-23"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -4927,7 +4918,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-23"
               id="kondisi-23"
@@ -4938,7 +4929,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-23"
               id="nama-perawat-bidan-b-23"
@@ -4986,19 +4977,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-24"
               id="tgl-pukul-pemantauan-24"
               label="tgl-pukul-pemantauan-24"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-24"
               id="lokasi-pemasangan-restrain-24"
@@ -5009,7 +5000,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-24"
               id="nama-perawat-bidan-a-24"
@@ -5055,13 +5046,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-24"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-24"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-24"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -5127,7 +5118,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-24"
               id="kondisi-24"
@@ -5138,7 +5129,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-24"
               id="nama-perawat-bidan-b-24"
@@ -5186,19 +5177,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-25"
               id="tgl-pukul-pemantauan-25"
               label="tgl-pukul-pemantauan-25"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-25"
               id="lokasi-pemasangan-restrain-25"
@@ -5209,7 +5200,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-25"
               id="nama-perawat-bidan-a-25"
@@ -5255,13 +5246,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-25"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-25"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-25"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -5327,7 +5318,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-25"
               id="kondisi-25"
@@ -5338,7 +5329,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-25"
               id="nama-perawat-bidan-b-25"
@@ -5386,19 +5377,19 @@
         <tr>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-pemantauan-26"
               id="tgl-pukul-pemantauan-26"
               label="tgl-pukul-pemantauan-26"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="lokasi-pemasangan-restrain-26"
               id="lokasi-pemasangan-restrain-26"
@@ -5409,7 +5400,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-a-26"
               id="nama-perawat-bidan-a-26"
@@ -5455,13 +5446,13 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="tgl-pukul-observasi-lokasi-pemasangan-restrain-26"
               id="tgl-pukul-observasi-lokasi-pemasangan-restrain-26"
               label="tgl-pukul-observasi-lokasi-pemasangan-restrain-26"
-              class="datepicker hasDatepicker"
-              placeholder="dd-mm-yy"
+              class="datepicker"
+              placeholder="dd/mm/yyyy"
               myid="check_cara"
             />
           </td>
@@ -5527,7 +5518,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="kondisi-26"
               id="kondisi-26"
@@ -5538,7 +5529,7 @@
           </td>
           <td>
             <input
-              style="width: 100%"
+              style="width: 100%; padding: 0"
               type="text"
               name="nama-perawat-bidan-b-26"
               id="nama-perawat-bidan-b-26"
@@ -5585,57 +5576,5 @@
         </tr>
       </tbody>
     </table>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const radioButtons = document.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(function (radio) {
-          radio.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              const name = this.getAttribute("name");
-              const radios = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              radios.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        const checkboxButtons = document.querySelectorAll(
-          'input[type="checkbox"]'
-        );
-        checkboxButtons.forEach(function (checkbox) {
-          checkbox.addEventListener("click", function () {
-            if (this.classList.contains("clicked")) {
-              this.checked = false;
-              this.classList.remove("clicked");
-            } else {
-              const name = this.getAttribute("name");
-              const checkboxes = document.querySelectorAll(
-                'input[type="radio"][name="' + name + '"]'
-              );
-              checkboxes.forEach(function (r) {
-                r.classList.remove("clicked");
-              });
-              this.classList.add("clicked");
-            }
-            console.log(this.name + " diubah menjadi: " + this.checked);
-          });
-        });
-
-        const textInputs = document.querySelectorAll('input[type="text"]');
-        textInputs.forEach(function (input) {
-          input.addEventListener("change", function () {
-            console.log(this.name + " diubah menjadi: " + this.value);
-          });
-        });
-      });
-    </script>
   </body>
 </html>
